@@ -1,27 +1,45 @@
 package sample;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
+
 import java.util.ArrayList;
 
 /**
  * Created by bendickson on 4/27/17.
  */
-public class StudyProfile {
+public class StudyProfile
+{
     // private data
-    private Account account;
-    private ArrayList<QuantityType> quantityTypes;
-    private ArrayList<TaskType> taskTypes;
-    private ArrayList<StudyProfile> studyProfiles;
-    private ArrayList<ActivityEvent> activityList;
-    private ArrayList<TimeTableEventType> timeTableEventTypes;
-    private ArrayList<Event> calendar;
-
+    private ArrayList<Module> modules;
+    private ArrayList<Milestone> milestones;
+    private String name;
+    private ArrayList<String> details;
+    private int year;
+    private int semesterNo;
+    private int version;
 
     // public methods
+    public int milestonesCompleted()
+    {
+        int r=0;
 
 
-    // getters
+        return r;
+    }
+    public double milestonesProgress()
+    {
+        double r=0.0;
+        
+        return r;
+    }
 
+    // constructors
+    StudyProfile()
+    {
 
-    // setters
+    }
+    StudyProfile(HubFile initialHubFile)
+    {
 
+    }
 }
