@@ -15,4 +15,17 @@ public class VersionControlEntity extends ModelEntity
         // initial set up code below - check if this needs updating
 
     }
+
+    // getters
+    public int getVersion()
+    {
+        // initial set up code below - check if this needs updating
+        return version;
+    }
+    public String getUID()
+    {
+        // initial set up code below - check if this needs updating
+        return uid;
+    }
+
 }
