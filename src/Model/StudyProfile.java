@@ -1,6 +1,4 @@
-package sample;
-
-import com.sun.org.apache.xpath.internal.operations.Mod;
+package Model;
 
 import java.util.ArrayList;
 

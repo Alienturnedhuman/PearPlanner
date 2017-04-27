@@ -1,5 +1,6 @@
-package sample;
+package Model;
 
 public class Controller {
 
 }
+

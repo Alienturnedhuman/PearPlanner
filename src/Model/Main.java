@@ -1,4 +1,4 @@
-package sample;
+package Model;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +36,7 @@ public class Main extends Application {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
-        Scene scene = new Scene(grid, 300, 275);
+        Scene scene = new Scene(grid, 300, 200);
         primaryStage.setScene(scene);
 
         Text scenetitle = new Text("Pear Planner");
@@ -85,7 +85,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        System.out.println("Hello");
+
     }
 }
 
