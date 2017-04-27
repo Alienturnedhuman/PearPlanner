@@ -18,6 +18,14 @@ public class Event
     // getters
     public String getName()
     {
+        // initial set up code below - check if this needs updating
         return name;
+    }
+
+    // setters
+    public void setName(String newName)
+    {
+        // initial set up code below - check if this needs updating
+        name = newName;
     }
 }

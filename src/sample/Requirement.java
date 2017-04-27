@@ -17,12 +17,14 @@ public class Requirement extends ModelEntity
     // public methods
     public boolean isComplete()
     {
+        // initial set up code below - check if this needs updating
         boolean r = false;
 
         return r;
     }
     public double requirementProgress()
     {
+        // initial set up code below - check if this needs updating
         double r = 0.0;
 
         return r;

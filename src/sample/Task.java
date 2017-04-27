@@ -20,24 +20,28 @@ public class Task extends ModelEntity
     // public methods
     boolean dependenciesComplete()
     {
+        // initial set up code below - check if this needs updating
         boolean r = false;
 
         return r;
     }
     boolean hasDependencies()
     {
+        // initial set up code below - check if this needs updating
         boolean r = false;
 
         return r;
     }
     boolean isComplete()
     {
+        // initial set up code below - check if this needs updating
         boolean r = false;
 
         return r;
     }
     boolean canCheckComplete()
     {
+        // initial set up code below - check if this needs updating
         boolean r = false;
 
         return r;

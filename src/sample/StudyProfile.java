@@ -21,6 +21,7 @@ public class StudyProfile
     // public methods
     public int milestonesCompleted()
     {
+        // initial set up code below - check if this needs updating
         int r=0;
 
 
@@ -28,6 +29,7 @@ public class StudyProfile
     }
     public double milestonesProgress()
     {
+        // initial set up code below - check if this needs updating
         double r=0.0;
 
         return r;
@@ -36,10 +38,12 @@ public class StudyProfile
     // constructors
     StudyProfile()
     {
+        // initial set up code below - check if this needs updating
 
     }
     StudyProfile(HubFile initialHubFile)
     {
+        // initial set up code below - check if this needs updating
 
     }
 }
