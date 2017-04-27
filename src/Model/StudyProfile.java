@@ -27,7 +27,7 @@ public class StudyProfile
     public double milestonesProgress()
     {
         double r=0.0;
-        
+
         return r;
     }
 
