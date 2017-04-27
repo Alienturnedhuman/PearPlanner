@@ -11,6 +11,7 @@ public class VersionControlEntity extends ModelEntity
     // public methods
     public void update(VersionControlEntity receivedVCE)
     {
+        // initial set up code below - check if this needs updating
 
     }
 }
