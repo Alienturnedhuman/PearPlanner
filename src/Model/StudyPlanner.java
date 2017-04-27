@@ -21,6 +21,7 @@ public class StudyPlanner {
     void loadFile (String filePath)
     {
         // initial set up code below - check if this needs updating
+        throw new UnsupportedOperationException("This method is not implemented yet");
 
     }
 
@@ -28,6 +29,7 @@ public class StudyPlanner {
     void processHubFile(HubFile newHubFile)
     {
         // initial set up code below - check if this needs updating
+        throw new UnsupportedOperationException("This method is not implemented yet");
 
     }
 

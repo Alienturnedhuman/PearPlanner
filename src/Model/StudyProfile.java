@@ -21,17 +21,12 @@ public class StudyProfile
     public int milestonesCompleted()
     {
         // initial set up code below - check if this needs updating
-        int r=0;
-
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
     public double milestonesProgress()
     {
         // initial set up code below - check if this needs updating
-        double r=0.0;
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
 
     // constructors
