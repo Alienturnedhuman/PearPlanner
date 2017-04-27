@@ -1,11 +1,11 @@
 package Model;
 
-import com.sun.org.apache.regexp.internal.RE;
 
 import java.util.ArrayList;
 
 /**
- * Created by bendickson on 4/27/17.
+ * PearPlanner
+ * Created by Team BRONZE on 4/27/17
  */
 public class Assignment extends VersionControlEntity
 {
@@ -21,5 +21,5 @@ public class Assignment extends VersionControlEntity
 
 
     // public enums
-    public enum StateType {IN_PROGRESS,DEADLINE_PASSED,NOT_STARTED};
+    public enum StateType {IN_PROGRESS,DEADLINE_PASSED,NOT_STARTED}
 }

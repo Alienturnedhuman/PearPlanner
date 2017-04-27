@@ -3,7 +3,8 @@ package Model;
 import java.util.ArrayList;
 
 /**
- * Created by bendickson on 4/27/17.
+ * PearPlanner
+ * Created by Team BRONZE on 4/27/17
  */
 public class Milestone
 {
@@ -16,37 +17,26 @@ public class Milestone
     public boolean isComplete()
     {
         // initial set up code below - check if this needs updating
-        boolean r = false;
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
     public double progressPercentage()
     {
         // initial set up code below - check if this needs updating
-        double r = 0.0;
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
     public int tasksCompleted()
     {
         // initial set up code below - check if this needs updating
-        int r = 0;
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
     public int size()
     {
-        // initial set up code below - check if this needs updating
-        int r = 0;
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
     public int totalWeighting()
     {
         // initial set up code below - check if this needs updating
-        int r = 0;
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
 
     // getters
@@ -54,7 +44,7 @@ public class Milestone
     {
         // initial set up code below - check if this needs updating
         return deadline.getName();
-    };
+    }
 
     // setters
     public void setName(String newName)

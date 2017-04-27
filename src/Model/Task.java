@@ -3,7 +3,8 @@ package Model;
 import java.util.ArrayList;
 
 /**
- * Created by bendickson on 4/27/17.
+ * PearPlanner
+ * Created by Team BRONZE on 4/27/17
  */
 public class Task extends ModelEntity
 {
@@ -20,27 +21,19 @@ public class Task extends ModelEntity
     // public methods
     boolean dependenciesComplete()
     {
-        boolean r = false;
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
     boolean hasDependencies()
     {
-        boolean r = false;
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
     boolean isComplete()
     {
-        boolean r = false;
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
     boolean canCheckComplete()
     {
-        boolean r = false;
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
 
 

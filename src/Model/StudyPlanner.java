@@ -3,7 +3,8 @@ package Model;
 import java.util.ArrayList;
 
 /**
- * Created by bendickson on 4/27/17.
+ * PearPlanner
+ * Created by Team BRONZE on 4/27/17
  */
 public class StudyPlanner {
     // private data
@@ -20,6 +21,7 @@ public class StudyPlanner {
     void loadFile (String filePath)
     {
         // initial set up code below - check if this needs updating
+        throw new UnsupportedOperationException("This method is not implemented yet");
 
     }
 
@@ -27,6 +29,7 @@ public class StudyPlanner {
     void processHubFile(HubFile newHubFile)
     {
         // initial set up code below - check if this needs updating
+        throw new UnsupportedOperationException("This method is not implemented yet");
 
     }
 

@@ -3,7 +3,8 @@ package Model;
 import java.util.ArrayList;
 
 /**
- * Created by bendickson on 4/27/17.
+ * PearPlanner
+ * Created by Team BRONZE on 4/27/17
  */
 public class Requirement extends ModelEntity
 {
@@ -17,14 +18,10 @@ public class Requirement extends ModelEntity
     // public methods
     public boolean isComplete()
     {
-        boolean r = false;
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
     public double requirementProgress()
     {
-        double r = 0.0;
-
-        return r;
+        throw new UnsupportedOperationException("This method is not implemented yet");
     }
 }

@@ -1,16 +1,17 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
- * Created by bendickson on 4/27/17.
+ * PearPlanner
+ * Created by Team BRONZE on 4/27/17
  */
 public class Note
 {
     // private data
     private String title;
-    private Date timeStamp;
+    private GregorianCalendar timeStamp;
     private ArrayList<String> text;
 
 
@@ -23,7 +24,7 @@ public class Note
         // initial set up code below - check if this needs updating
         return title;
     }
-    public Date getTimeStamp()
+    public GregorianCalendar getTimeStamp()
     {
         // initial set up code below - check if this needs updating
         return timeStamp;
@@ -35,15 +36,15 @@ public class Note
         // initial set up code below - check if this needs updating
         title = newTitle;
     }
-    private void setTimeStamp(Date newTimeStamp)
+    private void setTimeStamp(GregorianCalendar newTimeStamp)
     {
         // initial set up code below - check if this needs updating
         timeStamp = newTimeStamp;
     }
-    private void setTimeStamp(int Y,int M, int D, int h , int m , int s , int ms)
+    private void setTimeStamp(int Y,int M, int D, int h , int m , int s)
     {
         // initial set up code below - check if this needs updating
-        timeStamp = new Date(h,m,s);
+        timeStamp = new GregorianCalendar(Y,M,D,h,m,s);
         // test comment
     }
 }
