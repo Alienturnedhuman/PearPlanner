@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by bendickson on 4/27/17.
+ * Created by Andrew Odintsov on 4/27/17.
  */
 public class Event
 {
@@ -19,5 +19,9 @@ public class Event
     public String getName()
     {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
