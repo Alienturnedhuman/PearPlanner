@@ -52,23 +52,50 @@ public class Person
         // initial set up code below - check if this needs updating
         return preferredName.length()>0?preferredName:(givenNames.size()>0?givenNames.get(0):familyName);
     }
-
     // setters
     public void setFamilyName(String newFamilyName)
     {
+        // initial set up code below - check if this needs updating
         familyName = newFamilyName;
     }
+
+    /**
+     * Sets the given names from a string with space separated names
+     * @param nameStr String containing names
+     */
     public void setGivenNames(String nameStr)
     {
+        // initial set up code below - check if this needs updating
         String nameSplit[] = nameStr.split(" ");
         givenNames = new ArrayList<String>(Arrays.asList(nameSplit));
     }
+
+    /**
+     * Sets the name from a string with space separated names
+     * Family name position at start or end indicated by boolean value
+     * @param nameStr   String containing names
+     * @param isFamilyNameLast  is the family name at the end?
+     */
     public void setName(String nameStr,boolean isFamilyNameLast)
     {
+        // initial set up code below - check if this needs updating
         String nameSplit[] = nameStr.split(" ");
-        int i = 0;
+        familyNameLast = isFamilyNameLast;
+        givenNames = new ArrayList<String>();
+        int i = -1;
         int ii = nameSplit.length;
-        
+        if(familyNameLast)
+        {
+            familyName = nameSplit[--ii];
+        }
+        else
+        {
+            familyName = nameStr[++i];
+        }
+        while(++i<ii)
+        {
+            givenNames.add(nameSplit[i]);
+        }
     }
 
     // constructors
