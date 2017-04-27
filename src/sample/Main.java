@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -63,13 +66,30 @@ public class Main extends Application {
         grid.add(hbBtn, 1, 4);
 
 
+        final Text actiontarget = new Text();
+        grid.add(actiontarget, 1, 6);
+
+
+        //event handler
+        btn.setOnAction(e -> {
+            actiontarget.setFill(Color.GREEN);
+            actiontarget.setText("Click event handled");
+        });
+
+
 
         primaryStage.getIcons().add(new Image("http://vignette2.wikia.nocookie.net/animal-jam-clans-1/images/6/6e/305_emoji_iphone_pear.png"));
         primaryStage.show();
+
+
+
     }
+
 
 
     public static void main(String[] args) {
         launch(args);
     }
 }
+
+
