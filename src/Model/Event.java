@@ -10,7 +10,7 @@ public class Event
 {
     protected Date date;
     protected String name;
-    protected ArrayList<String> details;
+    protected MultilineString details;
     protected ArrayList<Note> notes;
 
     // public methods
