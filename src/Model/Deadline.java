@@ -6,7 +6,4 @@ package Model;
 public class Deadline extends Event
 {
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }
