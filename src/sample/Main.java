@@ -6,10 +6,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -24,9 +26,11 @@ public class Main extends Application {
 
         //Scene scene = new Scene(root, 1280, 720, Color.MAGENTA);
 
-        primaryStage.setTitle("Study Planner");
+
+        //This should be moved in a separate View class
 
 
+        primaryStage.setTitle("Study Planner Login");
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -36,8 +40,8 @@ public class Main extends Application {
         Scene scene = new Scene(grid, 300, 275);
         primaryStage.setScene(scene);
 
-        Text scenetitle = new Text("Welcome");
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        Text scenetitle = new Text("Pear Planner");
+        scenetitle.setFont(Font.font("Helvetica", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
         Label userName = new Label("User Name:");
@@ -52,7 +56,11 @@ public class Main extends Application {
         PasswordField pwBox = new PasswordField();
         grid.add(pwBox, 1, 2);
 
-
+        Button btn = new Button("Sign in");
+        HBox hbBtn = new HBox(10);
+        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().add(btn);
+        grid.add(hbBtn, 1, 4);
 
         primaryStage.show();
     }
