@@ -3,7 +3,8 @@ package Model;
 import java.util.ArrayList;
 
 /**
- * Created by bendickson on 4/27/17.
+ * PearPlanner
+ * Created by Team BRONZE on 4/27/17 at 20:59
  */
 public class Module extends VersionControlEntity
 {

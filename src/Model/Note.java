@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by bendickson on 4/27/17.
+ * PearPlanner
+ * Created by Team BRONZE on 4/27/17
  */
 public class Note
 {

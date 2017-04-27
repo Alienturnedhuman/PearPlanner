@@ -3,7 +3,8 @@ package Model;
 import java.sql.Time;
 
 /**
- * Created by bendickson on 4/27/17.
+ * PearPlanner
+ * Created by Team BRONZE on 4/27/17
  */
 public class ExamEvent extends Event
 {
