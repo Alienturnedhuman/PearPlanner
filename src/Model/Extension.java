@@ -35,14 +35,17 @@ public class Extension extends VersionControlEntity
     // setters
     public void setCircumstances(MultilineString newCircumstances)
     {
+        // initial set up code below - check if this needs updating
         circumstances = newCircumstances;
     }
     public void setNewDeadline(Deadline newNewDeadline)
     {
+        // initial set up code below - check if this needs updating
         newDeadline = newNewDeadline;
     }
     public void setApprovalStatus(ApprovalStatus newApprovalStatus)
     {
+        // initial set up code below - check if this needs updating
         approvalStatus = newApprovalStatus;
     }
 // constructor
