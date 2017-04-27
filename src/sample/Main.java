@@ -10,9 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -62,6 +62,9 @@ public class Main extends Application {
         hbBtn.getChildren().add(btn);
         grid.add(hbBtn, 1, 4);
 
+
+
+        primaryStage.getIcons().add(new Image("http://vignette2.wikia.nocookie.net/animal-jam-clans-1/images/6/6e/305_emoji_iphone_pear.png"));
         primaryStage.show();
     }
 
