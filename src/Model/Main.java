@@ -36,7 +36,7 @@ public class Main extends Application {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
-        Scene scene = new Scene(grid, 300, 275);
+        Scene scene = new Scene(grid, 300, 200);
         primaryStage.setScene(scene);
 
         Text scenetitle = new Text("Pear Planner");
