@@ -12,7 +12,7 @@ public class Room
     private String name;
     private Building building;
     private String roomNumber;
-    private ArrayList<String> details;
+    private MultilineString details;
 
 
 
@@ -36,7 +36,7 @@ public class Room
         // initial set up code below - check if this needs updating
         return roomNumber;
     }
-    public ArrayList<String> getDetails()
+    public MultilineString getDetails()
     {
         // initial set up code below - check if this needs updating
         return details;
@@ -59,7 +59,7 @@ public class Room
         // initial set up code below - check if this needs updating
         roomNumber = newRoomNumber;
     }
-    public void setDetails(ArrayList<String> newDetails)
+    public void setDetails(MultilineString newDetails)
     {
         // initial set up code below - check if this needs updating
         details = newDetails;

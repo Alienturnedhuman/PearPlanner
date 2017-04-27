@@ -12,7 +12,7 @@ public class StudyProfile
     private ArrayList<Module> modules;
     private ArrayList<Milestone> milestones;
     private String name;
-    private ArrayList<String> details;
+    private MultilineString details;
     private int year;
     private int semesterNo;
     private int version;

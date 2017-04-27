@@ -16,4 +16,17 @@ public class VersionControlEntity extends ModelEntity
         throw new UnsupportedOperationException("This method is not implemented yet");
 
     }
+
+    // getters
+    public int getVersion()
+    {
+        // initial set up code below - check if this needs updating
+        return version;
+    }
+    public String getUID()
+    {
+        // initial set up code below - check if this needs updating
+        return uid;
+    }
+
 }

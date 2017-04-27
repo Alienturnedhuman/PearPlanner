@@ -1,5 +1,6 @@
 package Model;
 
+import com.sun.org.apache.regexp.internal.RE;
 
 import java.util.ArrayList;
 
@@ -21,5 +22,10 @@ public class Assignment extends VersionControlEntity
 
 
     // public enums
-    public enum StateType {IN_PROGRESS,DEADLINE_PASSED,NOT_STARTED}
+    public static enum StateType {IN_PROGRESS,DEADLINE_PASSED,NOT_STARTED};
+
+    // public methods
+
+    // getters
+
 }

@@ -12,7 +12,7 @@ public class Note
     // private data
     private String title;
     private GregorianCalendar timeStamp;
-    private ArrayList<String> text;
+    private MultilineString text;
 
 
     // public methods
@@ -29,6 +29,10 @@ public class Note
         // initial set up code below - check if this needs updating
         return timeStamp;
     }
+    public MultilineString getText()
+    {
+        return text;
+    }
 
     // setters
     public void setTitle(String newTitle)
@@ -36,15 +40,19 @@ public class Note
         // initial set up code below - check if this needs updating
         title = newTitle;
     }
-    private void setTimeStamp(GregorianCalendar newTimeStamp)
+    public void setTimeStamp(GregorianCalendar newTimeStamp)
     {
         // initial set up code below - check if this needs updating
         timeStamp = newTimeStamp;
     }
-    private void setTimeStamp(int Y,int M, int D, int h , int m , int s)
+    public void setTimeStamp(int Y,int M, int D, int h , int m , int s)
     {
         // initial set up code below - check if this needs updating
         timeStamp = new GregorianCalendar(Y,M,D,h,m,s);
-        // test comment
+    }
+    public void setText(MultilineString newText)
+    {
+        // initial set up code below - check if this needs updating
+        text = newText;
     }
 }
