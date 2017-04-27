@@ -1,7 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by bendickson on 4/27/17.
@@ -10,8 +10,8 @@ public class Note
 {
     // private data
     private String title;
-    private Date timeStamp;
-    private ArrayList<String> text;
+    private GregorianCalendar timeStamp;
+    private MultilineString text;
 
 
     // public methods
@@ -23,10 +23,14 @@ public class Note
         // initial set up code below - check if this needs updating
         return title;
     }
-    public Date getTimeStamp()
+    public GregorianCalendar getTimeStamp()
     {
         // initial set up code below - check if this needs updating
         return timeStamp;
+    }
+    public MultilineString getText()
+    {
+        return text;
     }
 
     // setters
@@ -35,15 +39,19 @@ public class Note
         // initial set up code below - check if this needs updating
         title = newTitle;
     }
-    private void setTimeStamp(Date newTimeStamp)
+    public void setTimeStamp(GregorianCalendar newTimeStamp)
     {
         // initial set up code below - check if this needs updating
         timeStamp = newTimeStamp;
     }
-    private void setTimeStamp(int Y,int M, int D, int h , int m , int s , int ms)
+    public void setTimeStamp(int Y,int M, int D, int h , int m , int s)
     {
         // initial set up code below - check if this needs updating
-        timeStamp = new Date(h,m,s);
-        // test comment
+        timeStamp = new GregorianCalendar(Y,M,D,h,m,s);
+    }
+    public void setText(MultilineString newText)
+    {
+        // initial set up code below - check if this needs updating
+        text = newText;
     }
 }
