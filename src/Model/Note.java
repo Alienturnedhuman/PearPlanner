@@ -44,5 +44,6 @@ public class Note
     {
         // initial set up code below - check if this needs updating
         timeStamp = new Date(h,m,s);
+        // test comment
     }
 }
