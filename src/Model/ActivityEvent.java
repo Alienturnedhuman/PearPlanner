@@ -1,7 +1,7 @@
 package Model;
 
-import java.sql.Time;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 /**
  * PearPlanner
@@ -11,7 +11,7 @@ public class ActivityEvent extends Event
 {
     private ArrayList<Task> tasks;
     private boolean checkedComplete;
-    private Time start;
+    private GregorianCalendar start;
     private int duration;
     private String description;
     private int activityQuantity;

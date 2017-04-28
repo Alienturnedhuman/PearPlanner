@@ -22,7 +22,7 @@ public class Person
     public String getFullName()
     {
         // initial set up code below - check if this needs updating
-        String namesList[] = new String[givenNames.size()]
+        String namesList[] = new String[givenNames.size()];
         if(familyNameLast)
         {
             return (salutation.length()>0?salutation+" ":"")+String.join(" ",namesList)+" "+familyName;
@@ -90,7 +90,7 @@ public class Person
         }
         else
         {
-            familyName = nameStr[++i];
+            familyName = nameSplit[++i];
         }
         while(++i<ii)
         {
