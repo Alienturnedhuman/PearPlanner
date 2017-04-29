@@ -10,16 +10,19 @@ public class Coursework extends Assignment
 {
     private Event startDate;
     private Deadline deadline;
-    private ArrayList<Note> notes;
     private ArrayList<Extension> extensions;
 
     // private methods
-    void replace(Coursework receivedVCE)
+    @Override
+    protected void replace(VersionControlEntity receivedVCE)
     {
-        this.startDate = receivedVCE.getStartDate();
-        this.deadline = receivedVCE.getDeadline();
-        // this.notes = receivedVCE.getResit(); // do not update as these are added by the user, not by the hub
-        this.extensions = receivedVCE.getExtensions();
+        if(receivedVCE instanceof Coursework)
+        {
+            Coursework castedVCE = (Coursework)receivedVCE;
+            this.startDate = castedVCE.getStartDate();
+            this.deadline = castedVCE.getDeadline();
+            this.extensions = castedVCE.getExtensions();
+        }
 
         super.replace(receivedVCE);
     }

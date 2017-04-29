@@ -18,7 +18,9 @@ public abstract class VersionControlEntity extends ModelEntity
      */
     protected void replace(VersionControlEntity receivedVCE)
     {
-        this.version = receivedVCE.getVersion();
+        name = receivedVCE.getName();
+        details = receivedVCE.getDetails();
+        version = receivedVCE.getVersion();
         // super.replace(receivedVCE);
     }
 
@@ -45,6 +47,4 @@ public abstract class VersionControlEntity extends ModelEntity
         return uid;
     }
 
-    // private methods
-    abstract void replace(Assignment receivedVCE);
 }

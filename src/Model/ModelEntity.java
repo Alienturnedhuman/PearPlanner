@@ -11,12 +11,6 @@ public abstract class ModelEntity {
     protected MultilineString details;
     protected ArrayList<Note> notes;
 
-    protected void replace(ModelEntity newModel)
-    {
-        name = newModel.getName();
-        details = newModel.getDetails();
-    }
-
 
     // getters
     public String getName()
@@ -28,5 +22,4 @@ public abstract class ModelEntity {
         return details;
     }
 
-    abstract void replace(VersionControlEntity receivedVCE);
 }
