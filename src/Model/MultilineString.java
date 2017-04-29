@@ -19,7 +19,7 @@ public class MultilineString
         // initial set up code below - check if this needs updating
         return lines.size();
     }
-    public int getAsArrayList()
+    public ArrayList<String> getAsArrayList()
     {
         // initial set up code below - check if this needs updating
         return lines;

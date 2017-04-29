@@ -14,6 +14,24 @@ public class Module extends VersionControlEntity
     private String moduleCode;
     private ArrayList<TimetableEvent> timetable;
 
+
+    // private methods
+    @Override
+    protected void replace(VersionControlEntity receivedVCE)
+    {
+        if(receivedVCE instanceof Module)
+        {
+            Module castedVCE = (Module)receivedVCE;
+            this.organiser = castedVCE.getOrganiser();
+            this.moduleCode = castedVCE.getModuleCode();
+            this.assignments = castedVCE.getAssignments();
+            this.timetable = castedVCE.getTimetable();
+        }
+
+        super.replace(receivedVCE);
+    }
+
+
     // public methods
 
     // getters

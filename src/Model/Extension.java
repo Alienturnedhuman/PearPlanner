@@ -11,13 +11,29 @@ public class Extension extends VersionControlEntity
     private MultilineString circumstances;
     private ApprovalStatus approvalStatus;
 
+
+    // private methods
+    @Override
+    protected void replace(VersionControlEntity receivedVCE)
+    {
+        if(receivedVCE instanceof Extension)
+        {
+            Extension castedVCE = (Extension)receivedVCE;
+            this.newDeadline = castedVCE.getNewDeadline();
+            this.circumstances = castedVCE.getCircumstances();
+            this.approvalStatus = castedVCE.getApprovalStatus();
+        }
+
+        super.replace(receivedVCE);
+    }
+
     // public enums
     public enum ApprovalStatus{PENDING,APPROVED,DECLINED};
 
     // public methods
 
     // getters
-    public Deadline getDeadline()
+    public Deadline getNewDeadline()
     {
         // initial set up code below - check if this needs updating
         return newDeadline;

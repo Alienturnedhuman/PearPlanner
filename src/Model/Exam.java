@@ -11,12 +11,17 @@ public class Exam extends Assignment
     private ExamEvent timeSlot;
 
     // private methods
-    void replace(Exam receivedVCE)
+    @Override
+    protected void replace(VersionControlEntity receivedVCE)
     {
-        this.resit = receivedVCE.getResit();
-        this.timeSlot = receivedVCE.getTimeSlot();
+        if(receivedVCE instanceof Exam)
+        {
+            Exam castedVCE = (Exam)receivedVCE;
+            this.resit = castedVCE.getResit();
+            this.timeSlot = castedVCE.getTimeSlot();
+        }
 
-        // super.replace(receivedVCE);
+        super.replace(receivedVCE);
     }
 
     // public methods
