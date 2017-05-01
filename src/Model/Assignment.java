@@ -18,7 +18,7 @@ public abstract class Assignment extends VersionControlEntity
     protected Person markedBy;
     protected Person reviewedBy;
     protected int marks;
-    protected StateType state;
+    protected StateType state;  // this may not be needed as we can work it out
 
     // private methods
     @Override
@@ -27,14 +27,14 @@ public abstract class Assignment extends VersionControlEntity
         if(receivedVCE instanceof Assignment)
         {
             Assignment castedVCE = (Assignment)receivedVCE;
-            this.tasks = castedVCE.getTasks();
-            this.requirements = castedVCE.getRequirements();
+            // this.tasks = castedVCE.getTasks();
+            // this.requirements = castedVCE.getRequirements();
             this.weighting = castedVCE.getWeighting();
             this.setBy = castedVCE.getSetBy();
             this.markedBy = castedVCE.getMarkedBy();
             this.reviewedBy = castedVCE.getReviewedBy();
             this.marks = castedVCE.getMarks();
-            this.state = castedVCE.getState();
+            // this.state = castedVCE.getState();
         }
         super.replace(receivedVCE);
     }
