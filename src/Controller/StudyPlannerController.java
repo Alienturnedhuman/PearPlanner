@@ -103,17 +103,32 @@ public class StudyPlannerController
 
 
     // constructors
-    StudyPlannerController()
+    public StudyPlannerController()
     {
+        // checks if there is a existing settings file
+        if(DataController.existingSettingsFile())
+        {
+            // import data
+        }
+        else
+        {
+            // create a blank one
 
-    }
-    StudyPlannerController(StudyPlanner studyPlanner)
-    {
+            // create an Account
+            String fullName ="";
+            boolean familyNameLast =false;
+            String salutation = "";
 
-    }
-    StudyPlannerController(HubFile hubFile)
-    {
 
+
+            Person studentDetails = new Person(salutation,fullName,familyNameLast);
+            String studentAccountNumber ="";
+
+            Account newAccount = new Account(studentDetails,studentAccountNumber);
+
+
+            planner = new StudyPlanner(newAccount);
+        }
     }
 
 }

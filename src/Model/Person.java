@@ -40,11 +40,11 @@ public class Person extends VersionControlEntity
         String namesList[] = new String[givenNames.size()];
         if(familyNameLast)
         {
-            return (salutation.length()>0?salutation+" ":"")+String.join(" ",namesList)+" "+familyName;
+            return (salutation.length()>0?salutation+" ":"")+String.join(" ",givenNames)+" "+familyName;
         }
         else
         {
-            return (salutation.length()>0?salutation+" ":"")+familyName+" "+String.join(" ",namesList);
+            return (salutation.length()>0?salutation+" ":"")+familyName+" "+String.join(" ",givenNames);
         }
     }
     public String getFamilyName()
@@ -87,6 +87,12 @@ public class Person extends VersionControlEntity
     {
         // initial set up code below - check if this needs updating
         familyName = newFamilyName;
+    }
+
+
+    public void setPreferredName(String newPreferredName)
+    {
+        name = newPreferredName;
     }
 
     /**
@@ -134,13 +140,13 @@ public class Person extends VersionControlEntity
     }
 
     // constructors
-    Person(String cSalutation , String cName , Boolean cFamNameLast)
+    public Person(String cSalutation , String cName , Boolean cFamNameLast)
     {
         setName(cName,cFamNameLast);
         setSalutation(cSalutation);
     }
 
-    Person(String cSalutation , ArrayList<String> cGivenNames , String cFamName , Boolean cFamNameLast)
+    public Person(String cSalutation , ArrayList<String> cGivenNames , String cFamName , Boolean cFamNameLast)
     {
         setFamilyName(cFamName);
         givenNames = (ArrayList<String>)cGivenNames.clone();

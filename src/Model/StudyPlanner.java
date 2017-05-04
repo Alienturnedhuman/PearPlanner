@@ -36,4 +36,14 @@ public class StudyPlanner {
     // setters
 
 
+
+    // constructor
+    public StudyPlanner(Account newAccount)
+    {
+        // it may make sense to clone this to stop someone retaining access to the
+        // object
+        account = newAccount;
+    }
+
+
 }
