@@ -8,7 +8,9 @@
   <property name="skip.tests" value="true"/>
    -->
   
+
   <!-- Compiler options -->
+
   
   <property name="compiler.debug" value="on"/>
   <property name="compiler.generate.no.warnings" value="off"/>
@@ -52,58 +54,6 @@
     <exclude name="**/?*.aj"/>
   </patternset>
   
-  <!-- JDK definitions -->
-  
-  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
-  <path id="jdk.classpath.1.8">
-    <fileset dir="${jdk.home.1.8}">
-      <include name="jre/lib/charsets.jar"/>
-      <include name="jre/lib/deploy.jar"/>
-      <include name="jre/lib/ext/cldrdata.jar"/>
-      <include name="jre/lib/ext/dnsns.jar"/>
-      <include name="jre/lib/ext/jaccess.jar"/>
-      <include name="jre/lib/ext/jfxrt.jar"/>
-      <include name="jre/lib/ext/localedata.jar"/>
-      <include name="jre/lib/ext/nashorn.jar"/>
-      <include name="jre/lib/ext/sunec.jar"/>
-      <include name="jre/lib/ext/sunjce_provider.jar"/>
-      <include name="jre/lib/ext/sunpkcs11.jar"/>
-      <include name="jre/lib/ext/zipfs.jar"/>
-      <include name="jre/lib/javaws.jar"/>
-      <include name="jre/lib/jce.jar"/>
-      <include name="jre/lib/jfr.jar"/>
-      <include name="jre/lib/jfxswt.jar"/>
-      <include name="jre/lib/jsse.jar"/>
-      <include name="jre/lib/management-agent.jar"/>
-      <include name="jre/lib/plugin.jar"/>
-      <include name="jre/lib/resources.jar"/>
-      <include name="jre/lib/rt.jar"/>
-      <include name="lib/ant-javafx.jar"/>
-      <include name="lib/dt.jar"/>
-      <include name="lib/javafx-mx.jar"/>
-      <include name="lib/jconsole.jar"/>
-      <include name="lib/packager.jar"/>
-      <include name="lib/sa-jdi.jar"/>
-      <include name="lib/tools.jar"/>
-    </fileset>
-  </path>
-  
-  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
-  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
-  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
-  <!-- Register Custom Compiler Taskdefs -->
-  <property name="javac2.home" value="${idea.home}/lib"/>
-  <path id="javac2.classpath">
-    <pathelement location="${javac2.home}/javac2.jar"/>
-    <pathelement location="${javac2.home}/jdom.jar"/>
-    <pathelement location="${javac2.home}/asm-all.jar"/>
-    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
-  </path>
-  <target name="register.custom.compilers">
-    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
-    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
-  </target>
-  
   <!-- Modules -->
   
   
@@ -112,9 +62,6 @@
   <dirname property="module.pearplanner.basedir" file="${ant.file}"/>
   
   
-  <property name="module.jdk.home.pearplanner" value="${project.jdk.home}"/>
-  <property name="module.jdk.bin.pearplanner" value="${project.jdk.bin}"/>
-  <property name="module.jdk.classpath.pearplanner" value="${project.jdk.classpath}"/>
   
   <property name="compiler.args.pearplanner" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
   
@@ -124,27 +71,24 @@
   <path id="pearplanner.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
   </path>
-  
-  <path id="pearplanner.module.production.classpath">
-    <path refid="${module.jdk.classpath.pearplanner}"/>
-  </path>
+
+  <path id="pearplanner.module.production.classpath"/>
   
   <path id="pearplanner.runtime.production.module.classpath">
     <pathelement location="${pearplanner.output.dir}"/>
   </path>
   
   <path id="pearplanner.module.classpath">
-    <path refid="${module.jdk.classpath.pearplanner}"/>
     <pathelement location="${pearplanner.output.dir}"/>
-    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
-    <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+    <pathelement location="lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="lib/junit-4.12.jar"/>
   </path>
   
   <path id="pearplanner.runtime.module.classpath">
     <pathelement location="${pearplanner.testoutput.dir}"/>
     <pathelement location="${pearplanner.output.dir}"/>
-    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
-    <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+    <pathelement location="lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="lib/junit-4.12.jar"/>
   </path>
   
   
@@ -171,15 +115,15 @@
   
   <target name="compile.module.pearplanner" depends="compile.module.pearplanner.production,compile.module.pearplanner.tests" description="Compile module PearPlanner"/>
   
-  <target name="compile.module.pearplanner.production" depends="register.custom.compilers" description="Compile module PearPlanner; production classes">
+  <target name="compile.module.pearplanner.production" description="Compile module PearPlanner; production classes">
     <mkdir dir="${pearplanner.output.dir}"/>
-    <javac2 destdir="${pearplanner.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.pearplanner}/javac">
+    <javac destdir="${pearplanner.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
       <compilerarg line="${compiler.args.pearplanner}"/>
       <bootclasspath refid="pearplanner.module.bootclasspath"/>
       <classpath refid="pearplanner.module.production.classpath"/>
       <src refid="pearplanner.module.sourcepath"/>
       <patternset refid="excluded.from.compilation.pearplanner"/>
-    </javac2>
+    </javac>
     
     <copy todir="${pearplanner.output.dir}">
       <fileset dir="${module.pearplanner.basedir}/src">
@@ -189,15 +133,15 @@
     </copy>
   </target>
   
-  <target name="compile.module.pearplanner.tests" depends="register.custom.compilers,compile.module.pearplanner.production" description="compile module PearPlanner; test classes" unless="skip.tests">
+  <target name="compile.module.pearplanner.tests" depends="compile.module.pearplanner.production" description="compile module PearPlanner; test classes" unless="skip.tests">
     <mkdir dir="${pearplanner.testoutput.dir}"/>
-    <javac2 destdir="${pearplanner.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.pearplanner}/javac">
+    <javac destdir="${pearplanner.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
       <compilerarg line="${compiler.args.pearplanner}"/>
       <bootclasspath refid="pearplanner.module.bootclasspath"/>
       <classpath refid="pearplanner.module.classpath"/>
       <src refid="pearplanner.module.test.sourcepath"/>
       <patternset refid="excluded.from.compilation.pearplanner"/>
-    </javac2>
+    </javac>
     
     <copy todir="${pearplanner.testoutput.dir}">
       <fileset dir="${module.pearplanner.basedir}/Test">
@@ -221,7 +165,6 @@
   <target name="build.modules" depends="init, clean, compile.module.pearplanner" description="build all modules"/>
   
   <target name="all" depends="build.modules" description="build all"/>
-
     <target name="test" depends="compile.module.pearplanner.tests">
         <junit>
             <classpath>
@@ -235,6 +178,4 @@
             <formatter type="brief" usefile="false"/>
         </junit>
     </target>
-
-
 </project>
