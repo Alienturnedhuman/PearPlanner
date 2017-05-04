@@ -154,7 +154,7 @@ public class Person extends VersionControlEntity
     }
 
     /**
-     *
+     *    
      * @param cSalutation String for salutation
      * @param cGivenNames Array list of strings for given names
      * @param cFamName String for family name
