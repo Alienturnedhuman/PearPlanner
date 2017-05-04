@@ -1,7 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * ${FILENAME}
@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Event
 {
-    protected Date date;
+    protected GregorianCalendar date;
     protected String name;
     protected MultilineString details;
     protected ArrayList<Note> notes;
@@ -22,7 +22,8 @@ public class Event
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String newName)
+    {
+        name = newName;
     }
 }
