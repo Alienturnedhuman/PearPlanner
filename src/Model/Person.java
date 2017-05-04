@@ -130,4 +130,12 @@ public class Person extends VersionControlEntity
 
     // constructors
 
+
+    public Person(ArrayList<String> givenNames, String familyName, String salutation, String email, boolean familyNameLast) {
+        this.givenNames = givenNames;
+        this.familyName = familyName;
+        this.salutation = salutation;
+        this.email = email;
+        this.familyNameLast = familyNameLast;
+    }
 }
