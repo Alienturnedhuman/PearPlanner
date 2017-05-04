@@ -133,6 +133,10 @@ public class Person extends VersionControlEntity
             givenNames.add(nameSplit[i]);
         }
     }
+    public void setEmail(String newEmail)
+    {
+        email = newEmail;
+    }
 
     public void setSalutation(String newSalutation)
     {

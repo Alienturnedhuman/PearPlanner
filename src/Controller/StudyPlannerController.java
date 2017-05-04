@@ -1,7 +1,8 @@
 package Controller;
 
 import Model.*;
-//import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
+import View.ConsoleIO;
+
 
 import java.util.ArrayList;
 
@@ -119,10 +120,17 @@ public class StudyPlannerController
             boolean familyNameLast =false;
             String salutation = "";
 
-
+            // CONSOLE INPUT  - to be replaced by javaFX
+            fullName = View.ConsoleIO.getDataString("Enter Name:");
+            salutation = View.ConsoleIO.getDataString("Enter salutation:");
+            familyNameLast = View.ConsoleIO.getDataBool("Is the family name last (y/n)");
 
             Person studentDetails = new Person(salutation,fullName,familyNameLast);
             String studentAccountNumber ="";
+
+            View.ConsoleIO.setConsoleMessage("Hello "+studentDetails.getSalutation()+" "+studentDetails.getFamilyName());
+            View.ConsoleIO.setConsoleMessage("Thank you for creating a study profile.");
+
 
             Account newAccount = new Account(studentDetails,studentAccountNumber);
 
@@ -130,5 +138,4 @@ public class StudyPlannerController
             planner = new StudyPlanner(newAccount);
         }
     }
-
 }
