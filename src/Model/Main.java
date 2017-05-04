@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import Controller.*;
 
 public class Main extends Application {
 
@@ -78,7 +79,7 @@ public class Main extends Application {
         primaryStage.show();
 
 
-
+        MainController.main();
     }
 
 

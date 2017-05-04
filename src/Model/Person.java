@@ -133,6 +133,10 @@ public class Person extends VersionControlEntity
             givenNames.add(nameSplit[i]);
         }
     }
+    public void setEmail(String newEmail)
+    {
+        email = newEmail;
+    }
 
     public void setSalutation(String newSalutation)
     {
@@ -151,6 +155,7 @@ public class Person extends VersionControlEntity
     {
         setSalutation(cSalutation);
         setName(cName,cFamNameLast);
+        email="";
     }
 
     /**
@@ -166,5 +171,37 @@ public class Person extends VersionControlEntity
         givenNames = (ArrayList<String>)cGivenNames.clone();
         setSalutation(cSalutation);
         familyNameLast = cFamNameLast;
+        email="";
+    }
+
+
+
+    /**
+     *
+     * @param cSalutation String for saluation
+     * @param cName "NAME1 NAME2 NAME3 .... NAMEn"
+     * @param cFamNameLast if true, last name is family name, if not, first is
+     */
+    public Person(String cSalutation , String cName , Boolean cFamNameLast,String newEmail)
+    {
+        setSalutation(cSalutation);
+        setName(cName,cFamNameLast);
+        email=newEmail;
+    }
+
+    /**
+     *
+     * @param cSalutation String for salutation
+     * @param cGivenNames Array list of strings for given names
+     * @param cFamName String for family name
+     * @param cFamNameLast true if family name is at the end
+     */
+    public Person(String cSalutation , ArrayList<String> cGivenNames , String cFamName , Boolean cFamNameLast,String newEmail)
+    {
+        setFamilyName(cFamName);
+        givenNames = (ArrayList<String>)cGivenNames.clone();
+        setSalutation(cSalutation);
+        familyNameLast = cFamNameLast;
+        email=newEmail;
     }
 }
