@@ -155,6 +155,7 @@ public class Person extends VersionControlEntity
     {
         setSalutation(cSalutation);
         setName(cName,cFamNameLast);
+        familyNameLast = cFamNameLast;
         email="";
     }
 
@@ -186,6 +187,7 @@ public class Person extends VersionControlEntity
     {
         setSalutation(cSalutation);
         setName(cName,cFamNameLast);
+        familyNameLast = cFamNameLast;
         email=newEmail;
     }
 
@@ -196,7 +198,7 @@ public class Person extends VersionControlEntity
      * @param cFamName String for family name
      * @param cFamNameLast true if family name is at the end
      */
-    public Person(String cSalutation , ArrayList<String> cGivenNames , String cFamName , Boolean cFamNameLast,String newEmail)
+    public Person(String cSalutation , ArrayList<String> cGivenNames , String cFamName , Boolean cFamNameLast, String newEmail)
     {
         setFamilyName(cFamName);
         givenNames = (ArrayList<String>)cGivenNames.clone();

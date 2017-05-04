@@ -41,8 +41,6 @@ public class Account
     }
 
     // constructors
-
-
     public Account(Person studentDetails, String studentNumber) {
         this.studentDetails = studentDetails;
         this.studentNumber = studentNumber;
