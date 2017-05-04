@@ -221,4 +221,18 @@
   <target name="build.modules" depends="init, clean, compile.module.pearplanner" description="build all modules"/>
   
   <target name="all" depends="build.modules" description="build all"/>
+
+  <target name="test" depends="compile.module.pearplanner.tests">
+    <junit>
+      <classpath>
+        <pathelement location="lib/junit-4.12.jar"/>
+      </classpath>
+      <batchtest>
+        <fileset dir="Test">
+          <include name="**/*Test*" />
+        </fileset>
+      </batchtest>
+      <formatter type="brief" usefile="false"/>
+    </junit>
+  </target>
 </project>
