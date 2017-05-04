@@ -60,7 +60,7 @@ public class Person extends VersionControlEntity
     public ArrayList<String> getGivenNames()
     {
         // initial set up code below - check if this needs updating
-        return givenNames;
+        return (ArrayList<String>)givenNames.clone();
     }
     public boolean getFamilyNameLast()
     {
@@ -128,6 +128,22 @@ public class Person extends VersionControlEntity
         }
     }
 
-    // constructors
+    public void setSalutation(String newSalutation)
+    {
+        salutation = newSalutation;
+    }
 
+    // constructors
+    Person(String cSalutation , String cName , Boolean cFamNameLast)
+    {
+        setName(cName,cFamNameLast);
+        setSalutation(cSalutation);
+    }
+
+    Person(String cSalutation , ArrayList<String> cGivenNames , String cFamName , Boolean cFamNameLast)
+    {
+        setFamilyName(cFamName);
+        givenNames = (ArrayList<String>)cGivenNames.clone();
+        setSalutation(cSalutation);
+    }
 }
