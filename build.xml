@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pearplanner" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+    <include name="*.swc"/>
+    <include name="*.war"/>
+    <include name="*.ane"/>
+    <include name="*.zip"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module PearPlanner -->
+  
+  <dirname property="module.pearplanner.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.pearplanner" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="pearplanner.output.dir" value="${module.pearplanner.basedir}/out/production/PearPlanner"/>
+  <property name="pearplanner.testoutput.dir" value="${module.pearplanner.basedir}/out/test/PearPlanner"/>
+  
+  <path id="pearplanner.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="pearplanner.module.production.classpath"/>
+  
+  <path id="pearplanner.runtime.production.module.classpath">
+    <pathelement location="${pearplanner.output.dir}"/>
+  </path>
+  
+  <path id="pearplanner.module.classpath">
+    <pathelement location="${pearplanner.output.dir}"/>
+  </path>
+  
+  <path id="pearplanner.runtime.module.classpath">
+    <pathelement location="${pearplanner.testoutput.dir}"/>
+    <pathelement location="${pearplanner.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.pearplanner">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.pearplanner">
+    <patternset refid="excluded.from.module.pearplanner"/>
+  </patternset>
+  
+  <path id="pearplanner.module.sourcepath">
+    <dirset dir="${module.pearplanner.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.pearplanner" depends="compile.module.pearplanner.production,compile.module.pearplanner.tests" description="Compile module PearPlanner"/>
+  
+  <target name="compile.module.pearplanner.production" description="Compile module PearPlanner; production classes">
+    <mkdir dir="${pearplanner.output.dir}"/>
+    <javac destdir="${pearplanner.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.pearplanner}"/>
+      <bootclasspath refid="pearplanner.module.bootclasspath"/>
+      <classpath refid="pearplanner.module.production.classpath"/>
+      <src refid="pearplanner.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.pearplanner"/>
+    </javac>
+    
+    <copy todir="${pearplanner.output.dir}">
+      <fileset dir="${module.pearplanner.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.pearplanner.tests" depends="compile.module.pearplanner.production" description="compile module PearPlanner; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.pearplanner" description="cleanup module">
+    <delete dir="${pearplanner.output.dir}"/>
+    <delete dir="${pearplanner.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.pearplanner" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.pearplanner" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
