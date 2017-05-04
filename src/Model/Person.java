@@ -140,12 +140,26 @@ public class Person extends VersionControlEntity
     }
 
     // constructors
+
+    /**
+     *
+     * @param cSalutation String for saluation
+     * @param cName "NAME1 NAME2 NAME3 .... NAMEn"
+     * @param cFamNameLast if true, last name is family name, if not, first is
+     */
     public Person(String cSalutation , String cName , Boolean cFamNameLast)
     {
         setName(cName,cFamNameLast);
         setSalutation(cSalutation);
     }
 
+    /**
+     *
+     * @param cSalutation String for salutation
+     * @param cGivenNames Array list of strings for given names
+     * @param cFamName String for family name
+     * @param cFamNameLast true if family name is at the end
+     */
     public Person(String cSalutation , ArrayList<String> cGivenNames , String cFamName , Boolean cFamNameLast)
     {
         setFamilyName(cFamName);
