@@ -149,8 +149,8 @@ public class Person extends VersionControlEntity
      */
     public Person(String cSalutation , String cName , Boolean cFamNameLast)
     {
-        setName(cName,cFamNameLast);
         setSalutation(cSalutation);
+        setName(cName,cFamNameLast);
     }
 
     /**
