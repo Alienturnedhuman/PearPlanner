@@ -1,6 +1,6 @@
 package Model;
 
-import java.sql.Time;
+import java.util.GregorianCalendar;
 
 /**
  * PearPlanner
@@ -8,7 +8,7 @@ import java.sql.Time;
  */
 public class ExamEvent extends Event
 {
-    private Time time;
+    // private GregorianCalendar time; // no longer needed due to using Gregorian time
     private Room room;
     private int duration;
 }

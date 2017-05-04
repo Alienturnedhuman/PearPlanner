@@ -4,14 +4,27 @@ package Model;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class Building
+public class Building extends VersionControlEntity
 {
     // private Data
-    private String name;
     private String code;
     private double latitude;
     private double longitude;
 
+    // private methods
+    @Override
+    protected void replace(VersionControlEntity receivedVCE)
+    {
+        if(receivedVCE instanceof Building)
+        {
+            Building castedVCE = (Building)receivedVCE;
+            this.code = castedVCE.getCode();
+            this.latitude = castedVCE.getLatitude();
+            this.longitude = castedVCE.getLongitude();
+        }
+
+        super.replace(receivedVCE);
+    }
     // getters
     public String getName()
     {
