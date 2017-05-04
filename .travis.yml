@@ -5,6 +5,5 @@ matrix:
       jdk: oraclejdk8
     - os: osx
       -before_install:
-        - brew update || brew install ant
-      env: ANDROID_HOME=/usr/local/opt/android-sdk
+        - brew install ant
       osx_image: xcode8
