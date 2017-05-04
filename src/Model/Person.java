@@ -7,15 +7,30 @@ import java.util.Arrays;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class Person
+public class Person extends VersionControlEntity
 {
     // private data
     private ArrayList<String> givenNames;
     private String familyName;
     private String salutation;
     private String email;
-    private String preferredName;
     private boolean familyNameLast = true;
+
+    @Override
+    protected void replace(VersionControlEntity receivedVCE)
+    {
+        if(receivedVCE instanceof Person)
+        {
+            Person castedVCE = (Person)receivedVCE;
+            this.givenNames = castedVCE.getGivenNames();
+            this.familyName = castedVCE.getFamilyName();
+            this.salutation = castedVCE.getSalutation();
+            this.email = castedVCE.getEmail();
+            this.familyNameLast = castedVCE.getFamilyNameLast();
+        }
+        super.replace(receivedVCE);
+    }
+
 
     // public methods
     // getters
@@ -37,6 +52,21 @@ public class Person
         // initial set up code below - check if this needs updating
         return familyName;
     }
+    public String getEmail()
+    {
+        // initial set up code below - check if this needs updating
+        return email;
+    }
+    public ArrayList<String> getGivenNames()
+    {
+        // initial set up code below - check if this needs updating
+        return givenNames;
+    }
+    public boolean getFamilyNameLast()
+    {
+        // initial set up code below - check if this needs updating
+        return familyNameLast;
+    }
     public String getSalutation()
     {
         // initial set up code below - check if this needs updating
@@ -50,7 +80,7 @@ public class Person
     public String getPreferredName()
     {
         // initial set up code below - check if this needs updating
-        return preferredName.length()>0?preferredName:(givenNames.size()>0?givenNames.get(0):familyName);
+        return name.length()>0? name :(givenNames.size()>0?givenNames.get(0):familyName);
     }
     // setters
     public void setFamilyName(String newFamilyName)
