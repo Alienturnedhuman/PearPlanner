@@ -117,7 +117,7 @@ public class Person extends VersionControlEntity
         // initial set up code below - check if this needs updating
         String nameSplit[] = nameStr.split(" ");
         familyNameLast = isFamilyNameLast;
-        givenNames = new ArrayList<String>();
+        givenNames = new ArrayList<>();
         int i = -1;
         int ii = nameSplit.length;
         if(familyNameLast)

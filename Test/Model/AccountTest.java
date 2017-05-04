@@ -1,12 +1,9 @@
 package Model;
 
-import org.junit.After;
-import org.junit.Before;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by bijan on 04/05/2017.
@@ -22,7 +19,7 @@ public class AccountTest {
 
     @Test
     public void getStudentDetails() throws Exception {
-        ArrayList<String> personName = new ArrayList<String>();
+        ArrayList<String> personName = new ArrayList<>();
         personName.add("John");
 
         Person person = new Person("Mr.",personName, "Wick", true);
