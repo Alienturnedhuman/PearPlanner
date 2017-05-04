@@ -8,7 +8,9 @@
   <property name="skip.tests" value="true"/>
    -->
   
+
   <!-- Compiler options -->
+
   
   <property name="compiler.debug" value="on"/>
   <property name="compiler.generate.no.warnings" value="off"/>
@@ -69,7 +71,7 @@
   <path id="pearplanner.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
   </path>
-  
+
   <path id="pearplanner.module.production.classpath"/>
   
   <path id="pearplanner.runtime.production.module.classpath">
@@ -78,11 +80,15 @@
   
   <path id="pearplanner.module.classpath">
     <pathelement location="${pearplanner.output.dir}"/>
+    <pathelement location="lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="lib/junit-4.12.jar"/>
   </path>
   
   <path id="pearplanner.runtime.module.classpath">
     <pathelement location="${pearplanner.testoutput.dir}"/>
     <pathelement location="${pearplanner.output.dir}"/>
+    <pathelement location="lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="lib/junit-4.12.jar"/>
   </path>
   
   
@@ -97,6 +103,12 @@
   <path id="pearplanner.module.sourcepath">
     <dirset dir="${module.pearplanner.basedir}">
       <include name="src"/>
+    </dirset>
+  </path>
+  
+  <path id="pearplanner.module.test.sourcepath">
+    <dirset dir="${module.pearplanner.basedir}">
+      <include name="Test"/>
     </dirset>
   </path>
   
@@ -121,7 +133,23 @@
     </copy>
   </target>
   
-  <target name="compile.module.pearplanner.tests" depends="compile.module.pearplanner.production" description="compile module PearPlanner; test classes" unless="skip.tests"/>
+  <target name="compile.module.pearplanner.tests" depends="compile.module.pearplanner.production" description="compile module PearPlanner; test classes" unless="skip.tests">
+    <mkdir dir="${pearplanner.testoutput.dir}"/>
+    <javac destdir="${pearplanner.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.pearplanner}"/>
+      <bootclasspath refid="pearplanner.module.bootclasspath"/>
+      <classpath refid="pearplanner.module.classpath"/>
+      <src refid="pearplanner.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.pearplanner"/>
+    </javac>
+    
+    <copy todir="${pearplanner.testoutput.dir}">
+      <fileset dir="${module.pearplanner.basedir}/Test">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
   
   <target name="clean.module.pearplanner" description="cleanup module">
     <delete dir="${pearplanner.output.dir}"/>
@@ -137,4 +165,17 @@
   <target name="build.modules" depends="init, clean, compile.module.pearplanner" description="build all modules"/>
   
   <target name="all" depends="build.modules" description="build all"/>
+    <target name="test" depends="compile.module.pearplanner.tests">
+        <junit>
+            <classpath>
+                <pathelement location="lib/junit-4.12.jar"/>
+            </classpath>
+            <batchtest>
+                <fileset dir="Test">
+                    <include name="**/*Test*" />
+                </fileset>
+            </batchtest>
+            <formatter type="brief" usefile="false"/>
+        </junit>
+    </target>
 </project>
