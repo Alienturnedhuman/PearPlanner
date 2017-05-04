@@ -169,5 +169,6 @@ public class Person extends VersionControlEntity
         setFamilyName(cFamName);
         givenNames = (ArrayList<String>)cGivenNames.clone();
         setSalutation(cSalutation);
+        familyNameLast = cFamNameLast;
     }
 }
