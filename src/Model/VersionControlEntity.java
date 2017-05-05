@@ -1,5 +1,11 @@
 package Model;
 
+import sun.misc.Version;
+
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+
 /**
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
@@ -8,6 +14,8 @@ public abstract class VersionControlEntity extends ModelEntity
 {
     protected int version;
     protected String uid;
+    protected boolean sealed;
+    private static HashMap<String,VersionControlEntity> library = new HashMap<>();
 
     // private methods
 
@@ -35,6 +43,24 @@ public abstract class VersionControlEntity extends ModelEntity
 
     }
 
+    public static boolean findAndUpdate(VersionControlEntity receivedVCE)
+    {
+        String UID = receivedVCE.getUID();
+        if(inLibrary(UID))
+        {
+            library.get(UID).update(receivedVCE);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public static boolean inLibrary(String UID)
+    {
+        return library.containsKey(UID);
+    }
+
     // getters
     public int getVersion()
     {
@@ -45,6 +71,36 @@ public abstract class VersionControlEntity extends ModelEntity
     {
         // initial set up code below - check if this needs updating
         return uid;
+    }
+
+    public boolean setUID(String newUID)
+    {
+        if(sealed || library.containsKey(newUID))
+        {
+            return false;
+        }
+        else
+        {
+            uid = newUID;
+            library.put(newUID,this);
+            return true;
+        }
+    }
+
+    public VersionControlEntity(boolean leaveUnsealed)
+    {
+        super();
+        sealed = !leaveUnsealed;
+    }
+    public VersionControlEntity()
+    {
+        super();
+        sealed = false;
+    }
+    public VersionControlEntity(String UID)
+    {
+        super();
+        sealed = setUID(UID);
     }
 
 }

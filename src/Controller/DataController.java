@@ -75,13 +75,46 @@ public class DataController {
 
             // loop through assets adding to new Assets
             NodeList personList = assetNodes.item(0).getChildNodes();
+            String[] personSchema = {"name","details","version","uid","givenNames","familyName","salutation","email"
+                    ,"familyNameLast"};
+
             NodeList buildingList = assetNodes.item(1).getChildNodes();
+            String[] buildingSchema = {"name","details","version","uid","code","latitude","longitude"};
+
             NodeList roomList = assetNodes.item(2).getChildNodes();
+            String[] roomSchema = {"name","details","version","uid","building","roomNumber"};
+
             NodeList timeTableTypeList = assetNodes.item(3).getChildNodes();
+            String[] timeTableTypeSchema = {"name","details","version","uid"};
+
 
             ArrayList<VersionControlEntity> assetList = new ArrayList<>();
+            int vcVersion;
+            String vcName,vcDetails,vcUID;
+
+            int i = -1;
+            int ii = personList.getLength();
+            Node n;
+            NodeList nc;
+            Person tp;
+            String pGivenNames,pFamilyNames,pSalutation,pEmail;
+            boolean pFamilyNameLast;
+            while(++i<ii)
+            {
+                n = personList.item(i);
+                nc = n.getChildNodes();
+                if(n.getNodeName().equals("person") && validNodeList(nc,personSchema))
+                {
+                    // version control values
+                    vcName = nc.item(0).getTextContent();
+                    vcDetails = nc.item(1).getTextContent();
+                    vcVersion = Integer.parseInt(nc.item(2).getTextContent());
+                    vcUID = nc.item(3).getTextContent();
 
 
+                    //tp = new Person();
+                }
+            }
 
 
 
