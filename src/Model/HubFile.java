@@ -9,12 +9,14 @@ import java.util.ArrayList;
 public class HubFile
 {
     // private data
-    private ArrayList<Module> modules;
-    private ArrayList<ExtensionApplication> extensions;
-    private ArrayList<VersionControlEntity> updates;
+    private ArrayList<VersionControlEntity> assets = new ArrayList<VersionControlEntity>();
+    private ArrayList<Module> modules = new ArrayList<Module>();
+    private ArrayList<ExtensionApplication> extensions = new ArrayList<ExtensionApplication>();
+    private ArrayList<VersionControlEntity> updates = new ArrayList<VersionControlEntity>();
     private int version;
     private int semester;
     private int year;
+    boolean updateFile;
 
     // public methods
 
@@ -51,9 +53,46 @@ public class HubFile
         return year;
     }
 
+    public boolean isUpdate()
+    {
+        return updateFile;
+    }
+
     // setters
 
 
     // constructors
+
+    /**
+     * Constructor for new Study Profile
+     * @param v
+     * @param y
+     * @param s
+     * @param m
+     * @param a
+     */
+    public HubFile(int v , int y , int s , ArrayList<Module> m , ArrayList<VersionControlEntity>  a)
+    {
+        version = v;
+        year = y;
+        semester = s;
+        modules = (ArrayList<Module>)m.clone();
+        assets = (ArrayList<VersionControlEntity>)a.clone();
+        updateFile = false;
+    }
+
+    /**
+     * Constructor for update
+     * @param v
+     * @param e
+     * @param u
+     */
+    public HubFile(int v , ArrayList<ExtensionApplication> e , ArrayList<VersionControlEntity>  u)
+    {
+        version = v;
+        extensions = (ArrayList<ExtensionApplication>)e.clone();
+        updates = (ArrayList<VersionControlEntity>)u.clone();
+        updateFile = true;
+    }
 
 }

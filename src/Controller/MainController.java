@@ -12,13 +12,43 @@ public class MainController
         return true;
     }
 
+    public static void reportError(String message)
+    {
+        System.out.println(message);
+    }
+
+    private static void consoleUI(String menu)
+    {
+        while(!menu.equals(""))
+        {
+            switch(menu)
+            {
+                case "Quit Program":
+                    menu = "";
+                    break;
+                case "Main Menu":
+                case "Return to Main Menu":
+                    menu = View.ConsoleIO.view_main();
+                    break;
+                case "Create Study Profile":
+                    menu = View.ConsoleIO.view_createSP();
+                    break;
+                case "View Study Profile":
+                    menu = View.ConsoleIO.view_viewSP(SPC);
+                    break;
+                case "Load Study Profile File":
+                    menu = View.ConsoleIO.view_loadSP(SPC);
+                default:
+                    menu = "";
+            }
+        }
+    }
+
     public static void main()
     {
         if(initialise())
         {
-            // list of options
-            String[] menuOptions = {"Create Study Profile","View Study Profile","View Notifications"};
-            View.ConsoleIO.getMenuOption(menuOptions);
+            consoleUI("Return to Main Menu");
         }
         else
         {
