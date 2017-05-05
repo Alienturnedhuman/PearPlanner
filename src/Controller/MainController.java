@@ -1,15 +1,28 @@
 package Controller;
 
+import Model.Account;
+import Model.Person;
+import View.UIManager;
+
 /**
  * Created by bendickson on 5/4/17.
  */
 public class MainController
 {
+    public static UIManager ui = new UIManager();
     private static StudyPlannerController SPC;
+
     public static boolean initialise()
     {
-        SPC = new StudyPlannerController();
-        return true;
+        try
+        {
+            Account newAccount = ui.createAccount();
+            SPC = new StudyPlannerController(newAccount);
+            return true;
+        } catch (Exception e)
+        {
+            return false;
+        }
     }
 
     public static void reportError(String message)
