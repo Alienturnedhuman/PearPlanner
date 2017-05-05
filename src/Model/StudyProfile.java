@@ -29,6 +29,11 @@ public class StudyProfile
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
     // constructors
     StudyProfile()
     {

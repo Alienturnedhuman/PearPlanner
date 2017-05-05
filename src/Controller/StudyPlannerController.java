@@ -14,6 +14,11 @@ public class StudyPlannerController
     private StudyPlanner planner;
     // public methods
 
+    public String[] getStudyProfiles()
+    {
+        return planner.getListOfStudyProfiles();
+    }
+
     /**
      * validates whether a file is valid or not
      * @param filedata
@@ -137,5 +142,14 @@ public class StudyPlannerController
 
             planner = new StudyPlanner(newAccount);
         }
+    }
+
+    /**
+     * Temporary constructor for testing UI
+     * @param newAccount
+     */
+    public StudyPlannerController(Account newAccount)
+    {
+        planner = new StudyPlanner(newAccount);
     }
 }

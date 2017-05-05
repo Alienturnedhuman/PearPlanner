@@ -10,7 +10,9 @@
   
 
   <!-- Compiler options -->
-
+    <presetdef name="javac">
+        <javac includeantruntime="false" />
+    </presetdef>
   
   <property name="compiler.debug" value="on"/>
   <property name="compiler.generate.no.warnings" value="off"/>
@@ -142,7 +144,7 @@
       <src refid="pearplanner.module.test.sourcepath"/>
       <patternset refid="excluded.from.compilation.pearplanner"/>
     </javac>
-    
+
     <copy todir="${pearplanner.testoutput.dir}">
       <fileset dir="${module.pearplanner.basedir}/Test">
         <patternset refid="compiler.resources"/>
@@ -165,17 +167,27 @@
   <target name="build.modules" depends="init, clean, compile.module.pearplanner" description="build all modules"/>
   
   <target name="all" depends="build.modules" description="build all"/>
-    <target name="test" depends="compile.module.pearplanner.tests">
-        <junit>
+
+
+
+
+
+    <target name="test" depends="build.modules" >
+        <junit haltonerror="yes" haltonfailure="yes">
             <classpath>
-                <pathelement location="lib/junit-4.12.jar"/>
+                <pathelement location="${basedir}/lib/junit-4.12.jar"/>
+                <pathelement location="${basedir}/lib/hamcrest-core-1.3.jar"/>
+                <pathelement location="${pearplanner.output.dir}/"/>
+                <pathelement location="${pearplanner.testoutput.dir}/"/>
             </classpath>
             <batchtest>
-                <fileset dir="Test">
+                <fileset dir="${pearplanner.testoutput.dir}">
                     <include name="**/*Test*" />
                 </fileset>
             </batchtest>
             <formatter type="brief" usefile="false"/>
         </junit>
     </target>
+
+
 </project>

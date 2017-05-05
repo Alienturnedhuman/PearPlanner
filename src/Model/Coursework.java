@@ -41,11 +41,12 @@ public class Coursework extends Assignment
     {
         return extensions;
     }
-
     public ArrayList<Note> getNotes()
     {
         return notes;
     }
+
+
     // setters
     public void addNote(Note newNote)
     {

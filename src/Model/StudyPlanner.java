@@ -9,13 +9,28 @@ import java.util.ArrayList;
 public class StudyPlanner {
     // private data
     private Account account;
-    private ArrayList<QuantityType> quantityTypes;
-    private ArrayList<TaskType> taskTypes;
-    private ArrayList<StudyProfile> studyProfiles;
-    private ArrayList<ActivityEvent> activityList;
-    private ArrayList<TimeTableEventType> timeTableEventTypes;
-    private ArrayList<Event> calendar;
+    private ArrayList<QuantityType> quantityTypes = new ArrayList<QuantityType>();
+    private ArrayList<TaskType> taskTypes = new ArrayList<TaskType>();
+    private ArrayList<StudyProfile> studyProfiles = new ArrayList<StudyProfile>();
+    private ArrayList<ActivityEvent> activityList = new ArrayList<ActivityEvent>();
+    private ArrayList<TimeTableEventType> timeTableEventTypes = new ArrayList<TimeTableEventType>();
+    private ArrayList<Event> calendar = new ArrayList<Event>();
 
+
+    /**
+     * returns a String array of studyProfile names
+     * @return
+     */
+    public String[] getListOfStudyProfiles()
+    {
+        int i = -1;
+        String[] r = new String[studyProfiles.size()];
+        while(++i<studyProfiles.size())
+        {
+            r[i] = studyProfiles.get(i).getName();
+        }
+        return r;
+    }
 
     // public methods
     void loadFile (String filePath)

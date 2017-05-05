@@ -12,37 +12,42 @@ import static org.junit.Assert.*;
  * Created by bijan on 04/05/2017.
  */
 public class AccountTest {
-//    @Before
-//    public void setUp() throws Exception {
-//    }
-//
-//    @After
-//    public void tearDown() throws Exception {
-//    }
 
-    @Test
-    public void getStudentDetails() throws Exception {
-        ArrayList<String> personName = new ArrayList<String>();
-        personName.add("John");
+    Person person;
+    Account account;
 
-        Person person = new Person("Mr.",personName, "Wick", true);
-
-        Account account = new Account(person, "10012721-UG");
-
-
-        //assertEquals(person, account.getStudentDetails());
+    @Before
+    public void setUp() throws Exception {
+        System.out.println("Starting the test");
+        person = new Person("Mr","Andrew Odintsov", true);
+        account = new Account(person, "10012721-UG");
     }
 
     @Test
-    public void getStudentNumber() throws Exception {
+    public void getStudentDetails() throws Exception
+    {
+        assertEquals(person, account.getStudentDetails());
     }
 
     @Test
-    public void setStudentDetails() throws Exception {
+    public void getStudentNumber() throws Exception
+    {
+        assertEquals("10012721-UG", account.getStudentNumber());
     }
 
     @Test
-    public void setStudentNumber() throws Exception {
+    public void setStudentDetails() throws Exception
+    {
+        Person person2 = new Person("Dr","Zilvinas Ceikauskas", true, "zil.Cei@gmail.com");
+        account.setStudentDetails(person2);
+        assertEquals(person2, account.getStudentDetails());
+    }
+
+    @Test
+    public void setStudentNumber() throws Exception
+    {
+        account.setStudentNumber("99222213-UG");
+        assertEquals("99222213-UG", account.getStudentNumber());
     }
 
 }
