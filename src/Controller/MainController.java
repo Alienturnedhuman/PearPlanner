@@ -12,16 +12,30 @@ public class MainController
     public static UIManager ui = new UIManager();
     private static StudyPlannerController SPC;
 
-    public static boolean initialise()
+    public static void initialise()
     {
         try
         {
             Account newAccount = ui.createAccount();
             SPC = new StudyPlannerController(newAccount);
-            return true;
         } catch (Exception e)
         {
-            return false;
+            View.ConsoleIO.setConsoleMessage("INITIALISATION FAILED");
+            View.ConsoleIO.setConsoleMessage("Good bye!");
+            System.exit(1);
+        }
+
+        //consoleUI("Return to Main Menu");
+    }
+
+    public static void main()
+    {
+        try
+        {
+            ui.mainMenu();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -32,9 +46,9 @@ public class MainController
 
     private static void consoleUI(String menu)
     {
-        while(!menu.equals(""))
+        while (!menu.equals(""))
         {
-            switch(menu)
+            switch (menu)
             {
                 case "Quit Program":
                     menu = "";
@@ -55,18 +69,5 @@ public class MainController
                     menu = "";
             }
         }
-    }
-
-    public static void main()
-    {
-        if(initialise())
-        {
-            consoleUI("Return to Main Menu");
-        }
-        else
-        {
-            View.ConsoleIO.setConsoleMessage("INITIALISATION FAILED");
-        }
-        View.ConsoleIO.setConsoleMessage("Good bye!");
     }
 }

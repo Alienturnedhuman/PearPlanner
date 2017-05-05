@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MenuController">
+    <children>
+        <ToolBar minHeight="56.0" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <items>
+                <Button fx:id="menu" prefHeight="31.0" prefWidth="31.0" style="-fx-background-color: blue;" />
+                <Pane HBox.hgrow="ALWAYS" />
+                <Button fx:id="showNotification" prefHeight="31.0" prefWidth="31.0" style="-fx-background-color: red;" />
+            </items>
+        </ToolBar>
+        <StackPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+            <children>
+            </children>
+        </StackPane>
+        <AnchorPane fx:id="navList" style="-fx-background-color:lightgray" AnchorPane.topAnchor="56.0" AnchorPane.bottomAnchor="0.0" prefWidth="200.0" translateX="-200" />
+        <AnchorPane fx:id="notifications" style="-fx-background-color:lightgray" AnchorPane.topAnchor="56.0" AnchorPane.rightAnchor="0.0" prefWidth="220.0" prefHeight="400.0" translateX="-20.0" translateY="-456.0" />
+    </children>
+</AnchorPane>
