@@ -1,9 +1,7 @@
 package Controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import Model.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -16,6 +14,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * Created by bendickson on 5/4/17.
  */
 public class DataController {
+
+
     /**
      * checks if there is a settings file and it is valid
      * returns true if this is the case
@@ -60,7 +60,7 @@ public class DataController {
         HubFile r = null;
 
         NodeList assetNodes = nList.item(1).getChildNodes();
-        String[] assetSchema = {"persons","rooms","buildings","timetableEventTypes"};
+        String[] assetSchema = {"persons","buildings","rooms","timetableEventTypes"};
 
         NodeList studyProfileNodes = nList.item(2).getChildNodes();
         String[] studyProfileSchema = {"year","semester","modules"};
@@ -74,6 +74,16 @@ public class DataController {
             int semester = 1;
 
             // loop through assets adding to new Assets
+            NodeList personList = assetNodes.item(0).getChildNodes();
+            NodeList buildingList = assetNodes.item(1).getChildNodes();
+            NodeList roomList = assetNodes.item(2).getChildNodes();
+            NodeList timeTableTypeList = assetNodes.item(3).getChildNodes();
+
+            ArrayList<VersionControlEntity> assetList = new ArrayList<>();
+
+
+
+
 
             // loop through studyProfile adding new modules
 
