@@ -194,6 +194,7 @@ public class Person extends VersionControlEntity
      */
     public Person(String cSalutation , ArrayList<String> cGivenNames , String cFamName , Boolean cFamNameLast)
     {
+        super(true);
         setFamilyName(cFamName);
         givenNames = (ArrayList<String>)cGivenNames.clone();
         setSalutation(cSalutation);
@@ -215,6 +216,30 @@ public class Person extends VersionControlEntity
         email=newEmail;
     }
 
+
+    /**
+     * Pure String Constructor
+     * @param cSalutation
+     * @param cGivenNames
+     * @param cFamName
+     * @param cFamNameLast
+     * @param newEmail
+     */
+    public Person(String cSalutation , String cGivenNames, String cFamName , Boolean cFamNameLast,String newEmail)
+    {
+        setSalutation(cSalutation);
+        String cName;
+        if(cFamNameLast)
+        {
+            cName = cGivenNames +" " + cFamName;
+        }
+        else
+        {
+            cName = cFamName +" " + cGivenNames;
+        }
+        setName(cName,cFamNameLast);
+        email=newEmail;
+    }
     /**
      *
      * @param cSalutation String for salutation
@@ -229,5 +254,11 @@ public class Person extends VersionControlEntity
         setSalutation(cSalutation);
         familyNameLast = cFamNameLast;
         email=newEmail;
+    }
+
+    @Override
+    public String toString()
+    {
+        return getFullName()+" ( "+getEmail()+" )";
     }
 }
