@@ -28,6 +28,20 @@ public class DataController {
         // not implmented yet
     }
 
+    static public NodeList getNodes(Node parentNode)
+    {
+        NodeList tList = parentNode.getChildNodes();
+        int i = tList.getLength();
+        while(0<i--)
+        {
+            if(tList.item(i).getNodeType()!=Node.ELEMENT_NODE)
+            {
+                parentNode.removeChild(tList.item(i));
+            }
+        }
+        return parentNode.getChildNodes();
+    }
+
     static public boolean validNodeList(NodeList nodes , String[] nodeNames)
     {
         int i = -1;
@@ -38,7 +52,7 @@ public class DataController {
         }
         while(++i<ii)
         {
-            if(!nodes.item(i).equals(nodeNames[i]))
+            if(!nodes.item(i).getNodeName().equals(nodeNames[i]))
             {
                 return false;
             }
@@ -59,10 +73,10 @@ public class DataController {
     {
         HubFile r = null;
 
-        NodeList assetNodes = nList.item(1).getChildNodes();
+        NodeList assetNodes = getNodes(nList.item(1));
         String[] assetSchema = {"persons","buildings","rooms","timetableEventTypes"};
 
-        NodeList studyProfileNodes = nList.item(2).getChildNodes();
+        NodeList studyProfileNodes = getNodes(nList.item(2));
         String[] studyProfileSchema = {"year","semester","modules"};
 
         if(validNodeList(assetNodes,assetSchema) && validNodeList(studyProfileNodes,studyProfileSchema))
@@ -74,17 +88,17 @@ public class DataController {
             int semester = 1;
 
             // loop through assets adding to new Assets
-            NodeList personList = assetNodes.item(0).getChildNodes();
+            NodeList personList = getNodes(assetNodes.item(0));
             String[] personSchema = {"name","details","version","uid","givenNames","familyName","salutation","email"
                     ,"familyNameLast"};
 
-            NodeList buildingList = assetNodes.item(1).getChildNodes();
+            NodeList buildingList = getNodes(assetNodes.item(1));
             String[] buildingSchema = {"name","details","version","uid","code","latitude","longitude"};
 
-            NodeList roomList = assetNodes.item(2).getChildNodes();
+            NodeList roomList = getNodes(assetNodes.item(2));
             String[] roomSchema = {"name","details","version","uid","building","roomNumber"};
 
-            NodeList timeTableTypeList = assetNodes.item(3).getChildNodes();
+            NodeList timeTableTypeList = getNodes(assetNodes.item(3));
             String[] timeTableTypeSchema = {"name","details","version","uid"};
 
 
@@ -97,22 +111,37 @@ public class DataController {
             Node n;
             NodeList nc;
             Person tp;
-            String pGivenNames,pFamilyNames,pSalutation,pEmail;
+            String pGivenNames,pFamilyName,pSalutation,pEmail;
             boolean pFamilyNameLast;
             while(++i<ii)
             {
                 n = personList.item(i);
-                nc = n.getChildNodes();
-                if(n.getNodeName().equals("person") && validNodeList(nc,personSchema))
-                {
-                    // version control values
-                    vcName = nc.item(0).getTextContent();
-                    vcDetails = nc.item(1).getTextContent();
-                    vcVersion = Integer.parseInt(nc.item(2).getTextContent());
-                    vcUID = nc.item(3).getTextContent();
+                if(n.getNodeType()==Node.ELEMENT_NODE) {
+                    nc = getNodes(n);
+                    ;
+                    if (n.getNodeName().equals("person") && validNodeList(nc, personSchema)) {
+                        // version control values
+                        vcName = nc.item(0).getTextContent();
+                        vcDetails = nc.item(1).getTextContent();
+                        vcVersion = Integer.parseInt(nc.item(2).getTextContent());
+                        vcUID = nc.item(3).getTextContent();
+
+                        pGivenNames = nc.item(4).getTextContent();
+                        pFamilyName = nc.item(5).getTextContent();
+                        pSalutation = nc.item(6).getTextContent();
+                        pEmail = nc.item(7).getTextContent();
+                        pFamilyNameLast = nc.item(8).getTextContent().equals("true");
 
 
-                    //tp = new Person();
+                        tp = new Person(pSalutation, pGivenNames, pFamilyName, pFamilyNameLast, pEmail);
+                        System.out.println(tp.setUID(vcUID)?"VC updated":"VC not updated");
+                        tp.setName(vcName);
+                        tp.setDetails(vcDetails);
+
+                        assetList.add(tp);
+
+                        System.out.println(tp.toString());
+                    }
                 }
             }
 
@@ -149,7 +178,7 @@ public class DataController {
                 // check it is a hubfile
                 if(rootElementTag.equals("hubfile") && rootElement.hasChildNodes())
                 {
-                    NodeList nList = rootElement.getChildNodes();
+                    NodeList nList = getNodes(rootElement);
                     String[] schemaNew = {"version","assets","studyProfile"};
                     String[] schemaUpdate = {"version","extensions","updates"};
                     boolean newProfile = validNodeList(nList,schemaNew);
