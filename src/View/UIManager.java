@@ -29,9 +29,6 @@ public class UIManager
         stage.setTitle("Create Account");
         stage.resizableProperty().setValue(false);
         stage.getIcons().add(new Image("file:icon.png"));
-        stage.addEventHandler(WindowEvent.WINDOW_SHOWN, e -> {
-            accountControl.handleCreate();
-        });
         stage.showAndWait();
 
         if (accountControl.isSuccess())
@@ -49,7 +46,7 @@ public class UIManager
         Parent root = loader.load();
 
         Stage stage = new Stage();
-        stage.setScene(new Scene(root, 600, 640));
+        stage.setScene(new Scene(root, 700, 750));
         stage.setTitle("Main");
         stage.getIcons().add(new Image("file:icon.png"));
         stage.showAndWait();

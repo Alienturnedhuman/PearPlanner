@@ -2,19 +2,22 @@ package Controller;
 
 import Model.Account;
 import Model.Person;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import javax.xml.soap.Text;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Created by Zilvinas on 04/05/2017.
  */
-public class AccountController
+public class AccountController implements Initializable
 {
     @FXML private TextField account_no;
     @FXML private TextField salutation;
@@ -22,6 +25,7 @@ public class AccountController
     @FXML private TextField email;
     @FXML private CheckBox fam_last;
     @FXML private Button submit;
+    @FXML private GridPane pane;
 
     private Account account;
     private boolean success = false;
@@ -34,11 +38,6 @@ public class AccountController
     public boolean isSuccess()
     {
         return success;
-    }
-
-    public void handleCreate()
-    {
-        this.fam_last.requestFocus();
     }
 
     public void handleChange()
@@ -125,5 +124,11 @@ public class AccountController
     {
         Stage stage = (Stage) this.submit.getScene().getWindow();
         stage.close();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        Platform.runLater(() -> this.pane.requestFocus());
     }
 }

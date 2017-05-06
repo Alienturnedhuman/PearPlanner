@@ -10,7 +10,7 @@ import View.UIManager;
 public class MainController
 {
     public static UIManager ui = new UIManager();
-    private static StudyPlannerController SPC;
+    public static StudyPlannerController SPC;
 
     public static void initialise()
     {
