@@ -39,15 +39,15 @@ public class MultilineString
         return String.join("\n",getAsArray());
     }
 
-    MultilineString()
+    public MultilineString()
     {
         lines = new ArrayList<>();
     }
-    MultilineString(String mString)
+    public MultilineString(String mString)
     {
         lines = new ArrayList<>(Arrays.asList(mString.split("\n")));
     }
-    MultilineString(String[] mString)
+    public MultilineString(String[] mString)
     {
         lines = new ArrayList<>(Arrays.asList(mString));
     }

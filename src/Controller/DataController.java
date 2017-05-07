@@ -2,6 +2,8 @@ package Controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import Model.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -9,6 +11,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 
 /**
  * Created by bendickson on 5/4/17.
@@ -28,39 +31,7 @@ public class DataController {
         // not implmented yet
     }
 
-    static public NodeList getNodes(Node parentNode)
-    {
-        NodeList tList = parentNode.getChildNodes();
-        int i = tList.getLength();
-        while(0<i--)
-        {
-            if(tList.item(i).getNodeType()!=Node.ELEMENT_NODE)
-            {
-                parentNode.removeChild(tList.item(i));
-            }
-        }
-        return parentNode.getChildNodes();
-    }
-
-    static public boolean validNodeList(NodeList nodes , String[] nodeNames)
-    {
-        int i = -1;
-        int ii = nodeNames.length;
-        if(nodes.getLength() != ii)
-        {
-            return false;
-        }
-        while(++i<ii)
-        {
-            if(!nodes.item(i).getNodeName().equals(nodeNames[i]))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    static private HubFile processUpdateHubFile(NodeList nList, int version)
+    static private HubFile processUpdateHubFile(NodeList nList)
     {
         HubFile r = null;
 
@@ -69,88 +40,174 @@ public class DataController {
         return r;
     }
 
-    static private HubFile processNewHubFile(NodeList nList, int version)
+    static private HubFile processNewHubFile(NodeList nList)
     {
         HubFile r = null;
+        XMLcontroller xmlTools = new XMLcontroller();
 
-        NodeList assetNodes = getNodes(nList.item(1));
+        HashMap<String,XMLcontroller.NodeReturn> fValues = xmlTools.getSchemaValues(nList, HubFile.SCHEMA_NEW_STUDYPROFILE);
+
+        int version = fValues.get("version").getInt();
+        NodeList assetNodes = fValues.get("assets").getNodeList();
+        NodeList studyProfileNodes = fValues.get("studyProfile").getNodeList();
+
+        /*
+        NodeList assetNodes = XMLcontroller.getNodes(nList.item(1));
         String[] assetSchema = {"persons","buildings","rooms","timetableEventTypes"};
 
-        NodeList studyProfileNodes = getNodes(nList.item(2));
+        NodeList studyProfileNodes = XMLcontroller.getNodes(nList.item(2));
         String[] studyProfileSchema = {"year","semester","modules"};
-
-        if(validNodeList(assetNodes,assetSchema) && validNodeList(studyProfileNodes,studyProfileSchema))
+        */
+        if(XMLcontroller.matchesSchema(assetNodes,HubFile.SCHEMA_ASSETS) &&
+                XMLcontroller.matchesSchema(studyProfileNodes,HubFile.SCHEMA_STUDYPROFILE))
         {
+
+
+            HashMap<String,VersionControlEntity> assetList = new HashMap<>();
+            HashMap<String,XMLcontroller.NodeReturn> assetValues = xmlTools.getSchemaValues(assetNodes,HubFile.SCHEMA_ASSETS);
+
             ArrayList<VersionControlEntity> newAssets = new ArrayList<>();
             ArrayList<Module> newModules = new ArrayList<>();
             // replace these with reading the values
-            int year = 2017;
-            int semester = 1;
-
-            // loop through assets adding to new Assets
-            NodeList personList = getNodes(assetNodes.item(0));
-            String[] personSchema = {"name","details","version","uid","givenNames","familyName","salutation","email"
-                    ,"familyNameLast"};
-
-            NodeList buildingList = getNodes(assetNodes.item(1));
-            String[] buildingSchema = {"name","details","version","uid","code","latitude","longitude"};
-
-            NodeList roomList = getNodes(assetNodes.item(2));
-            String[] roomSchema = {"name","details","version","uid","building","roomNumber"};
-
-            NodeList timeTableTypeList = getNodes(assetNodes.item(3));
-            String[] timeTableTypeSchema = {"name","details","version","uid"};
 
 
-            ArrayList<VersionControlEntity> assetList = new ArrayList<>();
-            int vcVersion;
-            String vcName,vcDetails,vcUID;
 
-            int i = -1;
-            int ii = personList.getLength();
             Node n;
             NodeList nc;
-            Person tp;
-            String pGivenNames,pFamilyName,pSalutation,pEmail;
-            boolean pFamilyNameLast;
-            while(++i<ii)
+            int i,ii;
+            String UID;
+
+            // Add all the Person classes
+            if(assetValues.containsKey("persons"))
             {
-                n = personList.item(i);
-                if(n.getNodeType()==Node.ELEMENT_NODE) {
-                    nc = getNodes(n);
-                    ;
-                    if (n.getNodeName().equals("person") && validNodeList(nc, personSchema)) {
-                        // version control values
-                        vcName = nc.item(0).getTextContent();
-                        vcDetails = nc.item(1).getTextContent();
-                        vcVersion = Integer.parseInt(nc.item(2).getTextContent());
-                        vcUID = nc.item(3).getTextContent();
+                NodeList personList = assetValues.get("persons").getNodeList();
+                Person tp;
+                i = -1;
+                ii = personList.getLength();
+                while(++i<ii)
+                {
+                    n = personList.item(i);
+                    if(n.getNodeType()==Node.ELEMENT_NODE)
+                    {
+                        nc = XMLcontroller.getNodes(n);
+                        if (n.getNodeName().equals("person") && XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_PERSON))
+                        {
+                            HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
+                                    HubFile.SCHEMA_PERSON);
 
-                        pGivenNames = nc.item(4).getTextContent();
-                        pFamilyName = nc.item(5).getTextContent();
-                        pSalutation = nc.item(6).getTextContent();
-                        pEmail = nc.item(7).getTextContent();
-                        pFamilyNameLast = nc.item(8).getTextContent().equals("true");
+                            tp = new Person(pValues.get("salutation").getString(), pValues.get("givenNames").getString(),
+                                    pValues.get("familyName").getString(), pValues.get("familyNameLast").getBoolean(),
+                                    pValues.get("email").getString());
+                            UID = pValues.get("uid").getString();
+                            tp.setUID(UID,pValues.get("version").getInt());
+                            tp.setName(pValues.get("name").getString());
+                            tp.setDetails(pValues.get("details").getMultilineString().getAsArray());
+                            assetList.put(UID,tp);
+                            System.out.println(tp.toString());
+                        }
+                    }
+                }
+            }
+            // add all the Buildings
 
+            if(assetValues.containsKey("buildings"))
+            {
+                NodeList buildingList = assetValues.get("buildings").getNodeList();
+                Building tb;
+                i = -1;
+                ii = buildingList.getLength();
+                while(++i<ii)
+                {
+                    n = buildingList.item(i);
+                    if(n.getNodeType()==Node.ELEMENT_NODE)
+                    {
+                        nc = XMLcontroller.getNodes(n);
+                        if (n.getNodeName().equals("building") && XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_BUILDING))
+                        {
 
-                        tp = new Person(pSalutation, pGivenNames, pFamilyName, pFamilyNameLast, pEmail);
-                        System.out.println(tp.setUID(vcUID)?"VC updated":"VC not updated");
-                        tp.setName(vcName);
-                        tp.setDetails(vcDetails);
+                            HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
+                                    HubFile.SCHEMA_BUILDING);
 
-                        assetList.add(tp);
+                            tb = new Building(pValues.get("code").getString(), pValues.get("latitude").getDouble(),
+                                    pValues.get("longitude").getDouble());
 
-                        System.out.println(tp.toString());
+                            UID = pValues.get("uid").getString();
+                            tb.setUID(UID,pValues.get("version").getInt());
+                            tb.setName(pValues.get("name").getString());
+                            tb.setDetails(pValues.get("details").getMultilineString().getAsArray());
+                            assetList.put(UID,tb);
+                            System.out.println(tb.toString());
+                        }
                     }
                 }
             }
 
 
 
+            // add all the Rooms
+
+            if(assetValues.containsKey("rooms"))
+            {
+                System.out.println("Has rooms");
+                NodeList roomList = assetValues.get("rooms").getNodeList();
+                Room tr;
+                i = -1;
+                ii = roomList.getLength();
+                while(++i<ii)
+                {
+                    n = roomList.item(i);
+                    if(n.getNodeType()==Node.ELEMENT_NODE)
+                    {
+                        nc = XMLcontroller.getNodes(n);
+                        if (n.getNodeName().equals("room") && XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_ROOM))
+                        {
+                            // version control values
+
+                            System.out.println("Has room!!!!");
+
+                            HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
+                                    HubFile.SCHEMA_ROOM);
+                            System.out.println("Room schema processed!!!");
+
+                            String linkedBuilding = pValues.get("building").getString();
+                            if(assetList.containsKey(linkedBuilding) &&
+                                    assetList.get(linkedBuilding) instanceof Building)
+                            {
+                                tr = new Room(pValues.get("roomNumber").getString() ,
+                                        (Building)assetList.get(linkedBuilding));
+                            }
+                            else {
+                                tr = new Room(pValues.get("roomNumber").getString());
+                            }
+
+                            UID = pValues.get("uid").getString();
+                            tr.setUID(UID,pValues.get("version").getInt());
+                            tr.setName(pValues.get("name").getString());
+                            tr.setDetails(pValues.get("details").getMultilineString().getAsArray());
+                            assetList.put(UID,tr);
+
+                            System.out.println(tr.toString());
+                        }
+                    }
+                }
+            }
+
+
+
+            // add all the TimeTableTypes
+
+            int year = 2017;
+            int semester = 1;
+
+
+            System.out.println("done!");
+
+
+
             // loop through studyProfile adding new modules
 
             // if succcessful do this:
-            r = new HubFile(version,year,semester,newModules,newAssets);
+            // r = new HubFile(version,year,semester,newModules,newAssets);
         }
 
 
@@ -178,29 +235,14 @@ public class DataController {
                 // check it is a hubfile
                 if(rootElementTag.equals("hubfile") && rootElement.hasChildNodes())
                 {
-                    NodeList nList = getNodes(rootElement);
-                    String[] schemaNew = {"version","assets","studyProfile"};
-                    String[] schemaUpdate = {"version","extensions","updates"};
-                    boolean newProfile = validNodeList(nList,schemaNew);
-                    boolean updateFile = validNodeList(nList,schemaUpdate);
-                    if(newProfile||updateFile)
+                    NodeList nList = XMLcontroller.getNodes(rootElement);
+                    if (XMLcontroller.matchesSchema(nList, HubFile.SCHEMA_NEW_STUDYPROFILE))
                     {
-                        String versionString = nList.item(0).getTextContent();
-                        try{
-                            int version = Integer.parseInt(versionString);
-                            if(version>=0)
-                            {
-                                r = newProfile?processNewHubFile(nList,version):processUpdateHubFile(nList,version);
-                            }
-                            else
-                            {
-                                MainController.reportError("Invalid Version Number");
-                            }
-                        }
-                        catch(Exception e)
-                        {
-                            MainController.reportError("Invalid Version Data");
-                        }
+                        r = processNewHubFile(nList);
+                    }
+                    else if (XMLcontroller.matchesSchema(nList, HubFile.SCHEMA_UPDATE_FILE))
+                    {
+                        r = processUpdateHubFile(nList);
                     }
                     else
                     {

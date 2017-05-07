@@ -56,4 +56,28 @@ public class MainController
         }
         View.ConsoleIO.setConsoleMessage("Good bye!");
     }
+
+    /**
+     * Apparent (according to Stackoverflow) the Java Standard library doesn't have a
+     * standard check for testing if a string value is a number or not?!)
+     *
+     * Therefore, we are using this proposed isNumeric method from:
+     *
+     * http://stackoverflow.com/a/1102916
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isNumeric(String str)
+    {
+        try
+        {
+            double d = Double.parseDouble(str);
+        }
+        catch(NumberFormatException nfe)
+        {
+            return false;
+        }
+        return true;
+    }
 }
