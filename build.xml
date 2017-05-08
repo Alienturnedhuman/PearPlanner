@@ -13,6 +13,11 @@
     <presetdef name="javac">
         <javac includeantruntime="false" />
     </presetdef>
+
+
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath path="path_to_jacoco/lib/jacocoant.jar"/>
+    </taskdef>
   
   <property name="compiler.debug" value="on"/>
   <property name="compiler.generate.no.warnings" value="off"/>
