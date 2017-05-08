@@ -38,6 +38,24 @@ public abstract class ModelEntity {
     {
         details = new MultilineString((String[])newDetails.toArray());
     }
+    public void setDetails(MultilineString newDetails)
+    {
+        details = newDetails;
+    }
+
+
+
+    public void addProperties(String aName, MultilineString aDetails)
+    {
+        setName(aName);
+        setDetails(aDetails.clone());
+    }
+    public void addProperties(String aName, String aDetails)
+    {
+        setName(aName);
+        setDetails(aDetails);
+    }
+
     ModelEntity()
     {
         this("");

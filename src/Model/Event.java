@@ -2,28 +2,50 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.regex.Pattern;
+import Controller.*;
 
 /**
  * ${FILENAME}
  * Created by Andrew Odintsov on 4/27/17.
  */
-public class Event
+public class Event extends VersionControlEntity
 {
     protected GregorianCalendar date;
-    protected String name;
-    protected MultilineString details;
-    protected ArrayList<Note> notes;
 
     // public methods
+    private static Pattern dateRegex = Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)");
 
-    // getters
-    public String getName()
+    public static boolean validDateString(String dateString)
     {
-        return name;
+        return dateRegex.matcher(dateString).matches();
     }
 
-    public void setName(String newName)
+
+    // getters
+    public void setDate(String dateString)
     {
-        name = newName;
+        // 09/04/2017T15:00:00Z
+        if(validDateString(dateString))
+        {
+            String sDay = dateString.substring(0,2);
+            String sMonth = dateString.substring(3,5);
+            String sYear = dateString.substring(6,10);
+            String sHour = dateString.substring(11,13);
+            String sMinute = dateString.substring(14,16);
+            String sSecond = dateString.substring(17,19);
+            if(MainController.isNumeric(sDay) && MainController.isNumeric(sMonth) && MainController.isNumeric(sYear) &&
+                    MainController.isNumeric(sHour) && MainController.isNumeric(sMinute) &&
+                    MainController.isNumeric(sSecond))
+            {
+                date = new GregorianCalendar(Integer.parseInt(sYear), Integer.parseInt(sMonth)-1, Integer.parseInt(sDay)
+                        , Integer.parseInt(sHour), Integer.parseInt(sMinute), Integer.parseInt(sSecond));
+            }
+        }
+    }
+
+    public Event(String cDate)
+    {
+        setDate(cDate);
     }
 }

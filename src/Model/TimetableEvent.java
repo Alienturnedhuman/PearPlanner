@@ -59,4 +59,14 @@ public class TimetableEvent extends Event
 
 
     // constructor
+    public TimetableEvent(String cDate, Room cRoom,Person cLecturer, TimeTableEventType cTimeTableEventType ,
+                          int cDuration)
+    {
+        super(cDate);
+        setRoom(cRoom);
+        setLecturer(cLecturer);
+        setTimeTableEventType(cTimeTableEventType);
+        setDuration(cDuration);
+
+    }
 }

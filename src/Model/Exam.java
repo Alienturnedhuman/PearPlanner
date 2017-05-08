@@ -35,4 +35,18 @@ public class Exam extends Assignment
     {
         return timeSlot;
     }
+
+    // constructors
+    public Exam(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks , ExamEvent cTimeSlot,Exam cResit)
+    {
+        super(cWeighting,cSetBy,cMarkedBy,cReviewedBy,cMarks);
+        timeSlot = cTimeSlot;
+        resit = cResit;
+    }
+    public Exam(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks , ExamEvent cTimeSlot)
+    {
+        super(cWeighting,cSetBy,cMarkedBy,cReviewedBy,cMarks);
+        timeSlot = cTimeSlot;
+        resit = null;
+    }
 }

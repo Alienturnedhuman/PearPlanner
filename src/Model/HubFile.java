@@ -101,6 +101,8 @@ public class HubFile
 
 
     // schemas
+    // note, for the time being these are hard coded into the code
+    // long term, these would be imported from a settings file
 
     public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_ROOT;
     static
@@ -187,6 +189,89 @@ public class HubFile
         SCHEMA_TIMETABLE_EVENT_TYPE.put("details",XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_TIMETABLE_EVENT_TYPE.put("version",XMLcontroller.ImportAs.INTEGER);
         SCHEMA_TIMETABLE_EVENT_TYPE.put("uid",XMLcontroller.ImportAs.STRING);
+    }
+    public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_MODULE;
+    static
+    {
+        SCHEMA_MODULE = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_MODULE.put("organiser",XMLcontroller.ImportAs.STRING);
+        SCHEMA_MODULE.put("moduleCode",XMLcontroller.ImportAs.STRING);
+        SCHEMA_MODULE.put("timetable",XMLcontroller.ImportAs.NODELIST);
+        SCHEMA_MODULE.put("assignments",XMLcontroller.ImportAs.NODELIST);
+    }
+    public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_COURSEWORK;
+    static
+    {
+        SCHEMA_COURSEWORK = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_COURSEWORK.put("name",XMLcontroller.ImportAs.STRING);
+        SCHEMA_COURSEWORK.put("details",XMLcontroller.ImportAs.MULTILINESTRING);
+        SCHEMA_COURSEWORK.put("version",XMLcontroller.ImportAs.INTEGER);
+        SCHEMA_COURSEWORK.put("uid",XMLcontroller.ImportAs.STRING);
+
+        SCHEMA_COURSEWORK.put("weighting",XMLcontroller.ImportAs.INTEGER);
+        SCHEMA_COURSEWORK.put("setBy",XMLcontroller.ImportAs.STRING);
+        SCHEMA_COURSEWORK.put("markedBy",XMLcontroller.ImportAs.STRING);
+        SCHEMA_COURSEWORK.put("reviewedBy",XMLcontroller.ImportAs.STRING);
+        SCHEMA_COURSEWORK.put("marks",XMLcontroller.ImportAs.INTEGER);
+        SCHEMA_COURSEWORK.put("startDate",XMLcontroller.ImportAs.NODELIST);
+        SCHEMA_COURSEWORK.put("deadline",XMLcontroller.ImportAs.NODELIST);
+        SCHEMA_COURSEWORK.put("extensions",XMLcontroller.ImportAs.NODELIST);
+    }
+    public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_EXAM;
+    static
+    {
+        SCHEMA_EXAM = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_EXAM.put("name",XMLcontroller.ImportAs.STRING);
+        SCHEMA_EXAM.put("details",XMLcontroller.ImportAs.MULTILINESTRING);
+        SCHEMA_EXAM.put("version",XMLcontroller.ImportAs.INTEGER);
+        SCHEMA_EXAM.put("uid",XMLcontroller.ImportAs.STRING);
+
+        SCHEMA_EXAM.put("resit",XMLcontroller.ImportAs.STRING);
+        SCHEMA_EXAM.put("timeslot",XMLcontroller.ImportAs.NODELIST);
+        SCHEMA_EXAM.put("weighting",XMLcontroller.ImportAs.INTEGER);
+        SCHEMA_EXAM.put("setBy",XMLcontroller.ImportAs.STRING);
+        SCHEMA_EXAM.put("markedBy",XMLcontroller.ImportAs.STRING);
+        SCHEMA_EXAM.put("reviewedBy",XMLcontroller.ImportAs.STRING);
+        SCHEMA_EXAM.put("marks",XMLcontroller.ImportAs.INTEGER);
+    }
+    public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_TIMETABLE_EVENT;
+    static
+    {
+        SCHEMA_TIMETABLE_EVENT = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_TIMETABLE_EVENT.put("name",XMLcontroller.ImportAs.STRING);
+        SCHEMA_TIMETABLE_EVENT.put("details",XMLcontroller.ImportAs.MULTILINESTRING);
+        SCHEMA_TIMETABLE_EVENT.put("version",XMLcontroller.ImportAs.INTEGER);
+        SCHEMA_TIMETABLE_EVENT.put("uid",XMLcontroller.ImportAs.STRING);
+
+        SCHEMA_TIMETABLE_EVENT.put("date",XMLcontroller.ImportAs.STRING);
+        SCHEMA_TIMETABLE_EVENT.put("room",XMLcontroller.ImportAs.STRING);
+        SCHEMA_TIMETABLE_EVENT.put("lecturer",XMLcontroller.ImportAs.STRING);
+        SCHEMA_TIMETABLE_EVENT.put("timetableEventType",XMLcontroller.ImportAs.STRING);
+        SCHEMA_TIMETABLE_EVENT.put("duration",XMLcontroller.ImportAs.INTEGER);
+    }
+    public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_EVENT;
+    static
+    {
+        SCHEMA_EVENT = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_EVENT.put("name",XMLcontroller.ImportAs.STRING);
+        SCHEMA_EVENT.put("details",XMLcontroller.ImportAs.MULTILINESTRING);
+        SCHEMA_EVENT.put("version",XMLcontroller.ImportAs.INTEGER);
+        SCHEMA_EVENT.put("uid",XMLcontroller.ImportAs.STRING);
+
+        SCHEMA_EVENT.put("date",XMLcontroller.ImportAs.STRING);
+    }
+    public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_EXAMEVENT;
+    static
+    {
+        SCHEMA_EXAMEVENT = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_EXAMEVENT.put("name",XMLcontroller.ImportAs.STRING);
+        SCHEMA_EXAMEVENT.put("details",XMLcontroller.ImportAs.MULTILINESTRING);
+        SCHEMA_EXAMEVENT.put("version",XMLcontroller.ImportAs.INTEGER);
+        SCHEMA_EXAMEVENT.put("uid",XMLcontroller.ImportAs.STRING);
+
+        SCHEMA_EXAMEVENT.put("date",XMLcontroller.ImportAs.STRING);
+        SCHEMA_EXAMEVENT.put("room",XMLcontroller.ImportAs.STRING);
+        SCHEMA_EXAMEVENT.put("duration",XMLcontroller.ImportAs.INTEGER);
     }
 
 }
