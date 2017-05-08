@@ -17,7 +17,8 @@ public class AccountTest {
     Account account;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception
+    {
         person = new Person("Mr","Andrew Odintsov", true);
         account = new Account(person, "10012721-UG");
     }

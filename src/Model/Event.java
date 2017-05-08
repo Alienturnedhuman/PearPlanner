@@ -22,6 +22,7 @@ public class Event
         return name;
     }
 
+    // setters
     public void setName(String newName)
     {
         name = newName;

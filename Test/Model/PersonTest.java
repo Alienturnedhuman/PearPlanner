@@ -16,7 +16,8 @@ public class PersonTest {
     Person person1, person2;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception
+    {
         personName.add("Andrew");
         person1 = new Person("Mr", personName, "Odintsov", true, "Andrew.odi@apple.com");
         person2 = new Person("Mr","Zilvinas Ceikauskas", true, "Zill.cei@apple.com");
@@ -218,4 +219,56 @@ public class PersonTest {
         assertEquals("Ms", person2.getSalutation());
     }
 
+    @Test
+    public void validSalutation() throws Exception
+    {
+        // Testing a valid salutation
+        boolean result = Person.validSalutation("Mr");
+        assertEquals(true, result);
+
+        // Testing an invalid salutation
+        result = Person.validSalutation("7483mfd");
+        assertEquals(false, result);
+
+        result = Person.validSalutation("Mr mr");
+        assertEquals(false, result);
+    }
+
+    @Test
+    public void validName() throws Exception
+    {
+        // Testing a valid name
+        boolean result = Person.validName("Andrew Odintsov");
+        assertEquals(true, result);
+
+        // Testing an invalid name
+        result = Person.validName("Andrew35 Odintsov");
+        assertEquals(false, result);
+    }
+
+    @Test
+    public void validEmail() throws Exception
+    {
+        // Testing valid emails
+        // Valid emails from: https://blogs.msdn.microsoft.com/testing123/2009/02/06/email-address-test-cases/
+        String[] validEmails = {"email@domain.com", "firstname.lastname@domain.com", "email@subdomain.domain.com",
+        "firstname+lastname@domain.com", "email@123.123.123.123", "email@[123.123.123.123]", "“email”@domain.com",
+        "1234567890@domain.com", "email@domain-one.com", "_______@domain.com", "email@domain.name",
+                "email@domain.co.jp", "firstname-lastname@domain.com"};
+
+        for (int i=0; i<validEmails.length; i++){
+            assertTrue(Person.validEmail(validEmails[i]));
+        }
+
+        // Testing invalid emails
+        // Invalid emails from: https://blogs.msdn.microsoft.com/testing123/2009/02/06/email-address-test-cases/
+        String[] invalidEmails = {"plainaddress", "#@%^%#$@#$@#.com", "@domain.com", "Joe Smith </email@domain.com>/",
+        "email.domain.com", "email@domain@domain.com", ".email@domain.com", "email.@domain.com",
+                "email..email@domain.com", "email@domain.com (Joe Smith)", "email@domain..com"};
+
+        for (int i=0; i<invalidEmails.length; i++){
+            assertFalse(Person.validEmail(invalidEmails[i]));
+        }
+
+    }
 }

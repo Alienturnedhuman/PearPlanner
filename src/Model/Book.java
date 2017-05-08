@@ -26,4 +26,12 @@ public class Book extends Requirement
         // initial set up code below - check if this needs updating
         chapters = newChapters;
     }
+
+
+    // constructor
+
+    public Book(ArrayList<String> chapters)
+    {
+        this.chapters = chapters;
+    }
 }

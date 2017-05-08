@@ -22,6 +22,7 @@ public abstract class ModelEntity {
         return details;
     }
 
+    // setters
     public void setName(String newName)
     {
         name = newName;
@@ -38,6 +39,8 @@ public abstract class ModelEntity {
     {
         details = new MultilineString((String[])newDetails.toArray());
     }
+
+    // constructors
     ModelEntity()
     {
         this("");
