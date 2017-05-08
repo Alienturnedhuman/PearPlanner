@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Module extends VersionControlEntity
 {
     // private data
-    private ArrayList<Assignment> assignments;
+    private ArrayList<Assignment> assignments = new ArrayList<>();
     private Person organiser;
     private String moduleCode;
     private ArrayList<TimetableEvent> timetable;
@@ -82,9 +82,9 @@ public class Module extends VersionControlEntity
     {
         organiser = newOrganiser;
     }
-    public void setModuleCode(String newModuldeCode)
+    public void setModuleCode(String newModuleCode)
     {
-        moduleCode = newModuldeCode;
+        moduleCode = newModuleCode;
     }
     public void addTimetableEvent(TimetableEvent newTimetableEvent)
     {
@@ -100,8 +100,13 @@ public class Module extends VersionControlEntity
             timetable.remove(newTimetableEvent);
         }
     }
-
-
     // constructors
+
+    public Module(Person cOrganiser , String cModuleCode)
+    {
+        setOrganiser(cOrganiser);
+        setModuleCode(cModuleCode);
+    }
+
 
 }

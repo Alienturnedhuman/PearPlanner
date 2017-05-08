@@ -76,4 +76,14 @@ public abstract class Assignment extends VersionControlEntity
     {
         return state;
     }
+
+    // Constructor
+    public Assignment(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks)
+    {
+        weighting = cWeighting;
+        setBy = cSetBy;
+        markedBy = cMarkedBy;
+        reviewedBy = cReviewedBy;
+        marks = cMarks;
+    }
 }

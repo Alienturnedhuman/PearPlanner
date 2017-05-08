@@ -13,6 +13,10 @@ public class MultilineString
 
 
     // public methods
+    public MultilineString clone()
+    {
+        return new MultilineString(this.getAsArray());
+    }
 
     // getters
     public int getLines()
