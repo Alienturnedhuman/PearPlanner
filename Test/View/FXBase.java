@@ -13,7 +13,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.junit.After;
-import org.junit.Before;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 
@@ -25,13 +24,9 @@ import java.util.concurrent.TimeoutException;
  * PearPlanner
  * Created by Team BRONZE on 08/05/2017
  */
-public abstract class TestFXBase extends ApplicationTest {
+public abstract class FXBase extends ApplicationTest {
 
 
-    @Before
-    public void setUpClass() throws Exception {
-       //ApplicationTest.launch(Main.class);
-    }
 
     @Override
     public void start(Stage stage) throws Exception {

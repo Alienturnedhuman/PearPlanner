@@ -15,9 +15,7 @@
     </presetdef>
 
 
-    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-        <classpath path="path_to_jacoco/lib/jacocoant.jar"/>
-    </taskdef>
+
   
   <property name="compiler.debug" value="on"/>
   <property name="compiler.generate.no.warnings" value="off"/>
@@ -67,7 +65,22 @@
   <!-- Module PearPlanner -->
   
   <dirname property="module.pearplanner.basedir" file="${ant.file}"/>
-  
+
+
+  <path id="external.classpath">
+    <pathelement location="${basedir}/lib/guava-21.0.jar"/>
+    <pathelement location="${basedir}/lib/hamcrest-all-1.3.jar"/>
+    <pathelement location="${basedir}/lib/hamcrest-generator-1.3.jar"/>
+    <pathelement location="${basedir}/lib/hamcrest-integration-1.3.jar"/>
+    <pathelement location="${basedir}/lib/hamcrest-junit-2.0.0.0.jar"/>
+    <pathelement location="${basedir}/lib/hamcrest-library-1.3.jar"/>
+    <pathelement location="${basedir}/lib/testfx-core-4.0.0-20150226.214553-8-sources.jar"/>
+    <pathelement location="${basedir}/lib/testfx-core-4.0.6-alpha.jar"/>
+    <pathelement location="${basedir}/lib/testfx-junit5-4.0.6-alpha.jar"/>
+    <pathelement location="${basedir}/lib/testfx-junit-4.0.6-alpha.jar"/>
+    <pathelement location="${basedir}/lib/testfx-legacy-4.0.6-alpha.jar"/>
+
+  </path>
   
   
   <property name="compiler.args.pearplanner" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
@@ -128,6 +141,9 @@
       <compilerarg line="${compiler.args.pearplanner}"/>
       <bootclasspath refid="pearplanner.module.bootclasspath"/>
       <classpath refid="pearplanner.module.production.classpath"/>
+      <classpath>
+        <path refid="external.classpath" />
+      </classpath>
       <src refid="pearplanner.module.sourcepath"/>
       <patternset refid="excluded.from.compilation.pearplanner"/>
     </javac>
@@ -145,6 +161,9 @@
     <javac destdir="${pearplanner.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
       <compilerarg line="${compiler.args.pearplanner}"/>
       <bootclasspath refid="pearplanner.module.bootclasspath"/>
+      <classpath>
+        <path refid="external.classpath" />
+      </classpath>
       <classpath refid="pearplanner.module.classpath"/>
       <src refid="pearplanner.module.test.sourcepath"/>
       <patternset refid="excluded.from.compilation.pearplanner"/>
@@ -184,7 +203,11 @@
                 <pathelement location="${basedir}/lib/hamcrest-core-1.3.jar"/>
                 <pathelement location="${pearplanner.output.dir}/"/>
                 <pathelement location="${pearplanner.testoutput.dir}/"/>
+
             </classpath>
+          <classpath>
+            <path refid="external.classpath" />
+          </classpath>
             <batchtest>
                 <fileset dir="${pearplanner.testoutput.dir}">
                     <include name="**/*Test*" />
