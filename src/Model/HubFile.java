@@ -64,6 +64,13 @@ public class HubFile
     // setters
 
 
+
+    @Override
+    public String toString()
+    {
+        return "HubFile for "+Integer.toString(year)+" semester: "+Integer.toString(semester)+" | Module Count: "+
+                Integer.toString(modules.size());
+    }
     // constructors
 
     /**
@@ -140,8 +147,8 @@ public class HubFile
     static
     {
         SCHEMA_STUDYPROFILE = new HashMap<String, XMLcontroller.ImportAs>();
-        SCHEMA_STUDYPROFILE.put("year",XMLcontroller.ImportAs.NODELIST);
-        SCHEMA_STUDYPROFILE.put("semester",XMLcontroller.ImportAs.NODELIST);
+        SCHEMA_STUDYPROFILE.put("year",XMLcontroller.ImportAs.INTEGER);
+        SCHEMA_STUDYPROFILE.put("semester",XMLcontroller.ImportAs.INTEGER);
         SCHEMA_STUDYPROFILE.put("modules",XMLcontroller.ImportAs.NODELIST);
     }
     public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_PERSON;

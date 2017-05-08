@@ -44,6 +44,7 @@ public class Event extends VersionControlEntity
         }
     }
 
+
     public Event(String cDate)
     {
         setDate(cDate);

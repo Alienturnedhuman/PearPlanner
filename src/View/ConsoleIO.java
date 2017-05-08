@@ -110,13 +110,13 @@ public class ConsoleIO {
 
         String filename = getDataString("Enter filepath:");
         HubFile fileData = DataController.loadHubFile(filename);
-        while(!filename.equals("") || fileData == null)
+        while(!filename.equals("") && fileData == null)
         {
             filename = getDataString("File not valid, enter a different filepath:");
             fileData = DataController.loadHubFile(filename);
         }
 
-        System.out.println(fileData);
+        System.out.println(fileData.toString());
 
         return "Return to Main Menu";
     }

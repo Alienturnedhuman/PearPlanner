@@ -115,7 +115,6 @@ public class DataController {
                             tp.setName(pValues.get("name").getString());
                             tp.setDetails(pValues.get("details").getMultilineString().getAsArray());
                             assetList.put(UID,tp);
-                            System.out.println(tp.toString());
                         }
                     }
                 }
@@ -148,7 +147,6 @@ public class DataController {
                             tb.setName(pValues.get("name").getString());
                             tb.setDetails(pValues.get("details").getMultilineString().getAsArray());
                             assetList.put(UID,tb);
-                            System.out.println(tb.toString());
                         }
                     }
                 }
@@ -188,7 +186,6 @@ public class DataController {
                             tr.setName(pValues.get("name").getString());
                             tr.setDetails(pValues.get("details").getMultilineString().getAsArray());
                             assetList.put(UID,tr);
-                            System.out.println(tr.toString());
                         }
                     }
                 }
@@ -197,7 +194,6 @@ public class DataController {
             if(assetValues.containsKey("timetableEventTypes"))
             {
                 NodeList ttetList = assetValues.get("timetableEventTypes").getNodeList();
-                Room tr;
                 i = -1;
                 ii = ttetList.getLength();
                 while(++i<ii)
@@ -210,7 +206,7 @@ public class DataController {
                                 XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_TIMETABLE_EVENT_TYPE))
                         {
                             HashMap<String,XMLcontroller.NodeReturn> ttetValues =
-                                    xmlTools.getSchemaValues(assetNodes,HubFile.SCHEMA_TIMETABLE_EVENT_TYPE);
+                                    xmlTools.getSchemaValues(nc,HubFile.SCHEMA_TIMETABLE_EVENT_TYPE);
 
                             TimeTableEventType ttet = new TimeTableEventType();
                             ttet.addProperties(ttetValues.get("name").getString(),
@@ -227,7 +223,7 @@ public class DataController {
 
 
             HashMap<String,XMLcontroller.NodeReturn> studyProfileValues =
-                    xmlTools.getSchemaValues(assetNodes,HubFile.SCHEMA_STUDYPROFILE);
+                    xmlTools.getSchemaValues(studyProfileNodes,HubFile.SCHEMA_STUDYPROFILE);
 
             int year = studyProfileValues.get("year").getInt();
             int semester = studyProfileValues.get("semester").getInt();
@@ -264,6 +260,7 @@ public class DataController {
                     {
                         if(assignments.item(j).getNodeType()==Node.ELEMENT_NODE)
                         {
+
                             switch (assignments.item(j).getNodeName())
                             {
                                 case "coursework":
@@ -278,7 +275,6 @@ public class DataController {
                                         Event cwStartDate;
                                         Deadline cwDeadline;
                                         ArrayList<Extension> cwExtensions = new ArrayList<>();
-
                                         String linkedSetBy = courseworkValues.get("setBy").getString();
                                         String linkedMarkedBy = courseworkValues.get("markedBy").getString();
                                         String linkedReviewedBy = courseworkValues.get("reviewedBy").getString();
@@ -309,16 +305,15 @@ public class DataController {
                                         {
                                             cwReviewedBy = null;
                                         }
-
-                                        if(XMLcontroller.matchesSchema(courseworkValues.get("timeslot").getNodeList(),
-                                                HubFile.SCHEMA_EXAMEVENT))
+                                        if(XMLcontroller.matchesSchema(courseworkValues.get("startDate").getNodeList(),
+                                                HubFile.SCHEMA_EVENT))
                                         {
                                             HashMap<String,XMLcontroller.NodeReturn> eventValues =
-                                                    xmlTools.getSchemaValues(courseworkValues.get("timeslot").getNodeList(),
+                                                    xmlTools.getSchemaValues(courseworkValues.get("startDate").getNodeList(),
                                                             HubFile.SCHEMA_EVENT);
-                                            cwStartDate = new Event(eventValues.get("startDate").getString());
+                                            cwStartDate = new Event(eventValues.get("date").getString());
                                             cwStartDate.addProperties(eventValues.get("name").getString(),
-                                                    new MultilineString(eventValues.get("details").getString()));
+                                                    eventValues.get("details").getMultilineString());
                                             cwStartDate.setUID(eventValues.get("name").getString());
 
                                         }
@@ -332,9 +327,9 @@ public class DataController {
                                             HashMap<String,XMLcontroller.NodeReturn> eventValues =
                                                     xmlTools.getSchemaValues(courseworkValues.get("deadline").getNodeList(),
                                                             HubFile.SCHEMA_EVENT);
-                                            cwDeadline = new Deadline(eventValues.get("startDate").getString());
+                                            cwDeadline = new Deadline(eventValues.get("date").getString());
                                             cwDeadline.addProperties(eventValues.get("name").getString(),
-                                                    eventValues.get("details").getString());
+                                                    eventValues.get("details").getMultilineString());
                                             cwDeadline.setUID(eventValues.get("name").getString());
 
                                         }
@@ -342,13 +337,11 @@ public class DataController {
                                         {
                                             cwDeadline = null;
                                         }
-
-
                                         Coursework newCoursework = new Coursework(courseworkValues.get("weighting").getInt(),
                                                 cwSetBy,cwMarkedBy,cwReviewedBy,courseworkValues.get("marks").getInt(),
                                                 cwStartDate,cwDeadline,cwExtensions);
                                         newCoursework.addProperties(courseworkValues.get("name").getString(),
-                                                courseworkValues.get("details").getString());
+                                                courseworkValues.get("details").getMultilineString());
                                         UID = courseworkValues.get("uid").getString();
                                         newCoursework.setUID(UID,courseworkValues.get("version").getInt());
                                         assetList.put(UID,newCoursework);
@@ -408,7 +401,6 @@ public class DataController {
                                             HashMap<String,XMLcontroller.NodeReturn> eventValues =
                                                     xmlTools.getSchemaValues(examValues.get("timeslot").getNodeList(),
                                                             HubFile.SCHEMA_EXAMEVENT);
-
                                             Room exRoom;
                                             String linkedRoom = eventValues.get("room").getString();
                                             if(assetList.containsKey(linkedRoom) &&
@@ -423,15 +415,16 @@ public class DataController {
                                             exTimeSlot = new ExamEvent(eventValues.get("date").getString(),exRoom,
                                                     eventValues.get("duration").getInt());
                                             exTimeSlot.addProperties(eventValues.get("name").getString(),
-                                                    new MultilineString(eventValues.get("details").getString()));
-                                            exTimeSlot.setUID(eventValues.get("name").getString());
+                                                    eventValues.get("details").getMultilineString());
+
+                                            UID = eventValues.get("uid").getString();
+                                            exTimeSlot.setUID(UID,eventValues.get("version").getInt());
 
                                         }
                                         else
                                         {
                                             exTimeSlot = null;
                                         }
-
                                         Exam exExamResit;
                                         if(assetList.containsKey(linkedResit) &&
                                                 assetList.get(linkedResit) instanceof Exam)
@@ -455,7 +448,7 @@ public class DataController {
                                                     exTimeSlot,exExamResit);
                                         }
                                         newExam.addProperties(examValues.get("name").getString(),
-                                                examValues.get("details").getString());
+                                                examValues.get("details").getMultilineString());
                                         UID = examValues.get("uid").getString();
                                         newExam.setUID(UID,examValues.get("version").getInt());
                                         assetList.put(UID,newExam);
@@ -498,31 +491,18 @@ public class DataController {
                                     ,tTTET,tteValues.get("duration").getInt());
 
                             newTTE.addProperties(tteValues.get("name").getString(),
-                                    tteValues.get("details").getString());
+                                    tteValues.get("details").getMultilineString());
                             UID = tteValues.get("uid").getString();
                             newTTE.setUID(UID,tteValues.get("version").getInt());
                             assetList.put(UID,newTTE);
                             thisModule.addTimetableEvent(newTTE);
-
                         }
-
                     }
                     newModules.add(thisModule);
                 }
             }
-
-
-            System.out.println("done!");
-
-
-
-            // loop through studyProfile adding new modules
-
-            // if successful do this:
             r = new HubFile(version,year,semester,newModules,newAssets);
         }
-
-
         return r;
     }
 
