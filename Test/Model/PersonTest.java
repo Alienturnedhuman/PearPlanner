@@ -1,5 +1,6 @@
 package Model;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,24 +11,20 @@ import static org.junit.Assert.*;
 /**
  * Created by bijan on 04/05/2017.
  */
-public class PersonTest {
+public class PersonTest extends VersionControlEntityTest{
 
     ArrayList<String> personName = new ArrayList<>();
     Person person1, person2;
 
     @Before
+    @Override
     public void setUp() throws Exception
     {
         personName.add("Andrew");
         person1 = new Person("Mr", personName, "Odintsov", true, "Andrew.odi@apple.com");
         person2 = new Person("Mr","Zilvinas Ceikauskas", true, "Zill.cei@apple.com");
-    }
-
-    //TODO Write test for replace
-    @Test
-    public void replace() throws Exception
-    {
-//        assertTrue(false);
+        versionControlEntity = new Person("Mr","Zilvinas Ceikauskas", true, "Zill.cei@apple.com");
+        modelEntity = versionControlEntity;
     }
 
     @Test
@@ -270,5 +267,14 @@ public class PersonTest {
             assertFalse(Person.validEmail(invalidEmails[i]));
         }
 
+    }
+
+    @After
+    public void tearDown() throws Exception
+    {
+        personName = null;
+        person1 = null;
+        person2 = null;
+        versionControlEntity = null;
     }
 }
