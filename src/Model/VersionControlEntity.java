@@ -10,7 +10,7 @@ import java.util.HashMap;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public abstract class VersionControlEntity extends ModelEntity
+public class VersionControlEntity extends ModelEntity
 {
     protected int version;
     protected String uid;

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Module extends VersionControlEntity
 {
     // private data
-    private ArrayList<Assignment> assignments;
+    private ArrayList<Assignment> assignments = new ArrayList<>();
     private Person organiser;
     private String moduleCode;
     private ArrayList<TimetableEvent> timetable;
