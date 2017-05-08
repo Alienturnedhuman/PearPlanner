@@ -10,7 +10,12 @@ import View.UIManager;
 public class MainController
 {
     public static UIManager ui = new UIManager();
-    public static StudyPlannerController SPC;
+    private static StudyPlannerController SPC;
+
+    public static StudyPlannerController getSPC()
+    {
+        return SPC;
+    }
 
     public static void initialise()
     {
@@ -46,9 +51,9 @@ public class MainController
 
     private static void consoleUI(String menu)
     {
-        while (!menu.equals(""))
+        while(!menu.equals(""))
         {
-            switch (menu)
+            switch(menu)
             {
                 case "Quit Program":
                     menu = "";
@@ -69,5 +74,29 @@ public class MainController
                     menu = "";
             }
         }
+    }
+
+    /**
+     * Apparent (according to Stackoverflow) the Java Standard library doesn't have a
+     * standard check for testing if a string value is a number or not?!)
+     *
+     * Therefore, we are using this proposed isNumeric method from:
+     *
+     * http://stackoverflow.com/a/1102916
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isNumeric(String str)
+    {
+        try
+        {
+            double d = Double.parseDouble(str);
+        }
+        catch(NumberFormatException nfe)
+        {
+            return false;
+        }
+        return true;
     }
 }

@@ -34,13 +34,13 @@ public class MenuController implements Initializable
     public void initialize(URL location, ResourceBundle resources)
     {
         prepareSlideMenuAnimation();
-        if (MainController.SPC.getStudyProfiles().length <= 0)
+        if (MainController.getSPC().getStudyProfiles().length <= 0)
         {
             this.addActivity.setDisable(true);
             this.studyProfiles.setDisable(true);
             this.milestones.setDisable(true);
         }
-        if (MainController.SPC.getNotifications().length > 0)
+        if (MainController.getSPC().getNotifications().length > 0)
             this.showNotification.setStyle(this.showNotification.getStyle() +
                                             "-fx-background-image: url('/View/notification1.png');");
         else
