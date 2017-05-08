@@ -7,4 +7,8 @@ package Model;
 public class Deadline extends Event
 {
     // maybe we can get rid of this
+    public Deadline(String cDate)
+    {
+        super(cDate);
+    }
 }

@@ -56,6 +56,8 @@ public abstract class VersionControlEntity extends ModelEntity
             return false;
         }
     }
+
+
     public static boolean inLibrary(String UID)
     {
         return library.containsKey(UID);
@@ -101,6 +103,8 @@ public abstract class VersionControlEntity extends ModelEntity
         }
     }
 
+
+    // Constructors
     public VersionControlEntity(boolean leaveUnsealed)
     {
         super();
