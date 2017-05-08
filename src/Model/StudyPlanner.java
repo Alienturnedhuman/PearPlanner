@@ -13,8 +13,6 @@ import java.util.ArrayList;
  */
 public class StudyPlanner implements Serializable
 {
-    static final long serialVersionUID = 101L; //probably needs to be linked to the verison control or such
-
     // private data
     private Account account;
     private ArrayList<QuantityType> quantityTypes = new ArrayList<QuantityType>();
@@ -25,6 +23,11 @@ public class StudyPlanner implements Serializable
     private ArrayList<Event> calendar = new ArrayList<Event>();
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
+
+    public String getUserName()
+    {
+        return this.account.getStudentDetails().getFullName();
+    }
 
     /**
      * returns a String array of studyProfile names
@@ -50,7 +53,7 @@ public class StudyPlanner implements Serializable
     }
 
     // public methods
-    void loadFile(String filePath)
+    public void loadFile(String filePath)
     {
         // initial set up code below - check if this needs updating
         throw new UnsupportedOperationException("This method is not implemented yet");
@@ -58,7 +61,7 @@ public class StudyPlanner implements Serializable
     }
 
     // getters
-    void processHubFile(HubFile newHubFile)
+    public void processHubFile(HubFile newHubFile)
     {
         // initial set up code below - check if this needs updating
         throw new UnsupportedOperationException("This method is not implemented yet");
@@ -66,34 +69,18 @@ public class StudyPlanner implements Serializable
     }
 
 
-    void writeObject(Cipher cipher, String fileName, SecretKey key64) throws IOException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException
+    public void writeObject(Cipher cipher, String fileName, SecretKey key64) throws IOException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException
     {
         cipher.init(Cipher.ENCRYPT_MODE, key64);
 
-        StudyPlanner sp = new StudyPlanner();
-        SealedObject sealedObject = new SealedObject(sp, cipher);
+        SealedObject sealedObject = new SealedObject(this, cipher);
         CipherOutputStream cipherOutputStream = new CipherOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)), cipher);
         ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);
         outputStream.writeObject(sealedObject);
         outputStream.close();
-
     }
-
-
-    void readObject(Cipher cipher, String fileName, SecretKey key64) throws InvalidKeyException, IOException, ClassNotFoundException, BadPaddingException, IllegalBlockSizeException
-    {
-        cipher.init(Cipher.DECRYPT_MODE, key64);
-        CipherInputStream cipherInputStream = new CipherInputStream(new BufferedInputStream(new FileInputStream(fileName)), cipher);
-        ObjectInputStream inputStream = new ObjectInputStream(cipherInputStream);
-        SealedObject sealedObject = (SealedObject) inputStream.readObject();
-        //Person person1 = (Person) sealedObject.getObject( cipher );
-        StudyPlanner sp = (StudyPlanner) sealedObject.getObject(cipher);
-
-    }
-
 
     // setters
-
 
     // constructor
     public StudyPlanner(Account newAccount) throws NoSuchPaddingException, NoSuchAlgorithmException
@@ -101,17 +88,11 @@ public class StudyPlanner implements Serializable
         // it may make sense to clone this to stop someone retaining access to the
         // object
         account = newAccount;
-        String fileName = "result.dat";
-        SecretKey key64 = new SecretKeySpec(new byte[]{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07}, "Blowfish");
-        Cipher cipher = Cipher.getInstance("Blowfish");
-
-
     }
 
     //empty constructor
     public StudyPlanner()
     {
-
 
     }
 

@@ -2,15 +2,25 @@ package Controller;
 
 import Model.Account;
 import Model.Person;
+import Model.StudyPlanner;
 import View.UIManager;
+
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
 
 /**
  * Created by bendickson on 5/4/17.
  */
 public class MainController
 {
+    // Public:
     public static UIManager ui = new UIManager();
+
+    // Private:
     private static StudyPlannerController SPC;
+    private static SecretKey key64 = new SecretKeySpec(new byte[]{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07}, "Blowfish");
+    private static String fileName = "StudyPlanner.dat";
 
     public static StudyPlannerController getSPC()
     {
@@ -19,10 +29,22 @@ public class MainController
 
     public static void initialise()
     {
+        File plannerFile = new File("StudyPlanner.dat");
         try
         {
-            Account newAccount = ui.createAccount();
-            SPC = new StudyPlannerController(newAccount);
+            if (plannerFile.exists())
+            {
+                Cipher cipher = Cipher.getInstance("Blowfish");
+                cipher.init(Cipher.DECRYPT_MODE, key64);
+                CipherInputStream cipherInputStream = new CipherInputStream(new BufferedInputStream(new FileInputStream(fileName)), cipher);
+                ObjectInputStream inputStream = new ObjectInputStream(cipherInputStream);
+                SealedObject sealedObject = (SealedObject) inputStream.readObject();
+                SPC = new StudyPlannerController((StudyPlanner) sealedObject.getObject(cipher));
+            } else
+            {
+                Account newAccount = ui.createAccount();
+                SPC = new StudyPlannerController(newAccount);
+            }
         } catch (Exception e)
         {
             View.ConsoleIO.setConsoleMessage("INITIALISATION FAILED");
@@ -51,9 +73,9 @@ public class MainController
 
     private static void consoleUI(String menu)
     {
-        while(!menu.equals(""))
+        while (!menu.equals(""))
         {
-            switch(menu)
+            switch (menu)
             {
                 case "Quit Program":
                     menu = "";
@@ -79,9 +101,9 @@ public class MainController
     /**
      * Apparent (according to Stackoverflow) the Java Standard library doesn't have a
      * standard check for testing if a string value is a number or not?!)
-     *
+     * <p>
      * Therefore, we are using this proposed isNumeric method from:
-     *
+     * <p>
      * http://stackoverflow.com/a/1102916
      *
      * @param str
@@ -92,11 +114,28 @@ public class MainController
         try
         {
             double d = Double.parseDouble(str);
-        }
-        catch(NumberFormatException nfe)
+        } catch (NumberFormatException nfe)
         {
             return false;
         }
         return true;
     }
+
+    /**
+     * Save the current state of the program to file
+     * @return
+     */
+    public static boolean save()
+    {
+        try
+        {
+            SPC.save(MainController.key64, MainController.fileName);
+            return true;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
