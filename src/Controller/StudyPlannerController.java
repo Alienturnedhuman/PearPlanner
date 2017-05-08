@@ -30,6 +30,11 @@ public class StudyPlannerController
         // not implemented yet
     }
 
+    public Notification[] getNotifications()
+    {
+        return this.planner.getNotifications();
+    }
+
     /**
      * does the StudyPlanner contain the profile within the hubfile
      * @param hubFile

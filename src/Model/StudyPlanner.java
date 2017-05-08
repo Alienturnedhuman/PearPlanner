@@ -15,6 +15,7 @@ public class StudyPlanner {
     private ArrayList<ActivityEvent> activityList = new ArrayList<ActivityEvent>();
     private ArrayList<TimeTableEventType> timeTableEventTypes = new ArrayList<TimeTableEventType>();
     private ArrayList<Event> calendar = new ArrayList<Event>();
+    private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
 
     /**
@@ -29,6 +30,13 @@ public class StudyPlanner {
         {
             r[i] = studyProfiles.get(i).getName();
         }
+        return r;
+    }
+
+    public Notification[] getNotifications()
+    {
+        Notification[] r = new Notification[this.notifications.size()];
+        r = this.notifications.toArray(r);
         return r;
     }
 
