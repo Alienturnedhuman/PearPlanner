@@ -252,6 +252,11 @@ public class DataController {
                     }
                     String moduleCode = moduleValues.get("moduleCode").getString();
                     Module thisModule = new Module(organiser,moduleCode);
+                    thisModule.addProperties(moduleValues.get("name").getString(),
+                            moduleValues.get("details").getMultilineString());
+                    UID = moduleValues.get("uid").getString();
+                    thisModule.setUID(UID,moduleValues.get("version").getInt());
+                    assetList.put(UID,thisModule);
 
                     NodeList assignments = moduleValues.get("assignments").getNodeList();
                     int j = -1;

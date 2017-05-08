@@ -201,6 +201,10 @@ public class HubFile
     static
     {
         SCHEMA_MODULE = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_MODULE.put("name",XMLcontroller.ImportAs.STRING);
+        SCHEMA_MODULE.put("details",XMLcontroller.ImportAs.MULTILINESTRING);
+        SCHEMA_MODULE.put("version",XMLcontroller.ImportAs.INTEGER);
+        SCHEMA_MODULE.put("uid",XMLcontroller.ImportAs.STRING);
         SCHEMA_MODULE.put("organiser",XMLcontroller.ImportAs.STRING);
         SCHEMA_MODULE.put("moduleCode",XMLcontroller.ImportAs.STRING);
         SCHEMA_MODULE.put("timetable",XMLcontroller.ImportAs.NODELIST);
