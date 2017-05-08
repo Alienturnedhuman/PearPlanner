@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -8,7 +9,7 @@ import java.util.regex.Pattern;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class Person extends VersionControlEntity
+public class Person extends VersionControlEntity implements Serializable
 {
     // private data
     private ArrayList<String> givenNames;
