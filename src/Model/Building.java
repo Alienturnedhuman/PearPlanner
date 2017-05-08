@@ -69,10 +69,18 @@ public class Building extends VersionControlEntity
         longitude = newLongitude;
     }
 
+    // constructor
+    public Building(String cCode , double cLatitude , double cLongitude)
+    {
+        code = cCode;
+        latitude = cLatitude;
+        longitude = cLongitude;
+    }
     @Override
     public String toString()
     {
-        return code+" "+name;
+        return code+" "+name+" ( "+Double.toString(latitude) +
+                " , " + Double.toString(longitude)+" )";
     }
 }
 

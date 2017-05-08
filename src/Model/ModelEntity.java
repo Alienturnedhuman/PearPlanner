@@ -22,4 +22,43 @@ public abstract class ModelEntity {
         return details;
     }
 
+    public void setName(String newName)
+    {
+        name = newName;
+    }
+    public void setDetails(String newDetails)
+    {
+        details = new MultilineString(newDetails);
+    }
+    public void setDetails(String[] newDetails)
+    {
+        details = new MultilineString(newDetails);
+    }
+    public void setDetails(ArrayList<String> newDetails)
+    {
+        details = new MultilineString((String[])newDetails.toArray());
+    }
+    ModelEntity()
+    {
+        this("");
+    }
+    ModelEntity(String cName)
+    {
+        this(cName,"");
+    }
+    ModelEntity(String cName,String cDetails)
+    {
+        this(cName,cDetails.split("\n"));
+    }
+    ModelEntity(String cName, String[] cDetails)
+    {
+        setName(cName);
+        setDetails(cDetails);
+        notes = new ArrayList<>();
+    }
+    ModelEntity(String cName,String[] cDetails,ArrayList<Note> cNotes)
+    {
+        this(cName,cDetails);
+        notes = (ArrayList<Note>)cNotes.clone();
+    }
 }

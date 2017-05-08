@@ -10,11 +10,7 @@ public class Account
     private Person studentDetails;
     private String studentNumber;
 
-
-
-
     // public methods
-
 
     // getters
     public Person getStudentDetails()
@@ -41,7 +37,8 @@ public class Account
     }
 
     // constructors
-    public Account(Person studentDetails, String studentNumber) {
+    public Account(Person studentDetails, String studentNumber)
+    {
         this.studentDetails = studentDetails;
         this.studentNumber = studentNumber;
     }
