@@ -4,6 +4,8 @@ import Model.*;
 import View.ConsoleIO;
 
 
+import javax.crypto.NoSuchPaddingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 /**
@@ -114,8 +116,7 @@ public class StudyPlannerController
 
 
     // constructors
-    public StudyPlannerController()
-    {
+    public StudyPlannerController() throws NoSuchAlgorithmException, NoSuchPaddingException {
         // checks if there is a existing settings file
         if(DataController.existingSettingsFile())
         {
@@ -165,8 +166,7 @@ public class StudyPlannerController
      * Temporary constructor for testing UI
      * @param newAccount
      */
-    public StudyPlannerController(Account newAccount)
-    {
+    public StudyPlannerController(Account newAccount) throws NoSuchAlgorithmException, NoSuchPaddingException {
         planner = new StudyPlanner(newAccount);
     }
 }
