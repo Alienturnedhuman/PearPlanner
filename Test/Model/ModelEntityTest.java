@@ -2,6 +2,7 @@ package Model;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import static org.junit.Assert.*;
 /**
  * Created by bijan on 08/05/2017.
  */
+@Ignore
 public abstract class ModelEntityTest {
 
     ModelEntity modelEntity;
