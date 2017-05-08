@@ -18,7 +18,6 @@ public class AccountTest {
 
     @Before
     public void setUp() throws Exception {
-        System.out.println("Starting the test");
         person = new Person("Mr","Andrew Odintsov", true);
         account = new Account(person, "10012721-UG");
     }

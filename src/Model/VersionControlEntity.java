@@ -73,6 +73,20 @@ public abstract class VersionControlEntity extends ModelEntity
         return uid;
     }
 
+    public boolean setUID(String newUID, int newVersion)
+    {
+        if(sealed || library.containsKey(newUID))
+        {
+            return false;
+        }
+        else
+        {
+            uid = newUID;
+            library.put(newUID,this);
+            version = newVersion;
+            return true;
+        }
+    }
     public boolean setUID(String newUID)
     {
         if(sealed || library.containsKey(newUID))
