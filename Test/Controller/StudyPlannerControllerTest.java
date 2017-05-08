@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.Account;
+import Model.Person;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +15,8 @@ public class StudyPlannerControllerTest {
     @Before
     public void setUp() throws Exception
     {
-        StudyPlannerController studyPlannerController = new StudyPlannerController();
+        Account a = new Account(new Person("Mr","Adrew",true),"100125464");
+        StudyPlannerController studyPlannerController = new StudyPlannerController(a);
     }
 
     @Test
@@ -49,6 +52,7 @@ public class StudyPlannerControllerTest {
     @Test
     public void getListOfTasks() throws Exception
     {
+
     }
 
     @Test
