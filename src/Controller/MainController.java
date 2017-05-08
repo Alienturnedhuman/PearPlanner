@@ -12,6 +12,11 @@ public class MainController
     public static UIManager ui = new UIManager();
     private static StudyPlannerController SPC;
 
+    public static StudyPlannerController getSPC()
+    {
+        return SPC;
+    }
+
     public static void initialise()
     {
         try
