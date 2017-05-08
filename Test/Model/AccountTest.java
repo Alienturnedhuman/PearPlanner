@@ -50,4 +50,10 @@ public class AccountTest {
         assertEquals("99222213-UG", account.getStudentNumber());
     }
 
+    @After
+    public void tearDown() throws Exception
+    {
+        person = null;
+        account = null;
+    }
 }

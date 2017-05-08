@@ -37,7 +37,8 @@ public abstract class ModelEntity {
     }
     public void setDetails(ArrayList<String> newDetails)
     {
-        details = new MultilineString((String[])newDetails.toArray());
+        String[] str = newDetails.toArray(new String[newDetails.size()]);
+        details = new MultilineString(str);
     }
 
     // constructors
