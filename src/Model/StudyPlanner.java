@@ -71,9 +71,35 @@ public class StudyPlanner implements Serializable
 
     }
 
+    public boolean containsStudyProfile(int sYear, int sSem)
+    {
+        int i = -1;
+        int ii = studyProfiles.size();
+        while(++i<ii)
+        {
+            if(studyProfiles.get(i).matches(sYear,sSem))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // getters
     public void processHubFile(HubFile newHubFile)
     {
         // initial set up code below - check if this needs updating
+        if(newHubFile.isUpdate())
+        {
+            // process update file - to do
+        }
+        else
+        {
+            if(!containsStudyProfile(newHubFile.getYear(),newHubFile.getSemester()))
+            {
+                StudyProfile newSP = new StudyProfile(newHubFile);
+            }
+        }
         throw new UnsupportedOperationException("This method is not implemented yet");
 
     }

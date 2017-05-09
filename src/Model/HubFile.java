@@ -20,6 +20,9 @@ public class HubFile
     private int semester;
     private int year;
     boolean updateFile;
+    String semesterName;
+    String semesterUID;
+    MultilineString semesterDetails;
 
     // public methods
 
@@ -55,6 +58,18 @@ public class HubFile
         // initial set up code below - check if this needs updating
         return year;
     }
+    public String getSemesterName()
+    {
+        return semesterName;
+    }
+    public String getSemesterUID()
+    {
+        return semesterUID;
+    }
+    public MultilineString getSemesterDetails()
+    {
+        return semesterDetails;
+    }
 
     public boolean isUpdate()
     {
@@ -89,6 +104,16 @@ public class HubFile
         modules = (ArrayList<Module>)m.clone();
         assets = (ArrayList<VersionControlEntity>)a.clone();
         updateFile = false;
+    }
+
+
+    public HubFile(int v , int y , int s , ArrayList<Module> m , ArrayList<VersionControlEntity>  a,String n,
+                   MultilineString d, String u)
+    {
+        this(v,y,s,m,a);
+        semesterName = n;
+        semesterDetails = d;
+        semesterUID = u;
     }
 
     /**
@@ -147,6 +172,9 @@ public class HubFile
     static
     {
         SCHEMA_STUDYPROFILE = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_STUDYPROFILE.put("name",XMLcontroller.ImportAs.STRING);
+        SCHEMA_STUDYPROFILE.put("details",XMLcontroller.ImportAs.MULTILINESTRING);
+        SCHEMA_STUDYPROFILE.put("uid",XMLcontroller.ImportAs.STRING);
         SCHEMA_STUDYPROFILE.put("year",XMLcontroller.ImportAs.INTEGER);
         SCHEMA_STUDYPROFILE.put("semester",XMLcontroller.ImportAs.INTEGER);
         SCHEMA_STUDYPROFILE.put("modules",XMLcontroller.ImportAs.NODELIST);

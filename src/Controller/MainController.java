@@ -106,13 +106,13 @@ public class MainController
             }
         }
     }
-
+    
     /**
      * Apparent (according to Stackoverflow) the Java Standard library doesn't have a
      * standard check for testing if a string value is a number or not?!)
-     * <p>
+     *
      * Therefore, we are using this proposed isNumeric method from:
-     * <p>
+     *
      * http://stackoverflow.com/a/1102916
      *
      * @param str
