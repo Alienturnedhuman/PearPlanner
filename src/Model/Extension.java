@@ -28,7 +28,7 @@ public class Extension extends VersionControlEntity
     }
 
     // public enums
-    public enum ApprovalStatus{PENDING,APPROVED,DECLINED};
+    public enum ApprovalStatus{PENDING,APPROVED,DECLINED}
 
     // public methods
 

@@ -1,6 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
 
 /**
  * PearPlanner
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 public class Room extends VersionControlEntity
 {
     // private data
-    private Building building;
+    private Building building = null;
     private String roomNumber;
 
 
@@ -52,5 +51,28 @@ public class Room extends VersionControlEntity
     {
         // initial set up code below - check if this needs updating
         roomNumber = newRoomNumber;
+    }
+
+    public Room(String cRoomNumber , Building cBuilding)
+    {
+        setRoomNumber(cRoomNumber);
+        setBuilding(cBuilding);
+    }
+    public Room(String cRoomNumber)
+    {
+        setRoomNumber(cRoomNumber);
+    }
+
+    @Override
+    public String toString()
+    {
+        if(building==null)
+        {
+            return name + "( " + roomNumber + " )";
+        }
+        else
+        {
+            return name + "( " + roomNumber + " ) located in "+building.toString();
+        }
     }
 }

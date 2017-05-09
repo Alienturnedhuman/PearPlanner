@@ -32,5 +32,9 @@ public class ActivityEvent extends Event
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
 
+    public ActivityEvent(String cDate)
+    {
+        super(cDate);
+    }
 
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public abstract class ModelEntity {
+public class ModelEntity {
     protected String name = "";
     protected MultilineString details;
     protected ArrayList<Note> notes;
@@ -38,6 +38,24 @@ public abstract class ModelEntity {
     {
         details = new MultilineString((String[])newDetails.toArray());
     }
+    public void setDetails(MultilineString newDetails)
+    {
+        details = newDetails;
+    }
+
+
+
+    public void addProperties(String aName, MultilineString aDetails)
+    {
+        setName(aName);
+        setDetails(aDetails.clone());
+    }
+    public void addProperties(String aName, String aDetails)
+    {
+        setName(aName);
+        setDetails(aDetails);
+    }
+
     ModelEntity()
     {
         this("");

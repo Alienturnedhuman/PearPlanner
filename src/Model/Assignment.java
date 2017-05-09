@@ -1,7 +1,5 @@
 package Model;
 
-import com.sun.org.apache.regexp.internal.RE;
-
 import java.util.ArrayList;
 
 /**
@@ -41,7 +39,7 @@ public abstract class Assignment extends VersionControlEntity
 
 
     // public enums
-    public static enum StateType {IN_PROGRESS,DEADLINE_PASSED,NOT_STARTED};
+    public enum StateType {IN_PROGRESS,DEADLINE_PASSED,NOT_STARTED}
 
     // public methods
 
@@ -77,5 +75,15 @@ public abstract class Assignment extends VersionControlEntity
     public StateType getState()
     {
         return state;
+    }
+
+    // Constructor
+    public Assignment(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks)
+    {
+        weighting = cWeighting;
+        setBy = cSetBy;
+        markedBy = cMarkedBy;
+        reviewedBy = cReviewedBy;
+        marks = cMarks;
     }
 }

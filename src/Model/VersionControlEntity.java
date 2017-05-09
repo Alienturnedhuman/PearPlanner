@@ -10,7 +10,7 @@ import java.util.HashMap;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public abstract class VersionControlEntity extends ModelEntity
+public class VersionControlEntity extends ModelEntity
 {
     protected int version;
     protected String uid;
@@ -56,6 +56,8 @@ public abstract class VersionControlEntity extends ModelEntity
             return false;
         }
     }
+
+
     public static boolean inLibrary(String UID)
     {
         return library.containsKey(UID);
@@ -73,6 +75,20 @@ public abstract class VersionControlEntity extends ModelEntity
         return uid;
     }
 
+    public boolean setUID(String newUID, int newVersion)
+    {
+        if(sealed || library.containsKey(newUID))
+        {
+            return false;
+        }
+        else
+        {
+            uid = newUID;
+            library.put(newUID,this);
+            version = newVersion;
+            return true;
+        }
+    }
     public boolean setUID(String newUID)
     {
         if(sealed || library.containsKey(newUID))
@@ -87,6 +103,8 @@ public abstract class VersionControlEntity extends ModelEntity
         }
     }
 
+
+    // Constructors
     public VersionControlEntity(boolean leaveUnsealed)
     {
         super();

@@ -67,7 +67,7 @@
             </Button>
          </children>
       </HBox>
-      <Label text="Create Account">
+      <Label fx:id="createAccountLabel" text="Create Account">
          <font>
             <Font size="30.0" />
          </font>
