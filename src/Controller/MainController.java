@@ -54,6 +54,8 @@ public class MainController
                 // Welcome notification:
                 Notification not = new Notification("Welcome!", new GregorianCalendar(), "Thank you for using PearPlanner!");
                 SPC.getPlanner().addNotification(not);
+                not = new Notification("No file yet!", new GregorianCalendar(), "To begin using the PearPlanner, please upload a HUB file.");
+                SPC.getPlanner().addNotification(not);
             }
         } catch (Exception e)
         {
@@ -106,7 +108,7 @@ public class MainController
             }
         }
     }
-    
+
     /**
      * Apparent (according to Stackoverflow) the Java Standard library doesn't have a
      * standard check for testing if a string value is a number or not?!)

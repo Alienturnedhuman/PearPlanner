@@ -95,15 +95,9 @@ public class AccountController implements Initializable
     public void validateNumber()
     {
         if (account_no.getText().trim().isEmpty())
-        {
-            this.account_no.setStyle("-fx-text-box-border:red;");
             this.submit.setDisable(true);
-        }
         else
-        {
-            this.account_no.setStyle("");
             this.handleChange();
-        }
     }
 
     public void handleSubmit()

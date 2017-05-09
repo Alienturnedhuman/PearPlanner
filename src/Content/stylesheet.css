@@ -1,11 +1,29 @@
-.unread {
+.unread-button {
     -fx-background-image: url('/Content/notification1.png');
 }
 
-.read {
+.read-button {
     -fx-background-image: url('/Content/notification0.png');
 }
 
-.notificationItem {
-    -fx-padding: 5px;
+.notificationItem-title {
+    -fx-padding: 5px 5px 0px;
+    -fx-display: block;
+}
+
+.notificationItem-details {
+    -fx-padding: 0px 5px 5px;
+    -fx-display: block;
+    -fx-font-size: 85%;
+}
+
+.notificationItem-date {
+    -fx-font-size: 75%;
+    -fx-text-fill: darkslategrey;
+    -fx-padding: 0px 5px;
+}
+
+.unread-item {
+    -fx-background-color: lightgray;
+    -fx-display: block;
 }

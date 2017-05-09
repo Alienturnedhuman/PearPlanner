@@ -68,12 +68,10 @@
                 </ToolBar>
                 <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
                    <content>
-                      <GridPane fx:id="notificationList" vgap="10">
-                        <columnConstraints>
-                          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                        </columnConstraints>
-                        <rowConstraints>
-                        </rowConstraints>
+                      <GridPane fx:id="notificationList">
+                          <columnConstraints >
+                              <ColumnConstraints prefWidth="286.0" maxWidth="286.0"/>
+                          </columnConstraints>
                       </GridPane>
                    </content>
                 </ScrollPane>
