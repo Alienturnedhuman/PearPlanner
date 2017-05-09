@@ -506,7 +506,13 @@ public class DataController {
                     newModules.add(thisModule);
                 }
             }
-            r = new HubFile(version,year,semester,newModules,newAssets);
+
+
+            String name = studyProfileValues.get("name").getString();
+            MultilineString details = studyProfileValues.get("details").getMultilineString();
+            UID = studyProfileValues.get("uid").getString();
+
+            r = new HubFile(version,year,semester,newModules,newAssets,name,details,UID);
         }
         return r;
     }
