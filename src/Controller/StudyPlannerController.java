@@ -1,15 +1,14 @@
 package Controller;
 
 import Model.*;
-import View.ConsoleIO;
-
 
 import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
-import java.security.InvalidKeyException;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 /**
  * Created by bendickson on 5/4/17.
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 public class StudyPlannerController
 {
     private StudyPlanner planner;
-    private static final long serialVersionUID = 101L; //probably needs to be linked to the version control or such
 
     // public methods
 
@@ -37,18 +35,12 @@ public class StudyPlannerController
             ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);
             outputStream.writeObject(sealedObject);
             outputStream.close();
-
             return true;
         } catch (Exception e)
         {
             e.printStackTrace();
             return false;
         }
-    }
-
-    public String[] getStudyProfiles()
-    {
-        return planner.getListOfStudyProfiles();
     }
 
     /**
@@ -61,11 +53,6 @@ public class StudyPlannerController
     {
         return false;
         // not implemented yet
-    }
-
-    public Notification[] getNotifications()
-    {
-        return this.planner.getNotifications();
     }
 
     /**

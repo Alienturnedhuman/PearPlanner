@@ -1,9 +1,9 @@
 package View;
 
-import Controller.*;
-import Model.*;
+import Controller.DataController;
+import Controller.StudyPlannerController;
+import Model.HubFile;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -77,7 +77,7 @@ public class ConsoleIO {
     static public String view_viewSP(StudyPlannerController SPC)
     {
         View.ConsoleIO.setConsoleMessage("VIEW A STUDY PROFILE");
-        String[] studyProfiles = SPC.getStudyProfiles();
+        String[] studyProfiles = SPC.getPlanner().getListOfStudyProfiles();
         int i =-1, ii = studyProfiles.length;
 
         if(ii<1)

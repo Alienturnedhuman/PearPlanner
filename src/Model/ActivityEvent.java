@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -7,7 +8,7 @@ import java.util.GregorianCalendar;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class ActivityEvent extends Event
+public class ActivityEvent extends Event implements Serializable
 {
     private ArrayList<Task> tasks;
     private boolean checkedComplete;

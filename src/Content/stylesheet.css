@@ -1,0 +1,11 @@
+.unread {
+    -fx-background-image: url('/Content/notification1.png');
+}
+
+.read {
+    -fx-background-image: url('/Content/notification0.png');
+}
+
+.notificationItem {
+    -fx-padding: 5px;
+}

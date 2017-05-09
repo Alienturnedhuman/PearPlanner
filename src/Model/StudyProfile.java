@@ -1,12 +1,14 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class StudyProfile
+public class StudyProfile extends VersionControlEntity implements Serializable
+
 {
     // private data
     private ArrayList<Module> modules;
@@ -34,6 +36,19 @@ public class StudyProfile
         return name;
     }
 
+    public int getYear()
+    {
+        return year;
+    }
+    public int getSemester()
+    {
+        return semesterNo;
+    }
+
+    public boolean matches(int mYear, int mSemesterNo)
+    {
+        return mYear==year&&mSemesterNo==semesterNo;
+    }
     // constructors
     StudyProfile()
     {
@@ -43,6 +58,16 @@ public class StudyProfile
     StudyProfile(HubFile initialHubFile)
     {
         // initial set up code below - check if this needs updating
+        ArrayList<Module> hfModules = initialHubFile.getModules();
+        int i = -1;
+        int ii = hfModules.size();
+        while(++i<ii)
+        {
+            modules.add(hfModules.get(i));
+        }
+        milestones = new ArrayList<>();
+        year = initialHubFile.getYear();
+        semesterNo = initialHubFile.getSemester();
 
     }
 }

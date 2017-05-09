@@ -1,13 +1,20 @@
 package Controller;
 
 import Model.Account;
-import Model.Person;
+import Model.Notification;
 import Model.StudyPlanner;
 import View.UIManager;
 
-import javax.crypto.*;
+import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
+import javax.crypto.SealedObject;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.GregorianCalendar;
 
 /**
  * Created by bendickson on 5/4/17.
@@ -44,6 +51,9 @@ public class MainController
             {
                 Account newAccount = ui.createAccount();
                 SPC = new StudyPlannerController(newAccount);
+                // Welcome notification:
+                Notification not = new Notification("Welcome!", new GregorianCalendar(), "Thank you for using PearPlanner!");
+                SPC.getPlanner().addNotification(not);
             }
         } catch (Exception e)
         {
@@ -51,7 +61,6 @@ public class MainController
             View.ConsoleIO.setConsoleMessage("Good bye!");
             System.exit(1);
         }
-
         //consoleUI("Return to Main Menu");
     }
 

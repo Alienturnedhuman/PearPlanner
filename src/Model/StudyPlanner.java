@@ -1,11 +1,11 @@
 package Model;
 
 import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 /**
  * PearPlanner
@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class StudyPlanner implements Serializable
 {
     // private data
+    private static final long serialVersionUID = 101L; //probably needs to be linked to the version control or such
+
     private Account account;
     private ArrayList<QuantityType> quantityTypes = new ArrayList<QuantityType>();
     private ArrayList<TaskType> taskTypes = new ArrayList<TaskType>();
@@ -23,7 +25,9 @@ public class StudyPlanner implements Serializable
     private ArrayList<Event> calendar = new ArrayList<Event>();
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
+    // public methods
 
+    // getters
     public String getUserName()
     {
         return this.account.getStudentDetails().getFullName();
@@ -52,7 +56,14 @@ public class StudyPlanner implements Serializable
         return r;
     }
 
-    // public methods
+    public Notification[] getUnreadNotifications()
+    {
+        Notification[] r = this.notifications.stream().filter(e -> !e.isRead()).toArray(Notification[]::new);
+        return r;
+    }
+
+    // setters
+
     public void loadFile(String filePath)
     {
         // initial set up code below - check if this needs updating
@@ -60,7 +71,6 @@ public class StudyPlanner implements Serializable
 
     }
 
-    // getters
     public void processHubFile(HubFile newHubFile)
     {
         // initial set up code below - check if this needs updating
@@ -68,33 +78,17 @@ public class StudyPlanner implements Serializable
 
     }
 
-
-    public void writeObject(Cipher cipher, String fileName, SecretKey key64) throws IOException, IllegalBlockSizeException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException
+    public void addNotification(Notification notification)
     {
-        cipher.init(Cipher.ENCRYPT_MODE, key64);
-
-        SealedObject sealedObject = new SealedObject(this, cipher);
-        CipherOutputStream cipherOutputStream = new CipherOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)), cipher);
-        ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);
-        outputStream.writeObject(sealedObject);
-        outputStream.close();
+        this.notifications.add(notification);
     }
 
-    // setters
+    // constructors
 
-    // constructor
     public StudyPlanner(Account newAccount) throws NoSuchPaddingException, NoSuchAlgorithmException
     {
         // it may make sense to clone this to stop someone retaining access to the
         // object
         account = newAccount;
     }
-
-    //empty constructor
-    public StudyPlanner()
-    {
-
-    }
-
-
 }
