@@ -92,4 +92,11 @@ public class Notification implements Serializable
         this.details = new MultilineString(details);
         this.read = false;
     }
+
+    public Notification(String title, GregorianCalendar dateTime)
+    {
+        this.title = title;
+        this.dateTime = dateTime;
+        this.read = false;
+    }
 }

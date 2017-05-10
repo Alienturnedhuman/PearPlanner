@@ -40,58 +40,70 @@ public class AccountController implements Initializable
         return success;
     }
 
+    /**
+     * Handle changes to the text fields
+     */
     public void handleChange()
     {
         if (Person.validSalutation(this.salutation.getText().trim()) &&
-            Person.validName(this.full_name.getText().trim()) &&
-            (this.email.getText().trim().isEmpty() || Person.validEmail(this.email.getText().trim())) &&
-            !account_no.getText().trim().isEmpty())
+                Person.validName(this.full_name.getText().trim()) &&
+                (this.email.getText().trim().isEmpty() || Person.validEmail(this.email.getText().trim())) &&
+                !account_no.getText().trim().isEmpty())
 
             this.submit.setDisable(false);
     }
 
+    /**
+     * Validate data in the Salutation field
+     */
     public void validateSalutation()
     {
         if (!Person.validSalutation(this.salutation.getText().trim()))
         {
             this.salutation.setStyle("-fx-text-box-border:red;");
             this.submit.setDisable(true);
-        }
-        else
+        } else
         {
             this.salutation.setStyle("");
             this.handleChange();
         }
     }
 
+    /**
+     * Validate data in the Name field
+     */
     public void validateName()
     {
         if (!Person.validName(this.full_name.getText().trim()))
         {
             this.full_name.setStyle("-fx-text-box-border:red;");
             this.submit.setDisable(true);
-        }
-        else
+        } else
         {
             this.full_name.setStyle("");
             this.handleChange();
         }
     }
 
+    /**
+     * Validate data in the Email field
+     */
     public void validateEmail()
     {
         if (this.email.getText().trim().isEmpty() || Person.validEmail(this.email.getText().trim()))
         {
             this.email.setStyle("");
             this.handleChange();
-        }
-        else
+        } else
         {
             this.email.setStyle("-fx-text-box-border:red;");
             this.submit.setDisable(true);
         }
     }
 
+    /**
+     * Validate data in the Account Number field
+     */
     public void validateNumber()
     {
         if (account_no.getText().trim().isEmpty())
@@ -100,6 +112,9 @@ public class AccountController implements Initializable
             this.handleChange();
     }
 
+    /**
+     * Submit the form and create a new Account
+     */
     public void handleSubmit()
     {
         Person p = new Person(this.salutation.getText().trim(), this.full_name.getText().trim(),
@@ -114,6 +129,9 @@ public class AccountController implements Initializable
         stage.close();
     }
 
+    /**
+     * Handle Quit button
+     */
     public void handleQuit()
     {
         Stage stage = (Stage) this.submit.getScene().getWindow();

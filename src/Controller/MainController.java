@@ -5,7 +5,6 @@ import Model.HubFile;
 import Model.Notification;
 import Model.StudyPlanner;
 import View.UIManager;
-import javafx.scene.control.Alert;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;

@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MenuController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../Content/stylesheet.css" fx:controller="Controller.MenuController">
     <children>
         <ToolBar minHeight="56.0" style="-fx-background-color: #5C8B76" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
@@ -43,7 +43,7 @@
                   <RowConstraints />
                     </rowConstraints>
                     <children>
-                        <Button onAction="#main" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Study Dashboard" GridPane.rowIndex="0" />
+                        <Button fx:id="showDash" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Study Dashboard" GridPane.rowIndex="0" />
                         <Button fx:id="addActivity" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Add activity" GridPane.rowIndex="1" />
                         <Button fx:id="milestones" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Milestones" GridPane.rowIndex="2" />
                         <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Study Profiles" GridPane.rowIndex="3" />

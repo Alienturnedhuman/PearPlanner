@@ -2,22 +2,26 @@ package Controller;
 
 import Model.Module;
 import Model.Notification;
+import Model.StudyProfile;
 import View.UIManager;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Orientation;
 import javafx.scene.Cursor;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Locale;
@@ -28,45 +32,57 @@ import java.util.ResourceBundle;
  */
 public class MenuController implements Initializable
 {
+    public enum Window
+    {
+        Dashboard, Profiles
+    }
+
+    private Window current;
+    private boolean isNavOpen;
+
     // Labels:
-    @FXML
-    private Label welcome;
+    @FXML private Label welcome;
 
     // Buttons:
-    @FXML
-    private Button openMenu;
-    @FXML
-    private Button showNotification;
-    @FXML
-    private Button addActivity;
-    @FXML
-    private Button studyProfiles;
-    @FXML
-    private Button milestones;
+    @FXML private Button openMenu;
+    @FXML private Button showNotification;
+    @FXML private Button showDash;
+    @FXML private Button addActivity;
+    @FXML private Button studyProfiles;
+    @FXML private Button milestones;
 
     // Panes:
-    @FXML
-    private AnchorPane navList;
-    @FXML
-    private AnchorPane notifications;
-    @FXML
-    private GridPane notificationList;
-    @FXML
-    private GridPane mainContent;
+    @FXML private AnchorPane navList;
+    @FXML private AnchorPane notifications;
+    @FXML private GridPane notificationList;
+    @FXML private GridPane mainContent;
 
+
+    public void main(Window wind)
+    {
+        this.current = wind;
+        this.main();
+    }
 
     public void main()
     {
-        openMenu.fire();
-        if (MainController.getSPC().getPlanner().getListOfStudyProfiles().length > 0)
-            this.loadMain();
+        if (isNavOpen)
+            openMenu.fire();
+
+        this.updateNotifications();
+        this.updateMenu();
+
+        if (this.current == Window.Dashboard && MainController.getSPC().getPlanner().getListOfStudyProfileNames().length > 0)
+            this.loadDashboard();
+        else if (this.current == Window.Profiles)
+            this.loadStudyProfiles();
     }
 
-    public void loadMain()
+    public void loadDashboard()
     {
+        // Update main pane:
+        this.mainContent.getChildren().get(0).setVisible(true);
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
-
-        // Create labels (move to .fxml when a final layout is agreed upon):
 
         // Display modules:
         Label modules = new Label("Modules");
@@ -80,6 +96,71 @@ public class MenuController implements Initializable
             temp.getStyleClass().add("list-item");
             this.mainContent.addRow(i++, temp);
         }
+    }
+
+    public void loadStudyProfiles()
+    {
+        // Update main pane:
+        this.mainContent.getChildren().get(0).setVisible(false);
+        this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+
+        // Display profiles:
+        Label modules = new Label("Study Profiles");
+        modules.getStyleClass().add("title");
+        this.mainContent.addRow(1, modules);
+
+        // Column:
+        TableColumn<StudyProfile, String> nameColumn = new TableColumn<>("Profile name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<StudyProfile, Integer> yearColumn = new TableColumn<>("Year");
+        yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
+
+        TableColumn<StudyProfile, Integer> semesterColumn = new TableColumn<>("Semester");
+        semesterColumn.setCellValueFactory(new PropertyValueFactory<>("semesterNo"));
+
+        ObservableList<StudyProfile> list = FXCollections.observableArrayList(MainController.getSPC().getPlanner().getStudyProfiles());
+
+        // Create a table:
+        TableView<StudyProfile> table = new TableView<>();
+        table.setItems(list);
+        table.getColumns().addAll(nameColumn, yearColumn, semesterColumn);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        GridPane.setHgrow(table, Priority.ALWAYS);
+        GridPane.setVgrow(table, Priority.ALWAYS);
+
+        // Set click event:
+        table.setRowFactory(e -> {
+            TableRow<StudyProfile> row = new TableRow<StudyProfile>()
+            {
+                @Override
+                protected void updateItem(final StudyProfile item, final boolean empty)
+                {
+                    super.updateItem(item, empty);
+                    if (!empty && item != null)
+                        if (item.isCurrent())
+                            this.getStyleClass().add("current-item");
+                }
+            };
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                {
+                    try
+                    {
+                        StudyProfile profile = row.getItem();
+                        MainController.ui.studyProfileDetails(profile);
+                        this.main();
+                    } catch (IOException e1)
+                    {
+                        UIManager.reportError("Unable to open View file");
+                    }
+                }
+            });
+            return row;
+        });
+
+        this.mainContent.addRow(2, table);
+        this.mainContent.getStyleClass().add("list-item");
     }
 
     /**
@@ -108,12 +189,14 @@ public class MenuController implements Initializable
 
     /**
      * Handles clicking on a specific notification
+     *
      * @param id
      */
     public void handleRead(int id)
     {
         // Get notification:
-        Notification not = MainController.getSPC().getPlanner().getNotifications()[id];
+        int idInList = MainController.getSPC().getPlanner().getNotifications().length - 1 - id;
+        Notification not = MainController.getSPC().getPlanner().getNotifications()[idInList];
 
         // If not read:
         if (!not.isRead())
@@ -126,11 +209,18 @@ public class MenuController implements Initializable
             if (MainController.getSPC().getPlanner().getUnreadNotifications().length <= 0)
             {
                 this.showNotification.getStyleClass().remove("unread-button");
-                this.showNotification.getStyleClass().add("read-button");
+                if (!this.showNotification.getStyleClass().contains("read-button"))
+                    this.showNotification.getStyleClass().add("read-button");
             }
 
             if (not.getLink() == null)
                 this.notificationList.getChildren().get(id).setCursor(Cursor.DEFAULT);
+        }
+
+        if (not.getLink() != null)
+        {
+            not.getLink().open();
+            this.main();
         }
     }
 
@@ -148,24 +238,37 @@ public class MenuController implements Initializable
     public void initialize(URL location, ResourceBundle resources)
     {
         this.prepareAnimations();
+        this.isNavOpen = false;
+
+        this.showDash.setOnAction(e -> this.main(Window.Dashboard));
+        this.studyProfiles.setOnAction(e -> this.main(Window.Profiles));
+
         this.welcome.setText("Welcome back, " + MainController.getSPC().getPlanner().getUserName() + "!");
 
-        // Disable relevant openMenu options:
-        if (MainController.getSPC().getPlanner().getListOfStudyProfiles().length <= 0)
-        {
-            this.addActivity.setDisable(true);
-            this.studyProfiles.setDisable(true);
-            this.milestones.setDisable(true);
-        } else
-            this.loadMain();
+        this.main(Window.Dashboard);
+    }
 
+    /**
+     * Prepare notifications
+     */
+    private void updateNotifications()
+    {
         // Set notification button style:
         if (MainController.getSPC().getPlanner().getUnreadNotifications().length > 0)
-            this.showNotification.getStyleClass().add("unread-button");
-        else
+        {
+            if (!this.showNotification.getStyleClass().contains("unread-button"))
+            {
+                this.showNotification.getStyleClass().remove("read-button");
+                this.showNotification.getStyleClass().add("unread-button");
+            }
+        } else if (!this.showNotification.getStyleClass().contains("read-button"))
+        {
             this.showNotification.getStyleClass().add("read-button");
+            this.showNotification.getStyleClass().remove("unread-button");
+        }
 
         // Process notifications:
+        this.notificationList.getChildren().clear();
         Notification[] n = MainController.getSPC().getPlanner().getNotifications();
         for (int i = n.length - 1; i >= 0; i--)
         {
@@ -187,7 +290,7 @@ public class MenuController implements Initializable
             Label title = new Label(n[i].getTitle());
             title.getStyleClass().add("notificationItem-title");
 
-            Label details = new Label(n[i].getDetailsAsString());
+            Label details = n[i].getDetails() != null ? new Label(n[i].getDetailsAsString()) : new Label();
             details.getStyleClass().add("notificationItem-details");
 
             String dateFormatted = n[i].getDateTime().get(Calendar.DAY_OF_MONTH) + " " +
@@ -208,6 +311,28 @@ public class MenuController implements Initializable
     }
 
     /**
+     * Handles menu options
+     */
+    private void updateMenu()
+    {
+        this.addActivity.setDisable(false);
+        this.milestones.setDisable(false);
+        this.studyProfiles.setDisable(false);
+
+        // Disable relevant menu options:
+        if (MainController.getSPC().getPlanner().getCurrentStudyProfile() == null)
+        {
+            this.addActivity.setDisable(true);
+            this.milestones.setDisable(true);
+            this.studyProfiles.setDisable(true);
+        } else if (MainController.getSPC().getCurrentTasks().size() <= 0)
+        {
+            this.addActivity.setDisable(true);
+            this.milestones.setDisable(true);
+        }
+    }
+
+    /**
      * Prepares animations for the main window
      */
     private void prepareAnimations()
@@ -216,6 +341,7 @@ public class MenuController implements Initializable
         openNav.setToX(0);
         TranslateTransition closeNav = new TranslateTransition(new Duration(300), navList);
         openMenu.setOnAction((ActionEvent e) -> {
+            this.isNavOpen = !isNavOpen;
             if (navList.getTranslateX() != 0)
             {
                 openNav.play();
@@ -241,4 +367,16 @@ public class MenuController implements Initializable
             }
         });
     }
+
+//    public static class Previous
+//    {
+//        public Window current;
+//        public Previous previous;
+//
+//        public Previous(Window current, Previous prev)
+//        {
+//            this.current = current;
+//            this.previous = prev;
+//        }
+//    }
 }

@@ -2,7 +2,6 @@ package Model;
 
 import Controller.MainController;
 
-import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 

@@ -23,7 +23,7 @@ public class StudyPlanner implements Serializable
     private ArrayList<Event> calendar = new ArrayList<Event>();
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
-    private int currentStudyProfile;
+    private StudyProfile currentStudyProfile;
 
     // public methods
 
@@ -34,7 +34,7 @@ public class StudyPlanner implements Serializable
      *
      * @return
      */
-    public String[] getListOfStudyProfiles()
+    public String[] getListOfStudyProfileNames()
     {
         int i = -1;
         String[] r = new String[studyProfiles.size()];
@@ -43,6 +43,18 @@ public class StudyPlanner implements Serializable
             r[i] = studyProfiles.get(i).getName();
         }
         return r;
+    }
+
+    /**
+     * Returns an array of study profiles
+     *
+     * @return
+     */
+    public StudyProfile[] getStudyProfiles()
+    {
+        StudyProfile[] sp = new StudyProfile[this.studyProfiles.size()];
+        sp = this.studyProfiles.toArray(sp);
+        return sp;
     }
 
     public boolean containsStudyProfile(int sYear, int sSem)
@@ -59,9 +71,14 @@ public class StudyPlanner implements Serializable
         return false;
     }
 
+    /**
+     * Returns the current StudyProfile
+     *
+     * @return current StudyProfile
+     */
     public StudyProfile getCurrentStudyProfile()
     {
-        return this.studyProfiles.get(this.currentStudyProfile);
+        return this.currentStudyProfile;
     }
 
     public String getUserName()
@@ -111,20 +128,23 @@ public class StudyPlanner implements Serializable
     {
         if (this.studyProfiles.contains(profile))
         {
-            this.currentStudyProfile = this.studyProfiles.indexOf(profile);
+            if (this.currentStudyProfile != null)
+                this.currentStudyProfile.setCurrent(false);
+            this.currentStudyProfile = profile;
+            profile.setCurrent(true);
             return true;
         }
         return false;
     }
 
-    public boolean setCurrentStudyProfile(int profileIndex)
+    public boolean setCurrentStudyProfile(String profileID)
     {
-        if (this.studyProfiles.size() > profileIndex)
-        {
-            this.currentStudyProfile = profileIndex;
-            return true;
-        }
-        return false;
+        this.studyProfiles.forEach(e -> {
+            if (e.getUID().equals(profileID))
+                this.setCurrentStudyProfile(e);
+        });
+
+        return this.currentStudyProfile.getUID().equals(profileID);
     }
 
     /**
@@ -148,6 +168,6 @@ public class StudyPlanner implements Serializable
     {
         // it may make sense to clone this to stop someone retaining access to the
         // object
-        account = newAccount;
+        this.account = newAccount;
     }
 }

@@ -63,29 +63,35 @@ public class ModelEntity implements Serializable
         setDetails(aDetails);
     }
 
-    ModelEntity()
+    /**
+     * Open the appropriate UI window for this class
+     * To be overridden by childs.
+     */
+    public void open() { }
+
+    public ModelEntity()
     {
         this("");
     }
 
-    ModelEntity(String cName)
+    public ModelEntity(String cName)
     {
         this(cName, "");
     }
 
-    ModelEntity(String cName, String cDetails)
+    public ModelEntity(String cName, String cDetails)
     {
         this(cName, cDetails.split("\n"));
     }
 
-    ModelEntity(String cName, String[] cDetails)
+    public ModelEntity(String cName, String[] cDetails)
     {
         setName(cName);
         setDetails(cDetails);
         notes = new ArrayList<>();
     }
 
-    ModelEntity(String cName, String[] cDetails, ArrayList<Note> cNotes)
+    public ModelEntity(String cName, String[] cDetails, ArrayList<Note> cNotes)
     {
         this(cName, cDetails);
         notes = (ArrayList<Note>) cNotes.clone();

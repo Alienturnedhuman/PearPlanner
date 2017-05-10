@@ -1,6 +1,5 @@
 package Model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +12,7 @@ public class Module extends VersionControlEntity
     private ArrayList<Assignment> assignments = new ArrayList<>();
     private Person organiser;
     private String moduleCode;
-    private ArrayList<TimetableEvent> timetable;
+    private ArrayList<TimetableEvent> timetable = new ArrayList<>();
 
 
     // private methods

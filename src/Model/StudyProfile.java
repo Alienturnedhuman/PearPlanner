@@ -1,6 +1,9 @@
 package Model;
 
-import java.io.Serializable;
+import Controller.MainController;
+import View.UIManager;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -14,11 +17,9 @@ public class StudyProfile extends VersionControlEntity
     private ArrayList<Module> modules;
     private ArrayList<Milestone> milestones;
     private ArrayList<ExtensionApplication> extensions;
-    private String name;
-    private MultilineString details;
     private int year;
     private int semesterNo;
-    private int version;
+    private boolean current;
 
     // public methods
 
@@ -28,6 +29,37 @@ public class StudyProfile extends VersionControlEntity
         Module[] m = new Module[this.modules.size()];
         m = this.modules.toArray(m);
         return m;
+    }
+
+    public Milestone[] getMilestones()
+    {
+        Milestone[] m = new Milestone[this.milestones.size()];
+        m = this.milestones.toArray(m);
+        return m;
+    }
+
+    public ExtensionApplication[] getExtensions()
+    {
+        ExtensionApplication[] e = new ExtensionApplication[this.extensions.size()];
+        e = this.extensions.toArray(e);
+        return e;
+    }
+
+    public ArrayList<Task> getTasks()
+    {
+        ArrayList<Task> tasks = new ArrayList<>();
+        this.modules.forEach(e -> e.getAssignments().forEach(ee -> tasks.addAll(ee.getTasks())));
+        return tasks;
+    }
+
+    public boolean isCurrent()
+    {
+        return current;
+    }
+
+    public void setCurrent(boolean current)
+    {
+        this.current = current;
     }
 
     public int milestonesCompleted()
@@ -52,7 +84,7 @@ public class StudyProfile extends VersionControlEntity
         return year;
     }
 
-    public int getSemester()
+    public int getSemesterNo()
     {
         return semesterNo;
     }
@@ -60,6 +92,18 @@ public class StudyProfile extends VersionControlEntity
     public boolean matches(int mYear, int mSemesterNo)
     {
         return mYear == year && mSemesterNo == semesterNo;
+    }
+
+    @Override
+    public void open()
+    {
+        try
+        {
+            MainController.ui.studyProfileDetails(this);
+        } catch (IOException e)
+        {
+            UIManager.reportError("Unable to open View file");
+        }
     }
 
     // constructors
@@ -76,5 +120,7 @@ public class StudyProfile extends VersionControlEntity
         this.version = initialHubFile.getVersion();
         this.name = initialHubFile.getSemesterName();
         this.details = initialHubFile.getSemesterDetails();
+
+        this.current = false;
     }
 }

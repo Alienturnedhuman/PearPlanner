@@ -78,7 +78,7 @@ public class ConsoleIO {
     static public String view_viewSP(StudyPlannerController SPC)
     {
         View.ConsoleIO.setConsoleMessage("VIEW A STUDY PROFILE");
-        String[] studyProfiles = SPC.getPlanner().getListOfStudyProfiles();
+        String[] studyProfiles = SPC.getPlanner().getListOfStudyProfileNames();
         int i =-1, ii = studyProfiles.length;
 
         if(ii<1)

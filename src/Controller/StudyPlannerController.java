@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 /**
  * Created by bendickson on 5/4/17.
@@ -99,6 +100,17 @@ public class StudyPlannerController
         {
             StudyProfile profile = new StudyProfile(hubFile);
             this.planner.addStudyProfile(profile);
+            if (this.planner.getCurrentStudyProfile() == null)
+            {
+                this.planner.setCurrentStudyProfile(profile);
+                profile.setCurrent(true);
+            }
+
+            // Notify user:
+            Notification not = new Notification("New study profile created!", new GregorianCalendar(),
+                    "\"" + profile.getName() + "\"", profile);
+            this.planner.addNotification(not);
+
             return true;
         }
         return false;
@@ -126,6 +138,18 @@ public class StudyPlannerController
     public ArrayList<Task> getListOfTasks(ModelEntity model, ArrayList<Task> taskList)
     {
         return null;
+    }
+
+    /**
+     * returns a list of tasks in the current StudyProfile if it exists
+     * or an empty list if it doesn't
+     */
+    public ArrayList<Task> getCurrentTasks()
+    {
+        if (this.getPlanner().getCurrentStudyProfile() != null)
+            return this.getPlanner().getCurrentStudyProfile().getTasks();
+        else
+            return new ArrayList<>();
     }
 
     /**

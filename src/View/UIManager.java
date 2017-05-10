@@ -1,16 +1,20 @@
 package View;
 
 import Controller.AccountController;
+import Controller.StudyProfileController;
 import Model.Account;
+import Model.StudyProfile;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Zilvinas on 04/05/2017.
@@ -64,10 +68,31 @@ public class UIManager
 
         // Set the scene:
         mainStage.setScene(new Scene(root, 700, 750));
-        mainStage.setTitle("Main");
+        mainStage.setTitle("PearPlanner");
         mainStage.getIcons().add(new Image("file:icon.png"));
-        mainStage.getScene().getStylesheets().add("Content/stylesheet.css");
         mainStage.showAndWait();
+    }
+
+    /**
+     * Displays the StudyProfile details page
+     */
+    public void studyProfileDetails(StudyProfile profile) throws IOException
+    {
+        StudyProfileController spc = new StudyProfileController(profile);
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/StudyProfile.fxml"));
+        loader.setController(spc);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 232));
+        stage.setTitle(profile.getName());
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
     }
 
     /**
