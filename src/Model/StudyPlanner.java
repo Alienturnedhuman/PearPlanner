@@ -1,11 +1,9 @@
 package Model;
 
-import javax.crypto.*;
-import java.io.*;
-import java.security.InvalidKeyException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 /**
  * PearPlanner
@@ -25,13 +23,11 @@ public class StudyPlanner implements Serializable
     private ArrayList<Event> calendar = new ArrayList<Event>();
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
+    private int currentStudyProfile;
+
     // public methods
 
     // getters
-    public String getUserName()
-    {
-        return this.account.getStudentDetails().getFullName();
-    }
 
     /**
      * returns a String array of studyProfile names
@@ -49,6 +45,30 @@ public class StudyPlanner implements Serializable
         return r;
     }
 
+    public boolean containsStudyProfile(int sYear, int sSem)
+    {
+        int i = -1;
+        int ii = studyProfiles.size();
+        while (++i < ii)
+        {
+            if (studyProfiles.get(i).matches(sYear, sSem))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public StudyProfile getCurrentStudyProfile()
+    {
+        return this.studyProfiles.get(this.currentStudyProfile);
+    }
+
+    public String getUserName()
+    {
+        return this.account.getStudentDetails().getPreferredName();
+    }
+
     public Notification[] getNotifications()
     {
         Notification[] r = new Notification[this.notifications.size()];
@@ -63,7 +83,6 @@ public class StudyPlanner implements Serializable
     }
 
     // setters
-
     public void loadFile(String filePath)
     {
         // initial set up code below - check if this needs updating
@@ -71,37 +90,51 @@ public class StudyPlanner implements Serializable
 
     }
 
-    public boolean containsStudyProfile(int sYear, int sSem)
-    {
-        int i = -1;
-        int ii = studyProfiles.size();
-        while(++i<ii)
-        {
-            if(studyProfiles.get(i).matches(sYear,sSem))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // getters
     public void processHubFile(HubFile newHubFile)
     {
         // initial set up code below - check if this needs updating
-        if(newHubFile.isUpdate())
+        if (newHubFile.isUpdate())
         {
             // process update file - to do
-        }
-        else
+        } else
         {
-            if(!containsStudyProfile(newHubFile.getYear(),newHubFile.getSemester()))
+            if (!containsStudyProfile(newHubFile.getYear(), newHubFile.getSemester()))
             {
                 StudyProfile newSP = new StudyProfile(newHubFile);
             }
         }
         throw new UnsupportedOperationException("This method is not implemented yet");
 
+    }
+
+    public boolean setCurrentStudyProfile(StudyProfile profile)
+    {
+        if (this.studyProfiles.contains(profile))
+        {
+            this.currentStudyProfile = this.studyProfiles.indexOf(profile);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setCurrentStudyProfile(int profileIndex)
+    {
+        if (this.studyProfiles.size() > profileIndex)
+        {
+            this.currentStudyProfile = profileIndex;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Adds a new StudyProfile to the StudyPlanner
+     *
+     * @param profile
+     */
+    public void addStudyProfile(StudyProfile profile)
+    {
+        this.studyProfiles.add(profile);
     }
 
     public void addNotification(Notification notification)

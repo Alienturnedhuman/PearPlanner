@@ -4,6 +4,7 @@ import Controller.DataController;
 import Controller.StudyPlannerController;
 import Model.HubFile;
 
+import java.io.File;
 import java.util.Scanner;
 
 
@@ -109,11 +110,13 @@ public class ConsoleIO {
         View.ConsoleIO.setConsoleMessage("LOAD A STUDY PROFILE");
 
         String filename = getDataString("Enter filepath:");
-        HubFile fileData = DataController.loadHubFile(filename);
+        File tempFile = new File(filename);
+        HubFile fileData = DataController.loadHubFile(tempFile);
         while(!filename.equals("") && fileData == null)
         {
             filename = getDataString("File not valid, enter a different filepath:");
-            fileData = DataController.loadHubFile(filename);
+            tempFile = new File(filename);
+            fileData = DataController.loadHubFile(tempFile);
         }
 
         System.out.println(fileData.toString());

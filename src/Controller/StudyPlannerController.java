@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 /**
  * Created by bendickson on 5/4/17.
@@ -95,8 +94,14 @@ public class StudyPlannerController
      */
     public boolean createStudyProfile(HubFile hubFile)
     {
+        // Need to process assets and other data!
+        if (!this.planner.containsStudyProfile(hubFile.getYear(), hubFile.getSemester()))
+        {
+            StudyProfile profile = new StudyProfile(hubFile);
+            this.planner.addStudyProfile(profile);
+            return true;
+        }
         return false;
-
     }
 
     /**
@@ -109,7 +114,6 @@ public class StudyPlannerController
     public boolean updateStudyProfile(HubFile hubFile)
     {
         return false;
-
     }
 
     /**
@@ -197,6 +201,7 @@ public class StudyPlannerController
 
     /**
      * Used when loading from a file
+     *
      * @param planner
      */
     public StudyPlannerController(StudyPlanner planner)

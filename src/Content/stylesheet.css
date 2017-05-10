@@ -27,3 +27,12 @@
     -fx-background-color: lightgray;
     -fx-display: block;
 }
+
+.title {
+    -fx-font-size: 1.5em;
+    -fx-padding: 0 15 10;
+}
+
+.list-item {
+    -fx-padding: 0 15;
+}

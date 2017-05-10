@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class Person extends VersionControlEntity implements Serializable
+public class Person extends VersionControlEntity
 {
     // private data
     private ArrayList<String> givenNames;

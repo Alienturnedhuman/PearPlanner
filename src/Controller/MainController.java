@@ -1,9 +1,11 @@
 package Controller;
 
 import Model.Account;
+import Model.HubFile;
 import Model.Notification;
 import Model.StudyPlanner;
 import View.UIManager;
+import javafx.scene.control.Alert;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
@@ -34,11 +36,16 @@ public class MainController
         return SPC;
     }
 
+    /**
+     * Initializes the Study Planner by either registering a new account or
+     * importing an existing Study Planner file.
+     */
     public static void initialise()
     {
         File plannerFile = new File("StudyPlanner.dat");
         try
         {
+            // If a file is present:
             if (plannerFile.exists())
             {
                 Cipher cipher = Cipher.getInstance("Blowfish");
@@ -48,24 +55,24 @@ public class MainController
                 SealedObject sealedObject = (SealedObject) inputStream.readObject();
                 SPC = new StudyPlannerController((StudyPlanner) sealedObject.getObject(cipher));
             } else
+            // If not, prompt to create a new account:
             {
                 Account newAccount = ui.createAccount();
                 SPC = new StudyPlannerController(newAccount);
                 // Welcome notification:
                 Notification not = new Notification("Welcome!", new GregorianCalendar(), "Thank you for using PearPlanner!");
                 SPC.getPlanner().addNotification(not);
-                not = new Notification("No file yet!", new GregorianCalendar(), "To begin using the PearPlanner, please upload a HUB file.");
-                SPC.getPlanner().addNotification(not);
             }
         } catch (Exception e)
         {
-            View.ConsoleIO.setConsoleMessage("INITIALISATION FAILED");
-            View.ConsoleIO.setConsoleMessage("Good bye!");
+            UIManager.reportError(e.getMessage());
             System.exit(1);
         }
-        //consoleUI("Return to Main Menu");
     }
 
+    /**
+     * Display the main menu:
+     */
     public static void main()
     {
         try
@@ -73,39 +80,48 @@ public class MainController
             ui.mainMenu();
         } catch (Exception e)
         {
-            e.printStackTrace();
+            UIManager.reportError(e.getMessage());
         }
     }
 
-    public static void reportError(String message)
+    /**
+     * Handle importing a new file:
+     */
+    public static boolean importFile()
     {
-        System.out.println(message);
+        // Call a dialog:
+        File tempFile = ui.fileDialog();
+        if (tempFile != null)
+        {
+            // If a file was selected, process the file:
+            HubFile fileData = DataController.loadHubFile(tempFile);
+            if (fileData != null)
+            {
+                if (fileData.isUpdate() && !MainController.SPC.updateStudyProfile(fileData))
+                    UIManager.reportError("Cannot update a Study Profile!");
+                else if (!MainController.SPC.createStudyProfile(fileData))
+                    UIManager.reportError("This Study Profile is already created!");
+                else
+                    return true;
+            }
+        }
+        return false;
     }
 
-    private static void consoleUI(String menu)
+    /**
+     * Save the current state of the program to file
+     * @return
+     */
+    public static boolean save()
     {
-        while (!menu.equals(""))
+        try
         {
-            switch (menu)
-            {
-                case "Quit Program":
-                    menu = "";
-                    break;
-                case "Main Menu":
-                case "Return to Main Menu":
-                    menu = View.ConsoleIO.view_main();
-                    break;
-                case "Create Study Profile":
-                    menu = View.ConsoleIO.view_createSP();
-                    break;
-                case "View Study Profile":
-                    menu = View.ConsoleIO.view_viewSP(SPC);
-                    break;
-                case "Load Study Profile File":
-                    menu = View.ConsoleIO.view_loadSP(SPC);
-                default:
-                    menu = "";
-            }
+            SPC.save(MainController.key64, MainController.fileName);
+            return true;
+        } catch (Exception e)
+        {
+            UIManager.reportError("FAILED TO SAVE YOUR DATA!");
+            return false;
         }
     }
 
@@ -132,20 +148,30 @@ public class MainController
         return true;
     }
 
-    /**
-     * Save the current state of the program to file
-     * @return
-     */
-    public static boolean save()
+    private static void consoleUI(String menu)
     {
-        try
+        while (!menu.equals(""))
         {
-            SPC.save(MainController.key64, MainController.fileName);
-            return true;
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-            return false;
+            switch (menu)
+            {
+                case "Quit Program":
+                    menu = "";
+                    break;
+                case "Main Menu":
+                case "Return to Main Menu":
+                    menu = View.ConsoleIO.view_main();
+                    break;
+                case "Create Study Profile":
+                    menu = View.ConsoleIO.view_createSP();
+                    break;
+                case "View Study Profile":
+                    menu = View.ConsoleIO.view_viewSP(SPC);
+                    break;
+                case "Load Study Profile File":
+                    menu = View.ConsoleIO.view_loadSP(SPC);
+                default:
+                    menu = "";
+            }
         }
     }
 

@@ -1,12 +1,14 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class ModelEntity {
+public class ModelEntity implements Serializable
+{
     protected String name = "";
     protected MultilineString details;
     protected ArrayList<Note> notes;
@@ -17,7 +19,8 @@ public class ModelEntity {
     {
         return name;
     }
-    public  MultilineString getDetails()
+
+    public MultilineString getDetails()
     {
         return details;
     }
@@ -26,23 +29,26 @@ public class ModelEntity {
     {
         name = newName;
     }
+
     public void setDetails(String newDetails)
     {
         details = new MultilineString(newDetails);
     }
+
     public void setDetails(String[] newDetails)
     {
         details = new MultilineString(newDetails);
     }
+
     public void setDetails(ArrayList<String> newDetails)
     {
-        details = new MultilineString((String[])newDetails.toArray());
+        details = new MultilineString((String[]) newDetails.toArray());
     }
+
     public void setDetails(MultilineString newDetails)
     {
         details = newDetails;
     }
-
 
 
     public void addProperties(String aName, MultilineString aDetails)
@@ -50,6 +56,7 @@ public class ModelEntity {
         setName(aName);
         setDetails(aDetails.clone());
     }
+
     public void addProperties(String aName, String aDetails)
     {
         setName(aName);
@@ -60,23 +67,27 @@ public class ModelEntity {
     {
         this("");
     }
+
     ModelEntity(String cName)
     {
-        this(cName,"");
+        this(cName, "");
     }
-    ModelEntity(String cName,String cDetails)
+
+    ModelEntity(String cName, String cDetails)
     {
-        this(cName,cDetails.split("\n"));
+        this(cName, cDetails.split("\n"));
     }
+
     ModelEntity(String cName, String[] cDetails)
     {
         setName(cName);
         setDetails(cDetails);
         notes = new ArrayList<>();
     }
-    ModelEntity(String cName,String[] cDetails,ArrayList<Note> cNotes)
+
+    ModelEntity(String cName, String[] cDetails, ArrayList<Note> cNotes)
     {
-        this(cName,cDetails);
-        notes = (ArrayList<Note>)cNotes.clone();
+        this(cName, cDetails);
+        notes = (ArrayList<Note>) cNotes.clone();
     }
 }

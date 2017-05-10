@@ -1,16 +1,16 @@
 package Model;
 
+import Controller.MainController;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
-import Controller.*;
 
 /**
  * ${FILENAME}
  * Created by Andrew Odintsov on 4/27/17.
  */
-public class Event extends VersionControlEntity implements Serializable
+public class Event extends VersionControlEntity
 {
     protected GregorianCalendar date;
 

@@ -1,26 +1,24 @@
 package Controller;
 
+import Model.Module;
 import Model.Notification;
-import com.google.common.base.Splitter;
+import View.UIManager;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.*;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.util.Duration;
 
-import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -30,8 +28,13 @@ import java.util.ResourceBundle;
  */
 public class MenuController implements Initializable
 {
+    // Labels:
     @FXML
-    private Button menu;
+    private Label welcome;
+
+    // Buttons:
+    @FXML
+    private Button openMenu;
     @FXML
     private Button showNotification;
     @FXML
@@ -40,38 +43,73 @@ public class MenuController implements Initializable
     private Button studyProfiles;
     @FXML
     private Button milestones;
+
+    // Panes:
     @FXML
     private AnchorPane navList;
     @FXML
     private AnchorPane notifications;
     @FXML
     private GridPane notificationList;
+    @FXML
+    private GridPane mainContent;
+
 
     public void main()
     {
-        menu.fire();
+        openMenu.fire();
+        if (MainController.getSPC().getPlanner().getListOfStudyProfiles().length > 0)
+            this.loadMain();
     }
 
+    public void loadMain()
+    {
+        this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+
+        // Create labels (move to .fxml when a final layout is agreed upon):
+
+        // Display modules:
+        Label modules = new Label("Modules");
+        modules.getStyleClass().add("title");
+        this.mainContent.addRow(1, modules);
+
+        int i = 2;
+        for (Module module : MainController.getSPC().getPlanner().getCurrentStudyProfile().getModules())
+        {
+            Label temp = new Label(module.getName());
+            temp.getStyleClass().add("list-item");
+            this.mainContent.addRow(i++, temp);
+        }
+    }
+
+    /**
+     * Handles the 'Mark all as read' button event
+     */
     public void handleMarkAll()
     {
-        // Mark all notifications as read:
         Notification[] nots = MainController.getSPC().getPlanner().getUnreadNotifications();
-        for (int i = 0; i < nots.length; i++)
+        // Mark all notifications as read:
+        for (int i = 0; i < nots.length; ++i)
         {
             nots[i].read();
             // Remove cursor:
             if (nots[i].getLink() == null)
                 this.notificationList.getChildren().get(i).setCursor(Cursor.DEFAULT);
+
+            // Change style:
+            this.notificationList.getChildren().get(i).getStyleClass().remove("unread-item");
         }
 
         // Handle styles:
-        this.notificationList.getChildren().forEach(e -> e.getStyleClass().remove("unread-item"));
-
         this.showNotification.getStyleClass().remove("unread-button");
         if (!this.showNotification.getStyleClass().contains("read-button"))
             this.showNotification.getStyleClass().add("read-button");
     }
 
+    /**
+     * Handles clicking on a specific notification
+     * @param id
+     */
     public void handleRead(int id)
     {
         // Get notification:
@@ -96,18 +134,30 @@ public class MenuController implements Initializable
         }
     }
 
+    /**
+     * Handles the 'Import HUB file' event
+     */
+    public void importFile()
+    {
+        if (MainController.importFile())
+            UIManager.reportSuccess("File imported successfully!");
+        this.main();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        prepareSlideMenuAnimation();
+        this.prepareAnimations();
+        this.welcome.setText("Welcome back, " + MainController.getSPC().getPlanner().getUserName() + "!");
 
-        // Disable relevant menu options:
+        // Disable relevant openMenu options:
         if (MainController.getSPC().getPlanner().getListOfStudyProfiles().length <= 0)
         {
             this.addActivity.setDisable(true);
             this.studyProfiles.setDisable(true);
             this.milestones.setDisable(true);
-        }
+        } else
+            this.loadMain();
 
         // Set notification button style:
         if (MainController.getSPC().getPlanner().getUnreadNotifications().length > 0)
@@ -125,7 +175,7 @@ public class MenuController implements Initializable
             if (n[i].getLink() != null || !n[i].isRead())
             {
                 pane.setCursor(Cursor.HAND);
-                pane.setId(new Integer(n.length - i - 1).toString());
+                pane.setId(Integer.toString(n.length - i - 1));
                 pane.setOnMouseClicked(e -> this.handleRead(Integer.parseInt(pane.getId())));
 
                 // Check if unread:
@@ -157,12 +207,15 @@ public class MenuController implements Initializable
         }
     }
 
-    private void prepareSlideMenuAnimation()
+    /**
+     * Prepares animations for the main window
+     */
+    private void prepareAnimations()
     {
         TranslateTransition openNav = new TranslateTransition(new Duration(300), navList);
         openNav.setToX(0);
         TranslateTransition closeNav = new TranslateTransition(new Duration(300), navList);
-        menu.setOnAction((ActionEvent e) -> {
+        openMenu.setOnAction((ActionEvent e) -> {
             if (navList.getTranslateX() != 0)
             {
                 openNav.play();

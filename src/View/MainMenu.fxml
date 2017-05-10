@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MenuController">
     <children>
         <ToolBar minHeight="56.0" style="-fx-background-color: #5C8B76" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <Button fx:id="menu" prefHeight="35.0" prefWidth="25.0" style="-fx-background-color: transparent; -fx-background-image: url('/Content/menu.png'); -fx-background-size: 100% 100%; -fx-cursor: hand" />
+                <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" style="-fx-background-color: transparent; -fx-background-image: url('/Content/menu.png'); -fx-background-size: 100% 100%; -fx-cursor: hand" />
                 <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                    <children>
                        <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Study Dashboard" />
@@ -17,15 +15,15 @@
                 <Button fx:id="showNotification" prefWidth="31.0" style="-fx-background-color: transparent; -fx-background-size: 100% 100%; -fx-cursor: hand;" />
             </items>
         </ToolBar>
-        <StackPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+        <GridPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
             <children>
                 <HBox style="-fx-padding: 10 15;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <Label style="-fx-font-size: 2em" text="Overview" />
+                        <Label fx:id="welcome"/>
                     </children>
                 </HBox>
             </children>
-        </StackPane>
+        </GridPane>
         <AnchorPane fx:id="navList" prefWidth="200.0" style="-fx-background-color: #5C7167;" translateX="-200" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="56.0">
             <children>
                 <HBox alignment="CENTER_LEFT" style="-fx-background-color: #5C7167; -fx-padding: 10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -49,7 +47,7 @@
                         <Button fx:id="addActivity" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Add activity" GridPane.rowIndex="1" />
                         <Button fx:id="milestones" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Milestones" GridPane.rowIndex="2" />
                         <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Study Profiles" GridPane.rowIndex="3" />
-                        <Button style="-fx-background-color: transparent; -fx-cursor: hand;" text="Import HUB file" GridPane.rowIndex="4" />
+                        <Button onAction="#importFile" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Import HUB file" GridPane.rowIndex="4" />
                     </children>
                 </GridPane>
             </children>

@@ -16,7 +16,6 @@ public class Main extends Application
     public static void main(String[] args)
     {
         launch(args);
-        if (!MainController.save())
-            View.ConsoleIO.setConsoleMessage("FAILED TO SAVE YOUR DATA!");
+        MainController.save();
     }
 }
