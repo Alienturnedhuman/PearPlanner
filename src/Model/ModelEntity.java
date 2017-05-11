@@ -42,7 +42,7 @@ public class ModelEntity implements Serializable
 
     public void setDetails(ArrayList<String> newDetails)
     {
-        details = new MultilineString((String[]) newDetails.toArray());
+        details = new MultilineString(newDetails.toArray(new String[newDetails.size()]));
     }
 
     public void setDetails(MultilineString newDetails)

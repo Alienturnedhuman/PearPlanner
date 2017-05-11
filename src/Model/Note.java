@@ -55,4 +55,10 @@ public class Note implements Serializable
         // initial set up code below - check if this needs updating
         text = newText;
     }
+
+    public Note(String title, GregorianCalendar timeStamp, MultilineString text) {
+        this.title = title;
+        this.timeStamp = timeStamp;
+        this.text = text;
+    }
 }

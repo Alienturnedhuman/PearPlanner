@@ -137,8 +137,8 @@ public class Module extends VersionControlEntity
             timetable.remove(newTimetableEvent);
         }
     }
-    // constructors
 
+    // constructors
     public Module(Person cOrganiser , String cModuleCode)
     {
         setOrganiser(cOrganiser);
