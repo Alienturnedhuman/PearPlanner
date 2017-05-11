@@ -1,5 +1,10 @@
 package Model;
 
+import Controller.MainController;
+import Controller.MenuController;
+import View.UIManager;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +18,6 @@ public class Module extends VersionControlEntity
     private Person organiser;
     private String moduleCode;
     private ArrayList<TimetableEvent> timetable = new ArrayList<>();
-
 
     // private methods
     @Override
@@ -138,7 +142,20 @@ public class Module extends VersionControlEntity
         }
     }
 
+    @Override
+    public void open(MenuController.Window current)
+    {
+        try
+        {
+            MainController.ui.moduleDetails(this, current);
+        } catch (IOException e)
+        {
+            UIManager.reportError("Unable to open View file");
+        }
+    }
+
     // constructors
+
     public Module(Person cOrganiser , String cModuleCode)
     {
         setOrganiser(cOrganiser);

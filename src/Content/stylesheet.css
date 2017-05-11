@@ -12,13 +12,13 @@
     -fx-background-image: url('/Content/notification0.png');
 }
 
-.details-button {
-    -fx-background-image: url('/Content/information.png');
-    -fx-min-width: 32;
-}
-
 .set-button {
     -fx-base: greenyellow;
+}
+
+.back-button {
+    -fx-background-image: url("/Content/back.png");
+    -fx-min-width: 30;
 }
 
 .notificationItem-title {

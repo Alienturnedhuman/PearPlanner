@@ -1,12 +1,11 @@
 package Controller;
 
-import Model.Module;
-import Model.Notification;
-import Model.StudyProfile;
+import Model.*;
 import View.UIManager;
 import com.sun.javafx.scene.control.skin.TableViewSkin;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -21,71 +20,35 @@ import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.util.Duration;
+import org.junit.Assert;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Zilvinas on 05/05/2017.
  */
 public class MenuController implements Initializable
 {
-    /*// Breaking JAVA here:
-    // unsafe {
-    private static Method columnToFitMethod;
-
-    static
-    {
-        try
-        {
-            columnToFitMethod = TableViewSkin.class.getDeclaredMethod("resizeColumnToFitContent", TableColumn.class, int.class);
-            columnToFitMethod.setAccessible(true);
-        } catch (NoSuchMethodException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public static void autoFitTable(TableView tableView)
-    {
-        tableView.getItems().addListener(new ListChangeListener<Object>()
-        {
-            @Override
-            public void onChanged(Change<?> c)
-            {
-                for (Object column : tableView.getColumns())
-                {
-                    try
-                    {
-                        columnToFitMethod.invoke(tableView.getSkin(), column, -1);
-                    } catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-    }*/
-    // }
-
     public enum Window
     {
-        Dashboard, Profiles, Modules
+        Empty, Dashboard, Profiles, Modules
     }
 
     private Window current;
     private boolean isNavOpen;
 
     // Labels:
-    @FXML private Label welcome;
+    private Label welcome;
+    @FXML Label title;
 
     // Buttons:
     @FXML private Button openMenu;
@@ -101,6 +64,7 @@ public class MenuController implements Initializable
     @FXML private AnchorPane notifications;
     @FXML private GridPane notificationList;
     @FXML private GridPane mainContent;
+    @FXML private HBox topBox;
 
 
     public void main(Window wind)
@@ -144,8 +108,10 @@ public class MenuController implements Initializable
     public void loadDashboard()
     {
         // Update main pane:
-        this.mainContent.getChildren().get(0).setVisible(true);
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+        this.topBox.getChildren().clear();
+        this.topBox.getChildren().add(this.welcome);
+        this.title.setText("Study Dashboard");
 
         // Display modules:
         Label modules = new Label("Modules");
@@ -167,8 +133,9 @@ public class MenuController implements Initializable
     public void loadStudyProfiles()
     {
         // Update main pane:
-        this.mainContent.getChildren().get(0).setVisible(false);
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+        this.topBox.getChildren().clear();
+        this.title.setText("");
 
         // Display profiles:
         Label profiles = new Label("Study Profiles");
@@ -181,9 +148,11 @@ public class MenuController implements Initializable
 
         TableColumn<StudyProfile, Integer> yearColumn = new TableColumn<>("Year");
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
+        yearColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         TableColumn<StudyProfile, Integer> semesterColumn = new TableColumn<>("Semester");
         semesterColumn.setCellValueFactory(new PropertyValueFactory<>("semesterNo"));
+        semesterColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         ObservableList<StudyProfile> list = FXCollections.observableArrayList(MainController.getSPC().getPlanner().getStudyProfiles());
 
@@ -235,8 +204,9 @@ public class MenuController implements Initializable
     public void loadModules()
     {
         // Update main pane:
-        this.mainContent.getChildren().get(0).setVisible(false);
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+        this.topBox.getChildren().clear();
+        this.title.setText("");
 
         // Display modules:
         Label modules = new Label("Modules");
@@ -253,19 +223,13 @@ public class MenuController implements Initializable
         TableColumn<Module, String> organiserColumn = new TableColumn<>("Module Organiser");
         organiserColumn.setCellValueFactory(new PropertyValueFactory<>("organiser"));
 
-        TableColumn<Module, Boolean> detailsColumn = new TableColumn<>("Details");
-        detailsColumn.setCellFactory(c -> new ButtonCell<Module, Boolean>());
-        detailsColumn.setSortable(false);
-
-        ObservableList<Module> list = FXCollections.observableArrayList(MainController.getSPC()
-                .getPlanner().getCurrentStudyProfile().getModules());
+        ObservableList<Module> list = FXCollections.observableArrayList
+                (MainController.getSPC().getPlanner().getCurrentStudyProfile().getModules());
 
         // Create a table:
         TableView<Module> table = new TableView<>();
-        //this.autoFitTable(table);
-
         table.setItems(list);
-        table.getColumns().addAll(codeColumn, nameColumn, organiserColumn, detailsColumn);
+        table.getColumns().addAll(codeColumn, nameColumn, organiserColumn);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setHgrow(table, Priority.ALWAYS);
         GridPane.setVgrow(table, Priority.ALWAYS);
@@ -276,15 +240,7 @@ public class MenuController implements Initializable
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
                 {
-                    try
-                    {
-                        Module module = row.getItem();
-                        MainController.ui.moduleDetails(module);
-                        this.main();
-                    } catch (IOException e1)
-                    {
-                        UIManager.reportError("Unable to open View file");
-                    }
+                    this.loadModule(row.getItem(), this.current, null);
                 }
             });
             return row;
@@ -292,6 +248,86 @@ public class MenuController implements Initializable
 
         this.mainContent.addRow(2, table);
         this.mainContent.getStyleClass().add("list-item");
+    }
+
+    /**
+     * Display the Module pane
+     */
+    public void loadModule(Module module, Window previousWindow, ModelEntity previous)
+    {
+        // Update main pane:
+        this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+        this.topBox.getChildren().clear();
+        this.title.setText("");
+
+        // Create a back button:
+        if (previous != null || previousWindow != Window.Empty)
+        {
+            Button back = new Button();
+            back.getStyleClass().addAll("button-image", "back-button");
+
+            if (previous == null && previousWindow != Window.Empty)
+                back.setOnAction(e -> this.main(previousWindow));
+            else
+                back.setOnAction(e -> previous.open(this.current));
+
+            this.topBox.getChildren().add(back);
+        }
+
+        // Display modules:
+        Label modules = new Label(module.getModuleCode() + " " + module.getName());
+        modules.getStyleClass().add("title");
+        this.mainContent.addRow(1, modules);
+
+        // Create a details pane:
+        VBox detailsBox = new VBox(5);
+        Label details = new Label(module.getDetails().getAsString());
+        details.setWrapText(true);
+        detailsBox.getChildren().addAll(new Label("Organised by:\n" + module.getOrganiser()), details);
+        GridPane.setVgrow(detailsBox, Priority.ALWAYS);
+        GridPane.setHgrow(detailsBox, Priority.ALWAYS);
+
+        mainContent.addRow(2, detailsBox);
+
+        // Assignments:
+        TableColumn<Assignment, String> nameColumn = new TableColumn<>("Assignment");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Assignment, Integer> weightingColumn = new TableColumn<>("Weighting");
+        weightingColumn.setCellValueFactory(new PropertyValueFactory<>("weighting"));
+        weightingColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        ObservableList<Assignment> list = FXCollections.observableArrayList(module.getAssignments());
+
+        // Create a moduleContent:
+        TableView<Assignment> moduleContent = new TableView<>();
+        moduleContent.setItems(list);
+        moduleContent.getColumns().addAll(nameColumn, weightingColumn);
+        moduleContent.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        GridPane.setHgrow(moduleContent, Priority.ALWAYS);
+        GridPane.setVgrow(moduleContent, Priority.ALWAYS);
+
+        // Set click event:
+        moduleContent.setRowFactory(e -> {
+            TableRow<Assignment> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                {
+
+                }
+            });
+            return row;
+        });
+
+        this.mainContent.addRow(3, moduleContent);
+    }
+
+    /**
+     * Display the Assignment pane
+     */
+    public void loadAssignment(Assignment assignment, Window previousWindow, ModelEntity previous)
+    {
+
     }
 
     /**
@@ -350,7 +386,7 @@ public class MenuController implements Initializable
 
         if (not.getLink() != null)
         {
-            not.getLink().open();
+            not.getLink().open(this.current);
             this.main();
         }
     }
@@ -377,7 +413,8 @@ public class MenuController implements Initializable
         this.modules.setOnAction(e -> this.main(Window.Modules));
 
         // Welcome text:
-        this.welcome.setText("Welcome back, " + MainController.getSPC().getPlanner().getUserName() + "!");
+        this.welcome = new Label("Welcome back, " + MainController.getSPC().getPlanner().getUserName() + "!");
+        this.topBox.getChildren().add(this.welcome);
 
         // Render dashboard:
         this.main(Window.Dashboard);
@@ -509,53 +546,5 @@ public class MenuController implements Initializable
                 closeNot.play();
             }
         });
-    }
-
-//    public static class Previous
-//    {
-//        public Window current;
-//        public Previous previous;
-//
-//        public Previous(Window current, Previous prev)
-//        {
-//            this.current = current;
-//            this.previous = prev;
-//        }
-//    }
-
-    /**
-     * Button for a TableCell
-     * @param <S>
-     * @param <T>
-     */
-    public static class ButtonCell<S, T> extends TableCell<S, T>
-    {
-        private Button cellButton;
-
-        public ButtonCell()
-        {
-            cellButton = new Button();
-            cellButton.getStyleClass().addAll("button-image", "details-button");
-            cellButton.setOnAction(e -> updateToggle());
-            updateToggle();
-            setAlignment(Pos.CENTER);
-        }
-
-        protected void updateToggle()
-        {
-        }
-
-        @Override
-        protected void updateItem(T t, boolean empty)
-        {
-            super.updateItem(t, empty);
-            if (empty)
-            {
-                setGraphic(null);
-            } else
-            {
-                setGraphic(cellButton);
-            }
-        }
     }
 }

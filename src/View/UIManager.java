@@ -1,12 +1,9 @@
 package View;
 
 import Controller.AccountController;
-import Controller.ModuleController;
+import Controller.MenuController;
 import Controller.StudyProfileController;
-import Model.Account;
-import Model.Module;
-import Model.StudyProfile;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import Model.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,6 +22,7 @@ import java.io.IOException;
 public class UIManager
 {
     private static Stage mainStage = new Stage();
+    private static MenuController mc = new MenuController();
 
     /**
      * Displays a 'Create Account' window and handles the creation of
@@ -67,10 +65,11 @@ public class UIManager
     {
         // Load in the .fxml file:
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainMenu.fxml"));
+        loader.setController(UIManager.mc);
         Parent root = loader.load();
 
         // Set the scene:
-        mainStage.setScene(new Scene(root, 700, 750));
+        mainStage.setScene(new Scene(root, 1000, 750));
         mainStage.setTitle("PearPlanner");
         mainStage.getIcons().add(new Image("file:icon.png"));
         mainStage.showAndWait();
@@ -99,25 +98,27 @@ public class UIManager
     }
 
     /**
-     * Displays the StudyProfile details page
+     * Displays the Module details page
      */
-    public void moduleDetails(Module module) throws IOException
+    public void moduleDetails(Module module, MenuController.Window current) throws IOException
     {
-        ModuleController mController = new ModuleController(module);
+        UIManager.mc.loadModule(module, current, null);
+    }
+    public void moduleDetails(Module module, ModelEntity current) throws IOException
+    {
+        UIManager.mc.loadModule(module, MenuController.Window.Empty, current);
+    }
 
-        // Load in the .fxml file:
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Module.fxml"));
-        loader.setController(mController);
-        Parent root = loader.load();
-
-        // Set the scene:
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(new Scene(root, 550, 232));
-        stage.setTitle(module.getName());
-        stage.resizableProperty().setValue(false);
-        stage.getIcons().add(new Image("file:icon.png"));
-        stage.showAndWait();
+    /**
+     * Displays the Assignment details page
+     */
+    public void assignmentDetails(Assignment assignment, MenuController.Window current) throws IOException
+    {
+        UIManager.mc.loadAssignment(assignment, current, null);
+    }
+    public void assignmentDetails(Assignment assignment, ModelEntity current) throws IOException
+    {
+        UIManager.mc.loadAssignment(assignment, MenuController.Window.Empty, current);
     }
 
     /**

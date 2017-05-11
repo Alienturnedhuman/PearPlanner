@@ -37,9 +37,7 @@
 			</person>
 			<person>
 				<name>Stephen Laycock</name>
-				<details>Stephen was appointed as a Lecturer in January 2005 and is part of the Graphics, Vision and Speech Lab.
-					He was promoted to Senior Lecturer in August 2012.
-					Stephen's research interests include Haptic Rendering, Collision Detection, Deformable objects and Real-time rendering. He is also interested in the application of new graphics techniques to Cultural Heritage, scientific visualisation  and virtual training simulations. His research into haptic rendering led to a book chapter on the subject included in the book titled "Haptic Rendering: Foundations, Algorithms and Applications" edited by Ming Lin and Miguel Otaduy. His research in this area continues with the development of novel haptic rendering algorithms suitable for Molecular Graphics. Software based on these algorithms is available for download from http://www.haptimol.co.uk. The latest features of HaptiMOL ISAS are shown in the video. For more details on his research and publications please click on the research box above.</details>
+				<details>Stephen was appointed as a Lecturer in January 2005 and is part of the Graphics, Vision and Speech Lab. He was promoted to Senior Lecturer in August 2012. Stephen's research interests include Haptic Rendering, Collision Detection, Deformable objects and Real-time rendering. He is also interested in the application of new graphics techniques to Cultural Heritage, scientific visualisation  and virtual training simulations. His research into haptic rendering led to a book chapter on the subject included in the book titled "Haptic Rendering: Foundations, Algorithms and Applications" edited by Ming Lin and Miguel Otaduy. His research in this area continues with the development of novel haptic rendering algorithms suitable for Molecular Graphics. Software based on these algorithms is available for download from http://www.haptimol.co.uk. The latest features of HaptiMOL ISAS are shown in the video. For more details on his research and publications please click on the research box above.</details>
 				<version>0</version>
 				<uid>PERSON_004</uid>
 				<givenNames>Stephen</givenNames>
@@ -61,11 +59,7 @@
 			</person>
 			<person>
 				<name>Joost Noppen</name>
-				<details>Joost Noppen is lecturer in Software Engineering at the University of East Anglia in Norwich (UK). Joost holds an M.Sc. degree and a Ph. D. degree in Computer Science from the University of Twente in the Netherlands with a special focus on computational intelligence in Software Engineering. Joost has held positions in leading Software Engineering research groups across Europe, such as the École des Mines and the University of Lancaster, where he has worked in international research projects. In 2008 Joost was awarded a prestigious Marie Curie Intra-European fellowship from the EU for his work on Software Product Line development.
-					Within the School of Computing Sciences Joost is responsible for the Software Engineering aspect of the teaching curriculum. He has been responsible for the complete redesign of the Software Engineering modules and bringing them up to date with state of the art in industrial software design and academic research. His modules focus on providing students with the fundamental skills for software development, such as object-orientation, and agile and test-driven development, combined with research-led topics and novel developments in industry such as mobile applications and software product lines.
-					The long-standing research interest of Joost is in decision support for modelling and analysing design information during the development of software systems. This includes questions such as: is it possible to reconstruct software designs from partial documentation? How can you optimise the quality and extensibility of software systems when faced with uncertain change scenarios? Can historical data of software projects be used to steer the design of new systems? Most of Joost's research has resulted in advanced modelling techniques for capturing and reasoning with imprecise and uncertain design information based on probability and fuzzy set theory that support software development activities.
-					Joost has over 14 years experience in Software Engineering both from an academic and industrial perspective. He has founded a successful web development company as a student and he has developed software in collaboration with multi-national companies. In his spare time Joost is exploring the application of Software Engineering principles to mobile games development practice.
-					Currently Joost is involved in a variety of Software Engineering activities both related to research and teaching and he is happy to be approached for projects in these areas. He is also available for consultancy, advice and assessment in the field of industrial software engineering.</details>
+				<details>Joost Noppen is lecturer in Software Engineering at the University of East Anglia in Norwich (UK). Joost holds an M.Sc. degree and a Ph. D. degree in Computer Science from the University of Twente in the Netherlands with a special focus on computational intelligence in Software Engineering. Joost has held positions in leading Software Engineering research groups across Europe, such as the École des Mines and the University of Lancaster, where he has worked in international research projects. In 2008 Joost was awarded a prestigious Marie Curie Intra-European fellowship from the EU for his work on Software Product Line development. Within the School of Computing Sciences Joost is responsible for the Software Engineering aspect of the teaching curriculum. He has been responsible for the complete redesign of the Software Engineering modules and bringing them up to date with state of the art in industrial software design and academic research. His modules focus on providing students with the fundamental skills for software development, such as object-orientation, and agile and test-driven development, combined with research-led topics and novel developments in industry such as mobile applications and software product lines. The long-standing research interest of Joost is in decision support for modelling and analysing design information during the development of software systems. This includes questions such as: is it possible to reconstruct software designs from partial documentation? How can you optimise the quality and extensibility of software systems when faced with uncertain change scenarios? Can historical data of software projects be used to steer the design of new systems? Most of Joost's research has resulted in advanced modelling techniques for capturing and reasoning with imprecise and uncertain design information based on probability and fuzzy set theory that support software development activities. Joost has over 14 years experience in Software Engineering both from an academic and industrial perspective. He has founded a successful web development company as a student and he has developed software in collaboration with multi-national companies. In his spare time Joost is exploring the application of Software Engineering principles to mobile games development practice. Currently Joost is involved in a variety of Software Engineering activities both related to research and teaching and he is happy to be approached for projects in these areas. He is also available for consultancy, advice and assessment in the field of industrial software engineering.</details>
 				<version>0</version>
 				<uid>PERSON_006</uid>
 				<givenNames>Joost</givenNames>
@@ -76,8 +70,7 @@
 			</person>
 			<person>
 				<name>Geoff McKeown</name>
-				<details>Geoff is an Associate Fellow of the Institute of Mathematics and its Applications. IEEE Computer Society Affiliate
-					He has been a consultant and author for the Open University.</details>
+				<details>Geoff is an Associate Fellow of the Institute of Mathematics and its Applications. IEEE Computer Society Affiliate He has been a consultant and author for the Open University.</details>
 				<version>0</version>
 				<uid>PERSON_007</uid>
 				<givenNames>Geoffrey</givenNames>
@@ -99,9 +92,7 @@
 			</person>
 			<person>
 				<name>Ben Milner</name>
-				<details>In 1994 Ben moved to BT Laboratories in the speech recognition group, where he specialised in noise and channel robustness and front-end processing. In particular he worked on reducing error rates for services such as automated directory enquiries and speech recognition from payphones. More recent work at BT considered the effect of performing speech recognition over mobile and IP networks where problems of packet loss and codec distortion are addressed. He was also responsible for the handwriting component of BT's SmartQuill which features in the Guinness Book of Records as 'the world's most intelligent pen!'. He was also involved in work to automatically detect the internal rotting of telephone poles. He holds three patents in the areas of speech processing and handwriting recognition.
-					In March 2001 Ben returned to the School of Information Systems (now the School of Computing Sciences) as a Senior Lecturer.
-					Ben has also spent some time in oil and gas exploration working on side scan sonar and seabed profiling.</details>
+				<details>In 1994 Ben moved to BT Laboratories in the speech recognition group, where he specialised in noise and channel robustness and front-end processing. In particular he worked on reducing error rates for services such as automated directory enquiries and speech recognition from payphones. More recent work at BT considered the effect of performing speech recognition over mobile and IP networks where problems of packet loss and codec distortion are addressed. He was also responsible for the handwriting component of BT's SmartQuill which features in the Guinness Book of Records as 'the world's most intelligent pen!'. He was also involved in work to automatically detect the internal rotting of telephone poles. He holds three patents in the areas of speech processing and handwriting recognition. In March 2001 Ben returned to the School of Information Systems (now the School of Computing Sciences) as a Senior Lecturer. Ben has also spent some time in oil and gas exploration working on side scan sonar and seabed profiling.</details>
 				<version>0</version>
 				<uid>PERSON_009</uid>
 				<givenNames>Ben</givenNames>
@@ -125,9 +116,7 @@
 		<buildings>
 			<building>
 				<name>Julian Study Centre</name>
-				<details>The Julian Study Centre is a dedicated teaching building featuring a tiered 280 seat lecture theatre and an 80 seat Harvard-style lecture room.
-					Named after Julian of Norwich, the first woman to publish a book in the English language, the building's green credentials include its construction with Passivhaus techniques and complying with BREEAM guidelines.
-					The Julian Study Centre offers modern meeting facilities including multiple breakout areas, a large foyer and seven seminar rooms to seat 18-60 people in addition to the two lecture theatres. A café selling Grumpy Mule coffee complements the offering.</details>
+				<details>The Julian Study Centre is a dedicated teaching building featuring a tiered 280 seat lecture theatre and an 80 seat Harvard-style lecture room. Named after Julian of Norwich, the first woman to publish a book in the English language, the building's green credentials include its construction with Passivhaus techniques and complying with BREEAM guidelines. The Julian Study Centre offers modern meeting facilities including multiple breakout areas, a large foyer and seven seminar rooms to seat 18-60 people in addition to the two lecture theatres. A café selling Grumpy Mule coffee complements the offering.</details>
 				<version>0</version>
 				<uid>BUILDING_JSC</uid>
 				<code>JSC</code>
@@ -136,8 +125,7 @@
 			</building>
 			<building>
 				<name>Sports Park</name>
-				<details>The University of East Anglia plays host to the £30 million Sportspark It is currently the biggest indoor sports centre in Britain, and regularly hosts international sporting events.
-					Constructed in 2000, the Sportspark boasts fantastic facilities, including Norfolk's tallest indoor climbing wall, a state-of-the-art Olympic-sized swimming pool, athletics track and gym, as well as an extensive range of activities including aerobics, archery, athletics, badminton, basketball, climbing, cricket, fencing, hockey, indoor football, martial arts, squash, table tennis, trampolining and yoga.</details>
+				<details>The University of East Anglia plays host to the £30 million Sportspark It is currently the biggest indoor sports centre in Britain, and regularly hosts international sporting events. Constructed in 2000, the Sportspark boasts fantastic facilities, including Norfolk's tallest indoor climbing wall, a state-of-the-art Olympic-sized swimming pool, athletics track and gym, as well as an extensive range of activities including aerobics, archery, athletics, badminton, basketball, climbing, cricket, fencing, hockey, indoor football, martial arts, squash, table tennis, trampolining and yoga.</details>
 				<version>0</version>
 				<uid>BUILDING_SP</uid>
 				<code>SP</code>
@@ -189,9 +177,7 @@
 		<modules>
 			<module>
 				<name>Programming 2</name>
-				<details>This is a compulsory module for all computing students and is a continuation of CMP-4008Y. It contains greater breadth and depth and provides students with the range of skills needed for many of their subsequent modules. We recap Java and deepen your understanding of the language
-					by teaching topics such as nested classes, enumeration, generics, reflection, collections and threaded programming. We then introduce C in order to improve your low level understanding of how programming works, before moving on to C++ in semester 2. We conclude by introducing C# to
-					highlight the similarities and differences between languages.</details>
+				<details>This is a compulsory module for all computing students and is a continuation of CMP-4008Y. It contains greater breadth and depth and provides students with the range of skills needed for many of their subsequent modules. We recap Java and deepen your understanding of the language by teaching topics such as nested classes, enumeration, generics, reflection, collections and threaded programming. We then introduce C in order to improve your low level understanding of how programming works, before moving on to C++ in semester 2. We conclude by introducing C# to highlight the similarities and differences between languages.</details>
 				<version>0</version>
 				<uid>MODULE_PROG2</uid>
 				<organiser>PERSON_001</organiser>
@@ -233,8 +219,7 @@
 					</exam>
 					<coursework>
 						<name>Assignment 1 — Offline Movie DataBase (OMDB) in C</name>
-						<details>The aim of this assignment is for the student to gain experience in the design and implementation of a
-							simple application in the C programming language.</details>
+						<details>The aim of this assignment is for the student to gain experience in the design and implementation of a simple application in the C programming language.</details>
 						<version>0</version>
 						<uid>PROG2_CW_1</uid>
 						<startDate>
@@ -260,8 +245,7 @@
 					</coursework>
 					<coursework>
 						<name>Java Coursework</name>
-						<details>This coursework involves you designing and implementing a simulation of a
-							card game called Cheat.</details>
+						<details>This coursework involves you designing and implementing a simulation of a card game called Cheat.</details>
 						<version>0</version>
 						<uid>PROG2_CW_2</uid>
 						<startDate>
@@ -287,8 +271,7 @@
 					</coursework>
 					<coursework>
 						<name>Assignment 3 — Offline Movie Database in C++ (PROVISIONAL)</name>
-						<details>The aim of this assignment is for the student to gain experience in the design and implementation of
-							a relatively simple application in the C++ programming language. </details>
+						<details>The aim of this assignment is for the student to gain experience in the design and implementation of a relatively simple application in the C++ programming language. </details>
 						<version>0</version>
 						<uid>PROG2_CW_3</uid>
 						<startDate>
@@ -337,12 +320,7 @@
 			</module>
 			<module>
 				<name>Software Engineering</name>
-				<details>Software Engineering is one of the most essential skills for work in the software development
-					industry. Students will gain an understanding of the issues involved in designing and creating
-					software systems from an industry perspective. They will be taught state of the art in phased
-					software development methodology, with a special focus on the activities required to go from
-					initial class model design to actual running software systems. These activities are complemented
-					with an introduction into software project management and development facilitation.</details>
+				<details>Software Engineering is one of the most essential skills for work in the software development industry. Students will gain an understanding of the issues involved in designing and creating software systems from an industry perspective. They will be taught state of the art in phased software development methodology, with a special focus on the activities required to go from initial class model design to actual running software systems. These activities are complemented with an introduction into software project management and development facilitation.</details>
 				<version>0</version>
 				<uid>MODULE_SOFTENG</uid>
 				<organiser>PERSON_006</organiser>
@@ -417,9 +395,7 @@
 			</module>
 			<module>
 				<name>Data Structures and Algoritms</name>
-				<details>The purpose of this module is to give the student a solid grounding in the design, analysis
-					and implementation of algorithms, and in the efficient implementation of a wide range of
-					important data structures.</details>
+				<details>The purpose of this module is to give the student a solid grounding in the design, analysis and implementation of algorithms, and in the efficient implementation of a wide range of important data structures.</details>
 				<version>0</version>
 				<uid>MODULE_DATSTRALG</uid>
 				<organiser>PERSON_001</organiser>
@@ -461,8 +437,7 @@
 					</exam>
 					<coursework>
 						<name>Coursework 1</name>
-						<details>Describing algorithms using pseudo-code; use of mathematical notation when analysing algorithms;
-							computer programming.</details>
+						<details>Describing algorithms using pseudo-code; use of mathematical notation when analysing algorithms computer programming.</details>
 						<version>0</version>
 						<uid>DATSTRALG_CW_1</uid>
 						<startDate>
@@ -488,8 +463,7 @@
 					</coursework>
 					<coursework>
 						<name>Module Assessment Exercises 2</name>
-						<details>Describing algorithms using pseudo-code; use of mathematical notation when analysing algorithms;
-							computer programming; use of drawing tools.</details>
+						<details>Describing algorithms using pseudo-code; use of mathematical notation when analysing algorithms computer programming use of drawing tools.</details>
 						<version>0</version>
 						<uid>DATSTRALG_CW_2</uid>
 						<startDate>
@@ -538,13 +512,7 @@
 			</module>
 			<module>
 				<name>Graphics 1</name>
-				<details>Graphics 1 provides an introduction to the fundamentals of computer graphics for all computing
-					students. It aims to provide a strong foundation for students wishing to study graphics, focusing on
-					2D graphics, algorithms and interaction. The module requires a good background in programming.
-					OpenGL is utilised as the graphics API with examples provided in the lectures and supported in the
-					laboratory classes. Other topics covered include 2D transformations, texture mapping,
-					collision detection, graphics hardware, fonts, algorithms for line drawing, polygon filling,
-					line and polygon clipping and colour in graphics.</details>
+				<details>Graphics 1 provides an introduction to the fundamentals of computer graphics for all computing students. It aims to provide a strong foundation for students wishing to study graphics, focusing on 2D graphics, algorithms and interaction. The module requires a good background in programming. OpenGL is utilised as the graphics API with examples provided in the lectures and supported in the laboratory classes. Other topics covered include 2D transformations, texture mapping, collision detection, graphics hardware, fonts, algorithms for line drawing, polygon filling, line and polygon clipping and colour in graphics.</details>
 				<version>0</version>
 				<uid>MODULE_GRAP1</uid>
 				<organiser>PERSON_003</organiser>
@@ -585,12 +553,8 @@
 						<marks>120</marks>
 					</exam>
 					<coursework>
-						<name> DESIGN AND IMPLEMENT A TWO DIMENSIONAL INTERACTIVE
-							PLATFORM GAME USING C/C++ AND OPENGL</name>
-						<details>To introduce the concepts of Computer Graphics.
-							To develop a program using OpenGL.
-							To gain experience in writing computer graphics applications, with the assignment focusing
-							on a two dimensional platform game.</details>
+						<name> DESIGN AND IMPLEMENT A TWO DIMENSIONAL INTERACTIVE PLATFORM GAME USING C/C++ AND OPENGL</name>
+						<details>To introduce the concepts of Computer Graphics. To develop a program using OpenGL. To gain experience in writing computer graphics applications, with the assignment focusing on a two dimensional platform game.</details>
 						<version>0</version>
 						<uid>GRAP1_CW_1</uid>
 						<startDate>

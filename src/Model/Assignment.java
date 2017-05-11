@@ -1,5 +1,10 @@
 package Model;
 
+import Controller.MainController;
+import Controller.MenuController;
+import View.UIManager;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -104,6 +109,18 @@ public abstract class Assignment extends VersionControlEntity
     public StateType getState()
     {
         return state;
+    }
+
+    @Override
+    public void open(MenuController.Window current)
+    {
+        try
+        {
+            MainController.ui.assignmentDetails(this, current);
+        } catch (IOException e)
+        {
+            UIManager.reportError("Unable to open View file");
+        }
     }
 
     // Constructor

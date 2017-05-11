@@ -61,9 +61,9 @@ public class StudyProfileController implements Initializable
         this.name.setText(this.profile.getName());
         this.details.setText(this.profile.getDetails().getAsString());
 
-        this.modules.setText(this.profile.getModules().length + " modules.");
-        this.milestones.setText(this.profile.getMilestones().length + " milestones.");
-        this.extensions.setText(this.profile.getExtensions().length + " extension applications.");
+        this.modules.setText(this.profile.getModules().length + " module(s).");
+        this.milestones.setText(this.profile.getMilestones().length + " milestone(s).");
+        this.extensions.setText(this.profile.getExtensions().length + " extension application(s).");
 
         if (MainController.getSPC().getPlanner().getCurrentStudyProfile().equals(this.profile))
             this.setCurrent.setDisable(true);

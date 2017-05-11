@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.MainController;
+import Controller.MenuController;
 import View.UIManager;
 
 import java.io.IOException;
@@ -94,7 +95,7 @@ public class StudyProfile extends VersionControlEntity
     }
 
     @Override
-    public void open()
+    public void open(MenuController.Window current)
     {
         try
         {
