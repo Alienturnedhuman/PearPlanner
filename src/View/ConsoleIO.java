@@ -116,7 +116,7 @@ public class ConsoleIO {
             fileData = DataController.loadHubFile(filename);
         }
 
-        System.out.println(fileData.toString());
+        System.out.println(fileData.toString(true));
 
         return "Return to Main Menu";
     }

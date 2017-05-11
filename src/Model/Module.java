@@ -12,7 +12,7 @@ public class Module extends VersionControlEntity
     private ArrayList<Assignment> assignments = new ArrayList<>();
     private Person organiser;
     private String moduleCode;
-    private ArrayList<TimetableEvent> timetable;
+    private ArrayList<TimetableEvent> timetable = new ArrayList<>();
 
 
     // private methods
@@ -33,6 +33,40 @@ public class Module extends VersionControlEntity
 
 
     // public methods
+    public String toString(boolean verbose)
+    {
+        if(verbose)
+        {
+            StringBuilder r = new StringBuilder();
+            r.append(toString());
+            r.append("\n");
+            r.append("Organiser: "+organiser.toString());
+            r.append("\n");
+            r.append("Total Assignments: "+Integer.toString(assignments.size()));
+            r.append("\n");
+
+            int i =-1;
+            int ii = assignments.size();
+
+            while(++i<ii)
+            {
+                r.append("\n");
+                r.append(assignments.get(i).toString(true));
+            }
+
+            return r.toString();
+
+        }
+        else
+        {
+            return toString();
+        }
+    }
+    @Override
+    public String toString()
+    {
+        return "Module: "+this.name+" ( "+this.moduleCode+" )";
+    }
 
     // getters
     public ArrayList<Assignment> getAssignments()

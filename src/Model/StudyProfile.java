@@ -26,11 +26,6 @@ public class StudyProfile extends VersionControlEntity
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
 
-    public String getName()
-    {
-        return name;
-    }
-
     public int getYear()
     {
         return year;
@@ -63,6 +58,8 @@ public class StudyProfile extends VersionControlEntity
         milestones = new ArrayList<>();
         year = initialHubFile.getYear();
         semesterNo = initialHubFile.getSemester();
+
+
 
     }
 }
