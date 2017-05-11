@@ -59,7 +59,10 @@ public class Module extends VersionControlEntity
         return timetable;
     }
 
-
+    public int getNoOfAssignments()
+    {
+        return this.assignments.size();
+    }
 
     // setters
     public void addAssignment(Assignment newAssignment)

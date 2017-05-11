@@ -4,6 +4,7 @@ import Model.Module;
 import Model.Notification;
 import Model.StudyProfile;
 import View.UIManager;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,7 +35,7 @@ public class MenuController implements Initializable
 {
     public enum Window
     {
-        Dashboard, Profiles
+        Dashboard, Profiles, Modules
     }
 
     private Window current;
@@ -50,6 +51,7 @@ public class MenuController implements Initializable
     @FXML private Button addActivity;
     @FXML private Button studyProfiles;
     @FXML private Button milestones;
+    @FXML private Button modules;
 
     // Panes:
     @FXML private AnchorPane navList;
@@ -72,12 +74,30 @@ public class MenuController implements Initializable
         this.updateNotifications();
         this.updateMenu();
 
-        if (this.current == Window.Dashboard && MainController.getSPC().getPlanner().getListOfStudyProfileNames().length > 0)
-            this.loadDashboard();
-        else if (this.current == Window.Profiles)
-            this.loadStudyProfiles();
+        switch (this.current)
+        {
+            case Dashboard:
+            {
+                if (MainController.getSPC().getPlanner().getListOfStudyProfileNames().length > 0)
+                    this.loadDashboard();
+                break;
+            }
+            case Profiles:
+            {
+                this.loadStudyProfiles();
+                break;
+            }
+            case Modules:
+            {
+                this.loadModules();
+                break;
+            }
+        }
     }
 
+    /**
+     * Display the Study Dashboard pane
+     */
     public void loadDashboard()
     {
         // Update main pane:
@@ -98,6 +118,9 @@ public class MenuController implements Initializable
         }
     }
 
+    /**
+     * Display the Study Profiles pane
+     */
     public void loadStudyProfiles()
     {
         // Update main pane:
@@ -105,11 +128,11 @@ public class MenuController implements Initializable
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 
         // Display profiles:
-        Label modules = new Label("Study Profiles");
-        modules.getStyleClass().add("title");
-        this.mainContent.addRow(1, modules);
+        Label profiles = new Label("Study Profiles");
+        profiles.getStyleClass().add("title");
+        this.mainContent.addRow(1, profiles);
 
-        // Column:
+        // Columns:
         TableColumn<StudyProfile, String> nameColumn = new TableColumn<>("Profile name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
@@ -137,6 +160,7 @@ public class MenuController implements Initializable
                 protected void updateItem(final StudyProfile item, final boolean empty)
                 {
                     super.updateItem(item, empty);
+                    // If current Profile, mark:
                     if (!empty && item != null)
                         if (item.isCurrent())
                             this.getStyleClass().add("current-item");
@@ -149,6 +173,69 @@ public class MenuController implements Initializable
                     {
                         StudyProfile profile = row.getItem();
                         MainController.ui.studyProfileDetails(profile);
+                        this.main();
+                    } catch (IOException e1)
+                    {
+                        UIManager.reportError("Unable to open View file");
+                    }
+                }
+            });
+            return row;
+        });
+
+        this.mainContent.addRow(2, table);
+        this.mainContent.getStyleClass().add("list-item");
+    }
+
+    /**
+     * Display the Modules pane
+     */
+    public void loadModules()
+    {
+        // Update main pane:
+        this.mainContent.getChildren().get(0).setVisible(false);
+        this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+
+        // Display modules:
+        Label modules = new Label("Modules");
+        modules.getStyleClass().add("title");
+        this.mainContent.addRow(1, modules);
+
+        // Columns:
+        TableColumn<Module, String> codeColumn = new TableColumn<>("Module code");
+        codeColumn.setCellValueFactory(new PropertyValueFactory<>("moduleCode"));
+
+        TableColumn<Module, String> nameColumn = new TableColumn<>("Module name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Module, String> organiserColumn = new TableColumn<>("Module Organiser");
+        organiserColumn.setCellValueFactory(new PropertyValueFactory<>("organiser"));
+
+        TableColumn<Module, Integer> assignmentColumn = new TableColumn<>("Assignments");
+        assignmentColumn.setCellValueFactory(new PropertyValueFactory<>("noOfAssignments"));
+        assignmentColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        ObservableList<Module> list = FXCollections.observableArrayList(MainController.getSPC()
+                .getPlanner().getCurrentStudyProfile().getModules());
+
+        // Create a table:
+        TableView<Module> table = new TableView<>();
+        table.setItems(list);
+        table.getColumns().addAll(codeColumn, nameColumn, organiserColumn, assignmentColumn);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        GridPane.setHgrow(table, Priority.ALWAYS);
+        GridPane.setVgrow(table, Priority.ALWAYS);
+
+        // Set click event:
+        table.setRowFactory(e -> {
+            TableRow<Module> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                {
+                    try
+                    {
+                        Module module = row.getItem();
+                        MainController.ui.moduleDetails(module);
                         this.main();
                     } catch (IOException e1)
                     {
@@ -240,11 +327,15 @@ public class MenuController implements Initializable
         this.prepareAnimations();
         this.isNavOpen = false;
 
+        // Set button actions:
         this.showDash.setOnAction(e -> this.main(Window.Dashboard));
         this.studyProfiles.setOnAction(e -> this.main(Window.Profiles));
+        this.modules.setOnAction(e -> this.main(Window.Modules));
 
+        // Welcome text:
         this.welcome.setText("Welcome back, " + MainController.getSPC().getPlanner().getUserName() + "!");
 
+        // Render dashboard:
         this.main(Window.Dashboard);
     }
 
@@ -318,6 +409,7 @@ public class MenuController implements Initializable
         this.addActivity.setDisable(false);
         this.milestones.setDisable(false);
         this.studyProfiles.setDisable(false);
+        this.modules.setDisable(false);
 
         // Disable relevant menu options:
         if (MainController.getSPC().getPlanner().getCurrentStudyProfile() == null)
@@ -325,11 +417,15 @@ public class MenuController implements Initializable
             this.addActivity.setDisable(true);
             this.milestones.setDisable(true);
             this.studyProfiles.setDisable(true);
+            this.modules.setDisable(true);
         } else if (MainController.getSPC().getCurrentTasks().size() <= 0)
         {
             this.addActivity.setDisable(true);
             this.milestones.setDisable(true);
         }
+
+        if (MainController.getSPC().getPlanner().getCurrentStudyProfile().getModules().length <= 0)
+            this.modules.setDisable(true);
     }
 
     /**

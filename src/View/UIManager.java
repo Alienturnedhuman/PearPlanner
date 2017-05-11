@@ -1,9 +1,12 @@
 package View;
 
 import Controller.AccountController;
+import Controller.ModuleController;
 import Controller.StudyProfileController;
 import Model.Account;
+import Model.Module;
 import Model.StudyProfile;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -90,6 +93,28 @@ public class UIManager
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene(root, 550, 232));
         stage.setTitle(profile.getName());
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
+    }
+
+    /**
+     * Displays the StudyProfile details page
+     */
+    public void moduleDetails(Module module) throws IOException
+    {
+        ModuleController mController = new ModuleController(module);
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Module.fxml"));
+        loader.setController(mController);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 232));
+        stage.setTitle(module.getName());
         stage.resizableProperty().setValue(false);
         stage.getIcons().add(new Image("file:icon.png"));
         stage.showAndWait();

@@ -46,8 +46,9 @@
                         <Button fx:id="showDash" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Study Dashboard" GridPane.rowIndex="0" />
                         <Button fx:id="addActivity" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Add activity" GridPane.rowIndex="1" />
                         <Button fx:id="milestones" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Milestones" GridPane.rowIndex="2" />
-                        <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Study Profiles" GridPane.rowIndex="3" />
-                        <Button onAction="#importFile" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Import HUB file" GridPane.rowIndex="4" />
+                        <Button fx:id="modules" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Modules" GridPane.rowIndex="3" />
+                        <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Study Profiles" GridPane.rowIndex="4" />
+                        <Button onAction="#importFile" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Import HUB file" GridPane.rowIndex="5" />
                     </children>
                 </GridPane>
             </children>
