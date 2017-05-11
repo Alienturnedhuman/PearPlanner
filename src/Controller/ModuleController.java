@@ -18,8 +18,10 @@ public class ModuleController implements Initializable
 
     // Labels:
     @FXML private Label title;
-    @FXML private Label name;
+    @FXML private Label organiser;
     @FXML private Label details;
+    @FXML private Label assignments;
+    @FXML private Label events;
 
     /**
      * Close this window
@@ -40,6 +42,11 @@ public class ModuleController implements Initializable
 
     @Override public void initialize(URL location, ResourceBundle resources)
     {
+        this.title.setText(this.module.getModuleCode() + " " + this.module.getName());
+        this.organiser.setText("Organised by: \n" + this.module.getOrganiser().getFullName());
+        this.details.setText(this.module.getDetails().getAsString());
 
+        this.assignments.setText(this.module.getNoOfAssignments() + " assignments.");
+        this.events.setText(this.module.getTimetable().size() + " events.");
     }
 }

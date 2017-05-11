@@ -1,9 +1,20 @@
+.button-image {
+    -fx-background-size: 100% 100%;
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+}
+
 .unread-button {
     -fx-background-image: url('/Content/notification1.png');
 }
 
 .read-button {
     -fx-background-image: url('/Content/notification0.png');
+}
+
+.details-button {
+    -fx-background-image: url('/Content/information.png');
+    -fx-min-width: 32;
 }
 
 .set-button {

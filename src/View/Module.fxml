@@ -14,18 +14,17 @@
         <RowConstraints maxHeight="354.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Label fx:id="title" styleClass="title-details" text="Year 0, Semester 0" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+        <Label fx:id="title" styleClass="title-details" text="Module code, name" GridPane.halignment="LEFT" GridPane.valignment="CENTER" GridPane.columnSpan="2" />
         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
             <children>
-                <Label fx:id="name" styleClass="list-item" text="Name" />
+                <Label fx:id="organiser" styleClass="list-item" text="Name" />
                 <Label fx:id="details" styleClass="list-item" text="Details" />
             </children>
         </VBox>
         <VBox layoutX="10.0" layoutY="74.0" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <children>
-                <Label fx:id="modules" styleClass="list-item" text="# modules." />
-                <Label fx:id="milestones" styleClass="list-item" text="# milestones." />
-                <Label fx:id="extensions" layoutX="10.0" layoutY="34.0" styleClass="list-item" text="# extension applications." />
+                <Label fx:id="assignments" styleClass="list-item" text="# assignments." />
+                <Label fx:id="events" styleClass="list-item" text="# events." />
             </children>
         </VBox>
         <Button defaultButton="true" mnemonicParsing="false" onAction="#handleClose" prefHeight="31.0" prefWidth="69.0" text="OK" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">

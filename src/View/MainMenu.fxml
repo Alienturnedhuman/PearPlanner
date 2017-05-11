@@ -6,13 +6,13 @@
     <children>
         <ToolBar minHeight="56.0" style="-fx-background-color: #5C8B76" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" style="-fx-background-color: transparent; -fx-background-image: url('/Content/menu.png'); -fx-background-size: 100% 100%; -fx-cursor: hand" />
+                <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" styleClass="button-image" style="-fx-background-image: url('/Content/menu.png');" />
                 <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                    <children>
                        <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Study Dashboard" />
                    </children>
                 </HBox>
-                <Button fx:id="showNotification" prefWidth="31.0" style="-fx-background-color: transparent; -fx-background-size: 100% 100%; -fx-cursor: hand;" />
+                <Button fx:id="showNotification" styleClass="button-image" prefWidth="31.0" />
             </items>
         </ToolBar>
         <GridPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
