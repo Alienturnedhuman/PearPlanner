@@ -1,18 +1,23 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
  * Created by bendickson on 4/27/17.
  */
-public class MultilineString
+public class MultilineString implements Serializable
 {
     // private Data;
     private ArrayList<String> lines;
 
 
     // public methods
+    public MultilineString clone()
+    {
+        return new MultilineString(this.getAsArray());
+    }
 
     // getters
     public int getLines()

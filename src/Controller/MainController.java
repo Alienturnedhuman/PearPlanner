@@ -1,13 +1,21 @@
 package Controller;
 
 import Model.Account;
-import Model.Person;
+import Model.HubFile;
+import Model.Notification;
 import Model.StudyPlanner;
 import View.UIManager;
 
-import javax.crypto.*;
+import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
+import javax.crypto.SealedObject;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.GregorianCalendar;
 
 /**
  * Created by bendickson on 5/4/17.
@@ -27,11 +35,16 @@ public class MainController
         return SPC;
     }
 
+    /**
+     * Initializes the Study Planner by either registering a new account or
+     * importing an existing Study Planner file.
+     */
     public static void initialise()
     {
         File plannerFile = new File("StudyPlanner.dat");
         try
         {
+            // If a file is present:
             if (plannerFile.exists())
             {
                 Cipher cipher = Cipher.getInstance("Blowfish");
@@ -41,20 +54,24 @@ public class MainController
                 SealedObject sealedObject = (SealedObject) inputStream.readObject();
                 SPC = new StudyPlannerController((StudyPlanner) sealedObject.getObject(cipher));
             } else
+            // If not, prompt to create a new account:
             {
                 Account newAccount = ui.createAccount();
                 SPC = new StudyPlannerController(newAccount);
+                // Welcome notification:
+                Notification not = new Notification("Welcome!", new GregorianCalendar(), "Thank you for using PearPlanner!");
+                SPC.getPlanner().addNotification(not);
             }
         } catch (Exception e)
         {
-            View.ConsoleIO.setConsoleMessage("INITIALISATION FAILED");
-            View.ConsoleIO.setConsoleMessage("Good bye!");
+            UIManager.reportError(e.getMessage());
             System.exit(1);
         }
-
-        //consoleUI("Return to Main Menu");
     }
 
+    /**
+     * Display the main menu:
+     */
     public static void main()
     {
         try
@@ -62,13 +79,72 @@ public class MainController
             ui.mainMenu();
         } catch (Exception e)
         {
-            e.printStackTrace();
+            UIManager.reportError(e.getMessage());
         }
     }
 
-    public static void reportError(String message)
+    /**
+     * Handle importing a new file:
+     */
+    public static boolean importFile()
     {
-        System.out.println(message);
+        // Call a dialog:
+        File tempFile = ui.fileDialog();
+        if (tempFile != null)
+        {
+            // If a file was selected, process the file:
+            HubFile fileData = DataController.loadHubFile(tempFile);
+            if (fileData != null)
+            {
+                if (fileData.isUpdate() && !MainController.SPC.updateStudyProfile(fileData))
+                    UIManager.reportError("Cannot update a Study Profile!");
+                else if (!MainController.SPC.createStudyProfile(fileData))
+                    UIManager.reportError("This Study Profile is already created!");
+                else
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Save the current state of the program to file
+     * @return
+     */
+    public static boolean save()
+    {
+        try
+        {
+            SPC.save(MainController.key64, MainController.fileName);
+            return true;
+        } catch (Exception e)
+        {
+            UIManager.reportError("FAILED TO SAVE YOUR DATA!");
+            return false;
+        }
+    }
+
+    /**
+     * Apparent (according to Stackoverflow) the Java Standard library doesn't have a
+     * standard check for testing if a string value is a number or not?!)
+     *
+     * Therefore, we are using this proposed isNumeric method from:
+     *
+     * http://stackoverflow.com/a/1102916
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isNumeric(String str)
+    {
+        try
+        {
+            double d = Double.parseDouble(str);
+        } catch (NumberFormatException nfe)
+        {
+            return false;
+        }
+        return true;
     }
 
     private static void consoleUI(String menu)
@@ -95,46 +171,6 @@ public class MainController
                 default:
                     menu = "";
             }
-        }
-    }
-
-    /**
-     * Apparent (according to Stackoverflow) the Java Standard library doesn't have a
-     * standard check for testing if a string value is a number or not?!)
-     * <p>
-     * Therefore, we are using this proposed isNumeric method from:
-     * <p>
-     * http://stackoverflow.com/a/1102916
-     *
-     * @param str
-     * @return
-     */
-    public static boolean isNumeric(String str)
-    {
-        try
-        {
-            double d = Double.parseDouble(str);
-        } catch (NumberFormatException nfe)
-        {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Save the current state of the program to file
-     * @return
-     */
-    public static boolean save()
-    {
-        try
-        {
-            SPC.save(MainController.key64, MainController.fileName);
-            return true;
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-            return false;
         }
     }
 

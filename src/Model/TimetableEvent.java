@@ -57,6 +57,22 @@ public class TimetableEvent extends Event
     }
 
 
+    @Override
+    public String toString()
+    {
+        return name+" in "+room.toString()+" at "+date.toString();
+    }
+
 
     // constructor
+    public TimetableEvent(String cDate, Room cRoom,Person cLecturer, TimeTableEventType cTimeTableEventType ,
+                          int cDuration)
+    {
+        super(cDate);
+        setRoom(cRoom);
+        setLecturer(cLecturer);
+        setTimeTableEventType(cTimeTableEventType);
+        setDuration(cDuration);
+
+    }
 }

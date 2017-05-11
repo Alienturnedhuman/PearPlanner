@@ -1,15 +1,14 @@
 package Controller;
 
 import Model.*;
-import View.ConsoleIO;
-
 
 import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
-import java.security.InvalidKeyException;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 /**
  * Created by bendickson on 5/4/17.
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 public class StudyPlannerController
 {
     private StudyPlanner planner;
-    private static final long serialVersionUID = 101L; //probably needs to be linked to the version control or such
 
     // public methods
 
@@ -37,18 +35,12 @@ public class StudyPlannerController
             ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);
             outputStream.writeObject(sealedObject);
             outputStream.close();
-
             return true;
         } catch (Exception e)
         {
             e.printStackTrace();
             return false;
         }
-    }
-
-    public String[] getStudyProfiles()
-    {
-        return planner.getListOfStudyProfiles();
     }
 
     /**
@@ -61,11 +53,6 @@ public class StudyPlannerController
     {
         return false;
         // not implemented yet
-    }
-
-    public Notification[] getNotifications()
-    {
-        return this.planner.getNotifications();
     }
 
     /**
@@ -108,8 +95,25 @@ public class StudyPlannerController
      */
     public boolean createStudyProfile(HubFile hubFile)
     {
-        return false;
+        // Need to process assets and other data!
+        if (!this.planner.containsStudyProfile(hubFile.getYear(), hubFile.getSemester()))
+        {
+            StudyProfile profile = new StudyProfile(hubFile);
+            this.planner.addStudyProfile(profile);
+            if (this.planner.getCurrentStudyProfile() == null)
+            {
+                this.planner.setCurrentStudyProfile(profile);
+                profile.setCurrent(true);
+            }
 
+            // Notify user:
+            Notification not = new Notification("New study profile created!", new GregorianCalendar(),
+                    "\"" + profile.getName() + "\"", profile);
+            this.planner.addNotification(not);
+
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -122,7 +126,6 @@ public class StudyPlannerController
     public boolean updateStudyProfile(HubFile hubFile)
     {
         return false;
-
     }
 
     /**
@@ -135,6 +138,18 @@ public class StudyPlannerController
     public ArrayList<Task> getListOfTasks(ModelEntity model, ArrayList<Task> taskList)
     {
         return null;
+    }
+
+    /**
+     * returns a list of tasks in the current StudyProfile if it exists
+     * or an empty list if it doesn't
+     */
+    public ArrayList<Task> getCurrentTasks()
+    {
+        if (this.getPlanner().getCurrentStudyProfile() != null)
+            return this.getPlanner().getCurrentStudyProfile().getTasks();
+        else
+            return new ArrayList<>();
     }
 
     /**
@@ -210,6 +225,7 @@ public class StudyPlannerController
 
     /**
      * Used when loading from a file
+     *
      * @param planner
      */
     public StudyPlannerController(StudyPlanner planner)
