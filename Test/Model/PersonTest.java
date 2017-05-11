@@ -24,7 +24,6 @@ public class PersonTest extends VersionControlEntityTest{
         person1 = new Person("Mr", personName, "Odintsov", true, "Andrew.odi@apple.com");
         person2 = new Person("Mr","Zilvinas Ceikauskas", true, "Zill.cei@apple.com");
         versionControlEntity = new Person("Mr","Zilvinas Ceikauskas", true, "Zill.cei@apple.com");
-        modelEntity = versionControlEntity;
     }
 
     @Test

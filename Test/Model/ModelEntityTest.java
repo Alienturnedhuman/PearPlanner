@@ -6,6 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import static org.junit.Assert.*;
 
@@ -13,12 +14,25 @@ import static org.junit.Assert.*;
  * Created by bijan on 08/05/2017.
  */
 @Ignore
-public abstract class ModelEntityTest {
+public class ModelEntityTest {
 
-    ModelEntity modelEntity;
+    private ModelEntity modelEntity;
+    private GregorianCalendar gregorianCalendar;
+    private String[] detailsArray= {"detail"};
+    private MultilineString multilineString;
+    private Note note;
+    private ArrayList<Note> notes;
 
     @Before
-    public abstract void setUp() throws Exception;
+    public void setUp() throws Exception
+    {
+        gregorianCalendar = new GregorianCalendar(2017, 06, 02, 3,
+                31, 30);
+        multilineString = new MultilineString("This is some note for testing purposes");
+        note = new Note("Note1", gregorianCalendar, multilineString);
+        notes = new ArrayList<>();
+        modelEntity = new ModelEntity("name1", detailsArray, notes);
+    }
 
     @After
     public void tearDown() throws Exception
@@ -26,16 +40,11 @@ public abstract class ModelEntityTest {
         modelEntity = null;
     }
 
-    @Test
-    public void getName() throws Exception
-    {
-        assertEquals("", modelEntity.getName());
-    }
 
     @Test
     public void getDetails() throws Exception
     {
-        assertEquals("", modelEntity.getName());
+        assertEquals("detail", modelEntity.getDetails().getAsString());
     }
 
     @Test
@@ -48,7 +57,7 @@ public abstract class ModelEntityTest {
     @Test
     public void setDetails() throws Exception
     {
-        // Testing setDetails with Striing argument
+        // Testing setDetails with String argument
         modelEntity.setDetails("Some details to be added");
         assertEquals("Some details to be added", modelEntity.getDetails().getAsString());
     }
@@ -56,7 +65,7 @@ public abstract class ModelEntityTest {
     @Test
     public void setDetails1() throws Exception
     {
-        // Testing setDetails with Striing array argument
+        // Testing setDetails with String array argument
         String[] detailArray = {"Some details to be added", "more details to be added"};
         modelEntity.setDetails(detailArray);
         assertArrayEquals(detailArray, modelEntity.getDetails().getAsArray());
@@ -65,7 +74,7 @@ public abstract class ModelEntityTest {
     @Test
     public void setDetails2() throws Exception
     {
-        // Testing setDetails with Striing ArrayList argument
+        // Testing setDetails with String ArrayList argument
         ArrayList<String> detailArrrayList = new ArrayList<>();
         detailArrrayList.add("New details to be added ");
         detailArrrayList.add("And some more details to be added ");
@@ -73,4 +82,28 @@ public abstract class ModelEntityTest {
         assertArrayEquals(detailArrrayList.toArray(), modelEntity.getDetails().getAsArray());
     }
 
+    @Test
+    public void setDetails3() throws Exception
+    {
+        // Testing setDetails with multiline String argument
+        MultilineString multilineString = new MultilineString("New details to be added ");
+        modelEntity.setDetails(multilineString);
+        assertArrayEquals(multilineString.getAsArray(), modelEntity.getDetails().getAsArray());
+    }
+
+    @Test
+    public void addProperties() throws Exception
+    {
+        modelEntity.addProperties("name2", new MultilineString("Added details"));
+        assertEquals("name2", modelEntity.getName());
+        assertEquals("Added details", modelEntity.getDetails().getAsString());
+    }
+
+    @Test
+    public void addProperties1() throws Exception
+    {
+        modelEntity.addProperties("name3", "Added more details");
+        assertEquals("name3", modelEntity.getName());
+        assertEquals("Added more details", modelEntity.getDetails().getAsString());
+    }
 }

@@ -3,56 +3,56 @@
 	<assets>
 		<persons>
 			<person>
-				<name>James Bloggs</name>
-				<details>Best professor ever</details>
+				<name>Dan Smith</name>
+				<details>Director of Learning and Teaching</details>
 				<version>0</version>
-				<uid>PERSON_321</uid>
-				<givenNames>Joseph Pete</givenNames>
-				<familyName>Bloggs</familyName>
-				<salutation>King</salutation>
-				<email>king.joe@uea.ac.uk</email>
+				<uid>PRDASM-12</uid>
+				<givenNames>Dan</givenNames>
+				<familyName>Smith</familyName>
+				<salutation>Dr.</salutation>
+				<email>dan.smith@uea.ac.uk</email>
 				<familyNameLast>true</familyNameLast>
 			</person>
 			<person>
-				<name>Andrew Odintsov</name>
-				<details>1337 h@x0r</details>
+				<name>Joost Noppen</name>
+				<details>Director of Employability</details>
 				<version>0</version>
-				<uid>PERSON_666</uid>
-				<givenNames>Andrei</givenNames>
-				<familyName>Odinstov</familyName>
-				<salutation>Russian</salutation>
-				<email>andy@nodick.ru</email>
+				<uid>PRJONO_34</uid>
+				<givenNames>Joost</givenNames>
+				<familyName>Noppen</familyName>
+				<salutation>Dr.</salutation>
+				<email>j.Noppen@uea.ac.uk</email>
 				<familyNameLast>true</familyNameLast>
 			</person>
 			<person>
-				<name>Tanaka Aya</name>
-				<details>Bringer of Coffee</details>
+				<name>Lapeer Rudy</name>
+				<details>Director of Admissions</details>
 				<version>0</version>
-				<uid>PERSON_231</uid>
-				<givenNames>Aya</givenNames>
-				<familyName>Tanaka</familyName>
-				<salutation>Miss</salutation>
-				<email>girl@anime.co.jp</email>
+				<uid>PRRULA_56</uid>
+				<givenNames>Rudy</givenNames>
+				<familyName>Lapeer</familyName>
+				<salutation>Dr.</salutation>
+				<email>R.Lapeer@uea.ac.uk</email>
 				<familyNameLast>false</familyNameLast>
 			</person>
 			<person>
-				<name>Ben Dickson</name>
-				<details>Dreamer</details>
+				<name>Katharina Huber</name>
+				<details>Director of PGR</details>
 				<version>0</version>
-				<uid>PERSON_123</uid>
-				<givenNames>Benjamin David</givenNames>
-				<familyName>Dickson</familyName>
-				<salutation>Prof</salutation>
-				<email>bendickson@hotmale.com</email>
+				<uid>PRKAHU_78</uid>
+				<givenNames>Katharina</givenNames>
+				<familyName>Huber</familyName>
+				<salutation>Dr.</salutation>
+				<email>k.Huber@uea.ac.uk</email>
 				<familyNameLast>true</familyNameLast>
 			</person>
 		</persons>
 		<buildings>
 			<building>
 				<name>Julian Study Centre</name>
-				<details>Julian Study Centre is an amazing place with stupid sideways lecture theatres.</details>
+				<details>The Julian Study Centre is a dedicated teaching building featuring a tiered 280 seat lecture theatre and an 80 seat Harvard-style lecture room.</details>
 				<version>0</version>
-				<uid>BUILDING_555</uid>
+				<uid>BUJSC_12</uid>
 				<code>JSC</code>
 				<latitude>52.4227</latitude>
 				<longitude>1.59027</longitude>
@@ -60,18 +60,18 @@
 		</buildings>
 		<rooms>
 			<room>
-				<name>JSC Lecture Theatre</name>
-				<details>Main JSC Lecture Theatre</details>
+				<name>JSC Seminar Room</name>
+				<details>Large seminar room on level 1</details>
 				<version>0</version>
-				<uid>ROOM_201</uid>
-				<building>BUILDING_555</building>
-				<roomNumber>JSC 0.1</roomNumber>
+				<uid>ROJSCS_12</uid>
+				<building>BUJSC_12</building>
+				<roomNumber>JSC 1.02</roomNumber>
 			</room>
 		</rooms>
 		<timetableEventTypes>
 			<timetableEventType>
 				<name>Lecture</name>
-				<details>Lectures are things that some people don't turn up to but are thre because their friends sign them in.</details>
+				<details>An educational talk on the subject matter.</details>
 				<version>0</version>
 				<uid>LECTURE</uid>
 			</timetableEventType>
@@ -79,7 +79,7 @@
 	</assets>
 	<studyProfile>
 		<name>Autumn 2018 Semester</name>
-		<details>This is the future of your life.</details>
+		<details>The Autumn semster of the academic year 2018-2019.</details>
 		<uid>SEMESTER_2018_1</uid>
 		<year>2018</year>
 		<semester>1</semester>
