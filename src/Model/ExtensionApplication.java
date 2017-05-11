@@ -1,10 +1,12 @@
 package Model;
 
+import java.io.Serializable;
+
 /**
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class ExtensionApplication
+public class ExtensionApplication implements Serializable
 {
     // private data
     private Extension extension;

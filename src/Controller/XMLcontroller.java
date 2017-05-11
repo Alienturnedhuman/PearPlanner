@@ -5,7 +5,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static Controller.MainController.isNumeric;
 

@@ -1,17 +1,16 @@
 package Controller;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-
 import Model.*;
+import View.UIManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -482,9 +481,8 @@ public class DataController {
         return r;
     }
 
-    static public HubFile loadHubFile(String path)
+    static public HubFile loadHubFile(File tempFile)
     {
-        File tempFile = new File(path);
         HubFile r = null;
         if(tempFile.exists())
         {
@@ -494,7 +492,7 @@ public class DataController {
                 // https://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                Document doc = dBuilder.parse(path);
+                Document doc = dBuilder.parse(tempFile);
                 doc.getDocumentElement().normalize();
 
                 String rootElementTag = doc.getDocumentElement().getNodeName();
@@ -514,18 +512,18 @@ public class DataController {
                     }
                     else
                     {
-                        MainController.reportError("Invalid Parent Nodes");
+                        UIManager.reportError("Invalid Parent Nodes");
                     }
                 }
                 else
                 {
-                    MainController.reportError("Invalid XML file");
+                    UIManager.reportError("Invalid XML file");
                 }
 
             }
             catch(Exception e)
             {
-                MainController.reportError("Invalid File");
+                UIManager.reportError("Invalid File");
             }
         }
 

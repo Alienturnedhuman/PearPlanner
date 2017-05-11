@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public abstract class Assignment extends VersionControlEntity
 {
 
-    protected ArrayList<Assignment> tasks;
-    protected ArrayList<Requirement> requirements;
+    protected ArrayList<Task> tasks = new ArrayList<>();
+    protected ArrayList<Requirement> requirements = new ArrayList<>();
     protected int weighting;
     protected Person setBy;
     protected Person markedBy;
@@ -73,7 +73,7 @@ public abstract class Assignment extends VersionControlEntity
         }
     }
     // getters
-    public ArrayList<Assignment> getTasks()
+    public ArrayList<Task> getTasks()
     {
         return tasks;
     }
