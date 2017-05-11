@@ -86,6 +86,27 @@ public class HubFile
         return "HubFile for "+Integer.toString(year)+" semester: "+Integer.toString(semester)+" | Module Count: "+
                 Integer.toString(modules.size());
     }
+    public String toString(boolean verbose)
+    {
+        if(verbose)
+        {
+            StringBuilder r = new StringBuilder();
+
+            r.append(toString());
+            int i = -1;
+            int ii = modules.size();
+            while(++i<ii)
+            {
+                r.append(modules.get(i).toString(true));
+            }
+
+            return r.toString();
+        }
+        else
+        {
+            return toString();
+        }
+    }
     // constructors
 
     /**

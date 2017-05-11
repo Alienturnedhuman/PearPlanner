@@ -60,7 +60,7 @@ public class TimetableEvent extends Event
     @Override
     public String toString()
     {
-        return name+" in "+room.toString()+" at "+date.toString();
+        return name+" in "+room.toString()+" at "+date.getTime();
     }
 
 

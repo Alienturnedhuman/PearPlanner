@@ -44,7 +44,36 @@ public abstract class Assignment extends VersionControlEntity
     public static enum StateType {IN_PROGRESS,DEADLINE_PASSED,NOT_STARTED};
 
     // public methods
+    @Override
+    public String toString()
+    {
+        return "Assignment '"+name+"'";
+    }
+    public String toString(boolean verbose)
+    {
+        if(verbose)
+        {
+            StringBuilder r = new StringBuilder();
+            r.append(toString());
+            r.append("\n");
+            r.append("Total marks: "+Integer.toString(marks));
+            r.append("\n");
+            r.append("Total weighting: "+Integer.toString(weighting));
 
+            r.append("\n");
+            r.append("Set By: "+setBy.toString());
+            r.append("\n");
+            r.append("Marked By: "+markedBy.toString());
+            r.append("\n");
+            r.append("Reviewed By: "+reviewedBy.toString());
+
+            return r.toString();
+        }
+        else
+        {
+            return toString();
+        }
+    }
     // getters
     public ArrayList<Assignment> getTasks()
     {
