@@ -5,7 +5,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static Controller.MainController.isNumeric;
 
@@ -218,19 +217,8 @@ public class XMLcontroller {
             if(nodes.item(i).getNodeType()==Node.ELEMENT_NODE && schema.containsKey(nodes.item(i).getNodeName()))
             {
                 match.put(nodes.item(i).getNodeName(),"found");
-                // System.out.println("found "+nodes.item(i).getNodeName());
             }
         }
-        /*
-        for(Map.Entry<String, XMLcontroller.ImportAs> entry : schema.entrySet()) {
-            System.out.println(entry.getKey());
-
-            // do what you have to do here
-            // In your case, an other loop.
-        }
-
-        System.out.printf("matgh size %d | schema size: %d \n",match.size() , schema.size());
-        */
         return match.size() == schema.size();
     }
 }

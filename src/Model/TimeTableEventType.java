@@ -7,4 +7,8 @@ package Model;
 public class TimeTableEventType extends VersionControlEntity
 {
     // empty class until we add GUI
+    public String toString()
+    {
+        return name;
+    }
 }

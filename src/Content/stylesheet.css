@@ -1,0 +1,51 @@
+.unread-button {
+    -fx-background-image: url('/Content/notification1.png');
+}
+
+.read-button {
+    -fx-background-image: url('/Content/notification0.png');
+}
+
+.set-button {
+    -fx-base: greenyellow;
+}
+
+.notificationItem-title {
+    -fx-padding: 5 5 0;
+    -fx-display: block;
+}
+
+.notificationItem-details {
+    -fx-padding: 0 5 5;
+    -fx-display: block;
+    -fx-font-size: 85%;
+}
+
+.notificationItem-date {
+    -fx-font-size: 75%;
+    -fx-text-fill: darkslategrey;
+    -fx-padding: 0 5;
+}
+
+.unread-item {
+    -fx-background-color: lightgray;
+    -fx-display: block;
+}
+
+.title {
+    -fx-font-size: 1.5em;
+    -fx-padding: 0 15 10;
+}
+
+.title-details {
+    -fx-font-size: 1.5em;
+    -fx-padding: 5 15;
+}
+
+.list-item {
+    -fx-padding: 3 15 0;
+}
+
+.current-item {
+    -fx-background-color: greenyellow;
+}

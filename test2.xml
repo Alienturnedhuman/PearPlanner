@@ -1,0 +1,275 @@
+<hubfile>
+	<version>0</version>
+	<assets>
+		<persons>
+			<person>
+				<name>Joe Bloggs</name>
+				<details>Best professor ever</details>
+				<version>0</version>
+				<uid>PERSON_321</uid>
+				<givenNames>Joseph Pete</givenNames>
+				<familyName>Bloggs</familyName>
+				<salutation>King</salutation>
+				<email>king.joe@uea.ac.uk</email>
+				<familyNameLast>true</familyNameLast>
+			</person>
+			<person>
+				<name>Andrew Odintsov</name>
+				<details>1337 h@x0r</details>
+				<version>0</version>
+				<uid>PERSON_666</uid>
+				<givenNames>Andrei</givenNames>
+				<familyName>Odinstov</familyName>
+				<salutation>Russian</salutation>
+				<email>andy@bigdick.ru</email>
+				<familyNameLast>true</familyNameLast>
+			</person>
+			<person>
+				<name>Tanaka Aya</name>
+				<details>Bringer of Coffee</details>
+				<version>0</version>
+				<uid>PERSON_231</uid>
+				<givenNames>Aya</givenNames>
+				<familyName>Tanaka</familyName>
+				<salutation>Miss</salutation>
+				<email>girl@anime.co.jp</email>
+				<familyNameLast>false</familyNameLast>
+			</person>
+			<person>
+				<name>Ben Dickson</name>
+				<details>Dreamer</details>
+				<version>0</version>
+				<uid>PERSON_123</uid>
+				<givenNames>Benjamin David</givenNames>
+				<familyName>Dickson</familyName>
+				<salutation>Prof</salutation>
+				<email>bendickson@hotmale.com</email>
+				<familyNameLast>true</familyNameLast>
+			</person>
+		</persons>
+		<buildings>
+			<building>
+				<name>Julian Study Centre</name>
+				<details>Julian Study Centre is an amazing place with stupid sideways lecture theatres.</details>
+				<version>0</version>
+				<uid>BUILDING_555</uid>
+				<code>JSC</code>
+				<latitude>52.4227</latitude>
+				<longitude>1.59027</longitude>
+			</building>
+		</buildings>
+		<rooms>
+			<room>
+				<name>JSC Lecture Theatre</name>
+				<details>Main JSC Lecture Theatre</details>
+				<version>0</version>
+				<uid>ROOM_101</uid>
+				<building>BUILDING_555</building>
+				<roomNumber>JSC 0.1</roomNumber>
+			</room>
+		</rooms>
+		<timetableEventTypes>
+			<timetableEventType>
+				<name>Lecture</name>
+				<details>Lectures are things that some people don't turn up to but are thre because their friends sign them in.</details>
+				<version>0</version>
+				<uid>LECTURE</uid>
+			</timetableEventType>
+		</timetableEventTypes>
+	</assets>
+	<studyProfile>
+		<name>Spring 2017 Semester</name>
+		<details>This is the present of your life.</details>
+		<uid>SEMESTER_2016_2</uid>
+		<year>2017</year>
+		<semester>2</semester>
+		<modules>
+			<module>
+				<name>Programming 2</name>
+				<details>Learn how to code even better</details>
+				<version>0</version>
+				<uid>MODULE_PROG2</uid>
+				<organiser>PERSON_666</organiser>
+				<moduleCode>CMP-5016Z</moduleCode>
+				<timetable>
+					<timetableEvent>
+						<name>Programming 2 Lecture</name>
+						<details>Learn about C++</details>
+						<version>0</version>
+						<uid>TT_CMP-5016Z_LEC_01</uid>
+						<date>09/04/2017T11:00:00Z</date>
+						<room>ROOM_101</room>
+						<lecturer>PERSON_666</lecturer>
+						<timetableEventType>LECTURE</timetableEventType>
+						<duration>110</duration>
+					</timetableEvent>
+				</timetable>
+				<assignments>
+					<exam>
+						<name>Final Exam Resit</name>
+						<details>If you messed up you will need to take this</details>
+						<version>0</version>
+						<uid>PROG2_EXAM_1_RESIT</uid>
+						<resit></resit>
+						<timeslot>
+							<name>Deadline</name>
+							<details>Start Date for the Coursework</details>
+							<version>0</version>
+							<uid>PROG2_EXAM_1_TIMESLOT</uid>
+							<date>09/08/2017T15:00:00Z</date>
+							<room>ROOM_101</room>
+							<duration>120</duration>
+						</timeslot>
+						<weighting>30</weighting>
+						<setBy>PERSON_666</setBy>
+						<markedBy>PERSON_666</markedBy>
+						<reviewedBy>PERSON_123</reviewedBy>
+						<marks>120</marks>
+					</exam>
+					<coursework>
+						<name>Main Coursework</name>
+						<details>This is the coursework.</details>
+						<version>0</version>
+						<uid>PROG2_CW_1</uid>
+						<startDate>
+							<name>Start Date</name>
+							<details>Start Date for the Coursework</details>
+							<version>0</version>
+							<uid>PROG2_CW_1_START</uid>
+							<date>09/04/2017T15:00:00Z</date>
+						</startDate>
+						<deadline>
+							<name>Deadline</name>
+							<details>Start Date for the Coursework</details>
+							<version>0</version>
+							<uid>PROG2_CW_1_DEADLINE</uid>
+							<date>09/05/2017T15:00:00Z</date>
+						</deadline>
+						<extensions>
+							<extension>STUDENT_999_EXTENSION_101</extension>
+						</extensions>
+						<weighting>20</weighting>
+						<setBy>PERSON_666</setBy>
+						<markedBy>PERSON_666</markedBy>
+						<reviewedBy>PERSON_123</reviewedBy>
+						<marks>100</marks>
+					</coursework>
+					<exam>
+						<name>Final Exam</name>
+						<details>This is the final exam.\nDo not be late.\nOr you will not pass.</details>
+						<version>0</version>
+						<uid>PROG2_EXAM_1</uid>
+						<resit>SOFTENG_EXAM_1_RESIT</resit>
+						<timeslot>
+							<name>Deadline</name>
+							<details>Start Date for the Coursework</details>
+							<version>0</version>
+							<uid>PROG2_EXAM_1_TIMESLOT</uid>
+							<date>09/06/2017T15:00:00Z</date>
+							<room>ROOM_101</room>
+							<duration>120</duration>
+						</timeslot>
+						<weighting>30</weighting>
+						<setBy>PERSON_666</setBy>
+						<markedBy>PERSON_666</markedBy>
+						<reviewedBy>PERSON_123</reviewedBy>
+						<marks>120</marks>
+					</exam>
+				</assignments>
+			</module>
+			<module>
+				<name>Software Engineering</name>
+				<details>Learn how to design code!</details>
+				<version>0</version>
+				<uid>MODULE_SOFTENG</uid>
+				<organiser>PERSON_123</organiser>
+				<moduleCode>CMP-5012Y</moduleCode>
+				<timetable>
+					<timetableEvent>
+						<name>Software Engineering Lecture</name>
+						<details>Learn about the Gantt Diagram and why some people call it a Gantt Chart</details>
+						<version>0</version>
+						<uid>TT_CMP-5012Y_LEC_01</uid>
+						<date>09/04/2017T11:00:00Z</date>
+						<room>ROOM_101</room>
+						<lecturer>PERSON_123</lecturer>
+						<timetableEventType>LECTURE</timetableEventType>
+						<duration>110</duration>
+					</timetableEvent>
+				</timetable>
+				<assignments>
+					<exam>
+						<name>Final Exam Resit</name>
+						<details>If you messed up you will need to take this</details>
+						<version>0</version>
+						<uid>SOFTENG_EXAM_1_RESIT</uid>
+						<resit></resit>
+						<timeslot>
+							<name>Deadline</name>
+							<details>Start Date for the Coursework</details>
+							<version>0</version>
+							<uid>SOFTENG_EXAM_1_TIMESLOT</uid>
+							<date>09/08/2017T15:00:00Z</date>
+							<room>ROOM_101</room>
+							<duration>120</duration>
+						</timeslot>
+						<weighting>30</weighting>
+						<setBy>PERSON_123</setBy>
+						<markedBy>PERSON_123</markedBy>
+						<reviewedBy>PERSON_123</reviewedBy>
+						<marks>120</marks>
+					</exam>
+					<coursework>
+						<name>Main Coursework</name>
+						<details>This is the coursework.</details>
+						<version>0</version>
+						<uid>SOFTENG_CW_1</uid>
+						<startDate>
+							<name>Start Date</name>
+							<details>Start Date for the Coursework</details>
+							<version>0</version>
+							<uid>SOFTENG_CW_1_START</uid>
+							<date>09/04/2017T15:00:00Z</date>
+						</startDate>
+						<deadline>
+							<name>Deadline</name>
+							<details>Start Date for the Coursework</details>
+							<version>0</version>
+							<uid>SOFTENG_CW_1_DEADLINE</uid>
+							<date>09/05/2017T15:00:00Z</date>
+						</deadline>
+						<extensions>
+							<extension>STUDENT_999_EXTENSION_101</extension>
+						</extensions>
+						<weighting>20</weighting>
+						<setBy>PERSON_123</setBy>
+						<markedBy>PERSON_123</markedBy>
+						<reviewedBy>PERSON_123</reviewedBy>
+						<marks>100</marks>
+					</coursework>
+					<exam>
+						<name>Final Exam</name>
+						<details>This is the final exam.\nDo not be late.\nOr you will not pass.</details>
+						<version>0</version>
+						<uid>SOFTENG_EXAM_1</uid>
+						<resit>SOFTENG_EXAM_1_RESIT</resit>
+						<timeslot>
+							<name>Deadline</name>
+							<details>Start Date for the Coursework</details>
+							<version>0</version>
+							<uid>SOFTENG_EXAM_1_TIMESLOT</uid>
+							<date>09/06/2017T15:00:00Z</date>
+							<room>ROOM_101</room>
+							<duration>120</duration>
+						</timeslot>
+						<weighting>30</weighting>
+						<setBy>PERSON_123</setBy>
+						<markedBy>PERSON_123</markedBy>
+						<reviewedBy>PERSON_123</reviewedBy>
+						<marks>120</marks>
+					</exam>
+				</assignments>
+			</module>
+		</modules>
+	</studyProfile>
+</hubfile>
