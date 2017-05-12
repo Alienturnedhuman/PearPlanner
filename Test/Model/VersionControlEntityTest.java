@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  * Created by bijan on 06/05/2017.
  */
 @Ignore
-public abstract class VersionControlEntityTest extends ModelEntityTest{
+public abstract class VersionControlEntityTest{
 
     VersionControlEntity versionControlEntity;
 
