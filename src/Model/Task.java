@@ -19,22 +19,33 @@ public class Task extends ModelEntity
 
 
     // public methods
-    boolean dependenciesComplete()
+
+    // getters:
+
+    public String getDeadline()
     {
-        throw new UnsupportedOperationException("This method is not implemented yet");
-    }
-    boolean hasDependencies()
-    {
-        throw new UnsupportedOperationException("This method is not implemented yet");
-    }
-    boolean isComplete()
-    {
-        throw new UnsupportedOperationException("This method is not implemented yet");
-    }
-    boolean canCheckComplete()
-    {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return this.deadline.toString();
     }
 
+    public boolean isCheckedComplete()
+    {
+        return this.checkedComplete;
+    }
 
+    public boolean dependenciesComplete()
+    {
+        throw new UnsupportedOperationException("This method is not implemented yet");
+    }
+    public boolean hasDependencies()
+    {
+        throw new UnsupportedOperationException("This method is not implemented yet");
+    }
+    public boolean isComplete()
+    {
+        throw new UnsupportedOperationException("This method is not implemented yet");
+    }
+    public boolean canCheckComplete()
+    {
+        throw new UnsupportedOperationException("This method is not implemented yet");
+    }
 }

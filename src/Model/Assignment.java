@@ -1,5 +1,10 @@
 package Model;
 
+import Controller.MainController;
+import Controller.MenuController;
+import View.UIManager;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -42,7 +47,36 @@ public abstract class Assignment extends VersionControlEntity
     public enum StateType {IN_PROGRESS,DEADLINE_PASSED,NOT_STARTED}
 
     // public methods
+    @Override
+    public String toString()
+    {
+        return "Assignment '"+name+"'";
+    }
+    public String toString(boolean verbose)
+    {
+        if(verbose)
+        {
+            StringBuilder r = new StringBuilder();
+            r.append(toString());
+            r.append("\n");
+            r.append("Total marks: "+Integer.toString(marks));
+            r.append("\n");
+            r.append("Total weighting: "+Integer.toString(weighting));
 
+            r.append("\n");
+            r.append("Set By: "+setBy.toString());
+            r.append("\n");
+            r.append("Marked By: "+markedBy.toString());
+            r.append("\n");
+            r.append("Reviewed By: "+reviewedBy.toString());
+
+            return r.toString();
+        }
+        else
+        {
+            return toString();
+        }
+    }
     // getters
     public ArrayList<Task> getTasks()
     {
@@ -75,6 +109,18 @@ public abstract class Assignment extends VersionControlEntity
     public StateType getState()
     {
         return state;
+    }
+
+    @Override
+    public void open(MenuController.Window current)
+    {
+        try
+        {
+            MainController.ui.assignmentDetails(this, current);
+        } catch (IOException e)
+        {
+            UIManager.reportError("Unable to open View file");
+        }
     }
 
     // Constructor

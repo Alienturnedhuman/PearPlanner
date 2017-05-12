@@ -2,24 +2,23 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../Content/stylesheet.css" fx:controller="Controller.MenuController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../Content/stylesheet.css">
     <children>
         <ToolBar minHeight="56.0" style="-fx-background-color: #5C8B76" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" style="-fx-background-color: transparent; -fx-background-image: url('/Content/menu.png'); -fx-background-size: 100% 100%; -fx-cursor: hand" />
+                <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" styleClass="button-image" style="-fx-background-image: url('/Content/menu.png');" />
                 <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                    <children>
-                       <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Study Dashboard" />
+                       <Label fx:id="title" style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Study Dashboard" />
                    </children>
                 </HBox>
-                <Button fx:id="showNotification" prefWidth="31.0" style="-fx-background-color: transparent; -fx-background-size: 100% 100%; -fx-cursor: hand;" />
+                <Button fx:id="showNotification" styleClass="button-image" prefWidth="31.0" />
             </items>
         </ToolBar>
         <GridPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
             <children>
-                <HBox style="-fx-padding: 10 15;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <HBox fx:id="topBox" style="-fx-padding: 10 15;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <Label fx:id="welcome"/>
                     </children>
                 </HBox>
             </children>

@@ -119,7 +119,7 @@ public class ConsoleIO {
             fileData = DataController.loadHubFile(tempFile);
         }
 
-        System.out.println(fileData.toString());
+        System.out.println(fileData.toString(true));
 
         return "Return to Main Menu";
     }

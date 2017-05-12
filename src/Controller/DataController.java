@@ -40,13 +40,31 @@ public class DataController {
         return r;
     }
 
-    static VersionControlEntity inList( HashMap<String,VersionControlEntity> list,String uid)
+    private static <T extends VersionControlEntity> T inList( HashMap<String,VersionControlEntity> list,String uid)
     {
         if(list.containsKey(uid))
         {
-            return list.get(uid);
+            // can't do instanceof T annoyingly, so hopefully casting to T and failing will work instead
+            try
+            {
+                return (T)list.get(uid);
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
         }
         return null;
+    }
+
+    static private void addVCEproperties(VersionControlEntity vce , HashMap<String,XMLcontroller.NodeReturn> values)
+    {
+        vce.addProperties(values.get("name").getString(),
+                values.get("details").getMultilineString());
+        String UID = values.get("uid").getString();
+        vce.makeImporter();
+        vce.setUID(UID,values.get("version").getInt());
+
     }
 
     static private HubFile processNewHubFile(NodeList nList)
@@ -61,13 +79,6 @@ public class DataController {
         NodeList assetNodes = fValues.get("assets").getNodeList();
         NodeList studyProfileNodes = fValues.get("studyProfile").getNodeList();
 
-        /*
-        NodeList assetNodes = XMLcontroller.getNodes(nList.item(1));
-        String[] assetSchema = {"persons","buildings","rooms","timetableEventTypes"};
-
-        NodeList studyProfileNodes = XMLcontroller.getNodes(nList.item(2));
-        String[] studyProfileSchema = {"year","semester","modules"};
-        */
         if(XMLcontroller.matchesSchema(assetNodes,HubFile.SCHEMA_ASSETS) &&
                 XMLcontroller.matchesSchema(studyProfileNodes,HubFile.SCHEMA_STUDYPROFILE))
         {
@@ -79,9 +90,6 @@ public class DataController {
 
             ArrayList<VersionControlEntity> newAssets = new ArrayList<>();
             ArrayList<Module> newModules = new ArrayList<>();
-            // replace these with reading the values
-
-
 
             Node n;
             NodeList nc;
@@ -110,11 +118,11 @@ public class DataController {
                             tp = new Person(pValues.get("salutation").getString(), pValues.get("givenNames").getString(),
                                     pValues.get("familyName").getString(), pValues.get("familyNameLast").getBoolean(),
                                     pValues.get("email").getString());
-                            UID = pValues.get("uid").getString();
-                            tp.setUID(UID,pValues.get("version").getInt());
-                            tp.setName(pValues.get("name").getString());
-                            tp.setDetails(pValues.get("details").getMultilineString().getAsArray());
-                            assetList.put(UID,tp);
+
+                            TimeTableEventType ttet = new TimeTableEventType();
+                            addVCEproperties(tp,pValues);
+
+                            assetList.put(pValues.get("uid").getString(),tp);
                         }
                     }
                 }
@@ -142,11 +150,10 @@ public class DataController {
                             tb = new Building(pValues.get("code").getString(), pValues.get("latitude").getDouble(),
                                     pValues.get("longitude").getDouble());
 
-                            UID = pValues.get("uid").getString();
-                            tb.setUID(UID,pValues.get("version").getInt());
-                            tb.setName(pValues.get("name").getString());
-                            tb.setDetails(pValues.get("details").getMultilineString().getAsArray());
-                            assetList.put(UID,tb);
+
+                            addVCEproperties(tb,pValues);
+
+                            assetList.put(pValues.get("uid").getString(),tb);
                         }
                     }
                 }
@@ -181,11 +188,10 @@ public class DataController {
                                 tr = new Room(pValues.get("roomNumber").getString());
                             }
 
-                            UID = pValues.get("uid").getString();
-                            tr.setUID(UID,pValues.get("version").getInt());
-                            tr.setName(pValues.get("name").getString());
-                            tr.setDetails(pValues.get("details").getMultilineString().getAsArray());
-                            assetList.put(UID,tr);
+
+                            addVCEproperties(tr,pValues);
+
+                            assetList.put(pValues.get("uid").getString(),tr);
                         }
                     }
                 }
@@ -208,12 +214,12 @@ public class DataController {
                             HashMap<String,XMLcontroller.NodeReturn> ttetValues =
                                     xmlTools.getSchemaValues(nc,HubFile.SCHEMA_TIMETABLE_EVENT_TYPE);
 
+
                             TimeTableEventType ttet = new TimeTableEventType();
-                            ttet.addProperties(ttetValues.get("name").getString(),
-                                    ttetValues.get("details").getMultilineString());
-                            UID = ttetValues.get("uid").getString();
-                            ttet.setUID(UID,ttetValues.get("version").getInt());
-                            assetList.put(UID,ttet);
+
+                            addVCEproperties(ttet,ttetValues);
+
+                            assetList.put(ttetValues.get("uid").getString(),ttet);
                         }
                     }
 
@@ -240,23 +246,15 @@ public class DataController {
                             xmlTools.getSchemaValues(modules.item(i).getChildNodes(),HubFile.SCHEMA_MODULE);
 
                     String linkedPerson = moduleValues.get("organiser").getString();
-                    Person organiser;
-                    if(assetList.containsKey(linkedPerson) &&
-                            assetList.get(linkedPerson) instanceof Person)
-                    {
-                        organiser = (Person)assetList.get(linkedPerson);
-                    }
-                    else
-                    {
-                        organiser = null;
-                    }
+
+                    Person organiser = inList(assetList,linkedPerson);
                     String moduleCode = moduleValues.get("moduleCode").getString();
                     Module thisModule = new Module(organiser,moduleCode);
-                    thisModule.addProperties(moduleValues.get("name").getString(),
-                            moduleValues.get("details").getMultilineString());
-                    UID = moduleValues.get("uid").getString();
-                    thisModule.setUID(UID,moduleValues.get("version").getInt());
-                    assetList.put(UID,thisModule);
+
+
+                    addVCEproperties(thisModule,moduleValues);
+
+                    assetList.put(moduleValues.get("uid").getString(),thisModule);
 
                     NodeList assignments = moduleValues.get("assignments").getNodeList();
                     int j = -1;
@@ -283,33 +281,13 @@ public class DataController {
                                         String linkedSetBy = courseworkValues.get("setBy").getString();
                                         String linkedMarkedBy = courseworkValues.get("markedBy").getString();
                                         String linkedReviewedBy = courseworkValues.get("reviewedBy").getString();
-                                        if(assetList.containsKey(linkedSetBy) &&
-                                                assetList.get(linkedSetBy) instanceof Person)
-                                        {
-                                            cwSetBy = (Person)assetList.get(linkedSetBy);
-                                        }
-                                        else
-                                        {
-                                            cwSetBy = null;
-                                        }
-                                        if(assetList.containsKey(linkedMarkedBy) &&
-                                                assetList.get(linkedMarkedBy) instanceof Person)
-                                        {
-                                            cwMarkedBy = (Person)assetList.get(linkedMarkedBy);
-                                        }
-                                        else
-                                        {
-                                            cwMarkedBy = null;
-                                        }
-                                        if(assetList.containsKey(linkedReviewedBy) &&
-                                                assetList.get(linkedReviewedBy) instanceof Person)
-                                        {
-                                            cwReviewedBy = (Person)assetList.get(linkedReviewedBy);
-                                        }
-                                        else
-                                        {
-                                            cwReviewedBy = null;
-                                        }
+
+
+                                        cwSetBy = inList(assetList,linkedSetBy);
+                                        cwMarkedBy = inList(assetList,linkedMarkedBy);
+                                        cwReviewedBy = inList(assetList,linkedReviewedBy);
+
+
                                         if(XMLcontroller.matchesSchema(courseworkValues.get("startDate").getNodeList(),
                                                 HubFile.SCHEMA_EVENT))
                                         {
@@ -317,9 +295,10 @@ public class DataController {
                                                     xmlTools.getSchemaValues(courseworkValues.get("startDate").getNodeList(),
                                                             HubFile.SCHEMA_EVENT);
                                             cwStartDate = new Event(eventValues.get("date").getString());
-                                            cwStartDate.addProperties(eventValues.get("name").getString(),
-                                                    eventValues.get("details").getMultilineString());
-                                            cwStartDate.setUID(eventValues.get("name").getString());
+
+
+                                            addVCEproperties(cwStartDate,eventValues);
+                                            assetList.put(eventValues.get("uid").getString(),cwStartDate);
 
                                         }
                                         else
@@ -332,10 +311,12 @@ public class DataController {
                                             HashMap<String,XMLcontroller.NodeReturn> eventValues =
                                                     xmlTools.getSchemaValues(courseworkValues.get("deadline").getNodeList(),
                                                             HubFile.SCHEMA_EVENT);
+
                                             cwDeadline = new Deadline(eventValues.get("date").getString());
-                                            cwDeadline.addProperties(eventValues.get("name").getString(),
-                                                    eventValues.get("details").getMultilineString());
-                                            cwDeadline.setUID(eventValues.get("name").getString());
+
+
+                                            addVCEproperties(cwDeadline,eventValues);
+                                            assetList.put(eventValues.get("uid").getString(),cwDeadline);
 
                                         }
                                         else
@@ -345,11 +326,10 @@ public class DataController {
                                         Coursework newCoursework = new Coursework(courseworkValues.get("weighting").getInt(),
                                                 cwSetBy,cwMarkedBy,cwReviewedBy,courseworkValues.get("marks").getInt(),
                                                 cwStartDate,cwDeadline,cwExtensions);
-                                        newCoursework.addProperties(courseworkValues.get("name").getString(),
-                                                courseworkValues.get("details").getMultilineString());
-                                        UID = courseworkValues.get("uid").getString();
-                                        newCoursework.setUID(UID,courseworkValues.get("version").getInt());
-                                        assetList.put(UID,newCoursework);
+
+                                        addVCEproperties(newCoursework,courseworkValues);
+
+                                        assetList.put(courseworkValues.get("uid").getString(),newCoursework);
                                         thisModule.addAssignment(newCoursework);
                                     }
                                     break;
@@ -372,33 +352,10 @@ public class DataController {
                                         String linkedMarkedBy = examValues.get("markedBy").getString();
                                         String linkedReviewedBy = examValues.get("reviewedBy").getString();
                                         String linkedResit = examValues.get("resit").getString();
-                                        if(assetList.containsKey(linkedSetBy) &&
-                                                assetList.get(linkedSetBy) instanceof Person)
-                                        {
-                                            exSetBy = (Person)assetList.get(linkedSetBy);
-                                        }
-                                        else
-                                        {
-                                            exSetBy = null;
-                                        }
-                                        if(assetList.containsKey(linkedMarkedBy) &&
-                                                assetList.get(linkedMarkedBy) instanceof Person)
-                                        {
-                                            exMarkedBy = (Person)assetList.get(linkedMarkedBy);
-                                        }
-                                        else
-                                        {
-                                            exMarkedBy = null;
-                                        }
-                                        if(assetList.containsKey(linkedReviewedBy) &&
-                                                assetList.get(linkedReviewedBy) instanceof Person)
-                                        {
-                                            exReviewedBy = (Person)assetList.get(linkedReviewedBy);
-                                        }
-                                        else
-                                        {
-                                            exReviewedBy = null;
-                                        }
+
+                                        exSetBy = inList(assetList,linkedSetBy);
+                                        exMarkedBy = inList(assetList,linkedMarkedBy);
+                                        exReviewedBy = inList(assetList,linkedReviewedBy);
 
                                         if(XMLcontroller.matchesSchema(examValues.get("timeslot").getNodeList(),
                                                 HubFile.SCHEMA_EXAMEVENT))
@@ -406,40 +363,27 @@ public class DataController {
                                             HashMap<String,XMLcontroller.NodeReturn> eventValues =
                                                     xmlTools.getSchemaValues(examValues.get("timeslot").getNodeList(),
                                                             HubFile.SCHEMA_EXAMEVENT);
-                                            Room exRoom;
+                                            //Room exRoom;
                                             String linkedRoom = eventValues.get("room").getString();
-                                            if(assetList.containsKey(linkedRoom) &&
-                                                    assetList.get(linkedRoom) instanceof Room)
-                                            {
-                                                exRoom = (Room)assetList.get(linkedRoom);
-                                            }
-                                            else
-                                            {
-                                                exRoom = null;
-                                            }
+                                            Room exRoom = inList(assetList,linkedRoom);
+
+
                                             exTimeSlot = new ExamEvent(eventValues.get("date").getString(),exRoom,
                                                     eventValues.get("duration").getInt());
-                                            exTimeSlot.addProperties(eventValues.get("name").getString(),
-                                                    eventValues.get("details").getMultilineString());
 
-                                            UID = eventValues.get("uid").getString();
-                                            exTimeSlot.setUID(UID,eventValues.get("version").getInt());
+
+
+                                            addVCEproperties(exTimeSlot,eventValues);
+                                            assetList.put(eventValues.get("uid").getString(),exTimeSlot);
 
                                         }
                                         else
                                         {
                                             exTimeSlot = null;
                                         }
-                                        Exam exExamResit;
-                                        if(assetList.containsKey(linkedResit) &&
-                                                assetList.get(linkedResit) instanceof Exam)
-                                        {
-                                            exExamResit = (Exam)assetList.get(linkedResit);
-                                        }
-                                        else
-                                        {
-                                            exExamResit = null;
-                                        }
+                                        Exam exExamResit = inList(assetList,linkedResit);
+
+
                                         Exam newExam;
                                         if(exExamResit==null) {
                                             newExam = new Exam(examValues.get("weighting").getInt(),
@@ -452,11 +396,12 @@ public class DataController {
                                                     exSetBy, exMarkedBy, exReviewedBy, examValues.get("marks").getInt(),
                                                     exTimeSlot,exExamResit);
                                         }
-                                        newExam.addProperties(examValues.get("name").getString(),
-                                                examValues.get("details").getMultilineString());
-                                        UID = examValues.get("uid").getString();
-                                        newExam.setUID(UID,examValues.get("version").getInt());
-                                        assetList.put(UID,newExam);
+
+
+
+                                        addVCEproperties(newExam,examValues);
+
+                                        assetList.put(examValues.get("uid").getString(),newExam);
                                         thisModule.addAssignment(newExam);
                                     }
 
@@ -471,35 +416,31 @@ public class DataController {
                     while(++j<jj)
                     {
                         if(timetable.item(j).getNodeType()==Node.ELEMENT_NODE &&
-                                timetable.item(j).getNodeName()=="timetableEvent" &&
-                                XMLcontroller.matchesSchema(assignments.item(j).getChildNodes(),
+                                timetable.item(j).getNodeName().equals("timetableEvent") &&
+                                XMLcontroller.matchesSchema(timetable.item(j).getChildNodes(),
                                 HubFile.SCHEMA_TIMETABLE_EVENT))
 
                         {
                             HashMap<String,XMLcontroller.NodeReturn> tteValues =
-                                    xmlTools.getSchemaValues(assignments.item(j).getChildNodes(),
+                                    xmlTools.getSchemaValues(timetable.item(j).getChildNodes(),
                                             HubFile.SCHEMA_TIMETABLE_EVENT);
 
-                            Room tRoom;
-                            Person tLecturer;
-                            TimeTableEventType tTTET;
+
 
                             String linkedRoom = tteValues.get("room").getString();
                             String linkedLecturer = tteValues.get("lecturer").getString();
                             String linkedTTET = tteValues.get("timetableEventType").getString();
 
-                            tRoom = (Room)inList(assetList,linkedRoom);
-                            tLecturer = (Person)inList(assetList,linkedLecturer);
-                            tTTET = (TimeTableEventType)inList(assetList,linkedTTET);
+                            Room tRoom = inList(assetList,linkedRoom);
+                            Person tLecturer = inList(assetList,linkedLecturer);
+                            TimeTableEventType tTTET = inList(assetList,linkedTTET);
+
 
                             TimetableEvent newTTE = new TimetableEvent(tteValues.get("date").getString(),tRoom,tLecturer
                                     ,tTTET,tteValues.get("duration").getInt());
+                            addVCEproperties(newTTE,tteValues);
 
-                            newTTE.addProperties(tteValues.get("name").getString(),
-                                    tteValues.get("details").getMultilineString());
-                            UID = tteValues.get("uid").getString();
-                            newTTE.setUID(UID,tteValues.get("version").getInt());
-                            assetList.put(UID,newTTE);
+                            assetList.put(tteValues.get("uid").getString(),newTTE);
                             thisModule.addTimetableEvent(newTTE);
                         }
                     }
@@ -511,6 +452,29 @@ public class DataController {
             String name = studyProfileValues.get("name").getString();
             MultilineString details = studyProfileValues.get("details").getMultilineString();
             UID = studyProfileValues.get("uid").getString();
+
+
+
+            System.out.println("Attempting to import "+Integer.toString(assetList.size())+" items.");
+            System.out.println(VersionControlEntity.libraryReport());
+
+            for (String key : assetList.keySet()) {
+
+                if(assetList.get(key).addToLibrary())
+                {
+                    System.out.println(key + " added");
+                }
+                else if(assetList.get(i).isImporter())
+                {
+                    VersionControlEntity.get(key).update(assetList.get(i));
+                    System.out.println(key + " update attempted");
+                }
+                else
+                {
+                    System.out.println(key + " not imported");
+                }
+            }
+            System.out.println(VersionControlEntity.libraryReport());
 
             r = new HubFile(version,year,semester,newModules,newAssets,name,details,UID);
         }
