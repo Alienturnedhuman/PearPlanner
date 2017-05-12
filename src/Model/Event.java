@@ -26,28 +26,29 @@ public class Event extends VersionControlEntity
     // getters
     public String toString()
     {
-        String s = new String();
-        s.format("%02d", date.get(Calendar.MINUTE));
+        String[] numbers = {String.format("%02d", date.get(Calendar.DAY_OF_MONTH)),
+                String.format("%02d", date.get(Calendar.MONTH)), String.format("%02d", date.get(Calendar.HOUR_OF_DAY)),
+                String.format("%02d", date.get(Calendar.MINUTE)), String.format("%02d", date.get(Calendar.SECOND))};
+
         StringBuilder dateString = new StringBuilder();
-        dateString.append(date.get(Calendar.DAY_OF_MONTH));
+        dateString.append(numbers[0]);
         dateString.append("/");
-        dateString.append(date.get(Calendar.MONTH));
+        dateString.append(numbers[1]);
         dateString.append("/");
         dateString.append(date.get(Calendar.YEAR));
         dateString.append("T");
-        dateString.append(date.get(Calendar.HOUR_OF_DAY));
+        dateString.append(numbers[2]);
         dateString.append(":");
-        dateString.append(s.format("%02d", date.get(Calendar.MINUTE)));
+        dateString.append(numbers[3]);
         dateString.append(":");
-        dateString.append(date.get(Calendar.SECOND));
+        dateString.append(numbers[4]);
+
         return dateString.toString();
     }
 
     // setters:
     public void setDate(String dateString)
     {
-        System.out.println("setDate: "+dateString);
-        // 09/04/2017T15:00:00Z
         if(true||validDateString(dateString))
         {
 
@@ -70,7 +71,6 @@ public class Event extends VersionControlEntity
 
     public Event(String cDate)
     {
-        System.out.println("superDate: "+cDate);
         setDate(cDate);
     }
 }

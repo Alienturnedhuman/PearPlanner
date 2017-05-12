@@ -16,25 +16,30 @@ public class EventTest {
     @Before
     public void setUp() throws Exception
     {
-//        assertEquals(true, MainController.isNumeric("32"));
-        event = new Event("12/05/2017T13:54:20");
+        event = new Event("02/05/2017T05:02:09");
     }
 
     @Test
     public void validDateString() throws Exception
     {
+        // Testing a valid date format
+        assertEquals(true, Event.validDateString("02/05/2017T05:02:09"));
 
+        // Testing an invalid date format
+        assertEquals(false, Event.validDateString("02/05/217T0:02:09"));
     }
 
     @Test
     public void toStringTest() throws Exception
     {
-        assertEquals("12/5/2017T13:54:20", event.toString());
+        assertEquals("02/05/2017T05:02:09", event.toString());
     }
 
     @Test
     public void setDate() throws Exception
     {
+        event.setDate("04/10/2017T09:08:13");
+        assertEquals("04/10/2017T09:08:13", event.toString());
     }
 
 }
