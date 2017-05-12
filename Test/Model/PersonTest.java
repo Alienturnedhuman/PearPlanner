@@ -13,8 +13,8 @@ import static org.junit.Assert.*;
  */
 public class PersonTest extends VersionControlEntityTest{
 
-    ArrayList<String> personName = new ArrayList<>();
-    Person person1, person2;
+    private ArrayList<String> personName = new ArrayList<>();
+    private Person person1, person2;
 
     @Before
     @Override

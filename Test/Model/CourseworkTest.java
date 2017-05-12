@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class CourseworkTest{
 //    public class CourseworkTest extends AssignmentTest{
 
-    Coursework coursework;
+    private Coursework coursework;
 
     @Before
     public void setUp(){
@@ -21,15 +21,9 @@ public class CourseworkTest{
         Person person2 = new Person("Dr.", "Steven Laycock", true);
         Event event = new Event("02/03/2017T05:02:09");
         Deadline deadline = new Deadline("02/05/2017T05:02:09");
-//        Extension extension = new Extension();
         ArrayList<Extension> extensions = new ArrayList<>();
         coursework = new Coursework(30, person1, person1, person2, 100, event, deadline, extensions);
 //        assignment = coursework;
-    }
-
-    @Test
-    public void replace() throws Exception
-    {
     }
 
     @Test
