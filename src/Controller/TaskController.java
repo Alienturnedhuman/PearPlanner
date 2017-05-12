@@ -106,7 +106,7 @@ public class TaskController implements Initializable
      */
     public void handleSubmit()
     {
-        Task p = new Task(); // Create here
+        //Task p = new Task(); // Create here
 
         this.success = true;
         Stage stage = (Stage) this.submit.getScene().getWindow();
