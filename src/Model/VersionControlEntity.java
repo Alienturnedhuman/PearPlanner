@@ -126,6 +126,7 @@ public class VersionControlEntity extends ModelEntity
 //        setUID(newUID);
         if(importer)
         {
+            setUID(newUID);
             version = newVersion;
             return true;
         }

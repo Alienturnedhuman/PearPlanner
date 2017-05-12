@@ -112,6 +112,27 @@ public class Assignment extends VersionControlEntity
         return state;
     }
 
+    // Setters:
+
+    /**
+     * Add a Task to this Assignment.
+     * @param task Task to be added
+     */
+    public void addTask(Task task)
+    {
+        this.tasks.add(task);
+    }
+
+    /**
+     * Removes the given Task from the list of tasks.
+     * @param task Task to be removed
+     * @return true if found and deleted, false otherwise
+     */
+    public boolean removeTask(Task task)
+    {
+        return this.tasks.remove(task);
+    }
+
     @Override
     public void open(MenuController.Window current)
     {
