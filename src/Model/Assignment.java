@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public abstract class Assignment extends VersionControlEntity
+public class Assignment extends VersionControlEntity
 {
 
     protected ArrayList<Task> tasks = new ArrayList<>();
