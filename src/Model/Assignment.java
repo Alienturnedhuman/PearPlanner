@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public abstract class Assignment extends VersionControlEntity
+public class Assignment extends VersionControlEntity
 {
 
     protected ArrayList<Task> tasks = new ArrayList<>();
@@ -110,6 +110,27 @@ public abstract class Assignment extends VersionControlEntity
     public StateType getState()
     {
         return state;
+    }
+
+    // Setters:
+
+    /**
+     * Add a Task to this Assignment.
+     * @param task Task to be added
+     */
+    public void addTask(Task task)
+    {
+        this.tasks.add(task);
+    }
+
+    /**
+     * Removes the given Task from the list of tasks.
+     * @param task Task to be removed
+     * @return true if found and deleted, false otherwise
+     */
+    public boolean removeTask(Task task)
+    {
+        return this.tasks.remove(task);
     }
 
     @Override
