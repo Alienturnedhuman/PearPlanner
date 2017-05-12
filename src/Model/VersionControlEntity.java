@@ -123,7 +123,7 @@ public class VersionControlEntity extends ModelEntity
 
     public boolean setUID(String newUID, int newVersion)
     {
-        setUID(newUID);
+//        setUID(newUID);
         if(importer)
         {
             version = newVersion;
@@ -135,6 +135,7 @@ public class VersionControlEntity extends ModelEntity
         }
         else
         {
+            setUID(newUID);
             version = newVersion;
             return true;
         }
