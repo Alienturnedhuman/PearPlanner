@@ -1,9 +1,10 @@
 package View;
 
-import Controller.*;
-import Model.*;
+import Controller.DataController;
+import Controller.StudyPlannerController;
+import Model.HubFile;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.Scanner;
 
 
@@ -77,7 +78,7 @@ public class ConsoleIO {
     static public String view_viewSP(StudyPlannerController SPC)
     {
         View.ConsoleIO.setConsoleMessage("VIEW A STUDY PROFILE");
-        String[] studyProfiles = SPC.getStudyProfiles();
+        String[] studyProfiles = SPC.getPlanner().getListOfStudyProfileNames();
         int i =-1, ii = studyProfiles.length;
 
         if(ii<1)
@@ -109,11 +110,13 @@ public class ConsoleIO {
         View.ConsoleIO.setConsoleMessage("LOAD A STUDY PROFILE");
 
         String filename = getDataString("Enter filepath:");
-        HubFile fileData = DataController.loadHubFile(filename);
+        File tempFile = new File(filename);
+        HubFile fileData = DataController.loadHubFile(tempFile);
         while(!filename.equals("") && fileData == null)
         {
             filename = getDataString("File not valid, enter a different filepath:");
-            fileData = DataController.loadHubFile(filename);
+            tempFile = new File(filename);
+            fileData = DataController.loadHubFile(tempFile);
         }
 
         System.out.println(fileData.toString(true));
