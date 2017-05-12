@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.MenuController;
+
 import java.util.ArrayList;
 
 /**
@@ -66,5 +68,11 @@ public class Task extends ModelEntity
     public Task(String name)
     {
         super(name);
+    }
+
+    @Override
+    public void open(MenuController.Window current)
+    {
+
     }
 }
