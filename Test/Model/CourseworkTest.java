@@ -10,7 +10,8 @@ import static org.junit.Assert.*;
 /**
  * Created by bijan on 06/05/2017.
  */
-public class CourseworkTest extends AssignmentTest{
+public class CourseworkTest{
+//    public class CourseworkTest extends AssignmentTest{
 
     Coursework coursework;
 
@@ -23,7 +24,7 @@ public class CourseworkTest extends AssignmentTest{
 //        Extension extension = new Extension();
         ArrayList<Extension> extensions = new ArrayList<>();
         coursework = new Coursework(30, person1, person1, person2, 100, event, deadline, extensions);
-        assignment = coursework;
+//        assignment = coursework;
     }
 
     @Test
