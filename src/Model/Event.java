@@ -43,6 +43,7 @@ public class Event extends VersionControlEntity
     public void setDate(String dateString)
     {
         // 09/04/2017T15:00:00Z
+        // at the moment coded to bypass validator as it's not working correctly
         if(true||validDateString(dateString))
         {
 
