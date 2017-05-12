@@ -44,18 +44,6 @@ public class StudyPlannerController
     }
 
     /**
-     * validates whether a file is valid or not
-     *
-     * @param filedata
-     * @return true = valid,  false = not valid
-     */
-    public boolean fileValidation(String filedata)
-    {
-        return false;
-        // not implemented yet
-    }
-
-    /**
      * does the StudyPlanner contain the profile within the hubfile
      *
      * @param hubFile

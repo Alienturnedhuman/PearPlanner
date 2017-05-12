@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.MenuController;
+
 import java.util.ArrayList;
 
 /**
@@ -19,22 +21,58 @@ public class Task extends ModelEntity
 
 
     // public methods
-    boolean dependenciesComplete()
+    public String getDeadline()
     {
-        throw new UnsupportedOperationException("This method is not implemented yet");
-    }
-    boolean hasDependencies()
-    {
-        throw new UnsupportedOperationException("This method is not implemented yet");
-    }
-    boolean isComplete()
-    {
-        throw new UnsupportedOperationException("This method is not implemented yet");
-    }
-    boolean canCheckComplete()
-    {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return this.deadline.toString();
     }
 
+    public boolean isCheckedComplete()
+    {
+        return this.checkedComplete;
+    }
+    public boolean dependenciesComplete()
+    {
+        int i = -1;
+        int ii = dependencies.size();
+        while(++i<ii)
+        {
+            if(!dependencies.get(i).isComplete())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean hasDependencies()
+    {
+        return dependencies.size()>0;
+    }
+    public boolean isComplete()
+    {
+        return checkedComplete&&canCheckComplete();
+    }
+    public boolean canCheckComplete()
+    {
+        int i = -1;
+        int ii = requirements.size();
+        while(++i<ii)
+        {
+            if(!requirements.get(i).isComplete())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    public Task(String name)
+    {
+        super(name);
+    }
+
+    @Override
+    public void open(MenuController.Window current)
+    {
+
+    }
 }

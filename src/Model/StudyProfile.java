@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.MainController;
+import Controller.MenuController;
 import View.UIManager;
 
 import java.io.IOException;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
  * Created by Team BRONZE on 4/27/17
  */
 public class StudyProfile extends VersionControlEntity
-
 {
     // private data
     private ArrayList<Module> modules;
@@ -95,7 +95,7 @@ public class StudyProfile extends VersionControlEntity
     }
 
     @Override
-    public void open()
+    public void open(MenuController.Window current)
     {
         try
         {

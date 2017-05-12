@@ -26,7 +26,8 @@ public abstract class FXBase extends ApplicationTest {
 
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception
+    {
 
         AccountController accountControl = new AccountController();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateAccount.fxml"));
@@ -46,7 +47,8 @@ public abstract class FXBase extends ApplicationTest {
     }
 
     @After
-    public void afterEachTest() throws TimeoutException {
+    public void afterEachTest() throws TimeoutException
+    {
        FxToolkit.hideStage();
        release(new KeyCode[]{});
        release(new MouseButton[]{});
@@ -56,7 +58,4 @@ public abstract class FXBase extends ApplicationTest {
     public <T extends Node> T find (final String query) {
         return (T) lookup(query).queryAll().iterator().next();
     }
-
-
-
 }

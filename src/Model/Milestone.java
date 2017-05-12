@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class Milestone implements Serializable
+public class Milestone extends ModelEntity
 {
     // private data
     private ArrayList<Task> tasks;

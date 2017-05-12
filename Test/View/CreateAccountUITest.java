@@ -18,9 +18,9 @@ import static org.testfx.matcher.base.NodeMatchers.isEnabled;
  */
 public class CreateAccountUITest extends FXBase {
 
-
     @Test
-    public void testTextField () {
+    public void testTextField ()
+    {
         TextField t = find("#salutation");
         TextField t1 = find("#full_name");
         TextField t3 = find("#account_no");
@@ -38,10 +38,9 @@ public class CreateAccountUITest extends FXBase {
     }
 
 
-
-
     @Test
-    public void testTextFieldRegex () {
+    public void testTextFieldRegex ()
+    {
         TextField t = find("#salutation");
         TextField t1 = find("#full_name");
         TextField t3 = find("#account_no");

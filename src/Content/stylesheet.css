@@ -1,3 +1,9 @@
+.button-image {
+    -fx-background-size: 100% 100%;
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+}
+
 .unread-button {
     -fx-background-image: url('/Content/notification1.png');
 }
@@ -8,6 +14,11 @@
 
 .set-button {
     -fx-base: greenyellow;
+}
+
+.back-button {
+    -fx-background-image: url("/Content/back.png");
+    -fx-min-width: 30;
 }
 
 .notificationItem-title {
@@ -34,7 +45,7 @@
 
 .title {
     -fx-font-size: 1.5em;
-    -fx-padding: 0 15 10;
+    -fx-padding: 0 0 5;
 }
 
 .title-details {

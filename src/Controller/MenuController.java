@@ -1,25 +1,23 @@
 package Controller;
 
-import Model.Module;
-import Model.Notification;
-import Model.StudyProfile;
+import Model.*;
 import View.UIManager;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import javafx.animation.TranslateTransition;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -35,14 +33,15 @@ public class MenuController implements Initializable
 {
     public enum Window
     {
-        Dashboard, Profiles, Modules
+        Empty, Dashboard, Profiles, Modules
     }
 
     private Window current;
     private boolean isNavOpen;
 
     // Labels:
-    @FXML private Label welcome;
+    private Label welcome;
+    @FXML Label title;
 
     // Buttons:
     @FXML private Button openMenu;
@@ -58,6 +57,7 @@ public class MenuController implements Initializable
     @FXML private AnchorPane notifications;
     @FXML private GridPane notificationList;
     @FXML private GridPane mainContent;
+    @FXML private HBox topBox;
 
 
     public void main(Window wind)
@@ -78,7 +78,7 @@ public class MenuController implements Initializable
         {
             case Dashboard:
             {
-                if (MainController.getSPC().getPlanner().getListOfStudyProfileNames().length > 0)
+                if (MainController.getSPC().getPlanner().getCurrentStudyProfile() != null)
                     this.loadDashboard();
                 break;
             }
@@ -101,8 +101,10 @@ public class MenuController implements Initializable
     public void loadDashboard()
     {
         // Update main pane:
-        this.mainContent.getChildren().get(0).setVisible(true);
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+        this.topBox.getChildren().clear();
+        this.topBox.getChildren().add(this.welcome);
+        this.title.setText("Study Dashboard");
 
         // Display modules:
         Label modules = new Label("Modules");
@@ -124,8 +126,9 @@ public class MenuController implements Initializable
     public void loadStudyProfiles()
     {
         // Update main pane:
-        this.mainContent.getChildren().get(0).setVisible(false);
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+        this.topBox.getChildren().clear();
+        this.title.setText("");
 
         // Display profiles:
         Label profiles = new Label("Study Profiles");
@@ -138,9 +141,11 @@ public class MenuController implements Initializable
 
         TableColumn<StudyProfile, Integer> yearColumn = new TableColumn<>("Year");
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
+        yearColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         TableColumn<StudyProfile, Integer> semesterColumn = new TableColumn<>("Semester");
         semesterColumn.setCellValueFactory(new PropertyValueFactory<>("semesterNo"));
+        semesterColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         ObservableList<StudyProfile> list = FXCollections.observableArrayList(MainController.getSPC().getPlanner().getStudyProfiles());
 
@@ -161,9 +166,8 @@ public class MenuController implements Initializable
                 {
                     super.updateItem(item, empty);
                     // If current Profile, mark:
-                    if (!empty && item != null)
-                        if (item.isCurrent())
-                            this.getStyleClass().add("current-item");
+                    if (!empty && item != null && item.isCurrent())
+                        this.getStyleClass().add("current-item");
                 }
             };
             row.setOnMouseClicked(event -> {
@@ -193,8 +197,9 @@ public class MenuController implements Initializable
     public void loadModules()
     {
         // Update main pane:
-        this.mainContent.getChildren().get(0).setVisible(false);
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+        this.topBox.getChildren().clear();
+        this.title.setText("");
 
         // Display modules:
         Label modules = new Label("Modules");
@@ -211,17 +216,13 @@ public class MenuController implements Initializable
         TableColumn<Module, String> organiserColumn = new TableColumn<>("Module Organiser");
         organiserColumn.setCellValueFactory(new PropertyValueFactory<>("organiser"));
 
-        TableColumn<Module, Integer> assignmentColumn = new TableColumn<>("Assignments");
-        assignmentColumn.setCellValueFactory(new PropertyValueFactory<>("noOfAssignments"));
-        assignmentColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
-
-        ObservableList<Module> list = FXCollections.observableArrayList(MainController.getSPC()
-                .getPlanner().getCurrentStudyProfile().getModules());
+        ObservableList<Module> list = FXCollections.observableArrayList
+                (MainController.getSPC().getPlanner().getCurrentStudyProfile().getModules());
 
         // Create a table:
         TableView<Module> table = new TableView<>();
         table.setItems(list);
-        table.getColumns().addAll(codeColumn, nameColumn, organiserColumn, assignmentColumn);
+        table.getColumns().addAll(codeColumn, nameColumn, organiserColumn);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setHgrow(table, Priority.ALWAYS);
         GridPane.setVgrow(table, Priority.ALWAYS);
@@ -232,15 +233,7 @@ public class MenuController implements Initializable
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
                 {
-                    try
-                    {
-                        Module module = row.getItem();
-                        MainController.ui.moduleDetails(module);
-                        this.main();
-                    } catch (IOException e1)
-                    {
-                        UIManager.reportError("Unable to open View file");
-                    }
+                    this.loadModule(row.getItem(), this.current, null);
                 }
             });
             return row;
@@ -248,6 +241,246 @@ public class MenuController implements Initializable
 
         this.mainContent.addRow(2, table);
         this.mainContent.getStyleClass().add("list-item");
+    }
+
+    /**
+     * Display the Module pane
+     */
+    public void loadModule(Module module, Window previousWindow, ModelEntity previous)
+    {
+        // Update main pane:
+        this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+        this.topBox.getChildren().clear();
+        this.title.setText("");
+
+        // Create a back button:
+        this.backButton(previousWindow, previous);
+
+        // Display modules:
+        Label modules = new Label(module.getModuleCode() + " " + module.getName());
+        modules.getStyleClass().add("title");
+        this.mainContent.addRow(1, modules);
+
+        // Create a details pane:
+        VBox detailsBox = new VBox(5);
+        Label details = new Label(module.getDetails().getAsString());
+        details.setWrapText(true);
+        detailsBox.getChildren().addAll(new Label("Organised by: " + module.getOrganiser()), details);
+        GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
+        GridPane.setHgrow(detailsBox, Priority.ALWAYS);
+
+        mainContent.addRow(2, detailsBox);
+
+        // Assignments:
+        TableColumn<Assignment, String> nameColumn = new TableColumn<>("Assignment");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Assignment, Integer> weightingColumn = new TableColumn<>("Weighting");
+        weightingColumn.setCellValueFactory(new PropertyValueFactory<>("weighting"));
+        weightingColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        ObservableList<Assignment> list = FXCollections.observableArrayList(module.getAssignments());
+
+        // Create a moduleContent:
+        TableView<Assignment> moduleContent = new TableView<>();
+        moduleContent.setItems(list);
+        moduleContent.getColumns().addAll(nameColumn, weightingColumn);
+        moduleContent.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        GridPane.setHgrow(moduleContent, Priority.ALWAYS);
+        GridPane.setVgrow(moduleContent, Priority.ALWAYS);
+
+        // Set click event:
+        moduleContent.setRowFactory(e -> {
+            TableRow<Assignment> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                {
+                    this.loadAssignment(row.getItem(), Window.Empty, module);
+                }
+            });
+            return row;
+        });
+
+        this.mainContent.addRow(3, moduleContent);
+    }
+
+    /**
+     * Display the Assignment pane
+     */
+    public void loadAssignment(Assignment assignment, Window previousWindow, ModelEntity previous)
+    {
+        // Update main pane:
+        this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+        this.topBox.getChildren().clear();
+        this.title.setText("");
+        // =================
+
+        // Create a back button:
+        this.backButton(previousWindow, previous);
+        // =================
+
+        // Display modules:
+        Label assignments = new Label(assignment.getName());
+        assignments.getStyleClass().add("title");
+        this.mainContent.addRow(1, assignments);
+        // =================
+
+        // Create a details pane:
+        VBox detailsBox = new VBox(5);
+        Label details = new Label(assignment.getDetails().getAsString());
+        details.setWrapText(true);
+        detailsBox.getChildren().addAll(new Label("Weighting: " + assignment.getWeighting()),
+                new Label("Set by: " + assignment.getSetBy().getFullName()),
+                new Label("Marked by: " + assignment.getMarkedBy().getFullName()),
+                new Label("Reviewed by: " + assignment.getReviewedBy().getFullName()), details);
+        GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
+        GridPane.setHgrow(detailsBox, Priority.ALWAYS);
+
+        mainContent.addRow(2, detailsBox);
+        // =================
+
+
+        // Content pane:
+        GridPane content = new GridPane();
+        GridPane.setVgrow(content, Priority.ALWAYS);
+        GridPane.setHgrow(content, Priority.ALWAYS);
+        // =================
+
+        // Requirements columns:
+        TableColumn<Requirement, String> rNameColumn = new TableColumn<>("Requirement");
+        rNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Requirement, Integer> remainingColumn = new TableColumn<>("Remaining");
+        remainingColumn.setCellValueFactory(new PropertyValueFactory<>("remainingQuantity"));
+
+        TableColumn<Requirement, BooleanProperty> rIsComplete = new TableColumn<>("Completed?");
+        rIsComplete.setCellValueFactory(new PropertyValueFactory<>("checkedCompleted"));
+
+        ObservableList<Requirement> requirementList = FXCollections.observableArrayList(assignment.getRequirements());
+        // =================
+
+        // Create Requirements table:
+        TableView<Requirement> requirements = new TableView<>();
+        requirements.setItems(requirementList);
+        requirements.getColumns().addAll(rNameColumn, remainingColumn, rIsComplete);
+        requirements.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        GridPane.setHgrow(requirements, Priority.ALWAYS);
+        GridPane.setVgrow(requirements, Priority.ALWAYS);
+        // =================
+
+        // Set click event:
+        requirements.setRowFactory(e -> {
+            TableRow<Requirement> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                {
+                    //this.loadAssignment(row.getItem(), Window.Empty, module);
+                }
+            });
+            return row;
+        });
+        // =================
+
+        content.addColumn(0, requirements);
+        content.setVgap(5);
+
+        // Tasks columns:
+        TableColumn<Task, String> nameColumn = new TableColumn<>("Task");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Task, String> deadlineColumn = new TableColumn<>("Deadline");
+        deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
+
+        TableColumn<Task, BooleanProperty> isComplete = new TableColumn<>("Completed?");
+        isComplete.setCellValueFactory(new PropertyValueFactory<>("checkedComplete"));
+
+        ObservableList<Task> list = FXCollections.observableArrayList(assignment.getTasks());
+        // =================
+
+        // Create Tasks table:
+        TableView<Task> tasks = new TableView<>();
+        tasks.setItems(list);
+        tasks.getColumns().addAll(nameColumn, deadlineColumn, isComplete);
+        tasks.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        GridPane.setHgrow(tasks, Priority.ALWAYS);
+        GridPane.setVgrow(tasks, Priority.ALWAYS);
+        // =================
+
+        // Set click event:
+        tasks.setRowFactory(e -> {
+            TableRow<Task> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                {
+                    //this.loadAssignment(row.getItem(), Window.Empty, module);
+                }
+            });
+            return row;
+        });
+        // =================
+
+        content.addColumn(1, tasks);
+
+        // Actions toolbar:
+        HBox actions = new HBox();
+        GridPane.setHgrow(actions, Priority.ALWAYS);
+        actions.setSpacing(5);
+        actions.setPadding(new Insets(5, 5, 10, 0));
+        // =================
+
+        // Buttons:
+        Button addNew = new Button("Add a new Task");
+
+        Button check = new Button("Toggle complete");
+        check.getStyleClass().add("set-button");
+        check.setDisable(true);
+
+        Button delete = new Button("Remove");
+        delete.setDisable(true);
+        // =================
+
+        // Bind properties on buttons:
+        BooleanBinding disable = new BooleanBinding()
+        {
+            {
+                bind(tasks.getSelectionModel().getSelectedItems());
+            }
+
+            @Override
+            protected boolean computeValue()
+            {
+                return list.size() <= 0;
+            }
+        };
+
+        check.disableProperty().bind(disable);
+        delete.disableProperty().bind(disable);
+        // =================
+
+        // Bind actions:
+
+        addNew.setOnAction(e -> {
+            try
+            {
+                MainController.ui.addTask(assignment);
+            } catch (IOException e1)
+            {
+                UIManager.reportError("Unable to open View file");
+            }
+        });
+
+        // =================
+
+        // Gap:
+        HBox gap = new HBox();
+        HBox.setHgrow(gap, Priority.ALWAYS);
+        // =================
+
+        actions.getChildren().addAll(addNew, gap, check, delete);
+
+        content.add(actions, 1, 1);
+
+        this.mainContent.addRow(3, content);
     }
 
     /**
@@ -306,7 +539,7 @@ public class MenuController implements Initializable
 
         if (not.getLink() != null)
         {
-            not.getLink().open();
+            not.getLink().open(this.current);
             this.main();
         }
     }
@@ -333,7 +566,11 @@ public class MenuController implements Initializable
         this.modules.setOnAction(e -> this.main(Window.Modules));
 
         // Welcome text:
-        this.welcome.setText("Welcome back, " + MainController.getSPC().getPlanner().getUserName() + "!");
+        this.welcome = new Label("Welcome back, " + MainController.getSPC().getPlanner().getUserName() + "!");
+        this.welcome.setPadding(new Insets(10, 15, 10, 15));
+        this.topBox.getChildren().add(this.welcome);
+
+        this.mainContent.setVgap(10);
 
         // Render dashboard:
         this.main(Window.Dashboard);
@@ -418,14 +655,36 @@ public class MenuController implements Initializable
             this.milestones.setDisable(true);
             this.studyProfiles.setDisable(true);
             this.modules.setDisable(true);
-        } else if (MainController.getSPC().getCurrentTasks().size() <= 0)
+        } else
         {
-            this.addActivity.setDisable(true);
-            this.milestones.setDisable(true);
-        }
+            if (MainController.getSPC().getCurrentTasks().size() <= 0)
+            {
+                this.addActivity.setDisable(true);
+                this.milestones.setDisable(true);
+            }
 
-        if (MainController.getSPC().getPlanner().getCurrentStudyProfile().getModules().length <= 0)
-            this.modules.setDisable(true);
+            if (MainController.getSPC().getPlanner().getCurrentStudyProfile().getModules().length <= 0)
+                this.modules.setDisable(true);
+        }
+    }
+
+    /**
+     * Creates a back button
+     */
+    public void backButton(Window previousWindow, ModelEntity previous)
+    {
+        if (previous != null || previousWindow != Window.Empty)
+        {
+            Button back = new Button();
+            back.getStyleClass().addAll("button-image", "back-button");
+
+            if (previous == null && previousWindow != Window.Empty)
+                back.setOnAction(e -> this.main(previousWindow));
+            else
+                back.setOnAction(e -> previous.open(this.current));
+
+            this.topBox.getChildren().add(back);
+        }
     }
 
     /**
@@ -463,16 +722,4 @@ public class MenuController implements Initializable
             }
         });
     }
-
-//    public static class Previous
-//    {
-//        public Window current;
-//        public Previous previous;
-//
-//        public Previous(Window current, Previous prev)
-//        {
-//            this.current = current;
-//            this.previous = prev;
-//        }
-//    }
 }

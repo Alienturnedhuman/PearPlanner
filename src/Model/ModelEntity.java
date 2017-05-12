@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.MenuController;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -42,7 +44,7 @@ public class ModelEntity implements Serializable
 
     public void setDetails(ArrayList<String> newDetails)
     {
-        details = new MultilineString((String[]) newDetails.toArray());
+        details = new MultilineString(newDetails.toArray(new String[newDetails.size()]));
     }
 
     public void setDetails(MultilineString newDetails)
@@ -67,7 +69,7 @@ public class ModelEntity implements Serializable
      * Open the appropriate UI window for this class
      * To be overridden by childs.
      */
-    public void open() { }
+    public void open(MenuController.Window current) { }
 
     public ModelEntity()
     {

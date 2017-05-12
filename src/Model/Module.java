@@ -1,5 +1,10 @@
 package Model;
 
+import Controller.MainController;
+import Controller.MenuController;
+import View.UIManager;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +18,6 @@ public class Module extends VersionControlEntity
     private Person organiser;
     private String moduleCode;
     private ArrayList<TimetableEvent> timetable = new ArrayList<>();
-
 
     // private methods
     @Override
@@ -33,6 +37,40 @@ public class Module extends VersionControlEntity
 
 
     // public methods
+    public String toString(boolean verbose)
+    {
+        if(verbose)
+        {
+            StringBuilder r = new StringBuilder();
+            r.append(toString());
+            r.append("\n");
+            r.append("Organiser: "+organiser.toString());
+            r.append("\n");
+            r.append("Total Assignments: "+Integer.toString(assignments.size()));
+            r.append("\n");
+
+            int i =-1;
+            int ii = assignments.size();
+
+            while(++i<ii)
+            {
+                r.append("\n");
+                r.append(assignments.get(i).toString(true));
+            }
+
+            return r.toString();
+
+        }
+        else
+        {
+            return toString();
+        }
+    }
+    @Override
+    public String toString()
+    {
+        return "Module: "+this.name+" ( "+this.moduleCode+" )";
+    }
 
     // getters
     public ArrayList<Assignment> getAssignments()
@@ -103,6 +141,19 @@ public class Module extends VersionControlEntity
             timetable.remove(newTimetableEvent);
         }
     }
+
+    @Override
+    public void open(MenuController.Window current)
+    {
+        try
+        {
+            MainController.ui.moduleDetails(this, current);
+        } catch (IOException e)
+        {
+            UIManager.reportError("Unable to open View file");
+        }
+    }
+
     // constructors
 
     public Module(Person cOrganiser , String cModuleCode)
