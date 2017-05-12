@@ -47,7 +47,7 @@ public class TaskType extends ModelEntity
         }
         return false;
     }
-    public static boolean exists(String tt)
+    public static TaskType exists(String tt)
     {
         int i=-1;
         int ii = taskDatabase.size();
@@ -55,10 +55,10 @@ public class TaskType extends ModelEntity
         {
             if(taskDatabase.get(i).equals(tt))
             {
-                return true;
+                return taskDatabase.get(i);
             }
         }
-        return false;
+        return null;
     }
 
     // this is a temporary way to populate the array until we later replace from reading a set up file
@@ -99,7 +99,7 @@ public class TaskType extends ModelEntity
 
     private TaskType(String cName, String cDetails)
     {
-
+        this.name = cName;
         if(!exists(this))
         {
             taskDatabase.add(this);

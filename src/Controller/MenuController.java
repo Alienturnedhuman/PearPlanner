@@ -105,6 +105,7 @@ public class MenuController implements Initializable
         this.topBox.getChildren().clear();
         this.topBox.getChildren().add(this.welcome);
         this.title.setText("Study Dashboard");
+        // =================
 
         // Display modules:
         Label modules = new Label("Modules");
@@ -118,6 +119,7 @@ public class MenuController implements Initializable
             temp.getStyleClass().add("list-item");
             this.mainContent.addRow(i++, temp);
         }
+        // =================
     }
 
     /**
@@ -129,11 +131,13 @@ public class MenuController implements Initializable
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
         this.topBox.getChildren().clear();
         this.title.setText("");
+        // =================
 
         // Display profiles:
         Label profiles = new Label("Study Profiles");
         profiles.getStyleClass().add("title");
         this.mainContent.addRow(1, profiles);
+        // =================
 
         // Columns:
         TableColumn<StudyProfile, String> nameColumn = new TableColumn<>("Profile name");
@@ -148,6 +152,7 @@ public class MenuController implements Initializable
         semesterColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         ObservableList<StudyProfile> list = FXCollections.observableArrayList(MainController.getSPC().getPlanner().getStudyProfiles());
+        // =================
 
         // Create a table:
         TableView<StudyProfile> table = new TableView<>();
@@ -156,6 +161,7 @@ public class MenuController implements Initializable
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setHgrow(table, Priority.ALWAYS);
         GridPane.setVgrow(table, Priority.ALWAYS);
+        // =================
 
         // Set click event:
         table.setRowFactory(e -> {
@@ -186,6 +192,7 @@ public class MenuController implements Initializable
             });
             return row;
         });
+        // =================
 
         this.mainContent.addRow(2, table);
         this.mainContent.getStyleClass().add("list-item");
@@ -200,11 +207,13 @@ public class MenuController implements Initializable
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
         this.topBox.getChildren().clear();
         this.title.setText("");
+        // =================
 
         // Display modules:
         Label modules = new Label("Modules");
         modules.getStyleClass().add("title");
         this.mainContent.addRow(1, modules);
+        // =================
 
         // Columns:
         TableColumn<Module, String> codeColumn = new TableColumn<>("Module code");
@@ -218,6 +227,7 @@ public class MenuController implements Initializable
 
         ObservableList<Module> list = FXCollections.observableArrayList
                 (MainController.getSPC().getPlanner().getCurrentStudyProfile().getModules());
+        // =================
 
         // Create a table:
         TableView<Module> table = new TableView<>();
@@ -226,6 +236,7 @@ public class MenuController implements Initializable
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setHgrow(table, Priority.ALWAYS);
         GridPane.setVgrow(table, Priority.ALWAYS);
+        // =================
 
         // Set click event:
         table.setRowFactory(e -> {
@@ -238,6 +249,7 @@ public class MenuController implements Initializable
             });
             return row;
         });
+        // =================
 
         this.mainContent.addRow(2, table);
         this.mainContent.getStyleClass().add("list-item");
@@ -252,14 +264,17 @@ public class MenuController implements Initializable
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
         this.topBox.getChildren().clear();
         this.title.setText("");
+        // =================
 
         // Create a back button:
         this.backButton(previousWindow, previous);
+        // =================
 
         // Display modules:
         Label modules = new Label(module.getModuleCode() + " " + module.getName());
         modules.getStyleClass().add("title");
         this.mainContent.addRow(1, modules);
+        // =================
 
         // Create a details pane:
         VBox detailsBox = new VBox(5);
@@ -268,6 +283,7 @@ public class MenuController implements Initializable
         detailsBox.getChildren().addAll(new Label("Organised by: " + module.getOrganiser()), details);
         GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
         GridPane.setHgrow(detailsBox, Priority.ALWAYS);
+        // =================
 
         mainContent.addRow(2, detailsBox);
 
@@ -280,6 +296,7 @@ public class MenuController implements Initializable
         weightingColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         ObservableList<Assignment> list = FXCollections.observableArrayList(module.getAssignments());
+        // =================
 
         // Create a moduleContent:
         TableView<Assignment> moduleContent = new TableView<>();
@@ -288,6 +305,7 @@ public class MenuController implements Initializable
         moduleContent.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setHgrow(moduleContent, Priority.ALWAYS);
         GridPane.setVgrow(moduleContent, Priority.ALWAYS);
+        // =================
 
         // Set click event:
         moduleContent.setRowFactory(e -> {
@@ -300,6 +318,7 @@ public class MenuController implements Initializable
             });
             return row;
         });
+        // =================
 
         this.mainContent.addRow(3, moduleContent);
     }
@@ -335,10 +354,9 @@ public class MenuController implements Initializable
                 new Label("Reviewed by: " + assignment.getReviewedBy().getFullName()), details);
         GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
         GridPane.setHgrow(detailsBox, Priority.ALWAYS);
-
-        mainContent.addRow(2, detailsBox);
         // =================
 
+        mainContent.addRow(2, detailsBox);
 
         // Content pane:
         GridPane content = new GridPane();
@@ -390,9 +408,11 @@ public class MenuController implements Initializable
 
         TableColumn<Task, String> deadlineColumn = new TableColumn<>("Deadline");
         deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
+        deadlineColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         TableColumn<Task, BooleanProperty> isComplete = new TableColumn<>("Completed?");
         isComplete.setCellValueFactory(new PropertyValueFactory<>("checkedComplete"));
+        isComplete.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         ObservableList<Task> list = FXCollections.observableArrayList(assignment.getTasks());
         // =================
@@ -412,7 +432,14 @@ public class MenuController implements Initializable
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
                 {
-                    //this.loadAssignment(row.getItem(), Window.Empty, module);
+                    try
+                    {
+                        MainController.ui.taskDetails(row.getItem());
+                        tasks.refresh();
+                    } catch (IOException e1)
+                    {
+                        UIManager.reportError("Unable to open View file");
+                    }
                 }
             });
             return row;
@@ -429,7 +456,7 @@ public class MenuController implements Initializable
         // =================
 
         // Buttons:
-        Button addNew = new Button("Add a new Task");
+        Button addNew = new Button("Add a new task");
 
         Button check = new Button("Toggle complete");
         check.getStyleClass().add("set-button");
@@ -440,7 +467,7 @@ public class MenuController implements Initializable
         // =================
 
         // Bind properties on buttons:
-        BooleanBinding disable = new BooleanBinding()
+        delete.disableProperty().bind(new BooleanBinding()
         {
             {
                 bind(tasks.getSelectionModel().getSelectedItems());
@@ -451,24 +478,53 @@ public class MenuController implements Initializable
             {
                 return list.size() <= 0;
             }
-        };
+        });
 
-        check.disableProperty().bind(disable);
-        delete.disableProperty().bind(disable);
+        check.disableProperty().bind(new BooleanBinding()
+        {
+            {
+                bind(tasks.getSelectionModel().getSelectedItems());
+            }
+
+            @Override
+            protected boolean computeValue()
+            {
+                return !(list.size() > 0 && tasks.getSelectionModel().getSelectedItem() != null &&
+                        tasks.getSelectionModel().getSelectedItem().canCheckComplete());
+            }
+        });
         // =================
 
-        // Bind actions:
+        // Bind actions on buttons:
 
         addNew.setOnAction(e -> {
             try
             {
-                MainController.ui.addTask(assignment);
+                Task task = MainController.ui.addTask(assignment);
+                if (task != null)
+                {
+                    list.add(task);
+                    assignment.addTask(task);
+                }
             } catch (IOException e1)
             {
                 UIManager.reportError("Unable to open View file");
-            }
+            } catch (Exception e1) {}
         });
 
+        check.setOnAction(e -> {
+            tasks.getSelectionModel().getSelectedItem().toggleComplete();
+            tasks.refresh();
+        });
+
+        delete.setOnAction(e -> {
+            if (UIManager.confirm("Are you sure you want to remove this task?"))
+            {
+                Task t = tasks.getSelectionModel().getSelectedItem();
+                list.remove(t);
+                assignment.removeTask(t);
+            }
+        });
         // =================
 
         // Gap:

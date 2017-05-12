@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -28,6 +29,7 @@ public class UIManager
     /**
      * Displays a 'Create Account' window and handles the creation of
      * a new Account object
+     *
      * @return newly created Account
      * @throws Exception
      */
@@ -60,6 +62,7 @@ public class UIManager
 
     /**
      * Displays the main menu
+     *
      * @throws Exception
      */
     public void mainMenu() throws Exception
@@ -105,6 +108,7 @@ public class UIManager
     {
         UIManager.mc.loadModule(module, current, null);
     }
+
     public void moduleDetails(Module module, ModelEntity current) throws IOException
     {
         UIManager.mc.loadModule(module, MenuController.Window.Empty, current);
@@ -117,6 +121,7 @@ public class UIManager
     {
         UIManager.mc.loadAssignment(assignment, current, null);
     }
+
     public void assignmentDetails(Assignment assignment, ModelEntity current) throws IOException
     {
         UIManager.mc.loadAssignment(assignment, MenuController.Window.Empty, current);
@@ -125,12 +130,12 @@ public class UIManager
     /**
      * Creates a window for adding a new Task
      */
-    public void addTask(Assignment assignment) throws IOException
+    public Task addTask(Assignment assignment) throws Exception
     {
         TaskController tc = new TaskController(assignment);
 
         // Load in the .fxml file:
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AddTask.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Task.fxml"));
         loader.setController(tc);
         Parent root = loader.load();
 
@@ -142,10 +147,41 @@ public class UIManager
         stage.resizableProperty().setValue(false);
         stage.getIcons().add(new Image("file:icon.png"));
         stage.showAndWait();
+
+        // Handle creation of the Account object:
+        if (tc.isSuccess())
+        {
+            Task newTask = tc.getTask();
+            return newTask;
+        }
+        return null;
+    }
+
+    /**
+     * Displays the Task details page
+     */
+    public void taskDetails(Task task) throws IOException
+    {
+        TaskController tc = new TaskController(task);
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Task.fxml"));
+        loader.setController(tc);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 558));
+        stage.setTitle("Task");
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
     }
 
     /**
      * Displays a file dialog for importing .xml files
+     *
      * @return a File object
      */
     public File fileDialog()
@@ -159,6 +195,7 @@ public class UIManager
 
     /**
      * Displays an error message
+     *
      * @param message to be displayed
      */
     public static void reportError(String message)
@@ -169,6 +206,7 @@ public class UIManager
 
     /**
      * Reports that an action was successful and displays a message
+     *
      * @param message to be displayed
      */
     public static void reportSuccess(String message)
@@ -184,6 +222,27 @@ public class UIManager
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Success!");
         alert.showAndWait();
+    }
+
+    /**
+     * Confirm box with 'Yes' or 'No' as available options
+     *
+     * @param message message to be displayed
+     * @return true for yes, false for no.
+     */
+    public static boolean confirm(String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, message, ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        return alert.getResult().equals(ButtonType.YES);
+    }
+
+    /**
+     * Please don't use
+     */
+    public static void areYouFeelingLucky()
+    {
+        while (UIManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5)) {}
     }
 
 }
