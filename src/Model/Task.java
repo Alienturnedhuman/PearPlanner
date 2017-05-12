@@ -19,9 +19,6 @@ public class Task extends ModelEntity
 
 
     // public methods
-
-    // getters:
-
     public String getDeadline()
     {
         return this.deadline.toString();
@@ -31,21 +28,38 @@ public class Task extends ModelEntity
     {
         return this.checkedComplete;
     }
-
     public boolean dependenciesComplete()
     {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        int i = -1;
+        int ii = dependencies.size();
+        while(++i<ii)
+        {
+            if(!dependencies.get(i).isComplete())
+            {
+                return false;
+            }
+        }
+        return true;
     }
     public boolean hasDependencies()
     {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return dependencies.size()>0;
     }
     public boolean isComplete()
     {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return checkedComplete&&canCheckComplete();
     }
     public boolean canCheckComplete()
     {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        int i = -1;
+        int ii = requirements.size();
+        while(++i<ii)
+        {
+            if(!requirements.get(i).isComplete())
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
