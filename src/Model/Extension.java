@@ -66,6 +66,6 @@ public class Extension extends VersionControlEntity
         approvalStatus = newApprovalStatus;
     }
 
-
     // constructor
+
 }
