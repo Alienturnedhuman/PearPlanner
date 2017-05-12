@@ -63,4 +63,9 @@ public class Task extends ModelEntity
         }
         return true;
     }
+
+    public Task(String name)
+    {
+        super(name);
+    }
 }
