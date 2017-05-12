@@ -2,37 +2,29 @@ package Controller;
 
 import Model.*;
 import View.UIManager;
-import com.sun.javafx.scene.control.skin.TableViewSkin;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
-import org.junit.Assert;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Zilvinas on 05/05/2017.
@@ -274,7 +266,7 @@ public class MenuController implements Initializable
         Label details = new Label(module.getDetails().getAsString());
         details.setWrapText(true);
         detailsBox.getChildren().addAll(new Label("Organised by: " + module.getOrganiser()), details);
-        GridPane.setVgrow(detailsBox, Priority.ALWAYS);
+        GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
         GridPane.setHgrow(detailsBox, Priority.ALWAYS);
 
         mainContent.addRow(2, detailsBox);
@@ -321,14 +313,17 @@ public class MenuController implements Initializable
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
         this.topBox.getChildren().clear();
         this.title.setText("");
+        // =================
 
         // Create a back button:
         this.backButton(previousWindow, previous);
+        // =================
 
         // Display modules:
         Label assignments = new Label(assignment.getName());
         assignments.getStyleClass().add("title");
         this.mainContent.addRow(1, assignments);
+        // =================
 
         // Create a details pane:
         VBox detailsBox = new VBox(5);
@@ -338,12 +333,58 @@ public class MenuController implements Initializable
                 new Label("Set by: " + assignment.getSetBy().getFullName()),
                 new Label("Marked by: " + assignment.getMarkedBy().getFullName()),
                 new Label("Reviewed by: " + assignment.getReviewedBy().getFullName()), details);
-        GridPane.setVgrow(detailsBox, Priority.ALWAYS);
+        GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
         GridPane.setHgrow(detailsBox, Priority.ALWAYS);
 
         mainContent.addRow(2, detailsBox);
+        // =================
 
-        // Assignments:
+
+        // Content pane:
+        GridPane content = new GridPane();
+        GridPane.setVgrow(content, Priority.ALWAYS);
+        GridPane.setHgrow(content, Priority.ALWAYS);
+        // =================
+
+        // Requirements columns:
+        TableColumn<Requirement, String> rNameColumn = new TableColumn<>("Requirement");
+        rNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Requirement, Integer> remainingColumn = new TableColumn<>("Remaining");
+        remainingColumn.setCellValueFactory(new PropertyValueFactory<>("remainingQuantity"));
+
+        TableColumn<Requirement, BooleanProperty> rIsComplete = new TableColumn<>("Completed?");
+        rIsComplete.setCellValueFactory(new PropertyValueFactory<>("checkedCompleted"));
+
+        ObservableList<Requirement> requirementList = FXCollections.observableArrayList(assignment.getRequirements());
+        // =================
+
+        // Create Requirements table:
+        TableView<Requirement> requirements = new TableView<>();
+        requirements.setItems(requirementList);
+        requirements.getColumns().addAll(rNameColumn, remainingColumn, rIsComplete);
+        requirements.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        GridPane.setHgrow(requirements, Priority.ALWAYS);
+        GridPane.setVgrow(requirements, Priority.ALWAYS);
+        // =================
+
+        // Set click event:
+        requirements.setRowFactory(e -> {
+            TableRow<Requirement> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                {
+                    //this.loadAssignment(row.getItem(), Window.Empty, module);
+                }
+            });
+            return row;
+        });
+        // =================
+
+        content.addColumn(0, requirements);
+        content.setVgap(5);
+
+        // Tasks columns:
         TableColumn<Task, String> nameColumn = new TableColumn<>("Task");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
@@ -354,17 +395,19 @@ public class MenuController implements Initializable
         isComplete.setCellValueFactory(new PropertyValueFactory<>("checkedComplete"));
 
         ObservableList<Task> list = FXCollections.observableArrayList(assignment.getTasks());
+        // =================
 
-        // Create a assignmentContent:
-        TableView<Task> assignmentContent = new TableView<>();
-        assignmentContent.setItems(list);
-        assignmentContent.getColumns().addAll(nameColumn, deadlineColumn, isComplete);
-        assignmentContent.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        GridPane.setHgrow(assignmentContent, Priority.ALWAYS);
-        GridPane.setVgrow(assignmentContent, Priority.ALWAYS);
+        // Create Tasks table:
+        TableView<Task> tasks = new TableView<>();
+        tasks.setItems(list);
+        tasks.getColumns().addAll(nameColumn, deadlineColumn, isComplete);
+        tasks.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        GridPane.setHgrow(tasks, Priority.ALWAYS);
+        GridPane.setVgrow(tasks, Priority.ALWAYS);
+        // =================
 
         // Set click event:
-        assignmentContent.setRowFactory(e -> {
+        tasks.setRowFactory(e -> {
             TableRow<Task> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
@@ -374,8 +417,70 @@ public class MenuController implements Initializable
             });
             return row;
         });
+        // =================
 
-        this.mainContent.addRow(3, assignmentContent);
+        content.addColumn(1, tasks);
+
+        // Actions toolbar:
+        HBox actions = new HBox();
+        GridPane.setHgrow(actions, Priority.ALWAYS);
+        actions.setSpacing(5);
+        actions.setPadding(new Insets(5, 5, 10, 0));
+        // =================
+
+        // Buttons:
+        Button addNew = new Button("Add a new Task");
+
+        Button check = new Button("Toggle complete");
+        check.getStyleClass().add("set-button");
+        check.setDisable(true);
+
+        Button delete = new Button("Remove");
+        delete.setDisable(true);
+        // =================
+
+        // Bind properties on buttons:
+        BooleanBinding disable = new BooleanBinding()
+        {
+            {
+                bind(tasks.getSelectionModel().getSelectedItems());
+            }
+
+            @Override
+            protected boolean computeValue()
+            {
+                return list.size() <= 0;
+            }
+        };
+
+        check.disableProperty().bind(disable);
+        delete.disableProperty().bind(disable);
+        // =================
+
+        // Bind actions:
+
+        addNew.setOnAction(e -> {
+            try
+            {
+                MainController.ui.addTask(assignment);
+            } catch (IOException e1)
+            {
+                UIManager.reportError("Unable to open View file");
+            }
+        });
+
+        // =================
+
+        // Gap:
+        HBox gap = new HBox();
+        HBox.setHgrow(gap, Priority.ALWAYS);
+        // =================
+
+        actions.getChildren().addAll(addNew, gap, check, delete);
+
+        content.add(actions, 1, 1);
+
+        this.mainContent.addRow(3, content);
     }
 
     /**
@@ -462,7 +567,10 @@ public class MenuController implements Initializable
 
         // Welcome text:
         this.welcome = new Label("Welcome back, " + MainController.getSPC().getPlanner().getUserName() + "!");
+        this.welcome.setPadding(new Insets(10, 15, 10, 15));
         this.topBox.getChildren().add(this.welcome);
+
+        this.mainContent.setVgap(10);
 
         // Render dashboard:
         this.main(Window.Dashboard);
