@@ -23,6 +23,12 @@ public class Event extends VersionControlEntity
 
 
     // getters
+    public String toString()
+    {
+        return this.date.toString();
+    }
+
+    // setters:
     public void setDate(String dateString)
     {
         System.out.println("setDate: "+dateString);

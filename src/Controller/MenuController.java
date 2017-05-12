@@ -6,6 +6,7 @@ import com.sun.javafx.scene.control.skin.TableViewSkin;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -261,18 +262,7 @@ public class MenuController implements Initializable
         this.title.setText("");
 
         // Create a back button:
-        if (previous != null || previousWindow != Window.Empty)
-        {
-            Button back = new Button();
-            back.getStyleClass().addAll("button-image", "back-button");
-
-            if (previous == null && previousWindow != Window.Empty)
-                back.setOnAction(e -> this.main(previousWindow));
-            else
-                back.setOnAction(e -> previous.open(this.current));
-
-            this.topBox.getChildren().add(back);
-        }
+        this.backButton(previousWindow, previous);
 
         // Display modules:
         Label modules = new Label(module.getModuleCode() + " " + module.getName());
@@ -283,7 +273,7 @@ public class MenuController implements Initializable
         VBox detailsBox = new VBox(5);
         Label details = new Label(module.getDetails().getAsString());
         details.setWrapText(true);
-        detailsBox.getChildren().addAll(new Label("Organised by:\n" + module.getOrganiser()), details);
+        detailsBox.getChildren().addAll(new Label("Organised by: " + module.getOrganiser()), details);
         GridPane.setVgrow(detailsBox, Priority.ALWAYS);
         GridPane.setHgrow(detailsBox, Priority.ALWAYS);
 
@@ -313,7 +303,7 @@ public class MenuController implements Initializable
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
                 {
-
+                    this.loadAssignment(row.getItem(), Window.Empty, module);
                 }
             });
             return row;
@@ -327,7 +317,65 @@ public class MenuController implements Initializable
      */
     public void loadAssignment(Assignment assignment, Window previousWindow, ModelEntity previous)
     {
+        // Update main pane:
+        this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+        this.topBox.getChildren().clear();
+        this.title.setText("");
 
+        // Create a back button:
+        this.backButton(previousWindow, previous);
+
+        // Display modules:
+        Label assignments = new Label(assignment.getName());
+        assignments.getStyleClass().add("title");
+        this.mainContent.addRow(1, assignments);
+
+        // Create a details pane:
+        VBox detailsBox = new VBox(5);
+        Label details = new Label(assignment.getDetails().getAsString());
+        details.setWrapText(true);
+        detailsBox.getChildren().addAll(new Label("Weighting: " + assignment.getWeighting()),
+                new Label("Set by: " + assignment.getSetBy().getFullName()),
+                new Label("Marked by: " + assignment.getMarkedBy().getFullName()),
+                new Label("Reviewed by: " + assignment.getReviewedBy().getFullName()), details);
+        GridPane.setVgrow(detailsBox, Priority.ALWAYS);
+        GridPane.setHgrow(detailsBox, Priority.ALWAYS);
+
+        mainContent.addRow(2, detailsBox);
+
+        // Assignments:
+        TableColumn<Task, String> nameColumn = new TableColumn<>("Task");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Task, String> deadlineColumn = new TableColumn<>("Deadline");
+        deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
+
+        TableColumn<Task, BooleanProperty> isComplete = new TableColumn<>("Completed?");
+        isComplete.setCellValueFactory(new PropertyValueFactory<>("checkedComplete"));
+
+        ObservableList<Task> list = FXCollections.observableArrayList(assignment.getTasks());
+
+        // Create a assignmentContent:
+        TableView<Task> assignmentContent = new TableView<>();
+        assignmentContent.setItems(list);
+        assignmentContent.getColumns().addAll(nameColumn, deadlineColumn, isComplete);
+        assignmentContent.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        GridPane.setHgrow(assignmentContent, Priority.ALWAYS);
+        GridPane.setVgrow(assignmentContent, Priority.ALWAYS);
+
+        // Set click event:
+        assignmentContent.setRowFactory(e -> {
+            TableRow<Task> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                {
+                    //this.loadAssignment(row.getItem(), Window.Empty, module);
+                }
+            });
+            return row;
+        });
+
+        this.mainContent.addRow(3, assignmentContent);
     }
 
     /**
@@ -509,6 +557,25 @@ public class MenuController implements Initializable
 
             if (MainController.getSPC().getPlanner().getCurrentStudyProfile().getModules().length <= 0)
                 this.modules.setDisable(true);
+        }
+    }
+
+    /**
+     * Creates a back button
+     */
+    public void backButton(Window previousWindow, ModelEntity previous)
+    {
+        if (previous != null || previousWindow != Window.Empty)
+        {
+            Button back = new Button();
+            back.getStyleClass().addAll("button-image", "back-button");
+
+            if (previous == null && previousWindow != Window.Empty)
+                back.setOnAction(e -> this.main(previousWindow));
+            else
+                back.setOnAction(e -> previous.open(this.current));
+
+            this.topBox.getChildren().add(back);
         }
     }
 
