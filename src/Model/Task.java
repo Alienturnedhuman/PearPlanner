@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.MenuController;
+
 import java.util.ArrayList;
 
 /**
@@ -47,5 +49,11 @@ public class Task extends ModelEntity
     public boolean canCheckComplete()
     {
         throw new UnsupportedOperationException("This method is not implemented yet");
+    }
+
+    @Override
+    public void open(MenuController.Window current)
+    {
+
     }
 }

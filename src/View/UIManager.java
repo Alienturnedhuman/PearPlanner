@@ -3,6 +3,7 @@ package View;
 import Controller.AccountController;
 import Controller.MenuController;
 import Controller.StudyProfileController;
+import Controller.TaskController;
 import Model.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -119,6 +120,28 @@ public class UIManager
     public void assignmentDetails(Assignment assignment, ModelEntity current) throws IOException
     {
         UIManager.mc.loadAssignment(assignment, MenuController.Window.Empty, current);
+    }
+
+    /**
+     * Creates a window for adding a new Task
+     */
+    public void addTask(Assignment assignment) throws IOException
+    {
+        TaskController tc = new TaskController(assignment);
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AddTask.fxml"));
+        loader.setController(tc);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 558));
+        stage.setTitle("New Task");
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
     }
 
     /**

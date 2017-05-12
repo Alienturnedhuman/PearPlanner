@@ -45,7 +45,7 @@
 
 .title {
     -fx-font-size: 1.5em;
-    -fx-padding: 0 15 10;
+    -fx-padding: 0 0 5;
 }
 
 .title-details {
