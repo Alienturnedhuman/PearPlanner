@@ -10,14 +10,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.junit.After;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 
-import java.io.File;
-import java.net.URL;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -29,7 +26,8 @@ public abstract class FXBase extends ApplicationTest {
 
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception
+    {
 
         AccountController accountControl = new AccountController();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateAccount.fxml"));
@@ -49,7 +47,8 @@ public abstract class FXBase extends ApplicationTest {
     }
 
     @After
-    public void afterEachTest() throws TimeoutException {
+    public void afterEachTest() throws TimeoutException
+    {
        FxToolkit.hideStage();
        release(new KeyCode[]{});
        release(new MouseButton[]{});
@@ -59,7 +58,4 @@ public abstract class FXBase extends ApplicationTest {
     public <T extends Node> T find (final String query) {
         return (T) lookup(query).queryAll().iterator().next();
     }
-
-
-
 }

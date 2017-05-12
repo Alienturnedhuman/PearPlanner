@@ -4,3 +4,7 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 jdk:
   - oraclejdk8
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer

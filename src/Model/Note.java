@@ -1,12 +1,13 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 /**
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class Note
+public class Note implements Serializable
 {
     // private data
     private String title;
@@ -53,5 +54,11 @@ public class Note
     {
         // initial set up code below - check if this needs updating
         text = newText;
+    }
+
+    public Note(String title, GregorianCalendar timeStamp, MultilineString text) {
+        this.title = title;
+        this.timeStamp = timeStamp;
+        this.text = text;
     }
 }

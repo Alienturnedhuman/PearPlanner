@@ -28,7 +28,6 @@ public class Task extends ModelEntity
     {
         return this.checkedComplete;
     }
-
     public boolean dependenciesComplete()
     {
         int i = -1;
