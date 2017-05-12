@@ -240,6 +240,7 @@ public class Person extends VersionControlEntity
         setName(cName,cFamNameLast);
         email=newEmail;
     }
+
     /**
      *
      * @param cSalutation String for salutation

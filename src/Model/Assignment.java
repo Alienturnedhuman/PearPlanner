@@ -77,6 +77,7 @@ public abstract class Assignment extends VersionControlEntity
             return toString();
         }
     }
+
     // getters
     public ArrayList<Task> getTasks()
     {

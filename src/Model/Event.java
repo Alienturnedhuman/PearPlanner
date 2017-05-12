@@ -2,6 +2,7 @@ package Model;
 
 import Controller.MainController;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
@@ -25,7 +26,21 @@ public class Event extends VersionControlEntity
     // getters
     public String toString()
     {
-        return this.date.toString();
+        String s = new String();
+        s.format("%02d", date.get(Calendar.MINUTE));
+        StringBuilder dateString = new StringBuilder();
+        dateString.append(date.get(Calendar.DAY_OF_MONTH));
+        dateString.append("/");
+        dateString.append(date.get(Calendar.MONTH));
+        dateString.append("/");
+        dateString.append(date.get(Calendar.YEAR));
+        dateString.append("T");
+        dateString.append(date.get(Calendar.HOUR_OF_DAY));
+        dateString.append(":");
+        dateString.append(s.format("%02d", date.get(Calendar.MINUTE)));
+        dateString.append(":");
+        dateString.append(date.get(Calendar.SECOND));
+        return dateString.toString();
     }
 
     // setters:
@@ -42,13 +57,13 @@ public class Event extends VersionControlEntity
             String sHour = dateString.substring(11,13);
             String sMinute = dateString.substring(14,16);
             String sSecond = dateString.substring(17,19);
-            if(MainController.isNumeric(sDay) && MainController.isNumeric(sMonth) && MainController.isNumeric(sYear) &&
-                    MainController.isNumeric(sHour) && MainController.isNumeric(sMinute) &&
-                    MainController.isNumeric(sSecond))
-            {
-                date = new GregorianCalendar(Integer.parseInt(sYear), Integer.parseInt(sMonth)-1, Integer.parseInt(sDay)
-                        , Integer.parseInt(sHour), Integer.parseInt(sMinute), Integer.parseInt(sSecond));
-            }
+//            if(MainController.isNumeric(sDay) && MainController.isNumeric(sMonth) && MainController.isNumeric(sYear) &&
+//                    MainController.isNumeric(sHour) && MainController.isNumeric(sMinute) &&
+//                    MainController.isNumeric(sSecond))
+//            {
+                date = new GregorianCalendar(Integer.parseInt(sYear), Integer.parseInt(sMonth), Integer.parseInt(sDay),
+                        Integer.parseInt(sHour), Integer.parseInt(sMinute), Integer.parseInt(sSecond));
+//            }
         }
     }
 

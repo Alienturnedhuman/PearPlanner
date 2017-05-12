@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.MainController;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
