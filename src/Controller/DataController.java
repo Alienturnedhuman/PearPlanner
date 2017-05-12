@@ -12,6 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import View.*;
 
 /**
  * Created by bendickson on 5/4/17.
@@ -69,6 +70,8 @@ public class DataController {
 
     static private HubFile processNewHubFile(NodeList nList)
     {
+        int beginLog = ConsoleIO.getLogSize();
+        ConsoleIO.setConsoleMessage("Importing New Hub File" , true);
         HubFile r = null;
         XMLcontroller xmlTools = new XMLcontroller();
 
@@ -82,6 +85,8 @@ public class DataController {
         if(XMLcontroller.matchesSchema(assetNodes,HubFile.SCHEMA_ASSETS) &&
                 XMLcontroller.matchesSchema(studyProfileNodes,HubFile.SCHEMA_STUDYPROFILE))
         {
+            ConsoleIO.setConsoleMessage("Schema Validates: assets" , true);
+            ConsoleIO.setConsoleMessage("Schema Validates: studyProfile" , true);
 
 
             HashMap<String,VersionControlEntity> assetList = new HashMap<>();
@@ -99,10 +104,12 @@ public class DataController {
             // Add all the Person classes
             if(assetValues.containsKey("persons"))
             {
+
                 NodeList personList = assetValues.get("persons").getNodeList();
                 Person tp;
                 i = -1;
                 ii = personList.getLength();
+                ConsoleIO.setConsoleMessage("Reading persons tag, " + Integer.toString(ii) + " nodes:" , true);
                 while(++i<ii)
                 {
                     n = personList.item(i);
@@ -112,6 +119,8 @@ public class DataController {
                         if (n.getNodeName().equals("person") && XMLcontroller.matchesSchema(nc,
                                 HubFile.SCHEMA_PERSON))
                         {
+
+                            ConsoleIO.setConsoleMessage("Valid Node found:" , true);
                             HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
                                     HubFile.SCHEMA_PERSON);
 
@@ -123,6 +132,8 @@ public class DataController {
                             addVCEproperties(tp,pValues);
 
                             assetList.put(pValues.get("uid").getString(),tp);
+
+                            ConsoleIO.setConsoleMessage("Adding person: " + tp.toString() , true);
                         }
                     }
                 }
@@ -455,27 +466,29 @@ public class DataController {
 
 
 
-            System.out.println("Attempting to import "+Integer.toString(assetList.size())+" items.");
-            System.out.println(VersionControlEntity.libraryReport());
+            ConsoleIO.setConsoleMessage("Attempting to import "+Integer.toString(assetList.size())
+                    +" items to VersionControl..." , true);
+            ConsoleIO.setConsoleMessage("Starting with "+VersionControlEntity.libraryReport()+" entries");
 
             for (String key : assetList.keySet()) {
 
+                ConsoleIO.setConsoleMessage("Adding Asset: "+key , true);
                 if(assetList.get(key).addToLibrary())
                 {
-                    System.out.println(key + " added");
+                    System.out.println(assetList.get(key).toString() + " added");
                 }
                 else if(assetList.get(i).isImporter())
                 {
                     VersionControlEntity.get(key).update(assetList.get(i));
-                    System.out.println(key + " update attempted");
+                    System.out.println(assetList.get(key).toString() + " update attempted");
                 }
                 else
                 {
-                    System.out.println(key + " not imported");
+                    System.out.println(assetList.get(key).toString() + " not imported");
                 }
             }
-            System.out.println(VersionControlEntity.libraryReport());
-
+            ConsoleIO.setConsoleMessage("Ending with "+VersionControlEntity.libraryReport()+" entries");
+            ConsoleIO.saveLog("import_report.txt",beginLog,ConsoleIO.getLogSize());
             r = new HubFile(version,year,semester,newModules,newAssets,name,details,UID);
         }
         return r;

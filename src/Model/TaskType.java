@@ -99,7 +99,7 @@ public class TaskType extends ModelEntity
 
     private TaskType(String cName, String cDetails)
     {
-
+        super(cName,cDetails);
         if(!exists(this))
         {
             taskDatabase.add(this);

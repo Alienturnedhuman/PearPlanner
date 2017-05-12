@@ -25,14 +25,14 @@ public class Event extends VersionControlEntity
     // getters
     public String toString()
     {
-        return this.date.toString();
+        return this.date.getTime().toString();
     }
 
     // setters:
     public void setDate(String dateString)
     {
-        System.out.println("setDate: "+dateString);
         // 09/04/2017T15:00:00Z
+        // at the moment coded to bypass validator as it's not working correctly
         if(true||validDateString(dateString))
         {
 
@@ -55,7 +55,6 @@ public class Event extends VersionControlEntity
 
     public Event(String cDate)
     {
-        System.out.println("superDate: "+cDate);
         setDate(cDate);
     }
 }
