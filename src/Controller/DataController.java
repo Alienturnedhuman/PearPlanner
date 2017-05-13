@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import View.ConsoleIO;
 import View.UIManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -11,7 +12,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 
 /**
  * Created by bendickson on 5/4/17.
@@ -40,21 +40,26 @@ public class DataController {
         return r;
     }
 
-    private static <T extends VersionControlEntity> T inList( HashMap<String,VersionControlEntity> list,String uid)
+    private static <T extends VersionControlEntity> T inList( HashMap<String,VersionControlEntity> list,String uid) throws Exception
     {
-        if(list.containsKey(uid))
+        VersionControlEntity vce = null;
+        if(list.containsKey(uid)) {
+            vce = list.get(uid);
+        }
+        else if(VersionControlEntity.inLibrary(uid))
         {
-            // can't do instanceof T annoyingly, so hopefully casting to T and failing will work instead
-            try
-            {
-                return (T)list.get(uid);
-            }
-            catch(Exception e)
-            {
-                return null;
+            vce = VersionControlEntity.get(uid);
+        }
+        // can't do instanceof T annoyingly, so hopefully casting to T and failing will work instead
+        if(vce!=null)
+        {
+            try {
+                return (T) vce;
+            } catch (Exception e) {
+                throw new Exception("Incorrect type referenced for '"+uid+"'");
             }
         }
-        return null;
+        throw new Exception("UID referenced is not in database for '"+uid+"'");
     }
 
     static private void addVCEproperties(VersionControlEntity vce , HashMap<String,XMLcontroller.NodeReturn> values)
@@ -67,8 +72,10 @@ public class DataController {
 
     }
 
-    static private HubFile processNewHubFile(NodeList nList)
+    static private HubFile processNewHubFile(NodeList nList) throws Exception
     {
+        int beginLog = ConsoleIO.getLogSize();
+        ConsoleIO.setConsoleMessage("Importing New Hub File" , true);
         HubFile r = null;
         XMLcontroller xmlTools = new XMLcontroller();
 
@@ -82,6 +89,8 @@ public class DataController {
         if(XMLcontroller.matchesSchema(assetNodes,HubFile.SCHEMA_ASSETS) &&
                 XMLcontroller.matchesSchema(studyProfileNodes,HubFile.SCHEMA_STUDYPROFILE))
         {
+            ConsoleIO.setConsoleMessage("Schema Validates: assets" , true);
+            ConsoleIO.setConsoleMessage("Schema Validates: studyProfile" , true);
 
 
             HashMap<String,VersionControlEntity> assetList = new HashMap<>();
@@ -99,10 +108,12 @@ public class DataController {
             // Add all the Person classes
             if(assetValues.containsKey("persons"))
             {
+
                 NodeList personList = assetValues.get("persons").getNodeList();
                 Person tp;
                 i = -1;
                 ii = personList.getLength();
+                ConsoleIO.setConsoleMessage("Reading persons tag, " + Integer.toString(ii) + " nodes:" , true);
                 while(++i<ii)
                 {
                     n = personList.item(i);
@@ -112,6 +123,8 @@ public class DataController {
                         if (n.getNodeName().equals("person") && XMLcontroller.matchesSchema(nc,
                                 HubFile.SCHEMA_PERSON))
                         {
+
+                            ConsoleIO.setConsoleMessage("Valid Node found:" , true);
                             HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
                                     HubFile.SCHEMA_PERSON);
 
@@ -123,6 +136,8 @@ public class DataController {
                             addVCEproperties(tp,pValues);
 
                             assetList.put(pValues.get("uid").getString(),tp);
+
+                            ConsoleIO.setConsoleMessage("Adding person: " + tp.toString() , true);
                         }
                     }
                 }
@@ -135,6 +150,7 @@ public class DataController {
                 Building tb;
                 i = -1;
                 ii = buildingList.getLength();
+                ConsoleIO.setConsoleMessage("Reading buildings tag, " + Integer.toString(ii) + " nodes:" , true);
                 while(++i<ii)
                 {
                     n = buildingList.item(i);
@@ -166,6 +182,7 @@ public class DataController {
                 Room tr;
                 i = -1;
                 ii = roomList.getLength();
+                ConsoleIO.setConsoleMessage("Reading rooms tag, " + Integer.toString(ii) + " nodes:" , true);
                 while(++i<ii)
                 {
                     n = roomList.item(i);
@@ -381,7 +398,14 @@ public class DataController {
                                         {
                                             exTimeSlot = null;
                                         }
-                                        Exam exExamResit = inList(assetList,linkedResit);
+                                        Exam exExamResit;
+                                        try {
+                                            exExamResit = inList(assetList, linkedResit);
+                                        }
+                                        catch(Exception e)
+                                        {
+                                            exExamResit = null;
+                                        }
 
 
                                         Exam newExam;
@@ -455,28 +479,37 @@ public class DataController {
 
 
 
-            System.out.println("Attempting to import "+Integer.toString(assetList.size())+" items.");
-            System.out.println(VersionControlEntity.libraryReport());
+            ConsoleIO.setConsoleMessage("Attempting to import "+Integer.toString(assetList.size())
+                    +" items to VersionControl..." , true);
+            ConsoleIO.setConsoleMessage("Starting with "+VersionControlEntity.libraryReport()+" entries");
+
+            ArrayList<Event> calendarItems = new ArrayList<>();
 
             for (String key : assetList.keySet()) {
-
+                ConsoleIO.setConsoleMessage("Adding Asset: "+key , true);
                 if(assetList.get(key).addToLibrary())
                 {
-                    System.out.println(key + " added");
+                    if(assetList.get(key) instanceof Event)
+                    {
+                        calendarItems.add((Event)assetList.get(key));
+                    }
+                    System.out.println(assetList.get(key).toString() + " added");
                 }
                 else if(assetList.get(i).isImporter())
                 {
                     VersionControlEntity.get(key).update(assetList.get(i));
-                    System.out.println(key + " update attempted");
+                    System.out.println(assetList.get(key).toString() + " update attempted");
                 }
                 else
                 {
-                    System.out.println(key + " not imported");
+                    System.out.println(assetList.get(key).toString() + " not imported");
                 }
             }
-            System.out.println(VersionControlEntity.libraryReport());
+            ConsoleIO.setConsoleMessage("Ending with "+VersionControlEntity.libraryReport()+" entries");
+            ConsoleIO.saveLog("import_report.txt",beginLog,ConsoleIO.getLogSize());
 
-            r = new HubFile(version,year,semester,newModules,newAssets,name,details,UID);
+
+            r = new HubFile(version,year,semester,newModules,newAssets,calendarItems,name,details,UID);
         }
         return r;
     }
@@ -523,11 +556,9 @@ public class DataController {
             }
             catch(Exception e)
             {
-                UIManager.reportError("Invalid File");
+                UIManager.reportError("Invalid File: \n"+e.getMessage());
             }
         }
-
         return r;
-
     }
 }

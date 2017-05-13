@@ -7,11 +7,9 @@ import java.util.GregorianCalendar;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class ActivityEvent extends Event
+public class Activity extends Event
 {
     private ArrayList<Task> tasks;
-    private boolean checkedComplete;
-    private GregorianCalendar start;
     private int duration;
     private String description;
     private int activityQuantity;
@@ -32,7 +30,7 @@ public class ActivityEvent extends Event
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
 
-    public ActivityEvent(String cDate)
+    public Activity(String cDate)
     {
         super(cDate);
     }
