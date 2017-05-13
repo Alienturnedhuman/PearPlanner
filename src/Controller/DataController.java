@@ -9,6 +9,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,21 +42,26 @@ public class DataController {
         return r;
     }
 
-    private static <T extends VersionControlEntity> T inList( HashMap<String,VersionControlEntity> list,String uid)
+    private static <T extends VersionControlEntity> T inList( HashMap<String,VersionControlEntity> list,String uid) throws Exception
     {
-        if(list.containsKey(uid))
+        VersionControlEntity vce = null;
+        if(list.containsKey(uid)) {
+            vce = list.get(uid);
+        }
+        else if(VersionControlEntity.inLibrary(uid))
         {
-            // can't do instanceof T annoyingly, so hopefully casting to T and failing will work instead
-            try
-            {
-                return (T)list.get(uid);
-            }
-            catch(Exception e)
-            {
-                return null;
+            vce = VersionControlEntity.get(uid);
+        }
+        // can't do instanceof T annoyingly, so hopefully casting to T and failing will work instead
+        if(vce!=null)
+        {
+            try {
+                return (T) vce;
+            } catch (Exception e) {
+                throw new Exception("Incorrect type referenced for '"+uid+"'");
             }
         }
-        return null;
+        throw new Exception("UID referenced is not in database for '"+uid+"'");
     }
 
     static private void addVCEproperties(VersionControlEntity vce , HashMap<String,XMLcontroller.NodeReturn> values)
@@ -68,7 +74,7 @@ public class DataController {
 
     }
 
-    static private HubFile processNewHubFile(NodeList nList)
+    static private HubFile processNewHubFile(NodeList nList) throws Exception
     {
         int beginLog = ConsoleIO.getLogSize();
         ConsoleIO.setConsoleMessage("Importing New Hub File" , true);
@@ -146,6 +152,7 @@ public class DataController {
                 Building tb;
                 i = -1;
                 ii = buildingList.getLength();
+                ConsoleIO.setConsoleMessage("Reading buildings tag, " + Integer.toString(ii) + " nodes:" , true);
                 while(++i<ii)
                 {
                     n = buildingList.item(i);
@@ -177,6 +184,7 @@ public class DataController {
                 Room tr;
                 i = -1;
                 ii = roomList.getLength();
+                ConsoleIO.setConsoleMessage("Reading rooms tag, " + Integer.toString(ii) + " nodes:" , true);
                 while(++i<ii)
                 {
                     n = roomList.item(i);
@@ -392,7 +400,14 @@ public class DataController {
                                         {
                                             exTimeSlot = null;
                                         }
-                                        Exam exExamResit = inList(assetList,linkedResit);
+                                        Exam exExamResit;
+                                        try {
+                                            exExamResit = inList(assetList, linkedResit);
+                                        }
+                                        catch(Exception e)
+                                        {
+                                            exExamResit = null;
+                                        }
 
 
                                         Exam newExam;
@@ -543,7 +558,7 @@ public class DataController {
             }
             catch(Exception e)
             {
-                UIManager.reportError("Invalid File");
+                UIManager.reportError("Invalid File:\n"+e.getMessage());
             }
         }
 
