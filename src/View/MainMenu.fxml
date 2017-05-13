@@ -35,6 +35,8 @@
                 </HBox>
                 <HBox>
                     <Agenda fx:id="mainAgenda"/>
+                    <Button fx:id="agendaFwd"/>
+                    <Button fx:id="agendaBwd" />
                 </HBox>
                 <GridPane vgap="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
 

@@ -29,11 +29,16 @@ public class StudyPlanner implements Serializable
 
     // getters
 
+    public ArrayList<Event> getCalendar() {
+        return calendar;
+    }
+
     /**
      * returns a String array of studyProfile names
      *
      * @return
      */
+
     public String[] getListOfStudyProfileNames()
     {
         int i = -1;

@@ -19,14 +19,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
+import jfxtras.internal.scene.control.skin.agenda.AgendaDaySkin;
+import jfxtras.internal.scene.control.skin.agenda.AgendaMonthSkin;
 import jfxtras.scene.control.agenda.Agenda;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.*;
 
 /**
  * Created by Zilvinas on 05/05/2017.
@@ -71,9 +74,13 @@ public class MenuController implements Initializable {
     private GridPane mainContent;
     @FXML
     private HBox topBox;
+
+
+    //indian
     @FXML
     private Agenda mainAgenda;
-
+    @FXML private Button agendaFwd;
+    @FXML private Button agendaBwd;
 
     public void main(Window wind) {
         this.current = wind;
@@ -108,10 +115,22 @@ public class MenuController implements Initializable {
      * Display the Study Dashboard pane
      */
     public void loadDashboard() {
+
+
         //indian code starts here
+        this.agendaBwd.setOnMouseClicked(event -> {
+            this.mainAgenda.setDisplayedLocalDateTime(this.mainAgenda.getDisplayedLocalDateTime().minusDays(7));
+        });
+
+        this.agendaFwd.setOnMouseClicked(event -> {
+            this.mainAgenda.setDisplayedLocalDateTime(this.mainAgenda.getDisplayedLocalDateTime().plusDays(7));
+        });
+
         this.loadAgenda();
+        this.mainAgenda.setAllowDragging(false);
+        this.mainAgenda.setAllowResize(false);
         //endIndian
-        System.out.println("test test");
+
 
         // Update main pane:
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
@@ -751,30 +770,31 @@ public class MenuController implements Initializable {
 
     private void loadAgenda() {
 
-        this.populateAgenda();
+        this.populateAgenda(MainController.getSPC().getPlanner().getCalendar());
 
 
     }
 
-    private void populateAgenda() {
-        mainAgenda.appointments().addAll(
-                new Agenda.AppointmentImplLocal()
-                        .withStartLocalDateTime(LocalDate.now().atTime(0, 00))
-                        .withEndLocalDateTime(LocalDate.now().atTime(2, 30))
-                        .withDescription("Blah blah blah")
-                        .withLocation("JSC kek")
-                        .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"))// you should use a map of AppointmentGroups
+    private void populateAgenda(ArrayList<Event> calendar) {
+        for (Event e: calendar) {
+            LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+            LocalDateTime eTime = sTime.plusHours(2);
+            mainAgenda.appointments().addAll(
+                    new Agenda.AppointmentImplLocal()
+                            .withStartLocalDateTime(sTime)
+                            .withEndLocalDateTime(eTime)
+                            .withDescription("Blah blah blah")
+                            .withLocation("JSC kek")
+                            .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"))// you should use a map of AppointmentGroups
 
-        );
+            );
+
+        }
 
 
-        mainAgenda.appointments().addAll(
-                new Agenda.AppointmentImplLocal()
-                        .withStartLocalDateTime(LocalDate.now().atTime(0, 00))
-                        .withEndLocalDateTime(LocalDate.now().atTime(1, 30))
-                        .withDescription("bar blah")
-                        .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group10"))// you should use a map of AppointmentGroups
-        );
+
+
+
 
     }
 }
