@@ -24,7 +24,7 @@ public class EventTest extends ApplicationTest
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        MainController.initialise();
+        MainController.isNumeric("23");
     }
 
     Event event;
