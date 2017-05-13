@@ -1,8 +1,11 @@
 package Model;
 
+import Controller.MainController;
+import javafx.stage.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.testfx.framework.junit.ApplicationTest;
 
 import java.util.ArrayList;
 
@@ -11,12 +14,19 @@ import static org.junit.Assert.*;
 /**
  * Created by bijan on 13/05/2017.
  */
-public class ModuleTest
+public class ModuleTest extends ApplicationTest
 {
 
     Person person;
     Module module;
     ArrayList<Assignment> assignments;
+    ArrayList<TimetableEvent> timetableEvents;
+
+    @Override
+    public void start(Stage primaryStage) throws Exception
+    {
+        MainController.isNumeric("23");
+    }
 
     @Before
     public void setUp() throws Exception
@@ -24,9 +34,17 @@ public class ModuleTest
         person = new Person("Dr.", "Mark Fisher", true);
         module = new Module(person, "CMP-1550Y");
         assignments = new ArrayList<>();
+        timetableEvents = new ArrayList<>();
         Person person1 = new Person("Dr.", "Mark Fisher", true);
         Person person2 = new Person("Dr.", "Rudy Lapeer", true);
         assignments.add(new Assignment(30, person1, person1, person2, 100));
+        TimeTableEventType timeTableEventType = new TimeTableEventType();
+        Building building = new Building("JSC", 52.6308859, 1.297355);
+        Room room = new Room("JSC_1_02", building);
+        TimetableEvent timetableEvent = new TimetableEvent("13/05/2017T14:50:12", room, person1,
+                new TimeTableEventType(), 120);
+        timetableEvents.add(timetableEvent);
+
     }
 
     @After
@@ -123,11 +141,35 @@ public class ModuleTest
     @Test
     public void addTimetableEvent() throws Exception
     {
+        // Testing with one Time Table Event in the list
+        module.addTimetableEvent(timetableEvents.get(0));
+        for (int i=0; i<module.getAssignments().size(); i++){
+            assertEquals(timetableEvents.get(i), module.getTimetable().get(i));
+        }
+
+        // Testing with two Time Table Event in the list
+        Person person2 = new Person("Dr.", "Rudy Lapeer", true);
+        Building building = new Building("JSC", 52.6308859, 1.297355);
+        Room room = new Room("JSC_3_03", building);
+        TimetableEvent timetableEvent = new TimetableEvent("20/08/2017T15:50:12", room, person2,
+                new TimeTableEventType(), 120);
+        timetableEvents.add(timetableEvent);
+        module.addTimetableEvent(timetableEvents.get(1));
+        for (int i=0; i<module.getAssignments().size(); i++){
+            assertEquals(timetableEvents.get(i), module.getTimetable().get(i));
+        }
+
+        // Adding a duplicate to the list
+        module.addTimetableEvent(timetableEvents.get(1));
+        assertNotEquals(3, module.getTimetable().size());
     }
 
     @Test
     public void removeTimetableEvent() throws Exception
     {
+        module.removeTimetableEvent(timetableEvents.get(0));
+        timetableEvents.remove(0);
+        assertEquals(timetableEvents, module.getTimetable());
     }
 
 }
