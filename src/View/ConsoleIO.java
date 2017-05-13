@@ -2,10 +2,12 @@ package View;
 
 import Controller.DataController;
 import Controller.StudyPlannerController;
-import Model.Assignment;
 import Model.HubFile;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 

@@ -362,6 +362,7 @@ public class MenuController implements Initializable
         GridPane content = new GridPane();
         GridPane.setVgrow(content, Priority.ALWAYS);
         GridPane.setHgrow(content, Priority.ALWAYS);
+        content.setVgap(5);
         // =================
 
         // Requirements columns:
@@ -370,9 +371,10 @@ public class MenuController implements Initializable
 
         TableColumn<Requirement, Integer> remainingColumn = new TableColumn<>("Remaining");
         remainingColumn.setCellValueFactory(new PropertyValueFactory<>("remainingQuantity"));
+        remainingColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
-        TableColumn<Requirement, BooleanProperty> rIsComplete = new TableColumn<>("Completed?");
-        rIsComplete.setCellValueFactory(new PropertyValueFactory<>("checkedCompleted"));
+        TableColumn<Requirement, QuantityType> typeColumn = new TableColumn<>("Quantity type");
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("quantityType"));
 
         ObservableList<Requirement> requirementList = FXCollections.observableArrayList(assignment.getRequirements());
         // =================
@@ -380,7 +382,7 @@ public class MenuController implements Initializable
         // Create Requirements table:
         TableView<Requirement> requirements = new TableView<>();
         requirements.setItems(requirementList);
-        requirements.getColumns().addAll(rNameColumn, remainingColumn, rIsComplete);
+        requirements.getColumns().addAll(rNameColumn, remainingColumn, typeColumn);
         requirements.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setHgrow(requirements, Priority.ALWAYS);
         GridPane.setVgrow(requirements, Priority.ALWAYS);
@@ -388,11 +390,28 @@ public class MenuController implements Initializable
 
         // Set click event:
         requirements.setRowFactory(e -> {
-            TableRow<Requirement> row = new TableRow<>();
+            TableRow<Requirement> row = new TableRow<Requirement>()
+            {
+                @Override
+                protected void updateItem(final Requirement item, final boolean empty)
+                {
+                    super.updateItem(item, empty);
+                    // If completed, mark:
+                    if (!empty && item != null && item.isComplete())
+                        this.getStyleClass().add("current-item");
+                }
+            };
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
                 {
-                    //this.loadAssignment(row.getItem(), Window.Empty, module);
+                    try
+                    {
+                        MainController.ui.requirementDetails(row.getItem());
+                        requirements.refresh();
+                    } catch (IOException e1)
+                    {
+                        UIManager.reportError("Unable to open View file");
+                    }
                 }
             });
             return row;
@@ -400,7 +419,68 @@ public class MenuController implements Initializable
         // =================
 
         content.addColumn(0, requirements);
-        content.setVgap(5);
+
+        // Actions toolbar:
+        HBox actionsReq = new HBox();
+        GridPane.setHgrow(actionsReq, Priority.ALWAYS);
+        actionsReq.setSpacing(5);
+        actionsReq.setPadding(new Insets(5, 5, 10, 0));
+        // =================
+
+        // Buttons:
+        Button addNewReq = new Button("Add a new requirement");
+
+        Button deleteReq = new Button("Remove");
+        deleteReq.setDisable(true);
+        // =================
+
+        // Bind properties on buttons:
+        deleteReq.disableProperty().bind(new BooleanBinding()
+        {
+            {
+                bind(requirements.getSelectionModel().getSelectedItems());
+            }
+
+            @Override
+            protected boolean computeValue()
+            {
+                return !(requirementList.size() > 0 && requirements.getSelectionModel().getSelectedItem() != null);
+            }
+        });
+        // =================
+
+        // Bind actions on buttons:
+        addNewReq.setOnAction(e -> {
+            try
+            {
+                Requirement req = MainController.ui.addRequirement();
+                if (req != null)
+                {
+                    requirementList.add(req);
+                    assignment.addRequirement(req);
+                }
+            } catch (IOException e1)
+            {
+                UIManager.reportError("Unable to open View file");
+            } catch (Exception e1)
+            {
+            }
+        });
+
+        deleteReq.setOnAction(e -> {
+            if (UIManager.confirm("Are you sure you want to remove this requirement?"))
+            {
+                Requirement r = requirements.getSelectionModel().getSelectedItem();
+                requirementList.remove(r);
+                assignment.removeRequirement(r);
+            }
+        });
+        // =================
+
+        actionsReq.getChildren().addAll(addNewReq, deleteReq);
+
+        content.add(actionsReq, 0, 1);
+        // =================
 
         // Tasks columns:
         TableColumn<Task, String> nameColumn = new TableColumn<>("Task");
@@ -410,9 +490,9 @@ public class MenuController implements Initializable
         deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
         deadlineColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
-        TableColumn<Task, BooleanProperty> isComplete = new TableColumn<>("Completed?");
-        isComplete.setCellValueFactory(new PropertyValueFactory<>("checkedComplete"));
-        isComplete.setStyle("-fx-alignment: CENTER-RIGHT;");
+        TableColumn<Task, BooleanProperty> canComplete = new TableColumn<>("Can complete?");
+        canComplete.setCellValueFactory(new PropertyValueFactory<>("possibleToComplete"));
+        canComplete.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         ObservableList<Task> list = FXCollections.observableArrayList(assignment.getTasks());
         // =================
@@ -420,7 +500,7 @@ public class MenuController implements Initializable
         // Create Tasks table:
         TableView<Task> tasks = new TableView<>();
         tasks.setItems(list);
-        tasks.getColumns().addAll(nameColumn, deadlineColumn, isComplete);
+        tasks.getColumns().addAll(nameColumn, deadlineColumn, canComplete);
         tasks.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setHgrow(tasks, Priority.ALWAYS);
         GridPane.setVgrow(tasks, Priority.ALWAYS);
@@ -428,7 +508,17 @@ public class MenuController implements Initializable
 
         // Set click event:
         tasks.setRowFactory(e -> {
-            TableRow<Task> row = new TableRow<>();
+            TableRow<Task> row = new TableRow<Task>()
+            {
+                @Override
+                protected void updateItem(final Task item, final boolean empty)
+                {
+                    super.updateItem(item, empty);
+                    // If completed, mark:
+                    if (!empty && item != null && item.isCheckedComplete())
+                        this.getStyleClass().add("current-item");
+                }
+            };
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
                 {
@@ -449,10 +539,10 @@ public class MenuController implements Initializable
         content.addColumn(1, tasks);
 
         // Actions toolbar:
-        HBox actions = new HBox();
-        GridPane.setHgrow(actions, Priority.ALWAYS);
-        actions.setSpacing(5);
-        actions.setPadding(new Insets(5, 5, 10, 0));
+        HBox actionsTask = new HBox();
+        GridPane.setHgrow(actionsTask, Priority.ALWAYS);
+        actionsTask.setSpacing(5);
+        actionsTask.setPadding(new Insets(5, 5, 10, 0));
         // =================
 
         // Buttons:
@@ -500,7 +590,7 @@ public class MenuController implements Initializable
         addNew.setOnAction(e -> {
             try
             {
-                Task task = MainController.ui.addTask(assignment);
+                Task task = MainController.ui.addTask();
                 if (task != null)
                 {
                     list.add(task);
@@ -509,7 +599,9 @@ public class MenuController implements Initializable
             } catch (IOException e1)
             {
                 UIManager.reportError("Unable to open View file");
-            } catch (Exception e1) {}
+            } catch (Exception e1)
+            {
+            }
         });
 
         check.setOnAction(e -> {
@@ -532,9 +624,9 @@ public class MenuController implements Initializable
         HBox.setHgrow(gap, Priority.ALWAYS);
         // =================
 
-        actions.getChildren().addAll(addNew, gap, check, delete);
+        actionsTask.getChildren().addAll(addNew, gap, check, delete);
 
-        content.add(actions, 1, 1);
+        content.add(actionsTask, 1, 1);
 
         this.mainContent.addRow(3, content);
     }

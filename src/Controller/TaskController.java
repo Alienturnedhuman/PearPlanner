@@ -1,6 +1,8 @@
 package Controller;
 
-import Model.*;
+import Model.Requirement;
+import Model.Task;
+import Model.TaskType;
 import View.UIManager;
 import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
@@ -11,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -24,10 +25,10 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -35,10 +36,6 @@ import java.util.ResourceBundle;
  */
 public class TaskController implements Initializable
 {
-    // TODO add requirements and dependencies
-
-    private Assignment assignment;
-
     private Task task;
     private boolean success = false;
 
@@ -86,10 +83,9 @@ public class TaskController implements Initializable
     {
         // Check the input fields:
         if (!this.name.getText().trim().isEmpty() &&
-                !this.weighting.getText().trim().isEmpty() && MainController.isNumeric(this.weighting.getText()) &&
+                !this.weighting.getText().trim().isEmpty() &&
                 !this.deadline.getEditor().getText().trim().isEmpty() &&
-                this.taskType.getSelectionModel().getSelectedIndex() != -1 /*&&
-                this.requirements.getItems().size() > 0*/)
+                this.taskType.getSelectionModel().getSelectedIndex() != -1)
 
             this.submit.setDisable(false);
         // =================
@@ -100,7 +96,7 @@ public class TaskController implements Initializable
             this.task.replaceDependencies(this.dependencies.getItems());
             this.task.replaceRequirements(this.requirements.getItems());
 
-            if (!this.task.isComplete() && this.task.canCheckComplete())
+            if (!this.task.isCheckedComplete() && this.task.canCheckComplete())
             {
                 this.canComplete.setText("Can be completed.");
                 this.canComplete.setTextFill(Paint.valueOf("green"));
@@ -123,7 +119,8 @@ public class TaskController implements Initializable
      */
     public void validateWeighting()
     {
-        if (!MainController.isNumeric(this.weighting.getText()) || Integer.parseInt(this.weighting.getText()) > 100)
+        if (!MainController.isNumeric(this.weighting.getText()) || Integer.parseInt(this.weighting.getText()) > 100
+                || Integer.parseInt(this.weighting.getText()) < 0)
         {
             this.weighting.setStyle("-fx-text-box-border:red;");
             this.submit.setDisable(true);
@@ -147,6 +144,24 @@ public class TaskController implements Initializable
         {
             this.deadline.setStyle("");
             this.handleChange();
+        }
+    }
+
+    /**
+     * Handle the 'Add requirement' button action
+     */
+    public void addRequirement()
+    {
+        try
+        {
+            Requirement req = MainController.ui.addRequirement();
+            if (req != null)
+                this.requirements.getItems().add(req);
+        } catch (IOException e1)
+        {
+            UIManager.reportError("Unable to open View file");
+        } catch (Exception e1)
+        {
         }
     }
 
@@ -238,7 +253,7 @@ public class TaskController implements Initializable
      */
     public void toggleComplete()
     {
-        if (this.task.isComplete())
+        if (this.task.isCheckedComplete())
         {
             this.task.toggleComplete();
             this.completed.setVisible(false);
@@ -295,12 +310,9 @@ public class TaskController implements Initializable
 
     /**
      * Constructor for the TaskController
-     *
-     * @param assignment to which the Task relates
      */
-    public TaskController(Assignment assignment)
+    public TaskController()
     {
-        this.assignment = assignment;
     }
 
     /**
@@ -319,9 +331,8 @@ public class TaskController implements Initializable
         this.taskType.getItems().addAll(TaskType.listOfNames());
 
         // ListChangeListener:
-        ListChangeListener listen = (ListChangeListener<Task>) c -> handleChange();
-        this.dependencies.getItems().addListener(listen);
-        this.requirements.getItems().addListener(listen);
+        this.dependencies.getItems().addListener((ListChangeListener<Task>) c -> handleChange());
+        this.requirements.getItems().addListener((ListChangeListener<Requirement>) c -> handleChange());
         // =================
 
         // Bind properties on buttons:
@@ -367,8 +378,40 @@ public class TaskController implements Initializable
             {
                 Requirement r = this.requirements.getSelectionModel().getSelectedItem();
                 this.requirements.getItems().remove(r);
-                this.task.removeRequirment(r);
+                this.task.removeRequirement(r);
             }
+        });
+
+        this.requirements.setCellFactory(e -> {
+            ListCell<Requirement> cell = new ListCell<Requirement>()
+            {
+                @Override
+                protected void updateItem(final Requirement item, final boolean empty)
+                {
+                    super.updateItem(item, empty);
+                    // If completed, mark:
+                    if (!empty && item != null)
+                    {
+                        setText(item.toString());
+                        if (item.isComplete())
+                            this.getStyleClass().add("current-item");
+                    } else setText(null);
+                }
+            };
+            cell.setOnMouseClicked(event -> {
+                if (!cell.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                {
+                    try
+                    {
+                        MainController.ui.requirementDetails(cell.getItem());
+                        this.requirements.refresh();
+                    } catch (IOException e1)
+                    {
+                        UIManager.reportError("Unable to open View file");
+                    }
+                }
+            });
+            return cell;
         });
         // =================
 
@@ -380,7 +423,7 @@ public class TaskController implements Initializable
             this.markComplete.setVisible(true);
             this.canComplete.setTextFill(Paint.valueOf("green"));
 
-            if (this.task.isComplete())
+            if (this.task.isCheckedComplete())
             {
                 this.completed.setVisible(true);
                 this.markComplete.setSelected(true);

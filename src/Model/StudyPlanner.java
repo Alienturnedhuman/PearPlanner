@@ -18,7 +18,7 @@ public class StudyPlanner implements Serializable
     private ArrayList<QuantityType> quantityTypes = new ArrayList<QuantityType>();
     private ArrayList<TaskType> taskTypes = new ArrayList<TaskType>();
     private ArrayList<StudyProfile> studyProfiles = new ArrayList<StudyProfile>();
-    private ArrayList<ActivityEvent> activityList = new ArrayList<ActivityEvent>();
+    private ArrayList<Activity> activityList = new ArrayList<Activity>();
     private ArrayList<TimeTableEventType> timeTableEventTypes = new ArrayList<TimeTableEventType>();
     private ArrayList<Event> calendar = new ArrayList<Event>();
     private ArrayList<Notification> notifications = new ArrayList<Notification>();

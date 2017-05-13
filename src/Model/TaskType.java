@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class TaskType extends ModelEntity
 {
     private static ArrayList<TaskType> taskDatabase = new ArrayList<>();
-    // empty class until we add GUI
 
     public static String[] listOfNames()
     {

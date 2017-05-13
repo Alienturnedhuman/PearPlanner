@@ -20,7 +20,8 @@ public class Task extends ModelEntity
 {
     // private data
     private ArrayList<Task> dependencies = new ArrayList<>();
-    private Deadline deadline; // TODO notification
+    // TODO notification
+    private Deadline deadline;
     private ArrayList<Requirement> requirements = new ArrayList<>();
     private ArrayList<Note> notes;
     private boolean checkedComplete;
@@ -95,7 +96,7 @@ public class Task extends ModelEntity
      * @param requirement Requirement to be removed
      * @return whether the Requirement has been removed successfully
      */
-    public boolean removeRequirment(Requirement requirement)
+    public boolean removeRequirement(Requirement requirement)
     {
         return this.requirements.remove(requirement);
     }
@@ -105,7 +106,7 @@ public class Task extends ModelEntity
      */
     public void toggleComplete()
     {
-        if (this.isComplete())
+        if (this.isCheckedComplete())
             this.checkedComplete = false;
         else if (this.canCheckComplete())
             this.checkedComplete = true;
@@ -177,7 +178,7 @@ public class Task extends ModelEntity
      */
     public boolean isCheckedComplete()
     {
-        return this.isComplete();
+        return canCheckComplete() && checkedComplete;
     }
 
     public TaskType getType()
@@ -201,7 +202,7 @@ public class Task extends ModelEntity
         int ii = dependencies.size();
         while (++i < ii)
         {
-            if (!dependencies.get(i).isComplete())
+            if (!dependencies.get(i).isCheckedComplete())
             {
                 return false;
             }
@@ -214,9 +215,13 @@ public class Task extends ModelEntity
         return dependencies.size() > 0;
     }
 
-    public boolean isComplete()
+    /**
+     * Same as canCheckComplete(), wrapper for TableView
+     * @return
+     */
+    public boolean isPossibleToComplete()
     {
-        return canCheckComplete() && checkedComplete;
+        return canCheckComplete();
     }
 
     /**
@@ -273,19 +278,10 @@ public class Task extends ModelEntity
      *
      * @return Name of the task
      */
+    @Override
     public String toString()
     {
         return this.name;
-    }
-
-    // Constructors:
-    public Task(String name, String details, LocalDate deadline, int weighting, String type)
-    {
-        super(name);
-        this.setDetails(details);
-        this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
-        this.weighting = weighting;
-        this.type = TaskType.get(type);
     }
 
     @Override
@@ -298,5 +294,14 @@ public class Task extends ModelEntity
         {
             UIManager.reportError("Unable to open View file");
         }
+    }
+
+    // Constructors:
+    public Task(String name, String details, LocalDate deadline, int weighting, String type)
+    {
+        super(name, details);
+        this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
+        this.weighting = weighting;
+        this.type = TaskType.get(type);
     }
 }

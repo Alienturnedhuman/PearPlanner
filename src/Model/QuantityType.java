@@ -34,6 +34,20 @@ public class QuantityType extends ModelEntity
         return r;
     }
 
+    public static QuantityType get(String tt)
+    {
+        int i=-1;
+        int ii = quantityDatabase.size();
+        while(++i<ii)
+        {
+            if(quantityDatabase.get(i).equals(tt))
+            {
+                return quantityDatabase.get(i);
+            }
+        }
+        return DEFAULT;
+    }
+
     public static boolean exists(QuantityType qt)
     {
         int i=-1;
@@ -61,6 +75,15 @@ public class QuantityType extends ModelEntity
         return false;
     }
 
+    /**
+     * A toString method used in TableView
+     * @return
+     */
+    public String toString()
+    {
+        return this.name;
+    }
+
     // this is a temporary way to populate the array until we later replace from reading a set up file
     static
     {
@@ -75,15 +98,17 @@ public class QuantityType extends ModelEntity
             }
         }
         pair[] staticTypes = {
+                new pair("Other","Other")
+                ,
                 new pair("Hours","Work in hours")
                 ,
-                new pair("Booked read","Read this number of books")
+                new pair("Books read","Read this number of books")
                 ,
                 new pair("Videos watched","Watched this number of videos")
                 ,
                 new pair("thousand words written","Number of thousand words written")
                 ,
-                new pair("questions answers","Number of questions answered")
+                new pair("questions answered","Number of questions answered")
         };
         int i = -1;
         int ii = staticTypes.length;
@@ -110,4 +135,6 @@ public class QuantityType extends ModelEntity
     {
         return getName().equals(c);
     }
+
+    public static QuantityType DEFAULT = quantityDatabase.get(0);
 }
