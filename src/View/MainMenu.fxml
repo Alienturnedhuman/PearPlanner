@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+
+<?import jfxtras.scene.control.agenda.Agenda?>
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../Content/stylesheet.css">
     <children>
         <ToolBar minHeight="56.0" style="-fx-background-color: #5C8B76" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -25,12 +27,17 @@
         </GridPane>
         <AnchorPane fx:id="navList" prefWidth="200.0" style="-fx-background-color: #5C7167;" translateX="-200" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="56.0">
             <children>
+
                 <HBox alignment="CENTER_LEFT" style="-fx-background-color: #5C7167; -fx-padding: 10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
                         <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Navigation" />
                     </children>
                 </HBox>
+                <HBox>
+                    <Agenda fx:id="mainAgenda"/>
+                </HBox>
                 <GridPane vgap="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+
                     <columnConstraints>
                         <ColumnConstraints hgrow="ALWAYS" />
                     </columnConstraints>
