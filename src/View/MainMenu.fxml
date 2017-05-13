@@ -2,78 +2,98 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../Content/stylesheet.css">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@../Content/stylesheet.css">
     <children>
-        <ToolBar minHeight="56.0" style="-fx-background-color: #5C8B76" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ToolBar minHeight="56.0" style="-fx-background-color: #5C8B76" AnchorPane.leftAnchor="0.0"
+                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" styleClass="button-image" style="-fx-background-image: url('/Content/menu.png');" />
+                <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" styleClass="button-image"
+                        style="-fx-background-image: url('/Content/menu.png');"/>
                 <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
-                   <children>
-                       <Label fx:id="title" style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Study Dashboard" />
-                   </children>
+                    <children>
+                        <Label fx:id="title" style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Study Dashboard"/>
+                    </children>
                 </HBox>
-                <Button fx:id="showNotification" styleClass="button-image" prefWidth="31.0" />
+                <Button fx:id="showNotification" styleClass="button-image" prefWidth="31.0"/>
             </items>
         </ToolBar>
-        <GridPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+        <GridPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
             <children>
-                <HBox fx:id="topBox" style="-fx-padding: 10 0;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <HBox fx:id="topBox" style="-fx-padding: 10 0;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                      AnchorPane.topAnchor="0.0">
                     <children>
                     </children>
                 </HBox>
             </children>
         </GridPane>
-        <AnchorPane fx:id="navList" prefWidth="200.0" style="-fx-background-color: #5C7167;" translateX="-200" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="56.0">
+        <AnchorPane fx:id="navList" prefWidth="200.0" style="-fx-background-color: #5C7167;" translateX="-200"
+                    AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="56.0">
             <children>
-                <HBox alignment="CENTER_LEFT" style="-fx-background-color: #5C7167; -fx-padding: 10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <HBox alignment="CENTER_LEFT" style="-fx-background-color: #5C7167; -fx-padding: 10;"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Navigation" />
+                        <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Navigation"/>
                     </children>
                 </HBox>
-                <GridPane vgap="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                <GridPane vgap="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="ALWAYS"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="45.0" minHeight="10.0" />
-                        <RowConstraints maxHeight="45.0" minHeight="10.0" />
-                        <RowConstraints maxHeight="45.0" minHeight="10.0" />
-                        <RowConstraints maxHeight="45.0" minHeight="10.0" />
-                  <RowConstraints />
+                        <RowConstraints maxHeight="45.0" minHeight="10.0"/>
+                        <RowConstraints maxHeight="45.0" minHeight="10.0"/>
+                        <RowConstraints maxHeight="45.0" minHeight="10.0"/>
+                        <RowConstraints maxHeight="45.0" minHeight="10.0"/>
+                        <RowConstraints/>
                     </rowConstraints>
                     <children>
-                        <Button fx:id="showDash" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Study Dashboard" GridPane.rowIndex="0" />
-                        <Button fx:id="addActivity" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Add activity" GridPane.rowIndex="1" />
-                        <Button fx:id="milestones" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Milestones" GridPane.rowIndex="2" />
-                        <Button fx:id="modules" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Modules" GridPane.rowIndex="3" />
-                        <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Study Profiles" GridPane.rowIndex="4" />
-                        <Button onAction="#importFile" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Import HUB file" GridPane.rowIndex="5" />
+                        <Button fx:id="showDash" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                                text="Study Dashboard" GridPane.rowIndex="0"/>
+                        <Button fx:id="addActivity" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                                text="Add activity" GridPane.rowIndex="1"/>
+                        <Button fx:id="milestones" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                                text="Milestones" GridPane.rowIndex="2"/>
+                        <Button fx:id="modules" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                                text="Modules" GridPane.rowIndex="3"/>
+                        <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                                text="Study Profiles" GridPane.rowIndex="4"/>
+                        <Button onAction="#importFile" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                                text="Import HUB file" GridPane.rowIndex="5"/>
                     </children>
                 </GridPane>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="notifications" prefHeight="400.0" prefWidth="288.0" style="-fx-background-color: #5C7167" translateX="-20.0" translateY="-456.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
-             <children>
-                <ToolBar minHeight="50.0" style="-fx-background-color: #5C7167" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                  <items>
-                      <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
-                         <children>
-                            <Label style="-fx-text-fill: white" text="Notifications" />
-                         </children>
-                      </HBox>
-                    <Button onAction="#handleMarkAll" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand" text="Mark all as read" />
-                  </items>
+        <AnchorPane fx:id="notifications" prefHeight="400.0" prefWidth="288.0" style="-fx-background-color: #5C7167"
+                    translateX="-20.0" translateY="-456.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+            <children>
+                <ToolBar minHeight="50.0" style="-fx-background-color: #5C7167" AnchorPane.leftAnchor="0.0"
+                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                        <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label style="-fx-text-fill: white" text="Notifications"/>
+                            </children>
+                        </HBox>
+                        <Button onAction="#handleMarkAll"
+                                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand"
+                                text="Mark all as read"/>
+                    </items>
                 </ToolBar>
-                <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
-                   <content>
-                      <GridPane fx:id="notificationList">
-                          <columnConstraints >
-                              <ColumnConstraints prefWidth="286.0" maxWidth="286.0"/>
-                          </columnConstraints>
-                      </GridPane>
-                   </content>
+                <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                            AnchorPane.topAnchor="55.0">
+                    <content>
+                        <GridPane fx:id="notificationList">
+                            <columnConstraints>
+                                <ColumnConstraints prefWidth="286.0" maxWidth="286.0"/>
+                            </columnConstraints>
+                        </GridPane>
+                    </content>
                 </ScrollPane>
-             </children>
+            </children>
         </AnchorPane>
     </children>
 </AnchorPane>

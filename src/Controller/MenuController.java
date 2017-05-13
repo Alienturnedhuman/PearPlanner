@@ -476,7 +476,7 @@ public class MenuController implements Initializable
             @Override
             protected boolean computeValue()
             {
-                return list.size() <= 0;
+                return !(list.size() > 0 && tasks.getSelectionModel().getSelectedItem() != null);
             }
         });
 
@@ -548,13 +548,14 @@ public class MenuController implements Initializable
         // Mark all notifications as read:
         for (int i = 0; i < nots.length; ++i)
         {
+            int index = this.notificationList.getChildren().size() - 1 - i;
             nots[i].read();
             // Remove cursor:
             if (nots[i].getLink() == null)
-                this.notificationList.getChildren().get(i).setCursor(Cursor.DEFAULT);
+                this.notificationList.getChildren().get(index).setCursor(Cursor.DEFAULT);
 
             // Change style:
-            this.notificationList.getChildren().get(i).getStyleClass().remove("unread-item");
+            this.notificationList.getChildren().get(index).getStyleClass().remove("unread-item");
         }
 
         // Handle styles:
@@ -658,7 +659,7 @@ public class MenuController implements Initializable
         {
             GridPane pane = new GridPane();
 
-            // Check if has a link:
+            // Check if has a link or is unread:
             if (n[i].getLink() != null || !n[i].isRead())
             {
                 pane.setCursor(Cursor.HAND);

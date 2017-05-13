@@ -20,7 +20,7 @@ public class Task extends ModelEntity
 {
     // private data
     private ArrayList<Task> dependencies = new ArrayList<>();
-    private Deadline deadline;
+    private Deadline deadline; // TODO notification
     private ArrayList<Requirement> requirements = new ArrayList<>();
     private ArrayList<Note> notes;
     private boolean checkedComplete;
@@ -40,6 +40,7 @@ public class Task extends ModelEntity
     public void addRequirement(Requirement req)
     {
         this.requirements.add(req);
+        this.canCheckComplete();
     }
 
     /**
@@ -50,26 +51,53 @@ public class Task extends ModelEntity
     public void addDependency(Task task)
     {
         this.dependencies.add(task);
+        this.canCheckComplete();
     }
 
     /**
      * Replaces the current Requirements with the given ones
+     *
      * @param requirements list of requirements
      */
     public void replaceRequirements(Collection<Requirement> requirements)
     {
         this.requirements.clear();
         this.requirements.addAll(requirements);
+        this.canCheckComplete();
     }
 
     /**
      * Replaces the current Dependencies with the given ones
+     *
      * @param dependencies list of Tasks
      */
     public void replaceDependencies(Collection<Task> dependencies)
     {
         this.dependencies.clear();
         this.dependencies.addAll(dependencies);
+        this.canCheckComplete();
+    }
+
+    /**
+     * Removes a given Task from the dependencies list
+     *
+     * @param dependency Task to be removed
+     * @return whether the dependency has been removed successfully
+     */
+    public boolean removeDependency(Task dependency)
+    {
+        return this.dependencies.remove(dependency);
+    }
+
+    /**
+     * Removes a given Requirement from the requirements list
+     *
+     * @param requirement Requirement to be removed
+     * @return whether the Requirement has been removed successfully
+     */
+    public boolean removeRequirment(Requirement requirement)
+    {
+        return this.requirements.remove(requirement);
     }
 
     /**
@@ -84,7 +112,18 @@ public class Task extends ModelEntity
     }
 
     /**
+     * Mark as complete/incomplete
+     *
+     * @param c boolean value
+     */
+    public void setComplete(boolean c)
+    {
+        this.checkedComplete = c;
+    }
+
+    /**
      * Set a new deadline
+     *
      * @param date date to be set as a new deadline
      */
     public void setDeadline(LocalDate date)
@@ -94,6 +133,7 @@ public class Task extends ModelEntity
 
     /**
      * Set a new weighting for this Task
+     *
      * @param weighting
      */
     public void setWeighting(int weighting)
@@ -103,11 +143,12 @@ public class Task extends ModelEntity
 
     /**
      * Set a new type for this Task
+     *
      * @param type String representation of a type
      */
     public void setType(String type)
     {
-        if(TaskType.exists(type))
+        if (TaskType.exists(type))
         {
             this.type = TaskType.get(type);
         }
@@ -129,9 +170,14 @@ public class Task extends ModelEntity
         return this.weighting;
     }
 
+    /**
+     * Wrapper for JavaFX TableView
+     *
+     * @return
+     */
     public boolean isCheckedComplete()
     {
-        return this.checkedComplete;
+        return this.isComplete();
     }
 
     public TaskType getType()
@@ -170,9 +216,15 @@ public class Task extends ModelEntity
 
     public boolean isComplete()
     {
-        return checkedComplete && canCheckComplete();
+        return canCheckComplete() && checkedComplete;
     }
 
+    /**
+     * Checks whether this Task can be checked as complete. If it cannot, makes sure it is marked as
+     * incomplete.
+     *
+     * @return
+     */
     public boolean canCheckComplete()
     {
         int i = -1;
@@ -181,16 +233,22 @@ public class Task extends ModelEntity
         {
             if (!requirements.get(i).isComplete())
             {
+                this.checkedComplete = false;
                 return false;
             }
         }
         if (this.dependenciesComplete())
             return true;
-        else return false;
+        else
+        {
+            this.checkedComplete = false;
+            return false;
+        }
     }
 
     /**
      * Checks whether this Task already contains a given dependency
+     *
      * @param dep dependency to be checked for
      * @return true or false
      */
@@ -201,12 +259,23 @@ public class Task extends ModelEntity
 
     /**
      * Checks whether this Task already contains a given Requirement
+     *
      * @param requirement requirement to be checked for
      * @return true or false
      */
     public boolean containsRequirement(Requirement requirement)
     {
         return this.requirements.contains(requirement);
+    }
+
+    /**
+     * Returns the Name of the Task (used for JavaFX)
+     *
+     * @return Name of the task
+     */
+    public String toString()
+    {
+        return this.name;
     }
 
     // Constructors:
