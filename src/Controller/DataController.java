@@ -94,6 +94,16 @@ public class DataController {
             ConsoleIO.setConsoleMessage("Schema Validates: assets" , true);
             ConsoleIO.setConsoleMessage("Schema Validates: studyProfile" , true);
 
+            HashMap<String,XMLcontroller.NodeReturn> studyProfileValues =
+                    xmlTools.getSchemaValues(studyProfileNodes,HubFile.SCHEMA_STUDYPROFILE);
+
+            int year = studyProfileValues.get("year").getInt();
+            int semester = studyProfileValues.get("semester").getInt();
+
+            if(MainController.getSPC().containsStudyProfile(year,semester))
+            {
+                throw new Exception("Study profile for "+year+" semester "+semester+" already imported");
+            }
 
             HashMap<String,VersionControlEntity> assetList = new HashMap<>();
             HashMap<String,XMLcontroller.NodeReturn> assetValues = xmlTools.getSchemaValues(assetNodes,
@@ -247,11 +257,6 @@ public class DataController {
 
 
 
-            HashMap<String,XMLcontroller.NodeReturn> studyProfileValues =
-                    xmlTools.getSchemaValues(studyProfileNodes,HubFile.SCHEMA_STUDYPROFILE);
-
-            int year = studyProfileValues.get("year").getInt();
-            int semester = studyProfileValues.get("semester").getInt();
 
             NodeList modules = studyProfileValues.get("modules").getNodeList();
             i = -1;
