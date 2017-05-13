@@ -17,6 +17,7 @@ public class HubFile implements Serializable
     private ArrayList<Module> modules = new ArrayList<Module>();
     private ArrayList<ExtensionApplication> extensions = new ArrayList<ExtensionApplication>();
     private ArrayList<VersionControlEntity> updates = new ArrayList<VersionControlEntity>();
+    private ArrayList<Event> calendarList = new ArrayList<>();
     private int version;
     private int semester;
     private int year;
@@ -38,6 +39,11 @@ public class HubFile implements Serializable
     {
         // initial set up code below - check if this needs updating
         return extensions;
+    }
+
+    public ArrayList<Event> getCalendarList()
+    {
+        return calendarList;
     }
 
     public ArrayList<VersionControlEntity> getUpdates()
@@ -122,21 +128,22 @@ public class HubFile implements Serializable
      * @param m
      * @param a
      */
-    public HubFile(int v, int y, int s, ArrayList<Module> m, ArrayList<VersionControlEntity> a)
+    public HubFile(int v, int y, int s, ArrayList<Module> m, ArrayList<VersionControlEntity> a , ArrayList<Event> cal)
     {
         version = v;
         year = y;
         semester = s;
         modules = (ArrayList<Module>) m.clone();
         assets = (ArrayList<VersionControlEntity>) a.clone();
+        calendarList = (ArrayList<Event>) cal.clone();
         updateFile = false;
     }
 
 
-    public HubFile(int v, int y, int s, ArrayList<Module> m, ArrayList<VersionControlEntity> a, String n,
-                   MultilineString d, String u)
+    public HubFile(int v, int y, int s, ArrayList<Module> m, ArrayList<VersionControlEntity> a , ArrayList<Event> cal,
+                   String n, MultilineString d, String u)
     {
-        this(v, y, s, m, a);
+        this(v, y, s, m, a, cal);
         semesterName = n;
         semesterDetails = d;
         semesterUID = u;

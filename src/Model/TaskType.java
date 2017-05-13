@@ -34,6 +34,20 @@ public class TaskType extends ModelEntity
         return r;
     }
 
+    public static TaskType get(String tt)
+    {
+        int i=-1;
+        int ii = taskDatabase.size();
+        while(++i<ii)
+        {
+            if(taskDatabase.get(i).equals(tt))
+            {
+                return taskDatabase.get(i);
+            }
+        }
+        return DEFAULT;
+    }
+
     public static boolean exists(TaskType tt)
     {
         int i=-1;
@@ -75,6 +89,8 @@ public class TaskType extends ModelEntity
             }
         }
         pair[] staticTypes = {
+                new pair("Other","Other type of task")
+                ,
                 new pair("Reading","Read some required text")
                 ,
                 new pair("Exercises","Did some assigned exercises")
@@ -86,8 +102,7 @@ public class TaskType extends ModelEntity
                 new pair("Revision","Revised towards exam")
                 ,
                 new pair("Meeting","Meet with other course members")
-                ,
-                new pair("Other","Other type of task")
+
         };
         int i = -1;
         int ii = staticTypes.length;
@@ -99,7 +114,7 @@ public class TaskType extends ModelEntity
 
     private TaskType(String cName, String cDetails)
     {
-
+        super(cName,cDetails);
         if(!exists(this))
         {
             taskDatabase.add(this);
@@ -114,4 +129,6 @@ public class TaskType extends ModelEntity
     {
         return getName().equals(c);
     }
+
+    public static TaskType DEFAULT = taskDatabase.get(0);
 }

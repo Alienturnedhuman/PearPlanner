@@ -470,11 +470,16 @@ public class DataController {
                     +" items to VersionControl..." , true);
             ConsoleIO.setConsoleMessage("Starting with "+VersionControlEntity.libraryReport()+" entries");
 
-            for (String key : assetList.keySet()) {
+            ArrayList<Event> calendarItems = new ArrayList<>();
 
+            for (String key : assetList.keySet()) {
                 ConsoleIO.setConsoleMessage("Adding Asset: "+key , true);
                 if(assetList.get(key).addToLibrary())
                 {
+                    if(assetList.get(key) instanceof Event)
+                    {
+                        calendarItems.add((Event)assetList.get(key));
+                    }
                     System.out.println(assetList.get(key).toString() + " added");
                 }
                 else if(assetList.get(i).isImporter())
@@ -489,7 +494,9 @@ public class DataController {
             }
             ConsoleIO.setConsoleMessage("Ending with "+VersionControlEntity.libraryReport()+" entries");
             ConsoleIO.saveLog("import_report.txt",beginLog,ConsoleIO.getLogSize());
-            r = new HubFile(version,year,semester,newModules,newAssets,name,details,UID);
+
+
+            r = new HubFile(version,year,semester,newModules,newAssets,calendarItems,name,details,UID);
         }
         return r;
     }
