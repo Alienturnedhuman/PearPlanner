@@ -17,6 +17,10 @@ public class ActivityEvent extends Event
     private int activityQuantity;
     private QuantityType type;
 
+    public int getDuration() {
+        return duration;
+    }
+
     // public methods
     public void markComplete()
     {

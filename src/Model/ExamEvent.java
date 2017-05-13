@@ -16,4 +16,8 @@ public class ExamEvent extends Event
         room = cRoom;
         duration = cDuration;
     }
+
+    public int getDuration() {
+        return duration;
+    }
 }

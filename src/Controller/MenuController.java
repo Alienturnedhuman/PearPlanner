@@ -777,17 +777,70 @@ public class MenuController implements Initializable {
 
     private void populateAgenda(ArrayList<Event> calendar) {
         for (Event e: calendar) {
-            LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
-            LocalDateTime eTime = sTime.plusHours(2);
-            mainAgenda.appointments().addAll(
-                    new Agenda.AppointmentImplLocal()
-                            .withStartLocalDateTime(sTime)
-                            .withEndLocalDateTime(eTime)
-                            .withDescription("Blah blah blah")
-                            .withLocation("JSC kek")
-                            .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"))// you should use a map of AppointmentGroups
 
-            );
+            if (e instanceof TimetableEvent) {
+                System.out.println("adding - "+e.getClass()+"duration"+((TimetableEvent) e).getDuration());
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                mainAgenda.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withEndLocalDateTime(sTime.plusMinutes(((TimetableEvent) e).getDuration()))
+                                .withSummary("TimetableEvent")
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group5"))// you should use a map of AppointmentGroups
+
+                );
+            }
+            else if (e instanceof ExamEvent) {
+                System.out.println("adding - "+e.getClass());
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                mainAgenda.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withSummary("ExamEvent")
+                                .withEndLocalDateTime(sTime.plusMinutes(((ExamEvent) e).getDuration()))
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group20"))// you should use a map of AppointmentGroups
+
+                );
+            }
+            else if (e instanceof Deadline) {
+                System.out.println("adding - "+e.getClass()+"blah bar");
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                mainAgenda.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withSummary("Deadline")
+                                .withEndLocalDateTime(sTime.plusMinutes(60))
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"))// you should use a map of AppointmentGroups
+
+                );
+            }
+            else if (e instanceof ActivityEvent) {
+                System.out.println("adding - "+e.getClass()+"blah bar");
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                mainAgenda.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withSummary("ActivityEvent")
+                                .withEndLocalDateTime(sTime.plusMinutes(((ActivityEvent) e).getDuration()))
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group10"))// you should use a map of AppointmentGroups
+
+                );
+            }
+
+
+            else  {
+                System.out.println("adding - "+e.getClass());
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                mainAgenda.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withSummary("Generic Event")
+                                .withEndLocalDateTime(sTime.plusMinutes(60))
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group3"))// you should use a map of AppointmentGroups
+
+                );
+            }
+
 
         }
 
