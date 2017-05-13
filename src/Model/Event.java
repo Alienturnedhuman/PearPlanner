@@ -42,10 +42,8 @@ public class Event extends VersionControlEntity
     // setters:
     public void setDate(String dateString)
     {
-        // 09/04/2017T15:00:00Z
         if(true||validDateString(dateString))
         {
-
             String sDay = dateString.substring(0,2);
             String sMonth = dateString.substring(3,5);
             String sYear = dateString.substring(6,10);
@@ -61,7 +59,6 @@ public class Event extends VersionControlEntity
             }
         }
     }
-
 
     public Event(String cDate)
     {
