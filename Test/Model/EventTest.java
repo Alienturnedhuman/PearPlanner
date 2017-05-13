@@ -11,6 +11,8 @@ import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 
 
+import java.util.GregorianCalendar;
+
 import static org.junit.Assert.*;
 
 /**
@@ -50,15 +52,17 @@ public class EventTest extends ApplicationTest
     @Test
     public void toStringTest() throws Exception
     {
-        String expected = "Sun Apr 09 15:00:00 BST 2017";
-        assertEquals(expected, event.toString());
+
+        GregorianCalendar expectedDate = new GregorianCalendar(2017, 3, 9, 15, 0, 0);
+        assertEquals(expectedDate.getTime().toString(), event.toString());
     }
 
     @Test
     public void setDate() throws Exception
     {
         event.setDate("04/10/2017T09:08:13");
-        assertEquals("Wed Oct 04 09:08:13 BST 2017", event.toString());
+        GregorianCalendar expectedDate = new GregorianCalendar(2017, 9, 4, 9, 8, 13);
+        assertEquals(expectedDate.getTime().toString(), event.toString());
     }
 
 }
