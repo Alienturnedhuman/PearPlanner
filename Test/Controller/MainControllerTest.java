@@ -24,12 +24,7 @@ public class MainControllerTest extends ApplicationTest
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        primaryStage.setOnCloseRequest(e -> {
-            Platform.exit();
-            System.exit(0);
-        });
-
-        MainController.initialise();
+        MainController.isNumeric("23");
     }
 
     @After
