@@ -558,10 +558,9 @@ public class DataController {
             }
             catch(Exception e)
             {
-                UIManager.reportError("Invalid File:\n"+e.getMessage());
+                UIManager.reportError("Invalid File: \n"+e.getMessage());
             }
         }
-
         return r;
     }
 }
