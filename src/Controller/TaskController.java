@@ -1,6 +1,9 @@
 package Controller;
 
-import Model.*;
+import Model.Assignment;
+import Model.Requirement;
+import Model.Task;
+import Model.TaskType;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,7 +14,6 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.chrono.ChronoLocalDate;
 import java.util.ResourceBundle;
 
 /**

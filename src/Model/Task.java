@@ -3,10 +3,8 @@ package Model;
 import Controller.MainController;
 import Controller.MenuController;
 import View.UIManager;
-import org.junit.Test;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -109,7 +107,10 @@ public class Task extends ModelEntity
      */
     public void setType(String type)
     {
-        this.type = TaskType.exists(type);
+        if(TaskType.exists(type))
+        {
+            this.type = TaskType.get(type);
+        }
     }
 
     // Getters:
@@ -215,7 +216,7 @@ public class Task extends ModelEntity
         this.setDetails(details);
         this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
         this.weighting = weighting;
-        this.type = TaskType.exists(type);
+        this.type = TaskType.get(type);
     }
 
     @Override

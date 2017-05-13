@@ -71,6 +71,14 @@ public class StudyPlanner implements Serializable
         return false;
     }
 
+    public void addEventToCalendar(Event event)
+    {
+        if(!calendar.contains(event))
+        {
+            calendar.add(event);
+        }
+    }
+
     /**
      * Returns the current StudyProfile
      *

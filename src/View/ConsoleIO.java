@@ -2,9 +2,11 @@ package View;
 
 import Controller.DataController;
 import Controller.StudyPlannerController;
+import Model.Assignment;
 import Model.HubFile;
 
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -12,6 +14,7 @@ import java.util.Scanner;
  * Created by bendickson on 5/4/17.
  */
 public class ConsoleIO {
+    static ArrayList<String> logged = new ArrayList<>();
     static public String getDataString(String message)
     {
         Scanner scan = new Scanner(System.in);
@@ -32,9 +35,53 @@ public class ConsoleIO {
         }
         return r.equals("y");
     }
+    static public int getLogSize()
+    {
+        return logged.size();
+    }
+    static public void saveLog(String filePath)
+    {
+        saveLog(filePath,0,logged.size());
+    }
+    static public void saveLog(String filePath, int startLine, int endLine)
+    {
+        if(startLine<0)
+        {
+            startLine = 0;
+        }
+        if(endLine>logged.size())
+        {
+            endLine = logged.size();
+        }
+        int i = startLine-1;
+        try {
+            File logFile = new File(filePath);
+            FileOutputStream fos = new FileOutputStream(logFile);
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+            while (++i < endLine) {
+                if (i != startLine) {
+                    bw.newLine();
+                }
+                bw.write(logged.get(i));
+            }
+            bw.close();
+        }
+        catch(Exception e)
+        {
+            setConsoleMessage("File not written" , true);
+        }
+    }
     static public void setConsoleMessage(String message)
     {
         System.out.println(message);
+    }
+    static public void setConsoleMessage(String message, boolean logMessage)
+    {
+        System.out.println(message);
+        if(logMessage)
+        {
+            logged.add(message);
+        }
     }
     static public int getMenuOption(String[] menuOptions)
     {

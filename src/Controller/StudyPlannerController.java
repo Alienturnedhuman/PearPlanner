@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import View.ConsoleIO;
 
 import javax.crypto.*;
 import java.io.BufferedOutputStream;
@@ -92,6 +93,15 @@ public class StudyPlannerController
             {
                 this.planner.setCurrentStudyProfile(profile);
                 profile.setCurrent(true);
+            }
+
+            ArrayList<Event> cal = hubFile.getCalendarList();
+            int i = -1;
+            int ii = cal.size();
+            while(++i<ii)
+            {
+                ConsoleIO.setConsoleMessage("Adding "+cal.get(i).toString()+" to calendar", true);
+                this.planner.addEventToCalendar(cal.get(i));
             }
 
             // Notify user:
