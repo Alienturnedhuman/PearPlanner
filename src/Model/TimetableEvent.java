@@ -21,16 +21,19 @@ public class TimetableEvent extends Event
         // initial set up code below - check if this needs updating
         return room;
     }
+
     public Person getLecturer()
     {
         // initial set up code below - check if this needs updating
         return lecturer;
     }
+
     public TimeTableEventType getTimeTableEventType()
     {
         // initial set up code below - check if this needs updating
         return timeTableEventType;
     }
+
     public int getDuration()
     {
         // initial set up code below - check if this needs updating
@@ -43,14 +46,17 @@ public class TimetableEvent extends Event
         // initial set up code below - check if this needs updating
         room = newRoom;
     }
+
     public void setLecturer(Person newLecturer)
     {
         lecturer = newLecturer;
     }
+
     public void setTimeTableEventType(TimeTableEventType newTimeTableEventType)
     {
         timeTableEventType = newTimeTableEventType;
     }
+
     public void setDuration(int newDuration)
     {
         duration = newDuration;
@@ -60,12 +66,12 @@ public class TimetableEvent extends Event
     @Override
     public String toString()
     {
-        return name+" in "+room.toString()+" at "+date.getTime();
+        return name + " in " + room.toString() + " at " + date.getTime();
     }
 
 
     // constructor
-    public TimetableEvent(String cDate, Room cRoom,Person cLecturer, TimeTableEventType cTimeTableEventType ,
+    public TimetableEvent(String cDate, Room cRoom, Person cLecturer, TimeTableEventType cTimeTableEventType,
                           int cDuration)
     {
         super(cDate);

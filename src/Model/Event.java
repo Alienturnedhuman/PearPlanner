@@ -23,11 +23,11 @@ public class Event extends VersionControlEntity
     }
 
 
-
     // getters
 
     /**
      * Returns a Date object containing this Date
+     *
      * @return
      */
     public Date getDate()
@@ -45,20 +45,20 @@ public class Event extends VersionControlEntity
     {
         // 09/04/2017T15:00:00Z
         // at the moment coded to bypass validator as it's not working correctly
-        if(true||validDateString(dateString))
+        if (true || validDateString(dateString))
         {
 
-            String sDay = dateString.substring(0,2);
-            String sMonth = dateString.substring(3,5);
-            String sYear = dateString.substring(6,10);
-            String sHour = dateString.substring(11,13);
-            String sMinute = dateString.substring(14,16);
-            String sSecond = dateString.substring(17,19);
-            if(MainController.isNumeric(sDay) && MainController.isNumeric(sMonth) && MainController.isNumeric(sYear) &&
+            String sDay = dateString.substring(0, 2);
+            String sMonth = dateString.substring(3, 5);
+            String sYear = dateString.substring(6, 10);
+            String sHour = dateString.substring(11, 13);
+            String sMinute = dateString.substring(14, 16);
+            String sSecond = dateString.substring(17, 19);
+            if (MainController.isNumeric(sDay) && MainController.isNumeric(sMonth) && MainController.isNumeric(sYear) &&
                     MainController.isNumeric(sHour) && MainController.isNumeric(sMinute) &&
                     MainController.isNumeric(sSecond))
             {
-                date = new GregorianCalendar(Integer.parseInt(sYear), Integer.parseInt(sMonth)-1, Integer.parseInt(sDay)
+                date = new GregorianCalendar(Integer.parseInt(sYear), Integer.parseInt(sMonth) - 1, Integer.parseInt(sDay)
                         , Integer.parseInt(sHour), Integer.parseInt(sMinute), Integer.parseInt(sSecond));
             }
         }

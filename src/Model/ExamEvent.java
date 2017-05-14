@@ -10,7 +10,7 @@ public class ExamEvent extends Event
     private Room room;
     private int duration;
 
-    public ExamEvent(String cDate, Room cRoom , int cDuration)
+    public ExamEvent(String cDate, Room cRoom, int cDuration)
     {
         super(cDate);
         room = cRoom;

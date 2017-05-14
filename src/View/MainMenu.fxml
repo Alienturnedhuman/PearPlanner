@@ -53,7 +53,8 @@
                     <children>
                         <Button fx:id="showDash" style="-fx-background-color: transparent; -fx-cursor: hand;"
                                 text="Study Dashboard" GridPane.rowIndex="0"/>
-                        <Button fx:id="addActivity" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                        <Button fx:id="addActivity" onAction="#addActivity"
+                                style="-fx-background-color: transparent; -fx-cursor: hand;"
                                 text="Add activity" GridPane.rowIndex="1"/>
                         <Button fx:id="milestones" style="-fx-background-color: transparent; -fx-cursor: hand;"
                                 text="Milestones" GridPane.rowIndex="2"/>

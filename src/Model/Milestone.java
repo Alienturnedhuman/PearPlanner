@@ -19,20 +19,24 @@ public class Milestone extends ModelEntity
         // initial set up code below - check if this needs updating
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
+
     public double progressPercentage()
     {
         // initial set up code below - check if this needs updating
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
+
     public int tasksCompleted()
     {
         // initial set up code below - check if this needs updating
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
+
     public int size()
     {
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
+
     public int totalWeighting()
     {
         // initial set up code below - check if this needs updating

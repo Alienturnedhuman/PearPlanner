@@ -23,11 +23,13 @@ public class ExtensionApplication implements Serializable
         // initial set up code below - check if this needs updating
         return extension;
     }
+
     public String getModuleCode()
     {
         // initial set up code below - check if this needs updating
         return moduleCode;
     }
+
     public String getAssignmentUID()
     {
         // initial set up code below - check if this needs updating

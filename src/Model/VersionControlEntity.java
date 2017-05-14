@@ -11,13 +11,14 @@ public class VersionControlEntity extends ModelEntity
     protected int version;
     protected String uid;
     protected boolean sealed;
-    private static HashMap<String,VersionControlEntity> library = new HashMap<>();
+    private static HashMap<String, VersionControlEntity> library = new HashMap<>();
     protected boolean importer = false; // used for VCEs created during XML import
     // private methods
 
     /**
      * This method overwrites the data in the received object with that received
      * This method will need to overrode in every class that extends it
+     *
      * @param receivedVCE
      */
     protected void replace(VersionControlEntity receivedVCE)
@@ -32,7 +33,7 @@ public class VersionControlEntity extends ModelEntity
     public void update(VersionControlEntity receivedVCE)
     {
         // initial set up code below - check if this needs
-        if(uid.equals(receivedVCE.getUID()) && version < receivedVCE.getVersion())
+        if (uid.equals(receivedVCE.getUID()) && version < receivedVCE.getVersion())
         {
             replace(receivedVCE);
         }
@@ -42,47 +43,46 @@ public class VersionControlEntity extends ModelEntity
     public static boolean findAndUpdate(VersionControlEntity receivedVCE)
     {
         String UID = receivedVCE.getUID();
-        if(inLibrary(UID))
+        if (inLibrary(UID))
         {
             library.get(UID).update(receivedVCE);
             return true;
-        }
-        else
+        } else
         {
             return false;
         }
     }
+
     public boolean makeImporter()
     {
-        if(!sealed)
+        if (!sealed)
         {
             importer = true;
             return true;
-        }
-        else
+        } else
         {
             return false;
         }
     }
+
     public boolean isImporter()
     {
         return importer;
     }
+
     public boolean addToLibrary()
     {
-        if(importer)
+        if (importer)
         {
-            if(inLibrary(uid))
+            if (inLibrary(uid))
             {
                 return false;
-            }
-            else
+            } else
             {
-                library.put(uid,this);
+                library.put(uid, this);
                 return true;
             }
-        }
-        else
+        } else
         {
             return false;
         }
@@ -90,11 +90,10 @@ public class VersionControlEntity extends ModelEntity
 
     public static VersionControlEntity get(String UID)
     {
-        if(inLibrary(UID))
+        if (inLibrary(UID))
         {
             return library.get(UID);
-        }
-        else
+        } else
         {
             return null;
         }
@@ -111,55 +110,53 @@ public class VersionControlEntity extends ModelEntity
         // initial set up code below - check if this needs updating
         return version;
     }
+
     public String getUID()
     {
         // initial set up code below - check if this needs updating
         return uid;
     }
+
     public static String libraryReport()
     {
-        return "Total Entries: "+library.size();
+        return "Total Entries: " + library.size();
     }
 
     public boolean setUID(String newUID, int newVersion)
     {
 //        setUID(newUID);
-        if(importer)
+        if (importer)
         {
             setUID(newUID);
             version = newVersion;
             return true;
-        }
-        else if(sealed || library.containsKey(newUID))
+        } else if (sealed || library.containsKey(newUID))
         {
             return false;
-        }
-        else
+        } else
         {
             setUID(newUID);
             version = newVersion;
-            return true;
-        }
-    }
-    public boolean setUID(String newUID)
-    {
-        if(importer)
-        {
-            uid = newUID;
-            return true;
-        }
-        else if(sealed || library.containsKey(newUID))
-        {
-            return false;
-        }
-        else
-        {
-            uid = newUID;
-            library.put(newUID,this);
             return true;
         }
     }
 
+    public boolean setUID(String newUID)
+    {
+        if (importer)
+        {
+            uid = newUID;
+            return true;
+        } else if (sealed || library.containsKey(newUID))
+        {
+            return false;
+        } else
+        {
+            uid = newUID;
+            library.put(newUID, this);
+            return true;
+        }
+    }
 
 
     // Constructors
@@ -168,11 +165,13 @@ public class VersionControlEntity extends ModelEntity
         super();
         sealed = !leaveUnsealed;
     }
+
     public VersionControlEntity()
     {
         super();
         sealed = false;
     }
+
     public VersionControlEntity(String UID)
     {
         super();

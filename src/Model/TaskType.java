@@ -15,18 +15,19 @@ public class TaskType extends ModelEntity
         String[] r = new String[taskDatabase.size()];
         int i = -1;
         int ii = taskDatabase.size();
-        while(++i<ii)
+        while (++i < ii)
         {
             r[i] = taskDatabase.get(i).getName();
         }
         return r;
     }
+
     public static TaskType[] listOfTaskTypes()
     {
         TaskType[] r = new TaskType[taskDatabase.size()];
         int i = -1;
         int ii = taskDatabase.size();
-        while(++i<ii)
+        while (++i < ii)
         {
             r[i] = taskDatabase.get(i);
         }
@@ -35,11 +36,11 @@ public class TaskType extends ModelEntity
 
     public static TaskType get(String tt)
     {
-        int i=-1;
+        int i = -1;
         int ii = taskDatabase.size();
-        while(++i<ii)
+        while (++i < ii)
         {
-            if(taskDatabase.get(i).equals(tt))
+            if (taskDatabase.get(i).equals(tt))
             {
                 return taskDatabase.get(i);
             }
@@ -49,24 +50,25 @@ public class TaskType extends ModelEntity
 
     public static boolean exists(TaskType tt)
     {
-        int i=-1;
+        int i = -1;
         int ii = taskDatabase.size();
-        while(++i<ii)
+        while (++i < ii)
         {
-            if(taskDatabase.get(i).equals(tt))
+            if (taskDatabase.get(i).equals(tt))
             {
                 return true;
             }
         }
         return false;
     }
+
     public static boolean exists(String tt)
     {
-        int i=-1;
+        int i = -1;
         int ii = taskDatabase.size();
-        while(++i<ii)
+        while (++i < ii)
         {
-            if(taskDatabase.get(i).equals(tt))
+            if (taskDatabase.get(i).equals(tt))
             {
                 return true;
             }
@@ -81,40 +83,41 @@ public class TaskType extends ModelEntity
         {
             public String a;
             public String b;
-            pair(String name,String details)
+
+            pair(String name, String details)
             {
                 a = name;
                 b = details;
             }
         }
         pair[] staticTypes = {
-                new pair("Other","Other type of task")
+                new pair("Other", "Other type of task")
                 ,
-                new pair("Reading","Read some required text")
+                new pair("Reading", "Read some required text")
                 ,
-                new pair("Exercises","Did some assigned exercises")
+                new pair("Exercises", "Did some assigned exercises")
                 ,
-                new pair("Listening","Listened to a podcast")
+                new pair("Listening", "Listened to a podcast")
                 ,
-                new pair("Coursework","Worked towards coursework")
+                new pair("Coursework", "Worked towards coursework")
                 ,
-                new pair("Revision","Revised towards exam")
+                new pair("Revision", "Revised towards exam")
                 ,
-                new pair("Meeting","Meet with other course members")
+                new pair("Meeting", "Meet with other course members")
 
         };
         int i = -1;
         int ii = staticTypes.length;
-        while(++i<ii)
+        while (++i < ii)
         {
-            TaskType t = new TaskType(staticTypes[i].a,staticTypes[i].b);
+            TaskType t = new TaskType(staticTypes[i].a, staticTypes[i].b);
         }
     }
 
     private TaskType(String cName, String cDetails)
     {
-        super(cName,cDetails);
-        if(!exists(this))
+        super(cName, cDetails);
+        if (!exists(this))
         {
             taskDatabase.add(this);
         }
@@ -124,6 +127,7 @@ public class TaskType extends ModelEntity
     {
         return getName().equals(c.getName());
     }
+
     public boolean equals(String c)
     {
         return getName().equals(c);

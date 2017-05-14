@@ -16,9 +16,9 @@ public class Coursework extends Assignment
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
-        if(receivedVCE instanceof Coursework)
+        if (receivedVCE instanceof Coursework)
         {
-            Coursework castedVCE = (Coursework)receivedVCE;
+            Coursework castedVCE = (Coursework) receivedVCE;
             this.startDate = castedVCE.getStartDate();
             this.deadline = castedVCE.getDeadline();
             this.extensions = castedVCE.getExtensions();
@@ -33,14 +33,17 @@ public class Coursework extends Assignment
     {
         return startDate;
     }
+
     public Deadline getDeadline()
     {
         return deadline;
     }
+
     public ArrayList<Extension> getExtensions()
     {
         return extensions;
     }
+
     public ArrayList<Note> getNotes()
     {
         return notes;
@@ -50,14 +53,15 @@ public class Coursework extends Assignment
     // setters
     public void addNote(Note newNote)
     {
-        if(!notes.contains(newNote))
+        if (!notes.contains(newNote))
         {
             notes.add(newNote);
         }
     }
+
     public void removeNote(Note oldNote)
     {
-        if(notes.contains(oldNote))
+        if (notes.contains(oldNote))
         {
             notes.remove(oldNote);
         }
@@ -67,10 +71,10 @@ public class Coursework extends Assignment
     public Coursework(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks, Event cStartDate,
                       Deadline cDeadline, ArrayList<Extension> cExtensions)
     {
-        super(cWeighting,cSetBy,cMarkedBy,cReviewedBy,cMarks);
+        super(cWeighting, cSetBy, cMarkedBy, cReviewedBy, cMarks);
         startDate = cStartDate;
         deadline = cDeadline;
-        extensions = (ArrayList<Extension>)cExtensions.clone();
+        extensions = (ArrayList<Extension>) cExtensions.clone();
     }
 
 }
