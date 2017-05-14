@@ -152,13 +152,10 @@ public class StudyPlannerController
 
     /**
      * Adds a new activity to the StudyPlanner
-     *
-     * @return
      */
     public void addActivity(Activity activity)
     {
-        // TODO activity
-        // not implemented, argument list incomplete
+        this.planner.addActivity(activity);
     }
 
     // constructors

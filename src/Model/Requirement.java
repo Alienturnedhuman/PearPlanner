@@ -78,7 +78,7 @@ public class Requirement extends ModelEntity
 
     public double requirementProgress()
     {
-        // TODO
+        // TODO calculate progress
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
 
@@ -110,13 +110,28 @@ public class Requirement extends ModelEntity
     }
 
     /**
-     * Update the current Requirement to reflect newly added activities
+     * Add an Activity to the current Requirement and update the progress of this Requirement accordingly.
      *
+     * @param activity Activity to be added.
+     */
+    public void addActivity(Activity activity)
+    {
+        this.activityLog.add(activity);
+        this.remainingQuantity -= activity.getActivityQuantity();
+        if (remainingQuantity <= 0)
+        {
+            this.remainingQuantity = 0;
+            this.checkedCompleted = true;
+        }
+    }
+
+    /**
+     * Update the current Requirement to reflect newly added activities
      * @return whether any changes were made
      */
     public boolean update()
     {
-        // TODO
+        // TODO update
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
 

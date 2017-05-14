@@ -27,9 +27,149 @@ public class Task extends ModelEntity
     private boolean checkedComplete;
     private int weighting;
     private TaskType type;
-
+    private ArrayList<Assignment> assignments = new ArrayList<>();
 
     // public methods
+
+    // Getters:
+    public String getDeadline()
+    {
+        return new SimpleDateFormat("dd/MM/yyyy").format(this.deadline.getDate());
+    }
+
+    public Date getDeadlineDate()
+    {
+        return this.deadline.getDate();
+    }
+
+    public int getWeighting()
+    {
+        return this.weighting;
+    }
+
+    /**
+     * Wrapper for JavaFX TableView
+     *
+     * @return
+     */
+    public boolean isCheckedComplete()
+    {
+        return canCheckComplete() && checkedComplete;
+    }
+
+    public TaskType getType()
+    {
+        return this.type;
+    }
+
+    public Task[] getDependencies()
+    {
+        return this.dependencies.toArray(new Task[this.dependencies.size()]);
+    }
+
+    public Requirement[] getRequirements()
+    {
+        return this.requirements.toArray(new Requirement[this.requirements.size()]);
+    }
+
+    /**
+     * Returns an array of Assignments to which this Task relates.
+     *
+     * @return array of Assignments.
+     */
+    public Assignment[] getAssignmentReferences()
+    {
+        return this.assignments.toArray(new Assignment[this.assignments.size()]);
+    }
+
+    public boolean dependenciesComplete()
+    {
+        int i = -1;
+        int ii = dependencies.size();
+        while (++i < ii)
+        {
+            if (!dependencies.get(i).isCheckedComplete())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean hasDependencies()
+    {
+        return dependencies.size() > 0;
+    }
+
+    /**
+     * Same as canCheckComplete(), wrapper for TableView
+     *
+     * @return
+     */
+    public boolean isPossibleToComplete()
+    {
+        return canCheckComplete();
+    }
+
+    /**
+     * Checks whether this Task can be checked as complete. If it cannot, makes sure it is marked as
+     * incomplete.
+     *
+     * @return
+     */
+    public boolean canCheckComplete()
+    {
+        int i = -1;
+        int ii = requirements.size();
+        while (++i < ii)
+        {
+            if (!requirements.get(i).isComplete())
+            {
+                this.checkedComplete = false;
+                return false;
+            }
+        }
+        if (this.dependenciesComplete())
+            return true;
+        else
+        {
+            this.checkedComplete = false;
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether this Task already contains a given dependency
+     *
+     * @param dep dependency to be checked for
+     * @return true or false
+     */
+    public boolean containsDependency(Task dep)
+    {
+        return this.dependencies.contains(dep);
+    }
+
+    /**
+     * Checks whether this Task already contains a given Requirement
+     *
+     * @param requirement requirement to be checked for
+     * @return true or false
+     */
+    public boolean containsRequirement(Requirement requirement)
+    {
+        return this.requirements.contains(requirement);
+    }
+
+    /**
+     * Returns the Name of the Task (used for JavaFX)
+     *
+     * @return Name of the task
+     */
+    @Override
+    public String toString()
+    {
+        return this.name;
+    }
 
     // Setters:
 
@@ -155,134 +295,25 @@ public class Task extends ModelEntity
         }
     }
 
-    // Getters:
-    public String getDeadline()
+    /**
+     * Add a reference to an Assignment to this task. (Used for completing Assignment Requirements).
+     *
+     * @param assignment Assignment which should be linked with this Task.
+     */
+    public void addAssignmentReference(Assignment assignment)
     {
-        return new SimpleDateFormat("dd/MM/yyyy").format(this.deadline.getDate());
-    }
-
-    public Date getDeadlineDate()
-    {
-        return this.deadline.getDate();
-    }
-
-    public int getWeighting()
-    {
-        return this.weighting;
+        if (!this.assignments.contains(assignment))
+            this.assignments.add(assignment);
     }
 
     /**
-     * Wrapper for JavaFX TableView
+     * Removes a reference from the list of Assignments this Task relates to.
      *
-     * @return
+     * @param assignment Assignment to be removed.
      */
-    public boolean isCheckedComplete()
+    public void removeAssignmentReference(Assignment assignment)
     {
-        return canCheckComplete() && checkedComplete;
-    }
-
-    public TaskType getType()
-    {
-        return this.type;
-    }
-
-    public Task[] getDependencies()
-    {
-        return this.dependencies.toArray(new Task[this.dependencies.size()]);
-    }
-
-    public Requirement[] getRequirements()
-    {
-        return this.requirements.toArray(new Requirement[this.requirements.size()]);
-    }
-
-    public boolean dependenciesComplete()
-    {
-        int i = -1;
-        int ii = dependencies.size();
-        while (++i < ii)
-        {
-            if (!dependencies.get(i).isCheckedComplete())
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean hasDependencies()
-    {
-        return dependencies.size() > 0;
-    }
-
-    /**
-     * Same as canCheckComplete(), wrapper for TableView
-     *
-     * @return
-     */
-    public boolean isPossibleToComplete()
-    {
-        return canCheckComplete();
-    }
-
-    /**
-     * Checks whether this Task can be checked as complete. If it cannot, makes sure it is marked as
-     * incomplete.
-     *
-     * @return
-     */
-    public boolean canCheckComplete()
-    {
-        int i = -1;
-        int ii = requirements.size();
-        while (++i < ii)
-        {
-            if (!requirements.get(i).isComplete())
-            {
-                this.checkedComplete = false;
-                return false;
-            }
-        }
-        if (this.dependenciesComplete())
-            return true;
-        else
-        {
-            this.checkedComplete = false;
-            return false;
-        }
-    }
-
-    /**
-     * Checks whether this Task already contains a given dependency
-     *
-     * @param dep dependency to be checked for
-     * @return true or false
-     */
-    public boolean containsDependency(Task dep)
-    {
-        return this.dependencies.contains(dep);
-    }
-
-    /**
-     * Checks whether this Task already contains a given Requirement
-     *
-     * @param requirement requirement to be checked for
-     * @return true or false
-     */
-    public boolean containsRequirement(Requirement requirement)
-    {
-        return this.requirements.contains(requirement);
-    }
-
-    /**
-     * Returns the Name of the Task (used for JavaFX)
-     *
-     * @return Name of the task
-     */
-    @Override
-    public String toString()
-    {
-        return this.name;
+        this.assignments.remove(assignment);
     }
 
     @Override

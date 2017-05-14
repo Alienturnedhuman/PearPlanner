@@ -78,8 +78,6 @@ public class UIManager
 
     /**
      * Display the 'Add Activity' window
-     *
-     * @throws Exception
      */
     public Activity addActivity() throws Exception
     {
@@ -103,6 +101,28 @@ public class UIManager
         if (ac.isSuccess())
             return ac.getActivity();
         return null;
+    }
+
+    /**
+     * Displays the Activity details page
+     */
+    public void activityDetails(Activity activity) throws IOException
+    {
+        ActivityController ac = new ActivityController(activity);
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Activity.fxml"));
+        loader.setController(ac);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 358));
+        stage.setTitle("Activity");
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
     }
 
     /**

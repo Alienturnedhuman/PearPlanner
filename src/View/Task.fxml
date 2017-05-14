@@ -75,13 +75,13 @@
                     GridPane.valignment="CENTER"/>
         <VBox spacing="5.0" GridPane.rowIndex="3">
             <children>
-                <Label text="Requirements (optional)"/>
+                <Label text="Requirements"/>
                 <ListView fx:id="requirements" prefHeight="206.0" prefWidth="239.0" GridPane.rowIndex="3"
                           VBox.vgrow="ALWAYS"/>
                 <HBox>
                     <children>
                         <HBox HBox.hgrow="ALWAYS"/>
-                        <Button fx:id="addReq" onAction="#addRequirement" mnemonicParsing="false" text="Add">
+                        <Button fx:id="addReq" mnemonicParsing="false" onAction="#addRequirement" text="Add">
                             <HBox.margin>
                                 <Insets right="5.0" top="5.0"/>
                             </HBox.margin>
@@ -111,7 +111,7 @@
                 <HBox>
                     <children>
                         <HBox HBox.hgrow="ALWAYS"/>
-                        <Button fx:id="addDep" onAction="#addDependency" mnemonicParsing="false" text="Add">
+                        <Button fx:id="addDep" mnemonicParsing="false" onAction="#addDependency" text="Add">
                             <HBox.margin>
                                 <Insets right="5.0" top="5.0"/>
                             </HBox.margin>

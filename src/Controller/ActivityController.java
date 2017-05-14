@@ -3,8 +3,11 @@ package Controller;
 import Model.Activity;
 import Model.QuantityType;
 import Model.Task;
+import View.UIManager;
 import javafx.application.Platform;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +25,8 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 /**
@@ -47,6 +52,7 @@ public class ActivityController implements Initializable
 
     // Buttons:
     @FXML private Button submit;
+    @FXML private Button removeTask;
 
     // Text:
     @FXML private TextField name;
@@ -76,6 +82,11 @@ public class ActivityController implements Initializable
                 this.tasks.getItems().size() > 0)
 
             this.submit.setDisable(false);
+        // =================
+
+        // Process Task list:
+        if (this.activity != null)
+            this.activity.replaceTasks(this.tasks.getItems());
         // =================
     }
 
@@ -205,15 +216,23 @@ public class ActivityController implements Initializable
         if (this.activity == null)
         {
             // Create a new Activity:
-            this.activity = new Activity(this.date.getValue()); // TODO constructor for activity
+            this.activity = new Activity(this.name.getText(), this.details.getText(), this.date.getValue(),
+                    Integer.parseInt(this.duration.getText()), Integer.parseInt(this.quantity.getText()),
+                    this.quantityType.getValue());
             // =================
+            this.activity.addTasks(this.tasks.getItems());
         } else
         {
             // Update the current activity:
-            // TODO getters and setters for activity
+            this.activity.setName(this.name.getText());
+            this.activity.setDetails(this.details.getText());
+            this.activity.setDate(this.date.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
+            this.activity.setDuration(Integer.parseInt(this.duration.getText()));
+            this.activity.setActivityQuantity(Integer.parseInt(this.quantity.getText()));
+            this.activity.setType(this.quantityType.getValue());
             // =================
-
         }
+
         this.success = true;
         Stage stage = (Stage) this.submit.getScene().getWindow();
         stage.close();
@@ -249,7 +268,79 @@ public class ActivityController implements Initializable
     {
         this.quantityType.getItems().addAll(QuantityType.listOfNames());
         this.date.setValue(LocalDate.now());
-        this.handleChange();
+
+        // ListChangeListener:
+        this.tasks.getItems().addListener((ListChangeListener<Task>) c -> handleChange());
+        // =================
+
+        // Bind properties on buttons:
+        this.removeTask.disableProperty().bind(new BooleanBinding()
+        {
+            {
+                bind(tasks.getSelectionModel().getSelectedItems());
+            }
+
+            @Override
+            protected boolean computeValue()
+            {
+                return !(tasks.getItems().size() > 0 && tasks.getSelectionModel().getSelectedItem() != null);
+            }
+        });
+        // =================
+
+        // Button actions:
+        this.removeTask.setOnAction(e -> {
+            if (UIManager.confirm("Are you sure you want to remove this Task from the list?"))
+            {
+                Task t = this.tasks.getSelectionModel().getSelectedItem();
+                this.tasks.getItems().remove(t);
+                if (this.activity != null)
+                    this.activity.removeTask(t);
+            }
+        });
+
+        this.tasks.setCellFactory(e -> {
+            ListCell<Task> cell = new ListCell<Task>()
+            {
+                @Override
+                protected void updateItem(final Task item, final boolean empty)
+                {
+                    super.updateItem(item, empty);
+                    // If completed, mark:
+                    if (!empty && item != null)
+                    {
+                        setText(item.toString());
+                        if (item.isCheckedComplete())
+                            this.getStyleClass().add("current-item");
+                    } else
+                    {
+                        setText(null);
+                        this.getStyleClass().remove("current-item");
+                    }
+                }
+            };
+            return cell;
+        });
+        // =================
+
+        // Handle Activity details:
+        if (this.activity != null)
+        {
+            // Disable/modify elements:
+            this.title.setText("Activity");
+            // =================
+
+            // Fill in data:
+            this.name.setText(this.activity.getName());
+            this.details.setText(this.activity.getDetails().getAsString());
+            this.duration.setText(Integer.toString(this.activity.getDuration()));
+            this.quantity.setText(Integer.toString(this.activity.getActivityQuantity()));
+            this.date.setValue(this.activity.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            this.quantityType.getSelectionModel().select(this.activity.getType().getName());
+            this.tasks.getItems().addAll(this.activity.getTasks());
+            // =================
+        } else this.handleChange();
+        // =================
 
         Platform.runLater(() -> this.pane.requestFocus());
     }

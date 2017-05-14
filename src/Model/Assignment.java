@@ -131,6 +131,7 @@ public class Assignment extends VersionControlEntity
     public void addTask(Task task)
     {
         this.tasks.add(task);
+        task.addAssignmentReference(this);
     }
 
     /**
@@ -141,6 +142,7 @@ public class Assignment extends VersionControlEntity
      */
     public boolean removeTask(Task task)
     {
+        task.removeAssignmentReference(this);
         return this.tasks.remove(task);
     }
 

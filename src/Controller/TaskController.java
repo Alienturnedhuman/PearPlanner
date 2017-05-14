@@ -36,6 +36,7 @@ import java.util.ResourceBundle;
  */
 public class TaskController implements Initializable
 {
+    // TODO display activities
     private Task task;
     private boolean success = false;
 
@@ -85,7 +86,8 @@ public class TaskController implements Initializable
         if (!this.name.getText().trim().isEmpty() &&
                 !this.weighting.getText().trim().isEmpty() &&
                 !this.deadline.getEditor().getText().trim().isEmpty() &&
-                this.taskType.getSelectionModel().getSelectedIndex() != -1)
+                this.taskType.getSelectionModel().getSelectedIndex() != -1 &&
+                this.requirements.getItems().size() > 0)
 
             this.submit.setDisable(false);
         // =================
@@ -282,8 +284,8 @@ public class TaskController implements Initializable
             this.task.setWeighting(Integer.parseInt(this.weighting.getText()));
             this.task.setType(this.taskType.getValue());
             // =================
-
         }
+
         this.success = true;
         Stage stage = (Stage) this.submit.getScene().getWindow();
         stage.close();
@@ -320,11 +322,6 @@ public class TaskController implements Initializable
     {
         this.taskType.getItems().addAll(TaskType.listOfNames());
 
-        // ListChangeListener:
-        this.dependencies.getItems().addListener((ListChangeListener<Task>) c -> handleChange());
-        this.requirements.getItems().addListener((ListChangeListener<Requirement>) c -> handleChange());
-        // =================
-
         // Bind properties on buttons:
         this.removeDep.disableProperty().bind(new BooleanBinding()
         {
@@ -359,7 +356,8 @@ public class TaskController implements Initializable
             {
                 Task t = this.dependencies.getSelectionModel().getSelectedItem();
                 this.dependencies.getItems().remove(t);
-                this.task.removeDependency(t);
+                if (this.task != null)
+                    this.task.removeDependency(t);
             }
         });
 
@@ -368,7 +366,8 @@ public class TaskController implements Initializable
             {
                 Requirement r = this.requirements.getSelectionModel().getSelectedItem();
                 this.requirements.getItems().remove(r);
-                this.task.removeRequirement(r);
+                if (this.task != null)
+                    this.task.removeRequirement(r);
             }
         });
 
@@ -385,7 +384,11 @@ public class TaskController implements Initializable
                         setText(item.toString());
                         if (item.isComplete())
                             this.getStyleClass().add("current-item");
-                    } else setText(null);
+                    } else
+                    {
+                        setText(null);
+                        this.getStyleClass().remove("current-item");
+                    }
                 }
             };
             cell.setOnMouseClicked(event -> {
@@ -442,11 +445,17 @@ public class TaskController implements Initializable
         }
         // =================
 
+        // ListChangeListener:
+        this.dependencies.getItems().addListener((ListChangeListener<Task>) c -> handleChange());
+        this.requirements.getItems().addListener((ListChangeListener<Requirement>) c -> handleChange());
+        // =================
+
         Platform.runLater(() -> this.pane.requestFocus());
     }
 
     /**
      * Formats the cell for displaying Tasks.
+     *
      * @param e TableView to be formatted.
      * @return Formatted TableRow
      */
@@ -460,7 +469,7 @@ public class TaskController implements Initializable
                 super.updateItem(item, empty);
                 // If Task is completed, mark:
                 if (!empty && item != null && item.isCheckedComplete())
-                    this.getStyleClass().add("current-item");
+                    this.getStyleClass().add("current-item"); // TODO something wrong with TableRow styles
             }
         };
         row.setOnMouseClicked(event -> {

@@ -146,6 +146,33 @@ public class StudyPlanner implements Serializable
         this.notifications.add(notification);
     }
 
+    /**
+     * Add an Activity to this Study Planner and update appropriate fields.
+     *
+     * @param activity Activity to be added.
+     */
+    public void addActivity(Activity activity)
+    {
+        this.activityList.add(activity);
+        for (Task t : activity.getTasks())
+        {
+            for (Requirement r : t.getRequirements())
+            {
+                if (r.getQuantityType().equals(activity.getType()) && !r.checkedCompleted)
+                {
+                    // TODO carry over requirements
+                    r.addActivity(activity);
+                    break;
+                }
+            }
+            // TODO carry over requirements
+            for (Assignment a : t.getAssignmentReferences())
+                a.getRequirements().stream()
+                        .filter(e -> e.getQuantityType().equals(activity.getType()) && !e.checkedCompleted)
+                        .findFirst().ifPresent(e -> e.addActivity(activity));
+        }
+    }
+
     // constructors
 
     public StudyPlanner(Account newAccount) throws NoSuchPaddingException, NoSuchAlgorithmException

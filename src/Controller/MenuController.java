@@ -132,6 +132,7 @@ public class MenuController implements Initializable
             Activity activity = MainController.ui.addActivity();
             if (activity != null)
                 MainController.getSPC().addActivity(activity);
+            openMenu.fire();
 
         } catch (Exception e)
         {
@@ -416,6 +417,8 @@ public class MenuController implements Initializable
                     // If completed, mark:
                     if (!empty && item != null && item.isComplete())
                         this.getStyleClass().add("current-item");
+                    else
+                        this.getStyleClass().remove("current-item");
                 }
             };
             row.setOnMouseClicked(event -> {
@@ -507,7 +510,7 @@ public class MenuController implements Initializable
         deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
         deadlineColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
-        TableColumn<Task, BooleanProperty> canComplete = new TableColumn<>("Can complete?");
+        TableColumn<Task, BooleanProperty> canComplete = new TableColumn<>("Can be completed?");
         canComplete.setCellValueFactory(new PropertyValueFactory<>("possibleToComplete"));
         canComplete.setStyle("-fx-alignment: CENTER-RIGHT;");
 
@@ -534,6 +537,8 @@ public class MenuController implements Initializable
                     // If completed, mark:
                     if (!empty && item != null && item.isCheckedComplete())
                         this.getStyleClass().add("current-item");
+                    else
+                        this.getStyleClass().remove("current-item");
                 }
             };
             row.setOnMouseClicked(event -> {

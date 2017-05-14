@@ -3,14 +3,18 @@ package Controller;
 import Model.Activity;
 import Model.QuantityType;
 import Model.Requirement;
+import View.UIManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -160,6 +164,26 @@ public class RequirementController implements Initializable
     {
         this.quantityType.getItems().addAll(QuantityType.listOfNames());
 
+        // Row actions:
+        this.activities.setRowFactory(e -> {
+            TableRow<Activity> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                {
+                    try
+                    {
+                        MainController.ui.activityDetails(row.getItem());
+                        this.activities.refresh();
+                    } catch (IOException e1)
+                    {
+                        UIManager.reportError("Unable to open View file");
+                    }
+                }
+            });
+            return row;
+        });
+        // =================
+
         // Hide the Activities table:
         if (this.requirement == null)
         {
@@ -181,13 +205,18 @@ public class RequirementController implements Initializable
 
             if (this.requirement.isComplete())
                 this.completed.setVisible(true);
+
+            // Activity columns:
+            nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+            quantityColumn.setCellValueFactory(new PropertyValueFactory<>("activityQuantity"));
+            dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateString"));
             // =================
 
             // Fill in data:
             this.name.setText(this.requirement.getName());
             this.details.setText(this.requirement.getDetails().getAsString());
             this.time.setText(Double.toString(this.requirement.getEstimatedTimeInHours()));
-            this.quantity.setText(Integer.toString(this.requirement.getRemainingQuantity()));
+            this.quantity.setText(Integer.toString(this.requirement.getInitialQuantity()));
             this.quantityType.getSelectionModel().select(this.requirement.getQuantityType().getName());
             this.activities.getItems().addAll(this.requirement.getActivityLog());
             // =================
