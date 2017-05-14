@@ -17,7 +17,7 @@ import java.util.GregorianCalendar;
 public class StudyPlannerController
 {
     private StudyPlanner planner;
-
+    // TODO update milestones
     // public methods
 
     public StudyPlanner getPlanner()
@@ -151,11 +151,32 @@ public class StudyPlannerController
     }
 
     /**
-     * Adds a new activity to the StudyPlanner
+     * Adds a new Activity to this StudyPlanner
      */
     public void addActivity(Activity activity)
     {
         this.planner.addActivity(activity);
+    }
+
+    /**
+     * Adds a new Milestone to this StudyPlanner
+     *
+     * @param milestone
+     */
+    public void addMilestone(Milestone milestone)
+    {
+        this.planner.getCurrentStudyProfile().addMilestone(milestone);
+    }
+
+    /**
+     * Removes the given Milestone from this StudyPlanner
+     *
+     * @param milestone Milestone to be removed.
+     * @return Whether the Milestone was removed successfully.
+     */
+    public boolean removeMilestone(Milestone milestone)
+    {
+        return this.planner.getCurrentStudyProfile().removeMilestone(milestone);
     }
 
     // constructors

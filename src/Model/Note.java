@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
+// TODO Notes
 public class Note implements Serializable
 {
     // private data

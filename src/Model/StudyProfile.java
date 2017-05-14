@@ -62,18 +62,6 @@ public class StudyProfile extends VersionControlEntity
         this.current = current;
     }
 
-    public int milestonesCompleted()
-    {
-        // initial set up code below - check if this needs updating
-        throw new UnsupportedOperationException("This method is not implemented yet");
-    }
-
-    public double milestonesProgress()
-    {
-        // initial set up code below - check if this needs updating
-        throw new UnsupportedOperationException("This method is not implemented yet");
-    }
-
     public String getName()
     {
         return name;
@@ -92,6 +80,29 @@ public class StudyProfile extends VersionControlEntity
     public boolean matches(int mYear, int mSemesterNo)
     {
         return mYear == year && mSemesterNo == semesterNo;
+    }
+
+    // Setters:
+
+    /**
+     * Adds a Milestone to this StudyProfile.
+     *
+     * @param milestone Milestone to be added.
+     */
+    public void addMilestone(Milestone milestone)
+    {
+        this.milestones.add(milestone);
+    }
+
+    /**
+     * Removes a Milestone from this StudyProfile.
+     *
+     * @param milestone Milestone to be removed.
+     * @return whether the Milestone was removed successfully.
+     */
+    public boolean removeMilestone(Milestone milestone)
+    {
+        return this.milestones.remove(milestone);
     }
 
     @Override

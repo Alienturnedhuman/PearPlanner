@@ -11,16 +11,8 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -143,21 +135,6 @@ public class ActivityController implements Initializable
      */
     public void addTask()
     {
-        // Layout:
-        VBox layout = new VBox();
-        layout.setSpacing(10);
-        layout.setAlignment(Pos.BOTTOM_RIGHT);
-        // =================
-
-        // Tasks columns:
-        TableColumn<Task, String> nameColumn = new TableColumn<>("Task");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-        TableColumn<Task, String> deadlineColumn = new TableColumn<>("Deadline");
-        deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
-        deadlineColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
-        // =================
-
         // Table items:
         ObservableList<Task> list = FXCollections.observableArrayList(MainController.getSPC().getCurrentTasks());
         list.removeAll(this.tasks.getItems());
@@ -165,46 +142,8 @@ public class ActivityController implements Initializable
             list.remove(this.activity.getTasks());
         // =================
 
-        // Create a table:
-        TableView<Task> taskTable = new TableView<>();
-        taskTable.setItems(list);
-        taskTable.getColumns().addAll(nameColumn, deadlineColumn);
-        taskTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        // =================
-
-        // Table attributes:
-        taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        GridPane.setHgrow(taskTable, Priority.ALWAYS);
-        GridPane.setVgrow(taskTable, Priority.ALWAYS);
-        // =================
-
-        // Set click event:
-        taskTable.setRowFactory(TaskController::cellRowFormat);
-        // =================
-
-        // Button:
-        Button OK = new Button("OK");
-        OK.setOnAction(e -> {
-            Stage current = (Stage) OK.getScene().getWindow();
-            current.close();
-        });
-        VBox.setMargin(OK, new Insets(5));
-        OK.setDefaultButton(true);
-        // =================
-
-        layout.getChildren().addAll(taskTable, OK);
-
-        // Set a new scene:
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(new Scene(layout, 400, 300));
-        stage.setTitle("Select dependencies");
-        stage.getIcons().add(new Image("file:icon.png"));
-        stage.showAndWait();
-        // =================
-
         // Parse selected Tasks:
-        this.tasks.getItems().addAll(taskTable.getSelectionModel().getSelectedItems());
+        this.tasks.getItems().addAll(TaskController.taskSelectionWindow(list));
         // =================
     }
 
