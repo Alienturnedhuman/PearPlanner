@@ -77,6 +77,35 @@ public class UIManager
     }
 
     /**
+     * Display the 'Add Activity' window
+     *
+     * @throws Exception
+     */
+    public Activity addActivity() throws Exception
+    {
+        ActivityController ac = new ActivityController();
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Activity.fxml"));
+        loader.setController(ac);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 358));
+        stage.setTitle("New Activity");
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
+
+        // Add the activity to the StudyPlanner
+        if (ac.isSuccess())
+            return ac.getActivity();
+        return null;
+    }
+
+    /**
      * Displays the StudyProfile details page
      */
     public void studyProfileDetails(StudyProfile profile) throws IOException
@@ -147,10 +176,7 @@ public class UIManager
 
         // Handle creation of the Account object:
         if (tc.isSuccess())
-        {
-            Task newTask = tc.getTask();
-            return newTask;
-        }
+            return tc.getTask();
         return null;
     }
 
@@ -199,10 +225,7 @@ public class UIManager
 
         // Handle creation of the Account object:
         if (rc.isSuccess())
-        {
-            Requirement newRequirement = rc.getRequirement();
-            return newRequirement;
-        }
+            return rc.getRequirement();
         return null;
     }
 

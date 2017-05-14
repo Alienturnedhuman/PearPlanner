@@ -73,7 +73,7 @@ public class StudyPlanner implements Serializable
 
     public void addEventToCalendar(Event event)
     {
-        if(!calendar.contains(event))
+        if (!calendar.contains(event))
         {
             calendar.add(event);
         }

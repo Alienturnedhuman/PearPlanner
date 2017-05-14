@@ -32,7 +32,7 @@ import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 /**
- * Created by Žilvinas on 12/05/2017.
+ * Created by Zilvinas on 12/05/2017.
  */
 public class TaskController implements Initializable
 {
@@ -41,7 +41,7 @@ public class TaskController implements Initializable
 
     public Task getTask()
     {
-        return task;
+        return this.task;
     }
 
     public boolean isSuccess()
@@ -209,17 +209,7 @@ public class TaskController implements Initializable
         // =================
 
         // Set click event:
-        tasks.setRowFactory(e -> {
-            TableRow<Task> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
-                {
-                    Stage current = (Stage) row.getScene().getWindow();
-                    current.close();
-                }
-            });
-            return row;
-        });
+        tasks.setRowFactory(TaskController::cellRowFormat);
         // =================
 
         // Button:
@@ -453,6 +443,34 @@ public class TaskController implements Initializable
         // =================
 
         Platform.runLater(() -> this.pane.requestFocus());
+    }
+
+    /**
+     * Formats the cell for displaying Tasks.
+     * @param e TableView to be formatted.
+     * @return Formatted TableRow
+     */
+    protected static TableRow<Task> cellRowFormat(TableView<Task> e)
+    {
+        TableRow<Task> row = new TableRow<Task>()
+        {
+            @Override
+            protected void updateItem(final Task item, final boolean empty)
+            {
+                super.updateItem(item, empty);
+                // If Task is completed, mark:
+                if (!empty && item != null && item.isCheckedComplete())
+                    this.getStyleClass().add("current-item");
+            }
+        };
+        row.setOnMouseClicked(event -> {
+            if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+            {
+                Stage current = (Stage) row.getScene().getWindow();
+                current.close();
+            }
+        });
+        return row;
     }
 }
 

@@ -15,87 +15,100 @@ import java.util.Scanner;
 /**
  * Created by bendickson on 5/4/17.
  */
-public class ConsoleIO {
+public class ConsoleIO
+{
     static ArrayList<String> logged = new ArrayList<>();
+
     static public String getDataString(String message)
     {
         Scanner scan = new Scanner(System.in);
         String r = "";
-        while(r.equals("")) {
+        while (r.equals(""))
+        {
             System.out.println(message);
             r = scan.nextLine();
         }
         return r;
     }
+
     static public boolean getDataBool(String message)
     {
         Scanner scan = new Scanner(System.in);
         String r = "";
-        while(!(r.equals("y")||r.equals("n"))) {
+        while (!(r.equals("y") || r.equals("n")))
+        {
             System.out.println(message);
             r = scan.next();
         }
         return r.equals("y");
     }
+
     static public int getLogSize()
     {
         return logged.size();
     }
+
     static public void saveLog(String filePath)
     {
-        saveLog(filePath,0,logged.size());
+        saveLog(filePath, 0, logged.size());
     }
+
     static public void saveLog(String filePath, int startLine, int endLine)
     {
-        if(startLine<0)
+        if (startLine < 0)
         {
             startLine = 0;
         }
-        if(endLine>logged.size())
+        if (endLine > logged.size())
         {
             endLine = logged.size();
         }
-        int i = startLine-1;
-        try {
+        int i = startLine - 1;
+        try
+        {
             File logFile = new File(filePath);
             FileOutputStream fos = new FileOutputStream(logFile);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-            while (++i < endLine) {
-                if (i != startLine) {
+            while (++i < endLine)
+            {
+                if (i != startLine)
+                {
                     bw.newLine();
                 }
                 bw.write(logged.get(i));
             }
             bw.close();
-        }
-        catch(Exception e)
+        } catch (Exception e)
         {
-            setConsoleMessage("File not written" , true);
+            setConsoleMessage("File not written", true);
         }
     }
+
     static public void setConsoleMessage(String message)
     {
         System.out.println(message);
     }
+
     static public void setConsoleMessage(String message, boolean logMessage)
     {
         System.out.println(message);
-        if(logMessage)
+        if (logMessage)
         {
             logged.add(message);
         }
     }
+
     static public int getMenuOption(String[] menuOptions)
     {
         Scanner scan = new Scanner(System.in);
         int option = -1;
-        while(option<0||option>=menuOptions.length)
+        while (option < 0 || option >= menuOptions.length)
         {
             System.out.println("Please select an option\n");
             option = -1;
-            while(++option<menuOptions.length)
+            while (++option < menuOptions.length)
             {
-                System.out.printf("%d - " + menuOptions[option]+"\n",option);
+                System.out.printf("%d - " + menuOptions[option] + "\n", option);
             }
             option = scan.nextInt();
         }
@@ -108,45 +121,47 @@ public class ConsoleIO {
     {
         View.ConsoleIO.setConsoleMessage("MAIN MENU");
         // list of options
-        String[] menuOptions = {"Create Study Profile","View Study Profile","View Notifications","Quit Program"};
+        String[] menuOptions = {"Create Study Profile", "View Study Profile", "View Notifications", "Quit Program"};
         int choice = View.ConsoleIO.getMenuOption(menuOptions);
 
         return menuOptions[choice];
 
     }
+
     static public String view_createSP()
     {
         View.ConsoleIO.setConsoleMessage("CREATE A STUDY PROFILE");
         // list of options
-        String[] menuOptions = {"Load Study Profile File","Return to Main Menu"};
+        String[] menuOptions = {"Load Study Profile File", "Return to Main Menu"};
         int choice = View.ConsoleIO.getMenuOption(menuOptions);
 
         return menuOptions[choice];
 
     }
+
     static public String view_viewSP(StudyPlannerController SPC)
     {
         View.ConsoleIO.setConsoleMessage("VIEW A STUDY PROFILE");
         String[] studyProfiles = SPC.getPlanner().getListOfStudyProfileNames();
-        int i =-1, ii = studyProfiles.length;
+        int i = -1, ii = studyProfiles.length;
 
-        if(ii<1)
+        if (ii < 1)
         {
             View.ConsoleIO.setConsoleMessage("No existing study profiles");
         }
 
-        String[] menuOptions = new String[ii+1];
-        while(++i<ii)
+        String[] menuOptions = new String[ii + 1];
+        while (++i < ii)
         {
             menuOptions[i] = studyProfiles[i];
         }
         menuOptions[ii] = "Return to Main Menu";
 
         int m = -1;
-        while(m<ii)
+        while (m < ii)
         {
             m = View.ConsoleIO.getMenuOption(menuOptions);
-            if(m<ii)
+            if (m < ii)
             {
 
             }
@@ -154,6 +169,7 @@ public class ConsoleIO {
 
         return menuOptions[ii];
     }
+
     static public String view_loadSP(StudyPlannerController SPC)
     {
         View.ConsoleIO.setConsoleMessage("LOAD A STUDY PROFILE");
@@ -161,7 +177,7 @@ public class ConsoleIO {
         String filename = getDataString("Enter filepath:");
         File tempFile = new File(filename);
         HubFile fileData = DataController.loadHubFile(tempFile);
-        while(!filename.equals("") && fileData == null)
+        while (!filename.equals("") && fileData == null)
         {
             filename = getDataString("File not valid, enter a different filepath:");
             tempFile = new File(filename);

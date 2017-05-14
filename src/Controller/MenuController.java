@@ -123,6 +123,23 @@ public class MenuController implements Initializable
     }
 
     /**
+     * Display the 'Add Activity' window
+     */
+    public void addActivity()
+    {
+        try
+        {
+            Activity activity = MainController.ui.addActivity();
+            if (activity != null)
+                MainController.getSPC().addActivity(activity);
+
+        } catch (Exception e)
+        {
+            UIManager.reportError("Unable to open View file");
+        }
+    }
+
+    /**
      * Display the Study Profiles pane
      */
     public void loadStudyProfiles()

@@ -69,7 +69,9 @@ public class ModelEntity implements Serializable
      * Open the appropriate UI window for this class
      * To be overridden by childs.
      */
-    public void open(MenuController.Window current) { }
+    public void open(MenuController.Window current)
+    {
+    }
 
     public ModelEntity()
     {

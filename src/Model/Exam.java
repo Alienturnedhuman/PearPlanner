@@ -14,9 +14,9 @@ public class Exam extends Assignment
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
-        if(receivedVCE instanceof Exam)
+        if (receivedVCE instanceof Exam)
         {
-            Exam castedVCE = (Exam)receivedVCE;
+            Exam castedVCE = (Exam) receivedVCE;
             this.resit = castedVCE.getResit();
             this.timeSlot = castedVCE.getTimeSlot();
         }
@@ -31,21 +31,23 @@ public class Exam extends Assignment
     {
         return resit;
     }
+
     public ExamEvent getTimeSlot()
     {
         return timeSlot;
     }
 
     // constructors
-    public Exam(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks , ExamEvent cTimeSlot,Exam cResit)
+    public Exam(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks, ExamEvent cTimeSlot, Exam cResit)
     {
-        super(cWeighting,cSetBy,cMarkedBy,cReviewedBy,cMarks);
+        super(cWeighting, cSetBy, cMarkedBy, cReviewedBy, cMarks);
         timeSlot = cTimeSlot;
         resit = cResit;
     }
-    public Exam(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks , ExamEvent cTimeSlot)
+
+    public Exam(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks, ExamEvent cTimeSlot)
     {
-        super(cWeighting,cSetBy,cMarkedBy,cReviewedBy,cMarks);
+        super(cWeighting, cSetBy, cMarkedBy, cReviewedBy, cMarks);
         timeSlot = cTimeSlot;
         resit = null;
     }

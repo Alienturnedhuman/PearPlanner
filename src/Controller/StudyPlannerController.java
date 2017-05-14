@@ -98,9 +98,9 @@ public class StudyPlannerController
             ArrayList<Event> cal = hubFile.getCalendarList();
             int i = -1;
             int ii = cal.size();
-            while(++i<ii)
+            while (++i < ii)
             {
-                ConsoleIO.setConsoleMessage("Adding "+cal.get(i).toString()+" to calendar", true);
+                ConsoleIO.setConsoleMessage("Adding " + cal.get(i).toString() + " to calendar", true);
                 this.planner.addEventToCalendar(cal.get(i));
             }
 
@@ -155,9 +155,9 @@ public class StudyPlannerController
      *
      * @return
      */
-    public boolean newActivity(ArrayList<Task> taskList)
+    public void addActivity(Activity activity)
     {
-        return false;
+        // TODO activity
         // not implemented, argument list incomplete
     }
 

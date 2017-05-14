@@ -15,9 +15,9 @@ public class Building extends VersionControlEntity
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
-        if(receivedVCE instanceof Building)
+        if (receivedVCE instanceof Building)
         {
-            Building castedVCE = (Building)receivedVCE;
+            Building castedVCE = (Building) receivedVCE;
             this.code = castedVCE.getCode();
             this.latitude = castedVCE.getLatitude();
             this.longitude = castedVCE.getLongitude();
@@ -25,22 +25,26 @@ public class Building extends VersionControlEntity
 
         super.replace(receivedVCE);
     }
+
     // getters
     public String getName()
     {
         // initial set up code below - check if this needs updating
         return name;
     }
+
     public String getCode()
     {
         // initial set up code below - check if this needs updating
         return code;
     }
+
     public double getLatitude()
     {
         // initial set up code below - check if this needs updating
         return latitude;
     }
+
     public double getLongitude()
     {
         // initial set up code below - check if this needs updating
@@ -53,16 +57,19 @@ public class Building extends VersionControlEntity
         // initial set up code below - check if this needs updating
         name = newName;
     }
+
     public void setCode(String newCode)
     {
         // initial set up code below - check if this needs updating
         code = newCode;
     }
+
     public void setLatitude(double newLatitude)
     {
         // initial set up code below - check if this needs updating
         latitude = newLatitude;
     }
+
     public void setLongitude(double newLongitude)
     {
         // initial set up code below - check if this needs updating
@@ -70,17 +77,18 @@ public class Building extends VersionControlEntity
     }
 
     // constructor
-    public Building(String cCode , double cLatitude , double cLongitude)
+    public Building(String cCode, double cLatitude, double cLongitude)
     {
         code = cCode;
         latitude = cLatitude;
         longitude = cLongitude;
     }
+
     @Override
     public String toString()
     {
-        return code+" "+name+" ( "+Double.toString(latitude) +
-                " , " + Double.toString(longitude)+" )";
+        return code + " " + name + " ( " + Double.toString(latitude) +
+                " , " + Double.toString(longitude) + " )";
     }
 }
 

@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Žilvinas on 13/05/2017.
+ * Created by Zilvinas on 13/05/2017.
  */
 public class RequirementController implements Initializable
 {
@@ -24,7 +24,7 @@ public class RequirementController implements Initializable
 
     public Requirement getRequirement()
     {
-        return requirement;
+        return this.requirement;
     }
 
     public boolean isSuccess()
@@ -60,7 +60,6 @@ public class RequirementController implements Initializable
     {
         // Check the input fields:
         if (!this.name.getText().trim().isEmpty() &&
-                !this.details.getText().trim().isEmpty() &&
                 !this.quantity.getText().trim().isEmpty() &&
                 !this.time.getText().trim().isEmpty() &&
                 this.quantityType.getSelectionModel().getSelectedIndex() != -1)

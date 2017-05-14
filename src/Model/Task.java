@@ -217,6 +217,7 @@ public class Task extends ModelEntity
 
     /**
      * Same as canCheckComplete(), wrapper for TableView
+     *
      * @return
      */
     public boolean isPossibleToComplete()

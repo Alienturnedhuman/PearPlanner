@@ -1,7 +1,8 @@
 package Model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 /**
  * PearPlanner
@@ -11,28 +12,33 @@ public class Activity extends Event
 {
     private ArrayList<Task> tasks;
     private int duration;
-    private String description;
     private int activityQuantity;
     private QuantityType type;
 
-    // public methods
+    // public
+
+    // Getters:
+
+    /**
+     * Returns an array of Tasks this Activity relates to.
+     *
+     * @return array of Tasks
+     */
+    public Task[] getTasks()
+    {
+        return this.tasks.toArray(new Task[this.tasks.size()]);
+    }
+
     public void markComplete()
     {
         // initial set up code below - check if this needs updating
         throw new UnsupportedOperationException("This method is not implemented yet");
 
     }
-    public boolean isComplete()
+
+    public Activity(LocalDate date)
     {
-        // initial set up code below - check if this needs updating
-
-
-        throw new UnsupportedOperationException("This method is not implemented yet");
-    }
-
-    public Activity(String cDate)
-    {
-        super(cDate);
+        super(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
     }
 
 }

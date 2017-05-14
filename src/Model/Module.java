@@ -23,9 +23,9 @@ public class Module extends VersionControlEntity
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
-        if(receivedVCE instanceof Module)
+        if (receivedVCE instanceof Module)
         {
-            Module castedVCE = (Module)receivedVCE;
+            Module castedVCE = (Module) receivedVCE;
             this.organiser = castedVCE.getOrganiser();
             this.moduleCode = castedVCE.getModuleCode();
             this.assignments = castedVCE.getAssignments();
@@ -39,20 +39,20 @@ public class Module extends VersionControlEntity
     // public methods
     public String toString(boolean verbose)
     {
-        if(verbose)
+        if (verbose)
         {
             StringBuilder r = new StringBuilder();
             r.append(toString());
             r.append("\n");
-            r.append("Organiser: "+organiser.toString());
+            r.append("Organiser: " + organiser.toString());
             r.append("\n");
-            r.append("Total Assignments: "+Integer.toString(assignments.size()));
+            r.append("Total Assignments: " + Integer.toString(assignments.size()));
             r.append("\n");
 
-            int i =-1;
+            int i = -1;
             int ii = assignments.size();
 
-            while(++i<ii)
+            while (++i < ii)
             {
                 r.append("\n");
                 r.append(assignments.get(i).toString(true));
@@ -60,16 +60,16 @@ public class Module extends VersionControlEntity
 
             return r.toString();
 
-        }
-        else
+        } else
         {
             return toString();
         }
     }
+
     @Override
     public String toString()
     {
-        return "Module: "+this.name+" ( "+this.moduleCode+" )";
+        return "Module: " + this.name + " ( " + this.moduleCode + " )";
     }
 
     // getters
@@ -106,37 +106,42 @@ public class Module extends VersionControlEntity
     public void addAssignment(Assignment newAssignment)
     {
         // initial set up code below - check if this needs updating
-        if(!assignments.contains(newAssignment))
+        if (!assignments.contains(newAssignment))
         {
             assignments.add(newAssignment);
         }
     }
+
     public void removeAssignment(Assignment newAssignment)
     {
         // initial set up code below - check if this needs updating
-        if(assignments.contains(newAssignment))
+        if (assignments.contains(newAssignment))
         {
             assignments.remove(newAssignment);
         }
     }
+
     public void setOrganiser(Person newOrganiser)
     {
         organiser = newOrganiser;
     }
+
     public void setModuleCode(String newModuleCode)
     {
         moduleCode = newModuleCode;
     }
+
     public void addTimetableEvent(TimetableEvent newTimetableEvent)
     {
-        if(!timetable.contains(newTimetableEvent))
+        if (!timetable.contains(newTimetableEvent))
         {
             timetable.add(newTimetableEvent);
         }
     }
+
     public void removeTimetableEvent(TimetableEvent newTimetableEvent)
     {
-        if(timetable.contains(newTimetableEvent))
+        if (timetable.contains(newTimetableEvent))
         {
             timetable.remove(newTimetableEvent);
         }
@@ -156,7 +161,7 @@ public class Module extends VersionControlEntity
 
     // constructors
 
-    public Module(Person cOrganiser , String cModuleCode)
+    public Module(Person cOrganiser, String cModuleCode)
     {
         setOrganiser(cOrganiser);
         setModuleCode(cModuleCode);

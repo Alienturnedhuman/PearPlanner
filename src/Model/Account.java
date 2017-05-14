@@ -20,6 +20,7 @@ public class Account implements Serializable
         // initial set up code below - check if this needs updating
         return studentDetails;
     }
+
     public String getStudentNumber()
     {
         // initial set up code below - check if this needs updating
@@ -32,6 +33,7 @@ public class Account implements Serializable
         // initial set up code below - check if this needs updating
         studentDetails = newStudentDetails;
     }
+
     public void setStudentNumber(String newStudentNumber)
     {
         // initial set up code below - check if this needs updating

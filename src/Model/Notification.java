@@ -17,7 +17,7 @@ public class Notification implements Serializable
     private ModelEntity link;
 
     // public methods
-    
+
     // getters
     public String getTitle()
     {
