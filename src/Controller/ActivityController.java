@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 /**
@@ -44,6 +43,7 @@ public class ActivityController implements Initializable
 
     // Buttons:
     @FXML private Button submit;
+    @FXML private Button addTask;
     @FXML private Button removeTask;
 
     // Text:
@@ -74,11 +74,6 @@ public class ActivityController implements Initializable
                 this.tasks.getItems().size() > 0)
 
             this.submit.setDisable(false);
-        // =================
-
-        // Process Task list:
-        if (this.activity != null)
-            this.activity.replaceTasks(this.tasks.getItems());
         // =================
     }
 
@@ -160,16 +155,6 @@ public class ActivityController implements Initializable
                     this.quantityType.getValue());
             // =================
             this.activity.addTasks(this.tasks.getItems());
-        } else
-        {
-            // Update the current activity:
-            this.activity.setName(this.name.getText());
-            this.activity.setDetails(this.details.getText());
-            this.activity.setDate(this.date.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
-            this.activity.setDuration(Integer.parseInt(this.duration.getText()));
-            this.activity.setActivityQuantity(Integer.parseInt(this.quantity.getText()));
-            this.activity.setType(this.quantityType.getValue());
-            // =================
         }
 
         this.success = true;
@@ -267,6 +252,14 @@ public class ActivityController implements Initializable
         {
             // Disable/modify elements:
             this.title.setText("Activity");
+            this.addTask.setVisible(false);
+            this.removeTask.setVisible(false);
+            this.name.setEditable(false);
+            this.details.setEditable(false);
+            this.duration.setEditable(false);
+            this.quantity.setEditable(false);
+            this.date.setDisable(true);
+            this.quantityType.setDisable(true);
             // =================
 
             // Fill in data:

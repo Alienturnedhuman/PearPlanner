@@ -17,7 +17,6 @@ import java.util.GregorianCalendar;
 public class StudyPlannerController
 {
     private StudyPlanner planner;
-    // TODO update milestones
     // public methods
 
     public StudyPlanner getPlanner()

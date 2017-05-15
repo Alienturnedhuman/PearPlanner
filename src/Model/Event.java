@@ -69,4 +69,8 @@ public class Event extends VersionControlEntity
     {
         setDate(cDate);
     }
+
+    public Event()
+    {
+    }
 }

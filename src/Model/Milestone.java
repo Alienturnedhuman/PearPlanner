@@ -46,7 +46,7 @@ public class Milestone extends ModelEntity
         for (Task t : this.tasks)
             if (t.isCheckedComplete()) completed += t.getWeighting();
 
-        int result = (int) (completed / this.totalWeighting()) * 100;
+        int result = (int) (completed / this.totalWeighting() * 100);
 
         return Integer.toString(result) + '%';
     }

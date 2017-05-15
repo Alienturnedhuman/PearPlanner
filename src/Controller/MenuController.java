@@ -16,12 +16,16 @@ import javafx.geometry.Orientation;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -272,7 +276,7 @@ public class MenuController implements Initializable
         });
 
         remove.setOnAction(e -> {
-            if (UIManager.confirm("Are you sure you want to remove this requirement?"))
+            if (UIManager.confirm("Are you sure you want to remove this milestone?"))
             {
                 Milestone m = table.getSelectionModel().getSelectedItem();
                 list.remove(m);
@@ -553,36 +557,8 @@ public class MenuController implements Initializable
         GridPane.setVgrow(requirements, Priority.ALWAYS);
         // =================
 
-        // Set click event:
-        requirements.setRowFactory(e -> {
-            TableRow<Requirement> row = new TableRow<Requirement>()
-            {
-                @Override
-                protected void updateItem(final Requirement item, final boolean empty)
-                {
-                    super.updateItem(item, empty);
-                    // If completed, mark:
-                    if (!empty && item != null && item.isComplete())
-                        this.getStyleClass().add("current-item");
-                    else
-                        this.getStyleClass().remove("current-item");
-                }
-            };
-            row.setOnMouseClicked(event -> {
-                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
-                {
-                    try
-                    {
-                        MainController.ui.requirementDetails(row.getItem());
-                        requirements.refresh();
-                    } catch (IOException e1)
-                    {
-                        UIManager.reportError("Unable to open View file");
-                    }
-                }
-            });
-            return row;
-        });
+        // Set RowFactory:
+        requirements.setRowFactory(e -> MenuController.requirementRowFactory(requirements, assignment));
         // =================
 
         content.addColumn(0, requirements);
@@ -625,6 +601,7 @@ public class MenuController implements Initializable
                 {
                     requirementList.add(req);
                     assignment.addRequirement(req);
+                    requirements.refresh();
                 }
             } catch (IOException e1)
             {
@@ -640,6 +617,7 @@ public class MenuController implements Initializable
                 Requirement r = requirements.getSelectionModel().getSelectedItem();
                 requirementList.remove(r);
                 assignment.removeRequirement(r);
+                requirements.refresh();
             }
         });
         // =================
@@ -755,7 +733,6 @@ public class MenuController implements Initializable
         // =================
 
         // Bind actions on buttons:
-
         addNew.setOnAction(e -> {
             try
             {
@@ -1043,5 +1020,106 @@ public class MenuController implements Initializable
                 closeNot.play();
             }
         });
+    }
+
+    /**
+     * RowFactory for a TableView of Requirement.
+     *
+     * @param e TableView that contains the RowFactory.
+     * @return new RowFactory
+     */
+    protected static TableRow<Requirement> requirementRowFactory(TableView<Requirement> e, Assignment assignment)
+    {
+        TableRow<Requirement> row = new TableRow<Requirement>()
+        {
+            @Override
+            protected void updateItem(final Requirement item, final boolean empty)
+            {
+                super.updateItem(item, empty);
+                // If completed, mark:
+                if (!empty && item != null)
+                {
+                    setText(item.toString());
+                    if (item.isComplete())
+                        this.getStyleClass().add("current-item");
+                } else
+                {
+                    setText(null);
+                    this.getStyleClass().remove("current-item");
+                }
+                e.refresh();
+            }
+        };
+
+        row.setOnMouseClicked(event -> {
+            if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+            {
+                try
+                {
+                    MainController.ui.requirementDetails(row.getItem());
+                    e.refresh();
+                } catch (IOException e1)
+                {
+                    UIManager.reportError("Unable to open View file");
+                }
+            }
+        });
+
+        row.setOnDragDetected(event -> {
+
+            if (row.getItem() == null) return;
+            Dragboard dragboard = row.startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent content = new ClipboardContent();
+            content.put(TaskController.format, row.getItem());
+            dragboard.setContent(content);
+            event.consume();
+        });
+
+        row.setOnDragOver(event -> {
+            if (event.getGestureSource() != row && event.getDragboard().hasContent(TaskController.format))
+                event.acceptTransferModes(TransferMode.MOVE);
+            event.consume();
+        });
+
+        row.setOnDragEntered(event -> {
+            if (event.getGestureSource() != row && event.getDragboard().hasContent(TaskController.format))
+                row.setOpacity(0.3);
+        });
+
+        row.setOnDragExited(event -> {
+            if (event.getGestureSource() != row && event.getDragboard().hasContent(TaskController.format))
+                row.setOpacity(1);
+        });
+
+        row.setOnDragDropped(event -> {
+
+            if (row.getItem() == null)
+                return;
+
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+
+            if (event.getDragboard().hasContent(TaskController.format))
+            {
+                ObservableList<Requirement> items = e.getItems();
+                Requirement dragged = (Requirement) db.getContent(TaskController.format);
+
+                int draggedID = items.indexOf(dragged);
+                int thisID = items.indexOf(row.getItem());
+
+                e.getItems().set(draggedID, row.getItem());
+                e.getItems().set(thisID, dragged);
+
+                ArrayList<Requirement> reqs = assignment.getRequirements();
+                reqs.set(draggedID, row.getItem());
+                reqs.set(thisID, dragged);
+
+                success = true;
+                e.refresh();
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
+        return row;
     }
 }
