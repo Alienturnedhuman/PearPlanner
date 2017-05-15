@@ -17,7 +17,6 @@ import java.util.GregorianCalendar;
 public class StudyPlannerController
 {
     private StudyPlanner planner;
-
     // public methods
 
     public StudyPlanner getPlanner()
@@ -98,9 +97,9 @@ public class StudyPlannerController
             ArrayList<Event> cal = hubFile.getCalendarList();
             int i = -1;
             int ii = cal.size();
-            while(++i<ii)
+            while (++i < ii)
             {
-                ConsoleIO.setConsoleMessage("Adding "+cal.get(i).toString()+" to calendar", true);
+                ConsoleIO.setConsoleMessage("Adding " + cal.get(i).toString() + " to calendar", true);
                 this.planner.addEventToCalendar(cal.get(i));
             }
 
@@ -151,14 +150,64 @@ public class StudyPlannerController
     }
 
     /**
-     * Adds a new activity to the StudyPlanner
-     *
-     * @return
+     * Adds a new Activity to this StudyPlanner
      */
-    public boolean newActivity(ArrayList<Task> taskList)
+    public void addActivity(Activity activity)
     {
+        this.planner.addActivity(activity);
+    }
+
+    /**
+     * Adds a new Milestone to this StudyPlanner
+     *
+     * @param milestone
+     */
+    public void addMilestone(Milestone milestone)
+    {
+        this.planner.getCurrentStudyProfile().addMilestone(milestone);
+    }
+
+    /**
+     * Removes the given Milestone from this StudyPlanner
+     *
+     * @param milestone Milestone to be removed.
+     * @return Whether the Milestone was removed successfully.
+     */
+    public boolean removeMilestone(Milestone milestone)
+    {
+        return this.planner.getCurrentStudyProfile().removeMilestone(milestone);
+    }
+
+    /**
+     * Add a new QuantityType to this StudyPlanner.
+     *
+     * @param quantity QuantityType to be added
+     * @return whether added successfully.
+     */
+    public boolean addQuantityType(QuantityType quantity)
+    {
+        if (!this.planner.getQuantityTypes().contains(quantity))
+        {
+            this.planner.getQuantityTypes().add(quantity);
+            return true;
+        }
         return false;
-        // not implemented, argument list incomplete
+    }
+
+    /**
+     * Add a new TaskType to this StudyPlanner.
+     *
+     * @param taskType TaskType to be added
+     * @return whether added successfully.
+     */
+    public boolean addTaskType(TaskType taskType)
+    {
+        if (!this.planner.getTaskTypes().contains(taskType))
+        {
+            this.planner.getTaskTypes().add(taskType);
+            return true;
+        }
+        return false;
     }
 
     // constructors
@@ -229,5 +278,11 @@ public class StudyPlannerController
     public StudyPlannerController(StudyPlanner planner)
     {
         this.planner = planner;
+
+        if (!this.planner.getQuantityTypes().isEmpty())
+            this.planner.getQuantityTypes().forEach(e -> QuantityType.create(e));
+
+        if (!this.planner.getTaskTypes().isEmpty())
+            this.planner.getTaskTypes().forEach(e -> TaskType.create(e));
     }
 }

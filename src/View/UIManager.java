@@ -1,9 +1,6 @@
 package View;
 
-import Controller.AccountController;
-import Controller.MenuController;
-import Controller.StudyProfileController;
-import Controller.TaskController;
+import Controller.*;
 import Model.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -80,6 +77,104 @@ public class UIManager
     }
 
     /**
+     * Display the 'Add Activity' window
+     */
+    public Activity addActivity() throws Exception
+    {
+        ActivityController ac = new ActivityController();
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Activity.fxml"));
+        loader.setController(ac);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 358));
+        stage.setTitle("New Activity");
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
+
+        // Add the Activity to the StudyPlanner
+        if (ac.isSuccess())
+            return ac.getActivity();
+        return null;
+    }
+
+    /**
+     * Displays the Activity details page
+     */
+    public void activityDetails(Activity activity) throws IOException
+    {
+        ActivityController ac = new ActivityController(activity);
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Activity.fxml"));
+        loader.setController(ac);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 358));
+        stage.setTitle("Activity");
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
+    }
+
+    /**
+     * Displays the 'Add Milestone' window.
+     */
+    public Milestone addMilestone() throws IOException
+    {
+        MilestoneController mc = new MilestoneController();
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Milestone.fxml"));
+        loader.setController(mc);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 355));
+        stage.setTitle("Milestone");
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
+
+        // Add the Milestone to the StudyPlanner
+        if (mc.isSuccess())
+            return mc.getMilestone();
+        return null;
+    }
+
+    /**
+     * Displays the Milestone details page
+     */
+    public void milestoneDetails(Milestone milestone) throws IOException
+    {
+        MilestoneController mc = new MilestoneController(milestone);
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Milestone.fxml"));
+        loader.setController(mc);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 355));
+        stage.setTitle("Milestone");
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
+    }
+
+    /**
      * Displays the StudyProfile details page
      */
     public void studyProfileDetails(StudyProfile profile) throws IOException
@@ -130,9 +225,9 @@ public class UIManager
     /**
      * Creates a window for adding a new Task
      */
-    public Task addTask(Assignment assignment) throws Exception
+    public Task addTask() throws Exception
     {
-        TaskController tc = new TaskController(assignment);
+        TaskController tc = new TaskController();
 
         // Load in the .fxml file:
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Task.fxml"));
@@ -150,10 +245,7 @@ public class UIManager
 
         // Handle creation of the Account object:
         if (tc.isSuccess())
-        {
-            Task newTask = tc.getTask();
-            return newTask;
-        }
+            return tc.getTask();
         return null;
     }
 
@@ -174,6 +266,55 @@ public class UIManager
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene(root, 550, 558));
         stage.setTitle("Task");
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
+    }
+
+    /**
+     * Creates a window for adding a new Requirement
+     */
+    public Requirement addRequirement() throws Exception
+    {
+        RequirementController rc = new RequirementController();
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Requirement.fxml"));
+        loader.setController(rc);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 260));
+        stage.setTitle("New Requirement");
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
+
+        // Handle creation of the Account object:
+        if (rc.isSuccess())
+            return rc.getRequirement();
+        return null;
+    }
+
+    /**
+     * Displays the Task details page
+     */
+    public void requirementDetails(Requirement requirement) throws IOException
+    {
+        RequirementController rc = new RequirementController(requirement);
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Requirement.fxml"));
+        loader.setController(rc);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 558));
+        stage.setTitle("Requirement");
         stage.resizableProperty().setValue(false);
         stage.getIcons().add(new Image("file:icon.png"));
         stage.showAndWait();
@@ -242,7 +383,9 @@ public class UIManager
      */
     public static void areYouFeelingLucky()
     {
-        while (UIManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5)) {}
+        while (UIManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5))
+        {
+        }
     }
 
 }

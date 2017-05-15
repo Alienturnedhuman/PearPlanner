@@ -524,7 +524,7 @@
 						<version>0</version>
 						<uid>TT_CMP-5010B_LEC_01</uid>
 						<date>01/02/2017T11:00:00Z</date>
-						<room>SP 1.27</room>
+						<room>ROOM_SP_1_27</room>
 						<lecturer>PERSON_007</lecturer>
 						<timetableEventType>LECTURE</timetableEventType>
 						<duration>110</duration>

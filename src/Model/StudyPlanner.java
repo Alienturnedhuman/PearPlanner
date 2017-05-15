@@ -4,6 +4,7 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * PearPlanner
@@ -18,7 +19,7 @@ public class StudyPlanner implements Serializable
     private ArrayList<QuantityType> quantityTypes = new ArrayList<QuantityType>();
     private ArrayList<TaskType> taskTypes = new ArrayList<TaskType>();
     private ArrayList<StudyProfile> studyProfiles = new ArrayList<StudyProfile>();
-    private ArrayList<ActivityEvent> activityList = new ArrayList<ActivityEvent>();
+    private ArrayList<Activity> activityList = new ArrayList<Activity>();
     private ArrayList<TimeTableEventType> timeTableEventTypes = new ArrayList<TimeTableEventType>();
     private ArrayList<Event> calendar = new ArrayList<Event>();
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
@@ -78,7 +79,7 @@ public class StudyPlanner implements Serializable
 
     public void addEventToCalendar(Event event)
     {
-        if(!calendar.contains(event))
+        if (!calendar.contains(event))
         {
             calendar.add(event);
         }
@@ -110,6 +111,26 @@ public class StudyPlanner implements Serializable
     {
         Notification[] r = this.notifications.stream().filter(e -> !e.isRead()).toArray(Notification[]::new);
         return r;
+    }
+
+    /**
+     * Returns an ArrayList of QuantityTypes.
+     *
+     * @return ArrayList<QuantityType>
+     */
+    public ArrayList<QuantityType> getQuantityTypes()
+    {
+        return this.quantityTypes;
+    }
+
+    /**
+     * Returns an ArrayList of TaskTypes.
+     *
+     * @return ArrayList<QuantityType>
+     */
+    public ArrayList<TaskType> getTaskTypes()
+    {
+        return this.taskTypes;
     }
 
     // setters
@@ -151,12 +172,83 @@ public class StudyPlanner implements Serializable
         this.notifications.add(notification);
     }
 
+    /**
+     * Add an Activity to this Study Planner and update appropriate fields.
+     *
+     * @param activity Activity to be added.
+     */
+    public void addActivity(Activity activity)
+    {
+        this.activityList.add(activity);
+        ArrayList<Assignment> assignments = new ArrayList<>();
+        // Loop through all Tasks:
+        for (Task t : activity.getTasks())
+        {
+            // Distribute Activity Quantity to available Requirements of a Task:
+            int quantity = activity.getActivityQuantity();
+            for (Requirement r : t.getRequirements())
+            {
+                if (r.getQuantityType().equals(activity.getType()) && !r.checkedCompleted)
+                {
+                    quantity -= r.getRemainingQuantity();
+                    Activity extracted = new Activity(activity);
+
+                    if (quantity > 0)
+                    {
+                        extracted.setActivityQuantity(r.getRemainingQuantity());
+                        r.addActivity(extracted);
+                    } else
+                    {
+                        extracted.setActivityQuantity(quantity + r.getRemainingQuantity());
+                        r.addActivity(extracted);
+                        break;
+                    }
+                }
+            }
+            // =================
+            for (Assignment assignment : t.getAssignmentReferences())
+            {
+                if (!assignments.contains(assignment))
+                    assignments.add(assignment);
+            }
+        }
+        // =================
+
+        // Distribute quantity to Assignment requirements:
+        for (Assignment a : assignments)
+        {
+            int quantity = activity.getActivityQuantity();
+            for (Requirement r : a.getRequirements())
+            {
+                if (r.getQuantityType().equals(activity.getType()) && !r.checkedCompleted)
+                {
+                    quantity -= r.getRemainingQuantity();
+                    Activity extracted = new Activity(activity);
+
+                    if (quantity > 0)
+                    {
+                        extracted.setActivityQuantity(r.getRemainingQuantity());
+                        r.addActivity(extracted);
+                    } else
+                    {
+                        extracted.setActivityQuantity(quantity + r.getRemainingQuantity());
+                        r.addActivity(extracted);
+                        break;
+                    }
+                }
+            }
+        }
+        // =================
+    }
+
     // constructors
 
     public StudyPlanner(Account newAccount) throws NoSuchPaddingException, NoSuchAlgorithmException
     {
-        // it may make sense to clone this to stop someone retaining access to the
-        // object
         this.account = newAccount;
+        // Add Default Quantity types:
+        Collections.addAll(this.quantityTypes, QuantityType.listOfQuantityTypes());
+        // Add Default Task types:
+        Collections.addAll(this.taskTypes, TaskType.listOfTaskTypes());
     }
 }

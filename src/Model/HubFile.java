@@ -96,23 +96,23 @@ public class HubFile implements Serializable
         return "HubFile for " + Integer.toString(year) + " semester: " + Integer.toString(semester) + " | Module Count: " +
                 Integer.toString(modules.size());
     }
+
     public String toString(boolean verbose)
     {
-        if(verbose)
+        if (verbose)
         {
             StringBuilder r = new StringBuilder();
 
             r.append(toString());
             int i = -1;
             int ii = modules.size();
-            while(++i<ii)
+            while (++i < ii)
             {
                 r.append(modules.get(i).toString(true));
             }
 
             return r.toString();
-        }
-        else
+        } else
         {
             return toString();
         }
@@ -128,7 +128,7 @@ public class HubFile implements Serializable
      * @param m
      * @param a
      */
-    public HubFile(int v, int y, int s, ArrayList<Module> m, ArrayList<VersionControlEntity> a , ArrayList<Event> cal)
+    public HubFile(int v, int y, int s, ArrayList<Module> m, ArrayList<VersionControlEntity> a, ArrayList<Event> cal)
     {
         version = v;
         year = y;
@@ -140,7 +140,7 @@ public class HubFile implements Serializable
     }
 
 
-    public HubFile(int v, int y, int s, ArrayList<Module> m, ArrayList<VersionControlEntity> a , ArrayList<Event> cal,
+    public HubFile(int v, int y, int s, ArrayList<Module> m, ArrayList<VersionControlEntity> a, ArrayList<Event> cal,
                    String n, MultilineString d, String u)
     {
         this(v, y, s, m, a, cal);

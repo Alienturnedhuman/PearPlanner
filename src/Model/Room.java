@@ -15,9 +15,9 @@ public class Room extends VersionControlEntity
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
-        if(receivedVCE instanceof Room)
+        if (receivedVCE instanceof Room)
         {
-            Room castedVCE = (Room)receivedVCE;
+            Room castedVCE = (Room) receivedVCE;
             this.building = castedVCE.getBuilding();
             this.roomNumber = castedVCE.getRoomNumber();
         }
@@ -53,11 +53,12 @@ public class Room extends VersionControlEntity
         roomNumber = newRoomNumber;
     }
 
-    public Room(String cRoomNumber , Building cBuilding)
+    public Room(String cRoomNumber, Building cBuilding)
     {
         setRoomNumber(cRoomNumber);
         setBuilding(cBuilding);
     }
+
     public Room(String cRoomNumber)
     {
         setRoomNumber(cRoomNumber);
@@ -66,13 +67,12 @@ public class Room extends VersionControlEntity
     @Override
     public String toString()
     {
-        if(building==null)
+        if (building == null)
         {
             return name + "( " + roomNumber + " )";
-        }
-        else
+        } else
         {
-            return name + "( " + roomNumber + " ) located in "+building.toString();
+            return name + "( " + roomNumber + " ) located in " + building.toString();
         }
     }
 }

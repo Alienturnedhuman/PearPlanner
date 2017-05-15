@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class Book extends Requirement
+public class Book /*extends Requirement*/
 {
     // private data
     private ArrayList<String> chapters;

@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import View.ConsoleIO;
 import View.UIManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -12,19 +13,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import View.*;
-
 /**
  * Created by bendickson on 5/4/17.
  */
-public class DataController {
+public class DataController
+{
 
 
     /**
      * checks if there is a settings file and it is valid
      * returns true if this is the case
      * returns false if it isn't
-     *
      */
     static public boolean existingSettingsFile()
     {
@@ -37,60 +36,66 @@ public class DataController {
         HubFile r = null;
 
 
-
         return r;
     }
 
-    private static <T extends VersionControlEntity> T inList( HashMap<String,VersionControlEntity> list,String uid)
+    private static <T extends VersionControlEntity> T inList(HashMap<String, VersionControlEntity> list, String uid) throws Exception
     {
-        if(list.containsKey(uid))
+        VersionControlEntity vce = null;
+        if (list.containsKey(uid))
         {
-            // can't do instanceof T annoyingly, so hopefully casting to T and failing will work instead
+            vce = list.get(uid);
+        } else if (VersionControlEntity.inLibrary(uid))
+        {
+            vce = VersionControlEntity.get(uid);
+        }
+        // can't do instanceof T annoyingly, so hopefully casting to T and failing will work instead
+        if (vce != null)
+        {
             try
             {
-                return (T)list.get(uid);
-            }
-            catch(Exception e)
+                return (T) vce;
+            } catch (Exception e)
             {
-                return null;
+                throw new Exception("Incorrect type referenced for '" + uid + "'");
             }
         }
-        return null;
+        throw new Exception("UID referenced is not in database for '" + uid + "'");
     }
 
-    static private void addVCEproperties(VersionControlEntity vce , HashMap<String,XMLcontroller.NodeReturn> values)
+    static private void addVCEproperties(VersionControlEntity vce, HashMap<String, XMLcontroller.NodeReturn> values)
     {
         vce.addProperties(values.get("name").getString(),
                 values.get("details").getMultilineString());
         String UID = values.get("uid").getString();
         vce.makeImporter();
-        vce.setUID(UID,values.get("version").getInt());
+        vce.setUID(UID, values.get("version").getInt());
 
     }
 
-    static private HubFile processNewHubFile(NodeList nList)
+    static private HubFile processNewHubFile(NodeList nList) throws Exception
     {
         int beginLog = ConsoleIO.getLogSize();
-        ConsoleIO.setConsoleMessage("Importing New Hub File" , true);
+        ConsoleIO.setConsoleMessage("Importing New Hub File", true);
         HubFile r = null;
         XMLcontroller xmlTools = new XMLcontroller();
 
-        HashMap<String,XMLcontroller.NodeReturn> fValues = xmlTools.getSchemaValues(nList,
+        HashMap<String, XMLcontroller.NodeReturn> fValues = xmlTools.getSchemaValues(nList,
                 HubFile.SCHEMA_NEW_STUDYPROFILE);
 
         int version = fValues.get("version").getInt();
         NodeList assetNodes = fValues.get("assets").getNodeList();
         NodeList studyProfileNodes = fValues.get("studyProfile").getNodeList();
 
-        if(XMLcontroller.matchesSchema(assetNodes,HubFile.SCHEMA_ASSETS) &&
-                XMLcontroller.matchesSchema(studyProfileNodes,HubFile.SCHEMA_STUDYPROFILE))
+        if (XMLcontroller.matchesSchema(assetNodes, HubFile.SCHEMA_ASSETS) &&
+                XMLcontroller.matchesSchema(studyProfileNodes, HubFile.SCHEMA_STUDYPROFILE))
         {
-            ConsoleIO.setConsoleMessage("Schema Validates: assets" , true);
-            ConsoleIO.setConsoleMessage("Schema Validates: studyProfile" , true);
+            ConsoleIO.setConsoleMessage("Schema Validates: assets", true);
+            ConsoleIO.setConsoleMessage("Schema Validates: studyProfile", true);
 
 
-            HashMap<String,VersionControlEntity> assetList = new HashMap<>();
-            HashMap<String,XMLcontroller.NodeReturn> assetValues = xmlTools.getSchemaValues(assetNodes,
+            HashMap<String, VersionControlEntity> assetList = new HashMap<>();
+            HashMap<String, XMLcontroller.NodeReturn> assetValues = xmlTools.getSchemaValues(assetNodes,
                     HubFile.SCHEMA_ASSETS);
 
             ArrayList<VersionControlEntity> newAssets = new ArrayList<>();
@@ -98,30 +103,30 @@ public class DataController {
 
             Node n;
             NodeList nc;
-            int i,ii;
+            int i, ii;
             String UID;
 
             // Add all the Person classes
-            if(assetValues.containsKey("persons"))
+            if (assetValues.containsKey("persons"))
             {
 
                 NodeList personList = assetValues.get("persons").getNodeList();
                 Person tp;
                 i = -1;
                 ii = personList.getLength();
-                ConsoleIO.setConsoleMessage("Reading persons tag, " + Integer.toString(ii) + " nodes:" , true);
-                while(++i<ii)
+                ConsoleIO.setConsoleMessage("Reading persons tag, " + Integer.toString(ii) + " nodes:", true);
+                while (++i < ii)
                 {
                     n = personList.item(i);
-                    if(n.getNodeType()==Node.ELEMENT_NODE)
+                    if (n.getNodeType() == Node.ELEMENT_NODE)
                     {
                         nc = XMLcontroller.getNodes(n);
                         if (n.getNodeName().equals("person") && XMLcontroller.matchesSchema(nc,
                                 HubFile.SCHEMA_PERSON))
                         {
 
-                            ConsoleIO.setConsoleMessage("Valid Node found:" , true);
-                            HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
+                            ConsoleIO.setConsoleMessage("Valid Node found:", true);
+                            HashMap<String, XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
                                     HubFile.SCHEMA_PERSON);
 
                             tp = new Person(pValues.get("salutation").getString(), pValues.get("givenNames").getString(),
@@ -129,108 +134,110 @@ public class DataController {
                                     pValues.get("email").getString());
 
                             TimeTableEventType ttet = new TimeTableEventType();
-                            addVCEproperties(tp,pValues);
+                            addVCEproperties(tp, pValues);
 
-                            assetList.put(pValues.get("uid").getString(),tp);
+                            assetList.put(pValues.get("uid").getString(), tp);
 
-                            ConsoleIO.setConsoleMessage("Adding person: " + tp.toString() , true);
+                            ConsoleIO.setConsoleMessage("Adding person: " + tp.toString(), true);
                         }
                     }
                 }
             }
             // add all the Buildings
 
-            if(assetValues.containsKey("buildings"))
+            if (assetValues.containsKey("buildings"))
             {
                 NodeList buildingList = assetValues.get("buildings").getNodeList();
                 Building tb;
                 i = -1;
                 ii = buildingList.getLength();
-                while(++i<ii)
+                ConsoleIO.setConsoleMessage("Reading buildings tag, " + Integer.toString(ii) + " nodes:", true);
+                while (++i < ii)
                 {
                     n = buildingList.item(i);
-                    if(n.getNodeType()==Node.ELEMENT_NODE)
+                    if (n.getNodeType() == Node.ELEMENT_NODE)
                     {
                         nc = XMLcontroller.getNodes(n);
                         if (n.getNodeName().equals("building") && XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_BUILDING))
                         {
 
-                            HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
+                            HashMap<String, XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
                                     HubFile.SCHEMA_BUILDING);
 
                             tb = new Building(pValues.get("code").getString(), pValues.get("latitude").getDouble(),
                                     pValues.get("longitude").getDouble());
 
 
-                            addVCEproperties(tb,pValues);
+                            addVCEproperties(tb, pValues);
 
-                            assetList.put(pValues.get("uid").getString(),tb);
+                            assetList.put(pValues.get("uid").getString(), tb);
                         }
                     }
                 }
             }
 
             // add all the Rooms
-            if(assetValues.containsKey("rooms"))
+            if (assetValues.containsKey("rooms"))
             {
                 NodeList roomList = assetValues.get("rooms").getNodeList();
                 Room tr;
                 i = -1;
                 ii = roomList.getLength();
-                while(++i<ii)
+                ConsoleIO.setConsoleMessage("Reading rooms tag, " + Integer.toString(ii) + " nodes:", true);
+                while (++i < ii)
                 {
                     n = roomList.item(i);
-                    if(n.getNodeType()==Node.ELEMENT_NODE)
+                    if (n.getNodeType() == Node.ELEMENT_NODE)
                     {
                         nc = XMLcontroller.getNodes(n);
                         if (n.getNodeName().equals("room") && XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_ROOM))
                         {
-                            HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
+                            HashMap<String, XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
                                     HubFile.SCHEMA_ROOM);
 
                             String linkedBuilding = pValues.get("building").getString();
-                            if(assetList.containsKey(linkedBuilding) &&
+                            if (assetList.containsKey(linkedBuilding) &&
                                     assetList.get(linkedBuilding) instanceof Building)
                             {
-                                tr = new Room(pValues.get("roomNumber").getString() ,
-                                        (Building)assetList.get(linkedBuilding));
-                            }
-                            else {
+                                tr = new Room(pValues.get("roomNumber").getString(),
+                                        (Building) assetList.get(linkedBuilding));
+                            } else
+                            {
                                 tr = new Room(pValues.get("roomNumber").getString());
                             }
 
 
-                            addVCEproperties(tr,pValues);
+                            addVCEproperties(tr, pValues);
 
-                            assetList.put(pValues.get("uid").getString(),tr);
+                            assetList.put(pValues.get("uid").getString(), tr);
                         }
                     }
                 }
             }
             // add all the TimeTableTypes
-            if(assetValues.containsKey("timetableEventTypes"))
+            if (assetValues.containsKey("timetableEventTypes"))
             {
                 NodeList ttetList = assetValues.get("timetableEventTypes").getNodeList();
                 i = -1;
                 ii = ttetList.getLength();
-                while(++i<ii)
+                while (++i < ii)
                 {
                     n = ttetList.item(i);
-                    if(n.getNodeType()==Node.ELEMENT_NODE)
+                    if (n.getNodeType() == Node.ELEMENT_NODE)
                     {
                         nc = XMLcontroller.getNodes(n);
                         if (n.getNodeName().equals("timetableEventType") &&
                                 XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_TIMETABLE_EVENT_TYPE))
                         {
-                            HashMap<String,XMLcontroller.NodeReturn> ttetValues =
-                                    xmlTools.getSchemaValues(nc,HubFile.SCHEMA_TIMETABLE_EVENT_TYPE);
+                            HashMap<String, XMLcontroller.NodeReturn> ttetValues =
+                                    xmlTools.getSchemaValues(nc, HubFile.SCHEMA_TIMETABLE_EVENT_TYPE);
 
 
                             TimeTableEventType ttet = new TimeTableEventType();
 
-                            addVCEproperties(ttet,ttetValues);
+                            addVCEproperties(ttet, ttetValues);
 
-                            assetList.put(ttetValues.get("uid").getString(),ttet);
+                            assetList.put(ttetValues.get("uid").getString(), ttet);
                         }
                     }
 
@@ -238,9 +245,8 @@ public class DataController {
             }
 
 
-
-            HashMap<String,XMLcontroller.NodeReturn> studyProfileValues =
-                    xmlTools.getSchemaValues(studyProfileNodes,HubFile.SCHEMA_STUDYPROFILE);
+            HashMap<String, XMLcontroller.NodeReturn> studyProfileValues =
+                    xmlTools.getSchemaValues(studyProfileNodes, HubFile.SCHEMA_STUDYPROFILE);
 
             int year = studyProfileValues.get("year").getInt();
             int semester = studyProfileValues.get("semester").getInt();
@@ -248,44 +254,44 @@ public class DataController {
             NodeList modules = studyProfileValues.get("modules").getNodeList();
             i = -1;
             ii = modules.getLength();
-            while(++i<ii)
+            while (++i < ii)
             {
-                if(modules.item(i).getNodeType()==Node.ELEMENT_NODE && modules.item(i).getNodeName().equals("module")
+                if (modules.item(i).getNodeType() == Node.ELEMENT_NODE && modules.item(i).getNodeName().equals("module")
                         && modules.item(i).hasChildNodes() && XMLcontroller.matchesSchema(modules.item(i).getChildNodes(), HubFile.SCHEMA_MODULE))
                 {
-                    HashMap<String,XMLcontroller.NodeReturn> moduleValues =
-                            xmlTools.getSchemaValues(modules.item(i).getChildNodes(),HubFile.SCHEMA_MODULE);
+                    HashMap<String, XMLcontroller.NodeReturn> moduleValues =
+                            xmlTools.getSchemaValues(modules.item(i).getChildNodes(), HubFile.SCHEMA_MODULE);
 
                     String linkedPerson = moduleValues.get("organiser").getString();
 
-                    Person organiser = inList(assetList,linkedPerson);
+                    Person organiser = inList(assetList, linkedPerson);
                     String moduleCode = moduleValues.get("moduleCode").getString();
-                    Module thisModule = new Module(organiser,moduleCode);
+                    Module thisModule = new Module(organiser, moduleCode);
 
 
-                    addVCEproperties(thisModule,moduleValues);
+                    addVCEproperties(thisModule, moduleValues);
 
-                    assetList.put(moduleValues.get("uid").getString(),thisModule);
+                    assetList.put(moduleValues.get("uid").getString(), thisModule);
 
                     NodeList assignments = moduleValues.get("assignments").getNodeList();
                     int j = -1;
                     int jj = assignments.getLength();
-                    while(++j<jj)
+                    while (++j < jj)
                     {
-                        if(assignments.item(j).getNodeType()==Node.ELEMENT_NODE)
+                        if (assignments.item(j).getNodeType() == Node.ELEMENT_NODE)
                         {
 
                             switch (assignments.item(j).getNodeName())
                             {
                                 case "coursework":
-                                    if(XMLcontroller.matchesSchema(assignments.item(j).getChildNodes(),
+                                    if (XMLcontroller.matchesSchema(assignments.item(j).getChildNodes(),
                                             HubFile.SCHEMA_COURSEWORK))
                                     {
-                                        HashMap<String,XMLcontroller.NodeReturn> courseworkValues =
+                                        HashMap<String, XMLcontroller.NodeReturn> courseworkValues =
                                                 xmlTools.getSchemaValues(assignments.item(j).getChildNodes(),
                                                         HubFile.SCHEMA_COURSEWORK);
 
-                                        Person cwSetBy,cwMarkedBy,cwReviewedBy;
+                                        Person cwSetBy, cwMarkedBy, cwReviewedBy;
                                         Event cwStartDate;
                                         Deadline cwDeadline;
                                         ArrayList<Extension> cwExtensions = new ArrayList<>();
@@ -294,69 +300,66 @@ public class DataController {
                                         String linkedReviewedBy = courseworkValues.get("reviewedBy").getString();
 
 
-                                        cwSetBy = inList(assetList,linkedSetBy);
-                                        cwMarkedBy = inList(assetList,linkedMarkedBy);
-                                        cwReviewedBy = inList(assetList,linkedReviewedBy);
+                                        cwSetBy = inList(assetList, linkedSetBy);
+                                        cwMarkedBy = inList(assetList, linkedMarkedBy);
+                                        cwReviewedBy = inList(assetList, linkedReviewedBy);
 
 
-                                        if(XMLcontroller.matchesSchema(courseworkValues.get("startDate").getNodeList(),
+                                        if (XMLcontroller.matchesSchema(courseworkValues.get("startDate").getNodeList(),
                                                 HubFile.SCHEMA_EVENT))
                                         {
-                                            HashMap<String,XMLcontroller.NodeReturn> eventValues =
+                                            HashMap<String, XMLcontroller.NodeReturn> eventValues =
                                                     xmlTools.getSchemaValues(courseworkValues.get("startDate").getNodeList(),
                                                             HubFile.SCHEMA_EVENT);
                                             cwStartDate = new Event(eventValues.get("date").getString());
 
 
-                                            addVCEproperties(cwStartDate,eventValues);
-                                            assetList.put(eventValues.get("uid").getString(),cwStartDate);
+                                            addVCEproperties(cwStartDate, eventValues);
+                                            assetList.put(eventValues.get("uid").getString(), cwStartDate);
 
-                                        }
-                                        else
+                                        } else
                                         {
                                             cwStartDate = null;
                                         }
-                                        if(XMLcontroller.matchesSchema(courseworkValues.get("deadline").getNodeList(),
+                                        if (XMLcontroller.matchesSchema(courseworkValues.get("deadline").getNodeList(),
                                                 HubFile.SCHEMA_EVENT))
                                         {
-                                            HashMap<String,XMLcontroller.NodeReturn> eventValues =
+                                            HashMap<String, XMLcontroller.NodeReturn> eventValues =
                                                     xmlTools.getSchemaValues(courseworkValues.get("deadline").getNodeList(),
                                                             HubFile.SCHEMA_EVENT);
 
                                             cwDeadline = new Deadline(eventValues.get("date").getString());
 
 
-                                            addVCEproperties(cwDeadline,eventValues);
-                                            assetList.put(eventValues.get("uid").getString(),cwDeadline);
+                                            addVCEproperties(cwDeadline, eventValues);
+                                            assetList.put(eventValues.get("uid").getString(), cwDeadline);
 
-                                        }
-                                        else
+                                        } else
                                         {
                                             cwDeadline = null;
                                         }
                                         Coursework newCoursework = new Coursework(courseworkValues.get("weighting").getInt(),
-                                                cwSetBy,cwMarkedBy,cwReviewedBy,courseworkValues.get("marks").getInt(),
-                                                cwStartDate,cwDeadline,cwExtensions);
+                                                cwSetBy, cwMarkedBy, cwReviewedBy, courseworkValues.get("marks").getInt(),
+                                                cwStartDate, cwDeadline, cwExtensions);
 
-                                        addVCEproperties(newCoursework,courseworkValues);
+                                        addVCEproperties(newCoursework, courseworkValues);
 
-                                        assetList.put(courseworkValues.get("uid").getString(),newCoursework);
+                                        assetList.put(courseworkValues.get("uid").getString(), newCoursework);
                                         thisModule.addAssignment(newCoursework);
                                     }
                                     break;
 
                                 case "exam":
-                                    if(XMLcontroller.matchesSchema(assignments.item(j).getChildNodes(),
+                                    if (XMLcontroller.matchesSchema(assignments.item(j).getChildNodes(),
                                             HubFile.SCHEMA_EXAM))
                                     {
-                                        HashMap<String,XMLcontroller.NodeReturn> examValues =
+                                        HashMap<String, XMLcontroller.NodeReturn> examValues =
                                                 xmlTools.getSchemaValues(assignments.item(j).getChildNodes(),
                                                         HubFile.SCHEMA_EXAM);
 
-                                        Person exSetBy,exMarkedBy,exReviewedBy;
+                                        Person exSetBy, exMarkedBy, exReviewedBy;
                                         ExamEvent exTimeSlot;
                                         ArrayList<Extension> cwExtensions = new ArrayList<>();
-
 
 
                                         String linkedSetBy = examValues.get("setBy").getString();
@@ -364,55 +367,59 @@ public class DataController {
                                         String linkedReviewedBy = examValues.get("reviewedBy").getString();
                                         String linkedResit = examValues.get("resit").getString();
 
-                                        exSetBy = inList(assetList,linkedSetBy);
-                                        exMarkedBy = inList(assetList,linkedMarkedBy);
-                                        exReviewedBy = inList(assetList,linkedReviewedBy);
+                                        exSetBy = inList(assetList, linkedSetBy);
+                                        exMarkedBy = inList(assetList, linkedMarkedBy);
+                                        exReviewedBy = inList(assetList, linkedReviewedBy);
 
-                                        if(XMLcontroller.matchesSchema(examValues.get("timeslot").getNodeList(),
+                                        if (XMLcontroller.matchesSchema(examValues.get("timeslot").getNodeList(),
                                                 HubFile.SCHEMA_EXAMEVENT))
                                         {
-                                            HashMap<String,XMLcontroller.NodeReturn> eventValues =
+                                            HashMap<String, XMLcontroller.NodeReturn> eventValues =
                                                     xmlTools.getSchemaValues(examValues.get("timeslot").getNodeList(),
                                                             HubFile.SCHEMA_EXAMEVENT);
                                             //Room exRoom;
                                             String linkedRoom = eventValues.get("room").getString();
-                                            Room exRoom = inList(assetList,linkedRoom);
+                                            Room exRoom = inList(assetList, linkedRoom);
 
 
-                                            exTimeSlot = new ExamEvent(eventValues.get("date").getString(),exRoom,
+                                            exTimeSlot = new ExamEvent(eventValues.get("date").getString(), exRoom,
                                                     eventValues.get("duration").getInt());
 
 
+                                            addVCEproperties(exTimeSlot, eventValues);
+                                            assetList.put(eventValues.get("uid").getString(), exTimeSlot);
 
-                                            addVCEproperties(exTimeSlot,eventValues);
-                                            assetList.put(eventValues.get("uid").getString(),exTimeSlot);
-
-                                        }
-                                        else
+                                        } else
                                         {
                                             exTimeSlot = null;
                                         }
-                                        Exam exExamResit = inList(assetList,linkedResit);
+                                        Exam exExamResit;
+                                        try
+                                        {
+                                            exExamResit = inList(assetList, linkedResit);
+                                        } catch (Exception e)
+                                        {
+                                            exExamResit = null;
+                                        }
 
 
                                         Exam newExam;
-                                        if(exExamResit==null) {
-                                            newExam = new Exam(examValues.get("weighting").getInt(),
-                                                    exSetBy, exMarkedBy, exReviewedBy, examValues.get("marks").getInt(),
-                                                    exTimeSlot);
-                                        }
-                                        else
+                                        if (exExamResit == null)
                                         {
                                             newExam = new Exam(examValues.get("weighting").getInt(),
                                                     exSetBy, exMarkedBy, exReviewedBy, examValues.get("marks").getInt(),
-                                                    exTimeSlot,exExamResit);
+                                                    exTimeSlot);
+                                        } else
+                                        {
+                                            newExam = new Exam(examValues.get("weighting").getInt(),
+                                                    exSetBy, exMarkedBy, exReviewedBy, examValues.get("marks").getInt(),
+                                                    exTimeSlot, exExamResit);
                                         }
 
 
+                                        addVCEproperties(newExam, examValues);
 
-                                        addVCEproperties(newExam,examValues);
-
-                                        assetList.put(examValues.get("uid").getString(),newExam);
+                                        assetList.put(examValues.get("uid").getString(), newExam);
                                         thisModule.addAssignment(newExam);
                                     }
 
@@ -422,36 +429,35 @@ public class DataController {
                         }
                     }
                     NodeList timetable = moduleValues.get("timetable").getNodeList();
-                    j=-1;
+                    j = -1;
                     jj = timetable.getLength();
-                    while(++j<jj)
+                    while (++j < jj)
                     {
-                        if(timetable.item(j).getNodeType()==Node.ELEMENT_NODE &&
+                        if (timetable.item(j).getNodeType() == Node.ELEMENT_NODE &&
                                 timetable.item(j).getNodeName().equals("timetableEvent") &&
                                 XMLcontroller.matchesSchema(timetable.item(j).getChildNodes(),
-                                HubFile.SCHEMA_TIMETABLE_EVENT))
+                                        HubFile.SCHEMA_TIMETABLE_EVENT))
 
                         {
-                            HashMap<String,XMLcontroller.NodeReturn> tteValues =
+                            HashMap<String, XMLcontroller.NodeReturn> tteValues =
                                     xmlTools.getSchemaValues(timetable.item(j).getChildNodes(),
                                             HubFile.SCHEMA_TIMETABLE_EVENT);
-
 
 
                             String linkedRoom = tteValues.get("room").getString();
                             String linkedLecturer = tteValues.get("lecturer").getString();
                             String linkedTTET = tteValues.get("timetableEventType").getString();
 
-                            Room tRoom = inList(assetList,linkedRoom);
-                            Person tLecturer = inList(assetList,linkedLecturer);
-                            TimeTableEventType tTTET = inList(assetList,linkedTTET);
+                            Room tRoom = inList(assetList, linkedRoom);
+                            Person tLecturer = inList(assetList, linkedLecturer);
+                            TimeTableEventType tTTET = inList(assetList, linkedTTET);
 
 
-                            TimetableEvent newTTE = new TimetableEvent(tteValues.get("date").getString(),tRoom,tLecturer
-                                    ,tTTET,tteValues.get("duration").getInt());
-                            addVCEproperties(newTTE,tteValues);
+                            TimetableEvent newTTE = new TimetableEvent(tteValues.get("date").getString(), tRoom, tLecturer
+                                    , tTTET, tteValues.get("duration").getInt());
+                            addVCEproperties(newTTE, tteValues);
 
-                            assetList.put(tteValues.get("uid").getString(),newTTE);
+                            assetList.put(tteValues.get("uid").getString(), newTTE);
                             thisModule.addTimetableEvent(newTTE);
                         }
                     }
@@ -465,38 +471,36 @@ public class DataController {
             UID = studyProfileValues.get("uid").getString();
 
 
-
-            ConsoleIO.setConsoleMessage("Attempting to import "+Integer.toString(assetList.size())
-                    +" items to VersionControl..." , true);
-            ConsoleIO.setConsoleMessage("Starting with "+VersionControlEntity.libraryReport()+" entries");
+            ConsoleIO.setConsoleMessage("Attempting to import " + Integer.toString(assetList.size())
+                    + " items to VersionControl...", true);
+            ConsoleIO.setConsoleMessage("Starting with " + VersionControlEntity.libraryReport() + " entries");
 
             ArrayList<Event> calendarItems = new ArrayList<>();
 
-            for (String key : assetList.keySet()) {
-                ConsoleIO.setConsoleMessage("Adding Asset: "+key , true);
-                if(assetList.get(key).addToLibrary())
+            for (String key : assetList.keySet())
+            {
+                ConsoleIO.setConsoleMessage("Adding Asset: " + key, true);
+                if (assetList.get(key).addToLibrary())
                 {
-                    if(assetList.get(key) instanceof Event)
+                    if (assetList.get(key) instanceof Event)
                     {
-                        calendarItems.add((Event)assetList.get(key));
+                        calendarItems.add((Event) assetList.get(key));
                     }
                     System.out.println(assetList.get(key).toString() + " added");
-                }
-                else if(assetList.get(i).isImporter())
+                } else if (assetList.get(i).isImporter())
                 {
                     VersionControlEntity.get(key).update(assetList.get(i));
                     System.out.println(assetList.get(key).toString() + " update attempted");
-                }
-                else
+                } else
                 {
                     System.out.println(assetList.get(key).toString() + " not imported");
                 }
             }
-            ConsoleIO.setConsoleMessage("Ending with "+VersionControlEntity.libraryReport()+" entries");
-            ConsoleIO.saveLog("import_report.txt",beginLog,ConsoleIO.getLogSize());
+            ConsoleIO.setConsoleMessage("Ending with " + VersionControlEntity.libraryReport() + " entries");
+            ConsoleIO.saveLog("import_report.txt", beginLog, ConsoleIO.getLogSize());
 
 
-            r = new HubFile(version,year,semester,newModules,newAssets,calendarItems,name,details,UID);
+            r = new HubFile(version, year, semester, newModules, newAssets, calendarItems, name, details, UID);
         }
         return r;
     }
@@ -504,7 +508,7 @@ public class DataController {
     static public HubFile loadHubFile(File tempFile)
     {
         HubFile r = null;
-        if(tempFile.exists())
+        if (tempFile.exists())
         {
             try
             {
@@ -519,35 +523,29 @@ public class DataController {
                 Node rootElement = doc.getDocumentElement();
 
                 // check it is a hubfile
-                if(rootElementTag.equals("hubfile") && rootElement.hasChildNodes())
+                if (rootElementTag.equals("hubfile") && rootElement.hasChildNodes())
                 {
                     NodeList nList = XMLcontroller.getNodes(rootElement);
                     if (XMLcontroller.matchesSchema(nList, HubFile.SCHEMA_NEW_STUDYPROFILE))
                     {
                         r = processNewHubFile(nList);
-                    }
-                    else if (XMLcontroller.matchesSchema(nList, HubFile.SCHEMA_UPDATE_FILE))
+                    } else if (XMLcontroller.matchesSchema(nList, HubFile.SCHEMA_UPDATE_FILE))
                     {
                         r = processUpdateHubFile(nList);
-                    }
-                    else
+                    } else
                     {
                         UIManager.reportError("Invalid Parent Nodes");
                     }
-                }
-                else
+                } else
                 {
                     UIManager.reportError("Invalid XML file");
                 }
 
-            }
-            catch(Exception e)
+            } catch (Exception e)
             {
-                UIManager.reportError("Invalid File");
+                UIManager.reportError("Invalid File: \n" + e.getMessage());
             }
         }
-
         return r;
-
     }
 }
