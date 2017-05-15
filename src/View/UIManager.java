@@ -97,7 +97,7 @@ public class UIManager
         stage.getIcons().add(new Image("file:icon.png"));
         stage.showAndWait();
 
-        // Add the activity to the StudyPlanner
+        // Add the Activity to the StudyPlanner
         if (ac.isSuccess())
             return ac.getActivity();
         return null;
@@ -120,6 +120,55 @@ public class UIManager
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene(root, 550, 358));
         stage.setTitle("Activity");
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
+    }
+
+    /**
+     * Displays the 'Add Milestone' window.
+     */
+    public Milestone addMilestone() throws IOException
+    {
+        MilestoneController mc = new MilestoneController();
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Milestone.fxml"));
+        loader.setController(mc);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 355));
+        stage.setTitle("Milestone");
+        stage.resizableProperty().setValue(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
+
+        // Add the Milestone to the StudyPlanner
+        if (mc.isSuccess())
+            return mc.getMilestone();
+        return null;
+    }
+
+    /**
+     * Displays the Milestone details page
+     */
+    public void milestoneDetails(Milestone milestone) throws IOException
+    {
+        MilestoneController mc = new MilestoneController(milestone);
+
+        // Load in the .fxml file:
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Milestone.fxml"));
+        loader.setController(mc);
+        Parent root = loader.load();
+
+        // Set the scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 550, 355));
+        stage.setTitle("Milestone");
         stage.resizableProperty().setValue(false);
         stage.getIcons().add(new Image("file:icon.png"));
         stage.showAndWait();

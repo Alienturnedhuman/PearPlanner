@@ -172,21 +172,6 @@ public class TaskController implements Initializable
      */
     public void addDependency()
     {
-        // Layout:
-        VBox layout = new VBox();
-        layout.setSpacing(10);
-        layout.setAlignment(Pos.BOTTOM_RIGHT);
-        // =================
-
-        // Tasks columns:
-        TableColumn<Task, String> nameColumn = new TableColumn<>("Task");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-        TableColumn<Task, String> deadlineColumn = new TableColumn<>("Deadline");
-        deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
-        deadlineColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
-        // =================
-
         // Table items:
         ObservableList<Task> list = FXCollections.observableArrayList(MainController.getSPC().getCurrentTasks());
         list.removeAll(this.dependencies.getItems());
@@ -197,46 +182,8 @@ public class TaskController implements Initializable
         }
         // =================
 
-        // Create a table:
-        TableView<Task> tasks = new TableView<>();
-        tasks.setItems(list);
-        tasks.getColumns().addAll(nameColumn, deadlineColumn);
-        tasks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        // =================
-
-        // Table attributes:
-        tasks.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        GridPane.setHgrow(tasks, Priority.ALWAYS);
-        GridPane.setVgrow(tasks, Priority.ALWAYS);
-        // =================
-
-        // Set click event:
-        tasks.setRowFactory(TaskController::cellRowFormat);
-        // =================
-
-        // Button:
-        Button OK = new Button("OK");
-        OK.setOnAction(e -> {
-            Stage current = (Stage) OK.getScene().getWindow();
-            current.close();
-        });
-        VBox.setMargin(OK, new Insets(5));
-        OK.setDefaultButton(true);
-        // =================
-
-        layout.getChildren().addAll(tasks, OK);
-
-        // Set a new scene:
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(new Scene(layout, 400, 300));
-        stage.setTitle("Select dependencies");
-        stage.getIcons().add(new Image("file:icon.png"));
-        stage.showAndWait();
-        // =================
-
         // Parse selected Tasks:
-        this.dependencies.getItems().addAll(tasks.getSelectionModel().getSelectedItems());
+        this.dependencies.getItems().addAll(TaskController.taskSelectionWindow(list));
         // =================
     }
 
@@ -481,5 +428,111 @@ public class TaskController implements Initializable
         });
         return row;
     }
+
+    /**
+     * Creates a Task selection window.
+     *
+     * @param list List of Tasks to be put into the window.
+     * @return A list of selected Tasks
+     */
+    protected static ObservableList<Task> taskSelectionWindow(ObservableList<Task> list)
+    {
+        // Layout:
+        VBox layout = new VBox();
+        layout.setSpacing(10);
+        layout.setAlignment(Pos.BOTTOM_RIGHT);
+        // =================
+
+        // Tasks columns:
+        TableColumn<Task, String> nameColumn = new TableColumn<>("Task");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Task, String> deadlineColumn = new TableColumn<>("Deadline");
+        deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
+        deadlineColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+        // =================
+
+        // Create a table:
+        TableView<Task> tasks = new TableView<>();
+        tasks.setItems(list);
+        tasks.getColumns().addAll(nameColumn, deadlineColumn);
+        tasks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        // =================
+
+        // Table attributes:
+        tasks.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        GridPane.setHgrow(tasks, Priority.ALWAYS);
+        GridPane.setVgrow(tasks, Priority.ALWAYS);
+        // =================
+
+        // Set click event:
+        tasks.setRowFactory(TaskController::cellRowFormat);
+        // =================
+
+        // Button:
+        Button OK = new Button("OK");
+        OK.setOnAction(e -> {
+            Stage current = (Stage) OK.getScene().getWindow();
+            current.close();
+        });
+        VBox.setMargin(OK, new Insets(5));
+        OK.setDefaultButton(true);
+        // =================
+
+        layout.getChildren().addAll(tasks, OK);
+
+        // Set a new scene:
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(layout, 400, 300));
+        stage.setTitle("Select dependencies");
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
+        // =================
+
+        return tasks.getSelectionModel().getSelectedItems();
+    }
+
+    // TODO try to implement the draggy thing if there's time
+    /*protected static ListCell<Requirement> dragCell()
+    {
+        ListCell<Requirement> cell = new ListCell<Requirement>();
+
+        cell.setOnDragDetected(event -> {
+            Requirement selected = cell.getItem();
+            if (selected != null)
+            {
+                Dragboard db = cell.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.put(DataFormat.PLAIN_TEXT, selected);
+                db.setContent(content);
+                event.consume();
+            }
+        });
+        cell.setOnDragOver(event -> {
+            if (event.getDragboard().hasContent(DataFormat.PLAIN_TEXT))
+                event.acceptTransferModes(TransferMode.MOVE);
+            event.consume();
+        });
+        cell.setOnDragDropped(event -> {
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+            if (event.getDragboard().hasContent(DataFormat.PLAIN_TEXT))
+            {
+                Requirement req = (Requirement) db.getContent(DataFormat.PLAIN_TEXT);
+                ListCell<Requirement> source = (ListCell<Requirement>) event.getSource();
+                ListCell<Requirement> target = (ListCell<Requirement>) event.getGestureTarget();
+
+                Requirement temp = target.getItem();
+                target.setItem(req);
+                source.setItem(temp);
+
+                success = true;
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
+        return cell;
+    }*/
 }
 

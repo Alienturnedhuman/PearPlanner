@@ -33,7 +33,7 @@ public class MenuController implements Initializable
 {
     public enum Window
     {
-        Empty, Dashboard, Profiles, Modules
+        Empty, Dashboard, Profiles, Modules, Milestones
     }
 
     private Window current;
@@ -92,6 +92,11 @@ public class MenuController implements Initializable
                 this.loadModules();
                 break;
             }
+            case Milestones:
+            {
+                this.loadMilestones();
+                break;
+            }
         }
     }
 
@@ -138,6 +143,148 @@ public class MenuController implements Initializable
         {
             UIManager.reportError("Unable to open View file");
         }
+    }
+
+    /**
+     * Display the Milestones pane
+     */
+    public void loadMilestones()
+    {
+        // Update main pane:
+        this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+        this.topBox.getChildren().clear();
+        this.title.setText("");
+        // =================
+
+        // Display milestones:
+        Label milestones = new Label("Milestones");
+        milestones.getStyleClass().add("title");
+        this.mainContent.addRow(1, milestones);
+        // =================
+
+        // Columns:
+        TableColumn<Milestone, String> nameColumn = new TableColumn<>("Milestone");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Milestone, String> deadlineColumn = new TableColumn<>("Deadline");
+        deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
+        deadlineColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        TableColumn<Milestone, String> completedColumn = new TableColumn<>("Tasks completed");
+        completedColumn.setCellValueFactory(new PropertyValueFactory<>("taskCompletedAsString"));
+        completedColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        TableColumn<Milestone, Integer> progressColumn = new TableColumn<>("Progress");
+        progressColumn.setCellValueFactory(new PropertyValueFactory<>("progressPercentage"));
+        progressColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        ObservableList<Milestone> list = FXCollections.observableArrayList
+                (MainController.getSPC().getPlanner().getCurrentStudyProfile().getMilestones());
+        // =================
+
+        // Create a table:
+        TableView<Milestone> table = new TableView<>();
+        table.setItems(list);
+        table.getColumns().addAll(nameColumn, deadlineColumn, completedColumn, progressColumn);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        GridPane.setHgrow(table, Priority.ALWAYS);
+        GridPane.setVgrow(table, Priority.ALWAYS);
+        // =================
+
+        // Set click event:
+        table.setRowFactory(e -> {
+            TableRow<Milestone> row = new TableRow<Milestone>()
+            {
+                @Override
+                protected void updateItem(final Milestone item, final boolean empty)
+                {
+                    super.updateItem(item, empty);
+                    // If Milestone completed, mark:
+                    if (!empty && item != null && item.isComplete())
+                        this.getStyleClass().add("current-item");
+                }
+            };
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                {
+                    try
+                    {
+                        MainController.ui.milestoneDetails(row.getItem());
+                        this.main();
+                    } catch (IOException e1)
+                    {
+                        UIManager.reportError("Unable to open View file");
+                    }
+                }
+            });
+            return row;
+        });
+        // =================
+
+        this.mainContent.addRow(2, table);
+        this.mainContent.getStyleClass().add("list-item");
+
+        // Actions toolbar:
+        HBox actions = new HBox();
+        GridPane.setHgrow(actions, Priority.ALWAYS);
+        actions.setSpacing(5);
+        actions.setPadding(new Insets(5, 5, 10, 0));
+        // =================
+
+        // Buttons:
+        Button add = new Button("Add a new Milestone");
+
+        Button remove = new Button("Remove");
+        remove.setDisable(true);
+        // =================
+
+        // Bind properties on buttons:
+        remove.disableProperty().bind(new BooleanBinding()
+        {
+            {
+                bind(table.getSelectionModel().getSelectedItems());
+            }
+
+            @Override
+            protected boolean computeValue()
+            {
+                return !(list.size() > 0 && table.getSelectionModel().getSelectedItem() != null);
+            }
+        });
+        // =================
+
+        // Bind actions on buttons:
+        add.setOnAction(e -> {
+            try
+            {
+                Milestone milestone = MainController.ui.addMilestone();
+                if (milestone != null)
+                {
+                    list.add(milestone);
+                    MainController.getSPC().addMilestone(milestone);
+                }
+            } catch (IOException e1)
+            {
+                UIManager.reportError("Unable to open View file");
+            } catch (Exception e1)
+            {
+            }
+        });
+
+        remove.setOnAction(e -> {
+            if (UIManager.confirm("Are you sure you want to remove this requirement?"))
+            {
+                Milestone m = table.getSelectionModel().getSelectedItem();
+                list.remove(m);
+                MainController.getSPC().removeMilestone(m);
+            }
+        });
+        // =================
+
+        actions.getChildren().addAll(add, remove);
+
+        mainContent.addRow(3, actions);
+        // =================
     }
 
     /**
@@ -199,8 +346,7 @@ public class MenuController implements Initializable
                 {
                     try
                     {
-                        StudyProfile profile = row.getItem();
-                        MainController.ui.studyProfileDetails(profile);
+                        MainController.ui.studyProfileDetails(row.getItem());
                         this.main();
                     } catch (IOException e1)
                     {
@@ -344,6 +490,7 @@ public class MenuController implements Initializable
     /**
      * Display the Assignment pane
      */
+    // TODO display more stuff here
     public void loadAssignment(Assignment assignment, Window previousWindow, ModelEntity previous)
     {
         // Update main pane:
@@ -735,16 +882,20 @@ public class MenuController implements Initializable
         this.showDash.setOnAction(e -> this.main(Window.Dashboard));
         this.studyProfiles.setOnAction(e -> this.main(Window.Profiles));
         this.modules.setOnAction(e -> this.main(Window.Modules));
+        this.milestones.setOnAction(e -> this.main(Window.Milestones));
+        // =================
 
         // Welcome text:
         this.welcome = new Label("Welcome back, " + MainController.getSPC().getPlanner().getUserName() + "!");
         this.welcome.setPadding(new Insets(10, 15, 10, 15));
         this.topBox.getChildren().add(this.welcome);
+        // =================
 
         this.mainContent.setVgap(10);
 
         // Render dashboard:
         this.main(Window.Dashboard);
+        // =================
     }
 
     /**

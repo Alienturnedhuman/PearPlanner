@@ -154,23 +154,41 @@ public class StudyPlanner implements Serializable
     public void addActivity(Activity activity)
     {
         this.activityList.add(activity);
+        // Loop through all Tasks:
         for (Task t : activity.getTasks())
         {
+            // Distribute Activity Quantity to available Requirements of a Task:
+            int quantity = activity.getActivityQuantity();
             for (Requirement r : t.getRequirements())
             {
                 if (r.getQuantityType().equals(activity.getType()) && !r.checkedCompleted)
                 {
-                    // TODO carry over requirements
+                    quantity -= r.getRemainingQuantity();
                     r.addActivity(activity);
-                    break;
+                    if (quantity <= 0)
+                        break;
                 }
             }
-            // TODO carry over requirements
+            // =================
+
+            // Distribute quantity to Assignment requirements:
+            quantity = activity.getActivityQuantity();
             for (Assignment a : t.getAssignmentReferences())
-                a.getRequirements().stream()
-                        .filter(e -> e.getQuantityType().equals(activity.getType()) && !e.checkedCompleted)
-                        .findFirst().ifPresent(e -> e.addActivity(activity));
+            {
+                for (Requirement r : a.getRequirements())
+                {
+                    if (r.getQuantityType().equals(activity.getType()) && !r.checkedCompleted)
+                    {
+                        quantity -= r.getRemainingQuantity();
+                        r.addActivity(activity);
+                        if (quantity <= 0)
+                            break;
+                    }
+                }
+            }
+            // =================
         }
+        // =================
     }
 
     // constructors
