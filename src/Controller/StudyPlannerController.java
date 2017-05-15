@@ -178,6 +178,38 @@ public class StudyPlannerController
         return this.planner.getCurrentStudyProfile().removeMilestone(milestone);
     }
 
+    /**
+     * Add a new QuantityType to this StudyPlanner.
+     *
+     * @param quantity QuantityType to be added
+     * @return whether added successfully.
+     */
+    public boolean addQuantityType(QuantityType quantity)
+    {
+        if (!this.planner.getQuantityTypes().contains(quantity))
+        {
+            this.planner.getQuantityTypes().add(quantity);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Add a new TaskType to this StudyPlanner.
+     *
+     * @param taskType TaskType to be added
+     * @return whether added successfully.
+     */
+    public boolean addTaskType(TaskType taskType)
+    {
+        if (!this.planner.getTaskTypes().contains(taskType))
+        {
+            this.planner.getTaskTypes().add(taskType);
+            return true;
+        }
+        return false;
+    }
+
     // constructors
     public StudyPlannerController() throws NoSuchAlgorithmException, NoSuchPaddingException
     {
@@ -246,5 +278,11 @@ public class StudyPlannerController
     public StudyPlannerController(StudyPlanner planner)
     {
         this.planner = planner;
+
+        if (!this.planner.getQuantityTypes().isEmpty())
+            this.planner.getQuantityTypes().forEach(e -> QuantityType.create(e));
+
+        if (!this.planner.getTaskTypes().isEmpty())
+            this.planner.getTaskTypes().forEach(e -> TaskType.create(e));
     }
 }

@@ -59,9 +59,12 @@ public class TaskController implements Initializable
     @FXML private Button removeReq;
     @FXML private Button removeDep;
     @FXML private ToggleButton markComplete;
+    @FXML private Button addTaskType;
+    @FXML private MenuItem taskTypeMenu;
 
     // Panes:
     @FXML private GridPane pane;
+    @FXML private ContextMenu context;
 
     // Text:
     @FXML private TextArea details;
@@ -69,6 +72,7 @@ public class TaskController implements Initializable
     @FXML private DatePicker deadline;
     @FXML private TextField name;
     @FXML private TextField weighting;
+    @FXML private TextField taskTypeName;
 
     // Labels:
     @FXML private Label title;
@@ -208,6 +212,38 @@ public class TaskController implements Initializable
     }
 
     /**
+     * Validate data in the TaskType field
+     */
+    public void validateNewTaskType()
+    {
+        if (!this.taskTypeName.getText().trim().isEmpty())
+            this.taskTypeMenu.setDisable(false);
+        else
+            this.taskTypeMenu.setDisable(true);
+    }
+
+    /**
+     * Add a new TaskType
+     */
+    public void newTaskType()
+    {
+        if (UIManager.confirm("Create a new Task type '" + this.taskTypeName.getText() + '?'))
+        {
+            // Create a new type:
+            TaskType t = TaskType.create(this.taskTypeName.getText());
+            // =================
+
+            // Update the current list:
+            this.taskType.getItems().clear();
+            this.taskType.getItems().addAll(TaskType.listOfNames());
+            this.taskType.getSelectionModel().select(t.getName());
+            // =================
+        }
+        this.taskTypeName.clear();
+        this.taskTypeMenu.setDisable(true);
+    }
+
+    /**
      * Submit the form and create a new Task
      */
     public void handleSubmit()
@@ -321,6 +357,13 @@ public class TaskController implements Initializable
         });
 
         this.requirements.setCellFactory(this::requirementCellFactory);
+        // =================
+
+        // TaskType actions:
+        this.addTaskType.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown())
+                context.show(addTaskType, event.getScreenX(), event.getScreenY());
+        });
         // =================
 
         // Handle Task details:

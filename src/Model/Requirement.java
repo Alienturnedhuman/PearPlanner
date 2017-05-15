@@ -18,7 +18,7 @@ public class Requirement extends ModelEntity
     protected ArrayList<Activity> activityLog = new ArrayList<>();
     protected int initialQuantity;
     protected int remainingQuantity;
-    protected QuantityType quantityType; // TODO custom Quantity and Task types
+    protected QuantityType quantityType;
 
     // public methods
 

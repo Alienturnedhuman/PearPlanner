@@ -4,6 +4,7 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * PearPlanner
@@ -105,6 +106,26 @@ public class StudyPlanner implements Serializable
     {
         Notification[] r = this.notifications.stream().filter(e -> !e.isRead()).toArray(Notification[]::new);
         return r;
+    }
+
+    /**
+     * Returns an ArrayList of QuantityTypes.
+     *
+     * @return ArrayList<QuantityType>
+     */
+    public ArrayList<QuantityType> getQuantityTypes()
+    {
+        return this.quantityTypes;
+    }
+
+    /**
+     * Returns an ArrayList of TaskTypes.
+     *
+     * @return ArrayList<QuantityType>
+     */
+    public ArrayList<TaskType> getTaskTypes()
+    {
+        return this.taskTypes;
     }
 
     // setters
@@ -219,8 +240,10 @@ public class StudyPlanner implements Serializable
 
     public StudyPlanner(Account newAccount) throws NoSuchPaddingException, NoSuchAlgorithmException
     {
-        // it may make sense to clone this to stop someone retaining access to the
-        // object
         this.account = newAccount;
+        // Add Default Quantity types:
+        Collections.addAll(this.quantityTypes, QuantityType.listOfQuantityTypes());
+        // Add Default Task types:
+        Collections.addAll(this.taskTypes, TaskType.listOfTaskTypes());
     }
 }
