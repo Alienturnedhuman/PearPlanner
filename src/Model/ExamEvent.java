@@ -20,4 +20,8 @@ public class ExamEvent extends Event
     public int getDuration() {
         return duration;
     }
+
+    public Room getRoom() {
+        return room;
+    }
 }
