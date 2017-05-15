@@ -1173,18 +1173,7 @@ public class MenuController implements Initializable
 
                 );
             }
-            else if (e instanceof ActivityEvent) {
-                System.out.println("adding - "+e.getClass()+"blah bar");
-                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
-                mainAgenda.appointments().addAll(
-                        new Agenda.AppointmentImplLocal()
-                                .withStartLocalDateTime(sTime)
-                                .withSummary("ActivityEvent")
-                                .withEndLocalDateTime(sTime.plusMinutes(((ActivityEvent) e).getDuration()))
-                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group10"))// you should use a map of AppointmentGroups
 
-                );
-            }
 
 
             else  {
