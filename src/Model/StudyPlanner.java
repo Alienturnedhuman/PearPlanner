@@ -4,6 +4,8 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * PearPlanner
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 public class StudyPlanner implements Serializable
 {
     // private data
-    private static final long serialVersionUID = 101L; //probably needs to be linked to the version control or such
+    private static final long serialVersionUID = 101L;
 
     private int version=-1;
     private Account account;
@@ -23,6 +25,7 @@ public class StudyPlanner implements Serializable
     private ArrayList<TimeTableEventType> timeTableEventTypes = new ArrayList<TimeTableEventType>();
     private ArrayList<Event> calendar = new ArrayList<Event>();
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
+    private HashMap<ModelEntity, boolean[]> deadlineNotifications = new HashMap<>();
 
     private StudyProfile currentStudyProfile;
 
@@ -30,11 +33,16 @@ public class StudyPlanner implements Serializable
 
     // getters
 
+    public ArrayList<Event> getCalendar() {
+        return calendar;
+    }
+
     /**
      * returns a String array of studyProfile names
      *
      * @return
      */
+
     public String[] getListOfStudyProfileNames()
     {
         int i = -1;
@@ -108,6 +116,36 @@ public class StudyPlanner implements Serializable
         return r;
     }
 
+    /**
+     * Returns a HashMap that contains information about Deadline notifications.
+     *
+     * @return
+     */
+    public HashMap<ModelEntity, boolean[]> getDeadlineNotifications()
+    {
+        return deadlineNotifications;
+    }
+
+    /**
+     * Returns an ArrayList of QuantityTypes.
+     *
+     * @return ArrayList<QuantityType>
+     */
+    public ArrayList<QuantityType> getQuantityTypes()
+    {
+        return this.quantityTypes;
+    }
+
+    /**
+     * Returns an ArrayList of TaskTypes.
+     *
+     * @return ArrayList<QuantityType>
+     */
+    public ArrayList<TaskType> getTaskTypes()
+    {
+        return this.taskTypes;
+    }
+
     // setters
     public boolean setCurrentStudyProfile(StudyProfile profile)
     {
@@ -155,6 +193,7 @@ public class StudyPlanner implements Serializable
     public void addActivity(Activity activity)
     {
         this.activityList.add(activity);
+        ArrayList<Assignment> assignments = new ArrayList<>();
         // Loop through all Tasks:
         for (Task t : activity.getTasks())
         {
@@ -165,29 +204,52 @@ public class StudyPlanner implements Serializable
                 if (r.getQuantityType().equals(activity.getType()) && !r.checkedCompleted)
                 {
                     quantity -= r.getRemainingQuantity();
-                    r.addActivity(activity);
-                    if (quantity <= 0)
-                        break;
-                }
-            }
-            // =================
+                    Activity extracted = new Activity(activity);
 
-            // Distribute quantity to Assignment requirements:
-            quantity = activity.getActivityQuantity();
-            for (Assignment a : t.getAssignmentReferences())
-            {
-                for (Requirement r : a.getRequirements())
-                {
-                    if (r.getQuantityType().equals(activity.getType()) && !r.checkedCompleted)
+                    if (quantity > 0)
                     {
-                        quantity -= r.getRemainingQuantity();
-                        r.addActivity(activity);
-                        if (quantity <= 0)
-                            break;
+                        extracted.setActivityQuantity(r.getRemainingQuantity());
+                        r.addActivity(extracted);
+                    } else
+                    {
+                        extracted.setActivityQuantity(quantity + r.getRemainingQuantity());
+                        r.addActivity(extracted);
+                        break;
                     }
                 }
             }
             // =================
+            for (Assignment assignment : t.getAssignmentReferences())
+            {
+                if (!assignments.contains(assignment))
+                    assignments.add(assignment);
+            }
+        }
+        // =================
+
+        // Distribute quantity to Assignment requirements:
+        for (Assignment a : assignments)
+        {
+            int quantity = activity.getActivityQuantity();
+            for (Requirement r : a.getRequirements())
+            {
+                if (r.getQuantityType().equals(activity.getType()) && !r.checkedCompleted)
+                {
+                    quantity -= r.getRemainingQuantity();
+                    Activity extracted = new Activity(activity);
+
+                    if (quantity > 0)
+                    {
+                        extracted.setActivityQuantity(r.getRemainingQuantity());
+                        r.addActivity(extracted);
+                    } else
+                    {
+                        extracted.setActivityQuantity(quantity + r.getRemainingQuantity());
+                        r.addActivity(extracted);
+                        break;
+                    }
+                }
+            }
         }
         // =================
     }
@@ -215,8 +277,10 @@ public class StudyPlanner implements Serializable
 
     public StudyPlanner(Account newAccount) throws NoSuchPaddingException, NoSuchAlgorithmException
     {
-        // it may make sense to clone this to stop someone retaining access to the
-        // object
         this.account = newAccount;
+        // Add Default Quantity types:
+        Collections.addAll(this.quantityTypes, QuantityType.listOfQuantityTypes());
+        // Add Default Task types:
+        Collections.addAll(this.taskTypes, TaskType.listOfTaskTypes());
     }
 }

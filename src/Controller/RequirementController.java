@@ -42,9 +42,12 @@ public class RequirementController implements Initializable
     @FXML private TableColumn<Activity, String> nameColumn;
     @FXML private TableColumn<Activity, Integer> quantityColumn;
     @FXML private TableColumn<Activity, String> dateColumn;
+    @FXML private ContextMenu context;
 
     // Buttons:
     @FXML private Button submit;
+    @FXML private Button addQuantity;
+    @FXML private MenuItem quantityMenu;
 
     // Text:
     @FXML private TextArea details;
@@ -52,6 +55,7 @@ public class RequirementController implements Initializable
     @FXML private TextField name;
     @FXML private TextField quantity;
     @FXML private TextField time;
+    @FXML private TextField quantityName;
 
     // Labels:
     @FXML private Label title;
@@ -104,6 +108,38 @@ public class RequirementController implements Initializable
         }
         if (this.requirement != null)
             this.completed.setVisible(false);
+    }
+
+    /**
+     * Validate data in the QuantityType field
+     */
+    public void validateNewQuantity()
+    {
+        if (!this.quantityName.getText().trim().isEmpty())
+            this.quantityMenu.setDisable(false);
+        else
+            this.quantityMenu.setDisable(true);
+    }
+
+    /**
+     * Add a new QuantityType
+     */
+    public void newQuantity()
+    {
+        if (UIManager.confirm("Create a new Quantity '" + this.quantityName.getText() + '?'))
+        {
+            // Create a new type:
+            QuantityType t = QuantityType.create(this.quantityName.getText());
+            // =================
+
+            // Update the current list:
+            this.quantityType.getItems().clear();
+            this.quantityType.getItems().addAll(QuantityType.listOfNames());
+            this.quantityType.getSelectionModel().select(t.getName());
+            // =================
+        }
+        this.quantityName.clear();
+        this.quantityMenu.setDisable(true);
     }
 
     /**
@@ -181,6 +217,13 @@ public class RequirementController implements Initializable
                 }
             });
             return row;
+        });
+        // =================
+
+        // Quantity actions:
+        this.addQuantity.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown())
+                context.show(addQuantity, event.getScreenX(), event.getScreenY());
         });
         // =================
 

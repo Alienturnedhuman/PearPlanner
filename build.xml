@@ -79,7 +79,9 @@
     <pathelement location="${basedir}/lib/testfx-junit5-4.0.6-alpha.jar"/>
     <pathelement location="${basedir}/lib/testfx-junit-4.0.6-alpha.jar"/>
     <pathelement location="${basedir}/lib/testfx-legacy-4.0.6-alpha.jar"/>
-
+    <pathelement location="${basedir}/lib/jfxtras-agenda-8.0-r5.jar"/>
+    <pathelement location="${basedir}/lib/jfxtras-controls-8.0-r5.jar"/>
+    <pathelement location="${basedir}/lib/jfxtras-common-8.0-r5.jar"/>
   </path>
   
   

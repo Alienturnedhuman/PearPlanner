@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.MainController;
+
 import java.util.ArrayList;
 
 /**
@@ -76,6 +78,50 @@ public class TaskType extends ModelEntity
         return false;
     }
 
+    /**
+     * Create a new TaskType.
+     *
+     * @param cName    Name of the TaskType.
+     * @param cDetails Details of the TaskType.
+     * @return
+     */
+    public static TaskType create(String cName, String cDetails)
+    {
+        TaskType t = new TaskType(cName, cDetails);
+        if (MainController.getSPC() != null)
+            MainController.getSPC().addTaskType(t);
+        return t;
+    }
+
+    /**
+     * Create a new TaskType.
+     *
+     * @param cName Name of the TaskType.
+     * @return
+     */
+    public static TaskType create(String cName)
+    {
+        TaskType t = new TaskType(cName);
+        if (MainController.getSPC() != null)
+            MainController.getSPC().addTaskType(t);
+        return t;
+    }
+
+    /**
+     * Create a new TaskType from an existing one.
+     *
+     * @param type TaskType object
+     */
+    public static void create(TaskType type)
+    {
+        if (!TaskType.taskDatabase.contains(type))
+        {
+            TaskType.taskDatabase.add(type);
+            if (MainController.getSPC() != null)
+                MainController.getSPC().addTaskType(type);
+        }
+    }
+
     // this is a temporary way to populate the array until we later replace from reading a set up file
     static
     {
@@ -114,6 +160,15 @@ public class TaskType extends ModelEntity
         }
     }
 
+    private TaskType(String cName)
+    {
+        super(cName);
+        if (!exists(this))
+        {
+            taskDatabase.add(this);
+        }
+    }
+
     private TaskType(String cName, String cDetails)
     {
         super(cName, cDetails);
@@ -123,9 +178,11 @@ public class TaskType extends ModelEntity
         }
     }
 
-    public boolean equals(TaskType c)
+    @Override
+    public boolean equals(Object obj)
     {
-        return getName().equals(c.getName());
+        TaskType that = (TaskType) obj;
+        return getName().equals(that.getName());
     }
 
     public boolean equals(String c)

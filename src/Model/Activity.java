@@ -185,4 +185,21 @@ public class Activity extends Event
         this.activityQuantity = activityQuantity;
         this.type = QuantityType.get(type);
     }
+
+    /**
+     * Creates a copy of the given Activity.
+     *
+     * @param activity Activity object to be copied.
+     */
+    public Activity(Activity activity)
+    {
+        super();
+        this.name = activity.name;
+        this.details = activity.details;
+        this.date = activity.date;
+        this.duration = activity.duration;
+        this.activityQuantity = activity.activityQuantity;
+        this.type = activity.type;
+        this.tasks = activity.tasks;
+    }
 }

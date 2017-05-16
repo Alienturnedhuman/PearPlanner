@@ -18,7 +18,7 @@ public class Requirement extends ModelEntity
     protected ArrayList<Activity> activityLog = new ArrayList<>();
     protected int initialQuantity;
     protected int remainingQuantity;
-    protected QuantityType quantityType; // TODO custom Quantity and Task types
+    protected QuantityType quantityType;
 
     // public methods
 
@@ -76,10 +76,14 @@ public class Requirement extends ModelEntity
         return this.activityLog.toArray(new Activity[this.activityLog.size()]);
     }
 
+    /**
+     * Returns a double value representing the progress of this Requirement
+     *
+     * @return value between 0.0 and 0.1
+     */
     public double requirementProgress()
     {
-        // TODO calculate progress
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return (double) (this.initialQuantity - this.remainingQuantity) / this.initialQuantity;
     }
 
     // Setters:
@@ -126,13 +130,26 @@ public class Requirement extends ModelEntity
     }
 
     /**
-     * Update the current Requirement to reflect newly added activities
+     * Update the current Requirement to reflect changes.
+     *
      * @return whether any changes were made
      */
     public boolean update()
     {
-        // TODO update
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        int tempQuantity = this.remainingQuantity;
+
+        this.remainingQuantity = this.initialQuantity;
+        this.checkedCompleted = false;
+        for (Activity activity : this.activityLog)
+            this.remainingQuantity -= activity.getActivityQuantity();
+
+        if (this.remainingQuantity <= 0)
+        {
+            this.remainingQuantity = 0;
+            this.checkedCompleted = true;
+        }
+
+        return tempQuantity == this.remainingQuantity;
     }
 
     /**
@@ -144,6 +161,22 @@ public class Requirement extends ModelEntity
     public String toString()
     {
         return this.name;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+
+        Requirement that = (Requirement) o;
+
+        if (checkedCompleted != that.checkedCompleted) return false;
+        if (Double.compare(that.estimatedTimeInHours, estimatedTimeInHours) != 0) return false;
+        if (initialQuantity != that.initialQuantity) return false;
+        if (remainingQuantity != that.remainingQuantity) return false;
+        if (!activityLog.equals(that.activityLog)) return false;
+        return quantityType.equals(that.quantityType);
     }
 
     @Override

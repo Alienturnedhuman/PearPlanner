@@ -5,6 +5,8 @@ import View.UIManager;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,12 +18,19 @@ import javafx.geometry.Orientation;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
+import jfxtras.scene.control.agenda.Agenda;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -59,6 +68,9 @@ public class MenuController implements Initializable
     @FXML private GridPane mainContent;
     @FXML private HBox topBox;
 
+    @FXML private Agenda mainAgenda;
+    @FXML private Button agendaFwd;
+    @FXML private Button agendaBwd;
 
     public void main(Window wind)
     {
@@ -105,6 +117,13 @@ public class MenuController implements Initializable
      */
     public void loadDashboard()
     {
+        this.agendaBwd.setOnMouseClicked(event -> this.mainAgenda.setDisplayedLocalDateTime(this.mainAgenda.getDisplayedLocalDateTime().minusDays(7)));
+        this.agendaFwd.setOnMouseClicked(event -> this.mainAgenda.setDisplayedLocalDateTime(this.mainAgenda.getDisplayedLocalDateTime().plusDays(7)));
+
+        this.loadAgenda();
+        this.mainAgenda.setAllowDragging(false);
+        this.mainAgenda.setAllowResize(false);
+
         // Update main pane:
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
         this.topBox.getChildren().clear();
@@ -117,12 +136,14 @@ public class MenuController implements Initializable
         modules.getStyleClass().add("title");
         this.mainContent.addRow(1, modules);
 
+
         int i = 2;
         for (Module module : MainController.getSPC().getPlanner().getCurrentStudyProfile().getModules())
         {
             Label temp = new Label(module.getName());
             temp.getStyleClass().add("list-item");
             this.mainContent.addRow(i++, temp);
+
         }
         // =================
     }
@@ -272,7 +293,7 @@ public class MenuController implements Initializable
         });
 
         remove.setOnAction(e -> {
-            if (UIManager.confirm("Are you sure you want to remove this requirement?"))
+            if (UIManager.confirm("Are you sure you want to remove this milestone?"))
             {
                 Milestone m = table.getSelectionModel().getSelectedItem();
                 list.remove(m);
@@ -292,6 +313,8 @@ public class MenuController implements Initializable
      */
     public void loadStudyProfiles()
     {
+
+
         // Update main pane:
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
         this.topBox.getChildren().clear();
@@ -320,6 +343,7 @@ public class MenuController implements Initializable
         // =================
 
         // Create a table:
+
         TableView<StudyProfile> table = new TableView<>();
         table.setItems(list);
         table.getColumns().addAll(nameColumn, yearColumn, semesterColumn);
@@ -455,6 +479,26 @@ public class MenuController implements Initializable
         TableColumn<Assignment, String> nameColumn = new TableColumn<>("Assignment");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+        TableColumn<Assignment, String> deadlineColumn = new TableColumn<>("Date");
+        deadlineColumn.setCellValueFactory(new PropertyValueFactory("deadlineString")
+        {
+            @Override public ObservableValue call(TableColumn.CellDataFeatures param)
+            {
+                SimpleStringProperty value = new SimpleStringProperty();
+                if (param.getValue() instanceof Coursework)
+                {
+                    Coursework c = (Coursework) param.getValue();
+                    value.setValue(c.getDeadlineString());
+                } else if (param.getValue() instanceof Exam)
+                {
+                    Exam e = (Exam) param.getValue();
+                    value.setValue(e.getTimeSlot().getDateString());
+                }
+                return value;
+            }
+        });
+        deadlineColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+
         TableColumn<Assignment, Integer> weightingColumn = new TableColumn<>("Weighting");
         weightingColumn.setCellValueFactory(new PropertyValueFactory<>("weighting"));
         weightingColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
@@ -465,7 +509,7 @@ public class MenuController implements Initializable
         // Create a moduleContent:
         TableView<Assignment> moduleContent = new TableView<>();
         moduleContent.setItems(list);
-        moduleContent.getColumns().addAll(nameColumn, weightingColumn);
+        moduleContent.getColumns().addAll(nameColumn, deadlineColumn, weightingColumn);
         moduleContent.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setHgrow(moduleContent, Priority.ALWAYS);
         GridPane.setVgrow(moduleContent, Priority.ALWAYS);
@@ -513,7 +557,18 @@ public class MenuController implements Initializable
         VBox detailsBox = new VBox(5);
         Label details = new Label(assignment.getDetails().getAsString());
         details.setWrapText(true);
+        String date = "";
+        if (assignment instanceof Coursework)
+        {
+            Coursework c = (Coursework) assignment;
+            date = "Deadline: " + c.getDeadlineString();
+        } else if (assignment instanceof Exam)
+        {
+            Exam e = (Exam) assignment;
+            date = "Date: " + e.getTimeSlot().getDateString();
+        }
         detailsBox.getChildren().addAll(new Label("Weighting: " + assignment.getWeighting()),
+                new Label(date),
                 new Label("Set by: " + assignment.getSetBy().getFullName()),
                 new Label("Marked by: " + assignment.getMarkedBy().getFullName()),
                 new Label("Reviewed by: " + assignment.getReviewedBy().getFullName()), details);
@@ -553,36 +608,8 @@ public class MenuController implements Initializable
         GridPane.setVgrow(requirements, Priority.ALWAYS);
         // =================
 
-        // Set click event:
-        requirements.setRowFactory(e -> {
-            TableRow<Requirement> row = new TableRow<Requirement>()
-            {
-                @Override
-                protected void updateItem(final Requirement item, final boolean empty)
-                {
-                    super.updateItem(item, empty);
-                    // If completed, mark:
-                    if (!empty && item != null && item.isComplete())
-                        this.getStyleClass().add("current-item");
-                    else
-                        this.getStyleClass().remove("current-item");
-                }
-            };
-            row.setOnMouseClicked(event -> {
-                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
-                {
-                    try
-                    {
-                        MainController.ui.requirementDetails(row.getItem());
-                        requirements.refresh();
-                    } catch (IOException e1)
-                    {
-                        UIManager.reportError("Unable to open View file");
-                    }
-                }
-            });
-            return row;
-        });
+        // Set RowFactory:
+        requirements.setRowFactory(e -> MenuController.requirementRowFactory(requirements, assignment));
         // =================
 
         content.addColumn(0, requirements);
@@ -625,6 +652,7 @@ public class MenuController implements Initializable
                 {
                     requirementList.add(req);
                     assignment.addRequirement(req);
+                    requirements.refresh();
                 }
             } catch (IOException e1)
             {
@@ -640,6 +668,7 @@ public class MenuController implements Initializable
                 Requirement r = requirements.getSelectionModel().getSelectedItem();
                 requirementList.remove(r);
                 assignment.removeRequirement(r);
+                requirements.refresh();
             }
         });
         // =================
@@ -755,7 +784,6 @@ public class MenuController implements Initializable
         // =================
 
         // Bind actions on buttons:
-
         addNew.setOnAction(e -> {
             try
             {
@@ -903,6 +931,8 @@ public class MenuController implements Initializable
      */
     private void updateNotifications()
     {
+        MainController.getSPC().checkForNotifications();
+
         // Set notification button style:
         if (MainController.getSPC().getPlanner().getUnreadNotifications().length > 0)
         {
@@ -939,9 +969,11 @@ public class MenuController implements Initializable
             // Create labels:
             Label title = new Label(n[i].getTitle());
             title.getStyleClass().add("notificationItem-title");
+            title.setMaxWidth(250.0);
 
             Label details = n[i].getDetails() != null ? new Label(n[i].getDetailsAsString()) : new Label();
             details.getStyleClass().add("notificationItem-details");
+            details.setMaxWidth(250.0);
 
             String dateFormatted = n[i].getDateTime().get(Calendar.DAY_OF_MONTH) + " " +
                     n[i].getDateTime().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " at " +
@@ -1043,5 +1075,167 @@ public class MenuController implements Initializable
                 closeNot.play();
             }
         });
+    }
+
+    /**
+     * RowFactory for a TableView of Requirement.
+     *
+     * @param e TableView that contains the RowFactory.
+     * @return new RowFactory
+     */
+    protected static TableRow<Requirement> requirementRowFactory(TableView<Requirement> e, Assignment assignment)
+    {
+        TableRow<Requirement> row = new TableRow<Requirement>()
+        {
+            @Override
+            protected void updateItem(final Requirement item, final boolean empty)
+            {
+                super.updateItem(item, empty);
+                // If completed, mark:
+                if (!empty && item != null)
+                {
+                    setText(item.toString());
+                    if (item.isComplete())
+                        this.getStyleClass().add("current-item");
+                } else
+                {
+                    setText(null);
+                    this.getStyleClass().remove("current-item");
+                }
+                e.refresh();
+            }
+        };
+
+        row.setOnMouseClicked(event -> {
+            if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+            {
+                try
+                {
+                    MainController.ui.requirementDetails(row.getItem());
+                    e.refresh();
+                } catch (IOException e1)
+                {
+                    UIManager.reportError("Unable to open View file");
+                }
+            }
+        });
+
+        row.setOnDragDetected(event -> {
+
+            if (row.getItem() == null) return;
+            Dragboard dragboard = row.startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent content = new ClipboardContent();
+            content.put(TaskController.format, row.getItem());
+            dragboard.setContent(content);
+            event.consume();
+        });
+
+        row.setOnDragOver(event -> {
+            if (event.getGestureSource() != row && event.getDragboard().hasContent(TaskController.format))
+                event.acceptTransferModes(TransferMode.MOVE);
+            event.consume();
+        });
+
+        row.setOnDragEntered(event -> {
+            if (event.getGestureSource() != row && event.getDragboard().hasContent(TaskController.format))
+                row.setOpacity(0.3);
+        });
+
+        row.setOnDragExited(event -> {
+            if (event.getGestureSource() != row && event.getDragboard().hasContent(TaskController.format))
+                row.setOpacity(1);
+        });
+
+        row.setOnDragDropped(event -> {
+
+            if (row.getItem() == null)
+                return;
+
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+
+            if (event.getDragboard().hasContent(TaskController.format))
+            {
+                ObservableList<Requirement> items = e.getItems();
+                Requirement dragged = (Requirement) db.getContent(TaskController.format);
+
+                int draggedID = items.indexOf(dragged);
+                int thisID = items.indexOf(row.getItem());
+
+                e.getItems().set(draggedID, row.getItem());
+                e.getItems().set(thisID, dragged);
+
+                ArrayList<Requirement> reqs = assignment.getRequirements();
+                reqs.set(draggedID, row.getItem());
+                reqs.set(thisID, dragged);
+
+                success = true;
+                e.refresh();
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
+        return row;
+    }
+
+    private void loadAgenda()
+    {
+        this.populateAgenda(MainController.getSPC().getPlanner().getCalendar());
+    }
+
+    private void populateAgenda(ArrayList<Event> calendar)
+    {
+        for (Event e : calendar)
+        {
+            if (e instanceof TimetableEvent)
+            {
+                System.out.println("adding - " + e.getClass() + "duration" + ((TimetableEvent) e).getDuration());
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                mainAgenda.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withEndLocalDateTime(sTime.plusMinutes(((TimetableEvent) e).getDuration()))
+                                .withSummary("TimetableEvent")
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group5"))// you should use a map of AppointmentGroups
+
+                );
+            } else if (e instanceof ExamEvent)
+            {
+                System.out.println("adding - " + e.getClass());
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                mainAgenda.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withSummary("ExamEvent")
+                                .withEndLocalDateTime(sTime.plusMinutes(((ExamEvent) e).getDuration()))
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group20"))// you should use a map of AppointmentGroups
+
+                );
+            } else if (e instanceof Deadline)
+            {
+                System.out.println("adding - " + e.getClass() + "blah bar");
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                mainAgenda.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withSummary("Deadline")
+                                .withEndLocalDateTime(sTime.plusMinutes(60))
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"))// you should use a map of AppointmentGroups
+
+                );
+            } else
+            {
+                System.out.println("adding - " + e.getClass());
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                mainAgenda.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withSummary("Generic Event")
+                                .withEndLocalDateTime(sTime.plusMinutes(60))
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group3"))// you should use a map of AppointmentGroups
+
+                );
+            }
+        }
     }
 }

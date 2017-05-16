@@ -17,7 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseButton;
+import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -36,6 +36,8 @@ import java.util.ResourceBundle;
  */
 public class TaskController implements Initializable
 {
+    public static DataFormat format = new DataFormat("object/Requirement");
+
     // TODO display activities
     private Task task;
     private boolean success = false;
@@ -57,9 +59,12 @@ public class TaskController implements Initializable
     @FXML private Button removeReq;
     @FXML private Button removeDep;
     @FXML private ToggleButton markComplete;
+    @FXML private Button addTaskType;
+    @FXML private MenuItem taskTypeMenu;
 
     // Panes:
     @FXML private GridPane pane;
+    @FXML private ContextMenu context;
 
     // Text:
     @FXML private TextArea details;
@@ -67,6 +72,7 @@ public class TaskController implements Initializable
     @FXML private DatePicker deadline;
     @FXML private TextField name;
     @FXML private TextField weighting;
+    @FXML private TextField taskTypeName;
 
     // Labels:
     @FXML private Label title;
@@ -206,6 +212,38 @@ public class TaskController implements Initializable
     }
 
     /**
+     * Validate data in the TaskType field
+     */
+    public void validateNewTaskType()
+    {
+        if (!this.taskTypeName.getText().trim().isEmpty())
+            this.taskTypeMenu.setDisable(false);
+        else
+            this.taskTypeMenu.setDisable(true);
+    }
+
+    /**
+     * Add a new TaskType
+     */
+    public void newTaskType()
+    {
+        if (UIManager.confirm("Create a new Task type '" + this.taskTypeName.getText() + '?'))
+        {
+            // Create a new type:
+            TaskType t = TaskType.create(this.taskTypeName.getText());
+            // =================
+
+            // Update the current list:
+            this.taskType.getItems().clear();
+            this.taskType.getItems().addAll(TaskType.listOfNames());
+            this.taskType.getSelectionModel().select(t.getName());
+            // =================
+        }
+        this.taskTypeName.clear();
+        this.taskTypeMenu.setDisable(true);
+    }
+
+    /**
      * Submit the form and create a new Task
      */
     public void handleSubmit()
@@ -318,40 +356,13 @@ public class TaskController implements Initializable
             }
         });
 
-        this.requirements.setCellFactory(e -> {
-            ListCell<Requirement> cell = new ListCell<Requirement>()
-            {
-                @Override
-                protected void updateItem(final Requirement item, final boolean empty)
-                {
-                    super.updateItem(item, empty);
-                    // If completed, mark:
-                    if (!empty && item != null)
-                    {
-                        setText(item.toString());
-                        if (item.isComplete())
-                            this.getStyleClass().add("current-item");
-                    } else
-                    {
-                        setText(null);
-                        this.getStyleClass().remove("current-item");
-                    }
-                }
-            };
-            cell.setOnMouseClicked(event -> {
-                if (!cell.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
-                {
-                    try
-                    {
-                        MainController.ui.requirementDetails(cell.getItem());
-                        this.requirements.refresh();
-                    } catch (IOException e1)
-                    {
-                        UIManager.reportError("Unable to open View file");
-                    }
-                }
-            });
-            return cell;
+        this.requirements.setCellFactory(this::requirementCellFactory);
+        // =================
+
+        // TaskType actions:
+        this.addTaskType.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown())
+                context.show(addTaskType, event.getScreenX(), event.getScreenY());
         });
         // =================
 
@@ -401,12 +412,12 @@ public class TaskController implements Initializable
     }
 
     /**
-     * Formats the cell for displaying Tasks.
+     * RowFactory for a TableRow of Task.
      *
-     * @param e TableView to be formatted.
-     * @return Formatted TableRow
+     * @param e TableView that contains the TableRow.
+     * @return new TableRow
      */
-    protected static TableRow<Task> cellRowFormat(TableView<Task> e)
+    protected static TableRow<Task> taskRowFactory(TableView<Task> e)
     {
         TableRow<Task> row = new TableRow<Task>()
         {
@@ -466,7 +477,7 @@ public class TaskController implements Initializable
         // =================
 
         // Set click event:
-        tasks.setRowFactory(TaskController::cellRowFormat);
+        tasks.setRowFactory(TaskController::taskRowFactory);
         // =================
 
         // Button:
@@ -493,39 +504,92 @@ public class TaskController implements Initializable
         return tasks.getSelectionModel().getSelectedItems();
     }
 
-    // TODO try to implement the draggy thing if there's time
-    /*protected static ListCell<Requirement> dragCell()
+    /**
+     * CellFactory for a ListView of Requirement.
+     *
+     * @param e ListView that contains the ListCell.
+     * @return new ListCell
+     */
+    protected ListCell<Requirement> requirementCellFactory(ListView<Requirement> e)
     {
-        ListCell<Requirement> cell = new ListCell<Requirement>();
-
-        cell.setOnDragDetected(event -> {
-            Requirement selected = cell.getItem();
-            if (selected != null)
+        ListCell<Requirement> cell = new ListCell<Requirement>()
+        {
+            @Override
+            protected void updateItem(final Requirement item, final boolean empty)
             {
-                Dragboard db = cell.startDragAndDrop(TransferMode.MOVE);
-                ClipboardContent content = new ClipboardContent();
-                content.put(DataFormat.PLAIN_TEXT, selected);
-                db.setContent(content);
-                event.consume();
+                super.updateItem(item, empty);
+                // If completed, mark:
+                if (!empty && item != null)
+                {
+                    setText(item.toString());
+                    if (item.isComplete())
+                        this.getStyleClass().add("current-item");
+                } else
+                {
+                    setText(null);
+                    this.getStyleClass().remove("current-item");
+                }
+            }
+        };
+
+        cell.setOnMouseClicked(event -> {
+            if (!cell.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+            {
+                try
+                {
+                    MainController.ui.requirementDetails(cell.getItem());
+                    e.refresh();
+                } catch (IOException e1)
+                {
+                    UIManager.reportError("Unable to open View file");
+                }
             }
         });
+
+        cell.setOnDragDetected(event -> {
+
+            if (cell.getItem() == null) return;
+            Dragboard dragboard = cell.startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent content = new ClipboardContent();
+            content.put(TaskController.format, cell.getItem());
+            dragboard.setContent(content);
+            event.consume();
+        });
+
         cell.setOnDragOver(event -> {
-            if (event.getDragboard().hasContent(DataFormat.PLAIN_TEXT))
+            if (event.getGestureSource() != cell && event.getDragboard().hasContent(TaskController.format))
                 event.acceptTransferModes(TransferMode.MOVE);
             event.consume();
         });
+
+        cell.setOnDragEntered(event -> {
+            if (event.getGestureSource() != cell && event.getDragboard().hasContent(TaskController.format))
+                cell.setOpacity(0.3);
+        });
+
+        cell.setOnDragExited(event -> {
+            if (event.getGestureSource() != cell && event.getDragboard().hasContent(TaskController.format))
+                cell.setOpacity(1);
+        });
+
         cell.setOnDragDropped(event -> {
+
+            if (cell.getItem() == null)
+                return;
+
             Dragboard db = event.getDragboard();
             boolean success = false;
-            if (event.getDragboard().hasContent(DataFormat.PLAIN_TEXT))
-            {
-                Requirement req = (Requirement) db.getContent(DataFormat.PLAIN_TEXT);
-                ListCell<Requirement> source = (ListCell<Requirement>) event.getSource();
-                ListCell<Requirement> target = (ListCell<Requirement>) event.getGestureTarget();
 
-                Requirement temp = target.getItem();
-                target.setItem(req);
-                source.setItem(temp);
+            if (event.getDragboard().hasContent(TaskController.format))
+            {
+                ObservableList<Requirement> items = e.getItems();
+                Requirement dragged = (Requirement) db.getContent(TaskController.format);
+
+                int draggedID = items.indexOf(dragged);
+                int thisID = items.indexOf(cell.getItem());
+
+                e.getItems().set(draggedID, cell.getItem());
+                e.getItems().set(thisID, dragged);
 
                 success = true;
             }
@@ -533,6 +597,6 @@ public class TaskController implements Initializable
             event.consume();
         });
         return cell;
-    }*/
+    }
 }
 
