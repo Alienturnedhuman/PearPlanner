@@ -7,7 +7,7 @@ package Model;
 public class Building extends VersionControlEntity
 {
     // private Data
-    private String code;
+    private String code = null;
     private double latitude;
     private double longitude;
 
@@ -18,7 +18,10 @@ public class Building extends VersionControlEntity
         if (receivedVCE instanceof Building)
         {
             Building castedVCE = (Building) receivedVCE;
-            this.code = castedVCE.getCode();
+            if(castedVCE.getCode()!=null)
+            {
+                this.code = castedVCE.getCode();
+            }
             this.latitude = castedVCE.getLatitude();
             this.longitude = castedVCE.getLongitude();
         }

@@ -26,10 +26,22 @@ public class Module extends VersionControlEntity
         if (receivedVCE instanceof Module)
         {
             Module castedVCE = (Module) receivedVCE;
-            this.organiser = castedVCE.getOrganiser();
-            this.moduleCode = castedVCE.getModuleCode();
-            this.assignments = castedVCE.getAssignments();
-            this.timetable = castedVCE.getTimetable();
+            if(castedVCE.getOrganiser()!=null)
+            {
+                this.organiser = castedVCE.getOrganiser();
+            }
+            if(castedVCE.getModuleCode()!=null)
+            {
+                this.moduleCode = castedVCE.getModuleCode();
+            }
+            if(castedVCE.getAssignments()!=null)
+            {
+                this.assignments = castedVCE.getAssignments();
+            }
+            if(castedVCE.getAssignments()!=null)
+            {
+                this.timetable = castedVCE.getTimetable();
+            }
         }
 
         super.replace(receivedVCE);

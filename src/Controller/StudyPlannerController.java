@@ -55,6 +55,12 @@ public class StudyPlannerController
         // not implemented yet
     }
 
+
+    public boolean containsStudyProfile(int year, int semester)
+    {
+        return planner.containsStudyProfile(year,semester);
+    }
+
     /**
      * if the StudyPlanner contains the hubfile, this returns the version
      * if not, returns -1

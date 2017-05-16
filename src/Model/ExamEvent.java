@@ -12,6 +12,21 @@ public class ExamEvent extends Event
     private Room room;
     private int duration;
 
+    @Override
+    protected void replace(VersionControlEntity receivedVCE)
+    {
+        if (receivedVCE instanceof ExamEvent)
+        {
+            ExamEvent castedVCE = (ExamEvent) receivedVCE;
+            if(castedVCE.getRoom()!=null)
+            {
+                this.room = castedVCE.getRoom();
+            }
+            this.duration = castedVCE.getDuration();
+        }
+        super.replace(receivedVCE);
+    }
+
     /**
      * Returns a String representing the event.
      * Used in JavaFX.
@@ -21,6 +36,7 @@ public class ExamEvent extends Event
     public String getDateString()
     {
         return new SimpleDateFormat("dd/MM/yyyy HH:MM").format(this.date.getTime());
+
     }
 
     public ExamEvent(String cDate, Room cRoom, int cDuration)

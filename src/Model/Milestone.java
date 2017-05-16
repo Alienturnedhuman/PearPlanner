@@ -147,6 +147,17 @@ public class Milestone extends ModelEntity
     }
 
     /**
+     * Checks if the Milestone contains the requested task
+     *
+     * @param task Task to be checked for
+     * @return Whether the teask is contained.
+     */
+    public boolean containsTask(Task task)
+    {
+        return this.tasks.contains(task);
+    }
+
+    /**
      * Add all given Tasks to this Milestone.
      *
      * @param tasks a Collection of Tasks to be added.

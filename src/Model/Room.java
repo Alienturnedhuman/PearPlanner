@@ -18,7 +18,10 @@ public class Room extends VersionControlEntity
         if (receivedVCE instanceof Room)
         {
             Room castedVCE = (Room) receivedVCE;
-            this.building = castedVCE.getBuilding();
+            if(castedVCE.getBuilding()!=null)
+            {
+                this.building = castedVCE.getBuilding();
+            }
             this.roomNumber = castedVCE.getRoomNumber();
         }
         super.replace(receivedVCE);

@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class Event extends VersionControlEntity
 {
-    protected GregorianCalendar date;
+    protected GregorianCalendar date = null;
 
     // public methods
     private static Pattern dateRegex = Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)");
@@ -22,6 +22,22 @@ public class Event extends VersionControlEntity
         return dateRegex.matcher(dateString).matches();
     }
 
+
+
+
+    @Override
+    protected void replace(VersionControlEntity receivedVCE)
+    {
+        if (receivedVCE instanceof Event)
+        {
+            Event castedVCE = (Event) receivedVCE;
+            if(castedVCE.getCalendar()!=null)
+            {
+                this.date = castedVCE.getCalendar();
+            }
+        }
+        super.replace(receivedVCE);
+    }
 
     // getters
 
@@ -33,6 +49,11 @@ public class Event extends VersionControlEntity
     public Date getDate()
     {
         return this.date.getTime();
+    }
+
+    public GregorianCalendar getCalendar()
+    {
+        return date;
     }
 
     public String toString()

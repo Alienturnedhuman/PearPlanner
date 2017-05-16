@@ -7,8 +7,8 @@ package Model;
 public class Exam extends Assignment
 {
     // private data
-    private Exam resit;
-    private ExamEvent timeSlot;
+    private Exam resit = null;
+    private ExamEvent timeSlot = null;
 
     // private methods
     @Override
@@ -17,8 +17,14 @@ public class Exam extends Assignment
         if (receivedVCE instanceof Exam)
         {
             Exam castedVCE = (Exam) receivedVCE;
-            this.resit = castedVCE.getResit();
-            this.timeSlot = castedVCE.getTimeSlot();
+            if(castedVCE.getResit()!=null)
+            {
+                this.resit = castedVCE.getResit();
+            }
+            if(castedVCE.getTimeSlot()!=null)
+            {
+                this.timeSlot = castedVCE.getTimeSlot();
+            }
         }
 
         super.replace(receivedVCE);
