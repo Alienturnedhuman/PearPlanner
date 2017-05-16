@@ -150,6 +150,75 @@ public class StudyPlannerController
     }
 
     /**
+     * Checker whether the user needs to be notified about something.
+     * (Deadlines etc.)
+     */
+    public void checkForNotifications()
+    {
+        /*int hours1 = 168, hours2 = 48; // temporary values until a Settings page is present
+
+        for (Map.Entry<ModelEntity, boolean[]> entry : this.planner.getDeadlineNotifications().entrySet())
+        {
+            if (entry.getKey() instanceof Assignment)
+            {
+                if (!entry.getValue()[0])
+                {
+                    GregorianCalendar temp = new GregorianCalendar();
+                    temp.add(Calendar.HOUR, -hours1);
+                    Date date = temp.getTime();
+
+                    if (entry.getKey() instanceof Coursework)
+                    {
+                        if (date.after((((Coursework) entry.getKey()).getDeadline().getDate())))
+                        {
+                            Notification not = new Notification("Assignment due in a week!",
+                                    new GregorianCalendar(), entry.getKey().getName(), entry.getKey());
+                            MainController.getSPC().getPlanner().addNotification(not);
+                            entry.getValue()[0] = true;
+                        }
+                    }
+                    if (entry.getKey() instanceof Exam)
+                    {
+                        if (date.after((((Exam) entry.getKey()).getTimeSlot().getDate())))
+                        {
+                            Notification not = new Notification("You have an exam in a week!",
+                                    new GregorianCalendar(), entry.getKey().getName(), entry.getKey());
+                            MainController.getSPC().getPlanner().addNotification(not);
+                            entry.getValue()[0] = true;
+                        }
+                    }
+                } else if (!entry.getValue()[1])
+                {
+                    GregorianCalendar temp = new GregorianCalendar();
+                    temp.add(Calendar.HOUR, -hours2);
+                    Date date = temp.getTime();
+
+                    if (entry.getKey() instanceof Coursework)
+                    {
+                        if (date.after((((Coursework) entry.getKey()).getDeadline().getDate())))
+                        {
+                            Notification not = new Notification("Assignment due in a two days!",
+                                    new GregorianCalendar(), entry.getKey().getName(), entry.getKey());
+                            MainController.getSPC().getPlanner().addNotification(not);
+                            entry.getValue()[1] = true;
+                        }
+                    }
+                    if (entry.getKey() instanceof Exam)
+                    {
+                        if (date.after((((Exam) entry.getKey()).getTimeSlot().getDate())))
+                        {
+                            Notification not = new Notification("You have an exam in two days!",
+                                    new GregorianCalendar(), entry.getKey().getName(), entry.getKey());
+                            MainController.getSPC().getPlanner().addNotification(not);
+                            entry.getValue()[1] = true;
+                        }
+                    }
+                } else this.planner.getDeadlineNotifications().remove(entry);
+            }
+        }*/
+    }
+
+    /**
      * Adds a new Activity to this StudyPlanner
      */
     public void addActivity(Activity activity)

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * PearPlanner
@@ -13,7 +14,7 @@ import java.util.Collections;
 public class StudyPlanner implements Serializable
 {
     // private data
-    private static final long serialVersionUID = 101L; //probably needs to be linked to the version control or such
+    private static final long serialVersionUID = 101L;
 
     private Account account;
     private ArrayList<QuantityType> quantityTypes = new ArrayList<QuantityType>();
@@ -23,6 +24,7 @@ public class StudyPlanner implements Serializable
     private ArrayList<TimeTableEventType> timeTableEventTypes = new ArrayList<TimeTableEventType>();
     private ArrayList<Event> calendar = new ArrayList<Event>();
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
+    private HashMap<ModelEntity, boolean[]> deadlineNotifications = new HashMap<>();
 
     private StudyProfile currentStudyProfile;
 
@@ -111,6 +113,16 @@ public class StudyPlanner implements Serializable
     {
         Notification[] r = this.notifications.stream().filter(e -> !e.isRead()).toArray(Notification[]::new);
         return r;
+    }
+
+    /**
+     * Returns a HashMap that contains information about Deadline notifications.
+     *
+     * @return
+     */
+    public HashMap<ModelEntity, boolean[]> getDeadlineNotifications()
+    {
+        return deadlineNotifications;
     }
 
     /**
