@@ -112,7 +112,7 @@ public class Person extends VersionControlEntity
     {
         // initial set up code below - check if this needs updating
         String nameSplit[] = nameStr.split(" ");
-        givenNames = new ArrayList<String>(Arrays.asList(nameSplit));
+        givenNames = new ArrayList<>(Arrays.asList(nameSplit));
     }
 
     /**

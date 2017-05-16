@@ -356,9 +356,9 @@ public class StudyPlannerController
         this.planner = planner;
 
         if (!this.planner.getQuantityTypes().isEmpty())
-            this.planner.getQuantityTypes().forEach(e -> QuantityType.create(e));
+            this.planner.getQuantityTypes().forEach(QuantityType::create);
 
         if (!this.planner.getTaskTypes().isEmpty())
-            this.planner.getTaskTypes().forEach(e -> TaskType.create(e));
+            this.planner.getTaskTypes().forEach(TaskType::create);
     }
 }
