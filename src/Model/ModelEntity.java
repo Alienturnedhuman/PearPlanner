@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ModelEntity implements Serializable
 {
     protected String name = "";
-    protected MultilineString details;
+    protected MultilineString details=null;
     protected ArrayList<Note> notes;
 
 

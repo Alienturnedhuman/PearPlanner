@@ -1,6 +1,8 @@
 package Model;
 
+import Controller.DataController;
 import Controller.XMLcontroller;
+import org.w3c.dom.NodeList;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -164,13 +166,27 @@ public class HubFile implements Serializable
         updateFile = true;
     }
 
+    public static boolean updateableNode(String name)
+    {
+        return schemaList.containsKey(name);
+    }
 
     // schemas
     // note, for the time being these are hard coded into the code
     // long term, these would be imported from a settings file
 
-    public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_ROOT;
+    // special SCHEMA for update file
+    public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_VCE;
+    static
+    {
+        SCHEMA_VCE = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_VCE.put("name", XMLcontroller.ImportAs.STRING);
+        SCHEMA_VCE.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
+        SCHEMA_VCE.put("uid", XMLcontroller.ImportAs.STRING);
+        SCHEMA_VCE.put("version", XMLcontroller.ImportAs.INTEGER);
+    }
 
+    public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_ROOT;
     static
     {
         SCHEMA_ROOT = new HashMap<String, XMLcontroller.ImportAs>();
@@ -195,6 +211,7 @@ public class HubFile implements Serializable
         SCHEMA_UPDATE_FILE.put("version", XMLcontroller.ImportAs.INTEGER);
         SCHEMA_UPDATE_FILE.put("extensions", XMLcontroller.ImportAs.NODELIST);
         SCHEMA_UPDATE_FILE.put("updates", XMLcontroller.ImportAs.NODELIST);
+        SCHEMA_UPDATE_FILE.put("new", XMLcontroller.ImportAs.NODELIST);
     }
 
     public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_ASSETS;
@@ -209,7 +226,6 @@ public class HubFile implements Serializable
     }
 
     public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_STUDYPROFILE;
-
     static
     {
         SCHEMA_STUDYPROFILE = new HashMap<String, XMLcontroller.ImportAs>();
@@ -360,7 +376,6 @@ public class HubFile implements Serializable
     }
 
     public static HashMap<String, XMLcontroller.ImportAs> SCHEMA_EXAMEVENT;
-
     static
     {
         SCHEMA_EXAMEVENT = new HashMap<String, XMLcontroller.ImportAs>();
@@ -373,5 +388,61 @@ public class HubFile implements Serializable
         SCHEMA_EXAMEVENT.put("room", XMLcontroller.ImportAs.STRING);
         SCHEMA_EXAMEVENT.put("duration", XMLcontroller.ImportAs.INTEGER);
     }
+
+    public static HashMap<String,HashMap<String, XMLcontroller.ImportAs>> schemaList;
+    /*
+    static
+    {
+        schemaList.put("person",SCHEMA_PERSON);
+        schemaList.put("examEvent",SCHEMA_EXAMEVENT);
+        schemaList.put("event",SCHEMA_EVENT);
+        schemaList.put("deadline",SCHEMA_EVENT);
+        schemaList.put("timetableEvent",SCHEMA_TIMETABLE_EVENT);
+        schemaList.put("exam",SCHEMA_EXAM);
+        schemaList.put("coursework",SCHEMA_COURSEWORK);
+        schemaList.put("module",SCHEMA_MODULE);
+        schemaList.put("timetableEventType",SCHEMA_TIMETABLE_EVENT_TYPE);
+        schemaList.put("building",SCHEMA_BUILDING);
+        schemaList.put("room",SCHEMA_ROOM);
+    }
+    */
+
+    private static XMLcontroller xmlTools = new XMLcontroller();
+    public static Person createPerson(NodeList nc)
+    {
+        HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
+                HubFile.SCHEMA_PERSON);
+
+        Person r = new Person(pValues.get("salutation").getString(), pValues.get("givenNames").getString(),
+                pValues.get("familyName").getString(), pValues.get("familyNameLast").getBoolean(),
+                pValues.get("email").getString());
+
+        DataController.addVCEproperties(r,pValues);
+        return r;
+    }
+    public static Building createBuilding(NodeList nc)
+    {
+        HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
+                HubFile.SCHEMA_BUILDING);
+
+        Building r = new Building(pValues.get("code").getString(), pValues.get("latitude").getDouble(),
+                pValues.get("longitude").getDouble());
+
+        DataController.addVCEproperties(r,pValues);
+        return r;
+    }
+    /*
+    public static Room createRoom(NodeList nc)
+    {
+        HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
+                HubFile.SCHEMA_ROOM);
+
+        Room r = new Building(pValues.get("code").getString(), pValues.get("latitude").getDouble(),
+                pValues.get("longitude").getDouble());
+
+        DataController.addVCEproperties(r,pValues);
+        return r;
+    }
+    */
 
 }

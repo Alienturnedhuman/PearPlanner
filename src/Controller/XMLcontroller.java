@@ -5,6 +5,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static Controller.MainController.isNumeric;
 
@@ -216,14 +217,14 @@ public class XMLcontroller
 
     static public boolean matchesSchema(NodeList nodes, HashMap<String, XMLcontroller.ImportAs> schema)
     {
-        HashMap<String, String> match = new HashMap<>();
+        HashSet<String> match = new HashSet<>();
         int i = -1;
         int ii = nodes.getLength();
         while (++i < ii)
         {
             if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE && schema.containsKey(nodes.item(i).getNodeName()))
             {
-                match.put(nodes.item(i).getNodeName(), "found");
+                match.add(nodes.item(i).getNodeName());
             }
         }
         return match.size() == schema.size();

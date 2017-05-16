@@ -13,6 +13,30 @@ public class TimetableEvent extends Event
     private TimeTableEventType timeTableEventType;
     private int duration;
 
+
+
+    @Override
+    protected void replace(VersionControlEntity receivedVCE)
+    {
+        if (receivedVCE instanceof TimetableEvent)
+        {
+            TimetableEvent castedVCE = (TimetableEvent) receivedVCE;
+            this.duration = castedVCE.getDuration();
+            if(castedVCE.getLecturer()!=null)
+            {
+                this.lecturer = castedVCE.getLecturer();
+            }
+            if(castedVCE.getRoom()!=null)
+            {
+                this.room = castedVCE.getRoom();
+            }
+            if(castedVCE.getTimeTableEventType()!=null)
+            {
+                this.timeTableEventType = castedVCE.getTimeTableEventType();
+            }
+        }
+        super.replace(receivedVCE);
+    }
     // public methods
 
     // getters

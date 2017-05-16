@@ -14,6 +14,7 @@ public class StudyPlanner implements Serializable
     // private data
     private static final long serialVersionUID = 101L; //probably needs to be linked to the version control or such
 
+    private int version=-1;
     private Account account;
     private ArrayList<QuantityType> quantityTypes = new ArrayList<QuantityType>();
     private ArrayList<TaskType> taskTypes = new ArrayList<TaskType>();
@@ -189,6 +190,25 @@ public class StudyPlanner implements Serializable
             // =================
         }
         // =================
+    }
+
+
+    public boolean setVersion(int newVersion)
+    {
+        if(newVersion>version)
+        {
+            version = newVersion;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public int getVersion()
+    {
+        return version;
     }
 
     // constructors

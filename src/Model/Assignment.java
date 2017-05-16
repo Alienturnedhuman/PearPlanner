@@ -17,9 +17,9 @@ public class Assignment extends VersionControlEntity
     protected ArrayList<Task> tasks = new ArrayList<>();
     protected ArrayList<Requirement> requirements = new ArrayList<>();
     protected int weighting;
-    protected Person setBy;
-    protected Person markedBy;
-    protected Person reviewedBy;
+    protected Person setBy = null;
+    protected Person markedBy = null;
+    protected Person reviewedBy = null;
     protected int marks;
     protected StateType state;  // this may not be needed as we can work it out
 
@@ -33,9 +33,18 @@ public class Assignment extends VersionControlEntity
             // this.tasks = castedVCE.getTasks();
             // this.requirements = castedVCE.getRequirements();
             this.weighting = castedVCE.getWeighting();
-            this.setBy = castedVCE.getSetBy();
-            this.markedBy = castedVCE.getMarkedBy();
-            this.reviewedBy = castedVCE.getReviewedBy();
+            if(castedVCE.getSetBy()!=null)
+            {
+                this.setBy = castedVCE.getSetBy();
+            }
+            if(castedVCE.getMarkedBy()!=null)
+            {
+                this.markedBy = castedVCE.getMarkedBy();
+            }
+            if(castedVCE.getReviewedBy()!=null)
+            {
+                this.reviewedBy = castedVCE.getReviewedBy();
+            }
             this.marks = castedVCE.getMarks();
             // this.state = castedVCE.getState();
         }

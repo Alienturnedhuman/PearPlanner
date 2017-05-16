@@ -36,7 +36,72 @@ public class DataController {
     static private HubFile processUpdateHubFile(NodeList nList)
     {
         HubFile r = null;
+        XMLcontroller xmlTools = new XMLcontroller();
 
+        HashMap<String,XMLcontroller.NodeReturn> fValues = xmlTools.getSchemaValues(nList,
+                HubFile.SCHEMA_UPDATE_FILE);
+
+        int rootVersion = fValues.get("version").getInt();
+        NodeList updates = fValues.get("updates").getNodeList();
+
+        int i = -1;
+        int ii = updates.getLength();
+        while(++i<ii)
+        {
+            Node n = updates.item(i);
+            if(n.getNodeType() == Node.ELEMENT_NODE && HubFile.updateableNode(n.getNodeName()) &&
+                    XMLcontroller.matchesSchema(n.getChildNodes(),HubFile.SCHEMA_VCE))
+            {
+                String nodeName = n.getNodeName();
+                HashMap<String,XMLcontroller.NodeReturn> nodeValues =
+                        xmlTools.getSchemaValues(n.getChildNodes(),HubFile.schemaList.get(nodeName));
+
+                int version = nodeValues.get("version").getInt();
+                String uid = nodeValues.get("uid").getString();
+                if(VersionControlEntity.inLibrary(uid))
+                {
+                    if(VersionControlEntity.get(uid).getVersion()<version)
+                    {
+                        switch(nodeName)
+                        {
+                            case "person":
+
+                                break;
+                            case "building":
+
+                                break;
+                            case "room":
+
+                                break;
+                            case "module":
+
+                                break;
+                            case "exam":
+
+                                break;
+                            case "coursework":
+
+                                break;
+                            case "timetableEventType":
+
+                                break;
+                            case "timetableEvent":
+
+                                break;
+                            case "event":
+
+                                break;
+                            case "deadline":
+
+                                break;
+                            case "examEvent":
+
+                                break;
+                        }
+                    }
+                }
+            }
+        }
 
 
         return r;
@@ -64,7 +129,7 @@ public class DataController {
         throw new Exception("UID referenced is not in database for '"+uid+"'");
     }
 
-    static private void addVCEproperties(VersionControlEntity vce , HashMap<String,XMLcontroller.NodeReturn> values)
+    static public void addVCEproperties(VersionControlEntity vce , HashMap<String,XMLcontroller.NodeReturn> values)
     {
         vce.addProperties(values.get("name").getString(),
                 values.get("details").getMultilineString());
@@ -137,6 +202,7 @@ public class DataController {
                         {
 
                             ConsoleIO.setConsoleMessage("Valid Node found:" , true);
+                            /*
                             HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
                                     HubFile.SCHEMA_PERSON);
 
@@ -144,10 +210,12 @@ public class DataController {
                                     pValues.get("familyName").getString(), pValues.get("familyNameLast").getBoolean(),
                                     pValues.get("email").getString());
 
-                            TimeTableEventType ttet = new TimeTableEventType();
                             addVCEproperties(tp,pValues);
+                            */
 
-                            assetList.put(pValues.get("uid").getString(),tp);
+                            tp = HubFile.createPerson(nc);
+
+                            assetList.put(tp.getUID(),tp);
 
                             ConsoleIO.setConsoleMessage("Adding person: " + tp.toString() , true);
                         }
@@ -171,17 +239,19 @@ public class DataController {
                         nc = XMLcontroller.getNodes(n);
                         if (n.getNodeName().equals("building") && XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_BUILDING))
                         {
-
+/*
                             HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
                                     HubFile.SCHEMA_BUILDING);
 
                             tb = new Building(pValues.get("code").getString(), pValues.get("latitude").getDouble(),
                                     pValues.get("longitude").getDouble());
 
+                            addVCEproperties(tb,pValues);*/
 
-                            addVCEproperties(tb,pValues);
 
-                            assetList.put(pValues.get("uid").getString(),tb);
+                            tb = HubFile.createBuilding(nc);
+
+                            assetList.put(tb.getUID(),tb);
                         }
                     }
                 }
@@ -523,6 +593,24 @@ public class DataController {
 
     static public HubFile loadHubFile(File tempFile)
     {
+
+        /// begin GANTT CODE TESTING - remove once properly implemented
+        System.out.println("GANT");
+        GanttishDiagram g = new GanttishDiagram();
+        g.getBadge(75,true,5);
+        g.getBadge(0,true,1.5);
+        g.getBadge(1,false,2);
+        g.getBadge(100,true,10);
+
+        if(MainController.getSPC().getPlanner().containsStudyProfile(2017,1))
+        {
+            StudyPlanner sp = MainController.getSPC().getPlanner();
+            Assignment a = (sp.getStudyProfiles()[0].getModules()[0].getAssignments()).get(1);
+            GanttishDiagram.createGanttishDiagram(sp,a);
+        }
+        // END GANTT CODE TESTING
+
+        System.out.println("GANT!!");
         HubFile r = null;
         if(tempFile.exists())
         {

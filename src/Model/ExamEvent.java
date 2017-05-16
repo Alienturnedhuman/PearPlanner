@@ -10,6 +10,30 @@ public class ExamEvent extends Event
     private Room room;
     private int duration;
 
+    @Override
+    protected void replace(VersionControlEntity receivedVCE)
+    {
+        if (receivedVCE instanceof ExamEvent)
+        {
+            ExamEvent castedVCE = (ExamEvent) receivedVCE;
+            if(castedVCE.getRoom()!=null)
+            {
+                this.room = castedVCE.getRoom();
+            }
+            this.duration = castedVCE.getDuration();
+        }
+        super.replace(receivedVCE);
+    }
+
+    public Room getRoom()
+    {
+        return room;
+    }
+    public int getDuration()
+    {
+        return duration;
+    }
+
     public ExamEvent(String cDate, Room cRoom, int cDuration)
     {
         super(cDate);
