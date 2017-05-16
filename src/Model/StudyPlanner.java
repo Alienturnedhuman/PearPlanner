@@ -16,7 +16,7 @@ public class StudyPlanner implements Serializable
     // private data
     private static final long serialVersionUID = 101L;
 
-    private int version=-1;
+    private int version = -1;
     private Account account;
     private ArrayList<QuantityType> quantityTypes = new ArrayList<QuantityType>();
     private ArrayList<TaskType> taskTypes = new ArrayList<TaskType>();
@@ -33,7 +33,8 @@ public class StudyPlanner implements Serializable
 
     // getters
 
-    public ArrayList<Event> getCalendar() {
+    public ArrayList<Event> getCalendar()
+    {
         return calendar;
     }
 
@@ -257,12 +258,11 @@ public class StudyPlanner implements Serializable
 
     public boolean setVersion(int newVersion)
     {
-        if(newVersion>version)
+        if (newVersion > version)
         {
             version = newVersion;
             return true;
-        }
-        else
+        } else
         {
             return false;
         }

@@ -171,10 +171,10 @@
         </timetableEventTypes>
     </assets>
     <studyProfile>
-        <name>2017 Spring semester</name>
-        <details>24 April 2017 to 19 May 2017</details>
-        <uid>SEMESTER_2017_1</uid>
-        <year>2017</year>
+        <name>2018 Spring semester</name>
+        <details>24 April 2018 to 19 May 2018</details>
+        <uid>SEMESTER_2018_1</uid>
+        <year>2018</year>
         <semester>1</semester>
         <modules>
             <module>
@@ -190,7 +190,7 @@
                         <details>Lecture on C Pointers</details>
                         <version>0</version>
                         <uid>TT_CMP-5015Y_LEC_01</uid>
-                        <date>09/04/2017T11:00:00Z</date>
+                        <date>09/04/2018T11:00:00Z</date>
                         <room>ROOM_JSC_0_01</room>
                         <lecturer>PERSON_002</lecturer>
                         <timetableEventType>LECTURE</timetableEventType>
@@ -209,7 +209,7 @@
                             <details>The Date of the Programming 2 final exam resit</details>
                             <version>0</version>
                             <uid>PROG2_EXAM_1_RESIT_TIMESLOT</uid>
-                            <date>09/08/2017T15:00:00Z</date>
+                            <date>09/08/2018T15:00:00Z</date>
                             <room>ROOM_SP_1_27</room>
                             <duration>120</duration>
                         </timeslot>
@@ -262,7 +262,7 @@
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>PROG2_CW_2_DEADLINE</uid>
-                            <date>01/02/2017T15:00:00Z</date>
+                            <date>01/02/2018T15:00:00Z</date>
                         </deadline>
                         <extensions></extensions>
                         <weighting>20</weighting>
@@ -281,14 +281,14 @@
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>PROG2_CW_3_START</uid>
-                            <date>24/03/2017T15:00:00Z</date>
+                            <date>24/03/2018T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>PROG2_CW_3_DEADLINE</uid>
-                            <date>26/04/2017T15:00:00Z</date>
+                            <date>26/04/2018T15:00:00Z</date>
                         </deadline>
                         <extensions></extensions>
                         <weighting>20</weighting>
@@ -308,7 +308,7 @@
                             <details>The Date of the Programming 2 final exam</details>
                             <version>0</version>
                             <uid>PROG2_EXAM_1_TIMESLOT</uid>
-                            <date>01/06/2017T14:15:00Z</date>
+                            <date>01/06/2018T14:15:00Z</date>
                             <room>ROOM_SP_1_27</room>
                             <duration>120</duration>
                         </timeslot>
@@ -333,7 +333,7 @@
                         <details>Lecture on the history of software engineering</details>
                         <version>0</version>
                         <uid>TT_CMP-5012B_LEC_01</uid>
-                        <date>03/02/2017T11:00:00Z</date>
+                        <date>03/02/2018T11:00:00Z</date>
                         <room>ROOM_JSC_0_01</room>
                         <lecturer>PERSON_010</lecturer>
                         <timetableEventType>LECTURE</timetableEventType>
@@ -352,14 +352,14 @@
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>SOFTENG_CW_1_START</uid>
-                            <date>14/02/2017T15:00:00Z</date>
+                            <date>14/02/2018T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>SOFTENG_CW_1_DEADLINE</uid>
-                            <date>04/03/2017T15:00:00Z</date>
+                            <date>04/03/2018T15:00:00Z</date>
                         </deadline>
                         <extensions></extensions>
                         <weighting>20</weighting>
@@ -379,14 +379,14 @@
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>SOFTENG_CW_2_START</uid>
-                            <date>05/03/2017T15:00:00Z</date>
+                            <date>05/03/2018T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>SOFTENG_CW_2_DEADLINE</uid>
-                            <date>17/05/2017T15:00:00Z</date>
+                            <date>17/05/2018T15:00:00Z</date>
                         </deadline>
                         <extensions></extensions>
                         <weighting>20</weighting>
@@ -429,7 +429,7 @@
                             <details>The Date of the Data Structures and Algoritms final exam resit</details>
                             <version>0</version>
                             <uid>DATSTRALG_EXAM_1_RESIT_TIMESLOT</uid>
-                            <date>12/08/2017T15:00:00Z</date>
+                            <date>12/08/2018T15:00:00Z</date>
                             <room>ROOM_JSC_3_02</room>
                             <duration>120</duration>
                         </timeslot>
@@ -475,14 +475,14 @@
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>DATSTRALG_CW_2_START</uid>
-                            <date>01/02/2017T15:00:00Z</date>
+                            <date>01/02/2018T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>DATSTRALG_CW_2_DEADLINE</uid>
-                            <date>15/03/2017T15:00:00Z</date>
+                            <date>15/03/2018T15:00:00Z</date>
                         </deadline>
                         <extensions></extensions>
                         <weighting>20</weighting>
@@ -502,7 +502,7 @@
                             <details>The Date of the Data Structures and Algoritms final exam</details>
                             <version>0</version>
                             <uid>DATSTRALG_EXAM_1_TIMESLOT</uid>
-                            <date>05/06/2017T14:15:00Z</date>
+                            <date>05/06/2018T14:15:00Z</date>
                             <room>ROOM_JSC_3_02</room>
                             <duration>120</duration>
                         </timeslot>
@@ -527,7 +527,7 @@
                         <details>Lecture on OpenGL basics.</details>
                         <version>0</version>
                         <uid>TT_CMP-5010B_LEC_01</uid>
-                        <date>01/02/2017T11:00:00Z</date>
+                        <date>01/02/2018T11:00:00Z</date>
                         <room>ROOM_SP_1_27</room>
                         <lecturer>PERSON_007</lecturer>
                         <timetableEventType>LECTURE</timetableEventType>
@@ -546,7 +546,7 @@
                             <details>The Date of the Graphics 1 final exam resit</details>
                             <version>0</version>
                             <uid>GRAP1_EXAM_1_RESIT_TIMESLOT</uid>
-                            <date>16/08/2017T15:00:00Z</date>
+                            <date>16/08/2018T15:00:00Z</date>
                             <room>ROOM_JSC_3_02</room>
                             <duration>120</duration>
                         </timeslot>
@@ -566,14 +566,14 @@
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>GRAP1_CW_1_START</uid>
-                            <date>10/02/2017T15:00:00Z</date>
+                            <date>10/02/2018T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>GRAP1_CW_1_DEADLINE</uid>
-                            <date>10/05/2017T15:00:00Z</date>
+                            <date>10/05/2018T15:00:00Z</date>
                         </deadline>
                         <extensions></extensions>
                         <weighting>20</weighting>
@@ -593,7 +593,7 @@
                             <details>The Date of the Graphics 1 final exam</details>
                             <version>0</version>
                             <uid>GRAP1_EXAM_1_TIMESLOT</uid>
-                            <date>24/05/2017T14:15:00Z</date>
+                            <date>24/05/2018T14:15:00Z</date>
                             <room>ROOM_SP_1_27</room>
                             <duration>120</duration>
                         </timeslot>
