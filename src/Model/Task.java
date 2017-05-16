@@ -72,6 +72,24 @@ public class Task extends ModelEntity
         return this.requirements.toArray(new Requirement[this.requirements.size()]);
     }
 
+    public int requirementCount()
+    {
+        return requirements.size();
+    }
+    public int requirementsComplete()
+    {
+        int r = 0;
+        int i = -1 , ii = requirements.size();
+        while(++i<ii)
+        {
+            if(requirements.get(i).isComplete())
+            {
+                r+=1;
+            }
+        }
+        return r;
+    }
+
     /**
      * Returns an array of Assignments to which this Task relates.
      *

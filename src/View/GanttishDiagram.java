@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,16 +26,18 @@ public class GanttishDiagram {
 
     static int badgeSize = 128;
     static int badgeRingSize = 112;
-    static int getBadgeRingThickness = 4;
-    static int fontSize = 18;
+    static int getBadgeRingThickness = 8;
+    static int fontSize = 24;
 
 
+    static int GANTT_TITLE_SPACE = 80;
+    static int GANTT_TITLE_FONT_SIZE = 64;
     static int GANTT_COLUMN_WIDTH = 400;
     static int GANTT_COLUMN_PADDING = 80;
     static int GANTT_COLUMN_SPACING = 16;
-    static int GANTT_ENTRY_FONT_SIZE = 24;
+    static int GANTT_ENTRY_FONT_SIZE = 18;
     static Paint GANTT_ENTRY_FONT_COLOR = Color.black;
-    static int GANTT_ENTRY_HEIGHT = 36;
+    static int GANTT_ENTRY_HEIGHT = 64;
     static Paint GANTT_ENTRY_DEFAULT_COLOR = badgeColors.GREY.getPaint();
     static HashMap<String,Paint> GANTT_ENTRY_COLOR = new HashMap<>();
     static
@@ -101,9 +104,9 @@ public class GanttishDiagram {
         ,
         STARTED(64,255,0)
         ,
-        CANSTART(255,128,0,0)
+        CANSTART(255,128,0)
         ,
-        CANNOTSTART(64,64,64,0)
+        CANNOTSTART(64,64,64)
         ,
 
         FINISHED_FILL(255,255,255)
@@ -179,16 +182,26 @@ public class GanttishDiagram {
 
     public static BufferedImage createGanttishDiagram(StudyPlanner fromStudyProfile,Assignment fromAssignment)
     {
+        return createGanttishDiagram(fromStudyProfile,fromAssignment,"");
+    }
+    public static BufferedImage createGanttishDiagram(StudyPlanner fromStudyProfile,Assignment fromAssignment,String filePath)
+    {
 
         HashMap<String,ArrayList<Task>> catTasks = new HashMap<>();
 
         String COMPLETED = "Completed tasks";
+        String STARTED = "Tasks started";
         String POSSIBLE = "Possible to start";
         String IMPOSSIBLE = "Not possible to start";
 
-        String[] categoryList = {COMPLETED,POSSIBLE,IMPOSSIBLE};
+        String[] categoryList = {COMPLETED,STARTED,POSSIBLE,IMPOSSIBLE};
+        badgeColors[][] badges = {{badgeColors.FINISHED,badgeColors.FINISHED_FILL} ,
+                {badgeColors.STARTED,badgeColors.STARTED_FILL} ,
+                {badgeColors.CANSTART,badgeColors.CANSTART_FILL} ,
+                {badgeColors.CANNOTSTART,badgeColors.CANNOTSTART_FILL}};
 
         catTasks.put(COMPLETED,new ArrayList<>());
+        catTasks.put(STARTED,new ArrayList<>());
         catTasks.put(POSSIBLE,new ArrayList<>());
         catTasks.put(IMPOSSIBLE,new ArrayList<>());
 
@@ -204,7 +217,11 @@ public class GanttishDiagram {
             {
                 cat = COMPLETED;
             }
-            else if(t.isPossibleToComplete())
+            else if(t.requirementsComplete()>0)
+            {
+                cat = STARTED;
+            }
+            else if(t.dependenciesComplete())
             {
                 cat = POSSIBLE;
             }
@@ -222,16 +239,19 @@ public class GanttishDiagram {
         int j = -1; int jj = categoryList.length;
 
         int cWidth = GANTT_COLUMN_PADDING + jj*(GANTT_COLUMN_PADDING+GANTT_COLUMN_WIDTH);
-        int cHeight = 2*GANTT_COLUMN_PADDING + (1+longest)*(GANTT_COLUMN_SPACING+GANTT_ENTRY_HEIGHT);
+        int cHeight = 2*GANTT_COLUMN_PADDING + GANTT_TITLE_SPACE + (1+longest)*(GANTT_COLUMN_SPACING+GANTT_ENTRY_HEIGHT);
 
         BufferedImage r = new BufferedImage(cWidth,cHeight,imageType);
         Graphics2D g2d = r.createGraphics();
         g2d.setRenderingHint (RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        g2d.setPaint(GANTT_ENTRY_FONT_COLOR);
+        drawMessage(g2d,GANTT_TITLE_FONT_SIZE,fromAssignment.getName(),GANTT_COLUMN_PADDING,GANTT_COLUMN_PADDING,
+                cWidth-(2*GANTT_COLUMN_PADDING),GANTT_TITLE_SPACE);
         while(++j<jj)
         {
             int ox = GANTT_COLUMN_PADDING + j*(GANTT_COLUMN_PADDING+GANTT_COLUMN_WIDTH);
-            int oy = GANTT_COLUMN_PADDING;
+            int oy = GANTT_COLUMN_PADDING+GANTT_TITLE_SPACE;
 
             String name = categoryList[j];
             int k  =0;
@@ -266,77 +286,43 @@ public class GanttishDiagram {
                 g2d.drawRoundRect(ox, oyk, GANTT_COLUMN_WIDTH, GANTT_ENTRY_HEIGHT,15,15);
 
                 g2d.setPaint(GANTT_ENTRY_FONT_COLOR);
-                drawMessage(g2d,GANTT_ENTRY_FONT_SIZE,dt.getName(),ox,oyk,GANTT_COLUMN_WIDTH,GANTT_ENTRY_HEIGHT);
+                drawMessage(g2d,GANTT_ENTRY_FONT_SIZE,dt.getName(),ox,oyk,GANTT_COLUMN_WIDTH -
+                        GANTT_ENTRY_HEIGHT,GANTT_ENTRY_HEIGHT);
+
+                int percentage = (100*dt.requirementsComplete())/dt.requirementCount();
+
+                BufferedImage badge = getBadge(percentage,dt.dependenciesComplete(),0.5);
+
+                g2d.drawImage(badge,ox+GANTT_COLUMN_WIDTH -
+                        GANTT_ENTRY_HEIGHT,oyk,null);
             }
         }
 
 
-        try {
-            File outputfile = new File("gantt.png");
-            ImageIO.write(r, "png", outputfile);
-        }
-        catch(Exception e)
+        if(!filePath.equals(""))
         {
-            System.out.println(e.getMessage());
-        }
-
-        /*
-
-        HashMap<Task,ArrayList<Task>> familyTree = new HashMap<>();
-        HashMap<Task,Boolean> noParents = new HashMap<>();
-        HashMap<Task,Boolean> noInternalParents = new HashMap<>();
-
-        Iterator<Task> i = assignmentTasks.iterator();
-        while(i.hasNext())
-        {
-            Task t = i.next();
-            familyTree.put(t,new ArrayList<Task>());
-            noInternalParents.put(t,true);
-        }
-        i = assignmentTasks.iterator();
-        while(i.hasNext())
-        {
-            Task t = i.next();
-            if(t.hasDependencies())
+            try
             {
-                noParents.put(t,false);
-                ArrayList<Task> taskDependencies = new ArrayList<Task>(Arrays.asList(t.getDependencies()));
-                Iterator<Task> j = taskDependencies.iterator();
-                while(j.hasNext())
-                {
-                    Task d = j.next();
-                    if(familyTree.containsKey(d))
-                    {
-                        ArrayList<Task> dc = familyTree.get(d);
-                        if(!dc.contains(t))
-                        {
-                            dc.add(t);
-                        }
-                        noInternalParents.put(t,false);
-                    }
-                }
+                File outputfile = new File(filePath);
+                ImageIO.write(r, "png", outputfile);
             }
-            else
-            {
-                noParents.put(t,false);
+            catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
-        */
-
-
         return r;
     }
 
-    public BufferedImage getBadge(int progress,boolean canStart)
+    public static BufferedImage getBadge(int progress,boolean canStart)
     {
         return getBadge(progress,canStart,1.0f);
     }
-    public BufferedImage getBadge(int progress,boolean canStart, double multiplier)
+    public static BufferedImage getBadge(int progress,boolean canStart, double multiplier)
     {
-        int canvasSize = (int)((double)badgeSize*multiplier);
-        int ringSize = (int)((double)badgeRingSize*multiplier);
-        int badgeRingThickness = (int)((double)getBadgeRingThickness*multiplier);
-        int badgeFontSize = (int)((double)fontSize*multiplier);
+        int canvasSize = (int)((double)badgeSize*multiplier+.5);
+        int ringSize = (int)((double)badgeRingSize*multiplier+.5);
+        int badgeRingThickness = (int)((double)getBadgeRingThickness*multiplier+.5);
+        int badgeFontSize = (int)((double)fontSize*multiplier+.5);
 
         int ovalOffset = (canvasSize - ringSize)/2;
 
@@ -404,7 +390,7 @@ public class GanttishDiagram {
         g2d.setFont(font);
         g2d.drawString(msg, msgX, msgY);
 
-
+/*
         try {
             File outputfile = new File("badge_"+progress+".png");
             ImageIO.write(r, "png", outputfile);
@@ -413,6 +399,7 @@ public class GanttishDiagram {
         {
             System.out.println(e.getMessage());
         }
+        */
 
         return r;
     }
