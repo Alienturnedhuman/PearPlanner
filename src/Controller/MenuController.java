@@ -24,12 +24,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
-import jfxtras.scene.control.agenda.Agenda;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -38,6 +35,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Zilvinas on 05/05/2017.
  */
+// TODO icons
 public class MenuController implements Initializable
 {
     public enum Window
@@ -60,6 +58,7 @@ public class MenuController implements Initializable
     @FXML private Button studyProfiles;
     @FXML private Button milestones;
     @FXML private Button modules;
+    @FXML private Button calendar;
 
     // Panes:
     @FXML private AnchorPane navList;
@@ -67,10 +66,6 @@ public class MenuController implements Initializable
     @FXML private GridPane notificationList;
     @FXML private GridPane mainContent;
     @FXML private HBox topBox;
-
-    @FXML private Agenda mainAgenda;
-    @FXML private Button agendaFwd;
-    @FXML private Button agendaBwd;
 
     public void main(Window wind)
     {
@@ -117,13 +112,6 @@ public class MenuController implements Initializable
      */
     public void loadDashboard()
     {
-        this.agendaBwd.setOnMouseClicked(event -> this.mainAgenda.setDisplayedLocalDateTime(this.mainAgenda.getDisplayedLocalDateTime().minusDays(7)));
-        this.agendaFwd.setOnMouseClicked(event -> this.mainAgenda.setDisplayedLocalDateTime(this.mainAgenda.getDisplayedLocalDateTime().plusDays(7)));
-
-        this.loadAgenda();
-        this.mainAgenda.setAllowDragging(false);
-        this.mainAgenda.setAllowResize(false);
-
         // Update main pane:
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
         this.topBox.getChildren().clear();
@@ -920,6 +908,7 @@ public class MenuController implements Initializable
         this.studyProfiles.setOnAction(e -> this.main(Window.Profiles));
         this.modules.setOnAction(e -> this.main(Window.Modules));
         this.milestones.setOnAction(e -> this.main(Window.Milestones));
+        this.calendar.setOnAction(e -> MainController.ui.showCalendar());
         // =================
 
         // Welcome text:
@@ -1010,6 +999,7 @@ public class MenuController implements Initializable
         this.milestones.setDisable(false);
         this.studyProfiles.setDisable(false);
         this.modules.setDisable(false);
+        this.calendar.setDisable(false);
 
         // Disable relevant menu options:
         if (MainController.getSPC().getPlanner().getCurrentStudyProfile() == null)
@@ -1018,6 +1008,7 @@ public class MenuController implements Initializable
             this.milestones.setDisable(true);
             this.studyProfiles.setDisable(true);
             this.modules.setDisable(true);
+            this.calendar.setDisable(true);
         } else
         {
             if (MainController.getSPC().getCurrentTasks().size() <= 0)
@@ -1185,66 +1176,5 @@ public class MenuController implements Initializable
             event.consume();
         });
         return row;
-    }
-
-    private void loadAgenda()
-    {
-        this.populateAgenda(MainController.getSPC().getPlanner().getCalendar());
-    }
-
-    private void populateAgenda(ArrayList<Event> calendar)
-    {
-        for (Event e : calendar)
-        {
-            if (e instanceof TimetableEvent)
-            {
-                System.out.println("adding - " + e.getClass() + "duration" + ((TimetableEvent) e).getDuration());
-                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
-                mainAgenda.appointments().addAll(
-                        new Agenda.AppointmentImplLocal()
-                                .withStartLocalDateTime(sTime)
-                                .withEndLocalDateTime(sTime.plusMinutes(((TimetableEvent) e).getDuration()))
-                                .withSummary("TimetableEvent")
-                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group5"))// you should use a map of AppointmentGroups
-
-                );
-            } else if (e instanceof ExamEvent)
-            {
-                System.out.println("adding - " + e.getClass());
-                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
-                mainAgenda.appointments().addAll(
-                        new Agenda.AppointmentImplLocal()
-                                .withStartLocalDateTime(sTime)
-                                .withSummary("ExamEvent")
-                                .withEndLocalDateTime(sTime.plusMinutes(((ExamEvent) e).getDuration()))
-                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group20"))// you should use a map of AppointmentGroups
-
-                );
-            } else if (e instanceof Deadline)
-            {
-                System.out.println("adding - " + e.getClass() + "blah bar");
-                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
-                mainAgenda.appointments().addAll(
-                        new Agenda.AppointmentImplLocal()
-                                .withStartLocalDateTime(sTime)
-                                .withSummary("Deadline")
-                                .withEndLocalDateTime(sTime.plusMinutes(60))
-                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"))// you should use a map of AppointmentGroups
-
-                );
-            } else
-            {
-                System.out.println("adding - " + e.getClass());
-                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
-                mainAgenda.appointments().addAll(
-                        new Agenda.AppointmentImplLocal()
-                                .withStartLocalDateTime(sTime)
-                                .withSummary("Generic Event")
-                                .withEndLocalDateTime(sTime.plusMinutes(60))
-                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group3"))// you should use a map of AppointmentGroups
-
-                );
-            }
-        }
     }
 }
