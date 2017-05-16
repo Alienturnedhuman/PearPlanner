@@ -2,7 +2,6 @@ package View;
 
 import Controller.*;
 import Model.*;
-import com.apple.eawt.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -20,7 +19,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxtras.scene.control.agenda.Agenda;
 
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -53,11 +51,6 @@ public class UIManager
         Parent root = loader.load();
 
         // Set the scene:
-
-        //macOS compatible dock icon
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
-
-
         Stage stage = new Stage();
         stage.setScene(new Scene(root, 550, 232));
         stage.setTitle("Create Account");
@@ -440,7 +433,6 @@ public class UIManager
 
         // Content:
         Agenda content = new Agenda();
-        VBox.setVgrow(content, Priority.ALWAYS);
         content.setAllowDragging(false);
         content.setAllowResize(false);
         content.autosize();
@@ -451,7 +443,7 @@ public class UIManager
         // =================
 
         // Populate Agenda:
-        ArrayList<Event> calendar = MainController.getSPC().getPlanner().getCurrentStudyProfile().getCalendar();
+        ArrayList<Event> calendar = MainController.getSPC().getPlanner().getCalendar();
         for (Event e : calendar)
         {
             if (e instanceof TimetableEvent)
@@ -461,7 +453,7 @@ public class UIManager
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
                                 .withEndLocalDateTime(sTime.plusMinutes(((TimetableEvent) e).getDuration()))
-                                .withSummary(e.getName())
+                                .withSummary("TimetableEvent")
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group5"))
                 );
             } else if (e instanceof ExamEvent)
@@ -470,7 +462,7 @@ public class UIManager
                 content.appointments().addAll(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
-                                .withSummary(e.getName())
+                                .withSummary("ExamEvent")
                                 .withEndLocalDateTime(sTime.plusMinutes(((ExamEvent) e).getDuration()))
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group20"))
                 );
@@ -480,7 +472,7 @@ public class UIManager
                 content.appointments().addAll(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
-                                .withSummary(e.getName())
+                                .withSummary("Deadline")
                                 .withEndLocalDateTime(sTime.plusMinutes(60))
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"))
                 );
@@ -490,7 +482,7 @@ public class UIManager
                 content.appointments().addAll(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
-                                .withSummary(e.getName())
+                                .withSummary("Generic Event")
                                 .withEndLocalDateTime(sTime.plusMinutes(60))
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group3"))
                 );
