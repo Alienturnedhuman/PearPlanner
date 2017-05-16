@@ -433,6 +433,7 @@ public class UIManager
 
         // Content:
         Agenda content = new Agenda();
+        VBox.setVgrow(content, Priority.ALWAYS);
         content.setAllowDragging(false);
         content.setAllowResize(false);
         content.autosize();
@@ -443,7 +444,7 @@ public class UIManager
         // =================
 
         // Populate Agenda:
-        ArrayList<Event> calendar = MainController.getSPC().getPlanner().getCalendar();
+        ArrayList<Event> calendar = MainController.getSPC().getPlanner().getCurrentStudyProfile().getCalendar();
         for (Event e : calendar)
         {
             if (e instanceof TimetableEvent)
@@ -453,7 +454,7 @@ public class UIManager
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
                                 .withEndLocalDateTime(sTime.plusMinutes(((TimetableEvent) e).getDuration()))
-                                .withSummary("TimetableEvent")
+                                .withSummary(e.getName())
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group5"))
                 );
             } else if (e instanceof ExamEvent)
@@ -462,7 +463,7 @@ public class UIManager
                 content.appointments().addAll(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
-                                .withSummary("ExamEvent")
+                                .withSummary(e.getName())
                                 .withEndLocalDateTime(sTime.plusMinutes(((ExamEvent) e).getDuration()))
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group20"))
                 );
@@ -472,7 +473,7 @@ public class UIManager
                 content.appointments().addAll(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
-                                .withSummary("Deadline")
+                                .withSummary(e.getName())
                                 .withEndLocalDateTime(sTime.plusMinutes(60))
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"))
                 );
@@ -482,7 +483,7 @@ public class UIManager
                 content.appointments().addAll(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
-                                .withSummary("Generic Event")
+                                .withSummary(e.getName())
                                 .withEndLocalDateTime(sTime.plusMinutes(60))
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group3"))
                 );
