@@ -1,0 +1,421 @@
+<hubfile>
+    <version>0</version>
+    <assets>
+        <persons>
+            <person>
+                <name>Tony Bagnall</name>
+                <details>Tony joined CMP as a part time MRes student/part time teaching assistant in 1993 having
+                    finished his BSc in Mathematics and Statistics at the University of Hertfordshire. After completing
+                    his Masters by research in 1995 he began a PhD titled "Modelling the UK electricity market with
+                    autonomous adaptive agents". After a brief period as a research assistant on a data mining project
+                    sponsored by Master Foods and Centrica, in 1999 he completed his PhD and was appointed as a Lecturer
+                    in Statistics for Data Mining jointly in the schools of Computer Science and Mathematics. In 2003
+                    statistics moved into CMP and since then Tony has been a full member of the school. In 2007 he was
+                    promoted to senior lecturer.
+                </details>
+                <version>0</version>
+                <uid>NOPE</uid>
+                <givenNames>Anthony</givenNames>
+                <familyName>Bagnall</familyName>
+                <salutation>Dr</salutation>
+                <email>anthony.bagnall@uea.ac.uk</email>
+                <familyNameLast>true</familyNameLast>
+            </person>
+        </persons>
+        <buildings>
+            <building>
+                <name>Julian Study Centre</name>
+                <details>The Julian Study Centre is a dedicated teaching building featuring a tiered 280 seat lecture
+                    theatre and an 80 seat Harvard-style lecture room. Named after Julian of Norwich, the first woman to
+                    publish a book in the English language, the building's green credentials include its construction
+                    with Passivhaus techniques and complying with BREEAM guidelines. The Julian Study Centre offers
+                    modern meeting facilities including multiple breakout areas, a large foyer and seven seminar rooms
+                    to seat 18-60 people in addition to the two lecture theatres. A café selling Grumpy Mule coffee
+                    complements the offering.
+                </details>
+                <version>0</version>
+                <uid>NOPE</uid>
+                <code>JSC</code>
+                <latitude>52.6220299</latitude>
+                <longitude>1.2354997</longitude>
+            </building>
+        </buildings>
+        <rooms>
+            <room>
+                <name>JSC Lecture Theatre</name>
+                <details>Known as the JSC Lecture Theatre, this tiered room seats 280 people. Fully integrated
+                    audio-visual equipment is easy to use with back projection possible with an audio-visual technician.
+                    The lecture theatre is located on the ground floor with an accessible stair lift to the front and an
+                    adjoining foyer space with café. The JSC Lecture Theatre is a great space for a plenary session and
+                    breakout area.
+                </details>
+                <version>0</version>
+                <uid>NOPE</uid>
+                <building>BUILDING_JSC</building>
+                <roomNumber>JSC 0.01</roomNumber>
+            </room>
+        </rooms>
+        <timetableEventTypes>
+            <timetableEventType>
+                <name>Lecture</name>
+                <details>Lectures are things that some people don't turn up to but are thre because their friends sign
+                    them in.
+                </details>
+                <version>0</version>
+                <uid>LECTURE</uid>
+            </timetableEventType>
+        </timetableEventTypes>
+    </assets>
+    <studyProfile>
+        <name>First year Gryffindor</name>
+        <details>1 September 2017 to 31 December 2017</details>
+        <uid>HP_2017_1</uid>
+        <year>2017</year>
+        <semester>1</semester>
+        <modules>
+            <module>
+                <name>Potions</name>
+                <details>Potions is a core class and subject taught at Hogwarts School of Witchcraft and Wizardry. In
+                    this class, students learn the correct way to brew potions.
+                </details>
+                <version>0</version>
+                <uid>MODULE_POTIONS</uid>
+                <organiser>PERSON_001</organiser>
+                <moduleCode>HSWW-1992</moduleCode>
+                <timetable>
+                    <timetableEvent>
+                        <name>Potions</name>
+                        <details></details>
+                        <version>0</version>
+                        <uid>HSWW-1992-LEC-01</uid>
+                        <date>15/05/2017T09:45:00Z</date>
+                        <room>ROOM_PBASEMENT</room>
+                        <lecturer>PERSON_001</lecturer>
+                        <timetableEventType>LECTURE</timetableEventType>
+                        <duration>60</duration>
+                    </timetableEvent>
+                    <timetableEvent>
+                        <name>Potions</name>
+                        <details></details>
+                        <version>0</version>
+                        <uid>HSWW-1992-LEC-01</uid>
+                        <date>19/05/2017T09:45:00Z</date>
+                        <room>ROOM_PBASEMENT</room>
+                        <lecturer>PERSON_001</lecturer>
+                        <timetableEventType>LECTURE</timetableEventType>
+                        <duration>135</duration>
+                    </timetableEvent>
+                </timetable>
+                <assignments>
+                    <exam>
+                        <name>First year exam</name>
+                        <details>You will be required to make a Forgetfulness Potion.</details>
+                        <version>0</version>
+                        <uid>POTIONS_EXAM_1</uid>
+                        <resit></resit>
+                        <timeslot>
+                            <name>Deadline</name>
+                            <details>Date of the exam</details>
+                            <version>0</version>
+                            <uid>POTIONS_EXAM_1_TIMESLOT</uid>
+                            <date>15/12/2017T09:45:00Z</date>
+                            <room>POTION_MIXING</room>
+                            <duration>120</duration>
+                        </timeslot>
+                        <weighting>70</weighting>
+                        <setBy>PERSON_001</setBy>
+                        <markedBy>PERSON_001</markedBy>
+                        <reviewedBy>PERSON_001</reviewedBy>
+                        <marks>120</marks>
+                    </exam>
+                    <coursework>
+                        <name>Essay of Flobberworm Mucus uses in potions</name>
+                        <details>Write an essay about the uses of Flobberworm Mucus in potions.</details>
+                        <version>0</version>
+                        <uid>POTIONS_CW_1</uid>
+                        <startDate>
+                            <name>Start Date</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>0</version>
+                            <uid>POTIONS_CW_1_START</uid>
+                            <date>01/10/2017T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline</name>
+                            <details>End Date for the Coursework</details>
+                            <version>0</version>
+                            <uid>POTIONS_CW_1_START</uid>
+                            <date>01/11/2017T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>30</weighting>
+                        <setBy>PERSON_001</setBy>
+                        <markedBy>PERSON_001</markedBy>
+                        <reviewedBy>PERSON_001</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                </assignments>
+            </module>
+            <module>
+                <name>Defence Against the Dark Arts</name>
+                <details>Defence Against the Dark Arts is a subject taught at Hogwarts School of Witchcraft and Wizardry
+                    and Ilvermorny School of Witchcraft and Wizardry. In this class students learn how to magically
+                    defend themselves against Dark Creatures, the Dark Arts, and other dark charms.
+                </details>
+                <version>0</version>
+                <uid>MODULE_DADA</uid>
+                <organiser>PERSON_002</organiser>
+                <moduleCode>HSWW-DADA</moduleCode>
+                <timetable>
+                    <timetableEvent>
+                        <name>Defence Against the Dark Arts</name>
+                        <details></details>
+                        <version>0</version>
+                        <uid>HSWW-DADA-LEC-01</uid>
+                        <date>16/05/2017T09:45:00Z</date>
+                        <room>ROOM_CLASS_104</room>
+                        <lecturer>PERSON_002</lecturer>
+                        <timetableEventType>LECTURE</timetableEventType>
+                        <duration>60</duration>
+                    </timetableEvent>
+                    <timetableEvent>
+                        <name>Defence Against the Dark Arts</name>
+                        <details></details>
+                        <version>0</version>
+                        <uid>HSWW-DADA-LEC-01</uid>
+                        <date>16/05/2017T14:30:00Z</date>
+                        <room>ROOM_CLASS_3C</room>
+                        <lecturer>PERSON_002</lecturer>
+                        <timetableEventType>LECTURE</timetableEventType>
+                        <duration>60</duration>
+                    </timetableEvent>
+                </timetable>
+                <assignments>
+                    <coursework>
+                        <name>Disarming Charm</name>
+                        <details>Lear the Disarming Charm.</details>
+                        <version>0</version>
+                        <uid>DADA_CW_2</uid>
+                        <startDate>
+                            <name>Start Date</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>0</version>
+                            <uid>DADA_CW_2_START</uid>
+                            <date>10/12/2017T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline</name>
+                            <details>End Date for the Coursework</details>
+                            <version>0</version>
+                            <uid>DADA_CW_1_START</uid>
+                            <date>30/12/2017T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>50</weighting>
+                        <setBy>PERSON_002</setBy>
+                        <markedBy>PERSON_002</markedBy>
+                        <reviewedBy>PERSON_002</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                    <coursework>
+                        <name>Curing werewolf bites</name>
+                        <details>Find a solution to cure werewolf bites.</details>
+                        <version>0</version>
+                        <uid>DADA_CW_1</uid>
+                        <startDate>
+                            <name>Start Date</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>0</version>
+                            <uid>DADA_CW_1_START</uid>
+                            <date>20/10/2017T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline</name>
+                            <details>End Date for the Coursework</details>
+                            <version>0</version>
+                            <uid>DADA_CW_1_START</uid>
+                            <date>15/11/2017T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>50</weighting>
+                        <setBy>PERSON_002</setBy>
+                        <markedBy>PERSON_002</markedBy>
+                        <reviewedBy>PERSON_002</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                </assignments>
+            </module>
+            <module>
+                <name>History of Magic</name>
+                <details>History of Magic is a core class and subject taught at Hogwarts School of Witchcraft and
+                    Wizardry. This class is a study of magical history. This is one of the subjects where the use of
+                    magic practically isn't necessary.
+                </details>
+                <version>0</version>
+                <uid>MODULE_HOM</uid>
+                <organiser>PERSON_003</organiser>
+                <moduleCode>HSWW-1911</moduleCode>
+                <timetable>
+                    <timetableEvent>
+                        <name>History of Magic</name>
+                        <details></details>
+                        <version>0</version>
+                        <uid>HSWW-1911-LEC-01</uid>
+                        <date>15/05/2017T11:00:00Z</date>
+                        <room>CLASS_72</room>
+                        <lecturer>PERSON_003</lecturer>
+                        <timetableEventType>LECTURE</timetableEventType>
+                        <duration>60</duration>
+                    </timetableEvent>
+                    <timetableEvent>
+                        <name>History of Magic</name>
+                        <details></details>
+                        <version>0</version>
+                        <uid>HSWW-1911-LEC-01</uid>
+                        <date>17/05/2017T13:15:00Z</date>
+                        <room>CLASS_4F</room>
+                        <lecturer>PERSON_003</lecturer>
+                        <timetableEventType>LECTURE</timetableEventType>
+                        <duration>60</duration>
+                    </timetableEvent>
+                </timetable>
+                <assignments>
+                    <exam>
+                        <name>Final Exam Resit</name>
+                        <details>A second chance for students who did not pass their final exam</details>
+                        <version>0</version>
+                        <uid>HOM_EXAM_1_RESIT</uid>
+                        <resit></resit>
+                        <timeslot>
+                            <name>Deadline</name>
+                            <details></details>
+                            <version>0</version>
+                            <uid>HOM_EXAM_1_RESIT_TIMESLOT</uid>
+                            <date>30/01/2018T14:15:00Z</date>
+                            <room>ROOM_JSC_3_02</room>
+                            <duration>120</duration>
+                        </timeslot>
+                        <weighting>30</weighting>
+                        <setBy>PERSON_004</setBy>
+                        <markedBy>PERSON_004</markedBy>
+                        <reviewedBy>PERSON_004</reviewedBy>
+                        <marks>120</marks>
+                    </exam>
+                    <exam>
+                        <name>Final Exam</name>
+                        <details>One hour of answering questions about batty old wizards who'd invented Self-Stirring
+                            Cauldrons.
+                        </details>
+                        <version>0</version>
+                        <uid>HOM_EXAM_1</uid>
+                        <resit>HOM_EXAM_1_RESIT</resit>
+                        <timeslot>
+                            <name>Deadline</name>
+                            <details>The Date of the final exam</details>
+                            <version>0</version>
+                            <uid>HOM_EXAM_1_TIMESLOT</uid>
+                            <date>15/12/2017T14:15:00Z</date>
+                            <room>CLASS_4F</room>
+                            <duration>60</duration>
+                        </timeslot>
+                        <weighting>100</weighting>
+                        <setBy>PERSON_004</setBy>
+                        <markedBy>PERSON_004</markedBy>
+                        <reviewedBy>PERSON_004</reviewedBy>
+                        <marks>120</marks>
+                    </exam>
+                </assignments>
+            </module>
+            <module>
+                <name>Charms</name>
+                <details>Charms is a core class and subject taught at Hogwarts School of Witchcraft and Wizardry.
+                    Unsurprisingly, it specialises in the teaching of charms. Even though mastering the science of
+                    charmwork is clearly essential to performing the greater part of magic, charmwork is seen as a
+                    "softer option" by some such as Augusta Longbottom who, incidentally, failed her Charms.
+                </details>
+                <version>0</version>
+                <uid>MODULE_CHARMS</uid>
+                <organiser>PERSON_005</organiser>
+                <moduleCode>HSWW-CHARM</moduleCode>
+                <timetable>
+                    <timetableEvent>
+                        <name>Charms</name>
+                        <details></details>
+                        <version>0</version>
+                        <uid>HSWW-CHARM-LEC-01</uid>
+                        <date>18/05/2017T09:45:00Z</date>
+                        <room>ROOM_CLASS_99</room>
+                        <lecturer>PERSON_005</lecturer>
+                        <timetableEventType>LECTURE</timetableEventType>
+                        <duration>60</duration>
+                    </timetableEvent>
+                    <timetableEvent>
+                        <name>Charms</name>
+                        <details></details>
+                        <version>0</version>
+                        <uid>HSWW-CHARM-LEC-01</uid>
+                        <date>17/05/2017T14:30:00Z</date>
+                        <room>CLASS_2E</room>
+                        <lecturer>PERSON_005</lecturer>
+                        <timetableEventType>LECTURE</timetableEventType>
+                        <duration>60</duration>
+                    </timetableEvent>
+                </timetable>
+                <assignments>
+                    <coursework>
+                        <name>Disarming Charm</name>
+                        <details>Lear the Disarming Charm.</details>
+                        <version>0</version>
+                        <uid>DADA_CW_2</uid>
+                        <startDate>
+                            <name>Start Date</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>0</version>
+                            <uid>DADA_CW_2_START</uid>
+                            <date>10/12/2017T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline</name>
+                            <details>End Date for the Coursework</details>
+                            <version>0</version>
+                            <uid>DADA_CW_1_START</uid>
+                            <date>30/12/2017T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>50</weighting>
+                        <setBy>PERSON_002</setBy>
+                        <markedBy>PERSON_002</markedBy>
+                        <reviewedBy>PERSON_002</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                    <coursework>
+                        <name>Curing werewolf bites</name>
+                        <details>Find a solution to cure werewolf bites.</details>
+                        <version>0</version>
+                        <uid>DADA_CW_1</uid>
+                        <startDate>
+                            <name>Start Date</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>0</version>
+                            <uid>DADA_CW_1_START</uid>
+                            <date>20/10/2017T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline</name>
+                            <details>End Date for the Coursework</details>
+                            <version>0</version>
+                            <uid>DADA_CW_1_START</uid>
+                            <date>15/11/2017T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>50</weighting>
+                        <setBy>PERSON_002</setBy>
+                        <markedBy>PERSON_002</markedBy>
+                        <reviewedBy>PERSON_002</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                </assignments>
+            </module>
+        </modules>
+    </studyProfile>
+</hubfile>

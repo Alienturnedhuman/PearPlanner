@@ -117,7 +117,7 @@ public class MainController
     public static boolean importFile()
     {
         // Call a dialog:
-        File tempFile = ui.fileDialog();
+        File tempFile = ui.loadFileDialog();
         if (tempFile != null)
         {
             // If a file was selected, process the file:

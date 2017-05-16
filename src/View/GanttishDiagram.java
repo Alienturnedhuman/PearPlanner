@@ -8,9 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.nio.Buffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -304,7 +302,7 @@ public class GanttishDiagram {
             try
             {
                 File outputfile = new File(filePath);
-                ImageIO.write(r, "png", outputfile);
+                ImageIO.write(r, "jpg", outputfile);
             }
             catch (Exception e) {
                 System.out.println(e.getMessage());

@@ -552,6 +552,14 @@ public class MenuController implements Initializable
         this.mainContent.addRow(1, assignments);
         // =================
 
+        // Ganttish chart button:
+        Button gantt = new Button("Generate a Ganttish Diagram");
+        gantt.setOnAction(e -> MainController.ui.showGantt(assignment));
+        GridPane.setHalignment(gantt, HPos.RIGHT);
+        GridPane.setColumnSpan(gantt, GridPane.REMAINING);
+        this.mainContent.add(gantt, 0, 1);
+        // =================
+
         // Create a details pane:
         VBox detailsBox = new VBox(5);
         Label details = new Label(assignment.getDetails().getAsString());
