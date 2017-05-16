@@ -1,5 +1,7 @@
 package Model;
 
+import java.text.SimpleDateFormat;
+
 /**
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
@@ -25,13 +27,16 @@ public class ExamEvent extends Event
         super.replace(receivedVCE);
     }
 
-    public Room getRoom()
+    /**
+     * Returns a String representing the event.
+     * Used in JavaFX.
+     *
+     * @return String
+     */
+    public String getDateString()
     {
-        return room;
-    }
-    public int getDuration()
-    {
-        return duration;
+        return new SimpleDateFormat("dd/MM/yyyy HH:MM").format(this.date.getTime());
+
     }
 
     public ExamEvent(String cDate, Room cRoom, int cDuration)
@@ -39,5 +44,13 @@ public class ExamEvent extends Event
         super(cDate);
         room = cRoom;
         duration = cDuration;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public Room getRoom() {
+        return room;
     }
 }

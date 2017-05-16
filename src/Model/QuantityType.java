@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.MainController;
+
 import java.util.ArrayList;
 
 /**
@@ -9,7 +11,6 @@ import java.util.ArrayList;
 public class QuantityType extends ModelEntity
 {
     private static ArrayList<QuantityType> quantityDatabase = new ArrayList<>();
-    // empty class until we add GUI
 
     public static String[] listOfNames()
     {
@@ -78,6 +79,50 @@ public class QuantityType extends ModelEntity
     }
 
     /**
+     * Create a new QuantityType.
+     *
+     * @param cName    Name of the quantity.
+     * @param cDetails Details of the quantity.
+     * @return
+     */
+    public static QuantityType create(String cName, String cDetails)
+    {
+        QuantityType t = new QuantityType(cName, cDetails);
+        if (MainController.getSPC() != null)
+            MainController.getSPC().addQuantityType(t);
+        return t;
+    }
+
+    /**
+     * Create a new QuantityType.
+     *
+     * @param cName Name of the quantity.
+     * @return
+     */
+    public static QuantityType create(String cName)
+    {
+        QuantityType t = new QuantityType(cName);
+        if (MainController.getSPC() != null)
+            MainController.getSPC().addQuantityType(t);
+        return t;
+    }
+
+    /**
+     * Create a new QuantityType from an existing one.
+     *
+     * @param type QuantityType object
+     */
+    public static void create(QuantityType type)
+    {
+        if (!QuantityType.quantityDatabase.contains(type))
+        {
+            QuantityType.quantityDatabase.add(type);
+            if (MainController.getSPC() != null)
+                MainController.getSPC().addQuantityType(type);
+        }
+    }
+
+    /**
      * A toString method used in TableView
      *
      * @return
@@ -122,6 +167,15 @@ public class QuantityType extends ModelEntity
         }
     }
 
+    private QuantityType(String cName)
+    {
+        super(cName);
+        if (!exists(this))
+        {
+            quantityDatabase.add(this);
+        }
+    }
+
     private QuantityType(String cName, String cDetails)
     {
         super(cName, cDetails);
@@ -131,9 +185,11 @@ public class QuantityType extends ModelEntity
         }
     }
 
-    public boolean equals(QuantityType c)
+    @Override
+    public boolean equals(Object obj)
     {
-        return getName().equals(c.getName());
+        QuantityType that = (QuantityType) obj;
+        return getName().equals(that.getName());
     }
 
     public boolean equals(String c)

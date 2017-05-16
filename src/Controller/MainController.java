@@ -6,15 +6,11 @@ import Model.Notification;
 import Model.StudyPlanner;
 import View.UIManager;
 
-import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
-import javax.crypto.SealedObject;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
+import java.io.*;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.GregorianCalendar;
 
 /**
@@ -62,6 +58,38 @@ public class MainController
                 Notification not = new Notification("Welcome!", new GregorianCalendar(), "Thank you for using PearPlanner!");
                 SPC.getPlanner().addNotification(not);
             }
+        } catch (FileNotFoundException e)
+        {
+            UIManager.reportError("File does not exist");
+            System.exit(1);
+        } catch (ClassNotFoundException e)
+        {
+            UIManager.reportError("Invalid file");
+            System.exit(1);
+        } catch (NoSuchAlgorithmException e)
+        {
+            UIManager.reportError("Cannot decode the given file");
+            System.exit(1);
+        } catch (BadPaddingException e)
+        {
+            UIManager.reportError("Invalid file");
+            System.exit(1);
+        } catch (InvalidKeyException e)
+        {
+            UIManager.reportError("Cannot decode the given file");
+            System.exit(1);
+        } catch (NoSuchPaddingException e)
+        {
+            UIManager.reportError("Invalid file");
+            System.exit(1);
+        } catch (IOException e)
+        {
+            UIManager.reportError("Invalid file");
+            System.exit(1);
+        } catch (IllegalBlockSizeException e)
+        {
+            UIManager.reportError("Invalid file");
+            System.exit(1);
         } catch (Exception e)
         {
             UIManager.reportError(e.getMessage());

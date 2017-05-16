@@ -7,7 +7,6 @@ import java.util.GregorianCalendar;
  * PearPlanner
  * Created by Team BRONZE on 4/27/17
  */
-// TODO Notes
 public class Note implements Serializable
 {
     // private data
@@ -15,9 +14,7 @@ public class Note implements Serializable
     private GregorianCalendar timeStamp;
     private MultilineString text;
 
-
     // public methods
-
 
     // getters
     public String getTitle()

@@ -212,6 +212,7 @@ public class UIManager
     /**
      * Displays the Assignment details page
      */
+    // TODO open() doesn't work
     public void assignmentDetails(Assignment assignment, MenuController.Window current) throws IOException
     {
         UIManager.mc.loadAssignment(assignment, current, null);

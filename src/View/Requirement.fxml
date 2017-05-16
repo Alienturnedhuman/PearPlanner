@@ -63,13 +63,34 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
             </GridPane.margin>
         </TextArea>
-        <ComboBox fx:id="quantityType" onAction="#handleChange" prefHeight="31.0" prefWidth="531.0"
-                  promptText="Quantity type" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-                  GridPane.valignment="TOP">
+        <HBox alignment="TOP_CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2"
+              GridPane.valignment="CENTER">
+            <children>
+                <ComboBox fx:id="quantityType" onAction="#handleChange" prefHeight="31.0" prefWidth="242.0"
+                          promptText="Quantity type" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                          GridPane.rowIndex="2" GridPane.valignment="TOP">
+                    <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="5.0"/>
+                    </GridPane.margin>
+                </ComboBox>
+                <Button fx:id="addQuantity" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="+">
+                    <ContextMenu fx:id="context">
+                        <items>
+                            <MenuItem fx:id="quantityMenu" onAction="#newQuantity" disable="true"
+                                      mnemonicParsing="false" text="Add">
+                                <graphic>
+                                    <TextField fx:id="quantityName" onKeyReleased="#validateNewQuantity"
+                                               promptText="Quantity Type"/>
+                                </graphic>
+                            </MenuItem>
+                        </items>
+                    </ContextMenu>
+                </Button>
+            </children>
             <GridPane.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="5.0"/>
+                <Insets top="5.0"/>
             </GridPane.margin>
-        </ComboBox>
+        </HBox>
         <Label fx:id="completed" style="-fx-text-fill: green;" text="Completed." visible="false"
                GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
             <GridPane.margin>
@@ -86,9 +107,9 @@
                    GridPane.rowIndex="3">
             <columns>
                 <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Activity"/>
-                <TableColumn fx:id="quantityColumn" prefWidth="75.0" text="Quantity"
-                             style="-fx-alignment: CENTER-RIGHT;"/>
-                <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" style="-fx-alignment: CENTER-RIGHT;"/>
+                <TableColumn fx:id="quantityColumn" prefWidth="75.0" style="-fx-alignment: CENTER-RIGHT;"
+                             text="Quantity"/>
+                <TableColumn fx:id="dateColumn" prefWidth="75.0" style="-fx-alignment: CENTER-RIGHT;" text="Date"/>
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>

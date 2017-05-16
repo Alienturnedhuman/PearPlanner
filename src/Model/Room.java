@@ -67,6 +67,10 @@ public class Room extends VersionControlEntity
         setRoomNumber(cRoomNumber);
     }
 
+    public String getLocation() {
+        return name + "( " + roomNumber + " )";
+    }
+
     @Override
     public String toString()
     {

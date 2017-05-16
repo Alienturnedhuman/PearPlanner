@@ -1,5 +1,6 @@
 package Model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -58,6 +59,16 @@ public class Coursework extends Assignment
         return notes;
     }
 
+    /**
+     * Returns a String representing the deadline.
+     * Used in JavaFX.
+     *
+     * @return String
+     */
+    public String getDeadlineString()
+    {
+        return new SimpleDateFormat("dd/MM/yyyy HH:MM").format(this.deadline.getDate());
+    }
 
     // setters
     public void addNote(Note newNote)
