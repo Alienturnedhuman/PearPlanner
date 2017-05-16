@@ -1,11 +1,14 @@
 package Controller;
 
+import Model.Assignment;
 import Model.Requirement;
 import Model.Task;
 import Model.TaskType;
 import View.UIManager;
 import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -38,7 +41,6 @@ public class TaskController implements Initializable
 {
     public static DataFormat format = new DataFormat("object/Requirement");
 
-    // TODO display activities
     private Task task;
     private boolean success = false;
 
@@ -92,8 +94,7 @@ public class TaskController implements Initializable
         if (!this.name.getText().trim().isEmpty() &&
                 !this.weighting.getText().trim().isEmpty() &&
                 !this.deadline.getEditor().getText().trim().isEmpty() &&
-                this.taskType.getSelectionModel().getSelectedIndex() != -1 &&
-                this.requirements.getItems().size() > 0)
+                this.taskType.getSelectionModel().getSelectedIndex() != -1)
 
             this.submit.setDisable(false);
         // =================
@@ -458,6 +459,18 @@ public class TaskController implements Initializable
         TableColumn<Task, String> nameColumn = new TableColumn<>("Task");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+        TableColumn<Task, String> assignmentColumn = new TableColumn<>("Assignments");
+        assignmentColumn.setCellValueFactory(new PropertyValueFactory("assignments")
+        {
+            @Override public ObservableValue call(TableColumn.CellDataFeatures param)
+            {
+                SimpleStringProperty value = new SimpleStringProperty("");
+                for (Assignment a : ((Task) param.getValue()).getAssignmentReferences())
+                    value.set(value.getValue() + a.getName() + "\n");
+                return value;
+            }
+        });
+
         TableColumn<Task, String> deadlineColumn = new TableColumn<>("Deadline");
         deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
         deadlineColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
@@ -466,7 +479,7 @@ public class TaskController implements Initializable
         // Create a table:
         TableView<Task> tasks = new TableView<>();
         tasks.setItems(list);
-        tasks.getColumns().addAll(nameColumn, deadlineColumn);
+        tasks.getColumns().addAll(nameColumn, assignmentColumn, deadlineColumn);
         tasks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         // =================
 
@@ -495,7 +508,7 @@ public class TaskController implements Initializable
         // Set a new scene:
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(new Scene(layout, 400, 300));
+        stage.setScene(new Scene(layout, 550, 300));
         stage.setTitle("Select dependencies");
         stage.getIcons().add(new Image("file:icon.png"));
         stage.showAndWait();

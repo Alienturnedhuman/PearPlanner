@@ -155,6 +155,7 @@ public class StudyPlannerController
      */
     public void checkForNotifications()
     {
+        // TODO notifications
         /*int hours1 = 168, hours2 = 48; // temporary values until a Settings page is present
 
         for (Map.Entry<ModelEntity, boolean[]> entry : this.planner.getDeadlineNotifications().entrySet())

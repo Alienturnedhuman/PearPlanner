@@ -135,6 +135,7 @@ public class ActivityController implements Initializable
         list.removeAll(this.tasks.getItems());
         if (this.activity != null)
             list.remove(this.activity.getTasks());
+        list.removeIf(e -> !e.dependenciesComplete());
         // =================
 
         // Parse selected Tasks:

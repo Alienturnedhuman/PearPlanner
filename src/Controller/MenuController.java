@@ -534,7 +534,6 @@ public class MenuController implements Initializable
     /**
      * Display the Assignment pane
      */
-    // TODO display more stuff here
     public void loadAssignment(Assignment assignment, Window previousWindow, ModelEntity previous)
     {
         // Update main pane:
@@ -793,6 +792,7 @@ public class MenuController implements Initializable
                     list.add(task);
                     assignment.addTask(task);
                 }
+                this.updateMenu();
             } catch (IOException e1)
             {
                 UIManager.reportError("Unable to open View file");
@@ -812,6 +812,7 @@ public class MenuController implements Initializable
                 Task t = tasks.getSelectionModel().getSelectedItem();
                 list.remove(t);
                 assignment.removeTask(t);
+                this.updateMenu();
             }
         });
         // =================

@@ -20,7 +20,6 @@ public class Task extends ModelEntity
 {
     // private data
     private ArrayList<Task> dependencies = new ArrayList<>();
-    // TODO notification
     private Deadline deadline;
     private ArrayList<Requirement> requirements = new ArrayList<>();
     private ArrayList<Note> notes;
