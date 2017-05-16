@@ -15,15 +15,7 @@
             </person>
             <person>
                 <name>Tony Bagnall</name>
-                <details>Tony joined CMP as a part time MRes student/part time teaching assistant in 1993 having
-                    finished his BSc in Mathematics and Statistics at the University of Hertfordshire. After completing
-                    his Masters by research in 1995 he began a PhD titled "Modelling the UK electricity market with
-                    autonomous adaptive agents". After a brief period as a research assistant on a data mining project
-                    sponsored by Master Foods and Centrica, in 1999 he completed his PhD and was appointed as a Lecturer
-                    in Statistics for Data Mining jointly in the schools of Computer Science and Mathematics. In 2003
-                    statistics moved into CMP and since then Tony has been a full member of the school. In 2007 he was
-                    promoted to senior lecturer.
-                </details>
+                <details>Tony joined CMP as a part time MRes student/part time teaching assistant in 1993 having finished his BSc in Mathematics and Statistics at the University of Hertfordshire. After completing his Masters by research in 1995 he began a PhD titled "Modelling the UK electricity market with autonomous adaptive agents". After a brief period as a research assistant on a data mining project sponsored by Master Foods and Centrica, in 1999 he completed his PhD and was appointed as a Lecturer in Statistics for Data Mining jointly in the schools of Computer Science and Mathematics. In 2003 statistics moved into CMP and since then Tony has been a full member of the school. In 2007 he was promoted to senior lecturer.</details>
                 <version>0</version>
                 <uid>PERSON_666</uid>
                 <givenNames>Anthony</givenNames>
@@ -69,9 +61,7 @@
         <buildings>
             <building>
                 <name>Julian Study Centre</name>
-                <details>The Julian Study Centre is a dedicated teaching building featuring a tiered 280 seat lecture
-                    theatre and an 80 seat Harvard-style lecture room.
-                </details>
+                <details>The Julian Study Centre is a dedicated teaching building featuring a tiered 280 seat lecture theatre and an 80 seat Harvard-style lecture room.</details>
                 <version>0</version>
                 <uid>BUJSC_12</uid>
                 <code>JSC</code>
@@ -90,12 +80,7 @@
             </room>
             <room>
                 <name>JSC Lecture Theatre</name>
-                <details>Known as the JSC Lecture Theatre, this tiered room seats 280 people. Fully integrated
-                    audio-visual equipment is easy to use with back projection possible with an audio-visual technician.
-                    The lecture theatre is located on the ground floor with an accessible stair lift to the front and an
-                    adjoining foyer space with café. The JSC Lecture Theatre is a great space for a plenary session and
-                    breakout area.
-                </details>
+                <details>Known as the JSC Lecture Theatre, this tiered room seats 280 people. Fully integrated audio-visual equipment is easy to use with back projection possible with an audio-visual technician. The lecture theatre is located on the ground floor with an accessible stair lift to the front and an adjoining foyer space with café. The JSC Lecture Theatre is a great space for a plenary session and breakout area.</details>
                 <version>0</version>
                 <uid>ROOM_201</uid>
                 <building>BUILDING_JSC</building>
