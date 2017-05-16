@@ -617,8 +617,9 @@ public class DataController {
                 }
                 else if(assetList.get(i).isImporter())
                 {
-                    VersionControlEntity.get(key).update(assetList.get(i));
-                    System.out.println(assetList.get(key).toString() + " update attempted");
+
+                    System.out.println(assetList.get(key).toString() +
+                            (VersionControlEntity.get(key).update(assetList.get(i))?" updated":" not updated"));
                 }
                 else
                 {
@@ -636,18 +637,6 @@ public class DataController {
 
     static public HubFile loadHubFile(File tempFile)
     {
-
-        /// begin GANTT CODE TESTING - remove once properly implemented
-        System.out.println("GANT");
-        if(MainController.getSPC().getPlanner().containsStudyProfile(2017,1))
-        {
-            StudyPlanner sp = MainController.getSPC().getPlanner();
-            Assignment a = (sp.getStudyProfiles()[0].getModules()[0].getAssignments()).get(1);
-            GanttishDiagram.createGanttishDiagram(sp,a);
-        }
-        // END GANTT CODE TESTING
-
-        System.out.println("GANT!!");
         HubFile r = null;
         if(tempFile.exists())
         {

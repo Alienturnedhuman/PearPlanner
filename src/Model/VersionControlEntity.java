@@ -30,12 +30,17 @@ public class VersionControlEntity extends ModelEntity
     }
 
     // public methods
-    public void update(VersionControlEntity receivedVCE)
+    public boolean update(VersionControlEntity receivedVCE)
     {
         // initial set up code below - check if this needs
         if (uid.equals(receivedVCE.getUID()) && version < receivedVCE.getVersion())
         {
             replace(receivedVCE);
+            return true;
+        }
+        else
+        {
+            return false;
         }
 
     }
