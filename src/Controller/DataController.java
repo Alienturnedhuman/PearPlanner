@@ -596,12 +596,6 @@ public class DataController {
 
         /// begin GANTT CODE TESTING - remove once properly implemented
         System.out.println("GANT");
-        GanttishDiagram g = new GanttishDiagram();
-        g.getBadge(75,true,5);
-        g.getBadge(0,true,1.5);
-        g.getBadge(1,false,2);
-        g.getBadge(100,true,10);
-
         if(MainController.getSPC().getPlanner().containsStudyProfile(2017,1))
         {
             StudyPlanner sp = MainController.getSPC().getPlanner();
