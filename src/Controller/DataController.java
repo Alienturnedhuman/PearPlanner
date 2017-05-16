@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import View.ConsoleIO;
 import View.UIManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -9,11 +10,8 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import View.*;
 
 /**
  * Created by bendickson on 5/4/17.
@@ -636,18 +634,6 @@ public class DataController {
 
     static public HubFile loadHubFile(File tempFile)
     {
-
-        /// begin GANTT CODE TESTING - remove once properly implemented
-        System.out.println("GANT");
-        if(MainController.getSPC().getPlanner().containsStudyProfile(2017,1))
-        {
-            StudyPlanner sp = MainController.getSPC().getPlanner();
-            Assignment a = (sp.getStudyProfiles()[0].getModules()[0].getAssignments()).get(1);
-            GanttishDiagram.createGanttishDiagram(sp,a);
-        }
-        // END GANTT CODE TESTING
-
-        System.out.println("GANT!!");
         HubFile r = null;
         if(tempFile.exists())
         {

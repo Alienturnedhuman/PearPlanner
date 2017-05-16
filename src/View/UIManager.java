@@ -2,6 +2,7 @@ package View;
 
 import Controller.*;
 import Model.*;
+import com.apple.eawt.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -17,10 +18,15 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jfxtras.scene.control.agenda.Agenda;
 
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 
 /**
  * Created by Zilvinas on 04/05/2017.
@@ -47,6 +53,11 @@ public class UIManager
         Parent root = loader.load();
 
         // Set the scene:
+
+        //macOS compatible dock icon
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
+
+
         Stage stage = new Stage();
         stage.setScene(new Scene(root, 550, 232));
         stage.setTitle("Create Account");
@@ -391,6 +402,116 @@ public class UIManager
     }
 
     /**
+     * Displays a Calendar window with events of this Study Profile.
+     */
+    public void showCalendar()
+    {
+        Stage stage = new Stage();
+
+        // Layout:
+        VBox layout = new VBox();
+        layout.setSpacing(10);
+        layout.setPadding(new Insets(15));
+        layout.getStylesheets().add("/Content/stylesheet.css");
+        // =================
+
+        // Nav bar:
+        HBox nav = new HBox();
+        nav.setSpacing(15.0);
+        // =================
+
+        // Title:
+        Label title = new Label("Calendar");
+        title.getStyleClass().add("title");
+        HBox x = new HBox();
+        HBox.setHgrow(x, Priority.ALWAYS);
+        // =================
+
+        // Buttons:
+        Button save = new Button("Export");
+        save.setOnAction(e -> {
+            // Not implemented yet.
+        });
+        Button agendaFwd = new Button(">");
+        Button agendaBwd = new Button("<");
+        // =================
+
+        nav.getChildren().addAll(title, x, agendaBwd, agendaFwd);
+
+        // Content:
+        Agenda content = new Agenda();
+        VBox.setVgrow(content, Priority.ALWAYS);
+        content.setAllowDragging(false);
+        content.setAllowResize(false);
+        content.autosize();
+
+        // Agenda buttons:
+        agendaBwd.setOnMouseClicked(event -> content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
+        agendaFwd.setOnMouseClicked(event -> content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
+        // =================
+
+        // Populate Agenda:
+        ArrayList<Event> calendar = MainController.getSPC().getPlanner().getCurrentStudyProfile().getCalendar();
+        for (Event e : calendar)
+        {
+            if (e instanceof TimetableEvent)
+            {
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                content.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withEndLocalDateTime(sTime.plusMinutes(((TimetableEvent) e).getDuration()))
+                                .withSummary(e.getName())
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group5"))
+                );
+            } else if (e instanceof ExamEvent)
+            {
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                content.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withSummary(e.getName())
+                                .withEndLocalDateTime(sTime.plusMinutes(((ExamEvent) e).getDuration()))
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group20"))
+                );
+            } else if (e instanceof Deadline)
+            {
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                content.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withSummary(e.getName())
+                                .withEndLocalDateTime(sTime.plusMinutes(60))
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"))
+                );
+            } else
+            {
+                LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
+                content.appointments().addAll(
+                        new Agenda.AppointmentImplLocal()
+                                .withStartLocalDateTime(sTime)
+                                .withSummary(e.getName())
+                                .withEndLocalDateTime(sTime.plusMinutes(60))
+                                .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group3"))
+                );
+            }
+        }
+        // =================
+
+        // =================
+
+        layout.getChildren().addAll(nav, content);
+
+        // Set the scene:
+        stage.setScene(new Scene(layout, 1300, 800));
+        stage.setTitle("Calendar");
+        stage.resizableProperty().setValue(true);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.showAndWait();
+        // =================
+    }
+
+    /**
      * Displays a file dialog for importing .xml files
      *
      * @return a File object
@@ -413,7 +534,7 @@ public class UIManager
     {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Ganttish Diagram");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPG file", "*.jpg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG file", "*.png"));
         File path = fileChooser.showSaveDialog(stage);
         return path.getAbsolutePath();
     }
