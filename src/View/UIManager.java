@@ -2,6 +2,7 @@ package View;
 
 import Controller.*;
 import Model.*;
+import com.apple.eawt.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -19,6 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxtras.scene.control.agenda.Agenda;
 
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +53,11 @@ public class UIManager
         Parent root = loader.load();
 
         // Set the scene:
+
+        //macOS compatible dock icon
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
+
+
         Stage stage = new Stage();
         stage.setScene(new Scene(root, 550, 232));
         stage.setTitle("Create Account");
