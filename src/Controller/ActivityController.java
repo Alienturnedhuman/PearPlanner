@@ -194,6 +194,7 @@ public class ActivityController implements Initializable
         this.quantityType.getItems().addAll(QuantityType.listOfNames());
         this.date.setValue(LocalDate.now());
 
+        // TODO draggy
         // ListChangeListener:
         this.tasks.getItems().addListener((ListChangeListener<Task>) c -> handleChange());
         // =================

@@ -60,6 +60,7 @@ public class StudyProfileController implements Initializable
         this.title.setText("Year " + this.profile.getYear() + ", Semester " + this.profile.getSemesterNo());
         this.name.setText(this.profile.getName());
         this.details.setText(this.profile.getDetails().getAsString());
+        this.details.setWrapText(true);
 
         this.modules.setText(this.profile.getModules().length + " module(s).");
         this.milestones.setText(this.profile.getMilestones().length + " milestone(s).");
@@ -69,4 +70,3 @@ public class StudyProfileController implements Initializable
             this.setCurrent.setDisable(true);
     }
 }
-

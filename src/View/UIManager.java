@@ -413,7 +413,7 @@ public class UIManager
     {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Ganttish Diagram");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPG file", "*.jpg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG file", "*.png"));
         File path = fileChooser.showSaveDialog(stage);
         return path.getAbsolutePath();
     }

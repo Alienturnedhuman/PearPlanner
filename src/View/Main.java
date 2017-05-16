@@ -11,6 +11,7 @@ public class Main extends Application
     {
         MainController.initialise();
         MainController.main();
+        //UIManager.areYouFeelingLucky();
     }
 
     public static void main(String[] args)

@@ -576,9 +576,9 @@ public class MenuController implements Initializable
         }
         detailsBox.getChildren().addAll(new Label("Weighting: " + assignment.getWeighting()),
                 new Label(date),
-                new Label("Set by: " + assignment.getSetBy().getFullName()),
-                new Label("Marked by: " + assignment.getMarkedBy().getFullName()),
-                new Label("Reviewed by: " + assignment.getReviewedBy().getFullName()), details);
+                new Label("Set by: " + assignment.getSetBy().getPreferredName()),
+                new Label("Marked by: " + assignment.getMarkedBy().getPreferredName()),
+                new Label("Reviewed by: " + assignment.getReviewedBy().getPreferredName()), details);
         GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
         GridPane.setHgrow(detailsBox, Priority.ALWAYS);
         // =================
