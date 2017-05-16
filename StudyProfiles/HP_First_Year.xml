@@ -145,9 +145,9 @@
     </assets>
     <studyProfile>
         <name>First year Gryffindor</name>
-        <details>1 September 2018 to 31 December 2018</details>
-        <uid>HP_2018_1</uid>
-        <year>2018</year>
+        <details>1 September 2017 to 31 December 2017</details>
+        <uid>HP_2017_1</uid>
+        <year>2017</year>
         <semester>1</semester>
         <modules>
             <module>
@@ -163,7 +163,7 @@
                         <details></details>
                         <version>0</version>
                         <uid>HSWW-1992-LEC-01</uid>
-                        <date>15/05/2018T09:45:00Z</date>
+                        <date>15/05/2017T09:45:00Z</date>
                         <room>POTIONS_CLASSROOM</room>
                         <lecturer>WIZARD_001</lecturer>
                         <timetableEventType>LECTURE</timetableEventType>
@@ -174,7 +174,7 @@
                         <details></details>
                         <version>0</version>
                         <uid>HSWW-1992-LEC-01</uid>
-                        <date>19/05/2018T09:45:00Z</date>
+                        <date>19/05/2017T09:45:00Z</date>
                         <room>POTIONS_CLASSROOM</room>
                         <lecturer>WIZARD_001</lecturer>
                         <timetableEventType>LECTURE</timetableEventType>
@@ -193,7 +193,7 @@
                             <details>Date of the exam</details>
                             <version>0</version>
                             <uid>POTIONS_EXAM_1_TIMESLOT</uid>
-                            <date>15/12/2018T09:45:00Z</date>
+                            <date>15/12/2017T09:45:00Z</date>
                             <room>POTION_MIXING</room>
                             <duration>120</duration>
                         </timeslot>
@@ -213,14 +213,14 @@
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>POTIONS_CW_1_START</uid>
-                            <date>01/10/2018T15:00:00Z</date>
+                            <date>01/10/2017T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>POTIONS_CW_1_DEADLINE</uid>
-                            <date>01/11/2018T15:00:00Z</date>
+                            <date>01/11/2017T15:00:00Z</date>
                         </deadline>
                         <extensions></extensions>
                         <weighting>30</weighting>
@@ -244,7 +244,7 @@
                         <details></details>
                         <version>0</version>
                         <uid>HSWW-DADA-LEC-01</uid>
-                        <date>16/05/2018T09:45:00Z</date>
+                        <date>16/05/2017T09:45:00Z</date>
                         <room>CLASS_104</room>
                         <lecturer>WIZARD_002</lecturer>
                         <timetableEventType>LECTURE</timetableEventType>
@@ -255,7 +255,7 @@
                         <details></details>
                         <version>0</version>
                         <uid>HSWW-DADA-LEC-01</uid>
-                        <date>16/05/2018T14:30:00Z</date>
+                        <date>16/05/2017T14:30:00Z</date>
                         <room>CLASS_3C</room>
                         <lecturer>WIZARD_002</lecturer>
                         <timetableEventType>LECTURE</timetableEventType>
@@ -273,14 +273,14 @@
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>DADA_CW_2_START</uid>
-                            <date>10/12/2018T15:00:00Z</date>
+                            <date>10/12/2017T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>DADA_CW_2_DEADLINE</uid>
-                            <date>30/12/2018T15:00:00Z</date>
+                            <date>30/12/2017T15:00:00Z</date>
                         </deadline>
                         <extensions></extensions>
                         <weighting>50</weighting>
@@ -299,14 +299,14 @@
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>DADA_CW_1_START</uid>
-                            <date>20/10/2018T15:00:00Z</date>
+                            <date>20/10/2017T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>DADA_CW_1_DEADLINE</uid>
-                            <date>15/11/2018T15:00:00Z</date>
+                            <date>15/11/2017T15:00:00Z</date>
                         </deadline>
                         <extensions></extensions>
                         <weighting>50</weighting>
@@ -330,7 +330,7 @@
                         <details></details>
                         <version>0</version>
                         <uid>HSWW-1911-LEC-01</uid>
-                        <date>15/05/2018T11:00:00Z</date>
+                        <date>15/05/2017T11:00:00Z</date>
                         <room>CLASS_72</room>
                         <lecturer>WIZARD_003</lecturer>
                         <timetableEventType>LECTURE</timetableEventType>
@@ -341,7 +341,7 @@
                         <details></details>
                         <version>0</version>
                         <uid>HSWW-1911-LEC-01</uid>
-                        <date>17/05/2018T13:15:00Z</date>
+                        <date>17/05/2017T13:15:00Z</date>
                         <room>CLASS_4F</room>
                         <lecturer>WIZARD_003</lecturer>
                         <timetableEventType>LECTURE</timetableEventType>
@@ -360,7 +360,7 @@
                             <details></details>
                             <version>0</version>
                             <uid>HOM_EXAM_1_RESIT_TIMESLOT</uid>
-                            <date>30/01/2018T14:15:00Z</date>
+                            <date>30/01/2017T14:15:00Z</date>
                             <room>CLASS_4F</room>
                             <duration>120</duration>
                         </timeslot>
@@ -382,7 +382,7 @@
                             <details>The Date of the final exam</details>
                             <version>0</version>
                             <uid>HOM_EXAM_1_TIMESLOT</uid>
-                            <date>15/12/2018T14:15:00Z</date>
+                            <date>15/12/2017T14:15:00Z</date>
                             <room>CLASS_4F</room>
                             <duration>60</duration>
                         </timeslot>
@@ -407,7 +407,7 @@
                         <details></details>
                         <version>0</version>
                         <uid>HSWW-CHARM-LEC-01</uid>
-                        <date>18/05/2018T09:45:00Z</date>
+                        <date>18/05/2017T09:45:00Z</date>
                         <room>CLASS_99</room>
                         <lecturer>WIZARD_004</lecturer>
                         <timetableEventType>LECTURE</timetableEventType>
@@ -418,7 +418,7 @@
                         <details></details>
                         <version>0</version>
                         <uid>HSWW-CHARM-LEC-01</uid>
-                        <date>17/05/2018T14:30:00Z</date>
+                        <date>17/05/2017T14:30:00Z</date>
                         <room>CLASS_2E</room>
                         <lecturer>WIZARD_004</lecturer>
                         <timetableEventType>LECTURE</timetableEventType>
@@ -436,14 +436,14 @@
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>CHARM_CW_1_START</uid>
-                            <date>11/11/2018T15:00:00Z</date>
+                            <date>11/11/2017T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>CHARM_CW_1_DEADLINE</uid>
-                            <date>25/11/2018T15:00:00Z</date>
+                            <date>25/11/2017T15:00:00Z</date>
                         </deadline>
                         <extensions></extensions>
                         <weighting>50</weighting>
@@ -462,14 +462,14 @@
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>CHARM_CW_2_START</uid>
-                            <date>14/09/2018T15:00:00Z</date>
+                            <date>14/09/2017T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>CHARM_CW_2_DEADLINE</uid>
-                            <date>05/11/2018T15:00:00Z</date>
+                            <date>05/11/2017T15:00:00Z</date>
                         </deadline>
                         <extensions></extensions>
                         <weighting>50</weighting>

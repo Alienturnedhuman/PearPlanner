@@ -17,6 +17,7 @@ public class StudyProfile extends VersionControlEntity
     private ArrayList<Module> modules;
     private ArrayList<Milestone> milestones;
     private ArrayList<ExtensionApplication> extensions;
+    private ArrayList<Event> calendar = new ArrayList<Event>();
     private int year;
     private int semesterNo;
     private boolean current;
@@ -45,6 +46,17 @@ public class StudyProfile extends VersionControlEntity
         return e;
     }
 
+    /**
+     * Returns a calendar containing all the Events of this Study Profile.
+     *
+     * @return ArrayList of Events
+     */
+    public ArrayList<Event> getCalendar()
+    {
+        return calendar;
+    }
+
+
     public ArrayList<Task> getTasks()
     {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -60,6 +72,19 @@ public class StudyProfile extends VersionControlEntity
     public void setCurrent(boolean current)
     {
         this.current = current;
+    }
+
+    /**
+     * Add an Event to the calendar of this Study Profile.
+     *
+     * @param event Event to be added.
+     */
+    public void addEventToCalendar(Event event)
+    {
+        if (!calendar.contains(event))
+        {
+            calendar.add(event);
+        }
     }
 
     public String getName()
