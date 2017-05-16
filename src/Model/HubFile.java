@@ -431,18 +431,213 @@ public class HubFile implements Serializable
         DataController.addVCEproperties(r,pValues);
         return r;
     }
-    /*
-    public static Room createRoom(NodeList nc)
+
+    public static Room createRoom(NodeList nc , HashMap<String,VersionControlEntity> assetList)
     {
         HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
                 HubFile.SCHEMA_ROOM);
 
-        Room r = new Building(pValues.get("code").getString(), pValues.get("latitude").getDouble(),
-                pValues.get("longitude").getDouble());
+        Room r;
+        String linkedBuilding = pValues.get("building").getString();
+        if(assetList.containsKey(linkedBuilding) &&
+                assetList.get(linkedBuilding) instanceof Building)
+        {
+            r = new Room(pValues.get("roomNumber").getString() ,
+                    (Building)assetList.get(linkedBuilding));
+        }
+        else {
+            r = new Room(pValues.get("roomNumber").getString());
+        }
+        DataController.addVCEproperties(r,pValues);
+        return r;
+    }
+
+    public static TimeTableEventType createTimetableEvent(NodeList nc)
+    {
+        HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
+                HubFile.SCHEMA_TIMETABLE_EVENT_TYPE);
+
+        TimeTableEventType r = new TimeTableEventType();
 
         DataController.addVCEproperties(r,pValues);
         return r;
     }
-    */
+
+    public static Coursework createCoursework(NodeList nc , HashMap<String,VersionControlEntity> assetList) throws Exception
+    {
+        Coursework r;
+        HashMap<String,XMLcontroller.NodeReturn> courseworkValues = xmlTools.getSchemaValues(nc,
+                HubFile.SCHEMA_COURSEWORK);
+
+
+        Person cwSetBy,cwMarkedBy,cwReviewedBy;
+        Event cwStartDate;
+        Deadline cwDeadline;
+
+        // extensions to be added later
+        ArrayList<Extension> cwExtensions = new ArrayList<>();
+
+        String linkedSetBy = courseworkValues.get("setBy").getString();
+        String linkedMarkedBy = courseworkValues.get("markedBy").getString();
+        String linkedReviewedBy = courseworkValues.get("reviewedBy").getString();
+
+
+        cwSetBy = DataController.inList(assetList,linkedSetBy);
+        cwMarkedBy = DataController.inList(assetList,linkedMarkedBy);
+        cwReviewedBy = DataController.inList(assetList,linkedReviewedBy);
+
+
+        if(courseworkValues.containsKey("startDate") &&
+                XMLcontroller.matchesSchema(courseworkValues.get("startDate").getNodeList(),
+                HubFile.SCHEMA_EVENT))
+        {
+            HashMap<String,XMLcontroller.NodeReturn> eventValues =
+                    xmlTools.getSchemaValues(courseworkValues.get("startDate").getNodeList(),
+                            HubFile.SCHEMA_EVENT);
+            cwStartDate = new Event(eventValues.get("date").getString());
+
+
+            DataController.addVCEproperties(cwStartDate,eventValues);
+            assetList.put(eventValues.get("uid").getString(),cwStartDate);
+
+        }
+        else
+        {
+            cwStartDate = null;
+        }
+        if(courseworkValues.containsKey("deadline") &&
+                XMLcontroller.matchesSchema(courseworkValues.get("deadline").getNodeList(),
+                HubFile.SCHEMA_EVENT))
+        {
+            HashMap<String,XMLcontroller.NodeReturn> eventValues =
+                    xmlTools.getSchemaValues(courseworkValues.get("deadline").getNodeList(),
+                            HubFile.SCHEMA_EVENT);
+
+            cwDeadline = new Deadline(eventValues.get("date").getString());
+
+
+            DataController.addVCEproperties(cwDeadline,eventValues);
+            assetList.put(eventValues.get("uid").getString(),cwDeadline);
+
+        }
+        else
+        {
+            cwDeadline = null;
+        }
+
+
+        r = new Coursework(courseworkValues.get("weighting").getInt(),
+                cwSetBy,cwMarkedBy,cwReviewedBy,courseworkValues.get("marks").getInt(),
+                cwStartDate,cwDeadline,cwExtensions);
+
+        DataController.addVCEproperties(r,courseworkValues);
+        return r;
+    }
+
+    public static Exam createExam(NodeList nc , HashMap<String,VersionControlEntity> assetList) throws Exception
+    {
+
+        HashMap<String,XMLcontroller.NodeReturn> examValues = xmlTools.getSchemaValues(nc,
+                HubFile.SCHEMA_EXAM);
+
+
+
+        Person exSetBy,exMarkedBy,exReviewedBy;
+        ExamEvent exTimeSlot;
+        ArrayList<Extension> cwExtensions = new ArrayList<>();
+
+
+
+        String linkedSetBy = examValues.get("setBy").getString();
+        String linkedMarkedBy = examValues.get("markedBy").getString();
+        String linkedReviewedBy = examValues.get("reviewedBy").getString();
+
+        exSetBy = DataController.inList(assetList,linkedSetBy);
+        exMarkedBy = DataController.inList(assetList,linkedMarkedBy);
+        exReviewedBy = DataController.inList(assetList,linkedReviewedBy);
+
+        if(XMLcontroller.matchesSchema(examValues.get("timeslot").getNodeList(),
+                HubFile.SCHEMA_EXAMEVENT))
+        {
+            HashMap<String,XMLcontroller.NodeReturn> eventValues =
+                    xmlTools.getSchemaValues(examValues.get("timeslot").getNodeList(),
+                            HubFile.SCHEMA_EXAMEVENT);
+            //Room exRoom;
+            String linkedRoom = eventValues.get("room").getString();
+            Room exRoom = DataController.inList(assetList,linkedRoom);
+
+
+            exTimeSlot = new ExamEvent(eventValues.get("date").getString(),exRoom,
+                    eventValues.get("duration").getInt());
+
+
+
+            DataController.addVCEproperties(exTimeSlot,eventValues);
+            assetList.put(eventValues.get("uid").getString(),exTimeSlot);
+
+        }
+        else
+        {
+            exTimeSlot = null;
+        }
+
+        Exam exExamResit = null;
+        if(examValues.containsKey("resit")) {
+            String linkedResit = examValues.get("resit").getString();
+            try {
+                exExamResit = DataController.inList(assetList, linkedResit);
+            } catch (Exception e) {
+                // do nothing!
+                //exExamResit = null;
+            }
+        }
+
+
+        Exam newExam;
+        if(exExamResit==null) {
+            newExam = new Exam(examValues.get("weighting").getInt(),
+                    exSetBy, exMarkedBy, exReviewedBy, examValues.get("marks").getInt(),
+                    exTimeSlot);
+        }
+        else
+        {
+            newExam = new Exam(examValues.get("weighting").getInt(),
+                    exSetBy, exMarkedBy, exReviewedBy, examValues.get("marks").getInt(),
+                    exTimeSlot,exExamResit);
+        }
+
+        DataController.addVCEproperties(newExam,examValues);
+
+        return newExam;
+    }
+
+    public static TimetableEvent createTimetableEvent(NodeList nc , HashMap<String,VersionControlEntity> assetList) throws Exception
+    {
+        TimetableEvent newTTE;
+
+
+        HashMap<String,XMLcontroller.NodeReturn> tteValues = xmlTools.getSchemaValues(nc,
+                HubFile.SCHEMA_TIMETABLE_EVENT);
+
+
+
+        String linkedRoom = tteValues.get("room").getString();
+        String linkedLecturer = tteValues.get("lecturer").getString();
+        String linkedTTET = tteValues.get("timetableEventType").getString();
+
+        Room tRoom = DataController.inList(assetList,linkedRoom);
+        Person tLecturer = DataController.inList(assetList,linkedLecturer);
+        TimeTableEventType tTTET = DataController.inList(assetList,linkedTTET);
+
+
+        newTTE = new TimetableEvent(tteValues.get("date").getString(),tRoom,tLecturer
+                ,tTTET,tteValues.get("duration").getInt());
+        DataController.addVCEproperties(newTTE,tteValues);
+
+
+        return newTTE;
+    }
+
+
 
 }

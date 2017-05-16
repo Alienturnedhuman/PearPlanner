@@ -105,7 +105,7 @@ public class DataController {
         return r;
     }
 
-    private static <T extends VersionControlEntity> T inList( HashMap<String,VersionControlEntity> list,String uid) throws Exception
+    public static <T extends VersionControlEntity> T inList( HashMap<String,VersionControlEntity> list,String uid) throws Exception
     {
         VersionControlEntity vce = null;
         if(list.containsKey(uid)) {
@@ -237,6 +237,7 @@ public class DataController {
                         nc = XMLcontroller.getNodes(n);
                         if (n.getNodeName().equals("building") && XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_BUILDING))
                         {
+                            ConsoleIO.setConsoleMessage("Valid Node found:" , true);
 /*
                             HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
                                     HubFile.SCHEMA_BUILDING);
@@ -250,6 +251,7 @@ public class DataController {
                             tb = HubFile.createBuilding(nc);
 
                             assetList.put(tb.getUID(),tb);
+                            ConsoleIO.setConsoleMessage("Adding buiding: " + tb.toString() , true);
                         }
                     }
                 }
@@ -271,6 +273,8 @@ public class DataController {
                         nc = XMLcontroller.getNodes(n);
                         if (n.getNodeName().equals("room") && XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_ROOM))
                         {
+                            ConsoleIO.setConsoleMessage("Valid Node found:" , true);
+                            /*
                             HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
                                     HubFile.SCHEMA_ROOM);
 
@@ -287,8 +291,11 @@ public class DataController {
 
 
                             addVCEproperties(tr,pValues);
+                            */
 
-                            assetList.put(pValues.get("uid").getString(),tr);
+                            tr =  HubFile.createRoom(nc,assetList);
+                            assetList.put(tr.getUID(),tr);
+                            ConsoleIO.setConsoleMessage("Adding room: " + tr.toString() , true);
                         }
                     }
                 }
@@ -299,6 +306,7 @@ public class DataController {
                 NodeList ttetList = assetValues.get("timetableEventTypes").getNodeList();
                 i = -1;
                 ii = ttetList.getLength();
+                ConsoleIO.setConsoleMessage("Reading timetableEventTypes tag, " + Integer.toString(ii) + " nodes:" , true);
                 while(++i<ii)
                 {
                     n = ttetList.item(i);
@@ -308,15 +316,20 @@ public class DataController {
                         if (n.getNodeName().equals("timetableEventType") &&
                                 XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_TIMETABLE_EVENT_TYPE))
                         {
+                            ConsoleIO.setConsoleMessage("Valid Node found:" , true);
+                            /*
                             HashMap<String,XMLcontroller.NodeReturn> ttetValues =
                                     xmlTools.getSchemaValues(nc,HubFile.SCHEMA_TIMETABLE_EVENT_TYPE);
 
 
                             TimeTableEventType ttet = new TimeTableEventType();
-
                             addVCEproperties(ttet,ttetValues);
+                            */
+                            TimeTableEventType ttet = HubFile.createTimetableEvent(nc);
 
-                            assetList.put(ttetValues.get("uid").getString(),ttet);
+
+                            assetList.put(ttet.getUID(),ttet);
+                            ConsoleIO.setConsoleMessage("Adding timetable event: " + ttet.toString() , true);
                         }
                     }
 
@@ -351,17 +364,26 @@ public class DataController {
                     NodeList assignments = moduleValues.get("assignments").getNodeList();
                     int j = -1;
                     int jj = assignments.getLength();
+                    ConsoleIO.setConsoleMessage("Reading assignments tag, " + Integer.toString(ii) + " nodes:" , true);
                     while(++j<jj)
                     {
                         if(assignments.item(j).getNodeType()==Node.ELEMENT_NODE)
                         {
-
+                            nc = assignments.item(j).getChildNodes();
                             switch (assignments.item(j).getNodeName())
                             {
                                 case "coursework":
                                     if(XMLcontroller.matchesSchema(assignments.item(j).getChildNodes(),
                                             HubFile.SCHEMA_COURSEWORK))
                                     {
+                                        ConsoleIO.setConsoleMessage("Valid Node found:" , true);
+
+                                        /*
+
+
+
+
+
                                         HashMap<String,XMLcontroller.NodeReturn> courseworkValues =
                                                 xmlTools.getSchemaValues(assignments.item(j).getChildNodes(),
                                                         HubFile.SCHEMA_COURSEWORK);
@@ -421,8 +443,12 @@ public class DataController {
 
                                         addVCEproperties(newCoursework,courseworkValues);
 
-                                        assetList.put(courseworkValues.get("uid").getString(),newCoursework);
+
+                                        */
+                                        Coursework newCoursework = HubFile.createCoursework(nc,assetList);
+                                        assetList.put(newCoursework.getUID(),newCoursework);
                                         thisModule.addAssignment(newCoursework);
+                                        ConsoleIO.setConsoleMessage("Adding coursework: " + newCoursework.toString() , true);
                                     }
                                     break;
 
@@ -430,6 +456,9 @@ public class DataController {
                                     if(XMLcontroller.matchesSchema(assignments.item(j).getChildNodes(),
                                             HubFile.SCHEMA_EXAM))
                                     {
+                                        ConsoleIO.setConsoleMessage("Valid Node found:" , true);
+
+                                        /*
                                         HashMap<String,XMLcontroller.NodeReturn> examValues =
                                                 xmlTools.getSchemaValues(assignments.item(j).getChildNodes(),
                                                         HubFile.SCHEMA_EXAM);
@@ -500,8 +529,14 @@ public class DataController {
 
                                         addVCEproperties(newExam,examValues);
 
-                                        assetList.put(examValues.get("uid").getString(),newExam);
+                                        */
+
+
+
+                                        Exam newExam = HubFile.createExam(nc,assetList);
+                                        assetList.put(newExam.getUID(),newExam);
                                         thisModule.addAssignment(newExam);
+                                        ConsoleIO.setConsoleMessage("Adding exam: " + newExam.toString() , true);
                                     }
 
                                     break;
@@ -512,6 +547,7 @@ public class DataController {
                     NodeList timetable = moduleValues.get("timetable").getNodeList();
                     j=-1;
                     jj = timetable.getLength();
+                    ConsoleIO.setConsoleMessage("Reading timetable tag, " + Integer.toString(ii) + " nodes:" , true);
                     while(++j<jj)
                     {
                         if(timetable.item(j).getNodeType()==Node.ELEMENT_NODE &&
@@ -520,6 +556,9 @@ public class DataController {
                                 HubFile.SCHEMA_TIMETABLE_EVENT))
 
                         {
+                            ConsoleIO.setConsoleMessage("Valid Node found:" , true);
+                            nc = timetable.item(j).getChildNodes();
+                            /*
                             HashMap<String,XMLcontroller.NodeReturn> tteValues =
                                     xmlTools.getSchemaValues(timetable.item(j).getChildNodes(),
                                             HubFile.SCHEMA_TIMETABLE_EVENT);
@@ -538,9 +577,13 @@ public class DataController {
                             TimetableEvent newTTE = new TimetableEvent(tteValues.get("date").getString(),tRoom,tLecturer
                                     ,tTTET,tteValues.get("duration").getInt());
                             addVCEproperties(newTTE,tteValues);
+                            */
 
-                            assetList.put(tteValues.get("uid").getString(),newTTE);
+                            TimetableEvent newTTE = HubFile.createTimetableEvent(nc,assetList);
+                            assetList.put(newTTE.getUID(),newTTE);
                             thisModule.addTimetableEvent(newTTE);
+
+                            ConsoleIO.setConsoleMessage("Adding TimetableEvent: " + newTTE.toString() , true);
                         }
                     }
                     newModules.add(thisModule);
