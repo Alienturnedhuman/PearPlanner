@@ -187,5 +187,6 @@ public class Assignment extends VersionControlEntity
         markedBy = cMarkedBy;
         reviewedBy = cReviewedBy;
         marks = cMarks;
+        //MainController.getSPC().getPlanner().getDeadlineNotifications().put(this, new boolean[2]);
     }
 }
