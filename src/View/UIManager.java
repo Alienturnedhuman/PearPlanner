@@ -6,6 +6,7 @@ import com.apple.eawt.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
@@ -18,6 +19,7 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 
 import javax.swing.*;
@@ -406,7 +408,14 @@ public class UIManager
      */
     public void showCalendar()
     {
+
+
+
+
         Stage stage = new Stage();
+
+
+
 
         // Layout:
         VBox layout = new VBox();
@@ -444,7 +453,8 @@ public class UIManager
         content.setAllowDragging(false);
         content.setAllowResize(false);
         content.autosize();
-
+        content.setActionCallback(param -> null);
+        content.setEditAppointmentCallback(param -> null);
         // Agenda buttons:
         agendaBwd.setOnMouseClicked(event -> content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
         agendaFwd.setOnMouseClicked(event -> content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
@@ -461,7 +471,7 @@ public class UIManager
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
                                 .withEndLocalDateTime(sTime.plusMinutes(((TimetableEvent) e).getDuration()))
-                                .withSummary(e.getName())
+                                .withSummary(e.getName()+"\n"+"@ "+((TimetableEvent) e).getRoom().getLocation())
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group5"))
                 );
             } else if (e instanceof ExamEvent)
@@ -470,7 +480,7 @@ public class UIManager
                 content.appointments().addAll(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
-                                .withSummary(e.getName())
+                                .withSummary(e.getName()+"\n"+"@ "+((ExamEvent) e).getRoom().getLocation())
                                 .withEndLocalDateTime(sTime.plusMinutes(((ExamEvent) e).getDuration()))
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group20"))
                 );
@@ -479,9 +489,9 @@ public class UIManager
                 LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
                 content.appointments().addAll(
                         new Agenda.AppointmentImplLocal()
-                                .withStartLocalDateTime(sTime)
+                                .withStartLocalDateTime(sTime.minusMinutes(60))
                                 .withSummary(e.getName())
-                                .withEndLocalDateTime(sTime.plusMinutes(60))
+                                .withEndLocalDateTime(sTime)
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"))
                 );
             } else
