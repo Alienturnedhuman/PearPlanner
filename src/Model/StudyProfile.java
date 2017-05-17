@@ -17,7 +17,7 @@ public class StudyProfile extends VersionControlEntity
     private ArrayList<Module> modules;
     private ArrayList<Milestone> milestones;
     private ArrayList<ExtensionApplication> extensions;
-    private ArrayList<Event> calendar = new ArrayList<Event>();
+    private ArrayList<Event> calendar = new ArrayList<>();
     private int year;
     private int semesterNo;
     private boolean current;
