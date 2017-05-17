@@ -94,7 +94,7 @@ public class HubFile implements Serializable
     }
 
     public String toString(boolean verbose)
-    {
+        {
         if (verbose)
         {
             StringBuilder r = new StringBuilder();

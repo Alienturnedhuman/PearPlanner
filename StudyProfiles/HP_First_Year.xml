@@ -1,11 +1,11 @@
 <hubfile>
-    <version>0</version>
+    <version>37</version>
     <assets>
         <persons>
             <person>
                 <name>Horace Slughorn</name>
                 <details>Professor Horace Eugene Flaccus Slughorn is a pure-blood wizard, the Potions Master and Head of Slytherin House at Hogwarts School of Witchcraft and Wizardry. He was Potions Professor for fifty years, between 1931 and 1981, and Head of Slytherin before retiring in 1981. He was a friend and colleague of Albus Dumbledore, who convinced him to return to the post in 1996.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>WIZARD_001</uid>
                 <givenNames>Horace Eugene Flaccus</givenNames>
                 <familyName>Slughorn</familyName>
@@ -16,7 +16,7 @@
             <person>
                 <name>Severus Snape</name>
                 <details>Professor Severus Snape was a half-blood wizard and son of Tobias and Eileen Snape. During his lifetime, Snape was Potions Master (1981-1996), Defence Against the Dark Arts professor (1996-1997), and Headmaster (1997-1998) of Hogwarts School of Witchcraft and Wizardry (which he attended as a student from 1971 to 1978.) He was also a member of the Order of the Phoenix and played a very important role in both of the Wizarding Wars against Voldemort.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>WIZARD_002</uid>
                 <givenNames>Severus</givenNames>
                 <familyName>Snape</familyName>
@@ -27,7 +27,7 @@
             <person>
                 <name>Cuthbert Binns</name>
                 <details>Professor Cuthbert Binns was a wizard and History of Magic professor at Hogwarts School of Witchcraft and Wizardry. He owned an office in the main castle and Classroom 4F on the first floor to teach in. He taught until a very old age, when he fell asleep in the staff room and died in slumber. Now, he is a ghost who continued to teach, droning on about various Goblin Rebellions and Giant Wars to bored, sleeping students.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>WIZARD_003</uid>
                 <givenNames>Cuthbert</givenNames>
                 <familyName>Binns</familyName>
@@ -38,7 +38,7 @@
             <person>
                 <name>Filius Flitwick</name>
                 <details>Professor Filius Flitwick (b. 17 October[1] 1961 or earlier) was a part-goblin, part-wizard who attended Hogwarts School of Witchcraft and Wizardry and was sorted into Ravenclaw House, being an intelligent young man and a model student. Some time after his graduation, Flitwick returned to Hogwarts and became the Charms Master, as well as the Head of Ravenclaw House.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>WIZARD_004</uid>
                 <givenNames>Filius</givenNames>
                 <familyName>Flitwick</familyName>
@@ -51,7 +51,7 @@
             <building>
                 <name>Dungeons</name>
                 <details>The dungeons of Hogwarts Castle are located under Hogwarts School of Witchcraft and Wizardry, and it is colder there than in the main castle. The Potions classroom is located in the dungeons, as is the entrance to the Slytherin common room and dormitories.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>BUILDING_001</uid>
                 <code>D</code>
                 <latitude>51.532178</latitude>
@@ -60,7 +60,7 @@
             <building>
                 <name>Hogwarts Castle</name>
                 <details>Hogwarts Castle is a large, seven-storey high building supported by magic, with a hundred and forty two staircases throughout its many towers and turrets and very deep dungeons. The castle was built in the late Early Middle Ages (c. 993) by a wizard architect and the four most celebrated wizards of the age: Godric Gryffindor, Helga Hufflepuff, Rowena Ravenclaw and Salazar Slytherin. The castle houses Hogwarts School of Witchcraft and Wizardry, regarded as the finest wizarding school in the world.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>BUILDING_002</uid>
                 <code>HC</code>
                 <latitude>51.532178</latitude>
@@ -71,7 +71,7 @@
             <room>
                 <name>Potion-Mixing Room</name>
                 <details>The Potion-Mixing Room is a potions laboratory located in the dungeons of Hogwarts Castle. Its use is reserved for advanced Potions students.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>POTION_MIXING</uid>
                 <building>BUILDING_001</building>
                 <roomNumber>Potion-Mixing</roomNumber>
@@ -79,7 +79,7 @@
             <room>
                 <name>Potions Classroom</name>
                 <details>The Potions Classroom was one of the large dungeons in Hogwarts Castle, used for Potions lessons. It is large enough to allow at least twenty students to work and its walls are lined with pickled animals in glass jars.[2] In one corner of the room stands a basin into which ice-cold water pours from a gargoyle's mouth, while in another is a student supply cupboard. There is also a blackboard on which the Potions master can write the class's instructions. The room is especially cold, particularly in the winter when students are able to see their own breath.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>POTIONS_CLASSROOM</uid>
                 <building>BUILDING_001</building>
                 <roomNumber>PC</roomNumber>
@@ -87,7 +87,7 @@
             <room>
                 <name>Class 104</name>
                 <details>Class 104 is a classroom located in the North Tower at Hogwarts Castle. First-year Xylomancy and Defence Against the Dark Arts classes were taught here in the 1991-1992 school year.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>CLASS_104</uid>
                 <building>BUILDING_002</building>
                 <roomNumber>PC</roomNumber>
@@ -95,7 +95,7 @@
             <room>
                 <name>Classroom 3C</name>
                 <details>Classroom 3C, also known as the Defence Against the Dark Arts Classroom, is where Defence Against the Dark Arts class is taught. It is located off of the Serpentine Corridor on the third-floor. An iron chandelier hung from the ceiling, as well as a dragon's skeleton. On one end of the classroom stands a projector that is activated by magic. Several desks and tables can be found in the classroom as well as some sets of large windows. The classroom decoration had several changes over the years, spanning from lots of pictures of Gilderoy Lockhart to tons of skeletons and Shrunken Heads.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>CLASS_3C</uid>
                 <building>BUILDING_002</building>
                 <roomNumber>3C</roomNumber>
@@ -103,7 +103,7 @@
             <room>
                 <name>History of Magic Classroom</name>
                 <details>The History of Magic Classroom (designated Classroom 4F) is where History of Magic classes are taught at Hogwarts School of Witchcraft and Wizardry. It is located on the first floor of Hogwarts Castle.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>CLASS_4F</uid>
                 <building>BUILDING_002</building>
                 <roomNumber>4F</roomNumber>
@@ -111,7 +111,7 @@
             <room>
                 <name>Class 72</name>
                 <details>Class 72 is a classroom located on the third floor of Hogwarts Castle. First-year History of Magic were taught there in the 1991-1992 school year.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>CLASS_72</uid>
                 <building>BUILDING_002</building>
                 <roomNumber>72</roomNumber>
@@ -119,7 +119,7 @@
             <room>
                 <name>Class 99</name>
                 <details>Class 99 is a classroom located in the South Tower at Hogwarts Castle. First-year Charms and Transfiguration classes were taught there in the 1991-1992 school year.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>CLASS_99</uid>
                 <building>BUILDING_002</building>
                 <roomNumber>99</roomNumber>
@@ -127,7 +127,7 @@
             <room>
                 <name>Charms Classroom</name>
                 <details>The Charms Classroom (designated Classroom 2E) is where Charms classes are taught at Hogwarts School of Witchcraft and Wizardry, and it is located on the third floor, on the Charms corridor, near another classroom.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>CLASS_2E</uid>
                 <building>BUILDING_002</building>
                 <roomNumber>2E</roomNumber>
@@ -138,7 +138,7 @@
                 <name>Lecture</name>
                 <details>Lectures are things that some people don't turn up to but are there because their friends sign them in.
                 </details>
-                <version>0</version>
+                <version>37</version>
                 <uid>LECTURE</uid>
             </timetableEventType>
         </timetableEventTypes>
@@ -153,7 +153,7 @@
             <module>
                 <name>Potions</name>
                 <details>Potions is a core class and subject taught at Hogwarts School of Witchcraft and Wizardry. In this class, students learn the correct way to brew potions.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>MODULE_POTIONS</uid>
                 <organiser>WIZARD_001</organiser>
                 <moduleCode>HSWW-1992</moduleCode>
@@ -161,7 +161,7 @@
                     <timetableEvent>
                         <name>Potions</name>
                         <details></details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>HSWW-1992-LEC-01</uid>
                         <date>15/05/2017T09:45:00Z</date>
                         <room>POTIONS_CLASSROOM</room>
@@ -172,7 +172,7 @@
                     <timetableEvent>
                         <name>Potions</name>
                         <details></details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>HSWW-1992-LEC-01</uid>
                         <date>19/05/2017T09:45:00Z</date>
                         <room>POTIONS_CLASSROOM</room>
@@ -185,13 +185,13 @@
                     <exam>
                         <name>First year exam</name>
                         <details>You will be required to make a Forgetfulness Potion.</details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>POTIONS_EXAM_1</uid>
                         <resit></resit>
                         <timeslot>
-                            <name>Deadline</name>
+                            <name>Potions Exam</name>
                             <details>Date of the exam</details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>POTIONS_EXAM_1_TIMESLOT</uid>
                             <date>15/12/2017T09:45:00Z</date>
                             <room>POTION_MIXING</room>
@@ -206,19 +206,19 @@
                     <coursework>
                         <name>Essay of Flobberworm Mucus uses in potions</name>
                         <details>Write an essay about the uses of Flobberworm Mucus in potions.</details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>POTIONS_CW_1</uid>
                         <startDate>
                             <name>Start Date</name>
                             <details>Start Date for the Coursework</details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>POTIONS_CW_1_START</uid>
                             <date>01/10/2017T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>POTIONS_CW_1_DEADLINE</uid>
                             <date>01/11/2017T15:00:00Z</date>
                         </deadline>
@@ -234,7 +234,7 @@
             <module>
                 <name>Defence Against the Dark Arts</name>
                 <details>Defence Against the Dark Arts is a subject taught at Hogwarts School of Witchcraft and Wizardry and Ilvermorny School of Witchcraft and Wizardry. In this class students learn how to magically defend themselves against Dark Creatures, the Dark Arts, and other dark charms.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>MODULE_DADA</uid>
                 <organiser>WIZARD_002</organiser>
                 <moduleCode>HSWW-DADA</moduleCode>
@@ -242,7 +242,7 @@
                     <timetableEvent>
                         <name>Defence Against the Dark Arts</name>
                         <details></details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>HSWW-DADA-LEC-01</uid>
                         <date>16/05/2017T09:45:00Z</date>
                         <room>CLASS_104</room>
@@ -253,7 +253,7 @@
                     <timetableEvent>
                         <name>Defence Against the Dark Arts</name>
                         <details></details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>HSWW-DADA-LEC-01</uid>
                         <date>16/05/2017T14:30:00Z</date>
                         <room>CLASS_3C</room>
@@ -266,19 +266,19 @@
                     <coursework>
                         <name>Disarming Charm</name>
                         <details>Lear the Disarming Charm.</details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>DADA_CW_2</uid>
                         <startDate>
                             <name>Start Date</name>
                             <details>Start Date for the Coursework</details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>DADA_CW_2_START</uid>
                             <date>10/12/2017T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>DADA_CW_2_DEADLINE</uid>
                             <date>30/12/2017T15:00:00Z</date>
                         </deadline>
@@ -292,19 +292,19 @@
                     <coursework>
                         <name>Curing werewolf bites</name>
                         <details>Find a solution to cure werewolf bites.</details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>DADA_CW_1</uid>
                         <startDate>
                             <name>Start Date</name>
                             <details>Start Date for the Coursework</details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>DADA_CW_1_START</uid>
                             <date>20/10/2017T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>DADA_CW_1_DEADLINE</uid>
                             <date>15/11/2017T15:00:00Z</date>
                         </deadline>
@@ -320,7 +320,7 @@
             <module>
                 <name>History of Magic</name>
                 <details>History of Magic is a core class and subject taught at Hogwarts School of Witchcraft and Wizardry. This class is a study of magical history. This is one of the subjects where the use of magic practically isn't necessary.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>MODULE_HOM</uid>
                 <organiser>WIZARD_003</organiser>
                 <moduleCode>HSWW-1911</moduleCode>
@@ -328,7 +328,7 @@
                     <timetableEvent>
                         <name>History of Magic</name>
                         <details></details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>HSWW-1911-LEC-01</uid>
                         <date>15/05/2017T11:00:00Z</date>
                         <room>CLASS_72</room>
@@ -339,7 +339,7 @@
                     <timetableEvent>
                         <name>History of Magic</name>
                         <details></details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>HSWW-1911-LEC-01</uid>
                         <date>17/05/2017T13:15:00Z</date>
                         <room>CLASS_4F</room>
@@ -352,13 +352,13 @@
                     <exam>
                         <name>Final Exam Resit</name>
                         <details>A second chance for students who did not pass their final exam</details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>HOM_EXAM_1_RESIT</uid>
                         <resit></resit>
                         <timeslot>
-                            <name>Deadline</name>
+                            <name>History of Magic Final Exam Resit</name>
                             <details></details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>HOM_EXAM_1_RESIT_TIMESLOT</uid>
                             <date>30/01/2017T14:15:00Z</date>
                             <room>CLASS_4F</room>
@@ -374,13 +374,13 @@
                         <name>Final Exam</name>
                         <details>One hour of answering questions about batty old wizards who'd invented Self-Stirring Cauldrons.
                         </details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>HOM_EXAM_1</uid>
                         <resit>HOM_EXAM_1_RESIT</resit>
                         <timeslot>
-                            <name>Deadline</name>
+                            <name>History of Magic Final Exam</name>
                             <details>The Date of the final exam</details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>HOM_EXAM_1_TIMESLOT</uid>
                             <date>15/12/2017T14:15:00Z</date>
                             <room>CLASS_4F</room>
@@ -397,7 +397,7 @@
             <module>
                 <name>Charms</name>
                 <details>Charms is a core class and subject taught at Hogwarts School of Witchcraft and Wizardry. Unsurprisingly, it specialises in the teaching of charms. Even though mastering the science of charmwork is clearly essential to performing the greater part of magic, charmwork is seen as a "softer option" by some such as Augusta Longbottom who, incidentally, failed her Charms.</details>
-                <version>0</version>
+                <version>37</version>
                 <uid>MODULE_CHARMS</uid>
                 <organiser>WIZARD_004</organiser>
                 <moduleCode>HSWW-CHARM</moduleCode>
@@ -405,7 +405,7 @@
                     <timetableEvent>
                         <name>Charms</name>
                         <details></details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>HSWW-CHARM-LEC-01</uid>
                         <date>18/05/2017T09:45:00Z</date>
                         <room>CLASS_99</room>
@@ -416,7 +416,7 @@
                     <timetableEvent>
                         <name>Charms</name>
                         <details></details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>HSWW-CHARM-LEC-01</uid>
                         <date>17/05/2017T14:30:00Z</date>
                         <room>CLASS_2E</room>
@@ -429,19 +429,19 @@
                     <coursework>
                         <name>Fire-Making Spell</name>
                         <details>Lear the Fire-Making Spell.</details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>CHARM_CW_1</uid>
                         <startDate>
                             <name>Start Date</name>
                             <details>Start Date for the Coursework</details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>CHARM_CW_1_START</uid>
                             <date>11/11/2017T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>CHARM_CW_1_DEADLINE</uid>
                             <date>25/11/2017T15:00:00Z</date>
                         </deadline>
@@ -455,19 +455,19 @@
                     <coursework>
                         <name>Make a pineapple dance across a desk</name>
                         <details>Your goal is to charm a pineapple. Good luck.</details>
-                        <version>0</version>
+                        <version>37</version>
                         <uid>CHARM_CW_2</uid>
                         <startDate>
                             <name>Start Date</name>
                             <details>Start Date for the Coursework</details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>CHARM_CW_2_START</uid>
                             <date>14/09/2017T15:00:00Z</date>
                         </startDate>
                         <deadline>
                             <name>Deadline</name>
                             <details>End Date for the Coursework</details>
-                            <version>0</version>
+                            <version>37</version>
                             <uid>CHARM_CW_2_DEADLINE</uid>
                             <date>05/11/2017T15:00:00Z</date>
                         </deadline>

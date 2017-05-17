@@ -42,6 +42,7 @@ public class Exam extends Assignment
         return timeSlot;
     }
 
+
     // constructors
     public Exam(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks, ExamEvent cTimeSlot, Exam cResit)
     {
