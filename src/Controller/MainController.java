@@ -54,6 +54,14 @@ public class MainController
                 ObjectInputStream inputStream = new ObjectInputStream(cipherInputStream);
                 SealedObject sealedObject = (SealedObject) inputStream.readObject();
                 SPC = new StudyPlannerController((StudyPlanner) sealedObject.getObject(cipher));
+                /**
+                 * Begin note to examiner:
+                 */
+                if (SPC.getPlanner().getCurrentStudyProfile() != null && SPC.getPlanner().getCurrentStudyProfile().getName().equals("First year Gryffindor"))
+                    UIManager.reportSuccess("Note to examiner: This is a pre-loaded StudyPlanner, as used by Harry Potter, to reset the software delete or rename the 'StudyPlanner.dat' file in the root directory.");
+                /**
+                 * End note to examiner.
+                 */
             } else
             // If not, prompt to create a new account:
             {
