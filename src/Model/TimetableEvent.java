@@ -14,7 +14,6 @@ public class TimetableEvent extends Event
     private int duration;
 
 
-
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
@@ -22,15 +21,15 @@ public class TimetableEvent extends Event
         {
             TimetableEvent castedVCE = (TimetableEvent) receivedVCE;
             this.duration = castedVCE.getDuration();
-            if(castedVCE.getLecturer()!=null)
+            if (castedVCE.getLecturer() != null)
             {
                 this.lecturer = castedVCE.getLecturer();
             }
-            if(castedVCE.getRoom()!=null)
+            if (castedVCE.getRoom() != null)
             {
                 this.room = castedVCE.getRoom();
             }
-            if(castedVCE.getTimeTableEventType()!=null)
+            if (castedVCE.getTimeTableEventType() != null)
             {
                 this.timeTableEventType = castedVCE.getTimeTableEventType();
             }

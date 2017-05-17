@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.MainController;
+
 import java.util.HashMap;
 
 /**
@@ -30,12 +32,16 @@ public class VersionControlEntity extends ModelEntity
     }
 
     // public methods
-    public void update(VersionControlEntity receivedVCE)
+    public boolean update(VersionControlEntity receivedVCE)
     {
         // initial set up code below - check if this needs
         if (uid.equals(receivedVCE.getUID()) && version < receivedVCE.getVersion())
         {
             replace(receivedVCE);
+            return true;
+        } else
+        {
+            return false;
         }
 
     }
@@ -79,7 +85,10 @@ public class VersionControlEntity extends ModelEntity
                 return false;
             } else
             {
+                importer = false;
+                sealed = true;
                 library.put(uid, this);
+                MainController.getSPC().getPlanner().addToVersionControlLibrary(this);
                 return true;
             }
         } else
@@ -115,6 +124,11 @@ public class VersionControlEntity extends ModelEntity
     {
         // initial set up code below - check if this needs updating
         return uid;
+    }
+
+    public static HashMap<String, VersionControlEntity> getLibrary()
+    {
+        return library;
     }
 
     public static String libraryReport()
@@ -154,7 +168,16 @@ public class VersionControlEntity extends ModelEntity
         {
             uid = newUID;
             library.put(newUID, this);
+            MainController.getSPC().getPlanner().addToVersionControlLibrary(this);
             return true;
+        }
+    }
+
+    public void reload()
+    {
+        if (!inLibrary(this.uid) && !importer && sealed)
+        {
+            library.put(this.uid, this);
         }
     }
 

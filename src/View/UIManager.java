@@ -2,11 +2,10 @@ package View;
 
 import Controller.*;
 import Model.*;
-import com.apple.eawt.Application;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
@@ -19,10 +18,8 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -56,11 +53,6 @@ public class UIManager
         Parent root = loader.load();
 
         // Set the scene:
-
-        //macOS compatible dock icon
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
-
-
         Stage stage = new Stage();
         stage.setScene(new Scene(root, 550, 232));
         stage.setTitle("Create Account");
@@ -94,7 +86,7 @@ public class UIManager
         Parent root = loader.load();
 
         // Set the scene:
-        mainStage.setScene(new Scene(root, 1000, 750));
+        mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
         mainStage.setTitle("PearPlanner");
         mainStage.getIcons().add(new Image("file:icon.png"));
         mainStage.showAndWait();
@@ -102,6 +94,8 @@ public class UIManager
 
     /**
      * Display the 'Add Activity' window
+     *
+     * @return newly created Activity
      */
     public Activity addActivity() throws Exception
     {
@@ -131,6 +125,8 @@ public class UIManager
 
     /**
      * Displays the Activity details page
+     *
+     * @param activity Activity for which the details should be displayed.
      */
     public void activityDetails(Activity activity) throws IOException
     {
@@ -154,6 +150,8 @@ public class UIManager
 
     /**
      * Displays the 'Add Milestone' window.
+     *
+     * @return newly created Milestone object.
      */
     public Milestone addMilestone() throws IOException
     {
@@ -182,6 +180,8 @@ public class UIManager
 
     /**
      * Displays the Milestone details page
+     *
+     * @param milestone Milestone for which the details should be shown.
      */
     public void milestoneDetails(Milestone milestone) throws IOException
     {
@@ -205,6 +205,8 @@ public class UIManager
 
     /**
      * Displays the StudyProfile details page
+     *
+     * @param profile StudyProfile for which the details should be shown.
      */
     public void studyProfileDetails(StudyProfile profile) throws IOException
     {
@@ -228,12 +230,23 @@ public class UIManager
 
     /**
      * Displays the Module details page
+     *
+     * @param module  Module for which the details should be shown.
+     * @param current Window from which this method is called.
+     * @throws IOException
      */
     public void moduleDetails(Module module, MenuController.Window current) throws IOException
     {
         UIManager.mc.loadModule(module, current, null);
     }
 
+    /**
+     * Displays the Module details page
+     *
+     * @param module  Module for which the details should be shown.
+     * @param current Window from which this method is called.
+     * @throws IOException
+     */
     public void moduleDetails(Module module, ModelEntity current) throws IOException
     {
         UIManager.mc.loadModule(module, MenuController.Window.Empty, current);
@@ -241,13 +254,23 @@ public class UIManager
 
     /**
      * Displays the Assignment details page
+     *
+     * @param assignment Assignment for which the details should be shown.
+     * @param current    Window from which this method is called.
+     * @throws IOException
      */
-    // TODO open() doesn't work
     public void assignmentDetails(Assignment assignment, MenuController.Window current) throws IOException
     {
         UIManager.mc.loadAssignment(assignment, current, null);
     }
 
+    /**
+     * Displays the Assignment details page
+     *
+     * @param assignment Assignment for which the details should be shown.
+     * @param current    Window from which this method is called.
+     * @throws IOException
+     */
     public void assignmentDetails(Assignment assignment, ModelEntity current) throws IOException
     {
         UIManager.mc.loadAssignment(assignment, MenuController.Window.Empty, current);
@@ -255,6 +278,8 @@ public class UIManager
 
     /**
      * Creates a window for adding a new Task
+     *
+     * @return newly created Task
      */
     public Task addTask() throws Exception
     {
@@ -283,6 +308,9 @@ public class UIManager
 
     /**
      * Displays the Task details page
+     *
+     * @param task for which the details should be displayed.
+     * @throws IOException
      */
     public void taskDetails(Task task) throws IOException
     {
@@ -306,6 +334,8 @@ public class UIManager
 
     /**
      * Creates a window for adding a new Requirement
+     *
+     * @return newly created Requirement
      */
     public Requirement addRequirement() throws Exception
     {
@@ -333,7 +363,9 @@ public class UIManager
     }
 
     /**
-     * Displays the Task details page
+     * Displays the Requirement details page
+     *
+     * @param requirement Requirement for which the details should be displayed
      */
     public void requirementDetails(Requirement requirement) throws IOException
     {
@@ -424,14 +456,7 @@ public class UIManager
      */
     public void showCalendar()
     {
-
-
-
-
         Stage stage = new Stage();
-
-
-
 
         // Layout:
         VBox layout = new VBox();
@@ -487,7 +512,8 @@ public class UIManager
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
                                 .withEndLocalDateTime(sTime.plusMinutes(((TimetableEvent) e).getDuration()))
-                                .withSummary(e.getName()+"\n"+"@ "+((TimetableEvent) e).getRoom().getLocation())
+
+                                .withSummary(e.getName() + "\n" + "@ " + ((TimetableEvent) e).getRoom().getLocation())
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group5"))
                 );
             } else if (e instanceof ExamEvent)
@@ -496,7 +522,7 @@ public class UIManager
                 content.appointments().addAll(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
-                                .withSummary(e.getName()+"\n"+"@ "+((ExamEvent) e).getRoom().getLocation())
+                                .withSummary(e.getName() + "\n" + "@ " + ((ExamEvent) e).getRoom().getLocation())
                                 .withEndLocalDateTime(sTime.plusMinutes(((ExamEvent) e).getDuration()))
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group20"))
                 );
@@ -533,6 +559,8 @@ public class UIManager
         stage.setTitle("Calendar");
         stage.resizableProperty().setValue(true);
         stage.getIcons().add(new Image("file:icon.png"));
+
+        Platform.runLater(() -> content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusMinutes(1050)));
         stage.showAndWait();
         // =================
     }
@@ -614,9 +642,7 @@ public class UIManager
      */
     public static void areYouFeelingLucky()
     {
-        while (UIManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5))
-        {
-        }
+        while (UIManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5)) ;
     }
 
 }

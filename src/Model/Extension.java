@@ -11,8 +11,6 @@ public class Extension extends VersionControlEntity
     private MultilineString circumstances;
     private ApprovalStatus approvalStatus;
 
-
-    // private methods
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
@@ -27,7 +25,6 @@ public class Extension extends VersionControlEntity
         super.replace(receivedVCE);
     }
 
-    // public enums
     public enum ApprovalStatus
     {
         PENDING, APPROVED, DECLINED

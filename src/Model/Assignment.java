@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class Assignment extends VersionControlEntity
 {
-
     protected ArrayList<Task> tasks = new ArrayList<>();
     protected ArrayList<Requirement> requirements = new ArrayList<>();
     protected int weighting;
@@ -23,7 +22,6 @@ public class Assignment extends VersionControlEntity
     protected int marks;
     protected StateType state;  // this may not be needed as we can work it out
 
-    // private methods
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
@@ -33,15 +31,15 @@ public class Assignment extends VersionControlEntity
             // this.tasks = castedVCE.getTasks();
             // this.requirements = castedVCE.getRequirements();
             this.weighting = castedVCE.getWeighting();
-            if(castedVCE.getSetBy()!=null)
+            if (castedVCE.getSetBy() != null)
             {
                 this.setBy = castedVCE.getSetBy();
             }
-            if(castedVCE.getMarkedBy()!=null)
+            if (castedVCE.getMarkedBy() != null)
             {
                 this.markedBy = castedVCE.getMarkedBy();
             }
-            if(castedVCE.getReviewedBy()!=null)
+            if (castedVCE.getReviewedBy() != null)
             {
                 this.reviewedBy = castedVCE.getReviewedBy();
             }
@@ -51,7 +49,6 @@ public class Assignment extends VersionControlEntity
         super.replace(receivedVCE);
     }
 
-    // public enums
     public enum StateType
     {
         IN_PROGRESS, DEADLINE_PASSED, NOT_STARTED
@@ -174,6 +171,35 @@ public class Assignment extends VersionControlEntity
     public boolean removeRequirement(Requirement requirement)
     {
         return this.requirements.remove(requirement);
+    }
+
+    /**
+     * Calculates how much of this Assignment has been completed in percentage.
+     *
+     * @return int (0-100)
+     */
+    public int calculateProgress()
+    {
+        if (this.requirements.size() == 0 && this.tasks.size() == 0)
+            return 0;
+
+        int sum = 0, n = 0;
+        for (Requirement req : this.requirements)
+        {
+            sum += req.requirementProgress() * 100;
+            n++;
+        }
+
+        for (Task task : this.tasks)
+        {
+            if (task.getRequirements().length > 0)
+            {
+                sum += task.calculateProgress();
+                n++;
+            }
+        }
+
+        return sum / n;
     }
 
     @Override

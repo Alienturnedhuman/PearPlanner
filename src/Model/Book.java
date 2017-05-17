@@ -27,9 +27,7 @@ public class Book /*extends Requirement*/
         chapters = newChapters;
     }
 
-
     // constructor
-
     public Book(ArrayList<String> chapters)
     {
         this.chapters = chapters;

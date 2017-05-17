@@ -26,6 +26,7 @@ public class StudyPlanner implements Serializable
     private ArrayList<Event> calendar = new ArrayList<>();
     private ArrayList<Notification> notifications = new ArrayList<>();
     private HashMap<ModelEntity, boolean[]> deadlineNotifications = new HashMap<>();
+    private ArrayList<VersionControlEntity> versionControlLibrary = new ArrayList<>();
 
     private StudyProfile currentStudyProfile;
 
@@ -255,6 +256,28 @@ public class StudyPlanner implements Serializable
         // =================
     }
 
+
+    public boolean addToVersionControlLibrary(VersionControlEntity vce)
+    {
+        if (versionControlLibrary.contains(vce))
+        {
+            return false;
+        } else
+        {
+            versionControlLibrary.add(vce);
+            return true;
+        }
+    }
+
+    public boolean emptyVersionControlLibrary()
+    {
+        return versionControlLibrary.isEmpty();
+    }
+
+    public void rebuildVersionControlLibrary()
+    {
+        versionControlLibrary.forEach(e -> e.reload());
+    }
 
     public boolean setVersion(int newVersion)
     {

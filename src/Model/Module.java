@@ -19,26 +19,25 @@ public class Module extends VersionControlEntity
     private String moduleCode;
     private ArrayList<TimetableEvent> timetable = new ArrayList<>();
 
-    // private methods
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
         if (receivedVCE instanceof Module)
         {
             Module castedVCE = (Module) receivedVCE;
-            if(castedVCE.getOrganiser()!=null)
+            if (castedVCE.getOrganiser() != null)
             {
                 this.organiser = castedVCE.getOrganiser();
             }
-            if(castedVCE.getModuleCode()!=null)
+            if (castedVCE.getModuleCode() != null)
             {
                 this.moduleCode = castedVCE.getModuleCode();
             }
-            if(castedVCE.getAssignments()!=null)
+            if (castedVCE.getAssignments() != null)
             {
                 this.assignments = castedVCE.getAssignments();
             }
-            if(castedVCE.getAssignments()!=null)
+            if (castedVCE.getAssignments() != null)
             {
                 this.timetable = castedVCE.getTimetable();
             }
@@ -87,31 +86,43 @@ public class Module extends VersionControlEntity
     // getters
     public ArrayList<Assignment> getAssignments()
     {
-        // initial set up code below - check if this needs updating
         return assignments;
     }
 
     public Person getOrganiser()
     {
-        // initial set up code below - check if this needs updating
         return organiser;
     }
 
     public String getModuleCode()
     {
-        // initial set up code below - check if this needs updating
         return moduleCode;
     }
 
     public ArrayList<TimetableEvent> getTimetable()
     {
-        // initial set up code below - check if this needs updating
         return timetable;
     }
 
     public int getNoOfAssignments()
     {
         return this.assignments.size();
+    }
+
+    /**
+     * Calculates how much of this Module has been completed in percentage.
+     *
+     * @return int (0-100)
+     */
+    public int calculateProgress()
+    {
+        if (this.assignments.size() == 0)
+            return 0;
+
+        int sum = 0;
+        for (Assignment assignment : this.assignments)
+            sum += assignment.calculateProgress();
+        return sum / this.assignments.size();
     }
 
     // setters
@@ -172,12 +183,9 @@ public class Module extends VersionControlEntity
     }
 
     // constructors
-
     public Module(Person cOrganiser, String cModuleCode)
     {
         setOrganiser(cOrganiser);
         setModuleCode(cModuleCode);
     }
-
-
 }

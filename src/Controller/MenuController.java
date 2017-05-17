@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import View.GanttishDiagram;
 import View.UIManager;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.BooleanBinding;
@@ -9,22 +10,27 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -119,21 +125,51 @@ public class MenuController implements Initializable
         this.title.setText("Study Dashboard");
         // =================
 
-        // Display modules:
-        Label modules = new Label("Modules");
-        modules.getStyleClass().add("title");
-        this.mainContent.addRow(1, modules);
+        StudyProfile profile = MainController.getSPC().getPlanner().getCurrentStudyProfile();
 
+        // Display studyProfile:
+        Label studyProfile = new Label(profile.getName());
+        studyProfile.getStyleClass().add("title");
+        GridPane.setMargin(studyProfile, new Insets(10));
+        this.mainContent.addRow(1, studyProfile);
 
-        int i = 2;
-        for (Module module : MainController.getSPC().getPlanner().getCurrentStudyProfile().getModules())
+        FlowPane modules = new FlowPane();
+        modules.setHgap(30);
+        modules.setVgap(20);
+        modules.setPrefWrapLength(1000);
+        for (Module module : profile.getModules())
         {
-            Label temp = new Label(module.getName());
-            temp.getStyleClass().add("list-item");
-            this.mainContent.addRow(i++, temp);
+            VBox vbox = new VBox();
+            vbox.setSpacing(5);
+            vbox.setMinWidth(200);
+            vbox.setMaxWidth(200);
+            vbox.setAlignment(Pos.CENTER);
 
+            Label name = new Label(module.getName());
+            name.setTextAlignment(TextAlignment.CENTER);
+            vbox.getChildren().add(name);
+
+            BufferedImage buff = GanttishDiagram.getBadge(module.calculateProgress(), true, 1);
+            Image image = SwingFXUtils.toFXImage(buff, null);
+            Pane badge = new Pane();
+            VBox.setMargin(badge, new Insets(0, 0, 0, 50));
+            badge.setPrefHeight(100);
+            badge.setBackground(new Background(
+                    new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false))));
+
+            vbox.getChildren().add(badge);
+            Button view = new Button("View");
+            view.setOnAction(e -> module.open(this.current));
+            vbox.getChildren().add(view);
+
+            modules.getChildren().add(vbox);
         }
         // =================
+
+        GridPane.setColumnSpan(modules, GridPane.REMAINING);
+        GridPane.setMargin(modules, new Insets(10));
+        this.mainContent.addRow(2, modules);
     }
 
     /**
@@ -301,8 +337,6 @@ public class MenuController implements Initializable
      */
     public void loadStudyProfiles()
     {
-
-
         // Update main pane:
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
         this.topBox.getChildren().clear();
@@ -918,6 +952,7 @@ public class MenuController implements Initializable
         // =================
 
         this.mainContent.setVgap(10);
+        this.mainContent.setPadding(new Insets(15));
 
         // Render dashboard:
         this.main(Window.Dashboard);
