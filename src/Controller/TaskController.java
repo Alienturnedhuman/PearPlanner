@@ -93,7 +93,7 @@ public class TaskController implements Initializable
         // Check the input fields:
         if (!this.name.getText().trim().isEmpty() &&
                 !this.weighting.getText().trim().isEmpty() &&
-                !this.deadline.getEditor().getText().trim().isEmpty() &&
+                !this.deadline.getEditor().getText().trim().isEmpty() && !this.deadline.getValue().isBefore(LocalDate.now()) &&
                 this.taskType.getSelectionModel().getSelectedIndex() != -1)
 
             this.submit.setDisable(false);
