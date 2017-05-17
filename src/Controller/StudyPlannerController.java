@@ -7,8 +7,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 /**
  * Created by bendickson on 5/4/17.
@@ -124,7 +123,7 @@ public class StudyPlannerController
     public void checkForNotifications()
     {
         // TODO notifications
-        /*int hours1 = 168, hours2 = 48; // temporary values until a Settings page is present
+        int hours1 = 168, hours2 = 48; // temporary values until a Settings page is present
 
         for (Map.Entry<ModelEntity, boolean[]> entry : this.planner.getDeadlineNotifications().entrySet())
         {
@@ -184,7 +183,7 @@ public class StudyPlannerController
                     }
                 } else this.planner.getDeadlineNotifications().remove(entry);
             }
-        }*/
+        }
     }
 
     /**
