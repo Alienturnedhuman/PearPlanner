@@ -360,5 +360,8 @@ public class StudyPlannerController
 
         if (!this.planner.getTaskTypes().isEmpty())
             this.planner.getTaskTypes().forEach(e -> TaskType.create(e));
+
+        if (!this.planner.emptyVersionControlLibrary())
+            this.planner.rebuildVersionControlLibrary();
     }
 }

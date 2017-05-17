@@ -56,6 +56,11 @@ public class UIManager
         Parent root = loader.load();
 
         // Set the scene:
+
+        //macOS compatible dock icon
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
+
+
         Stage stage = new Stage();
         stage.setScene(new Scene(root, 550, 232));
         stage.setTitle("Create Account");
@@ -461,6 +466,7 @@ public class UIManager
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
                                 .withEndLocalDateTime(sTime.plusMinutes(((TimetableEvent) e).getDuration()))
+
                                 .withSummary(e.getName()+"\n"+"@ "+((TimetableEvent) e).getRoom().getLocation())
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group5"))
                 );

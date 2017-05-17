@@ -390,7 +390,7 @@ public class HubFile implements Serializable
     }
 
     public static HashMap<String,HashMap<String, XMLcontroller.ImportAs>> schemaList;
-    /*
+/*
     static
     {
         schemaList.put("person",SCHEMA_PERSON);
@@ -405,7 +405,7 @@ public class HubFile implements Serializable
         schemaList.put("building",SCHEMA_BUILDING);
         schemaList.put("room",SCHEMA_ROOM);
     }
-    */
+*/
 
     private static XMLcontroller xmlTools = new XMLcontroller();
     public static Person createPerson(NodeList nc)
@@ -452,7 +452,7 @@ public class HubFile implements Serializable
         return r;
     }
 
-    public static TimeTableEventType createTimetableEvent(NodeList nc)
+    public static TimeTableEventType createTimetableEventType(NodeList nc)
     {
         HashMap<String,XMLcontroller.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
                 HubFile.SCHEMA_TIMETABLE_EVENT_TYPE);

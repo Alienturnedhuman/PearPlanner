@@ -164,6 +164,7 @@ public class GanttishDiagram
     }
 
     public static BufferedImage createGanttishDiagram(StudyPlanner fromStudyProfile, Assignment fromAssignment, String filePath)
+
     {
         return createGanttishDiagram(fromStudyProfile, fromAssignment, filePath, false);
     }
@@ -171,6 +172,9 @@ public class GanttishDiagram
     public static BufferedImage createGanttishDiagram(StudyPlanner fromStudyProfile, Assignment fromAssignment,
                                                       String filePath, boolean transparentBackground)
     {
+        return createGanttishDiagram(fromStudyProfile, fromAssignment, filePath, false);
+    }
+
 
         HashMap<String, ArrayList<Task>> catTasks = new HashMap<>();
 
