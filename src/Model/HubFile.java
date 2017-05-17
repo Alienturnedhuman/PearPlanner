@@ -16,9 +16,9 @@ public class HubFile implements Serializable
 {
     // private data
     private ArrayList<VersionControlEntity> assets = new ArrayList<VersionControlEntity>();
-    private ArrayList<Module> modules = new ArrayList<Module>();
-    private ArrayList<ExtensionApplication> extensions = new ArrayList<ExtensionApplication>();
-    private ArrayList<VersionControlEntity> updates = new ArrayList<VersionControlEntity>();
+    private ArrayList<Module> modules = new ArrayList<>();
+    private ArrayList<ExtensionApplication> extensions = new ArrayList<>();
+    private ArrayList<VersionControlEntity> updates = new ArrayList<>();
     private ArrayList<Event> calendarList = new ArrayList<>();
     private int version;
     private int semester;
@@ -174,7 +174,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_VCE = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_VCE = new HashMap<>();
         SCHEMA_VCE.put("name", XMLcontroller.ImportAs.STRING);
         SCHEMA_VCE.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_VCE.put("uid", XMLcontroller.ImportAs.STRING);
@@ -185,7 +185,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_ROOT = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_ROOT = new HashMap<>();
         SCHEMA_ROOT.put("hubfile", XMLcontroller.ImportAs.NODELIST);
     }
 
@@ -193,7 +193,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_NEW_STUDYPROFILE = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_NEW_STUDYPROFILE = new HashMap<>();
         SCHEMA_NEW_STUDYPROFILE.put("version", XMLcontroller.ImportAs.INTEGER);
         SCHEMA_NEW_STUDYPROFILE.put("assets", XMLcontroller.ImportAs.NODELIST);
         SCHEMA_NEW_STUDYPROFILE.put("studyProfile", XMLcontroller.ImportAs.NODELIST);
@@ -203,7 +203,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_UPDATE_FILE = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_UPDATE_FILE = new HashMap<>();
         SCHEMA_UPDATE_FILE.put("version", XMLcontroller.ImportAs.INTEGER);
         SCHEMA_UPDATE_FILE.put("extensions", XMLcontroller.ImportAs.NODELIST);
         SCHEMA_UPDATE_FILE.put("updates", XMLcontroller.ImportAs.NODELIST);
@@ -214,7 +214,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_ASSETS = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_ASSETS = new HashMap<>();
         SCHEMA_ASSETS.put("persons", XMLcontroller.ImportAs.NODELIST);
         SCHEMA_ASSETS.put("buildings", XMLcontroller.ImportAs.NODELIST);
         SCHEMA_ASSETS.put("rooms", XMLcontroller.ImportAs.NODELIST);
@@ -225,7 +225,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_STUDYPROFILE = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_STUDYPROFILE = new HashMap<>();
         SCHEMA_STUDYPROFILE.put("name", XMLcontroller.ImportAs.STRING);
         SCHEMA_STUDYPROFILE.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_STUDYPROFILE.put("uid", XMLcontroller.ImportAs.STRING);
@@ -238,7 +238,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_PERSON = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_PERSON = new HashMap<>();
         SCHEMA_PERSON.put("name", XMLcontroller.ImportAs.STRING);
         SCHEMA_PERSON.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_PERSON.put("version", XMLcontroller.ImportAs.INTEGER);
@@ -254,7 +254,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_BUILDING = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_BUILDING = new HashMap<>();
         SCHEMA_BUILDING.put("name", XMLcontroller.ImportAs.STRING);
         SCHEMA_BUILDING.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_BUILDING.put("version", XMLcontroller.ImportAs.INTEGER);
@@ -268,7 +268,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_ROOM = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_ROOM = new HashMap<>();
         SCHEMA_ROOM.put("name", XMLcontroller.ImportAs.STRING);
         SCHEMA_ROOM.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_ROOM.put("version", XMLcontroller.ImportAs.INTEGER);
@@ -281,7 +281,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_TIMETABLE_EVENT_TYPE = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_TIMETABLE_EVENT_TYPE = new HashMap<>();
         SCHEMA_TIMETABLE_EVENT_TYPE.put("name", XMLcontroller.ImportAs.STRING);
         SCHEMA_TIMETABLE_EVENT_TYPE.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_TIMETABLE_EVENT_TYPE.put("version", XMLcontroller.ImportAs.INTEGER);
@@ -292,7 +292,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_MODULE = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_MODULE = new HashMap<>();
         SCHEMA_MODULE.put("name", XMLcontroller.ImportAs.STRING);
         SCHEMA_MODULE.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_MODULE.put("version", XMLcontroller.ImportAs.INTEGER);
@@ -307,7 +307,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_COURSEWORK = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_COURSEWORK = new HashMap<>();
         SCHEMA_COURSEWORK.put("name", XMLcontroller.ImportAs.STRING);
         SCHEMA_COURSEWORK.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_COURSEWORK.put("version", XMLcontroller.ImportAs.INTEGER);
@@ -327,7 +327,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_EXAM = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_EXAM = new HashMap<>();
         SCHEMA_EXAM.put("name", XMLcontroller.ImportAs.STRING);
         SCHEMA_EXAM.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_EXAM.put("version", XMLcontroller.ImportAs.INTEGER);
@@ -346,7 +346,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_TIMETABLE_EVENT = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_TIMETABLE_EVENT = new HashMap<>();
         SCHEMA_TIMETABLE_EVENT.put("name", XMLcontroller.ImportAs.STRING);
         SCHEMA_TIMETABLE_EVENT.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_TIMETABLE_EVENT.put("version", XMLcontroller.ImportAs.INTEGER);
@@ -363,7 +363,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_EVENT = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_EVENT = new HashMap<>();
         SCHEMA_EVENT.put("name", XMLcontroller.ImportAs.STRING);
         SCHEMA_EVENT.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_EVENT.put("version", XMLcontroller.ImportAs.INTEGER);
@@ -376,7 +376,7 @@ public class HubFile implements Serializable
 
     static
     {
-        SCHEMA_EXAMEVENT = new HashMap<String, XMLcontroller.ImportAs>();
+        SCHEMA_EXAMEVENT = new HashMap<>();
         SCHEMA_EXAMEVENT.put("name", XMLcontroller.ImportAs.STRING);
         SCHEMA_EXAMEVENT.put("details", XMLcontroller.ImportAs.MULTILINESTRING);
         SCHEMA_EXAMEVENT.put("version", XMLcontroller.ImportAs.INTEGER);

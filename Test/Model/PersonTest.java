@@ -258,8 +258,8 @@ public class PersonTest{
         "1234567890@domain.com", "email@domain-one.com", "_______@domain.com", "email@domain.name",
                 "email@domain.co.jp", "firstname-lastname@domain.com"};
 
-        for (int i=0; i<validEmails.length; i++){
-            assertTrue(Person.validEmail(validEmails[i]));
+        for (String validEmail : validEmails) {
+            assertTrue(Person.validEmail(validEmail));
         }
 
         // Testing invalid emails
@@ -268,8 +268,8 @@ public class PersonTest{
         "email.domain.com", "email@domain@domain.com", ".email@domain.com", "email.@domain.com",
                 "email..email@domain.com", "email@domain.com (Joe Smith)", "email@domain..com"};
 
-        for (int i=0; i<invalidEmails.length; i++){
-            assertFalse(Person.validEmail(invalidEmails[i]));
+        for (String invalidEmail : invalidEmails) {
+            assertFalse(Person.validEmail(invalidEmail));
         }
 
     }

@@ -11,7 +11,6 @@ public class Room extends VersionControlEntity
     private Building building = null;
     private String roomNumber;
 
-
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
@@ -29,42 +28,15 @@ public class Room extends VersionControlEntity
 
     // public methods
 
-
     // getters
     public Building getBuilding()
     {
-        // initial set up code below - check if this needs updating
         return building;
     }
 
     public String getRoomNumber()
     {
-        // initial set up code below - check if this needs updating
         return roomNumber;
-    }
-
-    // setters
-    public void setBuilding(Building newBuilding)
-    {
-        // initial set up code below - check if this needs updating
-        building = newBuilding;
-    }
-
-    public void setRoomNumber(String newRoomNumber)
-    {
-        // initial set up code below - check if this needs updating
-        roomNumber = newRoomNumber;
-    }
-
-    public Room(String cRoomNumber, Building cBuilding)
-    {
-        setRoomNumber(cRoomNumber);
-        setBuilding(cBuilding);
-    }
-
-    public Room(String cRoomNumber)
-    {
-        setRoomNumber(cRoomNumber);
     }
 
     public String getLocation()
@@ -82,5 +54,28 @@ public class Room extends VersionControlEntity
         {
             return name + "( " + roomNumber + " ) located in " + building.toString();
         }
+    }
+
+    // setters
+    public void setBuilding(Building newBuilding)
+    {
+        building = newBuilding;
+    }
+
+    public void setRoomNumber(String newRoomNumber)
+    {
+        roomNumber = newRoomNumber;
+    }
+
+    // Constructors:
+    public Room(String cRoomNumber, Building cBuilding)
+    {
+        setRoomNumber(cRoomNumber);
+        setBuilding(cBuilding);
+    }
+
+    public Room(String cRoomNumber)
+    {
+        setRoomNumber(cRoomNumber);
     }
 }
