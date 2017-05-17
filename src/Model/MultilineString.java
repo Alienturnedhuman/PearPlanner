@@ -12,7 +12,6 @@ public class MultilineString implements Serializable
     // private Data;
     private ArrayList<String> lines;
 
-
     // public methods
     public MultilineString clone()
     {
@@ -20,21 +19,24 @@ public class MultilineString implements Serializable
     }
 
     // getters
+
+    /**
+     * Returns the number of lines in this MultilineString
+     *
+     * @return number of lines
+     */
     public int getLines()
     {
-        // initial set up code below - check if this needs updating
         return lines.size();
     }
 
     public ArrayList<String> getAsArrayList()
     {
-        // initial set up code below - check if this needs updating
         return lines;
     }
 
     public String[] getAsArray()
     {
-        // initial set up code below - check if this needs updating
         String r[] = new String[lines.size()];
         r = lines.toArray(r);
         return r;
@@ -42,7 +44,6 @@ public class MultilineString implements Serializable
 
     public String getAsString()
     {
-        // initial set up code below - check if this needs updating
         return String.join("\n", getAsArray());
     }
 

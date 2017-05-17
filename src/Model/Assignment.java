@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class Assignment extends VersionControlEntity
 {
-
     protected ArrayList<Task> tasks = new ArrayList<>();
     protected ArrayList<Requirement> requirements = new ArrayList<>();
     protected int weighting;
@@ -23,7 +22,6 @@ public class Assignment extends VersionControlEntity
     protected int marks;
     protected StateType state;  // this may not be needed as we can work it out
 
-    // private methods
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
@@ -51,7 +49,6 @@ public class Assignment extends VersionControlEntity
         super.replace(receivedVCE);
     }
 
-    // public enums
     public enum StateType
     {
         IN_PROGRESS, DEADLINE_PASSED, NOT_STARTED

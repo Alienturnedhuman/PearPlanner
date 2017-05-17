@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
  */
 public class ExamEvent extends Event
 {
-    // private GregorianCalendar time; // no longer needed due to using Gregorian time
     private Room room;
     private int duration;
 
@@ -18,7 +17,7 @@ public class ExamEvent extends Event
         if (receivedVCE instanceof ExamEvent)
         {
             ExamEvent castedVCE = (ExamEvent) receivedVCE;
-            if(castedVCE.getRoom()!=null)
+            if (castedVCE.getRoom() != null)
             {
                 this.room = castedVCE.getRoom();
             }
@@ -26,6 +25,8 @@ public class ExamEvent extends Event
         }
         super.replace(receivedVCE);
     }
+
+    // Getters:
 
     /**
      * Returns a String representing the event.
@@ -39,18 +40,20 @@ public class ExamEvent extends Event
 
     }
 
+    public int getDuration()
+    {
+        return duration;
+    }
+
+    public Room getRoom()
+    {
+        return room;
+    }
+
     public ExamEvent(String cDate, Room cRoom, int cDuration)
     {
         super(cDate);
         room = cRoom;
         duration = cDuration;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public Room getRoom() {
-        return room;
     }
 }

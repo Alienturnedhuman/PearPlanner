@@ -19,6 +19,12 @@ public class ConsoleIO
 {
     static ArrayList<String> logged = new ArrayList<>();
 
+    /**
+     * Retrieve user input/
+     *
+     * @param message Message to be shown
+     * @return retrieved String
+     */
     static public String getDataString(String message)
     {
         Scanner scan = new Scanner(System.in);
@@ -31,6 +37,12 @@ public class ConsoleIO
         return r;
     }
 
+    /**
+     * Get yes/no input.
+     *
+     * @param message Message to be shown.
+     * @return true for yes, false for no.
+     */
     static public boolean getDataBool(String message)
     {
         Scanner scan = new Scanner(System.in);
@@ -43,16 +55,33 @@ public class ConsoleIO
         return r.equals("y");
     }
 
+    /**
+     * How many lines have been written to the log.
+     *
+     * @return number of lines.
+     */
     static public int getLogSize()
     {
         return logged.size();
     }
 
+    /**
+     * Save the full log to a file.
+     *
+     * @param filePath file path
+     */
     static public void saveLog(String filePath)
     {
         saveLog(filePath, 0, logged.size());
     }
 
+    /**
+     * Save specific lines to a file.
+     *
+     * @param filePath  file path
+     * @param startLine starting line
+     * @param endLine   end line
+     */
     static public void saveLog(String filePath, int startLine, int endLine)
     {
         if (startLine < 0)
@@ -84,11 +113,22 @@ public class ConsoleIO
         }
     }
 
+    /**
+     * Display a message on a console.
+     *
+     * @param message message to be displayed.
+     */
     static public void setConsoleMessage(String message)
     {
         System.out.println(message);
     }
 
+    /**
+     * Display a message with an option of saving it to a log.
+     *
+     * @param message    message to be displayed (or logged)
+     * @param logMessage whether to log it
+     */
     static public void setConsoleMessage(String message, boolean logMessage)
     {
         System.out.println(message);
@@ -98,6 +138,12 @@ public class ConsoleIO
         }
     }
 
+    /**
+     * Get user selection of a menu option.
+     *
+     * @param menuOptions available options
+     * @return user selection
+     */
     static public int getMenuOption(String[] menuOptions)
     {
         Scanner scan = new Scanner(System.in);
