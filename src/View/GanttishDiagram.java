@@ -164,6 +164,7 @@ public class GanttishDiagram
     }
 
     public static BufferedImage createGanttishDiagram(StudyPlanner fromStudyProfile, Assignment fromAssignment, String filePath)
+
     {
         return createGanttishDiagram(fromStudyProfile, fromAssignment, filePath, false);
     }
@@ -171,6 +172,9 @@ public class GanttishDiagram
     public static BufferedImage createGanttishDiagram(StudyPlanner fromStudyProfile, Assignment fromAssignment,
                                                       String filePath, boolean transparentBackground)
     {
+        return createGanttishDiagram(fromStudyProfile, fromAssignment, filePath, false);
+    }
+
 
         HashMap<String, ArrayList<Task>> catTasks = new HashMap<>();
 
@@ -382,16 +386,15 @@ public class GanttishDiagram
         g2d.setFont(font);
         g2d.drawString(msg, msgX, msgY);
 
-/*
-        try {
+
+/*        try {
             File outputfile = new File("badge_"+progress+".png");
             ImageIO.write(r, "png", outputfile);
         }
         catch(Exception e)
         {
             System.out.println(e.getMessage());
-        }
-        */
+        }*/
 
         return r;
     }

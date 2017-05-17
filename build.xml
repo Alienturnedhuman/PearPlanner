@@ -82,6 +82,8 @@
     <pathelement location="${basedir}/lib/jfxtras-agenda-8.0-r5.jar"/>
     <pathelement location="${basedir}/lib/jfxtras-controls-8.0-r5.jar"/>
     <pathelement location="${basedir}/lib/jfxtras-common-8.0-r5.jar"/>
+    <pathelement location="${basedir}/lib/AppleJavaExtensions-1.6.jar"/>
+
   </path>
   
   
