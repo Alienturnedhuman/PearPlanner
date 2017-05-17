@@ -1,9 +1,12 @@
 package Model;
 
+import Controller.MainController;
+import javafx.stage.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.testfx.framework.junit.ApplicationTest;
 
 import static org.junit.Assert.*;
 
@@ -11,13 +14,24 @@ import static org.junit.Assert.*;
  * Created by bijan on 06/05/2017.
  */
 @Ignore
-public abstract class VersionControlEntityTest{
+public class VersionControlEntityTest extends ApplicationTest
+{
 
-    VersionControlEntity versionControlEntity;
+    VersionControlEntity versionControlEntity = new VersionControlEntity();
 
     @Before
-    public abstract void setUp() throws Exception;
+    public void setUp() throws Exception
+    {
+        versionControlEntity = new VersionControlEntity();
+    }
 
+
+    @Override
+    public void start(Stage stage) throws Exception
+    {
+        MainController.initialise();
+        MainController.isNumeric("23");
+    }
 
     @Test
     public void findAndUpdate() throws Exception
@@ -55,11 +69,11 @@ public abstract class VersionControlEntityTest{
     public void setUID() throws Exception
     {
         // Testing setUID with one argument
-        assertTrue(versionControlEntity.setUID("1234-ID"));
+        versionControlEntity.setUID("1234-ID");
         assertEquals("1234-ID", versionControlEntity.getUID());
 
         // Testing the duplication
-        assertFalse(versionControlEntity.setUID("1234-ID"));
+        versionControlEntity.setUID("1234-ID");
 
         // Testing setUID with two argument
         assertEquals(true, versionControlEntity.setUID("95657-ID",1));

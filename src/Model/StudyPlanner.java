@@ -18,13 +18,13 @@ public class StudyPlanner implements Serializable
 
     private int version = -1;
     private Account account;
-    private ArrayList<QuantityType> quantityTypes = new ArrayList<QuantityType>();
-    private ArrayList<TaskType> taskTypes = new ArrayList<TaskType>();
-    private ArrayList<StudyProfile> studyProfiles = new ArrayList<StudyProfile>();
-    private ArrayList<Activity> activityList = new ArrayList<Activity>();
-    private ArrayList<TimeTableEventType> timeTableEventTypes = new ArrayList<TimeTableEventType>();
-    private ArrayList<Event> calendar = new ArrayList<Event>();
-    private ArrayList<Notification> notifications = new ArrayList<Notification>();
+    private ArrayList<QuantityType> quantityTypes = new ArrayList<>();
+    private ArrayList<TaskType> taskTypes = new ArrayList<>();
+    private ArrayList<StudyProfile> studyProfiles = new ArrayList<>();
+    private ArrayList<Activity> activityList = new ArrayList<>();
+    private ArrayList<TimeTableEventType> timeTableEventTypes = new ArrayList<>();
+    private ArrayList<Event> calendar = new ArrayList<>();
+    private ArrayList<Notification> notifications = new ArrayList<>();
     private HashMap<ModelEntity, boolean[]> deadlineNotifications = new HashMap<>();
     private ArrayList<VersionControlEntity> versionControlLibrary = new ArrayList<>();
 

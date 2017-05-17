@@ -16,7 +16,7 @@ public class XMLcontroller
 {
     public enum ImportAs
     {
-        BOOLEAN, STRING, INTEGER, DOUBLE, MULTILINESTRING, NODELIST;
+        BOOLEAN, STRING, INTEGER, DOUBLE, MULTILINESTRING, NODELIST
     }
 
     public class NodeReturn
