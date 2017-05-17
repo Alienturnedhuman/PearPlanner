@@ -98,7 +98,6 @@ public class UIManager
      */
     public Activity addActivity() throws Exception
     {
-
         ActivityController ac = new ActivityController();
 
         // Load in the .fxml file:
