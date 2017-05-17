@@ -12,9 +12,6 @@ addons:
 
 
 deploy:
-  -
-    on:
-      branch: release
     provider: bintray
     skip_cleanup: true
     file: target/bin/bintray.json
