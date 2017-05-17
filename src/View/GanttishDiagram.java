@@ -169,12 +169,10 @@ public class GanttishDiagram
         return createGanttishDiagram(fromStudyProfile, fromAssignment, filePath, false);
     }
 
+
     public static BufferedImage createGanttishDiagram(StudyPlanner fromStudyProfile, Assignment fromAssignment,
                                                       String filePath, boolean transparentBackground)
     {
-        return createGanttishDiagram(fromStudyProfile, fromAssignment, filePath, false);
-    }
-
 
         HashMap<String, ArrayList<Task>> catTasks = new HashMap<>();
 
@@ -231,7 +229,7 @@ public class GanttishDiagram
         BufferedImage r = new BufferedImage(cWidth, cHeight, imageType);
         Graphics2D g2d = r.createGraphics();
 
-        if (!transparentBackground)
+        if(!transparentBackground)
         {
 
             g2d.setPaint(Color.white);

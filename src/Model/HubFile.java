@@ -558,7 +558,8 @@ public class HubFile implements Serializable
         exMarkedBy = DataController.inList(assetList,linkedMarkedBy);
         exReviewedBy = DataController.inList(assetList,linkedReviewedBy);
 
-        if(XMLcontroller.matchesSchema(examValues.get("timeslot").getNodeList(),
+        if(examValues.containsKey("timeslot") &&
+                XMLcontroller.matchesSchema(examValues.get("timeslot").getNodeList(),
                 HubFile.SCHEMA_EXAMEVENT))
         {
             HashMap<String,XMLcontroller.NodeReturn> eventValues =
