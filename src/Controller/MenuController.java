@@ -41,7 +41,6 @@ import java.util.ResourceBundle;
 /**
  * Created by Zilvinas on 05/05/2017.
  */
-// TODO icons
 public class MenuController implements Initializable
 {
     public enum Window
