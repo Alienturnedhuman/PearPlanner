@@ -64,7 +64,7 @@ public class DataController {
             {
                 String nodeName = n.getNodeName();
                 HashMap<String,XMLcontroller.NodeReturn> nodeValues =
-                        xmlTools.getSchemaValues(n.getChildNodes(),HubFile.schemaList.get(nodeName));
+                        xmlTools.getSchemaValues(n.getChildNodes(),HubFile.SCHEMA_VCE);
 
                 int version = nodeValues.get("version").getInt();
                 String uid = nodeValues.get("uid").getString();

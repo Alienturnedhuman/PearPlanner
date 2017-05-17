@@ -166,10 +166,6 @@ public class HubFile implements Serializable
         updateFile = true;
     }
 
-    public static boolean updateableNode(String name)
-    {
-        return schemaList.containsKey(name);
-    }
 
     // schemas
     // note, for the time being these are hard coded into the code
@@ -389,23 +385,29 @@ public class HubFile implements Serializable
         SCHEMA_EXAMEVENT.put("duration", XMLcontroller.ImportAs.INTEGER);
     }
 
-    public static HashMap<String,HashMap<String, XMLcontroller.ImportAs>> schemaList;
-/*
+    public static HashMap<String,HashMap<String, XMLcontroller.ImportAs>> schemaList = new HashMap<>();
+
     static
     {
-        schemaList.put("person",SCHEMA_PERSON);
-        schemaList.put("examEvent",SCHEMA_EXAMEVENT);
-        schemaList.put("event",SCHEMA_EVENT);
-        schemaList.put("deadline",SCHEMA_EVENT);
-        schemaList.put("timetableEvent",SCHEMA_TIMETABLE_EVENT);
-        schemaList.put("exam",SCHEMA_EXAM);
-        schemaList.put("coursework",SCHEMA_COURSEWORK);
-        schemaList.put("module",SCHEMA_MODULE);
-        schemaList.put("timetableEventType",SCHEMA_TIMETABLE_EVENT_TYPE);
-        schemaList.put("building",SCHEMA_BUILDING);
-        schemaList.put("room",SCHEMA_ROOM);
+        schemaList.put("person",HubFile.SCHEMA_PERSON);
+        schemaList.put("examEvent",HubFile.SCHEMA_EXAMEVENT);
+        schemaList.put("event",HubFile.SCHEMA_EVENT);
+        schemaList.put("deadline",HubFile.SCHEMA_EVENT);
+        schemaList.put("timetableEvent",HubFile.SCHEMA_TIMETABLE_EVENT);
+        schemaList.put("exam",HubFile.SCHEMA_EXAM);
+        schemaList.put("coursework",HubFile.SCHEMA_COURSEWORK);
+        schemaList.put("module",HubFile.SCHEMA_MODULE);
+        schemaList.put("timetableEventType",HubFile.SCHEMA_TIMETABLE_EVENT_TYPE);
+        schemaList.put("building",HubFile.SCHEMA_BUILDING);
+        schemaList.put("room",HubFile.SCHEMA_ROOM);
     }
-*/
+
+
+
+    public static boolean updateableNode(String name)
+    {
+        return schemaList.containsKey(name);
+    }
 
     private static XMLcontroller xmlTools = new XMLcontroller();
     public static Person createPerson(NodeList nc)
