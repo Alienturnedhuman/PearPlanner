@@ -11,28 +11,12 @@ addons:
       - oracle-java8-installer
 
 
-before_deploy:
-  - git config --global user.email "builds@travis-ci.com"
-  - git config --global user.name "Travis CI"
-  - export GIT_TAG=$TRAVIS_BRANCH-v0.1.$TRAVIS_BUILD_NUMBER
-  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
-  - git push -q https://87e4ce71b31ca3f929c1f9b2b0b5afc4b0cae783@github.com/Alienturnedhuman/PearPlanner --tags
-
-
 deploy:
-  skip_cleanup: true
-  provider: releases
-  api_key:
-    secure: [redacted]
-  file:
-    - "your_file"
-  on:
-    tags: false
-    all_branches: true
-
-
-branches:
-  except:
-    - /^*-v[0-9]/
-
-
+  -
+    on:
+      branch: release
+    provider: bintray
+    skip_cleanup: true
+    file: target/bin/bintray.json
+    user: markelz0r
+    key: $BINTRAY_API_KEY
