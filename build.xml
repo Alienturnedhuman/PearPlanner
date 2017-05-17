@@ -141,6 +141,7 @@
   
   <target name="compile.module.pearplanner.production" description="Compile module PearPlanner; production classes">
     <mkdir dir="${pearplanner.output.dir}"/>
+
     <javac destdir="${pearplanner.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
       <compilerarg line="${compiler.args.pearplanner}"/>
       <bootclasspath refid="pearplanner.module.bootclasspath"/>
