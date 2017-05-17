@@ -94,7 +94,7 @@ public class HubFile implements Serializable
     }
 
     public String toString(boolean verbose)
-        {
+    {
         if (verbose)
         {
             StringBuilder r = new StringBuilder();
@@ -387,8 +387,8 @@ public class HubFile implements Serializable
         SCHEMA_EXAMEVENT.put("duration", XMLcontroller.ImportAs.INTEGER);
     }
 
-    public static HashMap<String, HashMap<String, XMLcontroller.ImportAs>> schemaList;
-/*
+    public static HashMap<String, HashMap<String, XMLcontroller.ImportAs>> schemaList = new HashMap<>();
+
     static
     {
         schemaList.put("person",SCHEMA_PERSON);
@@ -403,7 +403,7 @@ public class HubFile implements Serializable
         schemaList.put("building",SCHEMA_BUILDING);
         schemaList.put("room",SCHEMA_ROOM);
     }
-*/
+
 
     private static XMLcontroller xmlTools = new XMLcontroller();
 
@@ -552,7 +552,8 @@ public class HubFile implements Serializable
         exMarkedBy = DataController.inList(assetList, linkedMarkedBy);
         exReviewedBy = DataController.inList(assetList, linkedReviewedBy);
 
-        if (XMLcontroller.matchesSchema(examValues.get("timeslot").getNodeList(),
+        if (examValues.containsKey("timeslot") &&
+                XMLcontroller.matchesSchema(examValues.get("timeslot").getNodeList(),
                 HubFile.SCHEMA_EXAMEVENT))
         {
             HashMap<String, XMLcontroller.NodeReturn> eventValues =

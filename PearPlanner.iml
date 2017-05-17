@@ -15,5 +15,6 @@
     <orderEntry type="library" name="jfxtras-common-8.0-r5" level="project" />
     <orderEntry type="library" name="jfxtras-agenda-8.0-r5" level="project" />
     <orderEntry type="library" name="jfxtras-controls-8.0-r5" level="project" />
+    <orderEntry type="library" name="guava-21.0 (4)" level="project" />
   </component>
 </module>
