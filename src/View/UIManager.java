@@ -45,6 +45,7 @@ public class UIManager
     public Account createAccount() throws Exception
     {
         AccountController accountControl = new AccountController();
+        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
 
         // Load in the .fxml file:
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CreateAccount.fxml"));
@@ -77,6 +78,9 @@ public class UIManager
     public void mainMenu() throws Exception
     {
         // Load in the .fxml file:
+        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainMenu.fxml"));
         loader.setController(UIManager.mc);
         Parent root = loader.load();
@@ -90,9 +94,13 @@ public class UIManager
 
     /**
      * Display the 'Add Activity' window
+     *
+     * @return newly created Activity
      */
     public Activity addActivity() throws Exception
     {
+
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         ActivityController ac = new ActivityController();
 
         // Load in the .fxml file:
@@ -117,9 +125,12 @@ public class UIManager
 
     /**
      * Displays the Activity details page
+     *
+     * @param activity Activity for which the details should be displayed.
      */
     public void activityDetails(Activity activity) throws IOException
     {
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         ActivityController ac = new ActivityController(activity);
 
         // Load in the .fxml file:
@@ -139,9 +150,12 @@ public class UIManager
 
     /**
      * Displays the 'Add Milestone' window.
+     *
+     * @return newly created Milestone object.
      */
     public Milestone addMilestone() throws IOException
     {
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         MilestoneController mc = new MilestoneController();
 
         // Load in the .fxml file:
@@ -166,9 +180,12 @@ public class UIManager
 
     /**
      * Displays the Milestone details page
+     *
+     * @param milestone Milestone for which the details should be shown.
      */
     public void milestoneDetails(Milestone milestone) throws IOException
     {
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         MilestoneController mc = new MilestoneController(milestone);
 
         // Load in the .fxml file:
@@ -188,9 +205,12 @@ public class UIManager
 
     /**
      * Displays the StudyProfile details page
+     *
+     * @param profile StudyProfile for which the details should be shown.
      */
     public void studyProfileDetails(StudyProfile profile) throws IOException
     {
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         StudyProfileController spc = new StudyProfileController(profile);
 
         // Load in the .fxml file:
@@ -210,12 +230,23 @@ public class UIManager
 
     /**
      * Displays the Module details page
+     *
+     * @param module  Module for which the details should be shown.
+     * @param current Window from which this method is called.
+     * @throws IOException
      */
     public void moduleDetails(Module module, MenuController.Window current) throws IOException
     {
         UIManager.mc.loadModule(module, current, null);
     }
 
+    /**
+     * Displays the Module details page
+     *
+     * @param module  Module for which the details should be shown.
+     * @param current Window from which this method is called.
+     * @throws IOException
+     */
     public void moduleDetails(Module module, ModelEntity current) throws IOException
     {
         UIManager.mc.loadModule(module, MenuController.Window.Empty, current);
@@ -223,12 +254,23 @@ public class UIManager
 
     /**
      * Displays the Assignment details page
+     *
+     * @param assignment Assignment for which the details should be shown.
+     * @param current    Window from which this method is called.
+     * @throws IOException
      */
     public void assignmentDetails(Assignment assignment, MenuController.Window current) throws IOException
     {
         UIManager.mc.loadAssignment(assignment, current, null);
     }
 
+    /**
+     * Displays the Assignment details page
+     *
+     * @param assignment Assignment for which the details should be shown.
+     * @param current    Window from which this method is called.
+     * @throws IOException
+     */
     public void assignmentDetails(Assignment assignment, ModelEntity current) throws IOException
     {
         UIManager.mc.loadAssignment(assignment, MenuController.Window.Empty, current);
@@ -236,9 +278,12 @@ public class UIManager
 
     /**
      * Creates a window for adding a new Task
+     *
+     * @return newly created Task
      */
     public Task addTask() throws Exception
     {
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         TaskController tc = new TaskController();
 
         // Load in the .fxml file:
@@ -263,9 +308,13 @@ public class UIManager
 
     /**
      * Displays the Task details page
+     *
+     * @param task for which the details should be displayed.
+     * @throws IOException
      */
     public void taskDetails(Task task) throws IOException
     {
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         TaskController tc = new TaskController(task);
 
         // Load in the .fxml file:
@@ -285,9 +334,12 @@ public class UIManager
 
     /**
      * Creates a window for adding a new Requirement
+     *
+     * @return newly created Requirement
      */
     public Requirement addRequirement() throws Exception
     {
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         RequirementController rc = new RequirementController();
 
         // Load in the .fxml file:
@@ -311,10 +363,13 @@ public class UIManager
     }
 
     /**
-     * Displays the Task details page
+     * Displays the Requirement details page
+     *
+     * @param requirement Requirement for which the details should be displayed
      */
     public void requirementDetails(Requirement requirement) throws IOException
     {
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         RequirementController rc = new RequirementController(requirement);
 
         // Load in the .fxml file:
@@ -339,6 +394,7 @@ public class UIManager
      */
     public void showGantt(Assignment assignment)
     {
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         Stage stage = new Stage();
 
         // Layout:
@@ -385,6 +441,7 @@ public class UIManager
         layout.getChildren().addAll(nav, content);
 
         // Set the scene:
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         stage.setScene(new Scene(layout, 1300, 800, true, SceneAntialiasing.BALANCED));
         stage.setTitle("Ganttish Diagram");
         stage.resizableProperty().setValue(true);
@@ -437,7 +494,8 @@ public class UIManager
         content.setAllowDragging(false);
         content.setAllowResize(false);
         content.autosize();
-
+        content.setActionCallback(param -> null);
+        content.setEditAppointmentCallback(param -> null);
         // Agenda buttons:
         agendaBwd.setOnMouseClicked(event -> content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
         agendaFwd.setOnMouseClicked(event -> content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
@@ -454,7 +512,8 @@ public class UIManager
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
                                 .withEndLocalDateTime(sTime.plusMinutes(((TimetableEvent) e).getDuration()))
-                                .withSummary(e.getName())
+
+                                .withSummary(e.getName() + "\n" + "@ " + ((TimetableEvent) e).getRoom().getLocation())
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group5"))
                 );
             } else if (e instanceof ExamEvent)
@@ -463,7 +522,7 @@ public class UIManager
                 content.appointments().addAll(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
-                                .withSummary(e.getName())
+                                .withSummary(e.getName() + "\n" + "@ " + ((ExamEvent) e).getRoom().getLocation())
                                 .withEndLocalDateTime(sTime.plusMinutes(((ExamEvent) e).getDuration()))
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group20"))
                 );
@@ -472,9 +531,9 @@ public class UIManager
                 LocalDateTime sTime = LocalDateTime.ofInstant(e.getDate().toInstant(), ZoneId.systemDefault());
                 content.appointments().addAll(
                         new Agenda.AppointmentImplLocal()
-                                .withStartLocalDateTime(sTime)
+                                .withStartLocalDateTime(sTime.minusMinutes(60))
                                 .withSummary(e.getName())
-                                .withEndLocalDateTime(sTime.plusMinutes(60))
+                                .withEndLocalDateTime(sTime)
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1"))
                 );
             } else
@@ -583,9 +642,7 @@ public class UIManager
      */
     public static void areYouFeelingLucky()
     {
-        while (UIManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5))
-        {
-        }
+        while (UIManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5)) ;
     }
 
 }

@@ -158,18 +158,40 @@ public class GanttishDiagram
         }
     }
 
+    /**
+     * Creates a GanttishDiagram from a given Assignment.
+     *
+     * @param fromStudyProfile StudyProfile
+     * @param fromAssignment   Assignment for which to generate the GanttishDiagram.
+     * @return Generated diagram
+     */
     public static BufferedImage createGanttishDiagram(StudyPlanner fromStudyProfile, Assignment fromAssignment)
     {
         return createGanttishDiagram(fromStudyProfile, fromAssignment, "");
     }
 
+    /**
+     * Creates a GanttishDiagram from a given Assignment and saves it to a file.
+     *
+     * @param fromStudyProfile StudyProfile
+     * @param fromAssignment   Assignment for which to generate the GanttishDiagram.
+     * @param filePath         file path
+     * @return Generated diagram
+     */
     public static BufferedImage createGanttishDiagram(StudyPlanner fromStudyProfile, Assignment fromAssignment, String filePath)
-
     {
         return createGanttishDiagram(fromStudyProfile, fromAssignment, filePath, false);
     }
 
-
+    /**
+     * Creates a GanttishDiagram from a given Assignment with the option to set the background transparent.
+     *
+     * @param fromStudyProfile      StudyProfile
+     * @param fromAssignment        Assignment for which to generate the GanttishDiagram.
+     * @param filePath              file path
+     * @param transparentBackground whether the background should be white or transparent
+     * @return Generated diagram
+     */
     public static BufferedImage createGanttishDiagram(StudyPlanner fromStudyProfile, Assignment fromAssignment,
                                                       String filePath, boolean transparentBackground)
     {
@@ -229,7 +251,7 @@ public class GanttishDiagram
         BufferedImage r = new BufferedImage(cWidth, cHeight, imageType);
         Graphics2D g2d = r.createGraphics();
 
-        if(!transparentBackground)
+        if (!transparentBackground)
         {
 
             g2d.setPaint(Color.white);
@@ -310,11 +332,26 @@ public class GanttishDiagram
         return r;
     }
 
+    /**
+     * Generates a Badge with the given progress.
+     *
+     * @param progress integer representation of the progress.
+     * @param canStart true - default, false - greyed out.
+     * @return generated Badge
+     */
     public static BufferedImage getBadge(int progress, boolean canStart)
     {
         return getBadge(progress, canStart, 1.0f);
     }
 
+    /**
+     * Generates a Badge with the given progress.
+     *
+     * @param progress   integer representation of the progress.
+     * @param canStart   true - default, false - greyed out.
+     * @param multiplier size multiplier.
+     * @return generated Badge
+     */
     public static BufferedImage getBadge(int progress, boolean canStart, double multiplier)
     {
         int canvasSize = (int) ((double) badgeSize * multiplier + .5);
@@ -397,12 +434,24 @@ public class GanttishDiagram
         return r;
     }
 
+    /**
+     * Generates a rectangle with the given message in the middle.
+     *
+     * @param g2d
+     * @param fontSize
+     * @param msg
+     * @param c_x
+     * @param c_y
+     * @param c_width
+     * @param c_height
+     */
     static void drawMessage(Graphics2D g2d, int fontSize, String msg, int c_x, int c_y, int c_width, int c_height)
     {
 
         Font font = new Font("Helvetica", Font.PLAIN, fontSize);
         FontMetrics metrics = g2d.getFontMetrics(font);
-        
+
+
         int msgX = c_x + (c_width - metrics.stringWidth(msg)) / 2;
         int msgY = c_y + (c_height - metrics.getHeight()) / 2 + metrics.getAscent();
 

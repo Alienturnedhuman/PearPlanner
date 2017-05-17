@@ -10,18 +10,17 @@ public class Exam extends Assignment
     private Exam resit = null;
     private ExamEvent timeSlot = null;
 
-    // private methods
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
         if (receivedVCE instanceof Exam)
         {
             Exam castedVCE = (Exam) receivedVCE;
-            if(castedVCE.getResit()!=null)
+            if (castedVCE.getResit() != null)
             {
                 this.resit = castedVCE.getResit();
             }
-            if(castedVCE.getTimeSlot()!=null)
+            if (castedVCE.getTimeSlot() != null)
             {
                 this.timeSlot = castedVCE.getTimeSlot();
             }
@@ -42,6 +41,7 @@ public class Exam extends Assignment
     {
         return timeSlot;
     }
+
 
     // constructors
     public Exam(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks, ExamEvent cTimeSlot, Exam cResit)

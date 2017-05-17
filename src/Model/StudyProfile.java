@@ -17,7 +17,7 @@ public class StudyProfile extends VersionControlEntity
     private ArrayList<Module> modules;
     private ArrayList<Milestone> milestones;
     private ArrayList<ExtensionApplication> extensions;
-    private ArrayList<Event> calendar = new ArrayList<Event>();
+    private ArrayList<Event> calendar = new ArrayList<>();
     private int year;
     private int semesterNo;
     private boolean current;
@@ -64,11 +64,21 @@ public class StudyProfile extends VersionControlEntity
         return tasks;
     }
 
+    /**
+     * Whether this StudyProfile is set as current.
+     *
+     * @return true if current, else otherwise.
+     */
     public boolean isCurrent()
     {
         return current;
     }
 
+    /**
+     * Set/unset this StudyProfile as the current profile of the StudyPlanner.
+     *
+     * @param current
+     */
     public void setCurrent(boolean current)
     {
         this.current = current;
@@ -102,6 +112,13 @@ public class StudyProfile extends VersionControlEntity
         return semesterNo;
     }
 
+    /**
+     * Whether this StudyProfile matches the given details.
+     *
+     * @param mYear       year
+     * @param mSemesterNo semester number
+     * @return true if matches, false otherwise.
+     */
     public boolean matches(int mYear, int mSemesterNo)
     {
         return mYear == year && mSemesterNo == semesterNo;
@@ -145,7 +162,6 @@ public class StudyProfile extends VersionControlEntity
     // constructors
     public StudyProfile(HubFile initialHubFile)
     {
-        // initial set up code below - check if this needs updating
         this.milestones = new ArrayList<>();
 
         this.modules = initialHubFile.getModules();

@@ -11,14 +11,13 @@ public class Building extends VersionControlEntity
     private double latitude;
     private double longitude;
 
-    // private methods
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
         if (receivedVCE instanceof Building)
         {
             Building castedVCE = (Building) receivedVCE;
-            if(castedVCE.getCode()!=null)
+            if (castedVCE.getCode() != null)
             {
                 this.code = castedVCE.getCode();
             }
@@ -32,50 +31,42 @@ public class Building extends VersionControlEntity
     // getters
     public String getName()
     {
-        // initial set up code below - check if this needs updating
         return name;
     }
 
     public String getCode()
     {
-        // initial set up code below - check if this needs updating
         return code;
     }
 
     public double getLatitude()
     {
-        // initial set up code below - check if this needs updating
         return latitude;
     }
 
     public double getLongitude()
     {
-        // initial set up code below - check if this needs updating
         return longitude;
     }
 
     // setters
     public void setName(String newName)
     {
-        // initial set up code below - check if this needs updating
         name = newName;
     }
 
     public void setCode(String newCode)
     {
-        // initial set up code below - check if this needs updating
         code = newCode;
     }
 
     public void setLatitude(double newLatitude)
     {
-        // initial set up code below - check if this needs updating
         latitude = newLatitude;
     }
 
     public void setLongitude(double newLongitude)
     {
-        // initial set up code below - check if this needs updating
         longitude = newLongitude;
     }
 

@@ -16,13 +16,19 @@ import java.util.GregorianCalendar;
 public class StudyPlannerController
 {
     private StudyPlanner planner;
-    // public methods
 
     public StudyPlanner getPlanner()
     {
         return planner;
     }
 
+    /**
+     * Save the current StudyPlanner into a serialized file.
+     *
+     * @param key64    SecretKey used for encoding.
+     * @param fileName name of the file.
+     * @return whether saved successfully.
+     */
     public boolean save(SecretKey key64, String fileName)
     {
         try
@@ -43,54 +49,30 @@ public class StudyPlannerController
     }
 
     /**
-     * does the StudyPlanner contain the profile within the hubfile
+     * '
+     * Checks whether a StudyProfile for this year and semester is loaded in.
      *
-     * @param hubFile
-     * @return
+     * @param year     year to be checked
+     * @param semester semester number to be checked
+     * @return whether this StudyProfile exists in this StudyPlanner
      */
-    public boolean containsStudyProfile(HubFile hubFile)
-    {
-        return false;
-        // not implemented yet
-    }
-
-
     public boolean containsStudyProfile(int year, int semester)
     {
-        return planner.containsStudyProfile(year,semester);
-    }
-
-    /**
-     * if the StudyPlanner contains the hubfile, this returns the version
-     * if not, returns -1
-     *
-     * @param hubFile
-     * @return
-     */
-    public int getCurrentVersion(HubFile hubFile)
-    {
-        if (containsStudyProfile(hubFile))
-        {
-            return 0;
-            // return version
-        } else
-        {
-            return -1;
-        }
+        return planner.containsStudyProfile(year, semester);
     }
 
     /**
      * if valid, this method creates a new StudyProfile and returns true
      * if invalid, it returns false
-     * * fail states include:
      *
-     * @param hubFile
+     * @param hubFile HubFile containing the newly loaded in profile
+     * @return whether created successfully.
      */
     public boolean createStudyProfile(HubFile hubFile)
     {
-        // Need to process assets and other data!
         if (!this.planner.containsStudyProfile(hubFile.getYear(), hubFile.getSemester()))
         {
+            // Create a profile:
             StudyProfile profile = new StudyProfile(hubFile);
             this.planner.addStudyProfile(profile);
             if (this.planner.getCurrentStudyProfile() == null)
@@ -98,7 +80,9 @@ public class StudyPlannerController
                 this.planner.setCurrentStudyProfile(profile);
                 profile.setCurrent(true);
             }
+            // =================
 
+            // Fill the global calendar with newly imported events:
             ArrayList<Event> cal = hubFile.getCalendarList();
             int i = -1;
             int ii = cal.size();
@@ -108,39 +92,17 @@ public class StudyPlannerController
                 this.planner.addEventToCalendar(cal.get(i));
                 profile.addEventToCalendar(cal.get(i));
             }
+            // =================
 
             // Notify user:
             Notification not = new Notification("New study profile created!", new GregorianCalendar(),
                     "\"" + profile.getName() + "\"", profile);
             this.planner.addNotification(not);
+            // =================
 
             return true;
         }
         return false;
-    }
-
-    /**
-     * If the study profile exists and the hubfile is newer, this method updates and returns true
-     * If not, returns false
-     *
-     * @param hubFile
-     * @return
-     */
-    public boolean updateStudyProfile(HubFile hubFile)
-    {
-        return false;
-    }
-
-    /**
-     * returns a list of tasks from the array list that contain the ModelEntity provided
-     *
-     * @param model
-     * @param taskList
-     * @return
-     */
-    public ArrayList<Task> getListOfTasks(ModelEntity model, ArrayList<Task> taskList)
-    {
-        return null;
     }
 
     /**
@@ -226,7 +188,9 @@ public class StudyPlannerController
     }
 
     /**
-     * Adds a new Activity to this StudyPlanner
+     * Adds a new Activity to this StudyPlanner.
+     *
+     * @param activity Activity to be added.
      */
     public void addActivity(Activity activity)
     {
@@ -234,9 +198,9 @@ public class StudyPlannerController
     }
 
     /**
-     * Adds a new Milestone to this StudyPlanner
+     * Adds a new Milestone to this StudyPlanner.
      *
-     * @param milestone
+     * @param milestone Milestone to be added.
      */
     public void addMilestone(Milestone milestone)
     {
@@ -286,7 +250,7 @@ public class StudyPlannerController
         return false;
     }
 
-    // constructors
+    // Constructors:
     public StudyPlannerController() throws NoSuchAlgorithmException, NoSuchPaddingException
     {
         // checks if there is a existing settings file
@@ -337,7 +301,7 @@ public class StudyPlannerController
     }
 
     /**
-     * Temporary constructor for testing UI
+     * Constructor for testing UI
      *
      * @param newAccount
      */
@@ -349,12 +313,13 @@ public class StudyPlannerController
     /**
      * Used when loading from a file
      *
-     * @param planner
+     * @param planner StudyPlanner to be loaded.
      */
     public StudyPlannerController(StudyPlanner planner)
     {
         this.planner = planner;
 
+        // Process Quantity and Task types.
         if (!this.planner.getQuantityTypes().isEmpty())
             this.planner.getQuantityTypes().forEach(e -> QuantityType.create(e));
 

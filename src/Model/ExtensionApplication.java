@@ -16,7 +16,6 @@ public class ExtensionApplication implements Serializable
 
     // public methods
 
-
     // getters
     public Extension getExtension()
     {
@@ -35,7 +34,6 @@ public class ExtensionApplication implements Serializable
         // initial set up code below - check if this needs updating
         return assignmentUID;
     }
-
 
     // constructors
 }

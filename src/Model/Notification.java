@@ -21,19 +21,16 @@ public class Notification implements Serializable
     // getters
     public String getTitle()
     {
-        // initial set up code below - check if this needs updating
         return title;
     }
 
     public GregorianCalendar getDateTime()
     {
-        // initial set up code below - check if this needs updating
         return dateTime;
     }
 
     public MultilineString getDetails()
     {
-        // initial set up code below - check if this needs updating
         return details;
     }
 
@@ -44,13 +41,11 @@ public class Notification implements Serializable
 
     public boolean isRead()
     {
-        // initial set up code below - check if this needs updating
         return read;
     }
 
     public ModelEntity getLink()
     {
-        // initial set up code below - check if this needs updating
         return link;
     }
 

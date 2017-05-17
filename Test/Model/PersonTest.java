@@ -1,8 +1,16 @@
 package Model;
 
+import Controller.AccountController;
+import Controller.MainController;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.testfx.framework.junit.ApplicationTest;
 
 import java.util.ArrayList;
 
@@ -11,19 +19,17 @@ import static org.junit.Assert.*;
 /**
  * Created by bijan on 04/05/2017.
  */
-public class PersonTest extends VersionControlEntityTest{
+public class PersonTest{
 
     private ArrayList<String> personName = new ArrayList<>();
     private Person person1, person2;
 
     @Before
-    @Override
     public void setUp() throws Exception
     {
         personName.add("Andrew");
         person1 = new Person("Mr", personName, "Odintsov", true, "Andrew.odi@apple.com");
         person2 = new Person("Mr","Zilvinas Ceikauskas", true, "Zill.cei@apple.com");
-        versionControlEntity = new Person("Mr","Zilvinas Ceikauskas", true, "Zill.cei@apple.com");
     }
 
     @Test
@@ -252,8 +258,8 @@ public class PersonTest extends VersionControlEntityTest{
         "1234567890@domain.com", "email@domain-one.com", "_______@domain.com", "email@domain.name",
                 "email@domain.co.jp", "firstname-lastname@domain.com"};
 
-        for (int i=0; i<validEmails.length; i++){
-            assertTrue(Person.validEmail(validEmails[i]));
+        for (String validEmail : validEmails) {
+            assertTrue(Person.validEmail(validEmail));
         }
 
         // Testing invalid emails
@@ -262,8 +268,8 @@ public class PersonTest extends VersionControlEntityTest{
         "email.domain.com", "email@domain@domain.com", ".email@domain.com", "email.@domain.com",
                 "email..email@domain.com", "email@domain.com (Joe Smith)", "email@domain..com"};
 
-        for (int i=0; i<invalidEmails.length; i++){
-            assertFalse(Person.validEmail(invalidEmails[i]));
+        for (String invalidEmail : invalidEmails) {
+            assertFalse(Person.validEmail(invalidEmail));
         }
 
     }
@@ -274,6 +280,5 @@ public class PersonTest extends VersionControlEntityTest{
         personName = null;
         person1 = null;
         person2 = null;
-        versionControlEntity = null;
     }
 }

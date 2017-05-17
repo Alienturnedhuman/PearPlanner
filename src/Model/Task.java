@@ -76,6 +76,11 @@ public class Task extends ModelEntity
         return requirements.size();
     }
 
+    /**
+     * Returns the number of complete in Requirements in this Task.
+     *
+     * @return integer
+     */
     public int requirementsComplete()
     {
         int r = 0;
@@ -111,6 +116,11 @@ public class Task extends ModelEntity
         return this.assignments.toArray(new Assignment[this.assignments.size()]);
     }
 
+    /**
+     * Checks whether all dependencies of this Task are complete.
+     *
+     * @return true if complete, false otherwise.
+     */
     public boolean dependenciesComplete()
     {
         int i = -1;
@@ -125,6 +135,11 @@ public class Task extends ModelEntity
         return true;
     }
 
+    /**
+     * Checks whether this Task has any dependencies.
+     *
+     * @return true if does, false otherwise.
+     */
     public boolean hasDependencies()
     {
         return dependencies.size() > 0;

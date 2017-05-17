@@ -19,7 +19,6 @@ public class Module extends VersionControlEntity
     private String moduleCode;
     private ArrayList<TimetableEvent> timetable = new ArrayList<>();
 
-    // private methods
     @Override
     protected void replace(VersionControlEntity receivedVCE)
     {
@@ -87,25 +86,21 @@ public class Module extends VersionControlEntity
     // getters
     public ArrayList<Assignment> getAssignments()
     {
-        // initial set up code below - check if this needs updating
         return assignments;
     }
 
     public Person getOrganiser()
     {
-        // initial set up code below - check if this needs updating
         return organiser;
     }
 
     public String getModuleCode()
     {
-        // initial set up code below - check if this needs updating
         return moduleCode;
     }
 
     public ArrayList<TimetableEvent> getTimetable()
     {
-        // initial set up code below - check if this needs updating
         return timetable;
     }
 
@@ -188,12 +183,9 @@ public class Module extends VersionControlEntity
     }
 
     // constructors
-
     public Module(Person cOrganiser, String cModuleCode)
     {
         setOrganiser(cOrganiser);
         setModuleCode(cModuleCode);
     }
-
-
 }

@@ -41,7 +41,6 @@ import java.util.ResourceBundle;
 /**
  * Created by Zilvinas on 05/05/2017.
  */
-// TODO icons
 public class MenuController implements Initializable
 {
     public enum Window
@@ -133,8 +132,10 @@ public class MenuController implements Initializable
         GridPane.setMargin(studyProfile, new Insets(10));
         this.mainContent.addRow(1, studyProfile);
 
-        HBox modules = new HBox();
-        modules.setSpacing(30);
+        FlowPane modules = new FlowPane();
+        modules.setHgap(30);
+        modules.setVgap(20);
+        modules.setPrefWrapLength(1000);
         for (Module module : profile.getModules())
         {
             VBox vbox = new VBox();
@@ -335,8 +336,6 @@ public class MenuController implements Initializable
      */
     public void loadStudyProfiles()
     {
-
-
         // Update main pane:
         this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
         this.topBox.getChildren().clear();
@@ -952,6 +951,7 @@ public class MenuController implements Initializable
         // =================
 
         this.mainContent.setVgap(10);
+        this.mainContent.setPadding(new Insets(15));
 
         // Render dashboard:
         this.main(Window.Dashboard);

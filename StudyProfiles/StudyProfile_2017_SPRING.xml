@@ -225,14 +225,14 @@
                         <version>0</version>
                         <uid>PROG2_CW_1</uid>
                         <startDate>
-                            <name>Start Date</name>
+                            <name>Start Date for Offline Movie DataBase (OMDB) in C</name>
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>PROG2_CW_1_START</uid>
                             <date>20/10/2016T15:00:00Z</date>
                         </startDate>
                         <deadline>
-                            <name>Deadline</name>
+                            <name>Deadline for Offline Movie DataBase (OMDB) in C</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>PROG2_CW_1_DEADLINE</uid>
@@ -251,14 +251,14 @@
                         <version>0</version>
                         <uid>PROG2_CW_2</uid>
                         <startDate>
-                            <name>Start Date</name>
+                            <name>Start Date for Java Coursework</name>
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>PROG2_CW_2_START</uid>
                             <date>24/11/2016T15:00:00Z</date>
                         </startDate>
                         <deadline>
-                            <name>Deadline</name>
+                            <name>Deadline for Java Coursework</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>PROG2_CW_2_DEADLINE</uid>
@@ -277,14 +277,14 @@
                         <version>0</version>
                         <uid>PROG2_CW_3</uid>
                         <startDate>
-                            <name>Start Date</name>
+                            <name>Start Date for Offline Movie Database in C++</name>
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>PROG2_CW_3_START</uid>
                             <date>24/03/2018T15:00:00Z</date>
                         </startDate>
                         <deadline>
-                            <name>Deadline</name>
+                            <name>Deadline for Offline Movie Database in C++</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>PROG2_CW_3_DEADLINE</uid>
@@ -298,13 +298,13 @@
                         <marks>100</marks>
                     </coursework>
                     <exam>
-                        <name>Final Exam</name>
+                        <name>Programming 2 Final Exam </name>
                         <details>This is the final exam.\nDo not be late.\nOr you will not pass.</details>
                         <version>0</version>
                         <uid>PROG2_EXAM_1</uid>
                         <resit>PROG2_EXAM_1_RESIT</resit>
                         <timeslot>
-                            <name>Deadline</name>
+                            <name>Programming 2 Final Exam</name>
                             <details>The Date of the Programming 2 final exam</details>
                             <version>0</version>
                             <uid>PROG2_EXAM_1_TIMESLOT</uid>
@@ -348,7 +348,7 @@
                         <version>0</version>
                         <uid>SOFTENG_CW_1</uid>
                         <startDate>
-                            <name>Start Date</name>
+                            <name>Start Date for Main Coursework (Design Stage)</name>
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>SOFTENG_CW_1_START</uid>
@@ -375,14 +375,14 @@
                         <version>0</version>
                         <uid>SOFTENG_CW_2</uid>
                         <startDate>
-                            <name>Start Date</name>
+                            <name>Start Date for Main Coursework (Implementation Stage)</name>
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>SOFTENG_CW_2_START</uid>
                             <date>05/03/2018T15:00:00Z</date>
                         </startDate>
                         <deadline>
-                            <name>Deadline</name>
+                            <name>Deadline for Main Coursework (Implementation Stage)</name>
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>SOFTENG_CW_2_DEADLINE</uid>
@@ -398,7 +398,7 @@
                 </assignments>
             </module>
             <module>
-                <name>Data Structures and Algoritms</name>
+                <name>Data Structures and Algorithms</name>
                 <details>The purpose of this module is to give the student a solid grounding in the design, analysis and implementation of algorithms, and in the efficient implementation of a wide range of important data structures.</details>
                 <version>0</version>
                 <uid>MODULE_DATSTRALG</uid>
@@ -425,7 +425,7 @@
                         <uid>DATSTRALG_EXAM_1_RESIT</uid>
                         <resit></resit>
                         <timeslot>
-                            <name>Deadline</name>
+                            <name>Data Structures and Algorithms Final Exam Resit </name>
                             <details>The Date of the Data Structures and Algoritms final exam resit</details>
                             <version>0</version>
                             <uid>DATSTRALG_EXAM_1_RESIT_TIMESLOT</uid>
@@ -447,14 +447,14 @@
                         <version>0</version>
                         <uid>DATSTRALG_CW_1</uid>
                         <startDate>
-                            <name>Start Date</name>
+                            <name>Start Date for Module Assessment Exercises 1</name>
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>DATSTRALG_CW_1_START</uid>
                             <date>02/11/2016T15:00:00Z</date>
                         </startDate>
                         <deadline>
-                            <name>Deadline</name>
+                            <name>Deadline for Module Assessment Exercises 1</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>DATSTRALG_CW_1_DEADLINE</uid>
@@ -475,14 +475,14 @@
                         <version>0</version>
                         <uid>DATSTRALG_CW_2</uid>
                         <startDate>
-                            <name>Start Date</name>
+                            <name>Start Date for Module Assessment Exercises 2</name>
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>DATSTRALG_CW_2_START</uid>
                             <date>01/02/2018T15:00:00Z</date>
                         </startDate>
                         <deadline>
-                            <name>Deadline</name>
+                            <name>Deadline for Module Assessment Exercises 2</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>DATSTRALG_CW_2_DEADLINE</uid>
@@ -502,7 +502,7 @@
                         <uid>DATSTRALG_EXAM_1</uid>
                         <resit>DATSTRALG_EXAM_1_RESIT</resit>
                         <timeslot>
-                            <name>Deadline</name>
+                            <name>Data Structures and Algorithms Final Exam</name>
                             <details>The Date of the Data Structures and Algoritms final exam</details>
                             <version>0</version>
                             <uid>DATSTRALG_EXAM_1_TIMESLOT</uid>
@@ -576,14 +576,14 @@
                         <version>0</version>
                         <uid>GRAP1_CW_1</uid>
                         <startDate>
-                            <name>Start Date</name>
+                            <name>Start Date for PLATFORM GAME</name>
                             <details>Start Date for the Coursework</details>
                             <version>0</version>
                             <uid>GRAP1_CW_1_START</uid>
                             <date>10/02/2018T15:00:00Z</date>
                         </startDate>
                         <deadline>
-                            <name>Deadline</name>
+                            <name>Deadline for TWO DIMENSIONAL PLATFORM GAME</name>
                             <details>End Date for the Coursework</details>
                             <version>0</version>
                             <uid>GRAP1_CW_1_DEADLINE</uid>
@@ -603,7 +603,7 @@
                         <uid>GRAP1_EXAM_1</uid>
                         <resit>GRAP1_EXAM_1_RESIT</resit>
                         <timeslot>
-                            <name>Deadline</name>
+                            <name>Graphics 1 Final Exam</name>
                             <details>The Date of the Graphics 1 final exam</details>
                             <version>0</version>
                             <uid>GRAP1_EXAM_1_TIMESLOT</uid>
