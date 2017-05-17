@@ -197,6 +197,7 @@ public class XMLcontroller
         return parentNode.getChildNodes();
     }
 
+    @Deprecated
     static public boolean validNodeList(NodeList nodes, String[] nodeNames)
     {
         int i = -1;
