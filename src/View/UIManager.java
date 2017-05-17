@@ -79,7 +79,6 @@ public class UIManager
     {
         // Load in the .fxml file:
         System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainMenu.fxml"));
         loader.setController(UIManager.mc);
@@ -100,7 +99,6 @@ public class UIManager
     public Activity addActivity() throws Exception
     {
 
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         ActivityController ac = new ActivityController();
 
         // Load in the .fxml file:
@@ -130,7 +128,6 @@ public class UIManager
      */
     public void activityDetails(Activity activity) throws IOException
     {
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         ActivityController ac = new ActivityController(activity);
 
         // Load in the .fxml file:
@@ -155,7 +152,6 @@ public class UIManager
      */
     public Milestone addMilestone() throws IOException
     {
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         MilestoneController mc = new MilestoneController();
 
         // Load in the .fxml file:
@@ -185,7 +181,6 @@ public class UIManager
      */
     public void milestoneDetails(Milestone milestone) throws IOException
     {
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         MilestoneController mc = new MilestoneController(milestone);
 
         // Load in the .fxml file:
@@ -210,7 +205,6 @@ public class UIManager
      */
     public void studyProfileDetails(StudyProfile profile) throws IOException
     {
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         StudyProfileController spc = new StudyProfileController(profile);
 
         // Load in the .fxml file:
@@ -283,7 +277,6 @@ public class UIManager
      */
     public Task addTask() throws Exception
     {
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         TaskController tc = new TaskController();
 
         // Load in the .fxml file:
@@ -314,7 +307,6 @@ public class UIManager
      */
     public void taskDetails(Task task) throws IOException
     {
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         TaskController tc = new TaskController(task);
 
         // Load in the .fxml file:
@@ -339,7 +331,6 @@ public class UIManager
      */
     public Requirement addRequirement() throws Exception
     {
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         RequirementController rc = new RequirementController();
 
         // Load in the .fxml file:
@@ -369,7 +360,6 @@ public class UIManager
      */
     public void requirementDetails(Requirement requirement) throws IOException
     {
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         RequirementController rc = new RequirementController(requirement);
 
         // Load in the .fxml file:
@@ -394,7 +384,6 @@ public class UIManager
      */
     public void showGantt(Assignment assignment)
     {
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         Stage stage = new Stage();
 
         // Layout:
@@ -441,7 +430,6 @@ public class UIManager
         layout.getChildren().addAll(nav, content);
 
         // Set the scene:
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         stage.setScene(new Scene(layout, 1300, 800, true, SceneAntialiasing.BALANCED));
         stage.setTitle("Ganttish Diagram");
         stage.resizableProperty().setValue(true);
