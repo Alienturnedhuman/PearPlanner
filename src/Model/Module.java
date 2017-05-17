@@ -26,19 +26,19 @@ public class Module extends VersionControlEntity
         if (receivedVCE instanceof Module)
         {
             Module castedVCE = (Module) receivedVCE;
-            if(castedVCE.getOrganiser()!=null)
+            if (castedVCE.getOrganiser() != null)
             {
                 this.organiser = castedVCE.getOrganiser();
             }
-            if(castedVCE.getModuleCode()!=null)
+            if (castedVCE.getModuleCode() != null)
             {
                 this.moduleCode = castedVCE.getModuleCode();
             }
-            if(castedVCE.getAssignments()!=null)
+            if (castedVCE.getAssignments() != null)
             {
                 this.assignments = castedVCE.getAssignments();
             }
-            if(castedVCE.getAssignments()!=null)
+            if (castedVCE.getAssignments() != null)
             {
                 this.timetable = castedVCE.getTimetable();
             }
@@ -112,6 +112,22 @@ public class Module extends VersionControlEntity
     public int getNoOfAssignments()
     {
         return this.assignments.size();
+    }
+
+    /**
+     * Calculates how much of this Module has been completed in percentage.
+     *
+     * @return int (0-100)
+     */
+    public int calculateProgress()
+    {
+        if (this.assignments.size() == 0)
+            return 0;
+
+        int sum = 0;
+        for (Assignment assignment : this.assignments)
+            sum += assignment.calculateProgress();
+        return sum / this.assignments.size();
     }
 
     // setters

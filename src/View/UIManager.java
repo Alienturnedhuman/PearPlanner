@@ -2,6 +2,7 @@ package View;
 
 import Controller.*;
 import Model.*;
+import javafx.application.Platform;
 import com.apple.eawt.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
@@ -55,16 +56,13 @@ public class UIManager
         Parent root = loader.load();
 
         // Set the scene:
-
-        //macOS compatible dock icon
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
-
-
         Stage stage = new Stage();
         stage.setScene(new Scene(root, 550, 232));
         stage.setTitle("Create Account");
         stage.resizableProperty().setValue(false);
         stage.getIcons().add(new Image("file:icon.png"));
+        //macOS compatible dock icon
+        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         stage.showAndWait();
 
         // Handle creation of the Account object:
@@ -90,7 +88,7 @@ public class UIManager
         Parent root = loader.load();
 
         // Set the scene:
-        mainStage.setScene(new Scene(root, 1000, 750));
+        mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
         mainStage.setTitle("PearPlanner");
         mainStage.getIcons().add(new Image("file:icon.png"));
         mainStage.showAndWait();
@@ -232,7 +230,6 @@ public class UIManager
     /**
      * Displays the Assignment details page
      */
-    // TODO open() doesn't work
     public void assignmentDetails(Assignment assignment, MenuController.Window current) throws IOException
     {
         UIManager.mc.loadAssignment(assignment, current, null);
@@ -408,14 +405,7 @@ public class UIManager
      */
     public void showCalendar()
     {
-
-
-
-
         Stage stage = new Stage();
-
-
-
 
         // Layout:
         VBox layout = new VBox();
@@ -517,6 +507,8 @@ public class UIManager
         stage.setTitle("Calendar");
         stage.resizableProperty().setValue(true);
         stage.getIcons().add(new Image("file:icon.png"));
+
+        Platform.runLater(() -> content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusMinutes(1050)));
         stage.showAndWait();
         // =================
     }
