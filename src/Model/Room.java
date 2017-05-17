@@ -18,7 +18,7 @@ public class Room extends VersionControlEntity
         if (receivedVCE instanceof Room)
         {
             Room castedVCE = (Room) receivedVCE;
-            if(castedVCE.getBuilding()!=null)
+            if (castedVCE.getBuilding() != null)
             {
                 this.building = castedVCE.getBuilding();
             }
@@ -67,7 +67,8 @@ public class Room extends VersionControlEntity
         setRoomNumber(cRoomNumber);
     }
 
-    public String getLocation() {
+    public String getLocation()
+    {
         return name + "( " + roomNumber + " )";
     }
 

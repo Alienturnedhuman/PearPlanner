@@ -3,11 +3,9 @@ package View;
 import Controller.*;
 import Model.*;
 import javafx.application.Platform;
-import com.apple.eawt.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
@@ -20,10 +18,8 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -56,18 +52,11 @@ public class UIManager
         Parent root = loader.load();
 
         // Set the scene:
-
-        //macOS compatible dock icon
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
-
-
         Stage stage = new Stage();
         stage.setScene(new Scene(root, 550, 232));
         stage.setTitle("Create Account");
         stage.resizableProperty().setValue(false);
         stage.getIcons().add(new Image("file:icon.png"));
-        //macOS compatible dock icon
-        Application.getApplication().setDockIconImage(new ImageIcon("icon.png").getImage());
         stage.showAndWait();
 
         // Handle creation of the Account object:
@@ -508,7 +497,7 @@ public class UIManager
                                 .withStartLocalDateTime(sTime)
                                 .withEndLocalDateTime(sTime.plusMinutes(((TimetableEvent) e).getDuration()))
 
-                                .withSummary(e.getName()+"\n"+"@ "+((TimetableEvent) e).getRoom().getLocation())
+                                .withSummary(e.getName() + "\n" + "@ " + ((TimetableEvent) e).getRoom().getLocation())
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group5"))
                 );
             } else if (e instanceof ExamEvent)
@@ -517,7 +506,7 @@ public class UIManager
                 content.appointments().addAll(
                         new Agenda.AppointmentImplLocal()
                                 .withStartLocalDateTime(sTime)
-                                .withSummary(e.getName()+"\n"+"@ "+((ExamEvent) e).getRoom().getLocation())
+                                .withSummary(e.getName() + "\n" + "@ " + ((ExamEvent) e).getRoom().getLocation())
                                 .withEndLocalDateTime(sTime.plusMinutes(((ExamEvent) e).getDuration()))
                                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group20"))
                 );

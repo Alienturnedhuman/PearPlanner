@@ -20,15 +20,15 @@ public class Coursework extends Assignment
         if (receivedVCE instanceof Coursework)
         {
             Coursework castedVCE = (Coursework) receivedVCE;
-            if(castedVCE.getStartDate()!=null)
+            if (castedVCE.getStartDate() != null)
             {
                 this.startDate = castedVCE.getStartDate();
             }
-            if(castedVCE.getDeadline()!=null)
+            if (castedVCE.getDeadline() != null)
             {
                 this.deadline = castedVCE.getDeadline();
             }
-            if(castedVCE.getExtensions()!=null)
+            if (castedVCE.getExtensions() != null)
             {
                 this.extensions = castedVCE.getExtensions();
             }

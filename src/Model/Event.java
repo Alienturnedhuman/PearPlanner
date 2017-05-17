@@ -14,29 +14,19 @@ public class Event extends VersionControlEntity
 {
     protected GregorianCalendar date = null;
 
-    // public methods
     private static Pattern dateRegex = Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)Z");
 
+    // public methods
+
+    /**
+     * Validates the given String
+     *
+     * @param dateString a String containing a Date
+     * @return whether the given String is a valide date
+     */
     public static boolean validDateString(String dateString)
     {
         return dateRegex.matcher(dateString).matches();
-    }
-
-
-
-
-    @Override
-    protected void replace(VersionControlEntity receivedVCE)
-    {
-        if (receivedVCE instanceof Event)
-        {
-            Event castedVCE = (Event) receivedVCE;
-            if(castedVCE.getCalendar()!=null)
-            {
-                this.date = castedVCE.getCalendar();
-            }
-        }
-        super.replace(receivedVCE);
     }
 
     // getters
@@ -44,7 +34,7 @@ public class Event extends VersionControlEntity
     /**
      * Returns a Date object containing this Date
      *
-     * @return
+     * @return Date object
      */
     public Date getDate()
     {
@@ -65,10 +55,8 @@ public class Event extends VersionControlEntity
     public void setDate(String dateString)
     {
         // 09/04/2017T15:00:00Z
-        // at the moment coded to bypass validator as it's not working correctly
         if (validDateString(dateString))
         {
-
             String sDay = dateString.substring(0, 2);
             String sMonth = dateString.substring(3, 5);
             String sYear = dateString.substring(6, 10);
@@ -85,7 +73,21 @@ public class Event extends VersionControlEntity
         }
     }
 
+    @Override
+    protected void replace(VersionControlEntity receivedVCE)
+    {
+        if (receivedVCE instanceof Event)
+        {
+            Event castedVCE = (Event) receivedVCE;
+            if (castedVCE.getCalendar() != null)
+            {
+                this.date = castedVCE.getCalendar();
+            }
+        }
+        super.replace(receivedVCE);
+    }
 
+    // Constructors:
     public Event(String cDate)
     {
         setDate(cDate);

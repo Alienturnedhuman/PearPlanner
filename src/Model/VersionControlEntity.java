@@ -39,8 +39,7 @@ public class VersionControlEntity extends ModelEntity
         {
             replace(receivedVCE);
             return true;
-        }
-        else
+        } else
         {
             return false;
         }
@@ -131,6 +130,7 @@ public class VersionControlEntity extends ModelEntity
     {
         return library;
     }
+
     public static String libraryReport()
     {
         return "Total Entries: " + library.size();
@@ -175,9 +175,9 @@ public class VersionControlEntity extends ModelEntity
 
     public void reload()
     {
-        if(!inLibrary(this.uid)&&!importer&&sealed)
+        if (!inLibrary(this.uid) && !importer && sealed)
         {
-            library.put(this.uid,this);
+            library.put(this.uid, this);
         }
     }
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ModelEntity implements Serializable
 {
     protected String name = "";
-    protected MultilineString details=null;
+    protected MultilineString details = null;
     protected ArrayList<Note> notes;
 
 
@@ -67,7 +67,7 @@ public class ModelEntity implements Serializable
 
     /**
      * Open the appropriate UI window for this class
-     * To be overridden by childs.
+     * To be overridden by children.
      */
     public void open(MenuController.Window current)
     {

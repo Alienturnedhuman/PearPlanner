@@ -259,11 +259,10 @@ public class StudyPlanner implements Serializable
 
     public boolean addToVersionControlLibrary(VersionControlEntity vce)
     {
-        if(versionControlLibrary.contains(vce))
+        if (versionControlLibrary.contains(vce))
         {
             return false;
-        }
-        else
+        } else
         {
             versionControlLibrary.add(vce);
             return true;
@@ -277,7 +276,7 @@ public class StudyPlanner implements Serializable
 
     public void rebuildVersionControlLibrary()
     {
-        versionControlLibrary.forEach(e->e.reload());
+        versionControlLibrary.forEach(e -> e.reload());
     }
 
     public boolean setVersion(int newVersion)

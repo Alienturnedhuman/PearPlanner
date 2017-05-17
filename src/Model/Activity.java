@@ -23,8 +23,6 @@ public class Activity extends Event
     private int activityQuantity;
     private QuantityType type;
 
-    // public
-
     // Getters:
 
     /**
