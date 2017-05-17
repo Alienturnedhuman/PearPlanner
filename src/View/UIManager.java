@@ -2,6 +2,7 @@ package View;
 
 import Controller.*;
 import Model.*;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -81,7 +82,7 @@ public class UIManager
         Parent root = loader.load();
 
         // Set the scene:
-        mainStage.setScene(new Scene(root, 1000, 750));
+        mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
         mainStage.setTitle("PearPlanner");
         mainStage.getIcons().add(new Image("file:icon.png"));
         mainStage.showAndWait();
@@ -223,7 +224,6 @@ public class UIManager
     /**
      * Displays the Assignment details page
      */
-    // TODO open() doesn't work
     public void assignmentDetails(Assignment assignment, MenuController.Window current) throws IOException
     {
         UIManager.mc.loadAssignment(assignment, current, null);
@@ -500,6 +500,8 @@ public class UIManager
         stage.setTitle("Calendar");
         stage.resizableProperty().setValue(true);
         stage.getIcons().add(new Image("file:icon.png"));
+
+        Platform.runLater(() -> content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusMinutes(1050)));
         stage.showAndWait();
         // =================
     }

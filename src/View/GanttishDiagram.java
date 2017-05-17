@@ -382,16 +382,15 @@ public class GanttishDiagram
         g2d.setFont(font);
         g2d.drawString(msg, msgX, msgY);
 
-/*
-        try {
+
+/*        try {
             File outputfile = new File("badge_"+progress+".png");
             ImageIO.write(r, "png", outputfile);
         }
         catch(Exception e)
         {
             System.out.println(e.getMessage());
-        }
-        */
+        }*/
 
         return r;
     }

@@ -75,18 +75,30 @@ public class Task extends ModelEntity
     {
         return requirements.size();
     }
+
     public int requirementsComplete()
     {
         int r = 0;
-        int i = -1 , ii = requirements.size();
-        while(++i<ii)
+        int i = -1, ii = requirements.size();
+        while (++i < ii)
         {
-            if(requirements.get(i).isComplete())
-            {
-                r+=1;
-            }
+            if (requirements.get(i).isComplete())
+                r++;
         }
         return r;
+    }
+
+    /**
+     * Calculates how much of this Task has been completed in percentage.
+     *
+     * @return int (0-100)
+     */
+    public int calculateProgress()
+    {
+        if (this.requirementCount() == 0)
+            return 0;
+        else
+            return (this.requirementsComplete() * 100) / this.requirementCount();
     }
 
     /**
