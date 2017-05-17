@@ -18,14 +18,19 @@ import java.util.GregorianCalendar;
  */
 public class MainController
 {
-    // Public:
     public static UIManager ui = new UIManager();
 
-    // Private:
     private static StudyPlannerController SPC;
+
+    // Used for serialization:
     private static SecretKey key64 = new SecretKeySpec(new byte[]{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07}, "Blowfish");
     private static String fileName = "StudyPlanner.dat";
 
+    /**
+     * Returns a StudyPlannerController.
+     *
+     * @return StudyPlannerController.
+     */
     public static StudyPlannerController getSPC()
     {
         return SPC;
@@ -98,7 +103,7 @@ public class MainController
     }
 
     /**
-     * Display the main menu:
+     * Display the main menu.
      */
     public static void main()
     {
@@ -112,7 +117,9 @@ public class MainController
     }
 
     /**
-     * Handle importing a new file:
+     * Handles importing a new file.
+     *
+     * @return whether imported successfully.
      */
     public static boolean importFile()
     {
@@ -124,9 +131,7 @@ public class MainController
             HubFile fileData = DataController.loadHubFile(tempFile);
             if (fileData != null)
             {
-                if (fileData.isUpdate() && !MainController.SPC.updateStudyProfile(fileData))
-                    UIManager.reportError("Cannot update a Study Profile!");
-                else if (!MainController.SPC.createStudyProfile(fileData))
+                if (!fileData.isUpdate() && !MainController.SPC.createStudyProfile(fileData))
                     UIManager.reportError("This Study Profile is already created!");
                 else
                     return true;
@@ -138,7 +143,7 @@ public class MainController
     /**
      * Save the current state of the program to file
      *
-     * @return
+     * @return whether saved successfully.
      */
     public static boolean save()
     {
@@ -154,15 +159,15 @@ public class MainController
     }
 
     /**
-     * Apparent (according to Stackoverflow) the Java Standard library doesn't have a
+     * Apparently (according to Stackoverflow) the Java Standard library doesn't have a
      * standard check for testing if a string value is a number or not?!)
      * <p>
      * Therefore, we are using this proposed isNumeric method from:
      * <p>
      * http://stackoverflow.com/a/1102916
      *
-     * @param str
-     * @return
+     * @param str String to be tested
+     * @return whether the given String is numeric.
      */
     public static boolean isNumeric(String str)
     {
@@ -176,6 +181,11 @@ public class MainController
         return true;
     }
 
+    /**
+     * Early console based implementation.
+     *
+     * @param menu menu option.
+     */
     private static void consoleUI(String menu)
     {
         while (!menu.equals(""))
@@ -202,5 +212,4 @@ public class MainController
             }
         }
     }
-
 }

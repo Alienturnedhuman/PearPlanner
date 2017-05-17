@@ -90,6 +90,8 @@ public class UIManager
 
     /**
      * Display the 'Add Activity' window
+     *
+     * @return newly created Activity
      */
     public Activity addActivity() throws Exception
     {
@@ -117,6 +119,8 @@ public class UIManager
 
     /**
      * Displays the Activity details page
+     *
+     * @param activity Activity for which the details should be displayed.
      */
     public void activityDetails(Activity activity) throws IOException
     {
@@ -139,6 +143,8 @@ public class UIManager
 
     /**
      * Displays the 'Add Milestone' window.
+     *
+     * @return newly created Milestone object.
      */
     public Milestone addMilestone() throws IOException
     {
@@ -166,6 +172,8 @@ public class UIManager
 
     /**
      * Displays the Milestone details page
+     *
+     * @param milestone Milestone for which the details should be shown.
      */
     public void milestoneDetails(Milestone milestone) throws IOException
     {
@@ -188,6 +196,8 @@ public class UIManager
 
     /**
      * Displays the StudyProfile details page
+     *
+     * @param profile StudyProfile for which the details should be shown.
      */
     public void studyProfileDetails(StudyProfile profile) throws IOException
     {
@@ -210,12 +220,23 @@ public class UIManager
 
     /**
      * Displays the Module details page
+     *
+     * @param module  Module for which the details should be shown.
+     * @param current Window from which this method is called.
+     * @throws IOException
      */
     public void moduleDetails(Module module, MenuController.Window current) throws IOException
     {
         UIManager.mc.loadModule(module, current, null);
     }
 
+    /**
+     * Displays the Module details page
+     *
+     * @param module  Module for which the details should be shown.
+     * @param current Window from which this method is called.
+     * @throws IOException
+     */
     public void moduleDetails(Module module, ModelEntity current) throws IOException
     {
         UIManager.mc.loadModule(module, MenuController.Window.Empty, current);
@@ -223,12 +244,23 @@ public class UIManager
 
     /**
      * Displays the Assignment details page
+     *
+     * @param assignment Assignment for which the details should be shown.
+     * @param current    Window from which this method is called.
+     * @throws IOException
      */
     public void assignmentDetails(Assignment assignment, MenuController.Window current) throws IOException
     {
         UIManager.mc.loadAssignment(assignment, current, null);
     }
 
+    /**
+     * Displays the Assignment details page
+     *
+     * @param assignment Assignment for which the details should be shown.
+     * @param current    Window from which this method is called.
+     * @throws IOException
+     */
     public void assignmentDetails(Assignment assignment, ModelEntity current) throws IOException
     {
         UIManager.mc.loadAssignment(assignment, MenuController.Window.Empty, current);
@@ -236,6 +268,8 @@ public class UIManager
 
     /**
      * Creates a window for adding a new Task
+     *
+     * @return newly created Task
      */
     public Task addTask() throws Exception
     {
@@ -263,6 +297,9 @@ public class UIManager
 
     /**
      * Displays the Task details page
+     *
+     * @param task for which the details should be displayed.
+     * @throws IOException
      */
     public void taskDetails(Task task) throws IOException
     {
@@ -285,6 +322,8 @@ public class UIManager
 
     /**
      * Creates a window for adding a new Requirement
+     *
+     * @return newly created Requirement
      */
     public Requirement addRequirement() throws Exception
     {
@@ -311,7 +350,9 @@ public class UIManager
     }
 
     /**
-     * Displays the Task details page
+     * Displays the Requirement details page
+     *
+     * @param requirement Requirement for which the details should be displayed
      */
     public void requirementDetails(Requirement requirement) throws IOException
     {
@@ -583,9 +624,7 @@ public class UIManager
      */
     public static void areYouFeelingLucky()
     {
-        while (UIManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5))
-        {
-        }
+        while (UIManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5)) ;
     }
 
 }
