@@ -32,9 +32,15 @@ public class VersionControlEntity extends ModelEntity
     }
 
     // public methods
+
+    /**
+     * Update ths VCE with a given one.
+     *
+     * @param receivedVCE received VCE for updating the current one.
+     * @return whether updated successfully.
+     */
     public boolean update(VersionControlEntity receivedVCE)
     {
-        // initial set up code below - check if this needs
         if (uid.equals(receivedVCE.getUID()) && version < receivedVCE.getVersion())
         {
             replace(receivedVCE);
@@ -43,9 +49,14 @@ public class VersionControlEntity extends ModelEntity
         {
             return false;
         }
-
     }
 
+    /**
+     * Find the given VCE in the library and then update it.
+     *
+     * @param receivedVCE a VCE to be looked for and updated.
+     * @return whether found and updated successfully.
+     */
     public static boolean findAndUpdate(VersionControlEntity receivedVCE)
     {
         String UID = receivedVCE.getUID();
@@ -76,6 +87,11 @@ public class VersionControlEntity extends ModelEntity
         return importer;
     }
 
+    /**
+     * Add this VCE to the library.
+     *
+     * @return whether added successfully.
+     */
     public boolean addToLibrary()
     {
         if (importer)
@@ -97,6 +113,12 @@ public class VersionControlEntity extends ModelEntity
         }
     }
 
+    /**
+     * Get a VCE from the library by it's UID
+     *
+     * @param UID UID to be looked for.
+     * @return a valid VCE if found, null otherwise.
+     */
     public static VersionControlEntity get(String UID)
     {
         if (inLibrary(UID))
@@ -108,6 +130,12 @@ public class VersionControlEntity extends ModelEntity
         }
     }
 
+    /**
+     * Check whether a VCE with the given UID exists in the library.
+     *
+     * @param UID UID to be checked for.
+     * @return true if found, false otherwise.
+     */
     public static boolean inLibrary(String UID)
     {
         return library.containsKey(UID);
@@ -116,26 +144,41 @@ public class VersionControlEntity extends ModelEntity
     // getters
     public int getVersion()
     {
-        // initial set up code below - check if this needs updating
         return version;
     }
 
     public String getUID()
     {
-        // initial set up code below - check if this needs updating
         return uid;
     }
 
+    /**
+     * Returns the VCE library.
+     *
+     * @return HashMap containing all VCEs.
+     */
     public static HashMap<String, VersionControlEntity> getLibrary()
     {
         return library;
     }
 
+    /**
+     * Returns a summary of the VCEs in the library.
+     *
+     * @return String
+     */
     public static String libraryReport()
     {
         return "Total Entries: " + library.size();
     }
 
+    /**
+     * Set a new UID and version for this VCE.
+     *
+     * @param newUID     new UID
+     * @param newVersion new version
+     * @return whether changed successfully.
+     */
     public boolean setUID(String newUID, int newVersion)
     {
 //        setUID(newUID);
@@ -155,6 +198,12 @@ public class VersionControlEntity extends ModelEntity
         }
     }
 
+    /**
+     * Set a new UID for this VCE.
+     *
+     * @param newUID new UID
+     * @return whether changed successfully.
+     */
     public boolean setUID(String newUID)
     {
         if (importer)
@@ -173,6 +222,9 @@ public class VersionControlEntity extends ModelEntity
         }
     }
 
+    /**
+     * Called once the program is loaded, adds this VCE to the library if possible.
+     */
     public void reload()
     {
         if (!inLibrary(this.uid) && !importer && sealed)
@@ -180,7 +232,6 @@ public class VersionControlEntity extends ModelEntity
             library.put(this.uid, this);
         }
     }
-
 
     // Constructors
     public VersionControlEntity(boolean leaveUnsealed)

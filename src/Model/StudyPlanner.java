@@ -68,6 +68,13 @@ public class StudyPlanner implements Serializable
         return sp;
     }
 
+    /**
+     * Check whether this StudyPlanner contains a StudyProfile with the given parameters.
+     *
+     * @param sYear year
+     * @param sSem  semester number
+     * @return whether this StudyProfile exists
+     */
     public boolean containsStudyProfile(int sYear, int sSem)
     {
         int i = -1;
@@ -82,12 +89,15 @@ public class StudyPlanner implements Serializable
         return false;
     }
 
+    /**
+     * Add a given event to the global calendar.
+     *
+     * @param event Event to be added to the calendar.
+     */
     public void addEventToCalendar(Event event)
     {
         if (!calendar.contains(event))
-        {
             calendar.add(event);
-        }
     }
 
     /**
@@ -100,11 +110,21 @@ public class StudyPlanner implements Serializable
         return this.currentStudyProfile;
     }
 
+    /**
+     * Get the preferred name of the user using this StudyPlanner.
+     *
+     * @return String containing the users name.
+     */
     public String getUserName()
     {
         return this.account.getStudentDetails().getPreferredName();
     }
 
+    /**
+     * Get all notifications in this StudyPlanner.
+     *
+     * @return an array of notifications.
+     */
     public Notification[] getNotifications()
     {
         Notification[] r = new Notification[this.notifications.size()];
@@ -112,6 +132,11 @@ public class StudyPlanner implements Serializable
         return r;
     }
 
+    /**
+     * Get all unread notifications in this StudyPlanner.
+     *
+     * @return an array of unread notifications.
+     */
     public Notification[] getUnreadNotifications()
     {
         Notification[] r = this.notifications.stream().filter(e -> !e.isRead()).toArray(Notification[]::new);
@@ -149,6 +174,13 @@ public class StudyPlanner implements Serializable
     }
 
     // setters
+
+    /**
+     * Change the current Study Profile to a given one.
+     *
+     * @param profile a StudyProfile to be marked as current.
+     * @return whether changed successfully.
+     */
     public boolean setCurrentStudyProfile(StudyProfile profile)
     {
         if (this.studyProfiles.contains(profile))
@@ -162,6 +194,12 @@ public class StudyPlanner implements Serializable
         return false;
     }
 
+    /**
+     * Change the current Study Profile to a Study Profile with the given ID.
+     *
+     * @param profileID ID of a Study Profile
+     * @return whether changed successfully.
+     */
     public boolean setCurrentStudyProfile(String profileID)
     {
         this.studyProfiles.forEach(e -> {
@@ -175,13 +213,18 @@ public class StudyPlanner implements Serializable
     /**
      * Adds a new StudyProfile to the StudyPlanner
      *
-     * @param profile
+     * @param profile StudyProfile to be added.
      */
     public void addStudyProfile(StudyProfile profile)
     {
         this.studyProfiles.add(profile);
     }
 
+    /**
+     * Add a new notification to this StudyPlanner.
+     *
+     * @param notification Notification to be added.
+     */
     public void addNotification(Notification notification)
     {
         this.notifications.add(notification);
@@ -256,7 +299,12 @@ public class StudyPlanner implements Serializable
         // =================
     }
 
-
+    /**
+     * Add a VersionControlEntity to the library.
+     *
+     * @param vce VersionControlEntity to be added.
+     * @return whether added successfully.
+     */
     public boolean addToVersionControlLibrary(VersionControlEntity vce)
     {
         if (versionControlLibrary.contains(vce))
@@ -269,16 +317,30 @@ public class StudyPlanner implements Serializable
         }
     }
 
+    /**
+     * Check whether the current VCE library is empty.
+     *
+     * @return true if empty, false otherwise.
+     */
     public boolean emptyVersionControlLibrary()
     {
         return versionControlLibrary.isEmpty();
     }
 
+    /**
+     * Rebuild the VCE library (used when the app is reloaded).
+     */
     public void rebuildVersionControlLibrary()
     {
         versionControlLibrary.forEach(e -> e.reload());
     }
 
+    /**
+     * Update the version of this StudyPlanner.
+     *
+     * @param newVersion new version number
+     * @return whether updated successfully.
+     */
     public boolean setVersion(int newVersion)
     {
         if (newVersion > version)
