@@ -69,6 +69,28 @@ public class StudyPlanner implements Serializable
     }
 
     /**
+     * This was added at the last minute before releasing and should be in the Module class, however
+     * if we had done that our Java Serialized file, which took 3 hours prepare, would no longer have worked.
+     * This is temporary solution so you can still use our prepared Study Planner save file, but in the next iteration
+     * it will be moved to the correct place and would not consist of 4 nested loops.
+     * Also, for public release, we would create a file format for saving in so Java Serialization issues would not
+     * occur for the end user.
+     *
+     * @param module
+     * @return
+     */
+    public int getTimeSpent(Module module)
+    {
+        int time = 0;
+        for (Assignment assignment : module.getAssignments())
+            for (Task task : assignment.getTasks())
+                for (Requirement requirement : task.getRequirements())
+                    for (Activity activity : requirement.getActivityLog())
+                        time += activity.getDuration();
+        return time;
+    }
+
+    /**
      * Check whether this StudyPlanner contains a StudyProfile with the given parameters.
      *
      * @param sYear year

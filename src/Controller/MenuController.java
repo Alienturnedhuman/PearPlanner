@@ -6,6 +6,7 @@ import View.UIManager;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -431,8 +432,15 @@ public class MenuController implements Initializable
         TableColumn<Module, String> nameColumn = new TableColumn<>("Module name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<Module, String> organiserColumn = new TableColumn<>("Module Organiser");
-        organiserColumn.setCellValueFactory(new PropertyValueFactory<>("organiser"));
+        TableColumn<Module, Integer> timeSpent = new TableColumn<>("Time spent");
+        timeSpent.setCellValueFactory(new PropertyValueFactory("timeSpent")
+        {
+            @Override public ObservableValue call(TableColumn.CellDataFeatures param)
+            {
+                return new SimpleIntegerProperty(MainController.getSPC().getPlanner().getTimeSpent((Module) param.getValue()));
+            }
+        });
+        timeSpent.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         ObservableList<Module> list = FXCollections.observableArrayList
                 (MainController.getSPC().getPlanner().getCurrentStudyProfile().getModules());
@@ -441,7 +449,7 @@ public class MenuController implements Initializable
         // Create a table:
         TableView<Module> table = new TableView<>();
         table.setItems(list);
-        table.getColumns().addAll(codeColumn, nameColumn, organiserColumn);
+        table.getColumns().addAll(codeColumn, nameColumn, timeSpent);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setHgrow(table, Priority.ALWAYS);
         GridPane.setVgrow(table, Priority.ALWAYS);
