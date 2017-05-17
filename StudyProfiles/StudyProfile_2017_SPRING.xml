@@ -441,9 +441,7 @@
                     </exam>
                     <coursework>
                         <name>Module Assessment Exercises 1</name>
-                        <details>Describing algorithms using pseudo-code; use of mathematical notation when analysing
-                            algorithms computer programming.
-                        </details>
+                        <details>Describing algorithms using pseudo-code; use of mathematical notation when analysing algorithms computer programming.</details>
                         <version>0</version>
                         <uid>DATSTRALG_CW_1</uid>
                         <startDate>
@@ -469,9 +467,7 @@
                     </coursework>
                     <coursework>
                         <name>Module Assessment Exercises 2</name>
-                        <details>Describing algorithms using pseudo-code; use of mathematical notation when analysing
-                            algorithms computer programming use of drawing tools.
-                        </details>
+                        <details>Describing algorithms using pseudo-code; use of mathematical notation when analysing algorithms computer programming use of drawing tools.</details>
                         <version>0</version>
                         <uid>DATSTRALG_CW_2</uid>
                         <startDate>
@@ -520,14 +516,7 @@
             </module>
             <module>
                 <name>Graphics 1</name>
-                <details>Graphics 1 provides an introduction to the fundamentals of computer graphics for all computing
-                    students. It aims to provide a strong foundation for students wishing to study graphics, focusing on
-                    2D graphics, algorithms and interaction. The module requires a good background in programming.
-                    OpenGL is utilised as the graphics API with examples provided in the lectures and supported in the
-                    laboratory classes. Other topics covered include 2D transformations, texture mapping, collision
-                    detection, graphics hardware, fonts, algorithms for line drawing, polygon filling, line and polygon
-                    clipping and colour in graphics.
-                </details>
+                <details>Graphics 1 provides an introduction to the fundamentals of computer graphics for all computing students. It aims to provide a strong foundation for students wishing to study graphics, focusing on 2D graphics, algorithms and interaction. The module requires a good background in programming. OpenGL is utilised as the graphics API with examples provided in the lectures and supported in the laboratory classes. Other topics covered include 2D transformations, texture mapping, collision detection, graphics hardware, fonts, algorithms for line drawing, polygon filling, line and polygon clipping and colour in graphics.</details>
                 <version>0</version>
                 <uid>MODULE_GRAP1</uid>
                 <organiser>PERSON_003</organiser>
@@ -569,10 +558,7 @@
                     </exam>
                     <coursework>
                         <name>TWO DIMENSIONAL PLATFORM GAME USING C/C++ AND OPENGL</name>
-                        <details>To introduce the concepts of Computer Graphics. To develop a program using OpenGL. To
-                            gain experience in writing computer graphics applications, with the assignment focusing on a
-                            two dimensional platform game.
-                        </details>
+                        <details>To introduce the concepts of Computer Graphics. To develop a program using OpenGL. To gain experience in writing computer graphics applications, with the assignment focusing on a two dimensional platform game.</details>
                         <version>0</version>
                         <uid>GRAP1_CW_1</uid>
                         <startDate>

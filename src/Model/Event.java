@@ -15,7 +15,7 @@ public class Event extends VersionControlEntity
     protected GregorianCalendar date = null;
 
     // public methods
-    private static Pattern dateRegex = Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)");
+    private static Pattern dateRegex = Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)Z");
 
     public static boolean validDateString(String dateString)
     {
@@ -66,7 +66,7 @@ public class Event extends VersionControlEntity
     {
         // 09/04/2017T15:00:00Z
         // at the moment coded to bypass validator as it's not working correctly
-        if (true || validDateString(dateString))
+        if (validDateString(dateString))
         {
 
             String sDay = dateString.substring(0, 2);
