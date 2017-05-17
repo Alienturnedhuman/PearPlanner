@@ -12,8 +12,9 @@ addons:
 
 
 deploy:
-    provider: bintray
-    skip_cleanup: true
-    file: target/bin/bintray.json
-    user: markelz0r
-    key: $BINTRAY_API_KEY
+  provider: releases
+  api_key: "$GIT_API"
+  file: "build-travis.zip"
+  skip_cleanup: true
+  on:
+    tags: true
