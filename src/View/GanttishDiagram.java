@@ -402,8 +402,7 @@ public class GanttishDiagram
 
         Font font = new Font("Helvetica", Font.PLAIN, fontSize);
         FontMetrics metrics = g2d.getFontMetrics(font);
-
-
+        
         int msgX = c_x + (c_width - metrics.stringWidth(msg)) / 2;
         int msgY = c_y + (c_height - metrics.getHeight()) / 2 + metrics.getAscent();
 
