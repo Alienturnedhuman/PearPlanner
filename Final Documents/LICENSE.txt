@@ -1,0 +1,13 @@
+Note:
+
+The files in this folder are part of our coursework, are here for documentation purposes only, and are therefore excluded from the GPLv3 license.
+
+You may:
+ * keep copies of the files
+ * include them for reference reasons in future releases
+ * refer to them in your documentation (providing you correctly attribute and give credit)
+ 
+You may not:
+ * modify them in anyway
+ * attribute them to anyone other than the original authors
+ * use them as your own work in any documentation you create
