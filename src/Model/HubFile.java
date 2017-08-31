@@ -562,8 +562,6 @@ public class HubFile implements Serializable
 
         Person exSetBy, exMarkedBy, exReviewedBy;
         ExamEvent exTimeSlot;
-        ArrayList<Extension> cwExtensions = new ArrayList<>();
-
 
         String linkedSetBy = examValues.get("setBy").getString();
         String linkedMarkedBy = examValues.get("markedBy").getString();
