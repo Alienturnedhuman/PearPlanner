@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar
+ * Bijan Ghasemi Afshar, Eric Sweet, Roberto C. Sánchez
  *
  *
  *
@@ -28,15 +28,124 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**
- * PearPlanner. Created by Team BRONZE on 4/27/17
+ * This class represents a person and associated details (names, salutation,
+ * email, etc.).
+ *
+ * @author Team BRONZE on 4/27/17
  */
 public class Person extends VersionControlEntity {
-	//private data
+
+	private static Pattern salutationRegex = Pattern.compile("[a-zA-Z]*");
+	private static Pattern nameRegex = Pattern.compile("[a-zA-z\\s]*");
+
 	private ArrayList<String> givenNames;
 	private String familyName;
 	private String salutation;
 	private String email;
 	private boolean familyNameLast = true;
+
+	/**
+	 * Create a person from the provided parameters.  The <b>name</b> parameter
+	 * is split to separate the family name from the given name(s).
+	 *
+	 * @param salutation The person's salutation, e.g., Mr., Mrs., Dr., etc.
+	 * @param name The person's names, both given and family ("NAME1 NAME2 NAME3
+	 * 				.... NAMEn")
+	 * @param famNameLast true to indicate that family comes last in the
+	 * 		<b>name</b> parameter; false to indicate it comes first
+	 */
+	public Person(String salutation, String name, Boolean famNameLast) {
+
+		this(salutation, name, famNameLast, "");
+
+	}
+
+	/**
+	 * Create a person from the provided parameters.
+	 *
+	 * @param salutation The person's salutation, e.g., Mr., Mrs., Dr., etc.
+	 * @param givenNames The person's given name(s)
+	 * @param famName The person's family name
+	 * @param famNameLast true to indicate that family comes last in the
+	 * 				<b>name</b> parameter; false to indicate it comes first
+	 */
+	public Person(String salutation, ArrayList<String> givenNames,
+			String famName, Boolean famNameLast) {
+
+		super(true);
+		setFamilyName(famName);
+		givenNames = (ArrayList<String>) givenNames.clone();
+		setSalutation(salutation);
+		familyNameLast = famNameLast;
+		email = "";
+
+	}
+
+	/**
+	 * Create a person from the provided parameters.  The <b>name</b> parameter
+	 * is split to separate the family name from the given name(s).
+	 *
+	 * @param salutation The person's salutation, e.g., Mr., Mrs., Dr., etc.
+	 * @param name The person's given name(s)
+	 * @param famNameLast true to indicate that family comes last in the
+	 * 		<b>name</b> parameter; false to indicate it comes first
+	 * @param newEmail The person's email address
+	 */
+	public Person(String salutation, String name, Boolean famNameLast, String newEmail) {
+
+		setSalutation(salutation);
+		setName(name, famNameLast);
+		familyNameLast = famNameLast;
+		email = newEmail;
+
+	}
+
+	/**
+	 * Create a person from the provided parameters.  The <b>givenNames</b>
+	 * parameter is split to separate multiple given names.
+	 *
+	 * @param salutation The person's salutation, e.g., Mr., Mrs., Dr., etc.
+	 * @param givenNames The person's given name(s)
+	 * @param famName The person's family name
+	 * @param famNameLast true to indicate that family comes last; false to
+	 * 				indicate it comes first
+	 * @param newEmail The person's email address
+	 */
+	public Person(String salutation, String givenNames, String famName,
+			Boolean famNameLast, String newEmail) {
+
+		setSalutation(salutation);
+		String personName;
+		if (famNameLast) {
+			personName = givenNames + " " + famName;
+		} else {
+			personName = famName + " " + givenNames;
+		}
+		setName(personName, famNameLast);
+		email = newEmail;
+
+	}
+
+	/**
+	 * Create a person from the provided parameters.
+	 *
+	 * @param salutation The person's salutation, e.g., Mr., Mrs., Dr., etc.
+	 * @param givenNames The person's given name(s)
+	 * @param famName The person's family name
+	 * @param famNameLast true to indicate that family comes last; false to
+	 * 				indicate it comes first
+	 * @param newEmail The person's email address
+	 */
+	public Person(String salutation, ArrayList<String> givenNames, String famName,
+			Boolean famNameLast, String newEmail) {
+
+		setFamilyName(famName);
+		givenNames = (ArrayList<String>) givenNames.clone();
+		setSalutation(salutation);
+		familyNameLast = famNameLast;
+		email = newEmail;
+
+	}
 
 	@Override
 	protected void replace(VersionControlEntity receivedVce) {
@@ -51,12 +160,10 @@ public class Person extends VersionControlEntity {
 		super.replace(receivedVce);
 	}
 
-	// public methods
-	// getters
 	/**
-	 * Returns a full name of this Person.
+	 * Returns this person's full name.
 	 *
-	 * @return a String containing a full name.
+	 * @return this person's full name
 	 */
 	public String getFullName() {
 		if (familyNameLast) {
@@ -69,82 +176,54 @@ public class Person extends VersionControlEntity {
 	}
 
 	/**
-	 * gets the family name of the user.
-
-	 * @return familyName
+	 * Returns this person's family name.
+	 *
+	 * @return this person's family name
 	 */
 	public String getFamilyName() {
 		return familyName;
 	}
 
 	/**
-	 * gets the email address.
-	 * @return email
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-	/**
-	 * Returns a list of given names for this Person.
-	 * @return an ArrayList of String containing given names
-	 */
-	public ArrayList<String> getGivenNames() {
-		return (ArrayList<String>) givenNames.clone();
-	}
-
-	/**
-	 * Checker whether this Person specified his family name as last name.
-	 * @return true if last, false otherwise.
-	 */
-	public boolean getFamilyNameLast() {
-		return familyNameLast;
-	}
-
-	/**
-	 * gets the salutation of the user.
-	 * @return salutation
-	 */
-	public String getSalutation() {
-		return salutation;
-	}
-
-	/**
-	 * boolean if salutation exist.
-	 * @return salutation.length() > 0
-	 */
-	public boolean hasSalutation() {
-		return salutation.length() > 0;
-	}
-
-	/**
-	 * Get the preferred name of this Person.
-	 * @return a String containing the preferred name.
-	 */
-	public String getPreferredName() {
-		return name.length() > 0 ? name : (givenNames.size() > 0 ? givenNames.get(0) : familyName);
-	}
-
-	// setters
-	/**
-	 * sets the family name of user.
-	 * @param newFamilyName family name of user
+	 * Sets this person's family name.
+	 *
+	 * @param newFamilyName this person's family name
 	 */
 	public void setFamilyName(String newFamilyName) {
 		familyName = newFamilyName;
 	}
 
 	/**
-	 * sets the preferred name of user.
-	 * @param newPreferredName string of user preferred name
+	 * Returns this person's email address.
+	 *
+	 * @return this person's email address
 	 */
-	public void setPreferredName(String newPreferredName) {
-		name = newPreferredName;
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * Sets this person's email address.
+	 *
+	 * @param newEmail this person's email address
+	 */
+	public void setEmail(String newEmail) {
+		email = newEmail;
+	}
+
+	/**
+	 * Returns a list of given names for this person.
+	 *
+	 * @return a list of given names for this person
+	 */
+	public ArrayList<String> getGivenNames() {
+		return (ArrayList<String>) givenNames.clone();
 	}
 
 	/**
 	 * Sets the given names from a string with space separated names.
-	 * @param nameStr String containing names
+	 *
+	 * @param nameStr a space separated String containing names
 	 */
 	public void setGivenNames(String nameStr) {
 		String[] nameSplit = nameStr.split(" ");
@@ -152,14 +231,72 @@ public class Person extends VersionControlEntity {
 	}
 
 	/**
-	 * Sets the name from a string with space separated names Family name.
-	 * position at start or end indicated by boolean value
-	 * @param nameStr String containing names
-	 * @param isFamilyNameLast is the family name at the end?
+	 * Checker whether this Person specified his family name as last name.
+	 *
+	 * @return true if family name comes last, false otherwise
 	 */
-	public void setName(String nameStr, boolean isFamilyNameLast) {
-		String[] nameSplit = nameStr.split(" ");
-		familyNameLast = isFamilyNameLast;
+	public boolean getFamilyNameLast() {
+		return familyNameLast;
+	}
+
+	/**
+	 * Returns this person's salutation.
+	 *
+	 * @return this person's salutation
+	 */
+	public String getSalutation() {
+		return salutation;
+	}
+
+	/**
+	 * Sets this person's salutation.
+	 *
+	 * @param newSalutation this person's salutation
+	 */
+	public void setSalutation(String newSalutation) {
+		salutation = newSalutation;
+	}
+
+	/**
+	 * Returns true if this person has a salutation, false otherwise.
+	 *
+	 * @return true if this person has a salutation, false otherwise
+	 */
+	public boolean hasSalutation() {
+		return salutation.length() > 0;
+	}
+
+	/**
+	 * Returns this person's preferred name.
+	 *
+	 * @return this person's preferred name
+	 */
+	public String getPreferredName() {
+		return name.length() > 0 ? name : (givenNames.size() > 0 ? givenNames.get(0) : familyName);
+	}
+
+	/**
+	 * Sets this person's preferred name.
+	 *
+	 * @param newPreferredName this person's preferred name
+	 */
+	public void setPreferredName(String newPreferredName) {
+		name = newPreferredName;
+	}
+
+	/**
+	 * Sets this person's name from a string with space separated names. The
+	 * family name position at the start or end of the name is indicated by
+	 * boolean value.
+	 *
+	 * @param name The person's names, both given and family ("NAME1 NAME2 NAME3
+	 * 				.... NAMEn")
+	 * @param famNameLast true to indicate that family comes last in the
+	 * 		<b>name</b> parameter; false to indicate it comes first
+	 */
+	public void setName(String name, boolean famNameLast) {
+		String[] nameSplit = name.split(" ");
+		familyNameLast = famNameLast;
 		givenNames = new ArrayList<>();
 		int number = -1;
 		int ii = nameSplit.length;
@@ -174,29 +311,10 @@ public class Person extends VersionControlEntity {
 	}
 
 	/**
-	 * sets the email of the user.
-	 * @param newEmail String containing email
-	 */
-	public void setEmail(String newEmail) {
-		email = newEmail;
-	}
-
-	/**
-	 * sets the salutation of the user.
-	 * @param newSalutation string salutation of user
-	 */
-	public void setSalutation(String newSalutation) {
-		salutation = newSalutation;
-	}
-
-	// static validator
-	private static Pattern salutationRegex = Pattern.compile("[a-zA-Z]*");
-	private static Pattern nameRegex = Pattern.compile("[a-zA-z\\s]*");
-
-	/**
 	 * Checks whether the given String is a valid email.
-	 * @param email String to be checked.
-	 * @return whether valid or not.
+	 *
+	 * @param email The email address to validate
+	 * @return true if the email is valid, false otherwise
 	 */
 	public static boolean validEmail(String email) {
 		EmailValidator validator = EmailValidator.getInstance();
@@ -205,8 +323,9 @@ public class Person extends VersionControlEntity {
 
 	/**
 	 * Checks whether the given String is a valid name.
-	 * @param name String to be checked.
-	 * @return whether valid or not.
+	 *
+	 * @param name The name to validate
+	 * @return true if the name is valid, false otherwise
 	 */
 	public static boolean validName(String name) {
 		return nameRegex.matcher(name).matches();
@@ -214,93 +333,17 @@ public class Person extends VersionControlEntity {
 
 	/**
 	 * Checks whether the given String is a valid salutation.
-	 * @param salutation String to be checked.
-	 * @return whether valid or not.
+	 *
+	 * @param salutation The salutation to validate
+	 * @return true if the salutation is valid, false otherwise
 	 */
 	public static boolean validSalutation(String salutation) {
-		// salutation is empty OR if it
 		return salutationRegex.matcher(salutation).matches();
-	}
-
-	// constructors
-	/**
-	 * @param salutation String for salutation
-	 * @param name "NAME1 NAME2 NAME3 .... NAMEn"
-	 * @param famNameLast if true, last name is family name, if not, first is
-	 */
-	public Person(String salutation, String name, Boolean famNameLast) {
-		setSalutation(salutation);
-		setName(name, famNameLast);
-		familyNameLast = famNameLast;
-		email = "";
-	}
-
-	/**
-	 * @param salutation String for salutation.
-	 * @param givenNames Array list of strings for given names
-	 * @param famName String for family name
-	 * @param famNameLast true if family name is at the end
-	 */
-	public Person(String salutation, ArrayList<String> givenNames,
-		String famName, Boolean famNameLast) {
-		super(true);
-		setFamilyName(famName);
-		givenNames = (ArrayList<String>) givenNames.clone();
-		setSalutation(salutation);
-		familyNameLast = famNameLast;
-		email = "";
-	}
-
-	/**
-	 * @param salutation String for salutation
-	 * @param name "NAME1 NAME2 NAME3 .... NAMEn"
-	 * @param famNameLast if true, last name is family name, if not, first is
-	 */
-	public Person(String salutation, String name, Boolean famNameLast, String newEmail) {
-		setSalutation(salutation);
-		setName(name, famNameLast);
-		familyNameLast = famNameLast;
-		email = newEmail;
-	}
-
-	/**
-	 * Pure String Constructor.
-	 * @param salutation String for salutation
-	 * @param givenNames String for given name
-	 * @param famName String of the fam name
-	 * @param famNameLast Boolean if fam name is last
-	 * @param newEmail new email address
-	 */
-	public Person(String salutation, String givenNames, String famName,
-		Boolean famNameLast, String newEmail) {
-		setSalutation(salutation);
-		String name;
-		if (famNameLast) {
-			name = givenNames + " " + famName;
-		} else {
-			name = famName + " " + givenNames;
-		}
-		setName(name, famNameLast);
-		email = newEmail;
-	}
-
-	/**
-	 * @param salutation String for salutation.
-	 * @param givenNames Array list of strings for given names
-	 * @param famName String for family name
-	 * @param famNameLast true if family name is at the end
-	 */
-	public Person(String salutation, ArrayList<String> givenNames, String famName,
-		Boolean famNameLast, String newEmail) {
-		setFamilyName(famName);
-		givenNames = (ArrayList<String>) givenNames.clone();
-		setSalutation(salutation);
-		familyNameLast = famNameLast;
-		email = newEmail;
 	}
 
 	@Override
 	public String toString() {
 		return getFullName() + " ( " + getEmail() + " )";
 	}
+
 }
