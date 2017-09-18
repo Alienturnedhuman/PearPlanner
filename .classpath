@@ -22,5 +22,6 @@
 	<classpathentry kind="lib" path="lib/testfx-junit-4.0.6-alpha.jar"/>
 	<classpathentry kind="lib" path="lib/testfx-junit5-4.0.6-alpha.jar"/>
 	<classpathentry kind="lib" path="lib/testfx-legacy-4.0.6-alpha.jar"/>
+	<classpathentry kind="lib" path="lib/commons-validator-1.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
