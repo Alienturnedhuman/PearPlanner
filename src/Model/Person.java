@@ -200,10 +200,7 @@ public class Person extends VersionControlEntity {
 	 */
 	public static boolean validEmail(String email) {
 		EmailValidator validator = EmailValidator.getInstance();
-		if (validator.isValid(email)) {
-			return true;
-		}
-		return false;
+		return validator.isValid(email);
 	}
 
 	/**
