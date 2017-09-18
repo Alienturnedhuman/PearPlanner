@@ -74,7 +74,7 @@ public class Person extends VersionControlEntity {
 
 		super(true);
 		setFamilyName(famName);
-		givenNames = (ArrayList<String>) givenNames.clone();
+		this.givenNames = (ArrayList<String>) givenNames.clone();
 		setSalutation(salutation);
 		familyNameLast = famNameLast;
 		email = "";
@@ -140,7 +140,7 @@ public class Person extends VersionControlEntity {
 			Boolean famNameLast, String newEmail) {
 
 		setFamilyName(famName);
-		givenNames = (ArrayList<String>) givenNames.clone();
+		this.givenNames = (ArrayList<String>) givenNames.clone();
 		setSalutation(salutation);
 		familyNameLast = famNameLast;
 		email = newEmail;
