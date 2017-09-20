@@ -16,3 +16,5 @@ include 'services:webservice'
 */
 
 rootProject.name = 'raiderplanner'
+
+include 'Model', 'View', 'Controller', 'Test'

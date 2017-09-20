@@ -1,1 +1,10 @@
-ant.importBuild 'build.xml'
+//ant.importBuild 'build.xml'
+
+dependencies {
+	
+	
+}
+
+repositories {
+	 flatDir dirs: "${projectDir}/lib"
+}
