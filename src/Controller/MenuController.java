@@ -24,7 +24,10 @@ package Controller;
 import Model.Activity;
 import Model.Assignment;
 import Model.Coursework;
+import Model.Deadline;
+import Model.Event;
 import Model.Exam;
+import Model.ExamEvent;
 import Model.Milestone;
 import Model.ModelEntity;
 import Model.Module;
@@ -33,10 +36,11 @@ import Model.QuantityType;
 import Model.Requirement;
 import Model.StudyProfile;
 import Model.Task;
-
+import Model.TimetableEvent;
 import View.GanttishDiagram;
 import View.UIManager;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -79,10 +83,13 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
+import jfxtras.scene.control.agenda.Agenda;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -96,7 +103,7 @@ public class MenuController implements Initializable {
 	 * Initializes switch names and other buttons.
 	 */
 	public enum Window {
-		Empty, Dashboard, Profiles, Modules, Milestones
+		Empty, Dashboard, Profiles, Modules, Milestones, Calendar
 	}
 
 	private Window current;
@@ -173,6 +180,10 @@ public class MenuController implements Initializable {
 		}
 		case Milestones: {
 			this.loadMilestones();
+			break;
+		}
+		case Calendar: {
+			this.loadCalendar();
 			break;
 		}
 		default:
@@ -383,6 +394,98 @@ public class MenuController implements Initializable {
 
 		mainContent.addRow(3, actions);
 		// =================
+	}
+
+	/**
+	 * Display the Calendar pane.
+	 */
+	public void loadCalendar() {
+		// Update main pane:
+		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+		this.topBox.getChildren().clear();
+		this.title.setText("");
+		// =================
+		// Layout:
+		VBox layout = new VBox();
+		GridPane.setHgrow(layout, Priority.ALWAYS);
+		layout.setSpacing(10);
+		layout.setPadding(new Insets(15));
+		layout.getStylesheets().add("/Content/stylesheet.css");
+		// =================
+		// Nav bar:
+		HBox nav = new HBox();
+		nav.setSpacing(15.0);
+		// =================
+		// Title:
+		Label title = new Label("Calendar");
+		title.getStyleClass().add("title");
+		HBox xx = new HBox();
+		HBox.setHgrow(xx, Priority.ALWAYS);
+		// =================
+		// Buttons:
+		Button agendaFwd = new Button(">");
+		Button agendaBwd = new Button("<");
+		// =================
+		nav.getChildren().addAll(title, xx, agendaBwd, agendaFwd);
+		// Content:
+		Agenda content = new Agenda();
+		VBox.setVgrow(content, Priority.ALWAYS);
+		content.setAllowDragging(false);
+		content.setAllowResize(false);
+		content.autosize();
+		content.setActionCallback(param -> null);
+		content.setEditAppointmentCallback(param -> null);
+		// Agenda buttons:
+		agendaBwd.setOnMouseClicked(event -> content
+				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
+		agendaFwd.setOnMouseClicked(event -> content
+				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
+		// =================
+		// Populate Agenda:
+		ArrayList<Event> calendar = MainController.getSPC().getPlanner().getCurrentStudyProfile()
+				.getCalendar();
+		for (Event e : calendar) {
+			if (e instanceof TimetableEvent) {
+				LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
+						ZoneId.systemDefault());
+				content.appointments().addAll(new Agenda.AppointmentImplLocal()
+						.withStartLocalDateTime(stime)
+						.withEndLocalDateTime(stime.plusMinutes(((TimetableEvent) e).getDuration()))
+
+						.withSummary(e.getName() + "\n" + "@ "
+								+ ((TimetableEvent) e).getRoom().getLocation())
+						.withAppointmentGroup(
+								new Agenda.AppointmentGroupImpl().withStyleClass("group5")));
+			} else if (e instanceof ExamEvent) {
+				LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
+						ZoneId.systemDefault());
+				content.appointments().addAll(new Agenda.AppointmentImplLocal()
+						.withStartLocalDateTime(stime)
+						.withSummary(
+								e.getName() + "\n" + "@ " + ((ExamEvent) e).getRoom().getLocation())
+						.withEndLocalDateTime(stime.plusMinutes(((ExamEvent) e).getDuration()))
+						.withAppointmentGroup(
+								new Agenda.AppointmentGroupImpl().withStyleClass("group20")));
+			} else if (e instanceof Deadline) {
+				LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
+						ZoneId.systemDefault());
+				content.appointments().addAll(new Agenda.AppointmentImplLocal()
+						.withStartLocalDateTime(stime.minusMinutes(60)).withSummary(e.getName())
+						.withEndLocalDateTime(stime).withAppointmentGroup(
+								new Agenda.AppointmentGroupImpl().withStyleClass("group1")));
+			} else {
+				LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
+						ZoneId.systemDefault());
+				content.appointments().addAll(new Agenda.AppointmentImplLocal()
+						.withStartLocalDateTime(stime).withSummary(e.getName())
+						.withEndLocalDateTime(stime.plusMinutes(60)).withAppointmentGroup(
+								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
+			}
+		}
+		layout.getChildren().addAll(nav, content);
+		Platform.runLater(() -> content
+				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusMinutes(1050)));
+		this.mainContent.getChildren().add(layout);
 	}
 
 	/**
@@ -974,7 +1077,7 @@ public class MenuController implements Initializable {
 		this.studyProfiles.setOnAction(e -> this.main(Window.Profiles));
 		this.modules.setOnAction(e -> this.main(Window.Modules));
 		this.milestones.setOnAction(e -> this.main(Window.Milestones));
-		this.calendar.setOnAction(e -> MainController.ui.showCalendar());
+		this.calendar.setOnAction(e -> this.main(Window.Calendar));
 		// =================
 
 		// Welcome text:
