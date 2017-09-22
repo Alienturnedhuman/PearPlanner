@@ -1,10 +1,28 @@
 //ant.importBuild 'build.xml'
+apply plugin: 'java'
 
-dependencies {
-	
-	
+sourceSets {
+
+    main.java.srcDir "src/Model"
+    main.java.srcDir "src/View"
+    main.java.srcDir "src/Controller"
+    
+    test.java.srcDir "Test/Model"
+    test.java.srcDir "Test/View"
+    test.java.srcDir "Test/Controller"
+    
 }
 
 repositories {
-	 flatDir dirs: "${projectDir}/lib"
+    flatDir dirs: "${projectDir}/lib"
+	mavenCentral()
 }
+
+dependencies {
+	testCompile 'junit:junit:4.12'
+	runtime fileTree(dir: 'lib', include: '*.jar')
+	compile "commons-validator:commons-validator:jar:1.6"
+	compile "org.jfxtras:jfxtras-agenda:8.0-r5"
+	
+}
+
