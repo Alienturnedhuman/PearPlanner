@@ -28,3 +28,11 @@ dependencies {
 	
 }
 
+test {
+	ignoreFailures = true
+}
+
+jar {
+	manifest.attributes "Main-Class": "View.Main"
+}
+
