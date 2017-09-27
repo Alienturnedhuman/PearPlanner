@@ -83,6 +83,7 @@
     <pathelement location="${basedir}/lib/jfxtras-controls-8.0-r5.jar"/>
     <pathelement location="${basedir}/lib/jfxtras-common-8.0-r5.jar"/>
     <pathelement location="${basedir}/lib/AppleJavaExtensions-1.6.jar"/>
+	<pathelement location="${basedir}/lib/commons-validator-1.6.jar"/>
 
   </path>
   
@@ -91,6 +92,7 @@
   
   <property name="pearplanner.output.dir" value="${module.pearplanner.basedir}/out/production/PearPlanner"/>
   <property name="pearplanner.testoutput.dir" value="${module.pearplanner.basedir}/out/test/PearPlanner"/>
+  <property name="pearplanner.jaroutput.dir" value="${module.pearplanner.basedir}/out/jar"/>
   
   <path id="pearplanner.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
@@ -181,10 +183,28 @@
       </fileset>
     </copy>
   </target>
+
+ <target name="jar" depends="compile.module.pearplanner">
+   <mkdir dir="${pearplanner.jaroutput.dir}"/>
+    <manifestclasspath property="lib.list" jarfile="${pearplanner.jaroutput.dir}/${ant.project.name}.jar">
+        <classpath refid="external.classpath"/>
+    </manifestclasspath>
+    <jar destfile="${pearplanner.jaroutput.dir}/${ant.project.name}.jar" basedir="${pearplanner.output.dir}">
+      <manifest>
+        <attribute name="Main-Class" value="View.Main"/>
+        <attribute name="Class-Path" value="${lib.list}"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="run" depends="jar">
+    <java jar="${pearplanner.jaroutput.dir}/${ant.project.name}.jar" fork="true"/>
+  </target>
   
   <target name="clean.module.pearplanner" description="cleanup module">
     <delete dir="${pearplanner.output.dir}"/>
     <delete dir="${pearplanner.testoutput.dir}"/>
+    <delete dir="${pearplanner.jaroutput.dir}"/>
   </target>
   
   <target name="init" description="Build initialization">
@@ -193,13 +213,9 @@
   
   <target name="clean" depends="clean.module.pearplanner" description="cleanup all"/>
   
-  <target name="build.modules" depends="init, clean, compile.module.pearplanner" description="build all modules"/>
-  
+  <target name="build.modules" depends="init, clean, compile.module.pearplanner, jar" description="build all modules"/>
+
   <target name="all" depends="build.modules" description="build all"/>
-
-
-
-
 
     <target name="test" depends="build.modules" >
         <junit haltonerror="yes" haltonfailure="yes">

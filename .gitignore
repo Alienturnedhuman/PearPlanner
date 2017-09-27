@@ -1,2 +1,6 @@
 .idea/
 out/
+bin/
+.gradle/
+build/
+gradle-app.setting
