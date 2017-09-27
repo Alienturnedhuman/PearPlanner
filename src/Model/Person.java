@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar
+ * Bijan Ghasemi Afshar, Eric Sweet, Roberto C. Sánchez
  *
  *
  *
@@ -21,295 +21,329 @@
 
 package Model;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**
- * PearPlanner
- * Created by Team BRONZE on 4/27/17
+ * This class represents a person and associated details (names, salutation,
+ * email, etc.).
+ *
+ * @author Team BRONZE on 4/27/17
  */
-public class Person extends VersionControlEntity
-{
-    // private data
-    private ArrayList<String> givenNames;
-    private String familyName;
-    private String salutation;
-    private String email;
-    private boolean familyNameLast = true;
+public class Person extends VersionControlEntity {
 
-    @Override
-    protected void replace(VersionControlEntity receivedVCE)
-    {
-        if (receivedVCE instanceof Person)
-        {
-            Person castedVCE = (Person) receivedVCE;
-            this.givenNames = castedVCE.getGivenNames();
-            this.familyName = castedVCE.getFamilyName();
-            this.salutation = castedVCE.getSalutation();
-            this.email = castedVCE.getEmail();
-            this.familyNameLast = castedVCE.getFamilyNameLast();
-        }
-        super.replace(receivedVCE);
-    }
+	private static Pattern salutationRegex = Pattern.compile("[a-zA-Z]*");
+	private static Pattern nameRegex = Pattern.compile("[a-zA-z\\s]*");
 
-    // public methods
-    // getters
+	private ArrayList<String> givenNames;
+	private String familyName;
+	private String salutation;
+	private String email;
+	private boolean familyNameLast = true;
 
-    /**
-     * Returns a full name of this Person.
-     *
-     * @return a String containing a full name.
-     */
-    public String getFullName()
-    {
-        String namesList[] = new String[givenNames.size()];
-        if (familyNameLast)
-        {
-            return (salutation.length() > 0 ? salutation + " " : "") + String.join(" ", givenNames) + " " + familyName;
-        } else
-        {
-            return (salutation.length() > 0 ? salutation + " " : "") + familyName + " " + String.join(" ", givenNames);
-        }
-    }
+	/**
+	 * Create a person from the provided parameters.  The <b>name</b> parameter
+	 * is split to separate the family name from the given name(s).
+	 *
+	 * @param salutation The person's salutation, e.g., Mr., Mrs., Dr., etc.
+	 * @param name The person's names, both given and family ("NAME1 NAME2 NAME3
+	 * 				.... NAMEn")
+	 * @param famNameLast true to indicate that family comes last in the
+	 * 		<b>name</b> parameter; false to indicate it comes first
+	 */
+	public Person(String salutation, String name, Boolean famNameLast) {
 
-    public String getFamilyName()
-    {
-        return familyName;
-    }
+		this(salutation, name, famNameLast, "");
 
-    public String getEmail()
-    {
-        return email;
-    }
+	}
 
-    /**
-     * Returns a list of given names for this Person.
-     *
-     * @return an ArrayList of String containing given names
-     */
-    public ArrayList<String> getGivenNames()
-    {
-        return (ArrayList<String>) givenNames.clone();
-    }
+	/**
+	 * Create a person from the provided parameters.
+	 *
+	 * @param salutation The person's salutation, e.g., Mr., Mrs., Dr., etc.
+	 * @param givenNames The person's given name(s)
+	 * @param famName The person's family name
+	 * @param famNameLast true to indicate that family comes last in the
+	 * 				<b>name</b> parameter; false to indicate it comes first
+	 */
+	public Person(String salutation, ArrayList<String> givenNames,
+			String famName, Boolean famNameLast) {
 
-    /**
-     * Checker whether this Person specified his family name as last name.
-     *
-     * @return true if last, false otherwise.
-     */
-    public boolean getFamilyNameLast()
-    {
-        return familyNameLast;
-    }
+		super(true);
+		setFamilyName(famName);
+		this.givenNames = (ArrayList<String>) givenNames.clone();
+		setSalutation(salutation);
+		familyNameLast = famNameLast;
+		email = "";
 
-    public String getSalutation()
-    {
-        return salutation;
-    }
+	}
 
-    public boolean hasSalutation()
-    {
-        return salutation.length() > 0;
-    }
+	/**
+	 * Create a person from the provided parameters.  The <b>name</b> parameter
+	 * is split to separate the family name from the given name(s).
+	 *
+	 * @param salutation The person's salutation, e.g., Mr., Mrs., Dr., etc.
+	 * @param name The person's given name(s)
+	 * @param famNameLast true to indicate that family comes last in the
+	 * 		<b>name</b> parameter; false to indicate it comes first
+	 * @param newEmail The person's email address
+	 */
+	public Person(String salutation, String name, Boolean famNameLast, String newEmail) {
 
-    /**
-     * Get the preferred name of this Person.
-     *
-     * @return a String containing the preferred name.
-     */
-    public String getPreferredName()
-    {
-        return name.length() > 0 ? name : (givenNames.size() > 0 ? givenNames.get(0) : familyName);
-    }
+		setSalutation(salutation);
+		setName(name, famNameLast);
+		familyNameLast = famNameLast;
+		email = newEmail;
 
-    // setters
-    public void setFamilyName(String newFamilyName)
-    {
-        familyName = newFamilyName;
-    }
+	}
 
+	/**
+	 * Create a person from the provided parameters.  The <b>givenNames</b>
+	 * parameter is split to separate multiple given names.
+	 *
+	 * @param salutation The person's salutation, e.g., Mr., Mrs., Dr., etc.
+	 * @param givenNames The person's given name(s)
+	 * @param famName The person's family name
+	 * @param famNameLast true to indicate that family comes last; false to
+	 * 				indicate it comes first
+	 * @param newEmail The person's email address
+	 */
+	public Person(String salutation, String givenNames, String famName,
+			Boolean famNameLast, String newEmail) {
 
-    public void setPreferredName(String newPreferredName)
-    {
-        name = newPreferredName;
-    }
+		setSalutation(salutation);
+		String personName;
+		if (famNameLast) {
+			personName = givenNames + " " + famName;
+		} else {
+			personName = famName + " " + givenNames;
+		}
+		setName(personName, famNameLast);
+		email = newEmail;
 
-    /**
-     * Sets the given names from a string with space separated names
-     *
-     * @param nameStr String containing names
-     */
-    public void setGivenNames(String nameStr)
-    {
-        String nameSplit[] = nameStr.split(" ");
-        givenNames = new ArrayList<>(Arrays.asList(nameSplit));
-    }
+	}
 
-    /**
-     * Sets the name from a string with space separated names
-     * Family name position at start or end indicated by boolean value
-     *
-     * @param nameStr          String containing names
-     * @param isFamilyNameLast is the family name at the end?
-     */
-    public void setName(String nameStr, boolean isFamilyNameLast)
-    {
-        String nameSplit[] = nameStr.split(" ");
-        familyNameLast = isFamilyNameLast;
-        givenNames = new ArrayList<>();
-        int i = -1;
-        int ii = nameSplit.length;
-        if (familyNameLast)
-        {
-            familyName = nameSplit[--ii];
-        } else
-        {
-            familyName = nameSplit[++i];
-        }
-        while (++i < ii)
-        {
-            givenNames.add(nameSplit[i]);
-        }
-    }
+	/**
+	 * Create a person from the provided parameters.
+	 *
+	 * @param salutation The person's salutation, e.g., Mr., Mrs., Dr., etc.
+	 * @param givenNames The person's given name(s)
+	 * @param famName The person's family name
+	 * @param famNameLast true to indicate that family comes last; false to
+	 * 				indicate it comes first
+	 * @param newEmail The person's email address
+	 */
+	public Person(String salutation, ArrayList<String> givenNames, String famName,
+			Boolean famNameLast, String newEmail) {
 
-    public void setEmail(String newEmail)
-    {
-        email = newEmail;
-    }
+		setFamilyName(famName);
+		this.givenNames = (ArrayList<String>) givenNames.clone();
+		setSalutation(salutation);
+		familyNameLast = famNameLast;
+		email = newEmail;
 
-    public void setSalutation(String newSalutation)
-    {
-        salutation = newSalutation;
-    }
+	}
 
-    // static validators
+	@Override
+	protected void replace(VersionControlEntity receivedVce) {
+		if (receivedVce instanceof Person) {
+			Person castedVce = (Person) receivedVce;
+			this.givenNames = castedVce.getGivenNames();
+			this.familyName = castedVce.getFamilyName();
+			this.salutation = castedVce.getSalutation();
+			this.email = castedVce.getEmail();
+			this.familyNameLast = castedVce.getFamilyNameLast();
+		}
+		super.replace(receivedVce);
+	}
 
-    // email regex from: http://stackoverflow.com/questions/8204680/java-regex-email
-    private static Pattern emailRegex = Pattern.compile("(?:(?:\\r\\n)?[ \\t])*(?:(?:(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*)|(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)*:(?:(?:\\r\\n)?[ \\t])*(?:(?:(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*)(?:,\\s*(?:(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*))*)?;\\s*)");
-    private static Pattern salutationRegex = Pattern.compile("[a-zA-Z]*");
-    private static Pattern nameRegex = Pattern.compile("[a-zA-z\\s]*");
+	/**
+	 * Returns this person's full name.
+	 *
+	 * @return this person's full name
+	 */
+	public String getFullName() {
+		if (familyNameLast) {
+			return (salutation.length() > 0 ? salutation + " " : "")
+					+ String.join(" ", givenNames) + " " + familyName;
+		} else {
+			return (salutation.length() > 0 ? salutation + " " : "") + familyName + " "
+					+ String.join(" ", givenNames);
+		}
+	}
 
-    /**
-     * Checks whether the given String is a valid email.
-     *
-     * @param email String to be checked.
-     * @return whether valid or not.
-     */
-    public static boolean validEmail(String email)
-    {
-        return emailRegex.matcher(email).matches();
-    }
+	/**
+	 * Returns this person's family name.
+	 *
+	 * @return this person's family name
+	 */
+	public String getFamilyName() {
+		return familyName;
+	}
 
-    /**
-     * Checks whether the given String is a valid name.
-     *
-     * @param name String to be checked.
-     * @return whether valid or not.
-     */
-    public static boolean validName(String name)
-    {
-        return nameRegex.matcher(name).matches();
-    }
+	/**
+	 * Sets this person's family name.
+	 *
+	 * @param newFamilyName this person's family name
+	 */
+	public void setFamilyName(String newFamilyName) {
+		familyName = newFamilyName;
+	}
 
-    /**
-     * Checks whether the given String is a valid salutation.
-     *
-     * @param salutation String to be checked.
-     * @return whether valid or not.
-     */
-    public static boolean validSalutation(String salutation)
-    {
-        // salutation is empty OR if it
-        return salutationRegex.matcher(salutation).matches();
-    }
+	/**
+	 * Returns this person's email address.
+	 *
+	 * @return this person's email address
+	 */
+	public String getEmail() {
+		return email;
+	}
 
-    // constructors
+	/**
+	 * Sets this person's email address.
+	 *
+	 * @param newEmail this person's email address
+	 */
+	public void setEmail(String newEmail) {
+		email = newEmail;
+	}
 
-    /**
-     * @param cSalutation  String for saluation
-     * @param cName        "NAME1 NAME2 NAME3 .... NAMEn"
-     * @param cFamNameLast if true, last name is family name, if not, first is
-     */
-    public Person(String cSalutation, String cName, Boolean cFamNameLast)
-    {
-        setSalutation(cSalutation);
-        setName(cName, cFamNameLast);
-        familyNameLast = cFamNameLast;
-        email = "";
-    }
+	/**
+	 * Returns a list of given names for this person.
+	 *
+	 * @return a list of given names for this person
+	 */
+	public ArrayList<String> getGivenNames() {
+		return (ArrayList<String>) givenNames.clone();
+	}
 
-    /**
-     * @param cSalutation  String for salutation
-     * @param cGivenNames  Array list of strings for given names
-     * @param cFamName     String for family name
-     * @param cFamNameLast true if family name is at the end
-     */
-    public Person(String cSalutation, ArrayList<String> cGivenNames, String cFamName, Boolean cFamNameLast)
-    {
-        super(true);
-        setFamilyName(cFamName);
-        givenNames = (ArrayList<String>) cGivenNames.clone();
-        setSalutation(cSalutation);
-        familyNameLast = cFamNameLast;
-        email = "";
-    }
+	/**
+	 * Sets the given names from a string with space separated names.
+	 *
+	 * @param nameStr a space separated String containing names
+	 */
+	public void setGivenNames(String nameStr) {
+		String[] nameSplit = nameStr.split(" ");
+		givenNames = new ArrayList<>(Arrays.asList(nameSplit));
+	}
 
-    /**
-     * @param cSalutation  String for saluation
-     * @param cName        "NAME1 NAME2 NAME3 .... NAMEn"
-     * @param cFamNameLast if true, last name is family name, if not, first is
-     */
-    public Person(String cSalutation, String cName, Boolean cFamNameLast, String newEmail)
-    {
-        setSalutation(cSalutation);
-        setName(cName, cFamNameLast);
-        familyNameLast = cFamNameLast;
-        email = newEmail;
-    }
+	/**
+	 * Checker whether this Person specified his family name as last name.
+	 *
+	 * @return true if family name comes last, false otherwise
+	 */
+	public boolean getFamilyNameLast() {
+		return familyNameLast;
+	}
 
-    /**
-     * Pure String Constructor
-     *
-     * @param cSalutation
-     * @param cGivenNames
-     * @param cFamName
-     * @param cFamNameLast
-     * @param newEmail
-     */
-    public Person(String cSalutation, String cGivenNames, String cFamName, Boolean cFamNameLast, String newEmail)
-    {
-        setSalutation(cSalutation);
-        String cName;
-        if (cFamNameLast)
-        {
-            cName = cGivenNames + " " + cFamName;
-        } else
-        {
-            cName = cFamName + " " + cGivenNames;
-        }
-        setName(cName, cFamNameLast);
-        email = newEmail;
-    }
+	/**
+	 * Returns this person's salutation.
+	 *
+	 * @return this person's salutation
+	 */
+	public String getSalutation() {
+		return salutation;
+	}
 
-    /**
-     * @param cSalutation  String for salutation
-     * @param cGivenNames  Array list of strings for given names
-     * @param cFamName     String for family name
-     * @param cFamNameLast true if family name is at the end
-     */
-    public Person(String cSalutation, ArrayList<String> cGivenNames, String cFamName, Boolean cFamNameLast, String newEmail)
-    {
-        setFamilyName(cFamName);
-        givenNames = (ArrayList<String>) cGivenNames.clone();
-        setSalutation(cSalutation);
-        familyNameLast = cFamNameLast;
-        email = newEmail;
-    }
+	/**
+	 * Sets this person's salutation.
+	 *
+	 * @param newSalutation this person's salutation
+	 */
+	public void setSalutation(String newSalutation) {
+		salutation = newSalutation;
+	}
 
-    @Override
-    public String toString()
-    {
-        return getFullName() + " ( " + getEmail() + " )";
-    }
+	/**
+	 * Returns true if this person has a salutation, false otherwise.
+	 *
+	 * @return true if this person has a salutation, false otherwise
+	 */
+	public boolean hasSalutation() {
+		return salutation.length() > 0;
+	}
+
+	/**
+	 * Returns this person's preferred name.
+	 *
+	 * @return this person's preferred name
+	 */
+	public String getPreferredName() {
+		return name.length() > 0 ? name : (givenNames.size() > 0 ? givenNames.get(0) : familyName);
+	}
+
+	/**
+	 * Sets this person's preferred name.
+	 *
+	 * @param newPreferredName this person's preferred name
+	 */
+	public void setPreferredName(String newPreferredName) {
+		name = newPreferredName;
+	}
+
+	/**
+	 * Sets this person's name from a string with space separated names. The
+	 * family name position at the start or end of the name is indicated by
+	 * boolean value.
+	 *
+	 * @param name The person's names, both given and family ("NAME1 NAME2 NAME3
+	 * 				.... NAMEn")
+	 * @param famNameLast true to indicate that family comes last in the
+	 * 		<b>name</b> parameter; false to indicate it comes first
+	 */
+	public void setName(String name, boolean famNameLast) {
+		String[] nameSplit = name.split(" ");
+		familyNameLast = famNameLast;
+		givenNames = new ArrayList<>();
+		int number = -1;
+		int ii = nameSplit.length;
+		if (familyNameLast) {
+			familyName = nameSplit[--ii];
+		} else {
+			familyName = nameSplit[++number];
+		}
+		while (++number < ii) {
+			givenNames.add(nameSplit[number]);
+		}
+	}
+
+	/**
+	 * Checks whether the given String is a valid email.
+	 *
+	 * @param email The email address to validate
+	 * @return true if the email is valid, false otherwise
+	 */
+	public static boolean validEmail(String email) {
+		EmailValidator validator = EmailValidator.getInstance();
+		return validator.isValid(email);
+	}
+
+	/**
+	 * Checks whether the given String is a valid name.
+	 *
+	 * @param name The name to validate
+	 * @return true if the name is valid, false otherwise
+	 */
+	public static boolean validName(String name) {
+		return nameRegex.matcher(name).matches();
+	}
+
+	/**
+	 * Checks whether the given String is a valid salutation.
+	 *
+	 * @param salutation The salutation to validate
+	 * @return true if the salutation is valid, false otherwise
+	 */
+	public static boolean validSalutation(String salutation) {
+		return salutationRegex.matcher(salutation).matches();
+	}
+
+	@Override
+	public String toString() {
+		return getFullName() + " ( " + getEmail() + " )";
+	}
+
 }
