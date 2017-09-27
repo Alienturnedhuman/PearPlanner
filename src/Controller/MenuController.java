@@ -40,6 +40,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -145,19 +146,21 @@ public class MenuController implements Initializable
         this.topBox.getChildren().add(this.welcome);
         this.title.setText("Study Dashboard");
         // =================
-
         StudyProfile profile = MainController.getSPC().getPlanner().getCurrentStudyProfile();
-
+        
         // Display studyProfile:
         Label studyProfile = new Label(profile.getName());
         studyProfile.getStyleClass().add("title");
         GridPane.setMargin(studyProfile, new Insets(10));
         this.mainContent.addRow(1, studyProfile);
-
-        FlowPane modules = new FlowPane();
+        this.mainContent.setMaxSize(Control.USE_COMPUTED_SIZE, 1000);
+        this.mainContent.getColumnConstraints().add(new ColumnConstraints(Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, 2000, Priority.ALWAYS, HPos.CENTER, true));
+        GridPane modules = new GridPane();
         modules.setHgap(30);
         modules.setVgap(20);
-        modules.setPrefWrapLength(1000);
+        // This code will be added when wanting to resize the modules to grow with the page
+        // modules.getRowConstraints().add(new RowConstraints(1, Control.USE_COMPUTED_SIZE, 200, Priority.ALWAYS, VPos.CENTER, true));
+        int i = 0;
         for (Module module : profile.getModules())
         {
             VBox vbox = new VBox();
@@ -169,7 +172,7 @@ public class MenuController implements Initializable
             Label name = new Label(module.getName());
             name.setTextAlignment(TextAlignment.CENTER);
             vbox.getChildren().add(name);
-
+            
             BufferedImage buff = GanttishDiagram.getBadge(module.calculateProgress(), true, 1);
             Image image = SwingFXUtils.toFXImage(buff, null);
             Pane badge = new Pane();
@@ -178,19 +181,24 @@ public class MenuController implements Initializable
             badge.setBackground(new Background(
                     new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                             new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false))));
-
+            
             vbox.getChildren().add(badge);
             Button view = new Button("View");
             view.setOnAction(e -> module.open(this.current));
             vbox.getChildren().add(view);
-
-            modules.getChildren().add(vbox);
-        }
+            
+            modules.setMaxSize(800, 1000);
+            modules.getColumnConstraints().add(new ColumnConstraints(Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, 1000, Priority.ALWAYS, HPos.CENTER, true));
+              
+            i++;
+            modules.addColumn(i,vbox);
+            }
+           
         // =================
-
+        
         GridPane.setColumnSpan(modules, GridPane.REMAINING);
-        GridPane.setMargin(modules, new Insets(10));
-        this.mainContent.addRow(2, modules);
+        GridPane.setMargin(modules, new Insets(10));        
+        this.mainContent.addRow(2, modules);    
     }
 
     /**
