@@ -1,33 +1,31 @@
-//ant.importBuild 'build.xml'
-apply plugin: 'java'
+apply plugin: 'application'
+mainClassName='View.Main'
 
 sourceSets {
-
-    main.java.srcDir "src/Model"
-    main.java.srcDir "src/View"
-    main.java.srcDir "src/Controller"
-    
-    test.java.srcDir "Test/Model"
-    test.java.srcDir "Test/View"
-    test.java.srcDir "Test/Controller"
-    
+    main {
+		java {
+			srcDirs = ['src']
+		}
+		resources {
+			srcDirs = ['src']
+		}
+	}
+	
+	test {
+		java {
+			srcDirs = ["Test"]
+		}
+	}
 }
 
 repositories {
-    flatDir dirs: "${projectDir}/lib"
 	mavenCentral()
 }
 
 dependencies {
 	testCompile 'junit:junit:4.12'
-	runtime fileTree(dir: 'lib', include: '*.jar')
-	compile "commons-validator:commons-validator:jar:1.6"
-	compile "org.jfxtras:jfxtras-common:8.0-r5"
-	compile "org.jfxtras:jfxtras-controls:8.0-r5"
-	compile "org.jfxtras:jfxtras-agenda:8.0-r5"
-	compile "org.jfxtras:jfxtras-labs:8.0-r5"
-	compile "org.testfx:testfx-core:4.0.1-alpha"
-	compile "org.testfx:testfx-junit:4.0.6-alpha"
+	compile fileTree(dir: 'lib')
+	compile fileTree(dir: 'src')
 }
 
 test {
@@ -35,6 +33,5 @@ test {
 }
 
 jar {
-	manifest.attributes "Main-Class": "View.Main"
+	manifest.attributes "Main-Class": mainClassName
 }
-
