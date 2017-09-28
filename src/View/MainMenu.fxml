@@ -64,7 +64,7 @@
                                     <Image url="/Content/studydashboard.png"/>
                                 </image>
                             </ImageView>
-                            <Button fx:id="showDash" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                            <Button fx:id="showDash" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
                                     text="Study Dashboard">
                             </Button>
                         </HBox>
@@ -78,7 +78,7 @@
                                 </image>
                             </ImageView>
                             <Button fx:id="addActivity" onAction="#addActivity"
-                                    style="-fx-background-color: transparent; -fx-cursor: hand;" text="Add activity"
+                                    style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Add activity"
                             />
                         </HBox>
 
@@ -92,7 +92,7 @@
                                     <Image url="/Content/calendar.png"/>
                                 </image>
                             </ImageView>
-                            <Button fx:id="calendar" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                            <Button fx:id="calendar" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
                                     text="Calendar" GridPane.rowIndex="2"
                             />
                         </HBox>
@@ -108,7 +108,7 @@
                                     <Image url="/Content/milestones.png"/>
                                 </image>
                             </ImageView>
-                            <Button fx:id="milestones" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                            <Button fx:id="milestones" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
                                     text="Milestones" GridPane.rowIndex="3"
                             />
                         </HBox>
@@ -123,7 +123,7 @@
                                     <Image url="/Content/module.png"/>
                                 </image>
                             </ImageView>
-                            <Button fx:id="modules" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                            <Button fx:id="modules" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
                                      text="Modules" GridPane.rowIndex="4"
                             />
                         </HBox>
@@ -137,7 +137,7 @@
                                     <Image url="/Content/studyprofiles.png"/>
                                 </image>
                             </ImageView>
-                            <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                            <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
                                     text="Study Profiles" GridPane.rowIndex="5"
                             />
                         </HBox>
@@ -151,7 +151,7 @@
                                     <Image url="/Content/importhubfile.png"/>
                                 </image>
                             </ImageView>
-                            <Button onAction="#importFile" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                            <Button onAction="#importFile" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;"
                                     text="Import HUB file" GridPane.rowIndex="6"
                             />
                         </HBox>
