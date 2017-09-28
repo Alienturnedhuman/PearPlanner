@@ -33,18 +33,12 @@ import Controller.TaskController;
 import Model.Account;
 import Model.Activity;
 import Model.Assignment;
-import Model.Deadline;
-import Model.Event;
-import Model.ExamEvent;
 import Model.Milestone;
 import Model.ModelEntity;
 import Model.Module;
 import Model.Requirement;
 import Model.StudyProfile;
 import Model.Task;
-import Model.TimetableEvent;
-
-import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -68,14 +62,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import jfxtras.scene.control.agenda.Agenda;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
 
 /**
  * Created by Zilvinas on 04/05/2017.
@@ -412,7 +402,7 @@ public class UIManager {
 		stage.getIcons().add(new Image("file:icon.png"));
 		stage.showAndWait();
 	}
-	
+
 	/**
 	 * Display startup window.
 	 */
@@ -436,7 +426,7 @@ public class UIManager {
 			System.exit(0);
 		});
 		stage.showAndWait();
-}
+	}
 
 	/**
 	 * Displays a GanttishDiagram window for the given Assignment.
@@ -528,7 +518,7 @@ public class UIManager {
 		File path = fileChooser.showSaveDialog(stage);
 		return path.getAbsolutePath();
 	}
-	
+
 	/**
 	 * Displays a file dialog for importing .dat planner files
 	 *
