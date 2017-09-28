@@ -89,7 +89,7 @@ public class MainController
                 Account newAccount = ui.createAccount();
                 SPC = new StudyPlannerController(newAccount);
                 // Welcome notification:
-                Notification not = new Notification("Welcome!", new GregorianCalendar(), "Thank you for using PearPlanner!");
+                Notification not = new Notification("Welcome!", new GregorianCalendar(), "Thank you for using RaiderPlanner!");
                 SPC.getPlanner().addNotification(not);
             }
         } catch (FileNotFoundException e)

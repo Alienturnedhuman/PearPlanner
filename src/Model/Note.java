@@ -25,7 +25,7 @@ import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 /**
- * PearPlanner
+ * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 4/27/17
  */
 public class Note implements Serializable
