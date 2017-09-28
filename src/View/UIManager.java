@@ -396,6 +396,31 @@ public class UIManager
         stage.getIcons().add(new Image("file:icon.png"));
         stage.showAndWait();
     }
+    
+	/**
+	 * Display startup window.
+	 */
+	public void showStartup() throws IOException {
+		StartupController sc = new StartupController();
+
+		// Load in the .fxml file:
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Startup.fxml"));
+		loader.setController(sc);
+		Parent root = loader.load();
+
+		// Set the scene:
+		Stage stage = new Stage();
+		stage.setScene(new Scene(root, 400, 500));
+		stage.setTitle("RaiderPlanner");
+		stage.resizableProperty().setValue(false);
+		stage.getIcons().add(new Image("file:icon.png"));
+		// Replaces red x click with a System.exit(0);
+		stage.setOnCloseRequest(event -> {
+			event.consume();
+			System.exit(0);
+		});
+		stage.showAndWait();
+	}
 
     /**
      * Displays a GanttishDiagram window for the given Assignment.
@@ -586,6 +611,34 @@ public class UIManager
         File file = fileChooser.showOpenDialog(mainStage);
         return file;
     }
+
+	/**
+	 * Displays a file dialog for importing .dat planner files
+	 *
+	 * @return a File object
+	 */
+	public File loadPlannerFileDialog() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Select a planner to load");
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
+		fileChooser.setInitialDirectory(new File("saves"));
+		File file = fileChooser.showOpenDialog(mainStage);
+		return file;
+	}
+
+	/**
+	 * Displays a file dialog for saving .dat planner files
+	 *
+	 * @return a File object
+	 */
+	public File savePlannerFileDialog() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save your planner file");
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
+		fileChooser.setInitialDirectory(new File("saves"));
+		File file = fileChooser.showSaveDialog(mainStage);
+		return file;
+	}
 
     /**
      * Displays a file dialog for saving an .jpeg file
