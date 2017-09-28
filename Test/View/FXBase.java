@@ -39,7 +39,7 @@ import org.testfx.framework.junit.ApplicationTest;
 import java.util.concurrent.TimeoutException;
 
 /**
- * PearPlanner
+ * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 08/05/2017
  */
 public abstract class FXBase extends ApplicationTest {

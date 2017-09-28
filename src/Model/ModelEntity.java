@@ -27,7 +27,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * PearPlanner
+ * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 4/27/17
  */
 public class ModelEntity implements Serializable
