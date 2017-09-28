@@ -21,9 +21,7 @@
 
 package Controller;
 
-import Model.Account;
 import Model.HubFile;
-import Model.Notification;
 import Model.StudyPlanner;
 import View.UIManager;
 import javax.crypto.*;
@@ -31,7 +29,6 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.GregorianCalendar;
 
 /**
  * Created by bendickson on 5/4/17.

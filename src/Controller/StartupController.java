@@ -31,10 +31,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.security.NoSuchAlgorithmException;
 import java.util.GregorianCalendar;
-import javax.crypto.NoSuchPaddingException;
-
 
 /**
  * @author Eric Levine on 9/26/2017.
