@@ -9,6 +9,9 @@ mainClassName='View.Main'
 // This statement declares where Gradle is to find directories 
 // for source code, external resources, and test classes
 
+apply plugin: 'application'
+mainClassName='View.Main'
+
 sourceSets {
     main {
 		java {
