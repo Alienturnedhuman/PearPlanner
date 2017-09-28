@@ -45,7 +45,7 @@ public class MainController
 
     // Used for serialization:
     private static SecretKey key64 = new SecretKeySpec(new byte[]{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07}, "Blowfish");
-    private static String fileName = "StudyPlanner.dat";
+    private static File plannerFile = null;
 
     /**
      * Returns a StudyPlannerController.
@@ -56,6 +56,15 @@ public class MainController
     {
         return SPC;
     }
+    
+    /**
+     * Sets StudyPlannerController SPC
+     * 
+     * @param s
+     */
+    public static void setSPC(StudyPlannerController s) {
+    	SPC = s;
+    }
 
     /**
      * Initializes the Study Planner by either registering a new account or
@@ -63,35 +72,30 @@ public class MainController
      */
     public static void initialise()
     {
-        File plannerFile = new File("StudyPlanner.dat");
         try
         {
+        	ui.showStartup();
             // If a file is present:
             if (plannerFile.exists())
             {
                 Cipher cipher = Cipher.getInstance("Blowfish");
                 cipher.init(Cipher.DECRYPT_MODE, key64);
-                CipherInputStream cipherInputStream = new CipherInputStream(new BufferedInputStream(new FileInputStream(fileName)), cipher);
+                CipherInputStream cipherInputStream = new CipherInputStream(new BufferedInputStream(new FileInputStream(plannerFile)), cipher);
                 ObjectInputStream inputStream = new ObjectInputStream(cipherInputStream);
                 SealedObject sealedObject = (SealedObject) inputStream.readObject();
                 SPC = new StudyPlannerController((StudyPlanner) sealedObject.getObject(cipher));
-                /**
-                 * Begin note to examiner:
-                 */
+                
+                //Sample note
                 if (SPC.getPlanner().getCurrentStudyProfile() != null && SPC.getPlanner().getCurrentStudyProfile().getName().equals("First year Gryffindor"))
-                    UIManager.reportSuccess("Note to examiner: This is a pre-loaded StudyPlanner, as used by Harry Potter, to reset the software delete or rename the 'StudyPlanner.dat' file in the root directory.");
-                /**
-                 * End note to examiner.
-                 */
-            } else
-            // If not, prompt to create a new account:
-            {
-                Account newAccount = ui.createAccount();
-                SPC = new StudyPlannerController(newAccount);
-                // Welcome notification:
-                Notification not = new Notification("Welcome!", new GregorianCalendar(), "Thank you for using RaiderPlanner!");
-                SPC.getPlanner().addNotification(not);
+                    UIManager.reportSuccess("Note: This is a pre-loaded sample StudyPlanner, as used by Harry Potter. To make your own StudyPlanner, restart the application and choose \"New File\".");
+
+            } else {
+            	//This should never happen unless a file changes permissions or existence in the miliseconds 
+            	//that it runs the above code after checks in StartupController
+            	UIManager.reportError("Failed to load file.");
+            	System.exit(1);
             }
+            
         } catch (FileNotFoundException e)
         {
             UIManager.reportError("File does not exist");
@@ -178,7 +182,7 @@ public class MainController
     {
         try
         {
-            SPC.save(MainController.key64, MainController.fileName);
+        	SPC.save(MainController.key64, MainController.plannerFile.getAbsolutePath());
             return true;
         } catch (Exception e)
         {
@@ -186,6 +190,16 @@ public class MainController
             return false;
         }
     }
+    
+	/**
+	 * Sets the planner file that is loaded/saved.
+	 * 
+	 * @param file is the path used to load and save files
+	 */
+	public static void setPlannerFile(File file) {
+		plannerFile = file;
+		return;
+	}
 
     /**
      * Apparently (according to Stackoverflow) the Java Standard library doesn't have a
