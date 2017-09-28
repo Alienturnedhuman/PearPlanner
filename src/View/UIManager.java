@@ -108,6 +108,7 @@ public class UIManager
         // Set the scene:
         mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
         mainStage.setTitle("PearPlanner");
+        // Minimum screen width set to fit with the current layout where the modules do not wrap.
         mainStage.setMinWidth(1000);
         mainStage.setMinHeight(500);
         mainStage.getIcons().add(new Image("file:icon.png"));

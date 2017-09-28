@@ -147,7 +147,6 @@ public class MenuController implements Initializable
         this.title.setText("Study Dashboard");
         // =================
         StudyProfile profile = MainController.getSPC().getPlanner().getCurrentStudyProfile();
-        
         // Display studyProfile:
         Label studyProfile = new Label(profile.getName());
         studyProfile.getStyleClass().add("title");
@@ -168,7 +167,6 @@ public class MenuController implements Initializable
             vbox.setMinWidth(200);
             vbox.setMaxWidth(200);
             vbox.setAlignment(Pos.CENTER);
-
             Label name = new Label(module.getName());
             name.setTextAlignment(TextAlignment.CENTER);
             vbox.getChildren().add(name);
@@ -180,22 +178,17 @@ public class MenuController implements Initializable
             badge.setPrefHeight(100);
             badge.setBackground(new Background(
                     new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false))));
-            
+                            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false))));     
             vbox.getChildren().add(badge);
             Button view = new Button("View");
             view.setOnAction(e -> module.open(this.current));
-            vbox.getChildren().add(view);
-            
+            vbox.getChildren().add(view);            
             modules.setMaxSize(800, 1000);
-            modules.getColumnConstraints().add(new ColumnConstraints(Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, 1000, Priority.ALWAYS, HPos.CENTER, true));
-              
+            modules.getColumnConstraints().add(new ColumnConstraints(Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, 1000, Priority.ALWAYS, HPos.CENTER, true));         
             i++;
             modules.addColumn(i,vbox);
-            }
-           
+            } 
         // =================
-        
         GridPane.setColumnSpan(modules, GridPane.REMAINING);
         GridPane.setMargin(modules, new Insets(10));        
         this.mainContent.addRow(2, modules);    
