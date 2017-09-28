@@ -19,6 +19,19 @@
                         <Label fx:id="title" style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Study Dashboard"/>
                     </children>
                 </HBox>
+
+                <Button fx:id="addActivity" onAction="#addActivity" prefHeight="33" prefWidth="33" styleClass="button-image" style="-fx-background-image: url('/Content/addactivity.png'); -fx-background-color: #5C8B76" />
+                
+                <HBox prefWidth="11"></HBox>
+
+                <Button fx:id="calendar" prefHeight="33.0" prefWidth="33.0" styleClass="button-image" style="-fx-background-image: url('/Content/calendar.png'); -fx-background-color: #5C8B76"/>
+
+                <HBox prefWidth="11"></HBox>
+
+                <Button fx:id="showNotification" styleClass="button-image" prefWidth="35.0" prefHeight="31.0" style="-fx-background-color: #5C8B76"/>
+
+                <HBox prefWidth="7"></HBox>
+
                 <Button fx:id="showNotification" styleClass="button-image" prefWidth="31.0"/>
             </items>
         </ToolBar>
@@ -68,35 +81,6 @@
                                     text="Study Dashboard">
                             </Button>
                         </HBox>
-                        <HBox GridPane.rowIndex="1">
-                            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                <HBox.margin>
-                                    <Insets left="5"/>
-                                </HBox.margin>
-                                <image>
-                                    <Image url="/Content/addactivity.png"/>
-                                </image>
-                            </ImageView>
-                            <Button fx:id="addActivity" onAction="#addActivity"
-                                    style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Add activity"
-                            />
-                        </HBox>
-
-
-                        <HBox GridPane.rowIndex="2">
-                            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                <HBox.margin>
-                                    <Insets left="5"/>
-                                </HBox.margin>
-                                <image>
-                                    <Image url="/Content/calendar.png"/>
-                                </image>
-                            </ImageView>
-                            <Button fx:id="calendar" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
-                                    text="Calendar" GridPane.rowIndex="2"
-                            />
-                        </HBox>
-
 
 
                         <HBox GridPane.rowIndex="3">
