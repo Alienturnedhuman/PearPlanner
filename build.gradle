@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // The application plugin facilitates creating an executable JVM application.
 
 apply plugin: 'application'
@@ -56,4 +57,73 @@ test {
 
 jar {
 	manifest.attributes "Main-Class": mainClassName
+=======
+<<<<<<< HEAD
+// The application plugin facilitates creating an executable JVM application.
+
+apply plugin: 'application'
+
+// This line specifies where the main.java file is found.
+
+mainClassName='View.Main'
+
+// This statement declares where Gradle is to find directories 
+// for source code, external resources, and test classes
+
+=======
+apply plugin: 'application'
+mainClassName='View.Main'
+
+>>>>>>> ca652b8874f4af4d9ddb825138105b2a43e2e174
+sourceSets {
+    main {
+		java {
+			srcDirs = ['src']
+		}
+		resources {
+			srcDirs = ['src']
+		}
+	}
+	
+	test {
+		java {
+			srcDirs = ["Test"]
+		}
+	}
+}
+
+// Gradle uses this built-in function to locate declared
+// dependencies within Maven's central repositories.
+
+repositories {
+	mavenCentral()
+}
+
+// Gradle grabs the JUnit dependencies from Maven central,
+// and grabs local dependencies from the project filetree.
+
+dependencies {
+	testCompile 'junit:junit:4.12'
+	compile fileTree(dir: 'lib')
+	compile fileTree(dir: 'src')
+}
+
+<<<<<<< HEAD
+// IgnoreFailures is set to true until the failure issues are resolved
+// (refer to github.com/rsanchez-wsu/RaiderPlanner/issues/21)
+
+=======
+>>>>>>> ca652b8874f4af4d9ddb825138105b2a43e2e174
+test {
+	ignoreFailures = true
+}
+
+<<<<<<< HEAD
+// Tells Gradle to assemble a JAR archive.
+
+=======
+>>>>>>> ca652b8874f4af4d9ddb825138105b2a43e2e174
+jar {
+	manifest.attributes "Main-Class": mainClassName
+>>>>>>> dbfedea4234a7fbb6c7c7c2e0dd3d94dd4db7829
 }
