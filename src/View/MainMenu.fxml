@@ -16,12 +16,12 @@
                         style="-fx-background-image: url('/Content/menu.png');"/>
                 <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label fx:id="title" style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Study Dashboard"/>
+                        <Label fx:id="title" style="-fx-text-fill: white; -fx-background-color: #5C8B76; -fx-font-size: 1.5em" text="Study Dashboard"/>
                     </children>
                 </HBox>
 
                 <Button fx:id="addActivity" onAction="#addActivity" prefHeight="33" prefWidth="33" styleClass="button-image" style="-fx-background-image: url('/Content/addactivity.png'); -fx-background-color: #5C8B76" />
-                
+
                 <HBox prefWidth="11"></HBox>
 
                 <Button fx:id="calendar" prefHeight="33.0" prefWidth="33.0" styleClass="button-image" style="-fx-background-image: url('/Content/calendar.png'); -fx-background-color: #5C8B76"/>
