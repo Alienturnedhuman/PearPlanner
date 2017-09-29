@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * PearPlanner
+ * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 4/27/17
  */
 public class HubFile implements Serializable

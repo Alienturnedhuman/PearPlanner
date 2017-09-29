@@ -33,7 +33,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
 /**
- * PearPlanner
+ * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 4/27/17
  */
 public class Activity extends Event

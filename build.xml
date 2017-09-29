@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="pearplanner" default="all">
+<project name="raiderplanner" default="all">
   
   
   <property file="build.properties"/>
@@ -62,9 +62,9 @@
   <!-- Modules -->
   
   
-  <!-- Module PearPlanner -->
+  <!-- Module RaiderPlanner -->
   
-  <dirname property="module.pearplanner.basedir" file="${ant.file}"/>
+  <dirname property="module.raiderplanner.basedir" file="${ant.file}"/>
 
 
   <path id="external.classpath">
@@ -88,108 +88,108 @@
   </path>
   
   
-  <property name="compiler.args.pearplanner" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  <property name="compiler.args.raiderplanner" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
   
-  <property name="pearplanner.output.dir" value="${module.pearplanner.basedir}/out/production/PearPlanner"/>
-  <property name="pearplanner.testoutput.dir" value="${module.pearplanner.basedir}/out/test/PearPlanner"/>
-  <property name="pearplanner.jaroutput.dir" value="${module.pearplanner.basedir}/out/jar"/>
+  <property name="raiderplanner.output.dir" value="${module.raiderplanner.basedir}/out/production/RaiderPlanner"/>
+  <property name="raiderplanner.testoutput.dir" value="${module.raiderplanner.basedir}/out/test/RaiderPlanner"/>
+  <property name="raiderplanner.jaroutput.dir" value="${module.raiderplanner.basedir}/out/jar"/>
   
-  <path id="pearplanner.module.bootclasspath">
+  <path id="raiderplanner.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
   </path>
 
-  <path id="pearplanner.module.production.classpath"/>
+  <path id="raiderplanner.module.production.classpath"/>
   
-  <path id="pearplanner.runtime.production.module.classpath">
-    <pathelement location="${pearplanner.output.dir}"/>
+  <path id="raiderplanner.runtime.production.module.classpath">
+    <pathelement location="${raiderplanner.output.dir}"/>
   </path>
   
-  <path id="pearplanner.module.classpath">
-    <pathelement location="${pearplanner.output.dir}"/>
+  <path id="raiderplanner.module.classpath">
+    <pathelement location="${raiderplanner.output.dir}"/>
     <pathelement location="lib/hamcrest-core-1.3.jar"/>
     <pathelement location="lib/junit-4.12.jar"/>
   </path>
   
-  <path id="pearplanner.runtime.module.classpath">
-    <pathelement location="${pearplanner.testoutput.dir}"/>
-    <pathelement location="${pearplanner.output.dir}"/>
+  <path id="raiderplanner.runtime.module.classpath">
+    <pathelement location="${raiderplanner.testoutput.dir}"/>
+    <pathelement location="${raiderplanner.output.dir}"/>
     <pathelement location="lib/hamcrest-core-1.3.jar"/>
     <pathelement location="lib/junit-4.12.jar"/>
   </path>
   
   
-  <patternset id="excluded.from.module.pearplanner">
+  <patternset id="excluded.from.module.raiderplanner">
     <patternset refid="ignored.files"/>
   </patternset>
   
-  <patternset id="excluded.from.compilation.pearplanner">
-    <patternset refid="excluded.from.module.pearplanner"/>
+  <patternset id="excluded.from.compilation.raiderplanner">
+    <patternset refid="excluded.from.module.raiderplanner"/>
   </patternset>
   
-  <path id="pearplanner.module.sourcepath">
-    <dirset dir="${module.pearplanner.basedir}">
+  <path id="raiderplanner.module.sourcepath">
+    <dirset dir="${module.raiderplanner.basedir}">
       <include name="src"/>
     </dirset>
   </path>
   
-  <path id="pearplanner.module.test.sourcepath">
-    <dirset dir="${module.pearplanner.basedir}">
+  <path id="raiderplanner.module.test.sourcepath">
+    <dirset dir="${module.raiderplanner.basedir}">
       <include name="Test"/>
     </dirset>
   </path>
   
   
-  <target name="compile.module.pearplanner" depends="compile.module.pearplanner.production,compile.module.pearplanner.tests" description="Compile module PearPlanner"/>
+  <target name="compile.module.raiderplanner" depends="compile.module.raiderplanner.production,compile.module.raiderplanner.tests" description="Compile module Planner"/>
   
-  <target name="compile.module.pearplanner.production" description="Compile module PearPlanner; production classes">
-    <mkdir dir="${pearplanner.output.dir}"/>
+  <target name="compile.module.raiderplanner.production" description="Compile module RaiderPlanner; production classes">
+    <mkdir dir="${raiderplanner.output.dir}"/>
 
-    <javac destdir="${pearplanner.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
-      <compilerarg line="${compiler.args.pearplanner}"/>
-      <bootclasspath refid="pearplanner.module.bootclasspath"/>
-      <classpath refid="pearplanner.module.production.classpath"/>
+    <javac destdir="${raiderplanner.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.raiderplanner}"/>
+      <bootclasspath refid="raiderplanner.module.bootclasspath"/>
+      <classpath refid="raiderplanner.module.production.classpath"/>
       <classpath>
         <path refid="external.classpath" />
       </classpath>
-      <src refid="pearplanner.module.sourcepath"/>
-      <patternset refid="excluded.from.compilation.pearplanner"/>
+      <src refid="raiderplanner.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.raiderplanner"/>
     </javac>
     
-    <copy todir="${pearplanner.output.dir}">
-      <fileset dir="${module.pearplanner.basedir}/src">
+    <copy todir="${raiderplanner.output.dir}">
+      <fileset dir="${module.raiderplanner.basedir}/src">
         <patternset refid="compiler.resources"/>
         <type type="file"/>
       </fileset>
     </copy>
   </target>
   
-  <target name="compile.module.pearplanner.tests" depends="compile.module.pearplanner.production" description="compile module PearPlanner; test classes" unless="skip.tests">
-    <mkdir dir="${pearplanner.testoutput.dir}"/>
-    <javac destdir="${pearplanner.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
-      <compilerarg line="${compiler.args.pearplanner}"/>
-      <bootclasspath refid="pearplanner.module.bootclasspath"/>
+  <target name="compile.module.raiderplanner.tests" depends="compile.module.raiderplanner.production" description="compile module RaiderPlanner; test classes" unless="skip.tests">
+    <mkdir dir="${raiderplanner.testoutput.dir}"/>
+    <javac destdir="${raiderplanner.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.raiderplanner}"/>
+      <bootclasspath refid="raiderplanner.module.bootclasspath"/>
       <classpath>
         <path refid="external.classpath" />
       </classpath>
-      <classpath refid="pearplanner.module.classpath"/>
-      <src refid="pearplanner.module.test.sourcepath"/>
-      <patternset refid="excluded.from.compilation.pearplanner"/>
+      <classpath refid="raiderplanner.module.classpath"/>
+      <src refid="raiderplanner.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.raiderplanner"/>
     </javac>
 
-    <copy todir="${pearplanner.testoutput.dir}">
-      <fileset dir="${module.pearplanner.basedir}/Test">
+    <copy todir="${raiderplanner.testoutput.dir}">
+      <fileset dir="${module.raiderplanner.basedir}/Test">
         <patternset refid="compiler.resources"/>
         <type type="file"/>
       </fileset>
     </copy>
   </target>
 
- <target name="jar" depends="compile.module.pearplanner">
-   <mkdir dir="${pearplanner.jaroutput.dir}"/>
-    <manifestclasspath property="lib.list" jarfile="${pearplanner.jaroutput.dir}/${ant.project.name}.jar">
+ <target name="jar" depends="compile.module.raiderplanner">
+   <mkdir dir="${raiderplanner.jaroutput.dir}"/>
+    <manifestclasspath property="lib.list" jarfile="${raiderplanner.jaroutput.dir}/${ant.project.name}.jar">
         <classpath refid="external.classpath"/>
     </manifestclasspath>
-    <jar destfile="${pearplanner.jaroutput.dir}/${ant.project.name}.jar" basedir="${pearplanner.output.dir}">
+    <jar destfile="${raiderplanner.jaroutput.dir}/${ant.project.name}.jar" basedir="${raiderplanner.output.dir}">
       <manifest>
         <attribute name="Main-Class" value="View.Main"/>
         <attribute name="Class-Path" value="${lib.list}"/>
@@ -198,22 +198,22 @@
   </target>
 
   <target name="run" depends="jar">
-    <java jar="${pearplanner.jaroutput.dir}/${ant.project.name}.jar" fork="true"/>
+    <java jar="${raiderplanner.jaroutput.dir}/${ant.project.name}.jar" fork="true"/>
   </target>
   
-  <target name="clean.module.pearplanner" description="cleanup module">
-    <delete dir="${pearplanner.output.dir}"/>
-    <delete dir="${pearplanner.testoutput.dir}"/>
-    <delete dir="${pearplanner.jaroutput.dir}"/>
+  <target name="clean.module.raiderplanner" description="cleanup module">
+    <delete dir="${raiderplanner.output.dir}"/>
+    <delete dir="${raiderplanner.testoutput.dir}"/>
+    <delete dir="${raiderplanner.jaroutput.dir}"/>
   </target>
   
   <target name="init" description="Build initialization">
     <!-- Perform any build initialization in this target -->
   </target>
   
-  <target name="clean" depends="clean.module.pearplanner" description="cleanup all"/>
+  <target name="clean" depends="clean.module.raiderplanner" description="cleanup all"/>
   
-  <target name="build.modules" depends="init, clean, compile.module.pearplanner, jar" description="build all modules"/>
+  <target name="build.modules" depends="init, clean, compile.module.raiderplanner, jar" description="build all modules"/>
 
   <target name="all" depends="build.modules" description="build all"/>
 
@@ -222,15 +222,15 @@
             <classpath>
                 <pathelement location="${basedir}/lib/junit-4.12.jar"/>
                 <pathelement location="${basedir}/lib/hamcrest-core-1.3.jar"/>
-                <pathelement location="${pearplanner.output.dir}/"/>
-                <pathelement location="${pearplanner.testoutput.dir}/"/>
+                <pathelement location="${raiderplanner.output.dir}/"/>
+                <pathelement location="${raiderplanner.testoutput.dir}/"/>
 
             </classpath>
           <classpath>
             <path refid="external.classpath" />
           </classpath>
             <batchtest>
-                <fileset dir="${pearplanner.testoutput.dir}">
+                <fileset dir="${raiderplanner.testoutput.dir}">
                     <include name="**/*Test*" />
                 </fileset>
             </batchtest>

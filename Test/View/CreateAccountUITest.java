@@ -34,7 +34,7 @@ import static org.testfx.matcher.base.NodeMatchers.isEnabled;
 
 
 /**
- * PearPlanner
+ * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 08/05/2017
  */
 public class CreateAccountUITest extends FXBase {
