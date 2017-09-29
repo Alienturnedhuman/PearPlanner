@@ -93,6 +93,7 @@ public class Event extends VersionControlEntity
             }
         }
     }
+    
 
     @Override
     protected void replace(VersionControlEntity receivedVCE)
