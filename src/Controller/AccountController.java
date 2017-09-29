@@ -129,8 +129,10 @@ public class AccountController implements Initializable
     {
         if (account_no.getText().trim().isEmpty())
             this.submit.setDisable(true);
-        else
-            this.handleChange();
+        else {
+        	this.submit.setStyle("-fx-text-box-border:red;");
+        	this.handleChange();
+        }
     }
 
     /**
