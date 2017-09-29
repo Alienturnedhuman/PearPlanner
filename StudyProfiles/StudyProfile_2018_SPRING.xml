@@ -1,0 +1,624 @@
+<hubfile>
+    <version>42</version>
+    <assets>
+        <persons>
+            <person>
+                <name>Tony Bagnall</name>
+                <details>Tony joined CMP as a part time MRes student/part time teaching assistant in 1993 having finished his BSc in Mathematics and Statistics at the University of Hertfordshire. After completing his Masters by research in 1995 he began a PhD titled "Modelling the UK electricity market with autonomous adaptive agents". After a brief period as a research assistant on a data mining project sponsored by Master Foods and Centrica, in 1999 he completed his PhD and was appointed as a Lecturer in Statistics for Data Mining jointly in the schools of Computer Science and Mathematics. In 2003 statistics moved into CMP and since then Tony has been a full member of the school. In 2007 he was promoted to senior lecturer.</details>
+                <version>42</version>
+                <uid>PERSON_001</uid>
+                <givenNames>Anthony</givenNames>
+                <familyName>Bagnall</familyName>
+                <salutation>Dr</salutation>
+                <email>anthony.bagnall@uea.ac.uk</email>
+                <familyNameLast>true</familyNameLast>
+            </person>
+            <person>
+                <name>Gavin C. Cawley</name>
+                <details>My principal research interests lie in machine learning, with a particular emphasis on Bayesian and kernel learning methods. I am most interested in theoretical issues and algorthms with a direct impact in the practical application of machine learning techniques, including topics such as feature selection, model selection, performance estimation, model comparison, covariate shift, dealing with imbalanced or "non-standard" data and semi-supervised learning. Most of my applied work centres on problems arising in computational biology, in collaboration with the School of Chemistry and Pharmacy (CAP) and with the nearby John Iness Centre (JIC) and Institute for Food Reasearch (IFR). However I also have long-standing research links with the School of Environmental Sciences (ENV) and the Climatic Research Unit (CRU), working on applications of machine learning in the environmental sciences, particularly on modelling and exploiting predictive uncertainty.</details>
+                <version>42</version>
+                <uid>PERSON_002</uid>
+                <givenNames>Gavin</givenNames>
+                <familyName>Cawley</familyName>
+                <salutation>Dr</salutation>
+                <email>gcc@cmp.uea.ac.uk</email>
+                <familyNameLast>true</familyNameLast>
+            </person>
+            <person>
+                <name>Rudy Lapeer</name>
+                <details>Rudy Lapeer obtained an MSc in Mechanical Engineering with Distinction at University College Ghent (Belgium) in July 1988. His first job was as a production engineer at VOLVO Cars Europe in Ghent where he worked for three years. In 1992 he moved back to academia and took up the post of Software Engineer at the Department of Medical Informatics, University of Ghent (RUG). Meanwhile he embarked on a part-time MSc degree in Computer Science which he completed in 1993 with Distinction. He was then offered a Research Associate position at the University of Cambridge, working on the EU funded project Euro-Punch which involved the prediction of adverse pregnancy outcomes from clinical data. He started a PhD at the Department of Engineering, University of Cambridge in 1996, funded by the EPSRC, which he successfully completed in 1999. He was subsequently offered a Senior Research Fellowship at the Department of Medical Physics and Bio-engineering at University College London (UCL) working on an EPSRC funded project on augmented reality surgical navigation (CASSPAR). In 2001 he also worked as a Software Consultant for the UCL based company MTT (Medical Technology Transfer). In 2002, he was appointed as a Lecturer at the School of Computing Sciences, University of East Anglia. In the academic year 2007-8, he received the UEA’s Award for Excellence in Teaching. He was promoted to the position of Senior Lecturer in 2010.</details>
+                <version>42</version>
+                <uid>PERSON_003</uid>
+                <givenNames>Rudy</givenNames>
+                <familyName>Lapeer</familyName>
+                <salutation>Dr</salutation>
+                <email>r.lapeer@uea.ac.uk</email>
+                <familyNameLast>true</familyNameLast>
+            </person>
+            <person>
+                <name>Stephen Laycock</name>
+                <details>Stephen was appointed as a Lecturer in January 2005 and is part of the Graphics, Vision and Speech Lab. He was promoted to Senior Lecturer in August 2012. Stephen's research interests include Haptic Rendering, Collision Detection, Deformable objects and Real-time rendering. He is also interested in the application of new graphics techniques to Cultural Heritage, scientific visualisation and virtual training simulations. His research into haptic rendering led to a book chapter on the subject included in the book titled "Haptic Rendering: Foundations, Algorithms and Applications" edited by Ming Lin and Miguel Otaduy. His research in this area continues with the development of novel haptic rendering algorithms suitable for Molecular Graphics. Software based on these algorithms is available for download from http://www.haptimol.co.uk. The latest features of HaptiMOL ISAS are shown in the video. For more details on his research and publications please click on the research box above.</details>
+                <version>42</version>
+                <uid>PERSON_004</uid>
+                <givenNames>Stephen</givenNames>
+                <familyName>Laycock</familyName>
+                <salutation>Dr</salutation>
+                <email>s.laycock@uea.ac.uk</email>
+                <familyNameLast>true</familyNameLast>
+            </person>
+            <person>
+                <name>Andy Day</name>
+                <details>Andy is leader of the computer graphics research group. He established the Urban Modelling Group (UMG - www.urbanmodellinggroup.co.uk) and the Crowd Simulation Group (CSG - www.crowdsimulationgroup.co.uk). He has published over 100 research papers and holds (or has held) several EU and EPSRC grants. His research interests are in applied computational geometry, real time rendering and behaviour of crowds and haptics for deformable bodies. UMG works closely with the School of History (Virtual Past) on virtual historic reconstruction.</details>
+                <version>42</version>
+                <uid>PERSON_005</uid>
+                <givenNames>Andy</givenNames>
+                <familyName>Day</familyName>
+                <salutation>Professor</salutation>
+                <email>andy.day@uea.ac.uk</email>
+                <familyNameLast>true</familyNameLast>
+            </person>
+            <person>
+                <name>Joost Noppen</name>
+                <details>Joost Noppen is lecturer in Software Engineering at the University of East Anglia in Norwich (UK). Joost holds an M.Sc. degree and a Ph. D. degree in Computer Science from the University of Twente in the Netherlands with a special focus on computational intelligence in Software Engineering. Joost has held positions in leading Software Engineering research groups across Europe, such as the École des Mines and the University of Lancaster, where he has worked in international research projects. In 2008 Joost was awarded a prestigious Marie Curie Intra-European fellowship from the EU for his work on Software Product Line development. Within the School of Computing Sciences Joost is responsible for the Software Engineering aspect of the teaching curriculum. He has been responsible for the complete redesign of the Software Engineering modules and bringing them up to date with state of the art in industrial software design and academic research. His modules focus on providing students with the fundamental skills for software development, such as object-orientation, and agile and test-driven development, combined with research-led topics and novel developments in industry such as mobile applications and software product lines. The long-standing research interest of Joost is in decision support for modelling and analysing design information during the development of software systems. This includes questions such as: is it possible to reconstruct software designs from partial documentation? How can you optimise the quality and extensibility of software systems when faced with uncertain change scenarios? Can historical data of software projects be used to steer the design of new systems? Most of Joost's research has resulted in advanced modelling techniques for capturing and reasoning with imprecise and uncertain design information based on probability and fuzzy set theory that support software development activities. Joost has over 14 years experience in Software Engineering both from an academic and industrial perspective. He has founded a successful web development company as a student and he has developed software in collaboration with multi-national companies. In his spare time Joost is exploring the application of Software Engineering principles to mobile games development practice. Currently Joost is involved in a variety of Software Engineering activities both related to research and teaching and he is happy to be approached for projects in these areas. He is also available for consultancy, advice and assessment in the field of industrial software engineering.</details>
+                <version>42</version>
+                <uid>PERSON_006</uid>
+                <givenNames>Joost</givenNames>
+                <familyName>Noppen</familyName>
+                <salutation>Dr</salutation>
+                <email>j.noppen@uea.ac.uk</email>
+                <familyNameLast>true</familyNameLast>
+            </person>
+            <person>
+                <name>Geoff McKeown</name>
+                <details>Geoff is an Associate Fellow of the Institute of Mathematics and its Applications. IEEE Computer Society Affiliate He has been a consultant and author for the Open University.</details>
+                <version>42</version>
+                <uid>PERSON_007</uid>
+                <givenNames>Geoffrey</givenNames>
+                <familyName>McKeown</familyName>
+                <salutation>Dr</salutation>
+                <email>g.mckeown@uea.ac.uk</email>
+                <familyNameLast>true</familyNameLast>
+            </person>
+            <person>
+                <name>Mark Fisher</name>
+                <details>Mark started his career as an electronics apprentice with the Royal Radar Establishment, Malvern (http://college-of-electronics.org/), before reading Electrical and Electronic Engineering at Aston University. After graduating he joined Ferranti Computer Systems, Underwater Systems Group, Cheadle Heath, Manchester (http://en.wikipedia.org/wiki/Thales_Underwater_Systems#Cheadle_Heath). He returned to academia to study Microprocessor Engineering and Digital Electronics at UMIST and remained as a research assistant within the Department of Computation to gain a PhD in Applied Machine Learning. As a lecturer, Mark established a Machine Vision Research Group at Coventry Polytechnic before moving to UEA in 1998. His research interests now focus on medical image understanding and analysis and he has co-authored nearly 100 publications on applications of computer vision and image analysis in engineering, biosciences and medicine.</details>
+                <version>42</version>
+                <uid>PERSON_008</uid>
+                <givenNames>Mark</givenNames>
+                <familyName>Fisher</familyName>
+                <salutation>Dr</salutation>
+                <email>mark.fisher@uea.ac.uk</email>
+                <familyNameLast>true</familyNameLast>
+            </person>
+            <person>
+                <name>Ben Milner</name>
+                <details>In 1994 Ben moved to BT Laboratories in the speech recognition group, where he specialised in noise and channel robustness and front-end processing. In particular he worked on reducing error rates for services such as automated directory enquiries and speech recognition from payphones. More recent work at BT considered the effect of performing speech recognition over mobile and IP networks where problems of packet loss and codec distortion are addressed. He was also responsible for the handwriting component of BT's SmartQuill which features in the Guinness Book of Records as 'the world's most intelligent pen!'. He was also involved in work to automatically detect the internal rotting of telephone poles. He holds three patents in the areas of speech processing and handwriting recognition. In March 2001 Ben returned to the School of Information Systems (now the School of Computing Sciences) as a Senior Lecturer. Ben has also spent some time in oil and gas exploration working on side scan sonar and seabed profiling.</details>
+                <version>42</version>
+                <uid>PERSON_009</uid>
+                <givenNames>Ben</givenNames>
+                <familyName>Milner</familyName>
+                <salutation>Dr</salutation>
+                <email>b.milner@uea.ac.uk</email>
+                <familyNameLast>true</familyNameLast>
+            </person>
+            <person>
+                <name>Taoyang Wu</name>
+                <details>Taoyang Wu is Lecturer in Computational Biology at University of East Anglia. He completed his PhD in 2009 at Queen Mary, University of London, after which he worked as a visiting researcher at University of East Anglia and National University of Singapore. He took up his current position at University of East Anglia in 2012.</details>
+                <version>42</version>
+                <uid>PERSON_010</uid>
+                <givenNames>Taoyang</givenNames>
+                <familyName>Wu</familyName>
+                <salutation>Dr</salutation>
+                <email>taoyang.wu@uea.ac.uk</email>
+                <familyNameLast>false</familyNameLast>
+            </person>
+        </persons>
+        <buildings>
+            <building>
+                <name>Julian Study Centre</name>
+                <details>The Julian Study Centre is a dedicated teaching building featuring a tiered 280 seat lecture theatre and an 80 seat Harvard-style lecture room. Named after Julian of Norwich, the first woman to publish a book in the English language, the building's green credentials include its construction with Passivhaus techniques and complying with BREEAM guidelines. The Julian Study Centre offers modern meeting facilities including multiple breakout areas, a large foyer and seven seminar rooms to seat 18-60 people in addition to the two lecture theatres. A café selling Grumpy Mule coffee complements the offering.</details>
+                <version>42</version>
+                <uid>BUILDING_JSC</uid>
+                <code>JSC</code>
+                <latitude>52.6220299</latitude>
+                <longitude>1.2354997</longitude>
+            </building>
+            <building>
+                <name>Sports Park</name>
+                <details>The University of East Anglia plays host to the £30 million Sportspark It is currently the biggest indoor sports centre in Britain, and regularly hosts international sporting events. Constructed in 2000, the Sportspark boasts fantastic facilities, including Norfolk's tallest indoor climbing wall, a state-of-the-art Olympic-sized swimming pool, athletics track and gym, as well as an extensive range of activities including aerobics, archery, athletics, badminton, basketball, climbing, cricket, fencing, hockey, indoor football, martial arts, squash, table tennis, trampolining and yoga.</details>
+                <version>42</version>
+                <uid>BUILDING_SP</uid>
+                <code>SP</code>
+                <latitude>52.624472</latitude>
+                <longitude>1.240939</longitude>
+            </building>
+        </buildings>
+        <rooms>
+            <room>
+                <name>JSC Lecture Theatre</name>
+                <details>Known as the JSC Lecture Theatre, this tiered room seats 280 people. Fully integrated audio-visual equipment is easy to use with back projection possible with an audio-visual technician. The lecture theatre is located on the ground floor with an accessible stair lift to the front and an adjoining foyer space with café. The JSC Lecture Theatre is a great space for a plenary session and breakout area.</details>
+                <version>42</version>
+                <uid>ROOM_JSC_0_01</uid>
+                <building>BUILDING_JSC</building>
+                <roomNumber>JSC 0.01</roomNumber>
+            </room>
+            <room>
+                <name>JSC Harvard Style Lecture Theatre</name>
+                <details>Known as the Harvard-style lecture theatre, this tiered lecture room seats up to 80 people and is located on the top floor of JSC. The tables run the length of the room in three sections with moveable seating. There is fully integrated audio-visual equipment with two large displays either side of the lectern, and a drawing screen. An ideal space for panel and plenary sessions.</details>
+                <version>42</version>
+                <uid>ROOM_JSC_3_02</uid>
+                <building>BUILDING_JSC</building>
+                <roomNumber>JSC 3.02</roomNumber>
+            </room>
+            <room>
+                <name>Sports Park Lecture Theatre</name>
+                <details>Sportspark offers a range of meeting rooms and and conference facilities. Whether you are looking for a meeting room for a few hours or whole day, or a large conference / event venue, we have the facilities and personal service you need. We offer a range of meeting and conference facilities, from small, medium to large sized rooms which cater for groups of 6 to 160 delegates, seven days a week. We also have parking on site for conference delegates.</details>
+                <version>42</version>
+                <uid>ROOM_SP_1_27</uid>
+                <building>BUILDING_SP</building>
+                <roomNumber>SP 1.27</roomNumber>
+            </room>
+        </rooms>
+        <timetableEventTypes>
+            <timetableEventType>
+                <name>Lecture</name>
+                <details>Lectures are things that some people don't turn up to but are thre because their friends sign
+                    them in.
+                </details>
+                <version>42</version>
+                <uid>LECTURE</uid>
+            </timetableEventType>
+        </timetableEventTypes>
+    </assets>
+    <studyProfile>
+        <name>2018 Spring semester</name>
+        <details>24 April 2018 to 19 May 2018</details>
+        <uid>SEMESTER_2018_1</uid>
+        <year>2018</year>
+        <semester>1</semester>
+        <modules>
+            <module>
+                <name>Programming 2</name>
+                <details>This is a compulsory module for all computing students and is a continuation of CMP-4008Y. It contains greater breadth and depth and provides students with the range of skills needed for many of their subsequent modules. We recap Java and deepen your understanding of the language by teaching topics such as nested classes, enumeration, generics, reflection, collections and threaded programming. We then introduce C in order to improve your low level understanding of how programming works, before moving on to C++ in semester 2. We conclude by introducing C# to highlight the similarities and differences between languages.</details>
+                <version>42</version>
+                <uid>MODULE_PROG2</uid>
+                <organiser>PERSON_001</organiser>
+                <moduleCode>CMP-5015Y</moduleCode>
+                <timetable>
+                    <timetableEvent>
+                        <name>Programming 2 Lecture</name>
+                        <details>Lecture on C Pointers</details>
+                        <version>42</version>
+                        <uid>TT_CMP-5015Y_LEC_01</uid>
+                        <date>09/04/2018T11:00:00Z</date>
+                        <room>ROOM_JSC_0_01</room>
+                        <lecturer>PERSON_002</lecturer>
+                        <timetableEventType>LECTURE</timetableEventType>
+                        <duration>110</duration>
+                    </timetableEvent>
+                </timetable>
+                <assignments>
+                    <exam>
+                        <name>Final Exam Resit</name>
+                        <details>A second chance for students who did not pass their final exam</details>
+                        <version>42</version>
+                        <uid>PROG2_EXAM_1_RESIT</uid>
+                        <resit></resit>
+                        <timeslot>
+                            <name>Deadline</name>
+                            <details>The Date of the Programming 2 final exam resit</details>
+                            <version>42</version>
+                            <uid>PROG2_EXAM_1_RESIT_TIMESLOT</uid>
+                            <date>09/08/2018T15:00:00Z</date>
+                            <room>ROOM_SP_1_27</room>
+                            <duration>120</duration>
+                        </timeslot>
+                        <weighting>30</weighting>
+                        <setBy>PERSON_001</setBy>
+                        <markedBy>PERSON_001</markedBy>
+                        <reviewedBy>PERSON_005</reviewedBy>
+                        <marks>120</marks>
+                    </exam>
+                    <coursework>
+                        <name>Offline Movie DataBase (OMDB) in C</name>
+                        <details>The aim of this assignment is for the student to gain experience in the design and implementation of a simple application in the C programming language.</details>
+                        <version>42</version>
+                        <uid>PROG2_CW_1</uid>
+                        <startDate>
+                            <name>Start Date for Offline Movie DataBase (OMDB) in C</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>PROG2_CW_1_START</uid>
+                            <date>20/10/2016T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline for Offline Movie DataBase (OMDB) in C</name>
+                            <details>End Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>PROG2_CW_1_DEADLINE</uid>
+                            <date>20/11/2016T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>20</weighting>
+                        <setBy>PERSON_002</setBy>
+                        <markedBy>PERSON_002</markedBy>
+                        <reviewedBy>PERSON_001</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                    <coursework>
+                        <name>Java Coursework</name>
+                        <details>This coursework involves you designing and implementing a simulation of a card game called Cheat.</details>
+                        <version>42</version>
+                        <uid>PROG2_CW_2</uid>
+                        <startDate>
+                            <name>Start Date for Java Coursework</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>PROG2_CW_2_START</uid>
+                            <date>24/11/2016T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline for Java Coursework</name>
+                            <details>End Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>PROG2_CW_2_DEADLINE</uid>
+                            <date>01/02/2018T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>20</weighting>
+                        <setBy>PERSON_001</setBy>
+                        <markedBy>PERSON_001</markedBy>
+                        <reviewedBy>PERSON_002</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                    <coursework>
+                        <name>Offline Movie Database in C++</name>
+                        <details>The aim of this assignment is for the student to gain experience in the design and implementation of a relatively simple application in the C++ programming language.</details>
+                        <version>42</version>
+                        <uid>PROG2_CW_3</uid>
+                        <startDate>
+                            <name>Start Date for Offline Movie Database in C++</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>PROG2_CW_3_START</uid>
+                            <date>24/03/2018T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline for Offline Movie Database in C++</name>
+                            <details>End Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>PROG2_CW_3_DEADLINE</uid>
+                            <date>26/04/2018T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>20</weighting>
+                        <setBy>PERSON_002</setBy>
+                        <markedBy>PERSON_002</markedBy>
+                        <reviewedBy>PERSON_001</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                    <exam>
+                        <name>Programming 2 Final Exam</name>
+                        <details>This is the final exam.\nDo not be late.\nOr you will not pass.</details>
+                        <version>42</version>
+                        <uid>PROG2_EXAM_1</uid>
+                        <resit>PROG2_EXAM_1_RESIT</resit>
+                        <timeslot>
+                            <name>Programming 2 Final Exam</name>
+                            <details>The Date of the Programming 2 final exam</details>
+                            <version>42</version>
+                            <uid>PROG2_EXAM_1_TIMESLOT</uid>
+                            <date>01/06/2018T14:15:00Z</date>
+                            <room>ROOM_SP_1_27</room>
+                            <duration>120</duration>
+                        </timeslot>
+                        <weighting>30</weighting>
+                        <setBy>PERSON_001</setBy>
+                        <markedBy>PERSON_001</markedBy>
+                        <reviewedBy>PERSON_002</reviewedBy>
+                        <marks>120</marks>
+                    </exam>
+                </assignments>
+            </module>
+            <module>
+                <name>Software Engineering</name>
+                <details>Software Engineering is one of the most essential skills for work in the software development industry. Students will gain an understanding of the issues involved in designing and creating software systems from an industry perspective. They will be taught state of the art in phased software development methodology, with a special focus on the activities required to go from initial class model design to actual running software systems. These activities are complemented with an introduction into software project management and development facilitation.</details>
+                <version>42</version>
+                <uid>MODULE_SOFTENG</uid>
+                <organiser>PERSON_006</organiser>
+                <moduleCode>CMP-5012B</moduleCode>
+                <timetable>
+                    <timetableEvent>
+                        <name>Software Engineering Lecture</name>
+                        <details>Lecture on the history of software engineering</details>
+                        <version>42</version>
+                        <uid>TT_CMP-5012B_LEC_01</uid>
+                        <date>03/02/2018T11:00:00Z</date>
+                        <room>ROOM_JSC_0_01</room>
+                        <lecturer>PERSON_010</lecturer>
+                        <timetableEventType>LECTURE</timetableEventType>
+                        <duration>110</duration>
+                    </timetableEvent>
+                </timetable>
+                <assignments>
+                    <coursework>
+                        <name>Main Coursework (Design Stage)</name>
+                        <details>The first half of the main coursework/assignment of the Software Engineering module.
+                        </details>
+                        <version>42</version>
+                        <uid>SOFTENG_CW_1</uid>
+                        <startDate>
+                            <name>Start Date for Main Coursework (Design Stage)</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>SOFTENG_CW_1_START</uid>
+                            <date>14/02/2018T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>SOFTENG_CW_1_DEADLINE</uid>
+                            <date>04/03/2018T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>20</weighting>
+                        <setBy>PERSON_006</setBy>
+                        <markedBy>PERSON_006</markedBy>
+                        <reviewedBy>PERSON_003</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                    <coursework>
+                        <name>Main Coursework (Implementation Stage)</name>
+                        <details>The second half of the main coursework/assignment of the Software Engineering module.
+                        </details>
+                        <version>42</version>
+                        <uid>SOFTENG_CW_2</uid>
+                        <startDate>
+                            <name>Start Date for Main Coursework (Implementation Stage)</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>SOFTENG_CW_2_START</uid>
+                            <date>05/03/2018T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline for Main Coursework (Implementation Stage)</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>SOFTENG_CW_2_DEADLINE</uid>
+                            <date>17/05/2018T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>20</weighting>
+                        <setBy>PERSON_006</setBy>
+                        <markedBy>PERSON_006</markedBy>
+                        <reviewedBy>PERSON_003</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                </assignments>
+            </module>
+            <module>
+                <name>Data Structures and Algorithms</name>
+                <details>The purpose of this module is to give the student a solid grounding in the design, analysis and implementation of algorithms, and in the efficient implementation of a wide range of important data structures.</details>
+                <version>42</version>
+                <uid>MODULE_DATSTRALG</uid>
+                <organiser>PERSON_001</organiser>
+                <moduleCode>CMP-5014Y</moduleCode>
+                <timetable>
+                    <timetableEvent>
+                        <name>Data Structures and Algorithms Lecture</name>
+                        <details>Lecture on hash tables</details>
+                        <version>42</version>
+                        <uid>TT_CMP-5014Y_LEC_01</uid>
+                        <date>29/09/2016T11:00:00Z</date>
+                        <room>ROOM_JSC_3_02</room>
+                        <lecturer>PERSON_007</lecturer>
+                        <timetableEventType>LECTURE</timetableEventType>
+                        <duration>110</duration>
+                    </timetableEvent>
+                </timetable>
+                <assignments>
+                    <exam>
+                        <name>Final Exam Resit</name>
+                        <details>A second chance for students who did not pass their final exam</details>
+                        <version>42</version>
+                        <uid>DATSTRALG_EXAM_1_RESIT</uid>
+                        <resit></resit>
+                        <timeslot>
+                            <name>Data Structures and Algorithms Final Exam Resit</name>
+                            <details>The Date of the Data Structures and Algoritms final exam resit</details>
+                            <version>42</version>
+                            <uid>DATSTRALG_EXAM_1_RESIT_TIMESLOT</uid>
+                            <date>12/08/2018T15:00:00Z</date>
+                            <room>ROOM_JSC_3_02</room>
+                            <duration>120</duration>
+                        </timeslot>
+                        <weighting>30</weighting>
+                        <setBy>PERSON_001</setBy>
+                        <markedBy>PERSON_001</markedBy>
+                        <reviewedBy>PERSON_007</reviewedBy>
+                        <marks>120</marks>
+                    </exam>
+                    <coursework>
+                        <name>Module Assessment Exercises 1</name>
+                        <details>Describing algorithms using pseudo-code; use of mathematical notation when analysing
+                            algorithms computer programming.
+                        </details>
+                        <version>42</version>
+                        <uid>DATSTRALG_CW_1</uid>
+                        <startDate>
+                            <name>Start Date for Module Assessment Exercises 1</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>DATSTRALG_CW_1_START</uid>
+                            <date>02/11/2016T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline for Module Assessment Exercises 1</name>
+                            <details>End Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>DATSTRALG_CW_1_DEADLINE</uid>
+                            <date>08/12/2016T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>20</weighting>
+                        <setBy>PERSON_007</setBy>
+                        <markedBy>PERSON_007</markedBy>
+                        <reviewedBy>PERSON_001</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                    <coursework>
+                        <name>Module Assessment Exercises 2</name>
+                        <details>Describing algorithms using pseudo-code; use of mathematical notation when analysing
+                            algorithms computer programming use of drawing tools.
+                        </details>
+                        <version>42</version>
+                        <uid>DATSTRALG_CW_2</uid>
+                        <startDate>
+                            <name>Start Date for Module Assessment Exercises 2</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>DATSTRALG_CW_2_START</uid>
+                            <date>01/02/2018T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline for Module Assessment Exercises 2</name>
+                            <details>End Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>DATSTRALG_CW_2_DEADLINE</uid>
+                            <date>15/03/2018T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>20</weighting>
+                        <setBy>PERSON_001</setBy>
+                        <markedBy>PERSON_001</markedBy>
+                        <reviewedBy>PERSON_007</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                    <exam>
+                        <name>Final Exam</name>
+                        <details>This is the final exam.\nDo not be late.\nOr you will not pass.</details>
+                        <version>42</version>
+                        <uid>DATSTRALG_EXAM_1</uid>
+                        <resit>DATSTRALG_EXAM_1_RESIT</resit>
+                        <timeslot>
+                            <name>Data Structures and Algorithms Final Exam</name>
+                            <details>The Date of the Data Structures and Algoritms final exam</details>
+                            <version>42</version>
+                            <uid>DATSTRALG_EXAM_1_TIMESLOT</uid>
+                            <date>05/06/2018T14:15:00Z</date>
+                            <room>ROOM_JSC_3_02</room>
+                            <duration>120</duration>
+                        </timeslot>
+                        <weighting>30</weighting>
+                        <setBy>PERSON_001</setBy>
+                        <markedBy>PERSON_001</markedBy>
+                        <reviewedBy>PERSON_007</reviewedBy>
+                        <marks>120</marks>
+                    </exam>
+                </assignments>
+            </module>
+            <module>
+                <name>Graphics 1</name>
+                <details>Graphics 1 provides an introduction to the fundamentals of computer graphics for all computing
+                    students. It aims to provide a strong foundation for students wishing to study graphics, focusing on
+                    2D graphics, algorithms and interaction. The module requires a good background in programming.
+                    OpenGL is utilised as the graphics API with examples provided in the lectures and supported in the
+                    laboratory classes. Other topics covered include 2D transformations, texture mapping, collision
+                    detection, graphics hardware, fonts, algorithms for line drawing, polygon filling, line and polygon
+                    clipping and colour in graphics.
+                </details>
+                <version>42</version>
+                <uid>MODULE_GRAP1</uid>
+                <organiser>PERSON_003</organiser>
+                <moduleCode>CMP-5010B</moduleCode>
+                <timetable>
+                    <timetableEvent>
+                        <name>Graphics 1</name>
+                        <details>Lecture on OpenGL basics.</details>
+                        <version>42</version>
+                        <uid>TT_CMP-5010B_LEC_01</uid>
+                        <date>01/02/2018T11:00:00Z</date>
+                        <room>ROOM_SP_1_27</room>
+                        <lecturer>PERSON_007</lecturer>
+                        <timetableEventType>LECTURE</timetableEventType>
+                        <duration>110</duration>
+                    </timetableEvent>
+                </timetable>
+                <assignments>
+                    <exam>
+                        <name>Final Exam Resit</name>
+                        <details>A second chance for students who did not pass their final exam</details>
+                        <version>42</version>
+                        <uid>GRAP1_EXAM_1_RESIT</uid>
+                        <resit></resit>
+                        <timeslot>
+                            <name>Deadline</name>
+                            <details>The Date of the Graphics 1 final exam resit</details>
+                            <version>42</version>
+                            <uid>GRAP1_EXAM_1_RESIT_TIMESLOT</uid>
+                            <date>16/08/2018T15:00:00Z</date>
+                            <room>ROOM_JSC_3_02</room>
+                            <duration>120</duration>
+                        </timeslot>
+                        <weighting>30</weighting>
+                        <setBy>PERSON_003</setBy>
+                        <markedBy>PERSON_003</markedBy>
+                        <reviewedBy>PERSON_004</reviewedBy>
+                        <marks>120</marks>
+                    </exam>
+                    <coursework>
+                        <name>TWO DIMENSIONAL PLATFORM GAME USING C/C++ AND OPENGL</name>
+                        <details>To introduce the concepts of Computer Graphics. To develop a program using OpenGL. To
+                            gain experience in writing computer graphics applications, with the assignment focusing on a
+                            two dimensional platform game.
+                        </details>
+                        <version>42</version>
+                        <uid>GRAP1_CW_1</uid>
+                        <startDate>
+                            <name>Start Date for PLATFORM GAME</name>
+                            <details>Start Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>GRAP1_CW_1_START</uid>
+                            <date>10/02/2018T15:00:00Z</date>
+                        </startDate>
+                        <deadline>
+                            <name>Deadline for TWO DIMENSIONAL PLATFORM GAME</name>
+                            <details>End Date for the Coursework</details>
+                            <version>42</version>
+                            <uid>GRAP1_CW_1_DEADLINE</uid>
+                            <date>10/05/2018T15:00:00Z</date>
+                        </deadline>
+                        <extensions></extensions>
+                        <weighting>20</weighting>
+                        <setBy>PERSON_003</setBy>
+                        <markedBy>PERSON_003</markedBy>
+                        <reviewedBy>PERSON_004</reviewedBy>
+                        <marks>100</marks>
+                    </coursework>
+                    <exam>
+                        <name>Final Exam</name>
+                        <details>This is the final exam.\nDo not be late.\nOr you will not pass.</details>
+                        <version>42</version>
+                        <uid>GRAP1_EXAM_1</uid>
+                        <resit>GRAP1_EXAM_1_RESIT</resit>
+                        <timeslot>
+                            <name>Graphics 1 Final Exam</name>
+                            <details>The Date of the Graphics 1 final exam</details>
+                            <version>42</version>
+                            <uid>GRAP1_EXAM_1_TIMESLOT</uid>
+                            <date>24/05/2018T14:15:00Z</date>
+                            <room>ROOM_SP_1_27</room>
+                            <duration>120</duration>
+                        </timeslot>
+                        <weighting>30</weighting>
+                        <setBy>PERSON_003</setBy>
+                        <markedBy>PERSON_003</markedBy>
+                        <reviewedBy>PERSON_004</reviewedBy>
+                        <marks>120</marks>
+                    </exam>
+                </assignments>
+            </module>
+        </modules>
+    </studyProfile>
+</hubfile>

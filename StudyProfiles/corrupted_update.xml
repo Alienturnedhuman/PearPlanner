@@ -1,0 +1,100 @@
+<hubfile>
+    <version>56</version>
+    <extensions></extensions>
+    <updatesbad>
+        <person>
+            <name>Gavin C. Cawley 2.0</name>
+            <details>My principal research interests lie in machine learning, with a particular emphasis on Bayesian and kernel learning methods. I am most interested in theoretical issues and algorthms with a direct impact in the practical application of machine learning techniques, including topics such as feature selection, model selection, performance estimation, model comparison, covariate shift, dealing with imbalanced or "non-standard" data and semi-supervised learning. Most of my applied work centres on problems arising in computational biology, in collaboration with the School of Chemistry and Pharmacy (CAP) and with the nearby John Iness Centre (JIC) and Institute for Food Reasearch (IFR). However I also have long-standing research links with the School of Environmental Sciences (ENV) and the Climatic Research Unit (CRU), working on applications of machine learning in the environmental sciences, particularly on modelling and exploiting predictive uncertainty.</details>
+            <version>53</version>
+            <uid>PERSON_002</uid>
+            <givenNames>Gavin</givenNames>
+            <familyName>Cawley 2.0</familyName>
+            <salutation>Dr</salutation>
+            <email>gcc@cmp.uea.ac.uk</email>
+            <familyNameLast>true</familyNameLast>
+        </person>
+        <building>
+            <name>Sports Park 2.0</name>
+            <details>The University of East Anglia plays host to the £30 million Sportspark It is currently the biggest indoor sports centre in Britain, and regularly hosts international sporting events. Constructed in 2000, the Sportspark boasts fantastic facilities, including Norfolk's tallest indoor climbing wall, a state-of-the-art Olympic-sized swimming pool, athletics track and gym, as well as an extensive range of activities including aerobics, archery, athletics, badminton, basketball, climbing, cricket, fencing, hockey, indoor football, martial arts, squash, table tennis, trampolining and yoga.</details>
+            <version>53</version>
+            <uid>BUILDING_SP</uid>
+            <code>SP</code>
+            <latitude>52.624472</latitude>
+            <longitude>1.240939</longitude>
+        </building>
+        <room>
+            <name>JSC Harvard Style Lecture Cinema 3.0</name>
+            <details>Known as the Harvard-style lecture theatre, this tiered lecture room seats up to 80 people and is located on the top floor of JSC. The tables run the length of the room in three sections with moveable seating. There is fully integrated audio-visual equipment with two large displays either side of the lectern, and a drawing screen. An ideal space for panel and plenary sessions.</details>
+            <version>56</version>
+            <uid>ROOM_JSC_3_02</uid>
+            <building>BUILDING_JSC</building>
+            <roomNumber>JSC 3.02</roomNumber>
+        </room>
+        <timetableEventType>
+            <name>Lecture Talks</name>
+            <details>Lectures are things that some people don't turn up to but are thre because their friends sign
+                them in.
+            </details>
+            <version>54</version>
+            <uid>LECTURE</uid>
+        </timetableEventType>
+        <person>
+            <name>Joost Noppen 1.6</name>
+            <details>Joost Noppen is lecturer in Software Engineering at the University of East Anglia in Norwich (UK). Joost holds an M.Sc. degree and a Ph. D. degree in Computer Science from the University of Twente in the Netherlands with a special focus on computational intelligence in Software Engineering. Joost has held positions in leading Software Engineering research groups across Europe, such as the École des Mines and the University of Lancaster, where he has worked in international research projects. In 2008 Joost was awarded a prestigious Marie Curie Intra-European fellowship from the EU for his work on Software Product Line development. Within the School of Computing Sciences Joost is responsible for the Software Engineering aspect of the teaching curriculum. He has been responsible for the complete redesign of the Software Engineering modules and bringing them up to date with state of the art in industrial software design and academic research. His modules focus on providing students with the fundamental skills for software development, such as object-orientation, and agile and test-driven development, combined with research-led topics and novel developments in industry such as mobile applications and software product lines. The long-standing research interest of Joost is in decision support for modelling and analysing design information during the development of software systems. This includes questions such as: is it possible to reconstruct software designs from partial documentation? How can you optimise the quality and extensibility of software systems when faced with uncertain change scenarios? Can historical data of software projects be used to steer the design of new systems? Most of Joost's research has resulted in advanced modelling techniques for capturing and reasoning with imprecise and uncertain design information based on probability and fuzzy set theory that support software development activities. Joost has over 14 years experience in Software Engineering both from an academic and industrial perspective. He has founded a successful web development company as a student and he has developed software in collaboration with multi-national companies. In his spare time Joost is exploring the application of Software Engineering principles to mobile games development practice. Currently Joost is involved in a variety of Software Engineering activities both related to research and teaching and he is happy to be approached for projects in these areas. He is also available for consultancy, advice and assessment in the field of industrial software engineering.</details>
+            <version>55</version>
+            <uid>PERSON_006</uid>
+            <givenNames>Joost</givenNames>
+            <familyName>Noppen 1.6</familyName>
+            <salutation>Dr</salutation>
+            <email>j.noppen@uea.ac.uk</email>
+            <familyNameLast>true</familyNameLast>
+        </person>
+        <coursework>
+            <name>Offline Movie DataBase (OMDB) in C with bitmaps</name>
+            <details>The aim of this assignment is for the student to gain experience in the design and implementation of a simple application in the C programming language.</details>
+            <version>57</version>
+            <uid>PROG2_CW_1</uid>
+            <extensions></extensions>
+            <weighting>20</weighting>
+            <setBy>PERSON_002</setBy>
+            <markedBy>PERSON_002</markedBy>
+            <reviewedBy>PERSON_001</reviewedBy>
+            <marks>100</marks>
+        </coursework>
+        <exam>
+            <name>Final Exam of your life</name>
+            <details>This is the final exam.\nDo not be late.\nOr you will not pass.</details>
+            <version>55</version>
+            <uid>PROG2_EXAM_1</uid>
+            <resit>PROG2_EXAM_1_RESIT</resit>
+            <weighting>30</weighting>
+            <setBy>PERSON_001</setBy>
+            <markedBy>PERSON_001</markedBy>
+            <reviewedBy>PERSON_002</reviewedBy>
+            <marks>120</marks>
+        </exam>
+        <timetableEvent>
+            <name>Graphics 1.5</name>
+            <details>Lecture on OpenGL basics and Visual Studio.</details>
+            <version>53</version>
+            <uid>TT_CMP-5010B_LEC_01</uid>
+            <date>01/02/2017T11:00:00Z</date>
+            <room>ROOM_SP_1_27</room>
+            <lecturer>PERSON_007</lecturer>
+            <timetableEventType>LECTURE</timetableEventType>
+            <duration>110</duration>
+        </timetableEvent>
+        <person>
+            <name>Tony Bagnall 0.5 Beta</name>
+            <details>Tony joined CMP as a part time MRes student/part time teaching assistant in 1993 having finished his BSc in Mathematics and Statistics at the University of Hertfordshire. After completing his Masters by research in 1995 he began a PhD titled "Modelling the UK electricity market with autonomous adaptive agents". After a brief period as a research assistant on a data mining project sponsored by Master Foods and Centrica, in 1999 he completed his PhD and was appointed as a Lecturer in Statistics for Data Mining jointly in the schools of Computer Science and Mathematics. In 2003 statistics moved into CMP and since then Tony has been a full member of the school. In 2007 he was promoted to senior lecturer. (THIS SHOULD NOT UPDATE)</details>
+            <version>32</version>
+            <uid>PERSON_001</uid>
+            <givenNames>Anthony</givenNames>
+            <familyName>Bagnall 0.5 Beta</familyName>
+            <salutation>Dr</salutation>
+            <email>anthony.bagnall@myspace.com</email>
+            <familyNameLast>true</familyNameLast>
+        </person>
+    </updates>
+    <new></new>
+</hubfile>

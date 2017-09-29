@@ -1,3 +1,24 @@
+/*
+ * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
+ * Bijan Ghasemi Afshar
+ *
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package Model;
 
 import javax.crypto.NoSuchPaddingException;
@@ -8,7 +29,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 /**
- * PearPlanner
+ * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 4/27/17
  */
 public class StudyPlanner implements Serializable
@@ -66,6 +87,28 @@ public class StudyPlanner implements Serializable
         StudyProfile[] sp = new StudyProfile[this.studyProfiles.size()];
         sp = this.studyProfiles.toArray(sp);
         return sp;
+    }
+
+    /**
+     * This was added at the last minute before releasing and should be in the Module class, however
+     * if we had done that our Java Serialized file, which took 3 hours prepare, would no longer have worked.
+     * This is temporary solution so you can still use our prepared Study Planner save file, but in the next iteration
+     * it will be moved to the correct place and would not consist of 4 nested loops.
+     * Also, for public release, we would create a file format for saving in so Java Serialization issues would not
+     * occur for the end user.
+     *
+     * @param module
+     * @return
+     */
+    public int getTimeSpent(Module module)
+    {
+        int time = 0;
+        for (Assignment assignment : module.getAssignments())
+            for (Task task : assignment.getTasks())
+                for (Requirement requirement : task.getRequirements())
+                    for (Activity activity : requirement.getActivityLog())
+                        time += activity.getDuration();
+        return time;
     }
 
     /**
