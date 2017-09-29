@@ -18,26 +18,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
- 
- /**
+
+/**
  * The application plugin facilitates creating an executable JVM application.
  */
 
 apply plugin: 'application'
 
- /**
+/**
  * This line specifies where the main.java file is found.
  */
 
 mainClassName='View.Main'
 
- /**
+/**
  * This statement declares where Gradle is to find directories
  * for source code, external resources, and test classes
  */
 
 sourceSets {
-    main {
+	main {
 		java {
 			srcDirs = ['src']
 		}
@@ -53,7 +53,7 @@ sourceSets {
 	}
 }
 
- /**
+/**
  * Gradle uses this built-in function to locate declared
  * dependencies within Maven's central repositories.
  */
@@ -62,7 +62,7 @@ repositories {
 	mavenCentral()
 }
 
- /**
+/**
  * Gradle grabs the JUnit dependencies from Maven central,
  * and grabs local dependencies from the project filetree.
  */
@@ -73,7 +73,7 @@ dependencies {
 	compile fileTree(dir: 'src')
 }
 
- /**
+/**
  * IgnoreFailures is set to true until the failure issues are resolved
  * (refer to github.com/rsanchez-wsu/RaiderPlanner/issues/21)
  */
@@ -82,7 +82,7 @@ test {
 	ignoreFailures = true
 }
 
- /**
+/**
  * Tells Gradle to assemble a JAR archive.
  */
 
