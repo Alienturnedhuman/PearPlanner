@@ -24,6 +24,15 @@
 */
 
 apply plugin: 'application'
+apply plugin: 'eclipse'
+
+/**
+* This line declares a Gradle project nature for the Eclipse IDE.
+*/
+
+eclipse.project {
+  	natures 'org.springsource.ide.eclipse.gradle.core.nature'
+}
 
 /**
 * This line specifies where the main.java file is found.
