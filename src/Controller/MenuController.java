@@ -37,6 +37,7 @@ import Model.Requirement;
 import Model.StudyProfile;
 import Model.Task;
 import Model.TimetableEvent;
+import Model.iCalExport;
 import View.GanttishDiagram;
 import View.UIManager;
 import javafx.animation.TranslateTransition;
@@ -442,9 +443,18 @@ public class MenuController implements Initializable {
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
 		// =================
 		// Populate Agenda:
-		ArrayList<Event> calendar = MainController.getSPC().getPlanner().getCurrentStudyProfile()
-				.getCalendar();
+		ArrayList<Event> calendar = MainController.getSPC().getPlanner().getCurrentStudyProfile().getCalendar();
+		
+        //Counter to create unique ICS file names for export
+        int counter = 0;
+        //Creation of ICS export factory
+        iCalExport iExport = new iCalExport();
+        //Preparation of export directory
+        iExport.iCalSetup();
+		
+        
 		for (Event e : calendar) {
+			iExport.createExportEvent(e, counter);
 			if (e instanceof TimetableEvent) {
 				LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
 						ZoneId.systemDefault());
@@ -481,6 +491,7 @@ public class MenuController implements Initializable {
 						.withEndLocalDateTime(stime.plusMinutes(60)).withAppointmentGroup(
 								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
 			}
+			counter++;
 		}
 		layout.getChildren().addAll(nav, content);
 		Platform.runLater(() -> content
