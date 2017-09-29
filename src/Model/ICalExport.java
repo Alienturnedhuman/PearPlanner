@@ -35,8 +35,7 @@ import biweekly.util.Duration;
  * @author amila
  *
  */
-public class iCalExport {
-	
+public class ICalExport{
 	private Date eStart;
 	private String title;
 	private MultilineString description;
@@ -50,29 +49,29 @@ public class iCalExport {
 		setDescription(event.getDetails());
 		this.counter = counter;
 		
-		
+		//Creation of new export ICS file
 		File file = new File("calendarExport/" + createFileName(counter));
 		
+		//Creation of iCal export helper
 		ICalendar ical = new ICalendar();
 		VEvent calEvent = new VEvent();
-		
 		Summary summary = calEvent.setSummary(title);
 		summary.setLanguage("en-us");
 		
-		//Default hard coded duration
+		//Default hard coded duration values
 		hours = 1;
 		minutes = 0;
 		
 		//If duration exists within event, pull duration
 		if (event instanceof TimetableEvent) {
 			int intDuration = ((TimetableEvent) event).getDuration();
-			hours = intDuration/60;
-			minutes = intDuration%60;
+			hours = intDuration / 60;
+			minutes = intDuration % 60;
 		} else if (event instanceof ExamEvent) {
 			int intDuration = ((ExamEvent) event).getDuration();
-			hours = intDuration/60;
-			minutes = intDuration%60;
-		} 
+			hours = intDuration / 60;
+			minutes = intDuration % 60;
+		}
 		
 		//Set duration within event
 		Duration duration = new Duration.Builder().hours(hours).minutes(minutes).build();

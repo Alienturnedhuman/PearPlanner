@@ -37,7 +37,7 @@ import Model.Requirement;
 import Model.StudyProfile;
 import Model.Task;
 import Model.TimetableEvent;
-import Model.iCalExport;
+import Model.ICalExport;
 import View.GanttishDiagram;
 import View.UIManager;
 import javafx.animation.TranslateTransition;
@@ -448,7 +448,7 @@ public class MenuController implements Initializable {
         //Counter to create unique ICS file names for export
         int counter = 0;
         //Creation of ICS export factory
-        iCalExport iExport = new iCalExport();
+        ICalExport iExport = new ICalExport();
         //Preparation of export directory
         iExport.iCalSetup();
 		
