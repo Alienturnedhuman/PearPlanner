@@ -18,32 +18,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-/**
-* The application plugin facilitates creating an executable JVM application.
-*/
+ 
+ /**
+ * The application plugin facilitates creating an executable JVM application.
+ */
 
 apply plugin: 'application'
-apply plugin: 'eclipse'
 
-/**
-* This line declares a Gradle project nature for the Eclipse IDE.
-*/
-
-eclipse.project {
-  	natures 'org.springsource.ide.eclipse.gradle.core.nature'
-}
-
-/**
-* This line specifies where the main.java file is found.
-*/
+ /**
+ * This line specifies where the main.java file is found.
+ */
 
 mainClassName='View.Main'
 
-/**
-* This statement declares where Gradle is to find directories
-* for source code, external resources, and test classes
-*/
+ /**
+ * This statement declares where Gradle is to find directories
+ * for source code, external resources, and test classes
+ */
 
 sourceSets {
     main {
@@ -62,19 +53,19 @@ sourceSets {
 	}
 }
 
-/**
-* Gradle uses this built-in function to locate declared
-* dependencies within Maven's central repositories.
-*/
+ /**
+ * Gradle uses this built-in function to locate declared
+ * dependencies within Maven's central repositories.
+ */
 
 repositories {
 	mavenCentral()
 }
 
-/**
-* Gradle grabs the JUnit dependencies from Maven central,
-* and grabs local dependencies from the project filetree.
-*/
+ /**
+ * Gradle grabs the JUnit dependencies from Maven central,
+ * and grabs local dependencies from the project filetree.
+ */
 
 dependencies {
 	testCompile 'junit:junit:4.12'
@@ -82,18 +73,18 @@ dependencies {
 	compile fileTree(dir: 'src')
 }
 
-/**
-* IgnoreFailures is set to true until the failure issues are resolved
-* (refer to github.com/rsanchez-wsu/RaiderPlanner/issues/21)
-*/
+ /**
+ * IgnoreFailures is set to true until the failure issues are resolved
+ * (refer to github.com/rsanchez-wsu/RaiderPlanner/issues/21)
+ */
 
 test {
 	ignoreFailures = true
 }
 
-/**
-* Tells Gradle to assemble a JAR archive.
-*/
+ /**
+ * Tells Gradle to assemble a JAR archive.
+ */
 
 jar {
 	manifest.attributes "Main-Class": mainClassName
