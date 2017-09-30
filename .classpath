@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-        <classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>   
+        <classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
         <classpathentry kind="src" path="src"/>
         <classpathentry kind="src" path="Test"/>
         <classpathentry exported="true" kind="lib" path="lib/AppleJavaExtensions-1.6.jar"/>
@@ -22,6 +22,6 @@
         <classpathentry exported="true" kind="lib" path="lib/testfx-junit5-4.0.6-alpha.jar"/>
         <classpathentry exported="true" kind="lib" path="lib/testfx-legacy-4.0.6-alpha.jar"/>
         <classpathentry exported="true" kind="lib" path="lib/commons-validator-1.6.jar"/>
-        <classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>      
+        <classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
         <classpathentry kind="output" path="bin"/>
 </classpath>
