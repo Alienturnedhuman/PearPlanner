@@ -266,7 +266,6 @@ public class MenuController implements Initializable {
 			if (activity != null) {
 				MainController.getSPC().addActivity(activity);
 			}
-			openMenu.fire();
 
 		} catch (Exception e) {
 			UIManager.reportError("Unable to open View file");
