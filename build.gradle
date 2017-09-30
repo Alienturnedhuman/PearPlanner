@@ -79,7 +79,7 @@ dependencies {
  */
 
 test {
-	ignoreFailures = true
+	ignoreFailures = false
 }
 
 /**
