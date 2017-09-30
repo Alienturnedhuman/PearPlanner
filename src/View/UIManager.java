@@ -79,6 +79,7 @@ import java.util.ArrayList;
 /**
  * Created by Zilvinas on 04/05/2017.
  */
+
 public class UIManager {
 	private static Stage mainStage = new Stage();
 	private static MenuController mc = new MenuController();
@@ -131,6 +132,9 @@ public class UIManager {
 		// Set the scene:
 		mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
 		mainStage.setTitle("RaiderPlanner");
+		// Minimum screen width set to fit with the current layout where the modules do not wrap.
+        mainStage.setMinWidth(1000);
+        mainStage.setMinHeight(500);
 		mainStage.getIcons().add(new Image("file:icon.png"));
 		mainStage.showAndWait();
 	}
@@ -553,3 +557,4 @@ public class UIManager {
 	}
 
 }
+
