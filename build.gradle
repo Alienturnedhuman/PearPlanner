@@ -74,8 +74,7 @@ dependencies {
 }
 
 /**
- * IgnoreFailures is set to true until the failure issues are resolved
- * (refer to github.com/rsanchez-wsu/RaiderPlanner/issues/21)
+ * Ensure the build fails if any unit test fails.
  */
 
 test {
