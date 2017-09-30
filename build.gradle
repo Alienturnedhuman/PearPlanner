@@ -74,15 +74,6 @@ dependencies {
 }
 
 /**
- * IgnoreFailures is set to true until the failure issues are resolved
- * (refer to github.com/rsanchez-wsu/RaiderPlanner/issues/21)
- */
-
-test {
-	ignoreFailures = true
-}
-
-/**
  * Tells Gradle to assemble a JAR archive.
  */
 
