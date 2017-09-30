@@ -26,13 +26,9 @@
 
                 <Button fx:id="calendar" prefHeight="33.0" prefWidth="33.0" styleClass="button-image" style="-fx-background-image: url('/Content/calendar.png'); -fx-background-color: #5C8B76"/>
 
-                <HBox prefWidth="11"></HBox>
+                <HBox prefWidth="13"></HBox>
 
-                <Button fx:id="showNotification" styleClass="button-image" prefWidth="35.0" prefHeight="31.0" style="-fx-background-color: #5C8B76"/>
-
-                <HBox prefWidth="7"></HBox>
-
-                <Button fx:id="showNotification" styleClass="button-image" prefWidth="31.0"/>
+                <Button fx:id="showNotification" styleClass="button-image" prefWidth="39.0" prefHeight="35.0" style="-fx-background-color: #5C8B76"/>
             </items>
         </ToolBar>
         <GridPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
