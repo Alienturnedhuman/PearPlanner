@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017
+ * Copyright (C) 2017 - Amila Dias
  *
  *
  *
@@ -32,36 +32,30 @@ import biweekly.property.Summary;
 import biweekly.util.Duration;
 
 /**
- * @author amila
- *
+ * @author Amila Dias
+ * CEG 3120 - RaiderPlanner
  */
+
 public class ICalExport{
 	private Date eStart;
 	private String title;
-	private MultilineString description;
 	private int hours;
 	private int minutes;
-	private int counter;
 	
-	public void createExportEvent(Event event, int counter){
+	public void createExportEvent(Event event, int counter) {
 		seteStart(event.getDate());
 		setTitle(event.getName());
 		setDescription(event.getDetails());
-		this.counter = counter;
-		
 		//Creation of new export ICS file
 		File file = new File("calendarExport/" + createFileName(counter));
-		
 		//Creation of iCal export helper
 		ICalendar ical = new ICalendar();
 		VEvent calEvent = new VEvent();
 		Summary summary = calEvent.setSummary(title);
 		summary.setLanguage("en-us");
-		
 		//Default hard coded duration values
 		hours = 1;
 		minutes = 0;
-		
 		//If duration exists within event, pull duration
 		if (event instanceof TimetableEvent) {
 			int intDuration = ((TimetableEvent) event).getDuration();
@@ -72,40 +66,36 @@ public class ICalExport{
 			hours = intDuration / 60;
 			minutes = intDuration % 60;
 		}
-		
 		//Set duration within event
 		Duration duration = new Duration.Builder().hours(hours).minutes(minutes).build();
-		calEvent.setDuration(duration);	
-
+		calEvent.setDuration(duration);
 		//Set start date
 		calEvent.setDateStart(eStart);
-				
 		//Add new event to ICS File
 		ical.addEvent(calEvent);
-		
 		//Create ICS File
 		createIcs(ical, file);
 	}
-	
-	public void iCalSetup(){
+
+	public void iCalSetup() {
 		File newDir = new File("calendarExport");
-		if(newDir.exists()){
+		if(newDir.exists()) {
 			System.out.println("Calendar Export Directory already exists, all files were overwritten");
 		} else {
 			newDir.mkdirs();
 		}
 	}
-	
-	private void createIcs(ICalendar iCal, File file){
-		try{
+
+	private void createIcs(ICalendar iCal, File file) {
+		try {
 			Biweekly.write(iCal).go(file);
-		} catch (IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	private String createFileName(int counter){
+
+	private String createFileName(int counter) {
 		String str = "calendarExport" + counter + ".ics";
 		return str;
 	}
@@ -128,6 +118,5 @@ public class ICalExport{
 	 * @param description the description to set
 	 */
 	public void setDescription(MultilineString description) {
-		this.description = description;
 	}
 }

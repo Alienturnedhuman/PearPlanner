@@ -444,15 +444,12 @@ public class MenuController implements Initializable {
 		// =================
 		// Populate Agenda:
 		ArrayList<Event> calendar = MainController.getSPC().getPlanner().getCurrentStudyProfile().getCalendar();
-		
-        //Counter to create unique ICS file names for export
-        int counter = 0;
+		//Counter to create unique ICS file names for export
+		int counter = 0;
         //Creation of ICS export factory
         ICalExport iExport = new ICalExport();
         //Preparation of export directory
         iExport.iCalSetup();
-		
-        
 		for (Event e : calendar) {
 			iExport.createExportEvent(e, counter);
 			if (e instanceof TimetableEvent) {
