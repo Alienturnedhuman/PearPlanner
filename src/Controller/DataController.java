@@ -427,9 +427,7 @@ public class DataController
             ConsoleIO.setConsoleMessage("Attempting to import " + Integer.toString(assetList.size())
                     + " items to VersionControl...", true);
             ConsoleIO.setConsoleMessage("Starting with " + VersionControlEntity.libraryReport() + " entries");
-
             ArrayList<Event> calendarItems = new ArrayList<>();
-            
             for (String key : assetList.keySet())
             {
                 ConsoleIO.setConsoleMessage("Adding Asset: " + key, true);
