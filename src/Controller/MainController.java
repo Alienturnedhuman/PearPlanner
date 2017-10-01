@@ -21,17 +21,27 @@
 
 package Controller;
 
-import Model.Account;
 import Model.HubFile;
-import Model.Notification;
 import Model.StudyPlanner;
 import View.UIManager;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import javax.crypto.*;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SealedObject;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
 
 /**
  * Created by bendickson on 5/4/17.
@@ -65,9 +75,9 @@ public class MainController {
 	}
 
 	/**
-     * Initializes the Study Planner by either registering a new account or
-     * importing an existing Study Planner file.
-     */
+	 * Initializes the Study Planner by either registering a new account or
+	 * importing an existing Study Planner file.
+	 */
 	public static void initialise() {
 		try {
 			ui.showStartup();
@@ -85,7 +95,9 @@ public class MainController {
 				if (SPC.getPlanner().getCurrentStudyProfile() != null && SPC.getPlanner()
 						.getCurrentStudyProfile().getName().equals("First year Gryffindor")) {
 					UIManager.reportSuccess(
-							"Note: This is a pre-loaded sample StudyPlanner, as used by Harry Potter. To make your own StudyPlanner, restart the application and choose \"New File\".");
+							"Note: This is a pre-loaded sample StudyPlanner, as used by Harry "
+							+ "Potter. To make your own StudyPlanner, restart the application "
+							+ "and choose \"New File\".");
 				}
 
 			} else {
@@ -138,10 +150,10 @@ public class MainController {
 	}
 
 	/**
-     * Handles importing a new file.
-     *
-     * @return whether imported successfully.
-     */
+	 * Handles importing a new file.
+	 *
+	 * @return whether imported successfully.
+	 */
 	public static boolean importFile() {
 		// Call a dialog:
 		File tempFile = ui.loadFileDialog();
@@ -185,51 +197,24 @@ public class MainController {
 	}
 
 	/**
-     * Apparently (according to Stackoverflow) the Java Standard library doesn't have a
-     * standard check for testing if a string value is a number or not?!)
-     * <p>
-     * Therefore, we are using this proposed isNumeric method from:
-     * <p>
-     * http://stackoverflow.com/a/1102916
-     *
-     * @param str String to be tested
-     * @return whether the given String is numeric.
-     */
+	 * Apparently (according to Stackoverflow) the Java Standard library doesn't have a
+	 * standard check for testing if a string value is a number or not?!)
+	 *
+	 * <p>Therefore, we are using this proposed isNumeric method from:
+	 *
+	 * <p>http://stackoverflow.com/a/1102916
+	 *
+	 * @param str String to be tested
+	 * @return whether the given String is numeric.
+	 */
 	public static boolean isNumeric(String str) {
 		try {
-			double d = Double.parseDouble(str);
+			// No need to assign the result; the exception or lack of is what matters
+			Double.parseDouble(str);
 		} catch (NumberFormatException nfe) {
 			return false;
 		}
 		return true;
 	}
 
-	/**
-     * Early console based implementation.
-     *
-     * @param menu menu option.
-     */
-	private static void consoleUI(String menu) {
-		while (!menu.equals("")) {
-			switch (menu) {
-			case "Quit Program":
-				menu = "";
-				break;
-			case "Main Menu":
-			case "Return to Main Menu":
-				menu = View.ConsoleIO.view_main();
-				break;
-			case "Create Study Profile":
-				menu = View.ConsoleIO.view_createSP();
-				break;
-			case "View Study Profile":
-				menu = View.ConsoleIO.view_viewSP(SPC);
-				break;
-			case "Load Study Profile File":
-				menu = View.ConsoleIO.view_loadSP(SPC);
-			default:
-				menu = "";
-			}
-		}
-	}
 }

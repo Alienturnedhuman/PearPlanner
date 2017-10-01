@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017
+ * Copyright (C) 2017 - Eric Levine
  *
  *
  *
@@ -24,6 +24,7 @@ package Controller;
 import Model.Account;
 import Model.Notification;
 import View.UIManager;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
