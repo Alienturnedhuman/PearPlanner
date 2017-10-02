@@ -196,7 +196,6 @@ public class MenuController implements Initializable {
 	 * Display the Study Dashboard pane.
 	 */
 	public void loadDashboard() {
-		
 		//set ToolTips
 		openMenu.setTooltip(new Tooltip("Menu"));
 		showNotification.setTooltip(new Tooltip("Notifications"));
