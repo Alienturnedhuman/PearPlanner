@@ -21,8 +21,8 @@
 
 package Model;
 
-import Controller.MainController;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
@@ -36,6 +36,8 @@ public class Event extends VersionControlEntity
     protected GregorianCalendar date = null;
 
     private static Pattern dateRegex = Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)Z");
+    
+    protected SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy'T'hh:mm:ss'Z'");
 
     // public methods
 
@@ -78,19 +80,13 @@ public class Event extends VersionControlEntity
         // 09/04/2017T15:00:00Z
         if (validDateString(dateString))
         {
-            String sDay = dateString.substring(0, 2);
-            String sMonth = dateString.substring(3, 5);
-            String sYear = dateString.substring(6, 10);
-            String sHour = dateString.substring(11, 13);
-            String sMinute = dateString.substring(14, 16);
-            String sSecond = dateString.substring(17, 19);
-            if (MainController.isNumeric(sDay) && MainController.isNumeric(sMonth) && MainController.isNumeric(sYear) &&
-                    MainController.isNumeric(sHour) && MainController.isNumeric(sMinute) &&
-                    MainController.isNumeric(sSecond))
-            {
-                date = new GregorianCalendar(Integer.parseInt(sYear), Integer.parseInt(sMonth) - 1, Integer.parseInt(sDay)
-                        , Integer.parseInt(sHour), Integer.parseInt(sMinute), Integer.parseInt(sSecond));
-            }
+			try {
+				Date parsedDate = formatter.parse(dateString);
+				this.date = new GregorianCalendar();
+	            this.date.setTime(parsedDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
         }
     }
 
