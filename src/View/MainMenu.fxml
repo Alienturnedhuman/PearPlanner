@@ -78,8 +78,7 @@
                             </Button>
                         </HBox>
 
-
-                        <HBox GridPane.rowIndex="3">
+                        <HBox GridPane.rowIndex="1">
                             <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                 <HBox.margin>
                                     <Insets left="5"/>
@@ -94,7 +93,7 @@
                         </HBox>
 
 
-                        <HBox GridPane.rowIndex="4">
+                        <HBox GridPane.rowIndex="2">
                             <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                 <HBox.margin>
                                     <Insets left="5"/>
@@ -108,7 +107,7 @@
                             />
                         </HBox>
 
-                        <HBox GridPane.rowIndex="5">
+                        <HBox GridPane.rowIndex="3">
                             <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                 <HBox.margin>
                                     <Insets left="5"/>
@@ -122,7 +121,7 @@
                             />
                         </HBox>
 
-                        <HBox GridPane.rowIndex="6">
+                        <HBox GridPane.rowIndex="5">
                             <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                 <HBox.margin>
                                     <Insets left="5"/>
