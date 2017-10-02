@@ -205,7 +205,7 @@ public class MenuController implements Initializable {
 		showNotification.setTooltip(new Tooltip("Notifications"));
 		addActivity.setTooltip(new Tooltip("Add activity"));
 		calendar.setTooltip(new Tooltip("Open Calendar"));
-		
+
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
