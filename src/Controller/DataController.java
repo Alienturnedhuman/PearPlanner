@@ -39,7 +39,7 @@ import java.util.HashMap;
  */
 public class DataController
 {
-	private static  void processVCEupdate(VersionControlEntity vce)
+	private static void processVCEupdate(VersionControlEntity vce)
     {
         if (vce.addToLibrary() || VersionControlEntity.get(vce.getUID()).update(vce))
         {
@@ -50,7 +50,7 @@ public class DataController
         }
     }
 
-    private static  HubFile processUpdateHubFile(NodeList nList) throws Exception
+    private static HubFile processUpdateHubFile(NodeList nList) throws Exception
     {
         HubFile r = null;
         XMLcontroller xmlTools = new XMLcontroller();
@@ -150,7 +150,7 @@ public class DataController
         throw new Exception("UID referenced is not in database for '" + uid + "'");
     }
 
-    public static  void addVCEproperties(VersionControlEntity vce, HashMap<String, XMLcontroller.NodeReturn> values)
+    public static void addVCEproperties(VersionControlEntity vce, HashMap<String, XMLcontroller.NodeReturn> values)
     {
         vce.addProperties(values.get("name").getString(),
                 values.get("details").getMultilineString());
@@ -160,7 +160,7 @@ public class DataController
 
     }
 
-    private static  HubFile processNewHubFile(NodeList nList) throws Exception
+    private static HubFile processNewHubFile(NodeList nList) throws Exception
     {
         int beginLog = ConsoleIO.getLogSize();
         ConsoleIO.setConsoleMessage("Importing New Hub File", true);
@@ -448,7 +448,7 @@ public class DataController
         return r;
     }
 
-    public static  HubFile loadHubFile(File tempFile)
+    public static HubFile loadHubFile(File tempFile)
     {
         HubFile r = null;
         if (tempFile.exists())
