@@ -24,7 +24,7 @@ package Model;
 import java.io.Serializable;
 
 /**
- * PearPlanner
+ * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 4/27/17
  */
 public class ExtensionApplication implements Serializable

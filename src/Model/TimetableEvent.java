@@ -23,7 +23,7 @@ package Model;
 
 
 /**
- * PearPlanner
+ * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 4/27/17
  */
 public class TimetableEvent extends Event

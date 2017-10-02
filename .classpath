@@ -1,27 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="Test"/>
-	<classpathentry kind="lib" path="lib/AppleJavaExtensions-1.6.jar"/>
-	<classpathentry kind="lib" path="lib/guava-21.0.jar"/>
-	<classpathentry kind="lib" path="lib/hamcrest-all-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/hamcrest-core-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/hamcrest-generator-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/hamcrest-integration-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/hamcrest-junit-2.0.0.0.jar"/>
-	<classpathentry kind="lib" path="lib/hamcrest-library-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/jfoenix.jar"/>
-	<classpathentry kind="lib" path="lib/jfxtras-agenda-8.0-r5.jar"/>
-	<classpathentry kind="lib" path="lib/jfxtras-common-8.0-r5.jar"/>
-	<classpathentry kind="lib" path="lib/jfxtras-controls-8.0-r5.jar"/>
-	<classpathentry kind="lib" path="lib/jfxtras-labs-samples-8.0-r6-20160701.060717-1.jar"/>
-	<classpathentry kind="lib" path="lib/junit-4.12.jar"/>
-	<classpathentry kind="lib" path="lib/testfx-core-4.0.0-20150226.214553-8-sources.jar"/>
-	<classpathentry kind="lib" path="lib/testfx-core-4.0.6-alpha.jar"/>
-	<classpathentry kind="lib" path="lib/testfx-junit-4.0.6-alpha.jar"/>
-	<classpathentry kind="lib" path="lib/testfx-junit5-4.0.6-alpha.jar"/>
-	<classpathentry kind="lib" path="lib/testfx-legacy-4.0.6-alpha.jar"/>
-	<classpathentry kind="lib" path="lib/commons-validator-1.6.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
