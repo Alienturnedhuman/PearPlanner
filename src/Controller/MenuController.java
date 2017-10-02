@@ -56,13 +56,16 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
@@ -75,6 +78,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -98,6 +102,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Zilvinas on 05/05/2017.
  */
+
 public class MenuController implements Initializable {
 	/**
 	 * Initializes switch names and other buttons.
@@ -195,6 +200,12 @@ public class MenuController implements Initializable {
 	 * Display the Study Dashboard pane.
 	 */
 	public void loadDashboard() {
+		//set ToolTips
+		openMenu.setTooltip(new Tooltip("Menu"));
+		showNotification.setTooltip(new Tooltip("Notifications"));
+		addActivity.setTooltip(new Tooltip("Add activity"));
+		calendar.setTooltip(new Tooltip("Open Calendar"));
+
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
@@ -209,11 +220,14 @@ public class MenuController implements Initializable {
 		studyProfile.getStyleClass().add("title");
 		GridPane.setMargin(studyProfile, new Insets(10));
 		this.mainContent.addRow(1, studyProfile);
-
-		FlowPane modules = new FlowPane();
-		modules.setHgap(30);
-		modules.setVgap(20);
-		modules.setPrefWrapLength(1000);
+		this.mainContent.setMaxSize(Control.USE_COMPUTED_SIZE, 1000);
+        this.mainContent.getColumnConstraints().add(new ColumnConstraints(Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, 2000, Priority.ALWAYS, HPos.CENTER, true));
+		GridPane modules = new GridPane();
+        modules.setHgap(30);
+        modules.setVgap(20);
+        // This code will be added when wanting to resize the modules to grow with the page
+        // modules.getRowConstraints().add(new RowConstraints(1, Control.USE_COMPUTED_SIZE, 200, Priority.ALWAYS, VPos.CENTER, true));
+        int i = 0;
 		for (Module module : profile.getModules()) {
 			VBox vbox = new VBox();
 			vbox.setSpacing(5);
@@ -239,8 +253,10 @@ public class MenuController implements Initializable {
 			Button view = new Button("View");
 			view.setOnAction(e -> module.open(this.current));
 			vbox.getChildren().add(view);
-
-			modules.getChildren().add(vbox);
+			modules.setMaxSize(800, 1000);
+            modules.getColumnConstraints().add(new ColumnConstraints(Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, 1000, Priority.ALWAYS, HPos.CENTER, true));         
+            i++;
+            modules.addColumn(i,vbox);
 		}
 		// =================
 
@@ -258,7 +274,6 @@ public class MenuController implements Initializable {
 			if (activity != null) {
 				MainController.getSPC().addActivity(activity);
 			}
-			openMenu.fire();
 
 		} catch (Exception e) {
 			UIManager.reportError("Unable to open View file");
