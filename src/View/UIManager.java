@@ -27,23 +27,18 @@ import Controller.MainController;
 import Controller.MenuController;
 import Controller.MilestoneController;
 import Controller.RequirementController;
+import Controller.StartupController;
 import Controller.StudyProfileController;
 import Controller.TaskController;
 import Model.Account;
 import Model.Activity;
 import Model.Assignment;
-import Model.Deadline;
-import Model.Event;
-import Model.ExamEvent;
 import Model.Milestone;
 import Model.ModelEntity;
 import Model.Module;
 import Model.Requirement;
 import Model.StudyProfile;
 import Model.Task;
-import Model.TimetableEvent;
-
-import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -67,14 +62,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import jfxtras.scene.control.agenda.Agenda;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
 
 /**
  * Created by Zilvinas on 04/05/2017.
@@ -133,8 +124,8 @@ public class UIManager {
 		mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
 		mainStage.setTitle("RaiderPlanner");
 		// Minimum screen width set to fit with the current layout where the modules do not wrap.
-        mainStage.setMinWidth(1000);
-        mainStage.setMinHeight(500);
+		mainStage.setMinWidth(1000);
+		mainStage.setMinHeight(500);
 		mainStage.getIcons().add(new Image("file:icon.png"));
 		mainStage.showAndWait();
 	}
@@ -417,6 +408,31 @@ public class UIManager {
 	}
 
 	/**
+	 * Display startup window.
+	 */
+	public void showStartup() throws IOException {
+		StartupController sc = new StartupController();
+
+		// Load in the .fxml file:
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Startup.fxml"));
+		loader.setController(sc);
+		Parent root = loader.load();
+
+		// Set the scene:
+		Stage stage = new Stage();
+		stage.setScene(new Scene(root, 400, 500));
+		stage.setTitle("RaiderPlanner");
+		stage.resizableProperty().setValue(false);
+		stage.getIcons().add(new Image("file:icon.png"));
+		// Replaces red x click with a System.exit(0);
+		stage.setOnCloseRequest(event -> {
+			event.consume();
+			System.exit(0);
+		});
+		stage.showAndWait();
+	}
+
+	/**
 	 * Displays a GanttishDiagram window for the given Assignment.
 	 *
 	 * @param assignment Assignment for which to generate the GanttishDiagram.
@@ -508,6 +524,34 @@ public class UIManager {
 	}
 
 	/**
+	 * Displays a file dialog for importing .dat planner files
+	 *
+	 * @return a File object
+	 */
+	public File loadPlannerFileDialog() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Select a planner to load");
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
+		fileChooser.setInitialDirectory(new File("saves"));
+		File file = fileChooser.showOpenDialog(mainStage);
+		return file;
+	}
+
+	/**
+	 * Displays a file dialog for saving .dat planner files
+	 *
+	 * @return a File object
+	 */
+	public File savePlannerFileDialog() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save your planner file");
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
+		fileChooser.setInitialDirectory(new File("saves"));
+		File file = fileChooser.showSaveDialog(mainStage);
+		return file;
+	}
+
+	/**
 	 * Displays an error message.
 	 *
 	 * @param message to be displayed
@@ -557,4 +601,3 @@ public class UIManager {
 	}
 
 }
-
