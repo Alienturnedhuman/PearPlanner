@@ -51,7 +51,7 @@
                         <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Navigation"/>
                     </children>
                 </HBox>
-                <GridPane vgap="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                <GridPane vgap="15" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="ALWAYS"/>
@@ -88,7 +88,7 @@
                                 </image>
                             </ImageView>
                             <Button fx:id="milestones" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
-                                    text="Milestones" GridPane.rowIndex="3"
+                                    text="Milestones"
                             />
                         </HBox>
 
@@ -103,7 +103,7 @@
                                 </image>
                             </ImageView>
                             <Button fx:id="modules" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
-                                     text="Modules" GridPane.rowIndex="4"
+                                     text="Modules"
                             />
                         </HBox>
 
@@ -117,26 +117,36 @@
                                 </image>
                             </ImageView>
                             <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
-                                    text="Study Profiles" GridPane.rowIndex="5"
+                                    text="Study Profiles"
                             />
                         </HBox>
 
-                        <HBox GridPane.rowIndex="5">
-                            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                        <GridPane GridPane.rowIndex="4" vgap="11">
+                          <HBox GridPane.rowIndex="1">
+                            <ImageView fitHeight="2.0" fitWidth="200" pickOnBounds="true" preserveRatio="false">
                                 <HBox.margin>
-                                    <Insets left="5"/>
+                                    <Insets left="0"/>
                                 </HBox.margin>
                                 <image>
-                                    <Image url="/Content/importhubfile.png"/>
+                                    <Image url="/Content/line.png"/>
                                 </image>
                             </ImageView>
+                          </HBox>
+
+                          <HBox GridPane.rowIndex="2">
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                  <HBox.margin>
+                                      <Insets left="5"/>
+                                  </HBox.margin>
+                                  <image>
+                                      <Image url="/Content/importhubfile.png"/>
+                                  </image>
+                              </ImageView>
                             <Button onAction="#importFile" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;"
-                                    text="Import HUB file" GridPane.rowIndex="6"
+                                    text="Import HUB file"
                             />
-                        </HBox>
-
-
-
+                          </HBox>
+                        </GridPane>
 
                     </children>
                 </GridPane>
