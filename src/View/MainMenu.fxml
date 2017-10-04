@@ -41,13 +41,13 @@
                 </HBox>
             </children>
         </GridPane>
-        <AnchorPane fx:id="navList" prefWidth="200.0" style="-fx-background-color: #5C7167;" translateX="-200"
+        <AnchorPane fx:id="navList" prefWidth="173.0" style="-fx-background-color: #5C7167;" translateX="-173"
                     AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox style="-fx-background-color: #5C7167; -fx-padding: 8;"
                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                      <Button styleClass="button-image" prefHeight="18" prefWidth="19" fx:id="closeDrawer" style="-fx-background-image: url('/Content/close.png');
+                      <Button styleClass="button-image" prefWidth="21" fx:id="closeDrawer" style="-fx-background-image: url('/Content/close.png');
                         -fx-background-color: transparent; -fx-cursor: hand;">
                       </Button>
 
@@ -126,7 +126,7 @@
 
                         <GridPane GridPane.rowIndex="4" vgap="11">
                           <HBox GridPane.rowIndex="1">
-                            <ImageView fitHeight="2.0" fitWidth="200" pickOnBounds="true" preserveRatio="false">
+                            <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false">
                                 <HBox.margin>
                                     <Insets left="0"/>
                                 </HBox.margin>
