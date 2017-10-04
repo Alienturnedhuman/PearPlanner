@@ -25,72 +25,62 @@ package Model;
  * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class Extension extends VersionControlEntity
-{
-    // private data
-    private Deadline newDeadline;
-    private MultilineString circumstances;
-    private ApprovalStatus approvalStatus;
+public class Extension extends VersionControlEntity {
+	// private data
+	private Deadline newDeadline;
+	private MultilineString circumstances;
+	private ApprovalStatus approvalStatus;
 
-    @Override
-    protected void replace(VersionControlEntity receivedVCE)
-    {
-        if (receivedVCE instanceof Extension)
-        {
-            Extension castedVCE = (Extension) receivedVCE;
-            this.newDeadline = castedVCE.getNewDeadline();
-            this.circumstances = castedVCE.getCircumstances();
-            this.approvalStatus = castedVCE.getApprovalStatus();
-        }
+	@Override
+	protected void replace(VersionControlEntity receivedVCE) {
+		if (receivedVCE instanceof Extension) {
+			Extension castedVCE = (Extension) receivedVCE;
+			this.newDeadline = castedVCE.getNewDeadline();
+			this.circumstances = castedVCE.getCircumstances();
+			this.approvalStatus = castedVCE.getApprovalStatus();
+		}
 
-        super.replace(receivedVCE);
-    }
+		super.replace(receivedVCE);
+	}
 
-    public enum ApprovalStatus
-    {
-        PENDING, APPROVED, DECLINED
-    }
+	public enum ApprovalStatus {
+		PENDING, APPROVED, DECLINED
+	}
 
-    // public methods
+	// public methods
 
-    // getters
-    public Deadline getNewDeadline()
-    {
-        // initial set up code below - check if this needs updating
-        return newDeadline;
-    }
+	// getters
+	public Deadline getNewDeadline() {
+		// initial set up code below - check if this needs updating
+		return newDeadline;
+	}
 
-    public MultilineString getCircumstances()
-    {
-        // initial set up code below - check if this needs updating
-        return circumstances;
-    }
+	public MultilineString getCircumstances() {
+		// initial set up code below - check if this needs updating
+		return circumstances;
+	}
 
-    public ApprovalStatus getApprovalStatus()
-    {
-        // initial set up code below - check if this needs updating
-        return approvalStatus;
-    }
+	public ApprovalStatus getApprovalStatus() {
+		// initial set up code below - check if this needs updating
+		return approvalStatus;
+	}
 
-    // setters
-    public void setCircumstances(MultilineString newCircumstances)
-    {
-        // initial set up code below - check if this needs updating
-        circumstances = newCircumstances;
-    }
+	// setters
+	public void setCircumstances(MultilineString newCircumstances) {
+		// initial set up code below - check if this needs updating
+		circumstances = newCircumstances;
+	}
 
-    public void setNewDeadline(Deadline newNewDeadline)
-    {
-        // initial set up code below - check if this needs updating
-        newDeadline = newNewDeadline;
-    }
+	public void setNewDeadline(Deadline newNewDeadline) {
+		// initial set up code below - check if this needs updating
+		newDeadline = newNewDeadline;
+	}
 
-    public void setApprovalStatus(ApprovalStatus newApprovalStatus)
-    {
-        // initial set up code below - check if this needs updating
-        approvalStatus = newApprovalStatus;
-    }
+	public void setApprovalStatus(ApprovalStatus newApprovalStatus) {
+		// initial set up code below - check if this needs updating
+		approvalStatus = newApprovalStatus;
+	}
 
-    // constructor
+	// constructor
 
 }
