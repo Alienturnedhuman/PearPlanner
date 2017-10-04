@@ -1218,9 +1218,9 @@ public class MenuController implements Initializable {
 	 * Prepares animations for the main window.
 	 */
 	private void prepareAnimations() {
-		TranslateTransition openNav = new TranslateTransition(new Duration(300), navList);
+		TranslateTransition openNav = new TranslateTransition(new Duration(222), navList);
 		openNav.setToX(0);
-		TranslateTransition closeNav = new TranslateTransition(new Duration(300), navList);
+		TranslateTransition closeNav = new TranslateTransition(new Duration(173), navList);
 		openMenu.setOnAction((ActionEvent e1) -> {
 			this.isNavOpen = !isNavOpen;
 			if (navList.getTranslateX() != 0) {
@@ -1231,9 +1231,9 @@ public class MenuController implements Initializable {
 			}
 		});
 
-		TranslateTransition openNot = new TranslateTransition(new Duration(350), notifications);
+		TranslateTransition openNot = new TranslateTransition(new Duration(273), notifications);
 		openNot.setToY(0);
-		TranslateTransition closeNot = new TranslateTransition(new Duration(350), notifications);
+		TranslateTransition closeNot = new TranslateTransition(new Duration(222), notifications);
 
 		showNotification.setOnAction((ActionEvent e1) -> {
 			if (notifications.getTranslateY() != 0) {
