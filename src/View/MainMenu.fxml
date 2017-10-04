@@ -42,13 +42,16 @@
             </children>
         </GridPane>
         <AnchorPane fx:id="navList" prefWidth="200.0" style="-fx-background-color: #5C7167;" translateX="-200"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="56.0">
+                    AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-
-                <HBox alignment="CENTER_LEFT" style="-fx-background-color: #5C7167; -fx-padding: 10;"
+                <HBox style="-fx-background-color: #5C7167; -fx-padding: 8;"
                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Navigation"/>
+                      <Button styleClass="button-image" prefHeight="18" prefWidth="19" fx:id="closeDrawer" style="-fx-background-image: url('/Content/close.png');
+                        -fx-background-color: transparent; -fx-cursor: hand;">
+                      </Button>
+
+                      <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="  Navigation"/>
                     </children>
                 </HBox>
                 <GridPane vgap="15" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"

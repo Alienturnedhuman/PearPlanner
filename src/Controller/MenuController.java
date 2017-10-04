@@ -132,6 +132,8 @@ public class MenuController implements Initializable {
 	private Button modules;
 	@FXML
 	private Button calendar;
+	@FXML
+	private Button closeDrawer;
 
 	// Panes:
 	@FXML
@@ -355,7 +357,6 @@ public class MenuController implements Initializable {
 
 		// Buttons:
 		Button add = new Button("Add a new Milestone");
-
 		Button remove = new Button("Remove");
 		remove.setDisable(true);
 		// =================
@@ -1079,6 +1080,7 @@ public class MenuController implements Initializable {
 		this.isNavOpen = false;
 
 		// Set button actions:
+		this.closeDrawer.setOnAction(e -> openMenu.fire());
 		this.showDash.setOnAction(e -> this.main(Window.Dashboard));
 		this.studyProfiles.setOnAction(e -> this.main(Window.Profiles));
 		this.modules.setOnAction(e -> this.main(Window.Modules));
