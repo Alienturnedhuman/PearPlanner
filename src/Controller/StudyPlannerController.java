@@ -1,3 +1,24 @@
+/*
+ * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
+ * Bijan Ghasemi Afshar
+ *
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package Controller;
 
 import Model.*;
@@ -251,53 +272,8 @@ public class StudyPlannerController
     }
 
     // Constructors:
-    public StudyPlannerController() throws NoSuchAlgorithmException, NoSuchPaddingException
+    public StudyPlannerController()
     {
-        // checks if there is a existing settings file
-        if (DataController.existingSettingsFile())
-        {
-            // import data
-        } else
-        {
-            // create a blank one
-
-            // create an Account
-            String fullName = "";
-            boolean familyNameLast = false;
-            String salutation = "";
-            String email = "";
-
-            // CONSOLE INPUT  - to be replaced by javaFX
-            fullName = View.ConsoleIO.getDataString("Enter Name:");
-            while (!Person.validName(fullName))
-            {
-                fullName = View.ConsoleIO.getDataString("I'm sorry " + fullName +
-                        " I'm afraid I can't do that.\nName must only contain letters and spaces.\nPlease Enter Name:");
-            }
-            salutation = View.ConsoleIO.getDataString("Enter salutation:");
-            while (!Person.validSalutation(salutation))
-            {
-                salutation = View.ConsoleIO.getDataString("Salutation must only contain letters.\nPlease Enter Salutation:");
-            }
-            familyNameLast = View.ConsoleIO.getDataBool("Is the family name last (y/n)");
-
-            email = View.ConsoleIO.getDataString("Enter Email Address:");
-            while (!Person.validEmail(email))
-            {
-                email = View.ConsoleIO.getDataString("Invalid email address.\nPlease enter a valid email address:");
-            }
-            Person studentDetails = new Person(salutation, fullName, familyNameLast, email);
-            String studentAccountNumber = "";
-
-            View.ConsoleIO.setConsoleMessage("Hello " + studentDetails.getSalutation() + " " + studentDetails.getFamilyName());
-            View.ConsoleIO.setConsoleMessage("Thank you for creating a study profile.");
-
-
-            Account newAccount = new Account(studentDetails, studentAccountNumber);
-
-
-            planner = new StudyPlanner(newAccount);
-        }
     }
 
     /**

@@ -1,3 +1,24 @@
+/*
+ * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
+ * Bijan Ghasemi Afshar
+ *
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package Controller;
 
 import Model.*;
@@ -18,20 +39,7 @@ import java.util.HashMap;
  */
 public class DataController
 {
-
-
-    /**
-     * checks if there is a settings file and it is valid
-     * returns true if this is the case
-     * returns false if it isn't
-     */
-    static public boolean existingSettingsFile()
-    {
-        return false;
-        // not implmented yet
-    }
-
-    static private void processVCEupdate(VersionControlEntity vce)
+	private static void processVCEupdate(VersionControlEntity vce)
     {
         if (vce.addToLibrary() || VersionControlEntity.get(vce.getUID()).update(vce))
         {
@@ -42,7 +50,7 @@ public class DataController
         }
     }
 
-    static private HubFile processUpdateHubFile(NodeList nList) throws Exception
+    private static HubFile processUpdateHubFile(NodeList nList) throws Exception
     {
         HubFile r = null;
         XMLcontroller xmlTools = new XMLcontroller();
@@ -142,7 +150,7 @@ public class DataController
         throw new Exception("UID referenced is not in database for '" + uid + "'");
     }
 
-    static public void addVCEproperties(VersionControlEntity vce, HashMap<String, XMLcontroller.NodeReturn> values)
+    public static void addVCEproperties(VersionControlEntity vce, HashMap<String, XMLcontroller.NodeReturn> values)
     {
         vce.addProperties(values.get("name").getString(),
                 values.get("details").getMultilineString());
@@ -152,7 +160,7 @@ public class DataController
 
     }
 
-    static private HubFile processNewHubFile(NodeList nList) throws Exception
+    private static HubFile processNewHubFile(NodeList nList) throws Exception
     {
         int beginLog = ConsoleIO.getLogSize();
         ConsoleIO.setConsoleMessage("Importing New Hub File", true);
@@ -440,7 +448,7 @@ public class DataController
         return r;
     }
 
-    static public HubFile loadHubFile(File tempFile)
+    public static HubFile loadHubFile(File tempFile)
     {
         HubFile r = null;
         if (tempFile.exists())
