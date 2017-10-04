@@ -156,7 +156,7 @@
             </children>
         </AnchorPane>
         <AnchorPane fx:id="notifications" prefHeight="400.0" prefWidth="288.0" style="-fx-background-color: #5C7167"
-                    translateX="-20.0" translateY="-456.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+                    translateX="-20.0" translateY="-500.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
             <children>
                 <ToolBar minHeight="50.0" style="-fx-background-color: #5C7167" AnchorPane.leftAnchor="0.0"
                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

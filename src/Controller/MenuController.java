@@ -111,8 +111,12 @@ public class MenuController implements Initializable {
 
 	private Window current;
 	private boolean isNavOpen;
+	
+	//Shadows
 	private int shadowRadius = 44;
 	private int shadowOffset = 7;
+	private int shadowRadius2 = 27;
+	private int shadowOffset2 = 13;
 	
 	// Labels:
 	private Label welcome;
@@ -1082,6 +1086,10 @@ public class MenuController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		this.prepareAnimations();
 		this.isNavOpen = false;
+		
+		//Set shadows
+		notifications.setEffect(new DropShadow(this.shadowRadius2, 0, this.shadowOffset2, Color.BLACK));
+		navList.setEffect(new DropShadow(this.shadowRadius, this.shadowOffset, 0, Color.BLACK));
 
 		// Set button actions:
 		this.closeDrawer.setOnAction(e -> openMenu.fire());
@@ -1173,10 +1181,7 @@ public class MenuController implements Initializable {
 	/**
 	 * Handles menu options.
 	 */
-	private void updateMenu() {
-		//Set drop shadow on navigation menu
-		navList.setEffect(new DropShadow(this.shadowRadius, this.shadowOffset, 0, Color.BLACK));
-		
+	private void updateMenu() {		
 		this.addActivity.setDisable(false);
 		this.milestones.setDisable(false);
 		this.studyProfiles.setDisable(false);
@@ -1238,15 +1243,15 @@ public class MenuController implements Initializable {
 			}
 		});
 
-		TranslateTransition openNot = new TranslateTransition(new Duration(273), notifications);
+		TranslateTransition openNot = new TranslateTransition(new Duration(222), notifications);
 		openNot.setToY(0);
-		TranslateTransition closeNot = new TranslateTransition(new Duration(222), notifications);
+		TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
 
 		showNotification.setOnAction((ActionEvent e1) -> {
 			if (notifications.getTranslateY() != 0) {
 				openNot.play();
 			} else {
-				closeNot.setToY(-(notifications.getHeight()) - 56.0);
+				closeNot.setToY(-(notifications.getHeight() + this.shadowRadius + 56));
 				closeNot.play();
 			}
 		});
