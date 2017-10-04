@@ -65,6 +65,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -82,6 +83,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import jfxtras.scene.control.agenda.Agenda;
@@ -109,7 +111,9 @@ public class MenuController implements Initializable {
 
 	private Window current;
 	private boolean isNavOpen;
-
+	private int shadowRadius = 66;
+	private int shadowOffset = 7;
+	
 	// Labels:
 	private Label welcome;
 	@FXML
@@ -158,7 +162,7 @@ public class MenuController implements Initializable {
 	/**
 	 * Main method containing switch statements.
 	 */
-	public void main() {
+	public void main() {		
 		if (isNavOpen) {
 			openMenu.fire();
 		}
@@ -1170,6 +1174,9 @@ public class MenuController implements Initializable {
 	 * Handles menu options.
 	 */
 	private void updateMenu() {
+		//Set drop shadow on navigation menu
+		navList.setEffect(new DropShadow(this.shadowRadius, this.shadowOffset, 0, Color.BLACK));
+		
 		this.addActivity.setDisable(false);
 		this.milestones.setDisable(false);
 		this.studyProfiles.setDisable(false);
@@ -1226,7 +1233,7 @@ public class MenuController implements Initializable {
 			if (navList.getTranslateX() != 0) {
 				openNav.play();
 			} else {
-				closeNav.setToX(-(navList.getWidth()));
+				closeNav.setToX(-(navList.getWidth() + this.shadowRadius + this.shadowOffset));
 				closeNav.play();
 			}
 		});

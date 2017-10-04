@@ -41,7 +41,7 @@
                 </HBox>
             </children>
         </GridPane>
-        <AnchorPane fx:id="navList" prefWidth="173.0" style="-fx-background-color: #5C7167;" translateX="-173"
+        <AnchorPane fx:id="navList" prefWidth="173.0" style="-fx-background-color: #5C7167;" translateX="-246"
                     AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox style="-fx-background-color: #5C7167; -fx-padding: 8;"
