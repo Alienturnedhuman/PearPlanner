@@ -111,7 +111,7 @@ public class MenuController implements Initializable {
 
 	private Window current;
 	private boolean isNavOpen;
-	private int shadowRadius = 66;
+	private int shadowRadius = 44;
 	private int shadowOffset = 7;
 	
 	// Labels:
