@@ -24,6 +24,7 @@ package Model;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Locale;
 
 import biweekly.Biweekly;
 import biweekly.ICalendar;
@@ -106,6 +107,12 @@ public class iCalExport {
 	private String createFileName(int counter) {
 		String str = "calendarExport" + counter + ".ics";
 		return str;
+	}
+	
+	private String getLang() {
+		Locale currentLocale = Locale.getDefault();
+		String langCode = currentLocale.getDisplayLanguage() + "-" + currentLocale.getDisplayCountry();
+		return langCode;		
 	}
 
 	/**
