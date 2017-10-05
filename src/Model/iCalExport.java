@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017
+ * Copyright (C) 2017 - Amila Dias
  *
  *
  *
@@ -32,7 +32,8 @@ import biweekly.property.Summary;
 import biweekly.util.Duration;
 
 /**
- * @author amila
+ * @author Amila Dias
+ * CEG 3120 - RaiderPlanner
  *
  */
 public class iCalExport {
@@ -44,7 +45,7 @@ public class iCalExport {
 	private int minutes;
 	private int counter;
 	
-	public void createExportEvent(Event event, int counter){
+	public void createExportEvent(Event event, int counter) {
 		seteStart(event.getDate());
 		setTitle(event.getName());
 		setDescription(event.getDetails());
@@ -88,7 +89,7 @@ public class iCalExport {
 		createIcs(ical, file);
 	}
 	
-	public void iCalSetup(){
+	public void iCalSetup() {
 		File newDir = new File("calendarExport");
 		if(newDir.exists()){
 			System.out.println("Calendar Export Directory already exists, all files were overwritten");
@@ -97,7 +98,7 @@ public class iCalExport {
 		}
 	}
 	
-	private void createIcs(ICalendar iCal, File file){
+	private void createIcs(ICalendar iCal, File file) {
 		try{
 			Biweekly.write(iCal).go(file);
 		} catch (IOException e){
@@ -106,7 +107,7 @@ public class iCalExport {
 		
 	}
 	
-	private String createFileName(int counter){
+	private String createFileName(int counter) {
 		String str = "calendarExport" + counter + ".ics";
 		return str;
 	}
