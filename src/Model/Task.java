@@ -43,7 +43,6 @@ public class Task extends ModelEntity
     private ArrayList<Task> dependencies = new ArrayList<>();
     private Deadline deadline;
     private ArrayList<Requirement> requirements = new ArrayList<>();
-    private ArrayList<Note> notes;
     private boolean checkedComplete;
     private int weighting;
     private TaskType type;
