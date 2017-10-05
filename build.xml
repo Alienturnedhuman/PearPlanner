@@ -84,6 +84,8 @@
     <pathelement location="${basedir}/lib/jfxtras-common-8.0-r5.jar"/>
     <pathelement location="${basedir}/lib/AppleJavaExtensions-1.6.jar"/>
 	<pathelement location="${basedir}/lib/commons-validator-1.6.jar"/>
+  	<pathelement location="${basedir}/lib/biweekly-0.6.1.jar"/>
+		<pathelement location="${basedir}/lib/vinnie-2.0.1.jar"/>
 
   </path>
   
