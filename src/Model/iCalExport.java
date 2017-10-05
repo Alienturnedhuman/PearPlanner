@@ -50,21 +50,21 @@ public class iCalExport {
 		setTitle(event.getName());
 		setDescription(event.getDetails());
 		this.counter = counter;
-		
-		
+
 		File file = new File("calendarExport/" + createFileName(counter));
-		
+
 		ICalendar ical = new ICalendar();
 		VEvent calEvent = new VEvent();
-		
+
 		Summary summary = calEvent.setSummary(title);
-		summary.setLanguage("en-us");
-		
+		summary.setLanguage();
+
 		//Default hard coded duration
 		hours = 1;
 		minutes = 0;
-		
+
 		//If duration exists within event, pull duration
+		//TODO: Resolution of issue #88 in RaiderPlanner git should allow for single call and removal of if statement		
 		if (event instanceof TimetableEvent) {
 			int intDuration = ((TimetableEvent) event).getDuration();
 			hours = intDuration/60;
@@ -74,21 +74,18 @@ public class iCalExport {
 			hours = intDuration/60;
 			minutes = intDuration%60;
 		} 
-		
+
 		//Set duration within event
 		Duration duration = new Duration.Builder().hours(hours).minutes(minutes).build();
-		calEvent.setDuration(duration);	
-
+		calEvent.setDuration(duration);
 		//Set start date
 		calEvent.setDateStart(eStart);
-				
 		//Add new event to ICS File
 		ical.addEvent(calEvent);
-		
 		//Create ICS File
 		createIcs(ical, file);
 	}
-	
+
 	public void iCalSetup() {
 		File newDir = new File("calendarExport");
 		if(newDir.exists()){
@@ -97,16 +94,15 @@ public class iCalExport {
 			newDir.mkdirs();
 		}
 	}
-	
+
 	private void createIcs(ICalendar iCal, File file) {
 		try{
 			Biweekly.write(iCal).go(file);
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		
 	}
-	
+
 	private String createFileName(int counter) {
 		String str = "calendarExport" + counter + ".ics";
 		return str;
