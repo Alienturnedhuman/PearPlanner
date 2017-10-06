@@ -1,0 +1,90 @@
+/*
+ * Copyright (C) 2017 - Matthew Barrett, Randy Forte, Brandon Hulbert,
+ * Donald Miller
+ *
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+/**
+ * The application plugin facilitates creating an executable JVM application.
+ */
+
+apply plugin: 'application'
+
+/**
+ * This line specifies where the main.java file is found.
+ */
+
+mainClassName='View.Main'
+
+/**
+ * This statement declares where Gradle is to find directories
+ * for source code, external resources, and test classes
+ */
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src']
+		}
+		resources {
+			srcDirs = ['src']
+		}
+	}
+
+	test {
+		java {
+			srcDirs = ["Test"]
+		}
+	}
+}
+
+/**
+ * Gradle uses this built-in function to locate declared
+ * dependencies within Maven's central repositories.
+ */
+
+repositories {
+	mavenCentral()
+}
+
+/**
+ * Gradle grabs the JUnit dependencies from Maven central,
+ * and grabs local dependencies from the project filetree.
+ */
+
+dependencies {
+	testCompile 'junit:junit:4.12'
+	compile fileTree(dir: 'lib')
+	compile fileTree(dir: 'src')
+}
+
+/**
+ * Ensure the build fails if any unit test fails.
+ */
+
+test {
+	ignoreFailures = false
+}
+
+/**
+ * Tells Gradle to assemble a JAR archive.
+ */
+
+jar {
+	manifest.attributes "Main-Class": mainClassName
+}
