@@ -38,14 +38,13 @@ import biweekly.util.Duration;
  *
  */
 public class iCalExport {
-	
 	private Date eStart;
 	private String title;
 	private MultilineString description;
 	private int hours;
 	private int minutes;
 	private int counter;
-	
+
 	public void createExportEvent(Event event, int counter) {
 		seteStart(event.getDate());
 		setTitle(event.getName());
@@ -108,7 +107,7 @@ public class iCalExport {
 		String str = "calendarExport" + counter + ".ics";
 		return str;
 	}
-	
+
 	private String getLang() {
 		Locale currentLocale = Locale.getDefault();
 		String langCode = currentLocale.getDisplayLanguage() + "-" + currentLocale.getDisplayCountry();
@@ -120,7 +119,7 @@ public class iCalExport {
 	 */
 	public void seteStart(Date eStart) {
 		this.eStart = eStart;
-	}
+}
 
 	/**
 	 * @param title the title to set
