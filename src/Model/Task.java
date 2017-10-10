@@ -34,7 +34,7 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
 public class Task extends ModelEntity {
@@ -63,7 +63,7 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Wrapper for JavaFX TableView
+	 * Wrapper for JavaFX TableView.
 	 *
 	 * @return
 	 */
@@ -151,7 +151,7 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Same as canCheckComplete(), wrapper for TableView
+	 * Same as canCheckComplete(), wrapper for TableView.
 	 *
 	 * @return
 	 */
@@ -183,7 +183,7 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Checks whether this Task already contains a given dependency
+	 * Checks whether this Task already contains a given dependency.
 	 *
 	 * @param dep dependency to be checked for
 	 * @return true or false
@@ -193,7 +193,7 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Checks whether this Task already contains a given Requirement
+	 * Checks whether this Task already contains a given Requirement.
 	 *
 	 * @param requirement requirement to be checked for
 	 * @return true or false
@@ -203,7 +203,7 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Returns the Name of the Task (used for JavaFX)
+	 * Returns the Name of the Task (used for JavaFX).
 	 *
 	 * @return Name of the task
 	 */
@@ -235,7 +235,7 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Replaces the current Requirements with the given ones
+	 * Replaces the current Requirements with the given ones.
 	 *
 	 * @param requirements list of requirements
 	 */
@@ -246,7 +246,7 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Replaces the current Dependencies with the given ones
+	 * Replaces the current Dependencies with the given ones.
 	 *
 	 * @param dependencies list of Tasks
 	 */
@@ -257,7 +257,7 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Removes a given Task from the dependencies list
+	 * Removes a given Task from the dependencies list.
 	 *
 	 * @param dependency Task to be removed
 	 * @return whether the dependency has been removed successfully
@@ -267,7 +267,7 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Removes a given Requirement from the requirements list
+	 * Removes a given Requirement from the requirements list.
 	 *
 	 * @param requirement Requirement to be removed
 	 * @return whether the Requirement has been removed successfully
@@ -277,7 +277,7 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Toggle complete
+	 * Toggle complete.
 	 */
 	public void toggleComplete() {
 		if (this.isCheckedComplete()) {
@@ -288,7 +288,7 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Mark as complete/incomplete
+	 * Mark as complete/incomplete.
 	 *
 	 * @param c boolean value
 	 */
@@ -297,16 +297,17 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Set a new deadline
+	 * Set a new deadline.
 	 *
 	 * @param date date to be set as a new deadline
 	 */
 	public void setDeadline(LocalDate date) {
-		this.deadline.setDate(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
+		this.deadline.setDate(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+				+ "T00:00:01Z");
 	}
 
 	/**
-	 * Set a new weighting for this Task
+	 * Set a new weighting for this Task.
 	 *
 	 * @param weighting
 	 */
@@ -315,7 +316,7 @@ public class Task extends ModelEntity {
 	}
 
 	/**
-	 * Set a new type for this Task
+	 * Set a new type for this Task.
 	 *
 	 * @param type String representation of a type
 	 */
@@ -357,7 +358,8 @@ public class Task extends ModelEntity {
 	// Constructors:
 	public Task(String name, String details, LocalDate deadline, int weighting, String type) {
 		super(name, details);
-		this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
+		this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+				+ "T00:00:01Z");
 		this.weighting = weighting;
 		this.type = TaskType.get(type);
 	}
