@@ -37,8 +37,7 @@ import java.util.Date;
  * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class Task extends ModelEntity
-{
+public class Task extends ModelEntity {
 	// private data
 	private ArrayList<Task> dependencies = new ArrayList<>();
 	private Deadline deadline;
@@ -51,18 +50,15 @@ public class Task extends ModelEntity
 	// public methods
 
 	// Getters:
-	public String getDeadline()
-	{
+	public String getDeadline() {
 		return new SimpleDateFormat("dd/MM/yyyy").format(this.deadline.getDate());
 	}
 
-	public Date getDeadlineDate()
-	{
+	public Date getDeadlineDate() {
 		return this.deadline.getDate();
 	}
 
-	public int getWeighting()
-	{
+	public int getWeighting() {
 		return this.weighting;
 	}
 
@@ -71,28 +67,23 @@ public class Task extends ModelEntity
 	 *
 	 * @return
 	 */
-	public boolean isCheckedComplete()
-	{
+	public boolean isCheckedComplete() {
 		return canCheckComplete() && checkedComplete;
 	}
 
-	public TaskType getType()
-	{
+	public TaskType getType() {
 		return this.type;
 	}
 
-	public Task[] getDependencies()
-	{
+	public Task[] getDependencies() {
 		return this.dependencies.toArray(new Task[this.dependencies.size()]);
 	}
 
-	public Requirement[] getRequirements()
-	{
+	public Requirement[] getRequirements() {
 		return this.requirements.toArray(new Requirement[this.requirements.size()]);
 	}
 
-	public int requirementCount()
-	{
+	public int requirementCount() {
 		return requirements.size();
 	}
 
@@ -101,14 +92,13 @@ public class Task extends ModelEntity
 	 *
 	 * @return integer
 	 */
-	public int requirementsComplete()
-	{
+	public int requirementsComplete() {
 		int r = 0;
 		int i = -1, ii = requirements.size();
-		while (++i < ii)
-		{
-			if (requirements.get(i).isComplete())
+		while (++i < ii)	{
+			if (requirements.get(i).isComplete()) {
 				r++;
+			}
 		}
 		return r;
 	}
@@ -118,12 +108,12 @@ public class Task extends ModelEntity
 	 *
 	 * @return int (0-100)
 	 */
-	public int calculateProgress()
-	{
-		if (this.requirementCount() == 0)
+	public int calculateProgress() {
+		if (this.requirementCount() == 0) {
 			return 0;
-		else
+		} else {
 			return (this.requirementsComplete() * 100) / this.requirementCount();
+		}
 	}
 
 	/**
@@ -131,8 +121,7 @@ public class Task extends ModelEntity
 	 *
 	 * @return array of Assignments.
 	 */
-	public Assignment[] getAssignmentReferences()
-	{
+	public Assignment[] getAssignmentReferences() {
 		return this.assignments.toArray(new Assignment[this.assignments.size()]);
 	}
 
@@ -141,14 +130,11 @@ public class Task extends ModelEntity
 	 *
 	 * @return true if complete, false otherwise.
 	 */
-	public boolean dependenciesComplete()
-	{
+	public boolean dependenciesComplete() {
 		int i = -1;
 		int ii = dependencies.size();
-		while (++i < ii)
-		{
-			if (!dependencies.get(i).isCheckedComplete())
-			{
+		while (++i < ii) {
+			if (!dependencies.get(i).isCheckedComplete()) {
 				return false;
 			}
 		}
@@ -160,8 +146,7 @@ public class Task extends ModelEntity
 	 *
 	 * @return true if does, false otherwise.
 	 */
-	public boolean hasDependencies()
-	{
+	public boolean hasDependencies() {
 		return dependencies.size() > 0;
 	}
 
@@ -170,8 +155,7 @@ public class Task extends ModelEntity
 	 *
 	 * @return
 	 */
-	public boolean isPossibleToComplete()
-	{
+	public boolean isPossibleToComplete() {
 		return canCheckComplete();
 	}
 
@@ -181,22 +165,18 @@ public class Task extends ModelEntity
 	 *
 	 * @return
 	 */
-	public boolean canCheckComplete()
-	{
+	public boolean canCheckComplete() {
 		int i = -1;
 		int ii = requirements.size();
-		while (++i < ii)
-		{
-			if (!requirements.get(i).isComplete())
-			{
+		while (++i < ii) {
+			if (!requirements.get(i).isComplete()) {
 				this.checkedComplete = false;
 				return false;
 			}
 		}
-		if (this.dependenciesComplete())
+		if (this.dependenciesComplete()) {
 			return true;
-		else
-		{
+		} else {
 			this.checkedComplete = false;
 			return false;
 		}
@@ -208,8 +188,7 @@ public class Task extends ModelEntity
 	 * @param dep dependency to be checked for
 	 * @return true or false
 	 */
-	public boolean containsDependency(Task dep)
-	{
+	public boolean containsDependency(Task dep) {
 		return this.dependencies.contains(dep);
 	}
 
@@ -219,8 +198,7 @@ public class Task extends ModelEntity
 	 * @param requirement requirement to be checked for
 	 * @return true or false
 	 */
-	public boolean containsRequirement(Requirement requirement)
-	{
+	public boolean containsRequirement(Requirement requirement) {
 		return this.requirements.contains(requirement);
 	}
 
@@ -230,8 +208,7 @@ public class Task extends ModelEntity
 	 * @return Name of the task
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return this.name;
 	}
 
@@ -242,8 +219,7 @@ public class Task extends ModelEntity
 	 *
 	 * @param req requirement to be added
 	 */
-	public void addRequirement(Requirement req)
-	{
+	public void addRequirement(Requirement req) {
 		this.requirements.add(req);
 		this.canCheckComplete();
 	}
@@ -253,8 +229,7 @@ public class Task extends ModelEntity
 	 *
 	 * @param task Task to be added
 	 */
-	public void addDependency(Task task)
-	{
+	public void addDependency(Task task) {
 		this.dependencies.add(task);
 		this.canCheckComplete();
 	}
@@ -264,8 +239,7 @@ public class Task extends ModelEntity
 	 *
 	 * @param requirements list of requirements
 	 */
-	public void replaceRequirements(Collection<Requirement> requirements)
-	{
+	public void replaceRequirements(Collection<Requirement> requirements) {
 		this.requirements.clear();
 		this.requirements.addAll(requirements);
 		this.canCheckComplete();
@@ -276,8 +250,7 @@ public class Task extends ModelEntity
 	 *
 	 * @param dependencies list of Tasks
 	 */
-	public void replaceDependencies(Collection<Task> dependencies)
-	{
+	public void replaceDependencies(Collection<Task> dependencies) {
 		this.dependencies.clear();
 		this.dependencies.addAll(dependencies);
 		this.canCheckComplete();
@@ -289,8 +262,7 @@ public class Task extends ModelEntity
 	 * @param dependency Task to be removed
 	 * @return whether the dependency has been removed successfully
 	 */
-	public boolean removeDependency(Task dependency)
-	{
+	public boolean removeDependency(Task dependency) {
 		return this.dependencies.remove(dependency);
 	}
 
@@ -300,20 +272,19 @@ public class Task extends ModelEntity
 	 * @param requirement Requirement to be removed
 	 * @return whether the Requirement has been removed successfully
 	 */
-	public boolean removeRequirement(Requirement requirement)
-	{
+	public boolean removeRequirement(Requirement requirement) {
 		return this.requirements.remove(requirement);
 	}
 
 	/**
 	 * Toggle complete
 	 */
-	public void toggleComplete()
-	{
-		if (this.isCheckedComplete())
+	public void toggleComplete() {
+		if (this.isCheckedComplete()) {
 			this.checkedComplete = false;
-		else if (this.canCheckComplete())
+		} else if (this.canCheckComplete()) {
 			this.checkedComplete = true;
+		}
 	}
 
 	/**
@@ -321,8 +292,7 @@ public class Task extends ModelEntity
 	 *
 	 * @param c boolean value
 	 */
-	public void setComplete(boolean c)
-	{
+	public void setComplete(boolean c) {
 		this.checkedComplete = c;
 	}
 
@@ -331,8 +301,7 @@ public class Task extends ModelEntity
 	 *
 	 * @param date date to be set as a new deadline
 	 */
-	public void setDeadline(LocalDate date)
-	{
+	public void setDeadline(LocalDate date) {
 		this.deadline.setDate(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
 	}
 
@@ -341,8 +310,7 @@ public class Task extends ModelEntity
 	 *
 	 * @param weighting
 	 */
-	public void setWeighting(int weighting)
-	{
+	public void setWeighting(int weighting) {
 		this.weighting = weighting;
 	}
 
@@ -351,10 +319,8 @@ public class Task extends ModelEntity
 	 *
 	 * @param type String representation of a type
 	 */
-	public void setType(String type)
-	{
-		if (TaskType.exists(type))
-		{
+	public void setType(String type) {
+		if (TaskType.exists(type)) {
 			this.type = TaskType.get(type);
 		}
 	}
@@ -364,10 +330,10 @@ public class Task extends ModelEntity
 	 *
 	 * @param assignment Assignment which should be linked with this Task.
 	 */
-	public void addAssignmentReference(Assignment assignment)
-	{
-		if (!this.assignments.contains(assignment))
+	public void addAssignmentReference(Assignment assignment) {
+		if (!this.assignments.contains(assignment)) {
 			this.assignments.add(assignment);
+		}
 	}
 
 	/**
@@ -375,26 +341,21 @@ public class Task extends ModelEntity
 	 *
 	 * @param assignment Assignment to be removed.
 	 */
-	public void removeAssignmentReference(Assignment assignment)
-	{
+	public void removeAssignmentReference(Assignment assignment) {
 		this.assignments.remove(assignment);
 	}
 
 	@Override
-	public void open(MenuController.Window current)
-	{
-		try
-		{
+	public void open(MenuController.Window current) {
+		try {
 			MainController.ui.taskDetails(this);
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			UIManager.reportError("Unable to open View file");
 		}
 	}
 
 	// Constructors:
-	public Task(String name, String details, LocalDate deadline, int weighting, String type)
-	{
+	public Task(String name, String details, LocalDate deadline, int weighting, String type) {
 		super(name, details);
 		this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
 		this.weighting = weighting;
