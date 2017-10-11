@@ -65,6 +65,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
@@ -199,6 +200,12 @@ public class MenuController implements Initializable {
 	 * Display the Study Dashboard pane.
 	 */
 	public void loadDashboard() {
+		//set ToolTips
+		openMenu.setTooltip(new Tooltip("Menu"));
+		showNotification.setTooltip(new Tooltip("Notifications"));
+		addActivity.setTooltip(new Tooltip("Add activity"));
+		calendar.setTooltip(new Tooltip("Open Calendar"));
+
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
@@ -267,7 +274,6 @@ public class MenuController implements Initializable {
 			if (activity != null) {
 				MainController.getSPC().addActivity(activity);
 			}
-			openMenu.fire();
 
 		} catch (Exception e) {
 			UIManager.reportError("Unable to open View file");

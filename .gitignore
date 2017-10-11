@@ -4,3 +4,4 @@ bin/
 .gradle/
 build/
 gradle-app.setting
+reports/
