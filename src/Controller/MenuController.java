@@ -464,7 +464,7 @@ public class MenuController implements Initializable {
 		//Creation of ICS export factory
 		ICalExport iExport = new ICalExport();
 		//Preparation of export directory
-		iExport.iCalSetup();
+		iExport.icalSetup();
 		for (Event e : calendar) {
 			iExport.createExportEvent(e, counter);
 			if (e instanceof TimetableEvent) {

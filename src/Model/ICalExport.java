@@ -25,46 +25,49 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
-
 import biweekly.Biweekly;
 import biweekly.ICalendar;
 import biweekly.component.VEvent;
 import biweekly.property.Summary;
 import biweekly.util.Duration;
 
-/**
+/**Class used to create ICS files for export.
  * @author Amila Dias
- * CEG 3120 - RaiderPlanner
- *
+ * 				CEG 3120 - RaiderPlanner
  */
-public class iCalExport {
-	private Date eStart;
+
+public class ICalExport {
+	private Date eventStart;
 	private String title;
 	private MultilineString description;
 	private int hours;
 	private int minutes;
 	private int counter;
 
+	/**Method creates an event to be exported to an ICS file.
+	 * @param event - User created event
+	 * @param counter - Counter used to ensure
+	 * 				unique file names, counts how many files have been created
+	 */
 	public void createExportEvent(Event event, int counter) {
 		seteStart(event.getDate());
 		setTitle(event.getName());
 		setDescription(event.getDetails());
 		this.counter = counter;
 
-		File file = new File("calendarExport/" + createFileName(counter));
 
-		ICalendar ical = new ICalendar();
 		VEvent calEvent = new VEvent();
 
 		Summary summary = calEvent.setSummary(title);
-		summary.setLanguage();
+		summary.setLanguage(getLang());
 
 		//Default hard coded duration
 		hours = 1;
 		minutes = 0;
 
 		//If duration exists within event, pull duration
-		//TODO: Resolution of issue #88 in RaiderPlanner git should allow for single call and removal of if statement		
+		//TODO: Resolution of issue #88 in RaiderPlanner
+		//	git should allow for single call and removal of if statement
 		if (event instanceof TimetableEvent) {
 			int intDuration = ((TimetableEvent) event).getDuration();
 			hours = intDuration / 60;
@@ -79,56 +82,74 @@ public class iCalExport {
 		Duration duration = new Duration.Builder().hours(hours).minutes(minutes).build();
 		calEvent.setDuration(duration);
 		//Set start date
-		calEvent.setDateStart(eStart);
+		calEvent.setDateStart(eventStart);
 		//Add new event to ICS File
+		ICalendar ical = new ICalendar();
 		ical.addEvent(calEvent);
 		//Create ICS File
+		File file = new File("calendarExport/" + createFileName(counter));
 		createIcs(ical, file);
 	}
 
-	public void iCalSetup() {
+
+	/**Method creates directory required to export ICS files.
+	 */
+	public void icalSetup() {
 		File newDir = new File("calendarExport");
-		if(newDir.exists()){
-			System.out.println("Calendar Export Directory already exists, all files were overwritten");
+		if (newDir.exists()) {
+			System.out.println("Calendar Export Directory"
+					+ " already exists, all files were overwritten");
 		} else {
 			newDir.mkdirs();
 		}
 	}
 
-	private void createIcs(ICalendar iCal, File file) {
-		try{
-			Biweekly.write(iCal).go(file);
-		} catch (IOException e){
+	/**createIcs generates the ICS file for export.
+	 * @param ical - ICS object that contains items for new ICS file
+	 * @param file - File object to be created by ICalendar information
+	 */
+	private void createIcs(ICalendar ical, File file) {
+		try {
+			Biweekly.write(ical).go(file);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**Method creates unique file names.
+	 * @param counter - imported to count number of files created, ensures unique file name
+	 * @return - Returns string file name
+	 */
 	private String createFileName(int counter) {
 		String str = "calendarExport" + counter + ".ics";
 		return str;
 	}
 
+	/**Method gets current language of user.
+	 * @return - Returns string formatted to provide user location and language
+	 */
 	private String getLang() {
 		Locale currentLocale = Locale.getDefault();
-		String langCode = currentLocale.getDisplayLanguage() + "-" + currentLocale.getDisplayCountry();
+		String langCode = currentLocale.getDisplayLanguage()
+				+ "-" + currentLocale.getDisplayCountry();
 		return langCode;
 	}
 
-	/**
-	 * @param eStart the eStart to set
+	/**Method sets the event start date.
+	 * @param eventStart the eStart to set
 	 */
-	public void seteStart(Date eStart) {
-		this.eStart = eStart;
-}
+	public void seteStart(Date eventStart) {
+		this.eventStart = eventStart;
+	}
 
-	/**
+	/**Method sets title of the event.
 	 * @param title the title to set
 	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	/**
+	/**Method sets description of event.
 	 * @param description the description to set
 	 */
 	public void setDescription(MultilineString description) {
