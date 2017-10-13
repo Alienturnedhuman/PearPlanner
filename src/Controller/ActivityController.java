@@ -178,7 +178,7 @@ public class ActivityController implements Initializable {
 				.observableArrayList(MainController.getSPC().getCurrentTasks());
 		list.removeAll(this.tasks.getItems());
 		if (this.activity != null) {
-			list.remove(this.activity.getTasks());
+			list.removeAll(this.activity.getTasks());
 		}
 		list.removeIf(e -> !e.dependenciesComplete());
 		// =================
