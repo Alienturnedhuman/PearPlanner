@@ -25,6 +25,7 @@ import Model.Activity;
 import Model.QuantityType;
 import Model.Task;
 import View.UIManager;
+
 import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
@@ -32,7 +33,14 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -42,16 +50,42 @@ import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 /**
- * Created by Zilvinas on 13/05/2017.
+ * Handle actions associated with the GUI window for creating new activities.
+ * This includes validating the data contained in the various text fields,
+ * retrieving the validated data, and storing the submitted data to the proper
+ * objects.
+ *
+ * @author Zilvinas Ceikauskas
  */
 public class ActivityController implements Initializable {
 	private Activity activity;
 	private boolean success = false;
 
+	/**
+	 * Default constructor.
+	 */
+	public ActivityController() {
+	}
+
+	/**
+	 * Constructor for an ActivityController with an existing Activity.
+	 *
+	 * @param activity the activity which will be managed by the new controller
+	 */
+	public ActivityController(Activity activity) {
+		this.activity = activity;
+	}
+
+	/**
+	 * @return the Activity object being managed by this controller.
+	 */
 	public Activity getActivity() {
 		return this.activity;
 	}
 
+	/**
+	 * @return true if the last submit operation succeeded, false otherwise.
+	 */
 	public boolean isSuccess() {
 		return success;
 	}
@@ -79,26 +113,27 @@ public class ActivityController implements Initializable {
 	@FXML private ListView<Task> tasks;
 
 	/**
-	 * Handle changes to the input fields
+	 * Handle changes to the input fields.
 	 */
 	public void handleChange() {
-		// Check the input fields:
 		if (!this.name.getText().trim().isEmpty()
 				&& !this.quantity.getText().trim().isEmpty()
 				&& !this.date.getValue().isBefore(LocalDate.now())
 				&& !this.duration.getText().trim().isEmpty()
 				&& this.quantityType.getSelectionModel().getSelectedIndex() != -1
 				&& this.tasks.getItems().size() > 0) {
+
 			this.submit.setDisable(false);
-		// =================
+
 		}
 	}
 
 	/**
-	 * Validate data in the Duration field
+	 * Validate data in the Duration field.
 	 */
 	public void validateDuration() {
-		if (!MainController.isNumeric(this.duration.getText()) || Integer.parseInt(this.duration.getText()) < 0) {
+		if (!MainController.isNumeric(this.duration.getText())
+				|| Integer.parseInt(this.duration.getText()) < 0) {
 			this.duration.setStyle("-fx-text-box-border:red;");
 			this.submit.setDisable(true);
 		} else {
@@ -108,10 +143,11 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
-	 * Validate data in the Quantity field
+	 * Validate data in the Quantity field.
 	 */
 	public void validateQuantity() {
-		if (!MainController.isNumeric(this.quantity.getText()) || Integer.parseInt(this.quantity.getText()) < 0) {
+		if (!MainController.isNumeric(this.quantity.getText())
+				|| Integer.parseInt(this.quantity.getText()) < 0) {
 			this.quantity.setStyle("-fx-text-box-border:red;");
 			this.submit.setDisable(true);
 		} else {
@@ -121,7 +157,7 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
-	 * Validate data in the Date field
+	 * Validate data in the Date field.
 	 */
 	public void validateDate() {
 		if (this.date.getValue().isBefore(LocalDate.now())) {
@@ -134,11 +170,12 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
-	 * Handle the 'Add Task' button action
+	 * Handle the 'Add Task' button action.
 	 */
 	public void addTask() {
 		// Table items:
-		ObservableList<Task> list = FXCollections.observableArrayList(MainController.getSPC().getCurrentTasks());
+		ObservableList<Task> list = FXCollections
+				.observableArrayList(MainController.getSPC().getCurrentTasks());
 		list.removeAll(this.tasks.getItems());
 		if (this.activity != null) {
 			list.remove(this.activity.getTasks());
@@ -152,15 +189,17 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
-	 * Submit the form and create a new Activity
+	 * Submit the form and create a new Activity.
 	 */
 	public void handleSubmit() {
 		if (this.activity == null) {
-			// Create a new Activity:
-			this.activity = new Activity(this.name.getText(), this.details.getText(), this.date.getValue(),
-					Integer.parseInt(this.duration.getText()), Integer.parseInt(this.quantity.getText()),
+
+			this.activity = new Activity(this.name.getText(),
+					this.details.getText(), this.date.getValue(),
+					Integer.parseInt(this.duration.getText()),
+					Integer.parseInt(this.quantity.getText()),
 					this.quantityType.getValue());
-			// =================
+
 			this.activity.addTasks(this.tasks.getItems());
 		}
 
@@ -170,29 +209,15 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
-	 * Handle Quit button
+	 * Handle Quit button.
 	 */
 	public void handleQuit() {
 		Stage stage = (Stage) this.submit.getScene().getWindow();
 		stage.close();
 	}
 
-	/**
-	 * Constructor for the ActivityController
-	 */
-	public ActivityController() {
-	}
-
-	/**
-	 * Constructor for an ActivityController with an existing Activity
-	 *
-	 * @param activity
-	 */
-	public ActivityController(Activity activity) {
-		this.activity = activity;
-	}
-
-	@Override public void initialize(URL location, ResourceBundle resources) {
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		this.quantityType.getItems().addAll(QuantityType.listOfNames());
 		this.date.setValue(LocalDate.now());
 
@@ -209,7 +234,8 @@ public class ActivityController implements Initializable {
 
 			@Override
 			protected boolean computeValue() {
-				return !(tasks.getItems().size() > 0 && tasks.getSelectionModel().getSelectedItem() != null);
+				return !(tasks.getItems().size() > 0
+						&& tasks.getSelectionModel().getSelectedItem() != null);
 			}
 		});
 		// =================
@@ -217,10 +243,11 @@ public class ActivityController implements Initializable {
 		// Button actions:
 		this.removeTask.setOnAction(e -> {
 			if (UIManager.confirm("Are you sure you want to remove this Task from the list?")) {
-				Task t = this.tasks.getSelectionModel().getSelectedItem();
-				this.tasks.getItems().remove(t);
-				if (this.activity != null)
-					this.activity.removeTask(t);
+				Task task = this.tasks.getSelectionModel().getSelectedItem();
+				this.tasks.getItems().remove(task);
+				if (this.activity != null) {
+					this.activity.removeTask(task);
+				}
 			}
 		});
 
@@ -232,8 +259,9 @@ public class ActivityController implements Initializable {
 					// If completed, mark:
 					if (!empty && item != null) {
 						setText(item.toString());
-						if (item.isCheckedComplete())
+						if (item.isCheckedComplete()) {
 							this.getStyleClass().add("current-item");
+						}
 					} else {
 						setText(null);
 						this.getStyleClass().remove("current-item");
@@ -263,7 +291,8 @@ public class ActivityController implements Initializable {
 			this.details.setText(this.activity.getDetails().getAsString());
 			this.duration.setText(Integer.toString(this.activity.getDuration()));
 			this.quantity.setText(Integer.toString(this.activity.getActivityQuantity()));
-			this.date.setValue(this.activity.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+			this.date.setValue(this.activity.getDate().toInstant()
+					.atZone(ZoneId.systemDefault()).toLocalDate());
 			this.quantityType.getSelectionModel().select(this.activity.getType().getName());
 			this.tasks.getItems().addAll(this.activity.getTasks());
 			// =================
