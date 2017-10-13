@@ -65,6 +65,11 @@ public class TimetableEvent extends Event {
 		return timeTableEventType;
 	}
 
+	/**
+	 * Overrides the default getDuration behavior from Event.
+	 * returns duration
+	 */
+	@Override
 	public int getDuration() {
 		return duration;
 	}

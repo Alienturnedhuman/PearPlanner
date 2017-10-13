@@ -54,10 +54,10 @@ public class Activity extends Event {
 	}
 
 	/**
-	 * Returns the Duration of this Activity.
-	 *
-	 * @return integer representation of the Duration.
+	 * Overrides the default getDuration behavior from Event.
+	 * returns duration
 	 */
+	@Override
 	public int getDuration() {
 		return duration;
 	}
