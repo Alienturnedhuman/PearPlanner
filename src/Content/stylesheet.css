@@ -13,12 +13,13 @@
 }
 
 .set-button {
-    -fx-base: greenyellow;
+    -fx-base: #CEA052;
 }
 
 .back-button {
     -fx-background-image: url("/Content/back.png");
     -fx-min-width: 30;
+    -fx-background-color: transparent;
 }
 
 .notificationItem-title {
@@ -58,5 +59,5 @@
 }
 
 .current-item {
-    -fx-background-color: greenyellow;
+    -fx-background-color: #CEA052;
 }

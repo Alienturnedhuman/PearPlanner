@@ -68,6 +68,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -86,6 +87,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import jfxtras.scene.control.agenda.Agenda;
@@ -114,7 +116,13 @@ public class MenuController implements Initializable {
 
 	private Window current;
 	private boolean isNavOpen;
-
+	
+	//Shadows
+	private int shadowRadius = 44;
+	private int shadowOffset = 7;
+	private int shadowRadius2 = 27;
+	private int shadowOffset2 = 13;
+	
 	// Labels:
 	private Label welcome;
 	@FXML
@@ -137,6 +145,8 @@ public class MenuController implements Initializable {
 	private Button modules;
 	@FXML
 	private Button calendar;
+	@FXML
+	private Button closeDrawer;
 
 	// Panes:
 	@FXML
@@ -161,7 +171,7 @@ public class MenuController implements Initializable {
 	/**
 	 * Main method containing switch statements.
 	 */
-	public void main() {
+	public void main() {		
 		if (isNavOpen) {
 			openMenu.fire();
 		}
@@ -206,7 +216,7 @@ public class MenuController implements Initializable {
 		showNotification.setTooltip(new Tooltip("Notifications"));
 		addActivity.setTooltip(new Tooltip("Add activity"));
 		calendar.setTooltip(new Tooltip("Open Calendar"));
-
+		
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
@@ -365,7 +375,6 @@ public class MenuController implements Initializable {
 
 		// Buttons:
 		Button add = new Button("Add a new Milestone");
-
 		Button remove = new Button("Remove");
 		remove.setDisable(true);
 		// =================
@@ -1094,8 +1103,13 @@ public class MenuController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		this.prepareAnimations();
 		this.isNavOpen = false;
+		
+		//Set shadows
+		notifications.setEffect(new DropShadow(this.shadowRadius2, 0, this.shadowOffset2, Color.BLACK));
+		navList.setEffect(new DropShadow(this.shadowRadius, this.shadowOffset, 0, Color.BLACK));
 
 		// Set button actions:
+		this.closeDrawer.setOnAction(e -> openMenu.fire());
 		this.showDash.setOnAction(e -> this.main(Window.Dashboard));
 		this.studyProfiles.setOnAction(e -> this.main(Window.Profiles));
 		this.modules.setOnAction(e -> this.main(Window.Modules));
@@ -1184,7 +1198,7 @@ public class MenuController implements Initializable {
 	/**
 	 * Handles menu options.
 	 */
-	private void updateMenu() {
+	private void updateMenu() {		
 		this.addActivity.setDisable(false);
 		this.milestones.setDisable(false);
 		this.studyProfiles.setDisable(false);
@@ -1233,28 +1247,28 @@ public class MenuController implements Initializable {
 	 * Prepares animations for the main window.
 	 */
 	private void prepareAnimations() {
-		TranslateTransition openNav = new TranslateTransition(new Duration(300), navList);
+		TranslateTransition openNav = new TranslateTransition(new Duration(222), navList);
 		openNav.setToX(0);
-		TranslateTransition closeNav = new TranslateTransition(new Duration(300), navList);
+		TranslateTransition closeNav = new TranslateTransition(new Duration(173), navList);
 		openMenu.setOnAction((ActionEvent e1) -> {
 			this.isNavOpen = !isNavOpen;
 			if (navList.getTranslateX() != 0) {
 				openNav.play();
 			} else {
-				closeNav.setToX(-(navList.getWidth()));
+				closeNav.setToX(-(navList.getWidth() + this.shadowRadius + this.shadowOffset));
 				closeNav.play();
 			}
 		});
 
-		TranslateTransition openNot = new TranslateTransition(new Duration(350), notifications);
+		TranslateTransition openNot = new TranslateTransition(new Duration(222), notifications);
 		openNot.setToY(0);
-		TranslateTransition closeNot = new TranslateTransition(new Duration(350), notifications);
+		TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
 
 		showNotification.setOnAction((ActionEvent e1) -> {
 			if (notifications.getTranslateY() != 0) {
 				openNot.play();
 			} else {
-				closeNot.setToY(-(notifications.getHeight()) - 56.0);
+				closeNot.setToY(-(notifications.getHeight() + this.shadowRadius + 56));
 				closeNot.play();
 			}
 		});
