@@ -32,8 +32,9 @@ import java.util.regex.Pattern;
  * Created by Andrew Odintsov on 4/27/17.
  */
 public class Event extends VersionControlEntity {
-	protected GregorianCalendar date = null;
 
+	protected GregorianCalendar date = null;
+	private static final int DEFAULT_DURATION = 0;
 	private static Pattern dateRegex = Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)Z");
 
 	// public methods
@@ -59,6 +60,13 @@ public class Event extends VersionControlEntity {
 		return this.date.getTime();
 	}
 
+	/**
+	 * Returns a default duration of zero.
+	 * @return the constant default duration
+	 */
+	public int getDuration() {
+		return DEFAULT_DURATION;
+	}
 	public GregorianCalendar getCalendar() {
 		return date;
 	}
