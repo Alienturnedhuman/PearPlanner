@@ -44,259 +44,234 @@ import java.util.ResourceBundle;
 /**
  * Created by Zilvinas on 13/05/2017.
  */
-public class ActivityController implements Initializable
-{
-    private Activity activity;
-    private boolean success = false;
+public class ActivityController implements Initializable {
+	private Activity activity;
+	private boolean success = false;
 
-    public Activity getActivity()
-    {
-        return this.activity;
-    }
+	public Activity getActivity() {
+		return this.activity;
+	}
 
-    public boolean isSuccess()
-    {
-        return success;
-    }
+	public boolean isSuccess() {
+		return success;
+	}
 
-    // Panes:
-    @FXML private GridPane pane;
+	// Panes:
+	@FXML private GridPane pane;
 
-    // Buttons:
-    @FXML private Button submit;
-    @FXML private Button addTask;
-    @FXML private Button removeTask;
+	// Buttons:
+	@FXML private Button submit;
+	@FXML private Button addTask;
+	@FXML private Button removeTask;
 
-    // Text:
-    @FXML private TextField name;
-    @FXML private TextArea details;
-    @FXML private ComboBox<String> quantityType;
-    @FXML private TextField quantity;
-    @FXML private TextField duration;
-    @FXML private DatePicker date;
+	// Text:
+	@FXML private TextField name;
+	@FXML private TextArea details;
+	@FXML private ComboBox<String> quantityType;
+	@FXML private TextField quantity;
+	@FXML private TextField duration;
+	@FXML private DatePicker date;
 
-    // Labels:
-    @FXML private Label title;
+	// Labels:
+	@FXML private Label title;
 
-    // Lists:
-    @FXML private ListView<Task> tasks;
+	// Lists:
+	@FXML private ListView<Task> tasks;
 
-    /**
-     * Handle changes to the input fields
-     */
-    public void handleChange()
-    {
-        // Check the input fields:
-        if (!this.name.getText().trim().isEmpty() &&
-                !this.quantity.getText().trim().isEmpty() &&
-                !this.date.getValue().isBefore(LocalDate.now()) &&
-                !this.duration.getText().trim().isEmpty() &&
-                this.quantityType.getSelectionModel().getSelectedIndex() != -1 &&
-                this.tasks.getItems().size() > 0)
+	/**
+	 * Handle changes to the input fields
+	 */
+	public void handleChange() {
+		// Check the input fields:
+		if (!this.name.getText().trim().isEmpty()
+				&& !this.quantity.getText().trim().isEmpty()
+				&& !this.date.getValue().isBefore(LocalDate.now())
+				&& !this.duration.getText().trim().isEmpty()
+				&& this.quantityType.getSelectionModel().getSelectedIndex() != -1
+				&& this.tasks.getItems().size() > 0) {
+			this.submit.setDisable(false);
+		// =================
+		}
+	}
 
-            this.submit.setDisable(false);
-        // =================
-    }
+	/**
+	 * Validate data in the Duration field
+	 */
+	public void validateDuration() {
+		if (!MainController.isNumeric(this.duration.getText()) || Integer.parseInt(this.duration.getText()) < 0) {
+			this.duration.setStyle("-fx-text-box-border:red;");
+			this.submit.setDisable(true);
+		} else {
+			this.duration.setStyle("");
+			this.handleChange();
+		}
+	}
 
-    /**
-     * Validate data in the Duration field
-     */
-    public void validateDuration()
-    {
-        if (!MainController.isNumeric(this.duration.getText()) || Integer.parseInt(this.duration.getText()) < 0)
-        {
-            this.duration.setStyle("-fx-text-box-border:red;");
-            this.submit.setDisable(true);
-        } else
-        {
-            this.duration.setStyle("");
-            this.handleChange();
-        }
-    }
+	/**
+	 * Validate data in the Quantity field
+	 */
+	public void validateQuantity() {
+		if (!MainController.isNumeric(this.quantity.getText()) || Integer.parseInt(this.quantity.getText()) < 0) {
+			this.quantity.setStyle("-fx-text-box-border:red;");
+			this.submit.setDisable(true);
+		} else {
+			this.quantity.setStyle("");
+			this.handleChange();
+		}
+	}
 
-    /**
-     * Validate data in the Quantity field
-     */
-    public void validateQuantity()
-    {
-        if (!MainController.isNumeric(this.quantity.getText()) || Integer.parseInt(this.quantity.getText()) < 0)
-        {
-            this.quantity.setStyle("-fx-text-box-border:red;");
-            this.submit.setDisable(true);
-        } else
-        {
-            this.quantity.setStyle("");
-            this.handleChange();
-        }
-    }
+	/**
+	 * Validate data in the Date field
+	 */
+	public void validateDate() {
+		if (this.date.getValue().isBefore(LocalDate.now())) {
+			this.date.setStyle("-fx-border-color:red;");
+			this.submit.setDisable(true);
+		} else {
+			this.date.setStyle("");
+			this.handleChange();
+		}
+	}
 
-    /**
-     * Validate data in the Date field
-     */
-    public void validateDate()
-    {
-        if (this.date.getValue().isBefore(LocalDate.now()))
-        {
-            this.date.setStyle("-fx-border-color:red;");
-            this.submit.setDisable(true);
-        } else
-        {
-            this.date.setStyle("");
-            this.handleChange();
-        }
-    }
+	/**
+	 * Handle the 'Add Task' button action
+	 */
+	public void addTask() {
+		// Table items:
+		ObservableList<Task> list = FXCollections.observableArrayList(MainController.getSPC().getCurrentTasks());
+		list.removeAll(this.tasks.getItems());
+		if (this.activity != null) {
+			list.remove(this.activity.getTasks());
+		}
+		list.removeIf(e -> !e.dependenciesComplete());
+		// =================
 
-    /**
-     * Handle the 'Add Task' button action
-     */
-    public void addTask()
-    {
-        // Table items:
-        ObservableList<Task> list = FXCollections.observableArrayList(MainController.getSPC().getCurrentTasks());
-        list.removeAll(this.tasks.getItems());
-        if (this.activity != null)
-            list.remove(this.activity.getTasks());
-        list.removeIf(e -> !e.dependenciesComplete());
-        // =================
+		// Parse selected Tasks:
+		this.tasks.getItems().addAll(TaskController.taskSelectionWindow(list));
+		// =================
+	}
 
-        // Parse selected Tasks:
-        this.tasks.getItems().addAll(TaskController.taskSelectionWindow(list));
-        // =================
-    }
+	/**
+	 * Submit the form and create a new Activity
+	 */
+	public void handleSubmit() {
+		if (this.activity == null) {
+			// Create a new Activity:
+			this.activity = new Activity(this.name.getText(), this.details.getText(), this.date.getValue(),
+					Integer.parseInt(this.duration.getText()), Integer.parseInt(this.quantity.getText()),
+					this.quantityType.getValue());
+			// =================
+			this.activity.addTasks(this.tasks.getItems());
+		}
 
-    /**
-     * Submit the form and create a new Activity
-     */
-    public void handleSubmit()
-    {
-        if (this.activity == null)
-        {
-            // Create a new Activity:
-            this.activity = new Activity(this.name.getText(), this.details.getText(), this.date.getValue(),
-                    Integer.parseInt(this.duration.getText()), Integer.parseInt(this.quantity.getText()),
-                    this.quantityType.getValue());
-            // =================
-            this.activity.addTasks(this.tasks.getItems());
-        }
+		this.success = true;
+		Stage stage = (Stage) this.submit.getScene().getWindow();
+		stage.close();
+	}
 
-        this.success = true;
-        Stage stage = (Stage) this.submit.getScene().getWindow();
-        stage.close();
-    }
+	/**
+	 * Handle Quit button
+	 */
+	public void handleQuit() {
+		Stage stage = (Stage) this.submit.getScene().getWindow();
+		stage.close();
+	}
 
-    /**
-     * Handle Quit button
-     */
-    public void handleQuit()
-    {
-        Stage stage = (Stage) this.submit.getScene().getWindow();
-        stage.close();
-    }
+	/**
+	 * Constructor for the ActivityController
+	 */
+	public ActivityController() {
+	}
 
-    /**
-     * Constructor for the ActivityController
-     */
-    public ActivityController()
-    {
-    }
+	/**
+	 * Constructor for an ActivityController with an existing Activity
+	 *
+	 * @param activity
+	 */
+	public ActivityController(Activity activity) {
+		this.activity = activity;
+	}
 
-    /**
-     * Constructor for an ActivityController with an existing Activity
-     *
-     * @param activity
-     */
-    public ActivityController(Activity activity)
-    {
-        this.activity = activity;
-    }
+	@Override public void initialize(URL location, ResourceBundle resources) {
+		this.quantityType.getItems().addAll(QuantityType.listOfNames());
+		this.date.setValue(LocalDate.now());
 
-    @Override public void initialize(URL location, ResourceBundle resources)
-    {
-        this.quantityType.getItems().addAll(QuantityType.listOfNames());
-        this.date.setValue(LocalDate.now());
+		// TODO draggable tasks (same as requirement)
+		// ListChangeListener:
+		this.tasks.getItems().addListener((ListChangeListener<Task>) c -> handleChange());
+		// =================
 
-        // TODO draggable tasks (same as requirement)
-        // ListChangeListener:
-        this.tasks.getItems().addListener((ListChangeListener<Task>) c -> handleChange());
-        // =================
+		// Bind properties on buttons:
+		this.removeTask.disableProperty().bind(new BooleanBinding() {
+			{
+				bind(tasks.getSelectionModel().getSelectedItems());
+			}
 
-        // Bind properties on buttons:
-        this.removeTask.disableProperty().bind(new BooleanBinding()
-        {
-            {
-                bind(tasks.getSelectionModel().getSelectedItems());
-            }
+			@Override
+			protected boolean computeValue() {
+				return !(tasks.getItems().size() > 0 && tasks.getSelectionModel().getSelectedItem() != null);
+			}
+		});
+		// =================
 
-            @Override
-            protected boolean computeValue()
-            {
-                return !(tasks.getItems().size() > 0 && tasks.getSelectionModel().getSelectedItem() != null);
-            }
-        });
-        // =================
+		// Button actions:
+		this.removeTask.setOnAction(e -> {
+			if (UIManager.confirm("Are you sure you want to remove this Task from the list?")) {
+				Task t = this.tasks.getSelectionModel().getSelectedItem();
+				this.tasks.getItems().remove(t);
+				if (this.activity != null)
+					this.activity.removeTask(t);
+			}
+		});
 
-        // Button actions:
-        this.removeTask.setOnAction(e -> {
-            if (UIManager.confirm("Are you sure you want to remove this Task from the list?"))
-            {
-                Task t = this.tasks.getSelectionModel().getSelectedItem();
-                this.tasks.getItems().remove(t);
-                if (this.activity != null)
-                    this.activity.removeTask(t);
-            }
-        });
+		this.tasks.setCellFactory(e -> {
+			ListCell<Task> cell = new ListCell<Task>() {
+				@Override
+				protected void updateItem(final Task item, final boolean empty) {
+					super.updateItem(item, empty);
+					// If completed, mark:
+					if (!empty && item != null) {
+						setText(item.toString());
+						if (item.isCheckedComplete())
+							this.getStyleClass().add("current-item");
+					} else {
+						setText(null);
+						this.getStyleClass().remove("current-item");
+					}
+				}
+			};
+			return cell;
+		});
+		// =================
 
-        this.tasks.setCellFactory(e -> {
-            ListCell<Task> cell = new ListCell<Task>()
-            {
-                @Override
-                protected void updateItem(final Task item, final boolean empty)
-                {
-                    super.updateItem(item, empty);
-                    // If completed, mark:
-                    if (!empty && item != null)
-                    {
-                        setText(item.toString());
-                        if (item.isCheckedComplete())
-                            this.getStyleClass().add("current-item");
-                    } else
-                    {
-                        setText(null);
-                        this.getStyleClass().remove("current-item");
-                    }
-                }
-            };
-            return cell;
-        });
-        // =================
+		// Handle Activity details:
+		if (this.activity != null) {
+			// Disable/modify elements:
+			this.title.setText("Activity");
+			this.addTask.setVisible(false);
+			this.removeTask.setVisible(false);
+			this.name.setEditable(false);
+			this.details.setEditable(false);
+			this.duration.setEditable(false);
+			this.quantity.setEditable(false);
+			this.date.setDisable(true);
+			this.quantityType.setDisable(true);
+			// =================
 
-        // Handle Activity details:
-        if (this.activity != null)
-        {
-            // Disable/modify elements:
-            this.title.setText("Activity");
-            this.addTask.setVisible(false);
-            this.removeTask.setVisible(false);
-            this.name.setEditable(false);
-            this.details.setEditable(false);
-            this.duration.setEditable(false);
-            this.quantity.setEditable(false);
-            this.date.setDisable(true);
-            this.quantityType.setDisable(true);
-            // =================
+			// Fill in data:
+			this.name.setText(this.activity.getName());
+			this.details.setText(this.activity.getDetails().getAsString());
+			this.duration.setText(Integer.toString(this.activity.getDuration()));
+			this.quantity.setText(Integer.toString(this.activity.getActivityQuantity()));
+			this.date.setValue(this.activity.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+			this.quantityType.getSelectionModel().select(this.activity.getType().getName());
+			this.tasks.getItems().addAll(this.activity.getTasks());
+			// =================
+		} else {
+			this.handleChange();
+		}
+		// =================
 
-            // Fill in data:
-            this.name.setText(this.activity.getName());
-            this.details.setText(this.activity.getDetails().getAsString());
-            this.duration.setText(Integer.toString(this.activity.getDuration()));
-            this.quantity.setText(Integer.toString(this.activity.getActivityQuantity()));
-            this.date.setValue(this.activity.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            this.quantityType.getSelectionModel().select(this.activity.getType().getName());
-            this.tasks.getItems().addAll(this.activity.getTasks());
-            // =================
-        } else this.handleChange();
-        // =================
-
-        Platform.runLater(() -> this.pane.requestFocus());
-    }
+		Platform.runLater(() -> this.pane.requestFocus());
+	}
 }

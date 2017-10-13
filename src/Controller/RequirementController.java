@@ -42,251 +42,229 @@ import java.util.ResourceBundle;
 /**
  * Created by Zilvinas on 13/05/2017.
  */
-public class RequirementController implements Initializable
-{
-    private Requirement requirement;
-    private boolean success = false;
+public class RequirementController implements Initializable {
+	private Requirement requirement;
+	private boolean success = false;
 
-    public Requirement getRequirement()
-    {
-        return this.requirement;
-    }
+	public Requirement getRequirement() {
+		return this.requirement;
+	}
 
-    public boolean isSuccess()
-    {
-        return success;
-    }
+	public boolean isSuccess() {
+		return success;
+	}
 
-    // Panes:
-    @FXML private GridPane pane;
-    @FXML private TableView<Activity> activities;
-    @FXML private TableColumn<Activity, String> nameColumn;
-    @FXML private TableColumn<Activity, Integer> quantityColumn;
-    @FXML private TableColumn<Activity, String> dateColumn;
-    @FXML private ContextMenu context;
+	// Panes:
+	@FXML private GridPane pane;
+	@FXML private TableView<Activity> activities;
+	@FXML private TableColumn<Activity, String> nameColumn;
+	@FXML private TableColumn<Activity, Integer> quantityColumn;
+	@FXML private TableColumn<Activity, String> dateColumn;
+	@FXML private ContextMenu context;
 
-    // Buttons:
-    @FXML private Button submit;
-    @FXML private Button addQuantity;
-    @FXML private MenuItem quantityMenu;
+	// Buttons:
+	@FXML private Button submit;
+	@FXML private Button addQuantity;
+	@FXML private MenuItem quantityMenu;
 
-    // Text:
-    @FXML private TextArea details;
-    @FXML private ComboBox<String> quantityType;
-    @FXML private TextField name;
-    @FXML private TextField quantity;
-    @FXML private TextField time;
-    @FXML private TextField quantityName;
+	// Text:
+	@FXML private TextArea details;
+	@FXML private ComboBox<String> quantityType;
+	@FXML private TextField name;
+	@FXML private TextField quantity;
+	@FXML private TextField time;
+	@FXML private TextField quantityName;
 
-    // Labels:
-    @FXML private Label title;
-    @FXML private Label completed;
+	// Labels:
+	@FXML private Label title;
+	@FXML private Label completed;
 
-    /**
-     * Handle changes to the input fields
-     */
-    public void handleChange()
-    {
-        // Check the input fields:
-        if (!this.name.getText().trim().isEmpty() &&
-                !this.quantity.getText().trim().isEmpty() &&
-                !this.time.getText().trim().isEmpty() &&
-                this.quantityType.getSelectionModel().getSelectedIndex() != -1)
+	/**
+	 * Handle changes to the input fields
+	 */
+	public void handleChange() {
+		// Check the input fields:
+		if (!this.name.getText().trim().isEmpty()
+				&& !this.quantity.getText().trim().isEmpty()
+				&& !this.time.getText().trim().isEmpty()
+				&& this.quantityType.getSelectionModel().getSelectedIndex() != -1) {
+			this.submit.setDisable(false);
+		// =================
+		}
+	}
 
-            this.submit.setDisable(false);
-        // =================
-    }
+	/**
+	 * Validate data in the Time field
+	 */
+	public void validateTime() {
+		if (!MainController.isNumeric(this.time.getText()) || Double.parseDouble(this.time.getText()) < 0) {
+			this.time.setStyle("-fx-text-box-border:red;");
+			this.submit.setDisable(true);
+		} else {
+			this.time.setStyle("");
+			this.handleChange();
+		}
+	}
 
-    /**
-     * Validate data in the Time field
-     */
-    public void validateTime()
-    {
-        if (!MainController.isNumeric(this.time.getText()) || Double.parseDouble(this.time.getText()) < 0)
-        {
-            this.time.setStyle("-fx-text-box-border:red;");
-            this.submit.setDisable(true);
-        } else
-        {
-            this.time.setStyle("");
-            this.handleChange();
-        }
-    }
+	/**
+	 * Validate data in the Quantity field
+	 */
+	public void validateQuantity() {
+		if (!MainController.isNumeric(this.quantity.getText()) || Integer.parseInt(this.quantity.getText()) < 0) {
+			this.quantity.setStyle("-fx-text-box-border:red;");
+			this.submit.setDisable(true);
+		} else {
+			this.quantity.setStyle("");
+			this.handleChange();
+		}
+		if (this.requirement != null) {
+			this.completed.setVisible(false);
+		}
+	}
 
-    /**
-     * Validate data in the Quantity field
-     */
-    public void validateQuantity()
-    {
-        if (!MainController.isNumeric(this.quantity.getText()) || Integer.parseInt(this.quantity.getText()) < 0)
-        {
-            this.quantity.setStyle("-fx-text-box-border:red;");
-            this.submit.setDisable(true);
-        } else
-        {
-            this.quantity.setStyle("");
-            this.handleChange();
-        }
-        if (this.requirement != null)
-            this.completed.setVisible(false);
-    }
+	/**
+	 * Validate data in the QuantityType field
+	 */
+	public void validateNewQuantity() {
+		if (!this.quantityName.getText().trim().isEmpty()) {
+			this.quantityMenu.setDisable(false);
+		} else {
+			this.quantityMenu.setDisable(true);
+		}
+	}
 
-    /**
-     * Validate data in the QuantityType field
-     */
-    public void validateNewQuantity()
-    {
-        if (!this.quantityName.getText().trim().isEmpty())
-            this.quantityMenu.setDisable(false);
-        else
-            this.quantityMenu.setDisable(true);
-    }
+	/**
+	 * Add a new QuantityType
+	 */
+	public void newQuantity() {
+		if (UIManager.confirm("Create a new Quantity '" + this.quantityName.getText() + '?')) {
+			// Create a new type:
+			QuantityType t = QuantityType.create(this.quantityName.getText());
+			// =================
 
-    /**
-     * Add a new QuantityType
-     */
-    public void newQuantity()
-    {
-        if (UIManager.confirm("Create a new Quantity '" + this.quantityName.getText() + '?'))
-        {
-            // Create a new type:
-            QuantityType t = QuantityType.create(this.quantityName.getText());
-            // =================
+			// Update the current list:
+			this.quantityType.getItems().clear();
+			this.quantityType.getItems().addAll(QuantityType.listOfNames());
+			this.quantityType.getSelectionModel().select(t.getName());
+			// =================
+		}
+		this.quantityName.clear();
+		this.quantityMenu.setDisable(true);
+	}
 
-            // Update the current list:
-            this.quantityType.getItems().clear();
-            this.quantityType.getItems().addAll(QuantityType.listOfNames());
-            this.quantityType.getSelectionModel().select(t.getName());
-            // =================
-        }
-        this.quantityName.clear();
-        this.quantityMenu.setDisable(true);
-    }
+	/**
+	 * Submit the form and create a new Task
+	 */
+	public void handleSubmit() {
+		if (this.requirement == null) {
+			// Create a new Requirement:
+			this.requirement = new Requirement(this.name.getText(), this.details.getText(),
+					Double.parseDouble(this.time.getText()), Integer.parseInt(this.quantity.getText()),
+					this.quantityType.getValue());
+			// =================
+		} else {
+			// Update the current requirement:
+			this.requirement.setName(this.name.getText());
+			this.requirement.setDetails(this.details.getText());
+			this.requirement.setEstimatedTimeInHours(Double.parseDouble(this.time.getText()));
+			this.requirement.setInitialQuantity(Integer.parseInt(this.quantity.getText()));
+			this.requirement.setQuantityType(this.quantityType.getValue());
+			// =================
 
-    /**
-     * Submit the form and create a new Task
-     */
-    public void handleSubmit()
-    {
-        if (this.requirement == null)
-        {
-            // Create a new Requirement:
-            this.requirement = new Requirement(this.name.getText(), this.details.getText(),
-                    Double.parseDouble(this.time.getText()), Integer.parseInt(this.quantity.getText()),
-                    this.quantityType.getValue());
-            // =================
-        } else
-        {
-            // Update the current requirement:
-            this.requirement.setName(this.name.getText());
-            this.requirement.setDetails(this.details.getText());
-            this.requirement.setEstimatedTimeInHours(Double.parseDouble(this.time.getText()));
-            this.requirement.setInitialQuantity(Integer.parseInt(this.quantity.getText()));
-            this.requirement.setQuantityType(this.quantityType.getValue());
-            // =================
+		}
+		this.success = true;
+		Stage stage = (Stage) this.submit.getScene().getWindow();
+		stage.close();
+	}
 
-        }
-        this.success = true;
-        Stage stage = (Stage) this.submit.getScene().getWindow();
-        stage.close();
-    }
+	/**
+	 * Handle Quit button
+	 */
+	public void handleQuit() {
+		Stage stage = (Stage) this.submit.getScene().getWindow();
+		stage.close();
+	}
 
-    /**
-     * Handle Quit button
-     */
-    public void handleQuit()
-    {
-        Stage stage = (Stage) this.submit.getScene().getWindow();
-        stage.close();
-    }
+	/**
+	 * Constructor for the RequirementController
+	 */
+	public RequirementController() {
+	}
 
-    /**
-     * Constructor for the RequirementController
-     */
-    public RequirementController()
-    {
-    }
+	/**
+	 * Constructor for a RequirementController with an existing Requirement
+	 *
+	 * @param requirement
+	 */
+	public RequirementController(Requirement requirement) {
+		this.requirement = requirement;
+	}
 
-    /**
-     * Constructor for a RequirementController with an existing Requirement
-     *
-     * @param requirement
-     */
-    public RequirementController(Requirement requirement)
-    {
-        this.requirement = requirement;
-    }
+	@Override public void initialize(URL location, ResourceBundle resources) {
+		this.quantityType.getItems().addAll(QuantityType.listOfNames());
 
-    @Override public void initialize(URL location, ResourceBundle resources)
-    {
-        this.quantityType.getItems().addAll(QuantityType.listOfNames());
+		// Row actions:
+		this.activities.setRowFactory(e -> {
+			TableRow<Activity> row = new TableRow<>();
+			row.setOnMouseClicked(event -> {
+				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+					try {
+						MainController.ui.activityDetails(row.getItem());
+						this.activities.refresh();
+					} catch (IOException e1) {
+						UIManager.reportError("Unable to open View file");
+					}
+				}
+			});
+			return row;
+		});
+		// =================
 
-        // Row actions:
-        this.activities.setRowFactory(e -> {
-            TableRow<Activity> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
-                {
-                    try
-                    {
-                        MainController.ui.activityDetails(row.getItem());
-                        this.activities.refresh();
-                    } catch (IOException e1)
-                    {
-                        UIManager.reportError("Unable to open View file");
-                    }
-                }
-            });
-            return row;
-        });
-        // =================
+		// Quantity actions:
+		this.addQuantity.setOnMousePressed(event -> {
+			if (event.isPrimaryButtonDown()) {
+				context.show(addQuantity, event.getScreenX(), event.getScreenY());
+			}
+		});
+		// =================
 
-        // Quantity actions:
-        this.addQuantity.setOnMousePressed(event -> {
-            if (event.isPrimaryButtonDown())
-                context.show(addQuantity, event.getScreenX(), event.getScreenY());
-        });
-        // =================
+		// Hide the Activities table:
+		if (this.requirement == null) {
+			this.pane.getChildren().remove(this.activities);
+			this.pane.getRowConstraints().remove(3);
 
-        // Hide the Activities table:
-        if (this.requirement == null)
-        {
-            this.pane.getChildren().remove(this.activities);
-            this.pane.getRowConstraints().remove(3);
+			Node bottomNode = this.pane.getChildren().get(0);
+			this.pane.getChildren().remove(bottomNode);
+			this.pane.getRowConstraints().remove(3);
 
-            Node bottomNode = this.pane.getChildren().get(0);
-            this.pane.getChildren().remove(bottomNode);
-            this.pane.getRowConstraints().remove(3);
+			GridPane.setColumnSpan(bottomNode, 2);
+			this.pane.addRow(3, bottomNode);
+			// =================
+		} else {
+			// Disable/modify elements:
+			this.title.setText("Requirement");
 
-            GridPane.setColumnSpan(bottomNode, 2);
-            this.pane.addRow(3, bottomNode);
-        }
-        // =================
-        else
-        {
-            // Disable/modify elements:
-            this.title.setText("Requirement");
+			if (this.requirement.isComplete()) {
+				this.completed.setVisible(true);
+			}
 
-            if (this.requirement.isComplete())
-                this.completed.setVisible(true);
+			// Activity columns:
+			nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+			quantityColumn.setCellValueFactory(new PropertyValueFactory<>("activityQuantity"));
+			dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateString"));
+			// =================
 
-            // Activity columns:
-            nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-            quantityColumn.setCellValueFactory(new PropertyValueFactory<>("activityQuantity"));
-            dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateString"));
-            // =================
+			// Fill in data:
+			this.name.setText(this.requirement.getName());
+			this.details.setText(this.requirement.getDetails().getAsString());
+			this.time.setText(Double.toString(this.requirement.getEstimatedTimeInHours()));
+			this.quantity.setText(Integer.toString(this.requirement.getInitialQuantity()));
+			this.quantityType.getSelectionModel().select(this.requirement.getQuantityType().getName());
+			this.activities.getItems().addAll(this.requirement.getActivityLog());
+			// =================
+		}
+		// =================
 
-            // Fill in data:
-            this.name.setText(this.requirement.getName());
-            this.details.setText(this.requirement.getDetails().getAsString());
-            this.time.setText(Double.toString(this.requirement.getEstimatedTimeInHours()));
-            this.quantity.setText(Integer.toString(this.requirement.getInitialQuantity()));
-            this.quantityType.getSelectionModel().select(this.requirement.getQuantityType().getName());
-            this.activities.getItems().addAll(this.requirement.getActivityLog());
-            // =================
-        }
-        // =================
-
-        Platform.runLater(() -> this.pane.requestFocus());
-    }
+		Platform.runLater(() -> this.pane.requestFocus());
+	}
 }
