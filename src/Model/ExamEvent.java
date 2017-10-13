@@ -56,6 +56,11 @@ public class ExamEvent extends Event {
 
 	}
 
+	/**
+	 * Overrides the default getDuration behavior from Event.
+	 * returns duration
+	 */
+	@Override
 	public int getDuration() {
 		return duration;
 	}
