@@ -28,66 +28,62 @@ import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
 /**
- * ${FILENAME}
- * Created by Andrew Odintsov on 4/27/17.
+ * A basic event with a calendar date and duration.
+ *
+ * @author Andrew Odintsov
  */
 public class Event extends VersionControlEntity {
+
+	private static final long serialVersionUID = 1L;
 
 	protected GregorianCalendar date = null;
 	private static final int DEFAULT_DURATION = 0;
 	private static Pattern dateRegex =
 			Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)Z");
 
-	// public methods
-
 	/**
-	 * Validates the given String.
+	 * Create an Event with the given date.
 	 *
-	 * @param dateString a String containing a Date
-	 * @return whether the given String is a valid date
+	 * @param date date of the event
 	 */
-	public static boolean validDateString(String dateString) {
-		return dateRegex.matcher(dateString).matches();
+	public Event(String date) {
+		setDate(date);
 	}
 
-	// getters
+	/**
+	 * Create a blank Event.
+	 */
+	public Event() {
+	}
 
 	/**
-	 * Returns a Date object containing this Date.
-	 *
-	 * @return Date object
+	 * @return this Event's date.
 	 */
 	public Date getDate() {
 		return this.date.getTime();
 	}
 
 	/**
-	 * Returns a default duration of zero.
-	 * @return the constant default duration
+	 * @return the Event's duration.
 	 */
 	public int getDuration() {
 		return DEFAULT_DURATION;
 	}
 
 	/**
-	 * Gets the GregorianCalendar date.
-	 * @return date
+	 * @return this Event's calendar object.
 	 */
 	public GregorianCalendar getCalendar() {
 		return date;
 	}
 
-	@Override
-	public String toString() {
-		return this.date.getTime().toString();
-	}
-
-	// setters:
 	/**
-	 * sets the date using the date regex.
+	 * Sets the date using the date regex.
+	 *
 	 * @param dateString input of the date
 	 */
 	public void setDate(String dateString) {
+		// TODO: Fix this to use SimpleDateFormat
 		// 09/04/2017T15:00:00Z
 		if (validDateString(dateString)) {
 			String day = dateString.substring(0, 2);
@@ -117,18 +113,19 @@ public class Event extends VersionControlEntity {
 		super.replace(receivedVce);
 	}
 
-	// Constructors:
 	/**
-	 * Constructor of an event with a date.
-	 * @param date date of the event
+	 * Validates the given String.
+	 *
+	 * @param dateString a String containing a Date
+	 * @return whether the given String is a valid date
 	 */
-	public Event(String date) {
-		setDate(date);
+	public static boolean validDateString(String dateString) {
+		return dateRegex.matcher(dateString).matches();
 	}
 
-	/**
-	 * Constructor of a blank event.
-	 */
-	public Event() {
+	@Override
+	public String toString() {
+		return this.date.getTime().toString();
 	}
+
 }

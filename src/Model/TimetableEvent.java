@@ -24,14 +24,37 @@ package Model;
 
 /**
  * PearPlanner/RaiderPlanner.
- * Created by Team BRONZE on 4/27/17
+ *
+ * @author Andrew Odintsov
  */
 public class TimetableEvent extends Event {
-	// private data
+
+	private static final long serialVersionUID = 1L;
+
 	private Room room;
 	private Person lecturer;
 	private TimeTableEventType timeTableEventType;
 	private int duration;
+
+	/**
+	 * Create a new Timetable event from the given parameters.
+	 *
+	 * @param date date of the event
+	 * @param room room the event will be in
+	 * @param lecturer teacher of the event
+	 * @param timeTableEventType creating timetable event type
+	 * @param duration how long the event will be
+	 */
+	public TimetableEvent(String date, Room room, Person lecturer,
+			TimeTableEventType timeTableEventType, int duration) {
+
+		super(date);
+		setRoom(room);
+		setLecturer(lecturer);
+		setTimeTableEventType(timeTableEventType);
+		setDuration(duration);
+
+	}
 
 	@Override
 	protected void replace(VersionControlEntity receivedVce) {
@@ -50,45 +73,36 @@ public class TimetableEvent extends Event {
 		}
 		super.replace(receivedVce);
 	}
-	// public methods
 
-	// getters
 	/**
-	 * Gets the details of the room the event is in.
-	 * returns room
+	 * @return the details of the room the event is in.
 	 */
 	public Room getRoom() {
 		return room;
 	}
 
 	/**
-	 * Gets the details of the lecturer holding the event.
-	 * returns lecturer
+	 * @return the details of the lecturer holding the event.
 	 */
 	public Person getLecturer() {
 		return lecturer;
 	}
 
 	/**
-	 * Gets the eventType of the timetable event.
-	 * returns timeTableEventType
+	 * @return the eventType of the timetable event.
 	 */
 	public TimeTableEventType getTimeTableEventType() {
 		return timeTableEventType;
 	}
 
-	/**
-	 * Overrides the default getDuration behavior from Event.
-	 * returns duration
-	 */
 	@Override
 	public int getDuration() {
 		return duration;
 	}
 
-	// setters
 	/**
 	 * Sets the room the event will be in.
+	 *
 	 * @param newRoom room event will be in.
 	 */
 	public void setRoom(Room newRoom) {
@@ -97,6 +111,7 @@ public class TimetableEvent extends Event {
 
 	/**
 	 * Sets the lecturer of the event.
+	 *
 	 * @param newLecturer person holding the event.
 	 */
 	public void setLecturer(Person newLecturer) {
@@ -104,7 +119,8 @@ public class TimetableEvent extends Event {
 	}
 
 	/**
-	 * Creats the event type of the timeTableEvent.
+	 * Creates the event type of the timeTableEvent.
+	 *
 	 * @param newTimeTableEventType type of event
 	 */
 	public void setTimeTableEventType(TimeTableEventType newTimeTableEventType) {
@@ -113,6 +129,7 @@ public class TimetableEvent extends Event {
 
 	/**
 	 * Sets the duration of the event.
+	 *
 	 * @param newDuration duration of the event.
 	 */
 	public void setDuration(int newDuration) {
@@ -124,22 +141,4 @@ public class TimetableEvent extends Event {
 		return name + " in " + room.toString() + " at " + date.getTime();
 	}
 
-	// constructor
-	/**
-	 * Constructor creating the new Timetable event.
-	 * @param date date of the event
-	 * @param room room the event will be in
-	 * @param lecturer teacher of the event
-	 * @param timeTableEventType creating timetable event type
-	 * @param duration how long the event will be
-	 */
-	public TimetableEvent(String date, Room room, Person lecturer,
-			TimeTableEventType timeTableEventType, int duration) {
-		super(date);
-		setRoom(room);
-		setLecturer(lecturer);
-		setTimeTableEventType(timeTableEventType);
-		setDuration(duration);
-
-	}
 }

@@ -34,78 +34,105 @@ import java.util.Collection;
 import java.util.Locale;
 
 /**
- * PearPlanner/RaiderPlanner.
- * Created by Team BRONZE on 4/27/17
+ * An Activity with a duration and an associated list of tasks.
+ *
+ * @author Zilvinas Ceikauskas
  */
 public class Activity extends Event {
-	private ArrayList<Task> tasks = new ArrayList<>();
+
+	private static final long serialVersionUID = 1L;
+
+	private ArrayList<Task> taskList = new ArrayList<>();
 	private int duration;
 	private int activityQuantity;
 	private QuantityType type;
 
-	// Getters:
-
 	/**
-	 * Returns an array of Tasks this Activity relates to.
+	 * Create a new activity from the given parameters.
 	 *
-	 * @return array of Tasks.
+	 * @param name name of activity
+	 * @param details details of the activity
+	 * @param date date the activity will take place
+	 * @param duration duration of the activity
+	 * @param activityQuantity how much of the activity is there to be completed
+	 * @param type type of activity
 	 */
-	public Task[] getTasks() {
-		return this.tasks.toArray(new Task[this.tasks.size()]);
+	public Activity(String name, String details, LocalDate date, int duration,
+			int activityQuantity, String type) {
+		super(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
+		this.setName(name);
+		this.setDetails(details);
+		this.duration = duration;
+		this.activityQuantity = activityQuantity;
+		this.type = QuantityType.get(type);
 	}
 
 	/**
-	 * Overrides the default getDuration behavior from Event.
-	 * returns duration
+	 * Create a copy of the given Activity.
+	 *
+	 * @param activity Activity object to be copied.
 	 */
+	public Activity(Activity activity) {
+		super();
+		this.name = activity.name;
+		this.details = activity.details;
+		this.date = activity.date;
+		this.duration = activity.duration;
+		this.activityQuantity = activity.activityQuantity;
+		this.type = activity.type;
+		this.taskList = activity.taskList;
+	}
+
+	/**
+	 * @return an array of Tasks related to this Activity.
+	 */
+	public Task[] getTasks() {
+		// TODO: Change this to return a List<Task> and change users to conform
+		return this.taskList.toArray(new Task[this.taskList.size()]);
+	}
+
 	@Override
 	public int getDuration() {
 		return duration;
 	}
 
 	/**
-	 * Returns the Quantity of this Activity.
-	 *
-	 * @return integer representation of the Activity Quantity.
+	 * @return the Quantity of this Activity.
 	 */
 	public int getActivityQuantity() {
 		return activityQuantity;
 	}
 
 	/**
-	 * Returns the Quantity Type of this Activity.
-	 *
-	 * @return QuantityType object.
+	 * @return the Quantity Type of this Activity.
 	 */
 	public QuantityType getType() {
 		return type;
 	}
 
 	/**
-	 * Returns a formatted date of this Activity
-	 *
-	 * @return string representation of a Date.
+	 * @return a formatted String representation of this Activity's date.
 	 */
 	public String getDateString() {
+		// TODO: fix this to use SimpleDateFormat
 		return this.date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
 				+ " " + this.date.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
 				+ " " + this.date.get(Calendar.DAY_OF_MONTH);
 	}
 
-	// Setters:
-
 	/**
 	 * Add a single Task to this Activity.
 	 *
 	 * @param task Task to be added.
-	 * @return whether the provided Task was added successfully.
+	 *
+	 * @return true if the task was added, false if the task was already in the list.
 	 */
 	public boolean addTask(Task task) {
-		if (this.tasks.contains(task)) {
+		if (this.taskList.contains(task)) {
 			return false;
 		}
 
-		this.tasks.add(task);
+		this.taskList.add(task);
 		return true;
 	}
 
@@ -113,14 +140,17 @@ public class Activity extends Event {
 	 * Add all given Tasks to this Activity.
 	 *
 	 * @param tasks a Collection of Tasks to be added.
-	 * @return whether the provided Tasks were added successfully.
+	 *
+	 * @return true if the collection of taskList was added (even if only one is
+	 * 				new), false if all of the taskList were already in the list.
 	 */
 	public boolean addTasks(Collection<Task> tasks) {
-		if (this.tasks.contains(tasks)) {
+		// TODO: Returning a boolean from this seems odd; rethink the objective
+		if (this.taskList.containsAll(tasks)) {
 			return false;
 		}
 
-		this.tasks.addAll(tasks);
+		this.taskList.addAll(tasks);
 		return true;
 	}
 
@@ -130,8 +160,8 @@ public class Activity extends Event {
 	 * @param tasks Collection of Tasks.
 	 */
 	public void replaceTasks(Collection<Task> tasks) {
-		this.tasks.clear();
-		this.tasks.addAll(tasks);
+		this.taskList.clear();
+		this.taskList.addAll(tasks);
 	}
 
 	/**
@@ -140,7 +170,7 @@ public class Activity extends Event {
 	 * @param task Task to be removed.
 	 */
 	public void removeTask(Task task) {
-		this.tasks.remove(task);
+		this.taskList.remove(task);
 	}
 
 	/**
@@ -181,39 +211,4 @@ public class Activity extends Event {
 		}
 	}
 
-	// Constructors
-	/**
-	 *  Constructor for the new activity.
-	 * @param name name of activity
-	 * @param details details of the activity
-	 * @param date date the activity will take place
-	 * @param duration duration of the activity
-	 * @param activityQuantity how much of the activity is there to be completed
-	 * @param type type of activity
-	 */
-	public Activity(String name, String details, LocalDate date, int duration,
-			int activityQuantity, String type) {
-		super(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
-		this.setName(name);
-		this.setDetails(details);
-		this.duration = duration;
-		this.activityQuantity = activityQuantity;
-		this.type = QuantityType.get(type);
-	}
-
-	/**
-	 * Creates a copy of the given Activity.
-	 *
-	 * @param activity Activity object to be copied.
-	 */
-	public Activity(Activity activity) {
-		super();
-		this.name = activity.name;
-		this.details = activity.details;
-		this.date = activity.date;
-		this.duration = activity.duration;
-		this.activityQuantity = activity.activityQuantity;
-		this.type = activity.type;
-		this.tasks = activity.tasks;
-	}
 }

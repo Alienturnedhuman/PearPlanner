@@ -24,12 +24,29 @@ package Model;
 import java.text.SimpleDateFormat;
 
 /**
- * PearPlanner/RaiderPlanner.
- * Created by Team BRONZE on 4/27/17
+ * An exam event with a location/room and a duration.
+ *
+ * @author Andrew Odintsov
  */
 public class ExamEvent extends Event {
+
+	private static final long serialVersionUID = 1L;
+
 	private Room room;
 	private int duration;
+
+	/**
+	 * Create a new exam event from the given parameters.
+	 *
+	 * @param date date of the exam
+	 * @param room room exam is in
+	 * @param duration duration of the exam
+	 */
+	public ExamEvent(String date, Room room, int duration) {
+		super(date);
+		this.room = room;
+		this.duration = duration;
+	}
 
 	@Override
 	protected void replace(VersionControlEntity receivedVce) {
@@ -43,45 +60,28 @@ public class ExamEvent extends Event {
 		super.replace(receivedVce);
 	}
 
-	// Getters:
-
 	/**
 	 * Returns a String representing the event.
 	 * Used in JavaFX.
 	 *
-	 * @return String
+	 * @return a string representation of this exam event's date
 	 */
 	public String getDateString() {
+		// TODO: we should not create a new SimpleDateFormat every time
 		return new SimpleDateFormat("dd/MM/yyyy HH:MM").format(this.date.getTime());
 
 	}
 
-	/**
-	 * Overrides the default getDuration behavior from Event.
-	 * returns duration
-	 */
 	@Override
 	public int getDuration() {
 		return duration;
 	}
 
 	/**
-	 * gets the room the exam is in.
-	 * @return room
+	 * @return the room associated with this exam event.
 	 */
 	public Room getRoom() {
 		return room;
 	}
 
-	/**
-	 * Constructor for new exam event.
-	 * @param date date of the exam
-	 * @param room room exam is in
-	 * @param duration duration of the exam
-	 */
-	public ExamEvent(String date, Room room, int duration) {
-		super(date);
-		this.room = room;
-		this.duration = duration;
-	}
 }
