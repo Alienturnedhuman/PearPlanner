@@ -65,18 +65,9 @@ public class ICalExport {
 		hours = 1;
 		minutes = 0;
 
-		//If duration exists within event, pull duration
-		//TODO: Resolution of issue #88 in RaiderPlanner
-		//	git should allow for single call and removal of if statement
-		if (event instanceof TimetableEvent) {
-			int intDuration = ((TimetableEvent) event).getDuration();
-			hours = intDuration / 60;
-			minutes = intDuration % 60;
-		} else if (event instanceof ExamEvent) {
-			int intDuration = ((ExamEvent) event).getDuration();
-			hours = intDuration / 60;
-			minutes = intDuration % 60;
-		}
+		int intDuration = event.getDuration();
+		hours = intDuration / 60;
+		minutes = intDuration % 60;
 
 		//Set duration within event
 		Duration duration = new Duration.Builder().hours(hours).minutes(minutes).build();

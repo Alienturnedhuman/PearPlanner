@@ -481,7 +481,7 @@ public class MenuController implements Initializable {
 						ZoneId.systemDefault());
 				content.appointments().addAll(new Agenda.AppointmentImplLocal()
 						.withStartLocalDateTime(stime)
-						.withEndLocalDateTime(stime.plusMinutes(((TimetableEvent) e).getDuration()))
+						.withEndLocalDateTime(stime.plusMinutes(e.getDuration()))
 
 						.withSummary(e.getName() + "\n" + "@ "
 								+ ((TimetableEvent) e).getRoom().getLocation())
@@ -494,7 +494,7 @@ public class MenuController implements Initializable {
 						.withStartLocalDateTime(stime)
 						.withSummary(
 								e.getName() + "\n" + "@ " + ((ExamEvent) e).getRoom().getLocation())
-						.withEndLocalDateTime(stime.plusMinutes(((ExamEvent) e).getDuration()))
+						.withEndLocalDateTime(stime.plusMinutes(e.getDuration()))
 						.withAppointmentGroup(
 								new Agenda.AppointmentGroupImpl().withStyleClass("group20")));
 			} else if (e instanceof Deadline) {
