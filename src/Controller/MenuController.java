@@ -73,6 +73,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -241,10 +242,11 @@ public class MenuController implements Initializable {
         int i = 0;
 		for (Module module : profile.getModules()) {
 			VBox vbox = new VBox();
-			vbox.setSpacing(5);
-			vbox.setMinWidth(200);
-			vbox.setMaxWidth(200);
+			vbox.setSpacing(13);
+			vbox.setMinWidth(174);
+			vbox.setMaxWidth(174);
 			vbox.setAlignment(Pos.CENTER);
+			vbox.setCursor(Cursor.HAND);
 
 			Label name = new Label(module.getName());
 			name.setTextAlignment(TextAlignment.CENTER);
@@ -253,17 +255,20 @@ public class MenuController implements Initializable {
 			BufferedImage buff = GanttishDiagram.getBadge(module.calculateProgress(), true, 1);
 			Image image = SwingFXUtils.toFXImage(buff, null);
 			Pane badge = new Pane();
-			VBox.setMargin(badge, new Insets(0, 0, 0, 50));
+			VBox.setMargin(badge, new Insets(0, 0, 0, 37));
 			badge.setPrefHeight(100);
 			badge.setBackground(new Background(new BackgroundImage(image,
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 					BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO,
 							BackgroundSize.AUTO, false, false, true, false))));
-
 			vbox.getChildren().add(badge);
-			Button view = new Button("View");
-			view.setOnAction(e -> module.open(this.current));
-			vbox.getChildren().add(view);
+
+			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED,  e -> module.open(this.current));
+			
+			vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK));
+			vbox.setStyle("-fx-background-color: white");
+			vbox.setPrefHeight(187);
+			
 			modules.setMaxSize(800, 1000);
             modules.getColumnConstraints().add(new ColumnConstraints(Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, 1000, Priority.ALWAYS, HPos.CENTER, true));         
             i++;
