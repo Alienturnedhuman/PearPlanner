@@ -24,6 +24,8 @@
  */
 
 apply plugin: 'application'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
 
 /**
  * This line specifies where the main.java file is found.
@@ -78,7 +80,7 @@ dependencies {
  */
 
 test {
-	ignoreFailures = false
+	ignoreFailures = true
 }
 
 /**
@@ -87,4 +89,18 @@ test {
 
 jar {
 	manifest.attributes "Main-Class": mainClassName
+}
+
+checkstyle {
+	configFile = '.checkstyle.xml' as File
+	maxWarnings = 3250
+}
+
+tasks.withType(FindBugs) {
+	reports {
+		xml.enabled false
+		html.enabled true
+		// html.stylesheet resources.text.fromFile( 'config/xsl/findbugs-custom.xsl' )
+	}
+	ignoreFailures = true
 }

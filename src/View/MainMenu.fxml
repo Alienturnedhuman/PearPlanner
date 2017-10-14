@@ -9,7 +9,7 @@
             prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             stylesheets="@../Content/stylesheet.css">
     <children>
-        <ToolBar minHeight="56.0" style="-fx-background-color: #5C8B76" AnchorPane.leftAnchor="0.0"
+        <ToolBar minHeight="56.0" style="-fx-background-color: #026937" AnchorPane.leftAnchor="0.0"
                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
                 <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" styleClass="button-image"
@@ -17,6 +17,7 @@
                 <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                     <children>
                         <Label fx:id="title" style="-fx-text-fill: white; -fx-background-color: #5C8B76; -fx-font-size: 1.5em" text="Study Dashboard"/>
+                        <Label fx:id="title" style="-fx-font-family: Garamond; -fx-text-fill: white; -fx-font-size: 3.0em" text="Study Dashboard"/>
                     </children>
                 </HBox>
 
@@ -41,17 +42,20 @@
                 </HBox>
             </children>
         </GridPane>
-        <AnchorPane fx:id="navList" prefWidth="200.0" style="-fx-background-color: #5C7167;" translateX="-200"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="56.0">
+        <AnchorPane fx:id="navList" prefWidth="173.0" style="-fx-background-color: #5C7167;" translateX="-222"
+                    AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-
-                <HBox alignment="CENTER_LEFT" style="-fx-background-color: #5C7167; -fx-padding: 10;"
+                <HBox style="-fx-background-color: #5C7167; -fx-padding: 8;"
                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="Navigation"/>
+                      <Button styleClass="button-image" prefWidth="21" fx:id="closeDrawer" style="-fx-background-image: url('/Content/close.png');
+                        -fx-background-color: transparent; -fx-cursor: hand;">
+                      </Button>
+
+                      <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="  Navigation"/>
                     </children>
                 </HBox>
-                <GridPane vgap="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                <GridPane vgap="15" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="ALWAYS"/>
@@ -88,7 +92,7 @@
                                 </image>
                             </ImageView>
                             <Button fx:id="milestones" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
-                                    text="Milestones" GridPane.rowIndex="3"
+                                    text="Milestones"
                             />
                         </HBox>
 
@@ -103,7 +107,7 @@
                                 </image>
                             </ImageView>
                             <Button fx:id="modules" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
-                                     text="Modules" GridPane.rowIndex="4"
+                                     text="Modules"
                             />
                         </HBox>
 
@@ -117,44 +121,54 @@
                                 </image>
                             </ImageView>
                             <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
-                                    text="Study Profiles" GridPane.rowIndex="5"
+                                    text="Study Profiles"
                             />
                         </HBox>
 
-                        <HBox GridPane.rowIndex="5">
-                            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                        <GridPane GridPane.rowIndex="4" vgap="11">
+                          <HBox GridPane.rowIndex="1">
+                            <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false">
                                 <HBox.margin>
-                                    <Insets left="5"/>
+                                    <Insets left="0"/>
                                 </HBox.margin>
                                 <image>
-                                    <Image url="/Content/importhubfile.png"/>
+                                    <Image url="/Content/line.png"/>
                                 </image>
                             </ImageView>
+                          </HBox>
+
+                          <HBox GridPane.rowIndex="2">
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                  <HBox.margin>
+                                      <Insets left="5"/>
+                                  </HBox.margin>
+                                  <image>
+                                      <Image url="/Content/importhubfile.png"/>
+                                  </image>
+                              </ImageView>
                             <Button onAction="#importFile" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;"
-                                    text="Import HUB file" GridPane.rowIndex="6"
+                                    text="Import HUB file"
                             />
-                        </HBox>
-
-
-
+                          </HBox>
+                        </GridPane>
 
                     </children>
                 </GridPane>
             </children>
         </AnchorPane>
         <AnchorPane fx:id="notifications" prefHeight="400.0" prefWidth="288.0" style="-fx-background-color: #5C7167"
-                    translateX="-20.0" translateY="-456.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+                    translateX="-20.0" translateY="-500.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
             <children>
-                <ToolBar minHeight="50.0" style="-fx-background-color: #5C7167" AnchorPane.leftAnchor="0.0"
+                <ToolBar minHeight="50.0" style="-fx-background-color: #E4DEC7" AnchorPane.leftAnchor="0.0"
                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                         <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label style="-fx-text-fill: white" text="Notifications"/>
+                                <Label style="-fx-text-fill: #026937" text="Notifications"/>
                             </children>
                         </HBox>
                         <Button onAction="#handleMarkAll"
-                                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand"
+                                style="-fx-background-color: transparent; -fx-text-fill: black; -fx-cursor: hand"
                                 text="Mark all as read"/>
                     </items>
                 </ToolBar>
