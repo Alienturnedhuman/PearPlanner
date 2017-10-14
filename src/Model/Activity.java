@@ -32,8 +32,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
+
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
 public class Activity extends Event {
@@ -54,10 +55,10 @@ public class Activity extends Event {
 	}
 
 	/**
-	 * Returns the Duration of this Activity.
-	 *
-	 * @return integer representation of the Duration.
+	 * Overrides the default getDuration behavior from Event.
+	 * returns duration
 	 */
+	@Override
 	public int getDuration() {
 		return duration;
 	}
@@ -86,9 +87,9 @@ public class Activity extends Event {
 	 * @return string representation of a Date.
 	 */
 	public String getDateString() {
-		return this.date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()) + " " +
-				this.date.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " " +
-				this.date.get(Calendar.DAY_OF_MONTH);
+		return this.date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+				+ " " + this.date.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+				+ " " + this.date.get(Calendar.DAY_OF_MONTH);
 	}
 
 	// Setters:
@@ -180,8 +181,18 @@ public class Activity extends Event {
 		}
 	}
 
-	// Constructors:
-	public Activity(String name, String details, LocalDate date, int duration, int activityQuantity, String type) {
+	// Constructors
+	/**
+	 *  Constructor for the new activity.
+	 * @param name name of activity
+	 * @param details details of the activity
+	 * @param date date the activity will take place
+	 * @param duration duration of the activity
+	 * @param activityQuantity how much of the activity is there to be completed
+	 * @param type type of activity
+	 */
+	public Activity(String name, String details, LocalDate date, int duration,
+			int activityQuantity, String type) {
 		super(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
 		this.setName(name);
 		this.setDetails(details);

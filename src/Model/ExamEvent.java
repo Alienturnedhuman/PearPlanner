@@ -24,7 +24,7 @@ package Model;
 import java.text.SimpleDateFormat;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
 public class ExamEvent extends Event {
@@ -32,15 +32,15 @@ public class ExamEvent extends Event {
 	private int duration;
 
 	@Override
-	protected void replace(VersionControlEntity receivedVCE) {
-		if (receivedVCE instanceof ExamEvent) {
-			ExamEvent castedVCE = (ExamEvent) receivedVCE;
-			if (castedVCE.getRoom() != null) {
-				this.room = castedVCE.getRoom();
+	protected void replace(VersionControlEntity receivedVce) {
+		if (receivedVce instanceof ExamEvent) {
+			ExamEvent castedVce = (ExamEvent) receivedVce;
+			if (castedVce.getRoom() != null) {
+				this.room = castedVce.getRoom();
 			}
-			this.duration = castedVCE.getDuration();
+			this.duration = castedVce.getDuration();
 		}
-		super.replace(receivedVCE);
+		super.replace(receivedVce);
 	}
 
 	// Getters:
@@ -56,17 +56,32 @@ public class ExamEvent extends Event {
 
 	}
 
+	/**
+	 * Overrides the default getDuration behavior from Event.
+	 * returns duration
+	 */
+	@Override
 	public int getDuration() {
 		return duration;
 	}
 
+	/**
+	 * gets the room the exam is in.
+	 * @return room
+	 */
 	public Room getRoom() {
 		return room;
 	}
 
-	public ExamEvent(String cDate, Room cRoom, int cDuration) {
-		super(cDate);
-		room = cRoom;
-		duration = cDuration;
+	/**
+	 * Constructor for new exam event.
+	 * @param date date of the exam
+	 * @param room room exam is in
+	 * @param duration duration of the exam
+	 */
+	public ExamEvent(String date, Room room, int duration) {
+		super(date);
+		this.room = room;
+		this.duration = duration;
 	}
 }
