@@ -16,8 +16,7 @@
                         style="-fx-background-image: url('/Content/menu.png');"/>
                 <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label fx:id="title" style="-fx-text-fill: white; -fx-background-color: #5C8B76; -fx-font-size: 1.5em" text="Study Dashboard"/>
-                        <Label fx:id="title" style="-fx-font-family: Garamond; -fx-text-fill: white; -fx-font-size: 3.0em" text="Study Dashboard"/>
+                        <Label fx:id="title" style="-fx-font-family: Garamond; -fx-text-fill: white; -fx-font-size: 2.5em" text="Study Dashboard"/>
                     </children>
                 </HBox>
 
