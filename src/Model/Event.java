@@ -41,7 +41,7 @@ public class Event extends VersionControlEntity {
 			Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)Z");
 
 	protected GregorianCalendar date = null;
-	protected int duration;
+	protected int duration = DEFAULT_DURATION;
 
 	/**
 	 * Create an Event with the given date.
@@ -69,7 +69,7 @@ public class Event extends VersionControlEntity {
 	 * @return the Event's duration.
 	 */
 	public int getDuration() {
-		return DEFAULT_DURATION;
+		return duration;
 	}
 
 	/**
