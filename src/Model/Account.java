@@ -27,40 +27,34 @@ import java.io.Serializable;
  * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class Account implements Serializable
-{
-    // private data
-    private Person studentDetails;
-    private String studentNumber;
+public class Account implements Serializable {
+	// private data
+	private Person studentDetails;
+	private String studentNumber;
 
-    // public methods
+	// public methods
 
-    // getters
-    public Person getStudentDetails()
-    {
-        return studentDetails;
-    }
+	// getters
+	public Person getStudentDetails() {
+		return studentDetails;
+	}
 
-    public String getStudentNumber()
-    {
-        return studentNumber;
-    }
+	public String getStudentNumber() {
+		return studentNumber;
+	}
 
-    // setters
-    public void setStudentDetails(Person newStudentDetails)
-    {
-        studentDetails = newStudentDetails;
-    }
+	// setters
+	public void setStudentDetails(Person newStudentDetails) {
+		studentDetails = newStudentDetails;
+	}
 
-    public void setStudentNumber(String newStudentNumber)
-    {
-        studentNumber = newStudentNumber;
-    }
+	public void setStudentNumber(String newStudentNumber) {
+		studentNumber = newStudentNumber;
+	}
 
-    // constructors
-    public Account(Person studentDetails, String studentNumber)
-    {
-        this.studentDetails = studentDetails;
-        this.studentNumber = studentNumber;
-    }
+	// constructors
+	public Account(Person studentDetails, String studentNumber) {
+		this.studentDetails = studentDetails;
+		this.studentNumber = studentNumber;
+	}
 }

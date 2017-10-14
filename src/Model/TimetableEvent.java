@@ -23,98 +23,116 @@ package Model;
 
 
 /**
- * PearPlanner/RaiderPlanner
- * Created by Team BRONZE on 4/27/17
+ * PearPlanner/RaiderPlanner.
+ *
+ * @author Andrew Odintsov
  */
-public class TimetableEvent extends Event
-{
-    // private data
-    private Room room;
-    private Person lecturer;
-    private TimeTableEventType timeTableEventType;
-    private int duration;
+public class TimetableEvent extends Event {
 
-    @Override
-    protected void replace(VersionControlEntity receivedVCE)
-    {
-        if (receivedVCE instanceof TimetableEvent)
-        {
-            TimetableEvent castedVCE = (TimetableEvent) receivedVCE;
-            this.duration = castedVCE.getDuration();
-            if (castedVCE.getLecturer() != null)
-            {
-                this.lecturer = castedVCE.getLecturer();
-            }
-            if (castedVCE.getRoom() != null)
-            {
-                this.room = castedVCE.getRoom();
-            }
-            if (castedVCE.getTimeTableEventType() != null)
-            {
-                this.timeTableEventType = castedVCE.getTimeTableEventType();
-            }
-        }
-        super.replace(receivedVCE);
-    }
-    // public methods
+	private static final long serialVersionUID = 1L;
 
-    // getters
-    public Room getRoom()
-    {
-        return room;
-    }
+	private Room room;
+	private Person lecturer;
+	private TimeTableEventType timeTableEventType;
 
-    public Person getLecturer()
-    {
-        return lecturer;
-    }
+	/**
+	 * Create a new Timetable event from the given parameters.
+	 *
+	 * @param date date of the event
+	 * @param room room the event will be in
+	 * @param lecturer teacher of the event
+	 * @param timeTableEventType creating timetable event type
+	 * @param duration how long the event will be
+	 */
+	public TimetableEvent(String date, Room room, Person lecturer,
+			TimeTableEventType timeTableEventType, int duration) {
 
-    public TimeTableEventType getTimeTableEventType()
-    {
-        return timeTableEventType;
-    }
+		super(date);
+		setRoom(room);
+		setLecturer(lecturer);
+		setTimeTableEventType(timeTableEventType);
+		setDuration(duration);
 
-    public int getDuration()
-    {
-        return duration;
-    }
+	}
 
-    // setters
-    public void setRoom(Room newRoom)
-    {
-        room = newRoom;
-    }
+	@Override
+	protected void replace(VersionControlEntity receivedVce) {
+		if (receivedVce instanceof TimetableEvent) {
+			TimetableEvent castedVce = (TimetableEvent) receivedVce;
+			this.duration = castedVce.getDuration();
+			if (castedVce.getLecturer() != null) {
+				this.lecturer = castedVce.getLecturer();
+			}
+			if (castedVce.getRoom() != null) {
+				this.room = castedVce.getRoom();
+			}
+			if (castedVce.getTimeTableEventType() != null) {
+				this.timeTableEventType = castedVce.getTimeTableEventType();
+			}
+		}
+		super.replace(receivedVce);
+	}
 
-    public void setLecturer(Person newLecturer)
-    {
-        lecturer = newLecturer;
-    }
+	/**
+	 * @return the details of the room the event is in.
+	 */
+	public Room getRoom() {
+		return room;
+	}
 
-    public void setTimeTableEventType(TimeTableEventType newTimeTableEventType)
-    {
-        timeTableEventType = newTimeTableEventType;
-    }
+	/**
+	 * @return the details of the lecturer holding the event.
+	 */
+	public Person getLecturer() {
+		return lecturer;
+	}
 
-    public void setDuration(int newDuration)
-    {
-        duration = newDuration;
-    }
+	/**
+	 * @return the eventType of the timetable event.
+	 */
+	public TimeTableEventType getTimeTableEventType() {
+		return timeTableEventType;
+	}
 
-    @Override
-    public String toString()
-    {
-        return name + " in " + room.toString() + " at " + date.getTime();
-    }
+	/**
+	 * Sets the room the event will be in.
+	 *
+	 * @param newRoom room event will be in.
+	 */
+	public void setRoom(Room newRoom) {
+		room = newRoom;
+	}
 
-    // constructor
-    public TimetableEvent(String cDate, Room cRoom, Person cLecturer, TimeTableEventType cTimeTableEventType,
-                          int cDuration)
-    {
-        super(cDate);
-        setRoom(cRoom);
-        setLecturer(cLecturer);
-        setTimeTableEventType(cTimeTableEventType);
-        setDuration(cDuration);
+	/**
+	 * Sets the lecturer of the event.
+	 *
+	 * @param newLecturer person holding the event.
+	 */
+	public void setLecturer(Person newLecturer) {
+		lecturer = newLecturer;
+	}
 
-    }
+	/**
+	 * Creates the event type of the timeTableEvent.
+	 *
+	 * @param newTimeTableEventType type of event
+	 */
+	public void setTimeTableEventType(TimeTableEventType newTimeTableEventType) {
+		timeTableEventType = newTimeTableEventType;
+	}
+
+	/**
+	 * Sets the duration of the event.
+	 *
+	 * @param newDuration duration of the event.
+	 */
+	public void setDuration(int newDuration) {
+		duration = newDuration;
+	}
+
+	@Override
+	public String toString() {
+		return name + " in " + room.toString() + " at " + date.getTime();
+	}
+
 }

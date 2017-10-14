@@ -27,34 +27,30 @@ import java.io.Serializable;
  * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 4/27/17
  */
-public class ExtensionApplication implements Serializable
-{
-    // private data
-    private Extension extension;
-    private String moduleCode;
-    private String assignmentUID;
-    private Account account;
+public class ExtensionApplication implements Serializable {
+	// private data
+	private Extension extension;
+	private String moduleCode;
+	private String assignmentUID;
+	private Account account;
 
-    // public methods
+	// public methods
 
-    // getters
-    public Extension getExtension()
-    {
-        // initial set up code below - check if this needs updating
-        return extension;
-    }
+	// getters
+	public Extension getExtension() {
+		// initial set up code below - check if this needs updating
+		return extension;
+	}
 
-    public String getModuleCode()
-    {
-        // initial set up code below - check if this needs updating
-        return moduleCode;
-    }
+	public String getModuleCode() {
+		// initial set up code below - check if this needs updating
+		return moduleCode;
+	}
 
-    public String getAssignmentUID()
-    {
-        // initial set up code below - check if this needs updating
-        return assignmentUID;
-    }
+	public String getAssignmentUID() {
+		// initial set up code below - check if this needs updating
+		return assignmentUID;
+	}
 
-    // constructors
+	// constructors
 }
