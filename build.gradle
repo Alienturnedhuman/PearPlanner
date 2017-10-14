@@ -93,7 +93,7 @@ jar {
 
 checkstyle {
 	configFile = '.checkstyle.xml' as File
-	maxWarnings = 3250
+	maxWarnings = 3195
 }
 
 tasks.withType(FindBugs) {
