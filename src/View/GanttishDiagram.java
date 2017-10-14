@@ -48,7 +48,6 @@ public class GanttishDiagram {
 	static int getBadgeRingThickness = 8;
 	static int fontSize = 24;
 
-
 	static int GANTT_TITLE_SPACE = 80;
 	static int GANTT_TITLE_FONT_SIZE = 64;
 	static int GANTT_COLUMN_WIDTH = 400;
@@ -111,14 +110,14 @@ public class GanttishDiagram {
 	}
 
 	enum badgeColors {
-		FINISHED(0, 128, 255),
-		STARTED(64, 255, 0),
-		CANSTART(255, 128, 0),
+		FINISHED(0, 255, 0),
+		STARTED(255, 255, 0),
+		CANSTART(140, 26, 26),
 		CANNOTSTART(64, 64, 64),
 
 		FINISHED_FILL(255, 255, 255),
 		STARTED_FILL(255, 255, 255),
-		CANSTART_FILL(192, 192, 192),
+		CANSTART_FILL(255, 255, 255),
 		CANNOTSTART_FILL(128, 128, 128),
 		GREY(192, 192, 192),
 		PINK(255, 192, 192),
@@ -151,6 +150,13 @@ public class GanttishDiagram {
 
 		private Paint getPaint() {
 			return new Color(r, g, b, a);
+		}
+		private Color getPaint(int progress) {
+			r = 255 - (int)(2.5 * progress);
+			g = (int)(Math.log(progress + 1) * 29);
+			b = 0;
+			
+			return new Color(r, g, b, 255);
 		}
 
 		badgeColors(int cr, int cg, int cb) {
@@ -358,20 +364,11 @@ public class GanttishDiagram {
 
 		if (!canStart) {
 			g2d.setStroke(stroke.DASHED.getStroke(badgeRingThickness));
-			ringColor = badgeColors.CANNOTSTART.getPaint();
-			fillColor = badgeColors.CANNOTSTART_FILL.getPaint();
-		} else if (progress <= 0) {
-			g2d.setStroke(stroke.DASHED.getStroke(badgeRingThickness));
-			ringColor = badgeColors.CANSTART.getPaint();
-			fillColor = badgeColors.CANSTART_FILL.getPaint();
-		} else if (progress < 100) {
-			g2d.setStroke(stroke.SOLID.getStroke(badgeRingThickness));
-			ringColor = badgeColors.STARTED.getPaint();
-			fillColor = badgeColors.STARTED_FILL.getPaint();
-			arc = progress;
+			ringColor = new Color(140 ,26, 26);
+			fillColor = Color.white;
 		} else {
 			g2d.setStroke(stroke.SOLID.getStroke(badgeRingThickness));
-			ringColor = badgeColors.FINISHED.getPaint();
+			ringColor = badgeColors.FINISHED.getPaint(progress);
 			fillColor = badgeColors.FINISHED_FILL.getPaint();
 		}
 
