@@ -34,7 +34,6 @@ public class TimetableEvent extends Event {
 	private Room room;
 	private Person lecturer;
 	private TimeTableEventType timeTableEventType;
-	private int duration;
 
 	/**
 	 * Create a new Timetable event from the given parameters.
@@ -93,11 +92,6 @@ public class TimetableEvent extends Event {
 	 */
 	public TimeTableEventType getTimeTableEventType() {
 		return timeTableEventType;
-	}
-
-	@Override
-	public int getDuration() {
-		return duration;
 	}
 
 	/**

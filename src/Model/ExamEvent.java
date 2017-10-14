@@ -33,7 +33,6 @@ public class ExamEvent extends Event {
 	private static final long serialVersionUID = 1L;
 
 	private Room room;
-	private int duration;
 
 	/**
 	 * Create a new exam event from the given parameters.
@@ -70,11 +69,6 @@ public class ExamEvent extends Event {
 		// TODO: we should not create a new SimpleDateFormat every time
 		return new SimpleDateFormat("dd/MM/yyyy HH:MM").format(this.date.getTime());
 
-	}
-
-	@Override
-	public int getDuration() {
-		return duration;
 	}
 
 	/**

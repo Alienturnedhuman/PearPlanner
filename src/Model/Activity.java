@@ -43,7 +43,6 @@ public class Activity extends Event {
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Task> taskList = new ArrayList<>();
-	private int duration;
 	private int activityQuantity;
 	private QuantityType type;
 
@@ -89,11 +88,6 @@ public class Activity extends Event {
 	public Task[] getTasks() {
 		// TODO: Change this to return a List<Task> and change users to conform
 		return this.taskList.toArray(new Task[this.taskList.size()]);
-	}
-
-	@Override
-	public int getDuration() {
-		return duration;
 	}
 
 	/**

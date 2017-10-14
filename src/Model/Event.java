@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar
+ * Bijan Ghasemi Afshar, Eric Sweet, Roberto C. Sánchez
  *
  *
  *
@@ -36,10 +36,12 @@ public class Event extends VersionControlEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	protected GregorianCalendar date = null;
 	private static final int DEFAULT_DURATION = 0;
 	private static Pattern dateRegex =
 			Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)Z");
+
+	protected GregorianCalendar date = null;
+	protected int duration;
 
 	/**
 	 * Create an Event with the given date.
