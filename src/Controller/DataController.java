@@ -241,7 +241,7 @@ public class DataController {
 			int year = studyProfileValues.get("year").getInt();
 			int semester = studyProfileValues.get("semester").getInt();
 
-			if (MainController.getSPC().containsStudyProfile(year, semester)) {
+			if (MainController.getSpc().containsStudyProfile(year, semester)) {
 				throw new Exception("Study profile for " + year + " semester "
 						+ semester + " already imported");
 			}

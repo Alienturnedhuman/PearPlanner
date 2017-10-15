@@ -127,7 +127,7 @@ public class MilestoneController implements Initializable
 	public void addTask()
 	{
 		// Table items:
-		ObservableList<Task> list = FXCollections.observableArrayList(MainController.getSPC().getCurrentTasks());
+		ObservableList<Task> list = FXCollections.observableArrayList(MainController.getSpc().getCurrentTasks());
 		list.removeAll(this.tasks.getItems());
 		if (this.milestone != null)
 			list.removeAll(this.milestone.getTasks());
