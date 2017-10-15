@@ -66,6 +66,7 @@ import javafx.stage.Stage;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  * Created by Zilvinas on 04/05/2017.
@@ -529,10 +530,14 @@ public class UIManager {
 	 * @return a File object
 	 */
 	public File loadPlannerFileDialog() {
+		File savesFolder = new File("./saves");
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Select a planner to load");
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
-		fileChooser.setInitialDirectory(new File("saves"));
+		if(!savesFolder.exists()) {
+			savesFolder.mkdirs();
+		}
+		fileChooser.setInitialDirectory(savesFolder);
 		File file = fileChooser.showOpenDialog(mainStage);
 		return file;
 	}
