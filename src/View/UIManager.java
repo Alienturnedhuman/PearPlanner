@@ -464,7 +464,7 @@ public class UIManager {
 		save.setOnAction(e -> {
 			String path = this.saveFileDialog(stage);
 			GanttishDiagram.createGanttishDiagram(
-					MainController.getSPC().getPlanner(), assignment, path);
+					MainController.getSpc().getPlanner(), assignment, path);
 		});
 		Button close = new Button("Close");
 		close.setOnAction(e -> ((Stage) close.getScene().getWindow()).close());
@@ -474,7 +474,7 @@ public class UIManager {
 
 		// Content:
 		BufferedImage gantt = GanttishDiagram.createGanttishDiagram(
-				MainController.getSPC().getPlanner(), assignment);
+				MainController.getSpc().getPlanner(), assignment);
 		Image image = SwingFXUtils.toFXImage(gantt, null);
 		Pane content = new Pane();
 		VBox.setVgrow(content, Priority.ALWAYS);
