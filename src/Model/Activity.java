@@ -32,192 +32,177 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
+
 /**
- * PearPlanner/RaiderPlanner
- * Created by Team BRONZE on 4/27/17
+ * An Activity with a duration and an associated list of tasks.
+ *
+ * @author Zilvinas Ceikauskas
  */
-public class Activity extends Event
-{
-    private ArrayList<Task> tasks = new ArrayList<>();
-    private int duration;
-    private int activityQuantity;
-    private QuantityType type;
+public class Activity extends Event {
 
-    // Getters:
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Returns an array of Tasks this Activity relates to.
-     *
-     * @return array of Tasks.
-     */
-    public Task[] getTasks()
-    {
-        return this.tasks.toArray(new Task[this.tasks.size()]);
-    }
+	private ArrayList<Task> taskList = new ArrayList<>();
+	private int activityQuantity;
+	private QuantityType type;
 
-    /**
-     * Returns the Duration of this Activity.
-     *
-     * @return integer representation of the Duration.
-     */
-    public int getDuration()
-    {
-        return duration;
-    }
+	/**
+	 * Create a new activity from the given parameters.
+	 *
+	 * @param name name of activity
+	 * @param details details of the activity
+	 * @param date date the activity will take place
+	 * @param duration duration of the activity
+	 * @param activityQuantity how much of the activity is there to be completed
+	 * @param type type of activity
+	 */
+	public Activity(String name, String details, LocalDate date, int duration,
+			int activityQuantity, String type) {
+		super(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
+		this.setName(name);
+		this.setDetails(details);
+		this.duration = duration;
+		this.activityQuantity = activityQuantity;
+		this.type = QuantityType.get(type);
+	}
 
-    /**
-     * Returns the Quantity of this Activity.
-     *
-     * @return integer representation of the Activity Quantity.
-     */
-    public int getActivityQuantity()
-    {
-        return activityQuantity;
-    }
+	/**
+	 * Create a copy of the given Activity.
+	 *
+	 * @param activity Activity object to be copied.
+	 */
+	public Activity(Activity activity) {
+		super();
+		this.name = activity.name;
+		this.details = activity.details;
+		this.date = activity.date;
+		this.duration = activity.duration;
+		this.activityQuantity = activity.activityQuantity;
+		this.type = activity.type;
+		this.taskList = activity.taskList;
+	}
 
-    /**
-     * Returns the Quantity Type of this Activity.
-     *
-     * @return QuantityType object.
-     */
-    public QuantityType getType()
-    {
-        return type;
-    }
+	/**
+	 * @return an array of Tasks related to this Activity.
+	 */
+	public Task[] getTasks() {
+		// TODO: Change this to return a List<Task> and change users to conform
+		return this.taskList.toArray(new Task[this.taskList.size()]);
+	}
 
-    /**
-     * Returns a formatted date of this Activity
-     *
-     * @return string representation of a Date.
-     */
-    public String getDateString()
-    {
-        return this.date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()) + " " +
-                this.date.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " " +
-                this.date.get(Calendar.DAY_OF_MONTH);
-    }
+	/**
+	 * @return the Quantity of this Activity.
+	 */
+	public int getActivityQuantity() {
+		return activityQuantity;
+	}
 
-    // Setters:
+	/**
+	 * @return the Quantity Type of this Activity.
+	 */
+	public QuantityType getType() {
+		return type;
+	}
 
-    /**
-     * Add a single Task to this Activity.
-     *
-     * @param task Task to be added.
-     * @return whether the provided Task was added successfully.
-     */
-    public boolean addTask(Task task)
-    {
-        if (this.tasks.contains(task))
-            return false;
+	/**
+	 * @return a formatted String representation of this Activity's date.
+	 */
+	public String getDateString() {
+		// TODO: fix this to use SimpleDateFormat
+		return this.date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+				+ " " + this.date.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+				+ " " + this.date.get(Calendar.DAY_OF_MONTH);
+	}
 
-        this.tasks.add(task);
-        return true;
-    }
+	/**
+	 * Add a single Task to this Activity.
+	 *
+	 * @param task Task to be added.
+	 *
+	 * @return true if the task was added, false if the task was already in the list.
+	 */
+	public boolean addTask(Task task) {
+		if (this.taskList.contains(task)) {
+			return false;
+		}
 
-    /**
-     * Add all given Tasks to this Activity.
-     *
-     * @param tasks a Collection of Tasks to be added.
-     * @return whether the provided Tasks were added successfully.
-     */
-    public boolean addTasks(Collection<Task> tasks)
-    {
-        if (this.tasks.contains(tasks))
-            return false;
+		this.taskList.add(task);
+		return true;
+	}
 
-        this.tasks.addAll(tasks);
-        return true;
-    }
+	/**
+	 * Add all given Tasks to this Activity.
+	 *
+	 * @param tasks a Collection of Tasks to be added.
+	 *
+	 * @return true if the collection of taskList was added (even if only one is
+	 * 				new), false if all of the taskList were already in the list.
+	 */
+	public boolean addTasks(Collection<Task> tasks) {
+		// TODO: Returning a boolean from this seems odd; rethink the objective
+		if (this.taskList.containsAll(tasks)) {
+			return false;
+		}
 
-    /**
-     * Replace the current list of Tasks with the provided Tasks.
-     *
-     * @param tasks Collection of Tasks.
-     */
-    public void replaceTasks(Collection<Task> tasks)
-    {
-        this.tasks.clear();
-        this.tasks.addAll(tasks);
-    }
+		this.taskList.addAll(tasks);
+		return true;
+	}
 
-    /**
-     * Remove a given Task from this Activity.
-     *
-     * @param task Task to be removed.
-     */
-    public void removeTask(Task task)
-    {
-        this.tasks.remove(task);
-    }
+	/**
+	 * Replace the current list of Tasks with the provided Tasks.
+	 *
+	 * @param tasks Collection of Tasks.
+	 */
+	public void replaceTasks(Collection<Task> tasks) {
+		this.taskList.clear();
+		this.taskList.addAll(tasks);
+	}
 
-    /**
-     * Set the Duration of this Activity.
-     *
-     * @param duration integer value of the Duration.
-     */
-    public void setDuration(int duration)
-    {
-        this.duration = duration;
-    }
+	/**
+	 * Remove a given Task from this Activity.
+	 *
+	 * @param task Task to be removed.
+	 */
+	public void removeTask(Task task) {
+		this.taskList.remove(task);
+	}
 
-    /**
-     * Set the Quantity of this Activity.
-     *
-     * @param activityQuantity integer value of the Quantity.
-     */
-    public void setActivityQuantity(int activityQuantity)
-    {
-        this.activityQuantity = activityQuantity;
-    }
+	/**
+	 * Set the Duration of this Activity.
+	 *
+	 * @param duration integer value of the Duration.
+	 */
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
 
-    /**
-     * Set the QuantityType of this Activity.
-     *
-     * @param type String representation of the QuantityType.
-     */
-    public void setType(String type)
-    {
-        if (QuantityType.exists(type))
-            this.type = QuantityType.get(type);
-    }
+	/**
+	 * Set the Quantity of this Activity.
+	 *
+	 * @param activityQuantity integer value of the Quantity.
+	 */
+	public void setActivityQuantity(int activityQuantity) {
+		this.activityQuantity = activityQuantity;
+	}
 
-    @Override
-    public void open(MenuController.Window current)
-    {
-        try
-        {
-            MainController.ui.activityDetails(this);
-        } catch (IOException e)
-        {
-            UIManager.reportError("Unable to open View file");
-        }
-    }
+	/**
+	 * Set the QuantityType of this Activity.
+	 *
+	 * @param type String representation of the QuantityType.
+	 */
+	public void setType(String type) {
+		if (QuantityType.exists(type)) {
+			this.type = QuantityType.get(type);
+		}
+	}
 
-    // Constructors:
-    public Activity(String name, String details, LocalDate date, int duration, int activityQuantity, String type)
-    {
-        super(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
-        this.setName(name);
-        this.setDetails(details);
-        this.duration = duration;
-        this.activityQuantity = activityQuantity;
-        this.type = QuantityType.get(type);
-    }
+	@Override
+	public void open(MenuController.Window current) {
+		try {
+			MainController.ui.activityDetails(this);
+		} catch (IOException e) {
+			UIManager.reportError("Unable to open View file");
+		}
+	}
 
-    /**
-     * Creates a copy of the given Activity.
-     *
-     * @param activity Activity object to be copied.
-     */
-    public Activity(Activity activity)
-    {
-        super();
-        this.name = activity.name;
-        this.details = activity.details;
-        this.date = activity.date;
-        this.duration = activity.duration;
-        this.activityQuantity = activity.activityQuantity;
-        this.type = activity.type;
-        this.tasks = activity.tasks;
-    }
 }

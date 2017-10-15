@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar
+ * Bijan Ghasemi Afshar, Eric Sweet, Roberto C. Sánchez
  *
  *
  *
@@ -28,93 +28,106 @@ import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
 /**
- * ${FILENAME}
- * Created by Andrew Odintsov on 4/27/17.
+ * A basic event with a calendar date and duration.
+ *
+ * @author Andrew Odintsov
  */
-public class Event extends VersionControlEntity
-{
-    protected GregorianCalendar date = null;
+public class Event extends VersionControlEntity {
 
-    private static Pattern dateRegex = Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)Z");
+	private static final long serialVersionUID = 1L;
 
-    // public methods
+	private static final int DEFAULT_DURATION = 0;
+	private static Pattern dateRegex =
+			Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)Z");
 
-    /**
-     * Validates the given String
-     *
-     * @param dateString a String containing a Date
-     * @return whether the given String is a valide date
-     */
-    public static boolean validDateString(String dateString)
-    {
-        return dateRegex.matcher(dateString).matches();
-    }
+	protected GregorianCalendar date = null;
+	protected int duration = DEFAULT_DURATION;
 
-    // getters
+	/**
+	 * Create an Event with the given date.
+	 *
+	 * @param date date of the event
+	 */
+	public Event(String date) {
+		setDate(date);
+	}
 
-    /**
-     * Returns a Date object containing this Date
-     *
-     * @return Date object
-     */
-    public Date getDate()
-    {
-        return this.date.getTime();
-    }
+	/**
+	 * Create a blank Event.
+	 */
+	public Event() {
+	}
 
-    public GregorianCalendar getCalendar()
-    {
-        return date;
-    }
+	/**
+	 * @return this Event's date.
+	 */
+	public Date getDate() {
+		return this.date.getTime();
+	}
 
-    public String toString()
-    {
-        return this.date.getTime().toString();
-    }
+	/**
+	 * @return the Event's duration.
+	 */
+	public int getDuration() {
+		return duration;
+	}
 
-    // setters:
-    public void setDate(String dateString)
-    {
-        // 09/04/2017T15:00:00Z
-        if (validDateString(dateString))
-        {
-            String sDay = dateString.substring(0, 2);
-            String sMonth = dateString.substring(3, 5);
-            String sYear = dateString.substring(6, 10);
-            String sHour = dateString.substring(11, 13);
-            String sMinute = dateString.substring(14, 16);
-            String sSecond = dateString.substring(17, 19);
-            if (MainController.isNumeric(sDay) && MainController.isNumeric(sMonth) && MainController.isNumeric(sYear) &&
-                    MainController.isNumeric(sHour) && MainController.isNumeric(sMinute) &&
-                    MainController.isNumeric(sSecond))
-            {
-                date = new GregorianCalendar(Integer.parseInt(sYear), Integer.parseInt(sMonth) - 1, Integer.parseInt(sDay)
-                        , Integer.parseInt(sHour), Integer.parseInt(sMinute), Integer.parseInt(sSecond));
-            }
-        }
-    }
+	/**
+	 * @return this Event's calendar object.
+	 */
+	public GregorianCalendar getCalendar() {
+		return date;
+	}
 
-    @Override
-    protected void replace(VersionControlEntity receivedVCE)
-    {
-        if (receivedVCE instanceof Event)
-        {
-            Event castedVCE = (Event) receivedVCE;
-            if (castedVCE.getCalendar() != null)
-            {
-                this.date = castedVCE.getCalendar();
-            }
-        }
-        super.replace(receivedVCE);
-    }
+	/**
+	 * Sets the date using the date regex.
+	 *
+	 * @param dateString input of the date
+	 */
+	public void setDate(String dateString) {
+		// TODO: Fix this to use SimpleDateFormat
+		// 09/04/2017T15:00:00Z
+		if (validDateString(dateString)) {
+			String day = dateString.substring(0, 2);
+			String month = dateString.substring(3, 5);
+			String year = dateString.substring(6, 10);
+			String hour = dateString.substring(11, 13);
+			String minute = dateString.substring(14, 16);
+			String second = dateString.substring(17, 19);
+			if (MainController.isNumeric(day) && MainController.isNumeric(month)
+					&& MainController.isNumeric(year) && MainController.isNumeric(hour)
+					&& MainController.isNumeric(minute) && MainController.isNumeric(second)) {
+				date = new GregorianCalendar(Integer.parseInt(year), Integer.parseInt(month) - 1,
+						Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute),
+						Integer.parseInt(second));
+			}
+		}
+	}
 
-    // Constructors:
-    public Event(String cDate)
-    {
-        setDate(cDate);
-    }
+	@Override
+	protected void replace(VersionControlEntity receivedVce) {
+		if (receivedVce instanceof Event) {
+			Event castedVce = (Event) receivedVce;
+			if (castedVce.getCalendar() != null) {
+				this.date = castedVce.getCalendar();
+			}
+		}
+		super.replace(receivedVce);
+	}
 
-    public Event()
-    {
-    }
+	/**
+	 * Validates the given String.
+	 *
+	 * @param dateString a String containing a Date
+	 * @return whether the given String is a valid date
+	 */
+	public static boolean validDateString(String dateString) {
+		return dateRegex.matcher(dateString).matches();
+	}
+
+	@Override
+	public String toString() {
+		return this.date.getTime().toString();
+	}
+
 }

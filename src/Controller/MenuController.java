@@ -36,6 +36,7 @@ import Model.QuantityType;
 import Model.Requirement;
 import Model.StudyProfile;
 import Model.Task;
+import Model.ICalExport;
 import Model.TimetableEvent;
 import View.GanttishDiagram;
 import View.UIManager;
@@ -67,6 +68,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -85,6 +87,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import jfxtras.scene.control.agenda.Agenda;
@@ -113,7 +116,13 @@ public class MenuController implements Initializable {
 
 	private Window current;
 	private boolean isNavOpen;
-
+	
+	//Shadows
+	private int shadowRadius = 44;
+	private int shadowOffset = 7;
+	private int shadowRadius2 = 27;
+	private int shadowOffset2 = 13;
+	
 	// Labels:
 	private Label welcome;
 	@FXML
@@ -136,6 +145,8 @@ public class MenuController implements Initializable {
 	private Button modules;
 	@FXML
 	private Button calendar;
+	@FXML
+	private Button closeDrawer;
 
 	// Panes:
 	@FXML
@@ -160,7 +171,7 @@ public class MenuController implements Initializable {
 	/**
 	 * Main method containing switch statements.
 	 */
-	public void main() {
+	public void main() {		
 		if (isNavOpen) {
 			openMenu.fire();
 		}
@@ -170,7 +181,7 @@ public class MenuController implements Initializable {
 
 		switch (this.current) {
 		case Dashboard: {
-			if (MainController.getSPC().getPlanner().getCurrentStudyProfile() != null) {
+			if (MainController.getSpc().getPlanner().getCurrentStudyProfile() != null) {
 				this.loadDashboard();
 			}
 			break;
@@ -205,7 +216,7 @@ public class MenuController implements Initializable {
 		showNotification.setTooltip(new Tooltip("Notifications"));
 		addActivity.setTooltip(new Tooltip("Add activity"));
 		calendar.setTooltip(new Tooltip("Open Calendar"));
-
+		
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
@@ -213,7 +224,7 @@ public class MenuController implements Initializable {
 		this.title.setText("Study Dashboard");
 		// =================
 
-		StudyProfile profile = MainController.getSPC().getPlanner().getCurrentStudyProfile();
+		StudyProfile profile = MainController.getSpc().getPlanner().getCurrentStudyProfile();
 
 		// Display studyProfile:
 		Label studyProfile = new Label(profile.getName());
@@ -272,7 +283,7 @@ public class MenuController implements Initializable {
 		try {
 			Activity activity = MainController.ui.addActivity();
 			if (activity != null) {
-				MainController.getSPC().addActivity(activity);
+				MainController.getSpc().addActivity(activity);
 			}
 
 		} catch (Exception e) {
@@ -313,7 +324,7 @@ public class MenuController implements Initializable {
 		progressColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
 		ObservableList<Milestone> list = FXCollections.observableArrayList(
-				MainController.getSPC().getPlanner().getCurrentStudyProfile().getMilestones());
+				MainController.getSpc().getPlanner().getCurrentStudyProfile().getMilestones());
 		// =================
 
 		// Create a table:
@@ -364,7 +375,6 @@ public class MenuController implements Initializable {
 
 		// Buttons:
 		Button add = new Button("Add a new Milestone");
-
 		Button remove = new Button("Remove");
 		remove.setDisable(true);
 		// =================
@@ -388,7 +398,7 @@ public class MenuController implements Initializable {
 				Milestone milestone = MainController.ui.addMilestone();
 				if (milestone != null) {
 					list.add(milestone);
-					MainController.getSPC().addMilestone(milestone);
+					MainController.getSpc().addMilestone(milestone);
 				}
 			} catch (IOException e1) {
 				UIManager.reportError("Unable to open View file");
@@ -400,7 +410,7 @@ public class MenuController implements Initializable {
 			if (UIManager.confirm("Are you sure you want to remove this milestone?")) {
 				Milestone mm = table.getSelectionModel().getSelectedItem();
 				list.remove(mm);
-				MainController.getSPC().removeMilestone(mm);
+				MainController.getSpc().removeMilestone(mm);
 			}
 		});
 		// =================
@@ -457,15 +467,21 @@ public class MenuController implements Initializable {
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
 		// =================
 		// Populate Agenda:
-		ArrayList<Event> calendar = MainController.getSPC().getPlanner().getCurrentStudyProfile()
-				.getCalendar();
+		ArrayList<Event> calendar = MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
+		//Counter to create unique ICS file names for export
+		int counter = 0;
+		//Creation of ICS export factory
+		ICalExport iExport = new ICalExport();
+		//Preparation of export directory
+		iExport.icalSetup();
 		for (Event e : calendar) {
+			iExport.createExportEvent(e, counter);
 			if (e instanceof TimetableEvent) {
 				LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
 						ZoneId.systemDefault());
 				content.appointments().addAll(new Agenda.AppointmentImplLocal()
 						.withStartLocalDateTime(stime)
-						.withEndLocalDateTime(stime.plusMinutes(((TimetableEvent) e).getDuration()))
+						.withEndLocalDateTime(stime.plusMinutes(e.getDuration()))
 
 						.withSummary(e.getName() + "\n" + "@ "
 								+ ((TimetableEvent) e).getRoom().getLocation())
@@ -478,7 +494,7 @@ public class MenuController implements Initializable {
 						.withStartLocalDateTime(stime)
 						.withSummary(
 								e.getName() + "\n" + "@ " + ((ExamEvent) e).getRoom().getLocation())
-						.withEndLocalDateTime(stime.plusMinutes(((ExamEvent) e).getDuration()))
+						.withEndLocalDateTime(stime.plusMinutes(e.getDuration()))
 						.withAppointmentGroup(
 								new Agenda.AppointmentGroupImpl().withStyleClass("group20")));
 			} else if (e instanceof Deadline) {
@@ -496,6 +512,7 @@ public class MenuController implements Initializable {
 						.withEndLocalDateTime(stime.plusMinutes(60)).withAppointmentGroup(
 								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
 			}
+			counter++;
 		}
 		layout.getChildren().addAll(nav, content);
 		Platform.runLater(() -> content
@@ -532,7 +549,7 @@ public class MenuController implements Initializable {
 		semesterColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
 		ObservableList<StudyProfile> list = FXCollections
-				.observableArrayList(MainController.getSPC().getPlanner().getStudyProfiles());
+				.observableArrayList(MainController.getSpc().getPlanner().getStudyProfiles());
 		// =================
 
 		// Create a table:
@@ -603,14 +620,14 @@ public class MenuController implements Initializable {
 		timeSpent.setCellValueFactory(new PropertyValueFactory("timeSpent") {
 			@Override
 			public ObservableValue call(TableColumn.CellDataFeatures param) {
-				return new SimpleIntegerProperty(MainController.getSPC().getPlanner()
+				return new SimpleIntegerProperty(MainController.getSpc().getPlanner()
 						.getTimeSpent((Module) param.getValue()));
 			}
 		});
 		timeSpent.setStyle("-fx-alignment: CENTER-RIGHT;");
 
 		ObservableList<Module> list = FXCollections.observableArrayList(
-				MainController.getSPC().getPlanner().getCurrentStudyProfile().getModules());
+				MainController.getSpc().getPlanner().getCurrentStudyProfile().getModules());
 		// =================
 
 		// Create a table:
@@ -1016,7 +1033,7 @@ public class MenuController implements Initializable {
 	 * Handles the 'Mark all as read' button event.
 	 */
 	public void handleMarkAll() {
-		Notification[] nots = MainController.getSPC().getPlanner().getUnreadNotifications();
+		Notification[] nots = MainController.getSpc().getPlanner().getUnreadNotifications();
 		// Mark all notifications as read:
 		for (int i = 0; i < nots.length; ++i) {
 			int index = this.notificationList.getChildren().size() - 1 - i;
@@ -1044,8 +1061,8 @@ public class MenuController implements Initializable {
 	 */
 	public void handleRead(int id) {
 		// Get notification:
-		int idInList = MainController.getSPC().getPlanner().getNotifications().length - 1 - id;
-		Notification not = MainController.getSPC().getPlanner().getNotifications()[idInList];
+		int idInList = MainController.getSpc().getPlanner().getNotifications().length - 1 - id;
+		Notification not = MainController.getSpc().getPlanner().getNotifications()[idInList];
 
 		// If not read:
 		if (!not.isRead()) {
@@ -1054,7 +1071,7 @@ public class MenuController implements Initializable {
 
 			// Swap styles:
 			this.notificationList.getChildren().get(id).getStyleClass().remove("unread-item");
-			if (MainController.getSPC().getPlanner().getUnreadNotifications().length <= 0) {
+			if (MainController.getSpc().getPlanner().getUnreadNotifications().length <= 0) {
 				this.showNotification.getStyleClass().remove("unread-button");
 				if (!this.showNotification.getStyleClass().contains("read-button")) {
 					this.showNotification.getStyleClass().add("read-button");
@@ -1086,8 +1103,13 @@ public class MenuController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		this.prepareAnimations();
 		this.isNavOpen = false;
+		
+		//Set shadows
+		notifications.setEffect(new DropShadow(this.shadowRadius2, 0, this.shadowOffset2, Color.BLACK));
+		navList.setEffect(new DropShadow(this.shadowRadius, this.shadowOffset, 0, Color.BLACK));
 
 		// Set button actions:
+		this.closeDrawer.setOnAction(e -> openMenu.fire());
 		this.showDash.setOnAction(e -> this.main(Window.Dashboard));
 		this.studyProfiles.setOnAction(e -> this.main(Window.Profiles));
 		this.modules.setOnAction(e -> this.main(Window.Modules));
@@ -1097,7 +1119,7 @@ public class MenuController implements Initializable {
 
 		// Welcome text:
 		this.welcome = new Label(
-				"Welcome back, " + MainController.getSPC().getPlanner().getUserName() + "!");
+				"Welcome back, " + MainController.getSpc().getPlanner().getUserName() + "!");
 		this.welcome.setPadding(new Insets(10, 15, 10, 15));
 		this.topBox.getChildren().add(this.welcome);
 		// =================
@@ -1114,10 +1136,10 @@ public class MenuController implements Initializable {
 	 * Prepare notifications.
 	 */
 	private void updateNotifications() {
-		MainController.getSPC().checkForNotifications();
+		MainController.getSpc().checkForNotifications();
 
 		// Set notification button style:
-		if (MainController.getSPC().getPlanner().getUnreadNotifications().length > 0) {
+		if (MainController.getSpc().getPlanner().getUnreadNotifications().length > 0) {
 			if (!this.showNotification.getStyleClass().contains("unread-button")) {
 				this.showNotification.getStyleClass().remove("read-button");
 				this.showNotification.getStyleClass().add("unread-button");
@@ -1129,7 +1151,7 @@ public class MenuController implements Initializable {
 
 		// Process notifications:
 		this.notificationList.getChildren().clear();
-		Notification[] notifications = MainController.getSPC().getPlanner().getNotifications();
+		Notification[] notifications = MainController.getSpc().getPlanner().getNotifications();
 		for (int i = notifications.length - 1; i >= 0; i--) {
 			GridPane pane = new GridPane();
 
@@ -1176,7 +1198,7 @@ public class MenuController implements Initializable {
 	/**
 	 * Handles menu options.
 	 */
-	private void updateMenu() {
+	private void updateMenu() {		
 		this.addActivity.setDisable(false);
 		this.milestones.setDisable(false);
 		this.studyProfiles.setDisable(false);
@@ -1184,19 +1206,19 @@ public class MenuController implements Initializable {
 		this.calendar.setDisable(false);
 
 		// Disable relevant menu options:
-		if (MainController.getSPC().getPlanner().getCurrentStudyProfile() == null) {
+		if (MainController.getSpc().getPlanner().getCurrentStudyProfile() == null) {
 			this.addActivity.setDisable(true);
 			this.milestones.setDisable(true);
 			this.studyProfiles.setDisable(true);
 			this.modules.setDisable(true);
 			this.calendar.setDisable(true);
 		} else {
-			if (MainController.getSPC().getCurrentTasks().size() <= 0) {
+			if (MainController.getSpc().getCurrentTasks().size() <= 0) {
 				this.addActivity.setDisable(true);
 				this.milestones.setDisable(true);
 			}
 
-			if (MainController.getSPC().getPlanner().getCurrentStudyProfile()
+			if (MainController.getSpc().getPlanner().getCurrentStudyProfile()
 					.getModules().length <= 0) {
 				this.modules.setDisable(true);
 			}
@@ -1225,28 +1247,28 @@ public class MenuController implements Initializable {
 	 * Prepares animations for the main window.
 	 */
 	private void prepareAnimations() {
-		TranslateTransition openNav = new TranslateTransition(new Duration(300), navList);
+		TranslateTransition openNav = new TranslateTransition(new Duration(222), navList);
 		openNav.setToX(0);
-		TranslateTransition closeNav = new TranslateTransition(new Duration(300), navList);
+		TranslateTransition closeNav = new TranslateTransition(new Duration(173), navList);
 		openMenu.setOnAction((ActionEvent e1) -> {
 			this.isNavOpen = !isNavOpen;
 			if (navList.getTranslateX() != 0) {
 				openNav.play();
 			} else {
-				closeNav.setToX(-(navList.getWidth()));
+				closeNav.setToX(-(navList.getWidth() + this.shadowRadius + this.shadowOffset));
 				closeNav.play();
 			}
 		});
 
-		TranslateTransition openNot = new TranslateTransition(new Duration(350), notifications);
+		TranslateTransition openNot = new TranslateTransition(new Duration(222), notifications);
 		openNot.setToY(0);
-		TranslateTransition closeNot = new TranslateTransition(new Duration(350), notifications);
+		TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
 
 		showNotification.setOnAction((ActionEvent e1) -> {
 			if (notifications.getTranslateY() != 0) {
 				openNot.play();
 			} else {
-				closeNot.setToY(-(notifications.getHeight()) - 56.0);
+				closeNot.setToY(-(notifications.getHeight() + this.shadowRadius + 56));
 				closeNot.play();
 			}
 		});
