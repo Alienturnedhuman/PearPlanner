@@ -102,20 +102,17 @@ public class UIManager {
 	public Account createAccount() throws Exception {
 		AccountController accountControl = new AccountController();
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
-
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(createAccountFXML);
 		loader.setController(accountControl);
-		Parent root = loader.load();
-
+		Parent root = loader.load();		
 		// Set the scene:
 		Stage stage = new Stage();
 		stage.setScene(new Scene(root, 550, 232));
 		stage.setTitle("Create Account");
 		stage.resizableProperty().setValue(false);
 		stage.getIcons().add(icon);
-		stage.showAndWait();
-
+		stage.showAndWait();		
 		// Handle creation of the Account object:
 		if (accountControl.isSuccess()) {
 			Account newAccount = accountControl.getAccount();
@@ -128,17 +125,14 @@ public class UIManager {
 	/**
 	 * Displays the main menu.
 	 *
-	 * @throws Exception
-	 *             when the FXMLLoader is unable to load
+	 * @throws Exception when the FXMLLoader is unable to load
 	 */
 	public void mainMenu() throws Exception {
 		// Load in the .fxml file:
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
-
 		FXMLLoader loader = new FXMLLoader(mainMenuFXML);
 		loader.setController(UIManager.mc);
 		Parent root = loader.load();
-
 		// Set the scene:
 		mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
 		mainStage.setTitle("RaiderPlanner");
@@ -151,17 +145,15 @@ public class UIManager {
 
 	/**
 	 * Display the 'Add Activity' window.
-	 *
+	 * 
 	 * @return newly created Activity
 	 */
 	public Activity addActivity() throws Exception {
 		ActivityController ac = new ActivityController();
-
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(activityFXML);
 		loader.setController(ac);
 		Parent root = loader.load();
-
 		// Set the scene:
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -170,7 +162,6 @@ public class UIManager {
 		stage.resizableProperty().setValue(false);
 		stage.getIcons().add(icon);
 		stage.showAndWait();
-
 		// Add the Activity to the StudyPlanner
 		if (ac.isSuccess()) {
 			return ac.getActivity();
@@ -181,17 +172,14 @@ public class UIManager {
 	/**
 	 * Displays the Activity details page
 	 *
-	 * @param activity
-	 *            Activity for which the details should be displayed.
+	 * @param activity for which the details should be displayed.
 	 */
 	public void activityDetails(Activity activity) throws IOException {
 		ActivityController ac = new ActivityController(activity);
-
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(activityFXML);
 		loader.setController(ac);
 		Parent root = loader.load();
-
 		// Set the scene:
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -209,12 +197,10 @@ public class UIManager {
 	 */
 	public Milestone addMilestone() throws IOException {
 		MilestoneController mc = new MilestoneController();
-
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(milestoneFXML);
 		loader.setController(mc);
 		Parent root = loader.load();
-
 		// Set the scene:
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -223,7 +209,6 @@ public class UIManager {
 		stage.resizableProperty().setValue(false);
 		stage.getIcons().add(icon);
 		stage.showAndWait();
-
 		// Add the Milestone to the StudyPlanner
 		if (mc.isSuccess()) {
 			return mc.getMilestone();
@@ -234,17 +219,14 @@ public class UIManager {
 	/**
 	 * Displays the Milestone details page
 	 *
-	 * @param milestone
-	 *            Milestone for which the details should be shown.
+	 * @param milestone for which the details should be shown.
 	 */
 	public void milestoneDetails(Milestone milestone) throws IOException {
 		MilestoneController mc = new MilestoneController(milestone);
-
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(milestoneFXML);
 		loader.setController(mc);
 		Parent root = loader.load();
-
 		// Set the scene:
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -258,17 +240,14 @@ public class UIManager {
 	/**
 	 * Displays the StudyProfile details page
 	 *
-	 * @param profile
-	 *            StudyProfile for which the details should be shown.
+	 * @param profile StudyProfile for which the details should be shown.
 	 */
 	public void studyProfileDetails(StudyProfile profile) throws IOException {
 		StudyProfileController spc = new StudyProfileController(profile);
-
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(studyProfileFXML);
 		loader.setController(spc);
 		Parent root = loader.load();
-
 		// Set the scene:
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -282,12 +261,9 @@ public class UIManager {
 	/**
 	 * Displays the Module details page
 	 *
-	 * @param module
-	 *            Module for which the details should be shown.
-	 * @param current
-	 *            Window from which this method is called.
-	 * @throws IOException
-	 *             Throws exception if IO error is triggered
+	 * @param module for which the details should be shown.
+	 * @param current Window from which this method is called.
+	 * @throws IOException exception if IO error is triggered
 	 */
 	public void moduleDetails(Module module, MenuController.Window current) throws IOException {
 		UIManager.mc.loadModule(module, current, null);
@@ -296,12 +272,9 @@ public class UIManager {
 	/**
 	 * Displays the Module details page
 	 *
-	 * @param module
-	 *            Module for which the details should be shown.
-	 * @param current
-	 *            Window from which this method is called.
-	 * @throws IOException
-	 *             Throws exception if IO error is triggered
+	 * @param module for which the details should be shown.
+	 * @param current Window from which this method is called.
+	 * @throws IOException if IO error is triggered
 	 */
 	public void moduleDetails(Module module, ModelEntity current) throws IOException {
 		UIManager.mc.loadModule(module, MenuController.Window.Empty, current);
@@ -310,12 +283,9 @@ public class UIManager {
 	/**
 	 * Displays the Assignment details page
 	 *
-	 * @param assignment
-	 *            Assignment for which the details should be shown.
-	 * @param current
-	 *            Window from which this method is called.
-	 * @throws IOException
-	 *             Throws exception if IO error is triggered
+	 * @param assignment for which the details should be shown.
+	 * @param current Window from which this method is called.
+	 * @throws IOException if IO error is triggered
 	 */
 	public void assignmentDetails(Assignment assignment, MenuController.Window current)
 			throws IOException {
@@ -325,12 +295,9 @@ public class UIManager {
 	/**
 	 * Displays the Assignment details page
 	 *
-	 * @param assignment
-	 *            Assignment for which the details should be shown.
-	 * @param current
-	 *            Window from which this method is called.
-	 * @throws IOException
-	 *             Throws exception if IO error is triggered
+	 * @param assignment for which the details should be shown.
+	 * @param current Window from which this method is called.
+	 * @throws IOException if IO error is triggered
 	 */
 	public void assignmentDetails(Assignment assignment, ModelEntity current) throws IOException {
 		UIManager.mc.loadAssignment(assignment, MenuController.Window.Empty, current);
@@ -343,12 +310,10 @@ public class UIManager {
 	 */
 	public Task addTask() throws Exception {
 		TaskController tc = new TaskController();
-
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(taskFXML);
 		loader.setController(tc);
 		Parent root = loader.load();
-
 		// Set the scene:
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -357,7 +322,6 @@ public class UIManager {
 		stage.resizableProperty().setValue(false);
 		stage.getIcons().add(icon);
 		stage.showAndWait();
-
 		// Handle creation of the Account object:
 		if (tc.isSuccess()) {
 			return tc.getTask();
@@ -368,19 +332,15 @@ public class UIManager {
 	/**
 	 * Displays the Task details page
 	 *
-	 * @param task
-	 *            for which the details should be displayed.
-	 * @throws IOException
-	 *             Throws exception if IO error is triggered from loading .fxml
+	 * @param task for which the details should be displayed.
+	 * @throws IOException if IO error is triggered from loading .fxml
 	 */
 	public void taskDetails(Task task) throws IOException {
 		TaskController tc = new TaskController(task);
-
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(taskFXML);
 		loader.setController(tc);
 		Parent root = loader.load();
-
 		// Set the scene:
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -398,12 +358,10 @@ public class UIManager {
 	 */
 	public Requirement addRequirement() throws Exception {
 		RequirementController rc = new RequirementController();
-
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(requirementFXML);
 		loader.setController(rc);
 		Parent root = loader.load();
-
 		// Set the scene:
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -412,7 +370,6 @@ public class UIManager {
 		stage.resizableProperty().setValue(false);
 		stage.getIcons().add(icon);
 		stage.showAndWait();
-
 		// Handle creation of the Account object:
 		if (rc.isSuccess()) {
 			return rc.getRequirement();
@@ -423,17 +380,14 @@ public class UIManager {
 	/**
 	 * Displays the Requirement details page.
 	 *
-	 * @param requirement
-	 *            Requirement for which the details should be displayed
+	 * @param requirement for which the details should be displayed
 	 */
 	public void requirementDetails(Requirement requirement) throws IOException {
 		RequirementController rc = new RequirementController(requirement);
-
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(requirementFXML);
 		loader.setController(rc);
 		Parent root = loader.load();
-
 		// Set the scene:
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -449,12 +403,10 @@ public class UIManager {
 	 */
 	public void showStartup() throws IOException {
 		StartupController sc = new StartupController();
-
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(startupFXML);
 		loader.setController(sc);
 		Parent root = loader.load();
-
 		// Set the scene:
 		Stage stage = new Stage();
 		stage.setScene(new Scene(root, 400, 500));
@@ -472,31 +424,23 @@ public class UIManager {
 	/**
 	 * Displays a GanttishDiagram window for the given Assignment.
 	 *
-	 * @param assignment
-	 *            Assignment for which to generate the GanttishDiagram.
+	 * @param assignment for which to generate the GanttishDiagram.
 	 */
 	public void showGantt(Assignment assignment) {
 		Stage stage = new Stage();
-
 		// Layout:
 		VBox layout = new VBox();
 		layout.setSpacing(10);
 		layout.setPadding(new Insets(15));
 		layout.getStylesheets().add("/Content/stylesheet.css");
-		// =================
-
 		// Nav bar:
 		HBox nav = new HBox();
 		nav.setSpacing(15.0);
-		// =================
-
 		// Title:
 		Label title = new Label("Ganttish Diagram");
 		title.getStyleClass().add("title");
 		HBox xx = new HBox();
 		HBox.setHgrow(xx, Priority.ALWAYS);
-		// =================
-
 		// Buttons:
 		Button save = new Button("Save");
 		save.setOnAction(e -> {
@@ -506,10 +450,7 @@ public class UIManager {
 		});
 		Button close = new Button("Close");
 		close.setOnAction(e -> ((Stage) close.getScene().getWindow()).close());
-		// =================
-
 		nav.getChildren().addAll(title, xx, save, close);
-
 		// Content:
 		BufferedImage gantt = GanttishDiagram
 				.createGanttishDiagram(MainController.getSpc().getPlanner(), assignment);
@@ -519,10 +460,7 @@ public class UIManager {
 		content.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(
 						BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false))));
-		// =================
-
 		layout.getChildren().addAll(nav, content);
-
 		// Set the scene:
 		stage.setScene(new Scene(layout, 1300, 800, true, SceneAntialiasing.BALANCED));
 		stage.setTitle("Ganttish Diagram");
@@ -530,7 +468,6 @@ public class UIManager {
 		stage.getIcons().add(icon);
 		stage.setFullScreen(true);
 		stage.showAndWait();
-		// =================
 	}
 
 	/**
@@ -596,8 +533,7 @@ public class UIManager {
 	/**
 	 * Displays an error message.
 	 *
-	 * @param message
-	 *            to be displayed
+	 * @param message to be displayed
 	 */
 	public static void reportError(String message) {
 		Alert alert = new Alert(Alert.AlertType.ERROR, message);
@@ -607,8 +543,7 @@ public class UIManager {
 	/**
 	 * Reports that an action was successful and displays a message.
 	 *
-	 * @param message
-	 *            to be displayed
+	 * @param message to be displayed
 	 */
 	public static void reportSuccess(String message) {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
@@ -626,8 +561,7 @@ public class UIManager {
 	/**
 	 * Confirm box with 'Yes' or 'No' as available options
 	 *
-	 * @param message
-	 *            message to be displayed
+	 * @param message to be displayed
 	 * @return true for yes, false for no.
 	 */
 	public static boolean confirm(String message) {
