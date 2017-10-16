@@ -25,13 +25,13 @@ import Model.Assignment;
 import Model.StudyPlanner;
 import Model.Task;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import javax.imageio.ImageIO;
 
 /**
  * Created by bendickson on 5/15/17.
@@ -177,13 +177,13 @@ public class GanttishDiagram {
 			g = cg > 255 ? 255 : (cg < 0 ? 0 : cg);
 			b = cb > 255 ? 255 : (cb < 0 ? 0 : cb);
 		}
-
+		
 		badgeColors(int cr, int cg, int cb, int ca) {
 			this(cr, cg, cb);
 			a = ca > 255 ? 255 : (ca < 0 ? 0 : ca);
 		}
 	}
-
+	
 	/**
 	 * Creates a GanttishDiagram from a given Assignment.
 	 *
