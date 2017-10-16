@@ -127,7 +127,7 @@ public class HubFile implements Serializable {
 	 * @param s   semester
 	 * @param m   Module list
 	 * @param a   VersionControlEntity list
-	 * @param cal Calendar events list
+	 * @param cal CALENDAR events list
 	 */
 	public HubFile(int v, int y, int s, ArrayList<Module> m, ArrayList<VersionControlEntity> a, ArrayList<Event> cal) {
 		version = v;
@@ -398,7 +398,7 @@ public class HubFile implements Serializable {
 				pValues.get("familyName").getString(), pValues.get("familyNameLast").getBoolean(),
 				pValues.get("email").getString());
 
-		DataController.addVCEproperties(r, pValues);
+		DataController.addVceProperties(r, pValues);
 		return r;
 	}
 
@@ -409,7 +409,7 @@ public class HubFile implements Serializable {
 		Building r = new Building(pValues.get("code").getString(), pValues.get("latitude").getDouble(),
 				pValues.get("longitude").getDouble());
 
-		DataController.addVCEproperties(r, pValues);
+		DataController.addVceProperties(r, pValues);
 		return r;
 	}
 
@@ -426,7 +426,7 @@ public class HubFile implements Serializable {
 		} else {
 			r = new Room(pValues.get("roomNumber").getString());
 		}
-		DataController.addVCEproperties(r, pValues);
+		DataController.addVceProperties(r, pValues);
 		return r;
 	}
 
@@ -436,7 +436,7 @@ public class HubFile implements Serializable {
 
 		TimeTableEventType r = new TimeTableEventType();
 
-		DataController.addVCEproperties(r, pValues);
+		DataController.addVceProperties(r, pValues);
 		return r;
 	}
 
@@ -472,7 +472,7 @@ public class HubFile implements Serializable {
 			cwStartDate = new Event(eventValues.get("date").getString());
 
 
-			DataController.addVCEproperties(cwStartDate, eventValues);
+			DataController.addVceProperties(cwStartDate, eventValues);
 			assetList.put(eventValues.get("uid").getString(), cwStartDate);
 
 		} else {
@@ -488,7 +488,7 @@ public class HubFile implements Serializable {
 			cwDeadline = new Deadline(eventValues.get("date").getString());
 
 
-			DataController.addVCEproperties(cwDeadline, eventValues);
+			DataController.addVceProperties(cwDeadline, eventValues);
 			assetList.put(eventValues.get("uid").getString(), cwDeadline);
 
 		} else {
@@ -500,7 +500,7 @@ public class HubFile implements Serializable {
 				cwSetBy, cwMarkedBy, cwReviewedBy, courseworkValues.get("marks").getInt(),
 				cwStartDate, cwDeadline, cwExtensions);
 
-		DataController.addVCEproperties(r, courseworkValues);
+		DataController.addVceProperties(r, courseworkValues);
 		return r;
 	}
 
@@ -536,7 +536,7 @@ public class HubFile implements Serializable {
 					eventValues.get("duration").getInt());
 
 
-			DataController.addVCEproperties(exTimeSlot, eventValues);
+			DataController.addVceProperties(exTimeSlot, eventValues);
 			assetList.put(eventValues.get("uid").getString(), exTimeSlot);
 
 		} else {
@@ -566,7 +566,7 @@ public class HubFile implements Serializable {
 					exTimeSlot, exExamResit);
 		}
 
-		DataController.addVCEproperties(newExam, examValues);
+		DataController.addVceProperties(newExam, examValues);
 
 		return newExam;
 	}
@@ -590,7 +590,7 @@ public class HubFile implements Serializable {
 
 		newTTE = new TimetableEvent(tteValues.get("date").getString(), tRoom, tLecturer
 				, tTTET, tteValues.get("duration").getInt());
-		DataController.addVCEproperties(newTTE, tteValues);
+		DataController.addVceProperties(newTTE, tteValues);
 
 
 		return newTTE;
