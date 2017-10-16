@@ -34,9 +34,17 @@ import java.util.Collection;
 import java.util.Locale;
 
 /**
+<<<<<<< HEAD
  * An Activity with a duration and an associated list of tasks.
  *
  * @author Zilvinas Ceikauskas
+||||||| merged common ancestors
+ * PearPlanner/RaiderPlanner
+ * Created by Team BRONZE on 4/27/17
+=======
+ * PearPlanner/RaiderPlanner.
+ * Created by Team BRONZE on 4/27/17
+>>>>>>> 76e78f5a99e05488b4c2632fa584a968d0066ed3
  */
 public class Activity extends Event {
 
@@ -67,10 +75,20 @@ public class Activity extends Event {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Create a copy of the given Activity.
 	 *
 	 * @param activity Activity object to be copied.
+||||||| merged common ancestors
+	 * Returns the Duration of this Activity.
+	 *
+	 * @return integer representation of the Duration.
+=======
+	 * Overrides the default getDuration behavior from Event.
+	 * returns duration
+>>>>>>> 76e78f5a99e05488b4c2632fa584a968d0066ed3
 	 */
+<<<<<<< HEAD
 	public Activity(Activity activity) {
 		super();
 		this.name = activity.name;
@@ -80,6 +98,14 @@ public class Activity extends Event {
 		this.activityQuantity = activity.activityQuantity;
 		this.type = activity.type;
 		this.taskList = activity.taskList;
+||||||| merged common ancestors
+	public int getDuration() {
+		return duration;
+=======
+	@Override
+	public int getDuration() {
+		return duration;
+>>>>>>> 76e78f5a99e05488b4c2632fa584a968d0066ed3
 	}
 
 	/**
@@ -108,10 +134,20 @@ public class Activity extends Event {
 	 * @return a formatted String representation of this Activity's date.
 	 */
 	public String getDateString() {
+<<<<<<< HEAD
 		// TODO: fix this to use SimpleDateFormat
 		return this.date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
 				+ " " + this.date.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
 				+ " " + this.date.get(Calendar.DAY_OF_MONTH);
+||||||| merged common ancestors
+		return this.date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()) + " " +
+				this.date.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " " +
+				this.date.get(Calendar.DAY_OF_MONTH);
+=======
+		return this.date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+				+ " " + this.date.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+				+ " " + this.date.get(Calendar.DAY_OF_MONTH);
+>>>>>>> 76e78f5a99e05488b4c2632fa584a968d0066ed3
 	}
 
 	/**
@@ -205,4 +241,68 @@ public class Activity extends Event {
 		}
 	}
 
+<<<<<<< HEAD
+||||||| merged common ancestors
+	// Constructors:
+	public Activity(String name, String details, LocalDate date, int duration, int activityQuantity, String type) {
+		super(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
+		this.setName(name);
+		this.setDetails(details);
+		this.duration = duration;
+		this.activityQuantity = activityQuantity;
+		this.type = QuantityType.get(type);
+	}
+
+	/**
+	 * Creates a copy of the given Activity.
+	 *
+	 * @param activity Activity object to be copied.
+	 */
+	public Activity(Activity activity) {
+		super();
+		this.name = activity.name;
+		this.details = activity.details;
+		this.date = activity.date;
+		this.duration = activity.duration;
+		this.activityQuantity = activity.activityQuantity;
+		this.type = activity.type;
+		this.tasks = activity.tasks;
+	}
+=======
+	// Constructors
+	/**
+	 *  Constructor for the new activity.
+	 * @param name name of activity
+	 * @param details details of the activity
+	 * @param date date the activity will take place
+	 * @param duration duration of the activity
+	 * @param activityQuantity how much of the activity is there to be completed
+	 * @param type type of activity
+	 */
+	public Activity(String name, String details, LocalDate date, int duration,
+			int activityQuantity, String type) {
+		super(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "T00:00:01Z");
+		this.setName(name);
+		this.setDetails(details);
+		this.duration = duration;
+		this.activityQuantity = activityQuantity;
+		this.type = QuantityType.get(type);
+	}
+
+	/**
+	 * Creates a copy of the given Activity.
+	 *
+	 * @param activity Activity object to be copied.
+	 */
+	public Activity(Activity activity) {
+		super();
+		this.name = activity.name;
+		this.details = activity.details;
+		this.date = activity.date;
+		this.duration = activity.duration;
+		this.activityQuantity = activity.activityQuantity;
+		this.type = activity.type;
+		this.tasks = activity.tasks;
+	}
+>>>>>>> 76e78f5a99e05488b4c2632fa584a968d0066ed3
 }

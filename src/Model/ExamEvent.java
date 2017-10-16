@@ -24,9 +24,17 @@ package Model;
 import java.text.SimpleDateFormat;
 
 /**
+<<<<<<< HEAD
  * An exam event with a location/room and a duration.
  *
  * @author Andrew Odintsov
+||||||| merged common ancestors
+ * PearPlanner/RaiderPlanner
+ * Created by Team BRONZE on 4/27/17
+=======
+ * PearPlanner/RaiderPlanner.
+ * Created by Team BRONZE on 4/27/17
+>>>>>>> 76e78f5a99e05488b4c2632fa584a968d0066ed3
  */
 public class ExamEvent extends Event {
 
@@ -71,11 +79,52 @@ public class ExamEvent extends Event {
 
 	}
 
+<<<<<<< HEAD
 	/**
 	 * @return the room associated with this exam event.
 	 */
+||||||| merged common ancestors
+	public int getDuration() {
+		return duration;
+	}
+
+=======
+	/**
+	 * Overrides the default getDuration behavior from Event.
+	 * returns duration
+	 */
+	@Override
+	public int getDuration() {
+		return duration;
+	}
+
+	/**
+	 * gets the room the exam is in.
+	 * @return room
+	 */
+>>>>>>> 76e78f5a99e05488b4c2632fa584a968d0066ed3
 	public Room getRoom() {
 		return room;
 	}
 
+<<<<<<< HEAD
+||||||| merged common ancestors
+	public ExamEvent(String cDate, Room cRoom, int cDuration) {
+		super(cDate);
+		room = cRoom;
+		duration = cDuration;
+	}
+=======
+	/**
+	 * Constructor for new exam event.
+	 * @param date date of the exam
+	 * @param room room exam is in
+	 * @param duration duration of the exam
+	 */
+	public ExamEvent(String date, Room room, int duration) {
+		super(date);
+		this.room = room;
+		this.duration = duration;
+	}
+>>>>>>> 76e78f5a99e05488b4c2632fa584a968d0066ed3
 }
