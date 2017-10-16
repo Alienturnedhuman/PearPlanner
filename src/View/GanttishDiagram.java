@@ -139,15 +139,6 @@ public class GanttishDiagram {
 		private int b;
 		private int a = 255;
 
-		private int[] getColor() {
-			int[] cols = new int[4];
-			cols[0] = r;
-			cols[1] = g;
-			cols[2] = b;
-			cols[3] = a;
-			return cols;
-		}
-
 		private Paint getPaint() {
 			return new Color(r, g, b, a);
 		}
