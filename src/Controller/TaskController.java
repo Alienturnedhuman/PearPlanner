@@ -201,7 +201,7 @@ public class TaskController implements Initializable
     public void addDependency()
     {
         // Table items:
-        ObservableList<Task> list = FXCollections.observableArrayList(MainController.getSPC().getCurrentTasks());
+        ObservableList<Task> list = FXCollections.observableArrayList(MainController.getSpc().getCurrentTasks());
         list.removeAll(this.dependencies.getItems());
         if (this.task != null)
         {

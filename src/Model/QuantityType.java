@@ -109,8 +109,8 @@ public class QuantityType extends ModelEntity
     public static QuantityType create(String cName, String cDetails)
     {
         QuantityType t = new QuantityType(cName, cDetails);
-        if (MainController.getSPC() != null)
-            MainController.getSPC().addQuantityType(t);
+        if (MainController.getSpc() != null)
+            MainController.getSpc().addQuantityType(t);
         return t;
     }
 
@@ -123,8 +123,8 @@ public class QuantityType extends ModelEntity
     public static QuantityType create(String cName)
     {
         QuantityType t = new QuantityType(cName);
-        if (MainController.getSPC() != null)
-            MainController.getSPC().addQuantityType(t);
+        if (MainController.getSpc() != null)
+            MainController.getSpc().addQuantityType(t);
         return t;
     }
 
@@ -138,8 +138,8 @@ public class QuantityType extends ModelEntity
         if (!QuantityType.quantityDatabase.contains(type))
         {
             QuantityType.quantityDatabase.add(type);
-            if (MainController.getSPC() != null)
-                MainController.getSPC().addQuantityType(type);
+            if (MainController.getSpc() != null)
+                MainController.getSpc().addQuantityType(type);
         }
     }
 

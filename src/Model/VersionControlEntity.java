@@ -109,7 +109,7 @@ public class VersionControlEntity extends ModelEntity {
 				importer = false;
 				sealed = true;
 				library.put(uid, this);
-				MainController.getSPC().getPlanner().addToVersionControlLibrary(this);
+				MainController.getSpc().getPlanner().addToVersionControlLibrary(this);
 				return true;
 			}
 		} else {
@@ -205,7 +205,7 @@ public class VersionControlEntity extends ModelEntity {
 		} else {
 			uid = newUID;
 			library.put(newUID, this);
-			MainController.getSPC().getPlanner().addToVersionControlLibrary(this);
+			MainController.getSpc().getPlanner().addToVersionControlLibrary(this);
 			return true;
 		}
 	}

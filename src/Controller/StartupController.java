@@ -74,7 +74,7 @@ public class StartupController {
 			Notification not = new Notification("Welcome!", new GregorianCalendar(),
 					"Thank you for using RaiderPlanner!");
 			study.getPlanner().addNotification(not);
-			MainController.setSPC(study);
+			MainController.setSpc(study);
 			plannerFile = MainController.ui.savePlannerFileDialog();
 		} catch (Exception e) {
 			// Apparently createAccount() throws a general exception when the user hits quit
