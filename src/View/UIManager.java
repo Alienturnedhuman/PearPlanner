@@ -276,7 +276,7 @@ public class UIManager {
 	 * @throws IOException Throws exception if IO error is triggered
 	 */
 	public void moduleDetails(Module module, ModelEntity current) throws IOException {
-		UIManager.mc.loadModule(module, MenuController.Window.Empty, current);
+		UIManager.mc.loadModule(module, MenuController.Window.EMPTY, current);
 	}
 
 	/**
@@ -299,7 +299,7 @@ public class UIManager {
 	 * @throws IOException Throws exception if IO error is triggered
 	 */
 	public void assignmentDetails(Assignment assignment, ModelEntity current) throws IOException {
-		UIManager.mc.loadAssignment(assignment, MenuController.Window.Empty, current);
+		UIManager.mc.loadAssignment(assignment, MenuController.Window.EMPTY, current);
 	}
 
 	/**
