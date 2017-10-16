@@ -151,24 +151,24 @@ public class GanttishDiagram {
 		private Paint getPaint() {
 			return new Color(r, g, b, a);
 		}
-		
+
 		/**
 		 * Returns a color based on a progress out of 100
 		 * @param progress
 		 * @return
 		 */
 		private Color getPaint(int progress) {
-			if(progress > 100) {
+			if(progress > 100) { 
 				return new Color(0, 255, 0);
 			}
-			if(progress < 0) {
+			if(progress < 0) { 
 				return new Color(255, 0, 137);
 			}
-			
+
 			r = 255 - (int)(2.5 * progress);
 			g = (int)(Math.log(progress + 1) * 29);
 			b = 0;
-			
+
 			return new Color(r, g, b, 255);
 		}
 
@@ -177,13 +177,13 @@ public class GanttishDiagram {
 			g = cg > 255 ? 255 : (cg < 0 ? 0 : cg);
 			b = cb > 255 ? 255 : (cb < 0 ? 0 : cb);
 		}
-		
+
 		badgeColors(int cr, int cg, int cb, int ca) {
 			this(cr, cg, cb);
 			a = ca > 255 ? 255 : (ca < 0 ? 0 : ca);
 		}
 	}
-	
+
 	/**
 	 * Creates a GanttishDiagram from a given Assignment.
 	 *
