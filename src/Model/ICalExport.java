@@ -88,7 +88,7 @@ public class ICalExport {
 	public void icalSetup() {
 		File newDir = new File("calendarExport");
 		if (newDir.exists()) {
-			System.out.println("Calendar Export Directory"
+			System.out.println("CALENDAR Export Directory"
 					+ " already exists, all files were overwritten");
 		} else {
 			newDir.mkdirs();
