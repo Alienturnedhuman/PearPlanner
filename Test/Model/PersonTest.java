@@ -261,9 +261,9 @@ public class PersonTest {
 		// Valid emails from: https://blogs.msdn.microsoft.com/testing123/2009/02/06/email-address-test-cases/
 		String[] validEmails = {"email@domain.com", "firstname.lastname@domain.com",
 				"email@subdomain.domain.com", "firstname+lastname@domain.com",
-				"email@123.123.123.123", "email@[123.123.123.123]", "“email”@domain.com",
-				"1234567890@domain.com", "email@domain-one.com", "_______@domain.com",
-				"email@domain.name", "email@domain.co.jp", "firstname-lastname@domain.com"};
+				"email@[123.123.123.123]", "“email”@domain.com", "1234567890@domain.com",
+				"email@domain-one.com", "_______@domain.com", "email@domain.name",
+				"email@domain.co.jp", "firstname-lastname@domain.com"};
 
 		for (String validEmail : validEmails) {
 			assertTrue(Person.validEmail(validEmail));
