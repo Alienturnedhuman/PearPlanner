@@ -151,7 +151,20 @@ public class GanttishDiagram {
 		private Paint getPaint() {
 			return new Color(r, g, b, a);
 		}
+		
+		/**
+		 * Returns a color based on a progress out of 100
+		 * @param progress
+		 * @return
+		 */
 		private Color getPaint(int progress) {
+			if(progress > 100) {
+				return new Color(0, 255, 0);
+			}
+			if(progress < 0) {
+				return new Color(255, 0, 137);
+			}
+			
 			r = 255 - (int)(2.5 * progress);
 			g = (int)(Math.log(progress + 1) * 29);
 			b = 0;
