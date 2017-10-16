@@ -154,7 +154,7 @@ public class StudyPlannerController
                 if (!entry.getValue()[0])
                 {
                     GregorianCalendar temp = new GregorianCalendar();
-                    temp.add(Calendar.HOUR, -hours1);
+                    temp.add(CALENDAR.HOUR, -hours1);
                     Date date = temp.getTime();
 
                     if (entry.getKey() instanceof Coursework)
@@ -180,7 +180,7 @@ public class StudyPlannerController
                 } else if (!entry.getValue()[1])
                 {
                     GregorianCalendar temp = new GregorianCalendar();
-                    temp.add(Calendar.HOUR, -hours2);
+                    temp.add(CALENDAR.HOUR, -hours2);
                     Date date = temp.getTime();
 
                     if (entry.getKey() instanceof Coursework)
