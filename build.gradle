@@ -117,6 +117,10 @@ dependencies {
 	compile 'org.testfx:testfx-junit5:4.0.6-alpha'
 	compile 'org.testfx:testfx-legacy:4.0.6-alpha'
 	compile 'com.github.mangstadt:vinnie:2.0.1'
+	compile 'org.junit.jupiter:junit-jupiter-api:5.0.1'
+	compile 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
+	compile 'org.junit.platform:junit-platform-runner:1.0.1'
+	compile 'org.junit.vintage:junit-vintage-engine:4.12.1'
 
 	compile fileTree(dir: 'src')
 
