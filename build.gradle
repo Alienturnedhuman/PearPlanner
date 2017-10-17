@@ -98,13 +98,6 @@ repositories {
 dependencies {
 
 	testCompile 'junit:junit:4.12'
-<<<<<<< HEAD
-	testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.1'
-	testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
-	testRuntime 'org.junit.platform:junit-platform-runner:1.0.1'
-	testRuntime 'org.junit.vintage:junit-vintage-engine:4.12.1'
-	compile fileTree(dir: 'lib')
-=======
 
 	compile 'net.sf.biweekly:biweekly:0.6.1'
 	compile 'commons-validator:commons-validator:1.6'
@@ -125,7 +118,6 @@ dependencies {
 	compile 'org.testfx:testfx-legacy:4.0.6-alpha'
 	compile 'com.github.mangstadt:vinnie:2.0.1'
 
->>>>>>> sanchez/master
 	compile fileTree(dir: 'src')
 
 }
