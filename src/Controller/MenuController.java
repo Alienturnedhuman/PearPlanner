@@ -62,6 +62,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -296,14 +297,22 @@ public class MenuController implements Initializable {
 							Priority.ALWAYS,
 							HPos.CENTER,
 							true));
+
 			colIdx++;
 			modules.addColumn(colIdx,vbox);
+			GridPane.setMargin(vbox, new Insets(7));
 		}
-		// =================
+		
+		//Allow modules to be scrollable if window is too small to display them all
+		ScrollPane moduleBox = new ScrollPane();
+		moduleBox.setContent(modules);
+		moduleBox.setStyle("-fx-background-color: transparent");
+		moduleBox.setFitToHeight(true);
+		moduleBox.setFitToWidth(true);
 
 		GridPane.setColumnSpan(modules, GridPane.REMAINING);
 		GridPane.setMargin(modules, new Insets(10));
-		this.mainContent.addRow(2, modules);
+		this.mainContent.addRow(2, moduleBox);
 	}
 
 	/**
