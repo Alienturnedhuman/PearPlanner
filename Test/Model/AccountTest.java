@@ -21,13 +21,18 @@
 
 package Model;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+//import org.junit.After;
+//import org.junit.Before;
+//import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 
 /**
  * Created by bijan on 04/05/2017.
@@ -37,7 +42,7 @@ public class AccountTest {
 	Person person;
 	Account account;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		person = new Person("Mr","Andrew Odintsov", true);
 		account = new Account(person, "10012721-UG");
@@ -66,7 +71,7 @@ public class AccountTest {
 		assertEquals("99222213-UG", account.getStudentNumber());
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		person = null;
 		account = null;
