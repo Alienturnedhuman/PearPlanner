@@ -122,12 +122,12 @@ public class UIManager {
 		Parent root = loader.load();
 
 		// Set the scene:
-		mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
+		mainStage.setScene(new Scene(root,
+				Screen.getPrimary().getVisualBounds().getWidth() / 1.3,
+				Screen.getPrimary().getVisualBounds().getHeight() / 1.1,
+				true, SceneAntialiasing.BALANCED));
 		mainStage.setTitle("RaiderPlanner");
 		
-		//Set default window size to specific fraction of screen resolution
-		mainStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth() / 1.5);
-		mainStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight() / 1.1);
 		//Set minimum resolution to 360p
 		mainStage.setMinHeight(480);
 		mainStage.setMinWidth(640);
