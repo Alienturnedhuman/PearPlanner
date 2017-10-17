@@ -283,11 +283,13 @@ public class MenuController implements Initializable {
 			vbox.getChildren().add(badge);
 
 			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED,  e -> module.open(this.current));
-			
+			vbox.addEventHandler(MouseEvent.MOUSE_ENTERED,  e -> vbox.setEffect(new DropShadow(33, 0, 0, Color.BLACK)));
+			vbox.addEventHandler(MouseEvent.MOUSE_EXITED,  e -> vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK)));
+
 			vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK));
 			vbox.setStyle("-fx-background-color: white");
 			vbox.setPrefHeight(187);
-			
+
 			modules.setMaxSize(800, 1000);
 			modules.getColumnConstraints().add(
 					new ColumnConstraints(
@@ -300,10 +302,10 @@ public class MenuController implements Initializable {
 
 			colIdx++;
 			modules.addColumn(colIdx,vbox);
-			GridPane.setMargin(vbox, new Insets(7));
+			GridPane.setMargin(vbox, new Insets(33, 7, 33, 0));
 		}
-		
-		//Allow modules to be scrollable if window is too small to display them all
+
+		//Allow modules to be scrollable if window is too small to display them all on screen simultaneously
 		ScrollPane moduleBox = new ScrollPane();
 		moduleBox.setContent(modules);
 		moduleBox.setStyle("-fx-background-color: transparent");
