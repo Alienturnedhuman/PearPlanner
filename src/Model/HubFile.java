@@ -127,7 +127,7 @@ public class HubFile implements Serializable {
 	 * @param s   semester
 	 * @param m   Module list
 	 * @param a   VersionControlEntity list
-	 * @param cal Calendar events list
+	 * @param cal CALENDAR events list
 	 */
 	public HubFile(int v, int y, int s, ArrayList<Module> m, ArrayList<VersionControlEntity> a, ArrayList<Event> cal) {
 		version = v;
