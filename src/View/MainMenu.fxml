@@ -20,7 +20,7 @@
                     </children>
                 </HBox>
 
-                <Button fx:id="addActivity" onAction="#addActivity" prefHeight="33" prefWidth="33" styleClass="button-image" style="-fx-background-image: url('/Content/addactivity.png'); -fx-background-color: #5C8B76" />
+                <Button fx:id="addActivity" onAction="#addActivity" prefHeight="33" prefWidth="33" styleClass="button-image" style="-fx-background-image: url('/Content/addactivity.png');"/>
 
                 <HBox prefWidth="11"></HBox>
 
@@ -28,7 +28,7 @@
 
                 <HBox prefWidth="13"></HBox>
 
-                <Button fx:id="showNotification" styleClass="button-image" prefWidth="39.0" prefHeight="35.0" style="-fx-background-color: #5C8B76"/>
+                <Button fx:id="showNotification" styleClass="button-image" prefWidth="39.0" prefHeight="35.0"/>
             </items>
         </ToolBar>
         <GridPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
