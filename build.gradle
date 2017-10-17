@@ -65,12 +65,12 @@ sourceSets {
  */
 
 buildscript {
-  repositories {
-    jcenter()
-  }
-  dependencies {
-    classpath 'edu.sc.seis.gradle:launch4j:2.4.2'
-  }
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'edu.sc.seis.gradle:launch4j:2.4.2'
+	}
 }
 
 repositories {
@@ -127,7 +127,7 @@ test {
 jar {
 	manifest.attributes "Main-Class": mainClassName
 	baseName = project.name
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 /**
@@ -135,12 +135,12 @@ jar {
  */
 launch4j {
 	outputDir = 'libs'
-    outfile = 'raiderplanner.exe'
-    icon = '/../../icon.ico'
-    mainClassName = mainClassName
-    jar = "raiderplanner.jar"
-    productName = 'Raider Planner'
-    fileDescription = 'The best study planner since the Gantt Diagram'
+	outfile = 'raiderplanner.exe'
+	icon = '/../../icon.ico'
+	mainClassName = mainClassName
+	jar = "raiderplanner.jar"
+	productName = 'Raider Planner'
+	fileDescription = 'The best study planner since the Gantt Diagram'
 }
 
 checkstyle {
