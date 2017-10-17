@@ -225,7 +225,7 @@ public class MenuController implements Initializable {
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.topBox.getChildren().add(this.welcome);
-		this.title.setText("Study DASHBOARD");
+		this.title.setText("Study Dashboard");
 		// =================
 
 		StudyProfile profile = MainController.getSpc().getPlanner().getCurrentStudyProfile();
