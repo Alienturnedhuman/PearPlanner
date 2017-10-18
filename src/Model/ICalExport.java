@@ -94,6 +94,9 @@ public class ICalExport {
 		ical = new ICalendar();
 	}
 	
+	/**Method exports the created ical event file to a user readable file that can be imported to a calendar app of choice.
+	 * 
+	 */
 	public void exportFile() {
 		File file = new File("calendarExport/exportFile.ics");
 		createIcs(ical, file);

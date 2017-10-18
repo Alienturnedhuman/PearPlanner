@@ -497,13 +497,12 @@ public class MenuController implements Initializable {
 		// Populate Agenda:
 		ArrayList<Event> calendar =
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
-//		//Counter to create unique ICS file names for export
-//		int counter = 0;
 		//Creation of ICS export factory
 		ICalExport icalExport = new ICalExport();
 		//Preparation of export directory
 		icalExport.icalSetup();
 		for (Event e : calendar) {
+			//Create an event to be exported to an ICS file
 			icalExport.createExportEvent(e);
 			// TODO - find a way to eliminate this if/else-if/instanceof anti-pattern
 			if (e instanceof TimetableEvent) {
@@ -542,8 +541,8 @@ public class MenuController implements Initializable {
 						.withEndLocalDateTime(stime.plusMinutes(60)).withAppointmentGroup(
 								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
 			}
-//			counter++;
 		}
+		//After all events are created, export the file to export directory
 		icalExport.exportFile();
 		layout.getChildren().addAll(nav, content);
 		Platform.runLater(() -> content
