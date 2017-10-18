@@ -30,7 +30,7 @@ import java.text.SimpleDateFormat;
  */
 public class ExamEvent extends Event {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1127426583437715164L;
 
 	private Room room;
 

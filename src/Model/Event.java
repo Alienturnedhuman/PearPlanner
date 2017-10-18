@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  */
 public class Event extends VersionControlEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4940549364156632405L;
 
 	private static final int DEFAULT_DURATION = 0;
 	private static Pattern dateRegex =
