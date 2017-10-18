@@ -440,7 +440,7 @@ public class HubFile implements Serializable {
 		return r;
 	}
 
-	public static Coursework createCoursework(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws Exception {
+	public static Coursework createCoursework(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws IOException {
 		Coursework r;
 		HashMap<String, XMLcontroller.NodeReturn> courseworkValues = xmlTools.getSchemaValues(nc,
 				HubFile.SCHEMA_COURSEWORK);
@@ -504,7 +504,7 @@ public class HubFile implements Serializable {
 		return r;
 	}
 
-	public static Exam createExam(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws Exception {
+	public static Exam createExam(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws IOException {
 
 		HashMap<String, XMLcontroller.NodeReturn> examValues = xmlTools.getSchemaValues(nc,
 				HubFile.SCHEMA_EXAM);
@@ -571,7 +571,7 @@ public class HubFile implements Serializable {
 		return newExam;
 	}
 
-	public static TimetableEvent createTimetableEvent(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws Exception {
+	public static TimetableEvent createTimetableEvent(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws IOException {
 		TimetableEvent newTTE;
 
 

@@ -79,9 +79,9 @@ public class UIManager {
 	 * Displays a 'Create Account' window and handles the creation of a new Account object.
 	 *
 	 * @return newly created Account
-	 * @throws Exception if user quits
+	 * @throws IOException if user quits
 	 */
-	public Account createAccount() throws Exception {
+	public Account createAccount() throws IOException {
 		AccountController accountControl = new AccountController();
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
 
@@ -135,7 +135,7 @@ public class UIManager {
 	 *
 	 * @return newly created Activity
 	 */
-	public Activity addActivity() throws Exception {
+	public Activity addActivity() throws IOException {
 		ActivityController ac = new ActivityController();
 
 		// Load in the .fxml file:
