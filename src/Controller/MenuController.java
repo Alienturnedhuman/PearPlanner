@@ -83,6 +83,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -90,6 +91,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 import jfxtras.scene.control.agenda.Agenda;
 
@@ -245,9 +247,8 @@ public class MenuController implements Initializable {
 						Priority.ALWAYS,
 						HPos.CENTER,
 						true));
-		GridPane modules = new GridPane();
-		modules.setHgap(30);
-		modules.setVgap(20);
+		FlowPane modules = new FlowPane();
+
 		// This code will be added when wanting to resize the modules to grow with the page
 		//modules.getRowConstraints().add(
 		//		new RowConstraints(
@@ -290,19 +291,13 @@ public class MenuController implements Initializable {
 			vbox.setStyle("-fx-background-color: white");
 			vbox.setPrefHeight(187);
 
-			modules.setMaxSize(800, 1000);
-			modules.getColumnConstraints().add(
-					new ColumnConstraints(
-							Control.USE_COMPUTED_SIZE,
-							Double.POSITIVE_INFINITY,
-							1000,
-							Priority.ALWAYS,
-							HPos.CENTER,
-							true));
-
 			colIdx++;
-			modules.addColumn(colIdx,vbox);
-			GridPane.setMargin(vbox, new Insets(33, 7, 33, 0));
+			modules.getChildren().add(vbox);
+			modules.setMargin(vbox, new Insets(
+					Screen.getPrimary().getVisualBounds().getHeight() * 0.02,
+					0,
+					Screen.getPrimary().getVisualBounds().getHeight() * 0.02,
+					Screen.getPrimary().getVisualBounds().getWidth() * 0.04));
 		}
 
 		//Allow modules to be scrollable if window is too small to display them all on screen simultaneously
@@ -312,7 +307,6 @@ public class MenuController implements Initializable {
 		moduleBox.setFitToHeight(true);
 		moduleBox.setFitToWidth(true);
 
-		GridPane.setColumnSpan(modules, GridPane.REMAINING);
 		GridPane.setMargin(modules, new Insets(10));
 		this.mainContent.addRow(2, moduleBox);
 	}
