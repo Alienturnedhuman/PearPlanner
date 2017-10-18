@@ -62,11 +62,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import java.awt.image.BufferedImage;
 
 /**
  * Created by Zilvinas on 04/05/2017.
@@ -83,14 +84,14 @@ public class UIManager {
 			"XML file", "*.xml");
 	private static FileChooser.ExtensionFilter pngExtension = new FileChooser.ExtensionFilter(
 			"PNG file", "*.png");
-	private URL activityFXML = getClass().getResource("/View/Activity.fxml");
-	private URL milestoneFXML = getClass().getResource("/View/Milestone.fxml");
-	private URL taskFXML = getClass().getResource("/View/Task.fxml");
-	private URL requirementFXML = getClass().getResource("/View/Requirement.fxml");
-	private URL createAccountFXML = getClass().getResource("/View/CreateAccount.fxml");
-	private URL mainMenuFXML = getClass().getResource("/View/MainMenu.fxml");
-	private URL studyProfileFXML = getClass().getResource("/View/StudyProfile.fxml");
-	private URL startupFXML = getClass().getResource("/View/Startup.fxml");
+	private URL activityFxml = getClass().getResource("/View/Activity.fxml");
+	private URL milestoneFxml = getClass().getResource("/View/Milestone.fxml");
+	private URL taskFxml = getClass().getResource("/View/Task.fxml");
+	private URL requirementFxml = getClass().getResource("/View/Requirement.fxml");
+	private URL createAccountFxml = getClass().getResource("/View/CreateAccount.fxml");
+	private URL mainMenuFxml = getClass().getResource("/View/MainMenu.fxml");
+	private URL studyProfileFxml = getClass().getResource("/View/StudyProfile.fxml");
+	private URL startupFxml = getClass().getResource("/View/Startup.fxml");
 
 	/**
 	 * Displays a 'Create Account' window and handles the creation of a new Account object.
@@ -103,16 +104,16 @@ public class UIManager {
 		AccountController accountControl = new AccountController();
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
 		// Load in the .fxml file:
-		FXMLLoader loader = new FXMLLoader(createAccountFXML);
+		FXMLLoader loader = new FXMLLoader(createAccountFxml);
 		loader.setController(accountControl);
-		Parent root = loader.load();		
+		Parent root = loader.load();
 		// Set the scene:
 		Stage stage = new Stage();
 		stage.setScene(new Scene(root, 550, 232));
 		stage.setTitle("Create Account");
 		stage.resizableProperty().setValue(false);
 		stage.getIcons().add(icon);
-		stage.showAndWait();		
+		stage.showAndWait();
 		// Handle creation of the Account object:
 		if (accountControl.isSuccess()) {
 			Account newAccount = accountControl.getAccount();
@@ -130,7 +131,7 @@ public class UIManager {
 	public void mainMenu() throws Exception {
 		// Load in the .fxml file:
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
-		FXMLLoader loader = new FXMLLoader(mainMenuFXML);
+		FXMLLoader loader = new FXMLLoader(mainMenuFxml);
 		loader.setController(UIManager.mc);
 		Parent root = loader.load();
 		// Set the scene:
@@ -145,13 +146,13 @@ public class UIManager {
 
 	/**
 	 * Display the 'Add Activity' window.
-	 * 
+	 *
 	 * @return newly created Activity
 	 */
 	public Activity addActivity() throws Exception {
 		ActivityController ac = new ActivityController();
 		// Load in the .fxml file:
-		FXMLLoader loader = new FXMLLoader(activityFXML);
+		FXMLLoader loader = new FXMLLoader(activityFxml);
 		loader.setController(ac);
 		Parent root = loader.load();
 		// Set the scene:
@@ -177,7 +178,7 @@ public class UIManager {
 	public void activityDetails(Activity activity) throws IOException {
 		ActivityController ac = new ActivityController(activity);
 		// Load in the .fxml file:
-		FXMLLoader loader = new FXMLLoader(activityFXML);
+		FXMLLoader loader = new FXMLLoader(activityFxml);
 		loader.setController(ac);
 		Parent root = loader.load();
 		// Set the scene:
@@ -198,7 +199,7 @@ public class UIManager {
 	public Milestone addMilestone() throws IOException {
 		MilestoneController mc = new MilestoneController();
 		// Load in the .fxml file:
-		FXMLLoader loader = new FXMLLoader(milestoneFXML);
+		FXMLLoader loader = new FXMLLoader(milestoneFxml);
 		loader.setController(mc);
 		Parent root = loader.load();
 		// Set the scene:
@@ -224,7 +225,7 @@ public class UIManager {
 	public void milestoneDetails(Milestone milestone) throws IOException {
 		MilestoneController mc = new MilestoneController(milestone);
 		// Load in the .fxml file:
-		FXMLLoader loader = new FXMLLoader(milestoneFXML);
+		FXMLLoader loader = new FXMLLoader(milestoneFxml);
 		loader.setController(mc);
 		Parent root = loader.load();
 		// Set the scene:
@@ -245,7 +246,7 @@ public class UIManager {
 	public void studyProfileDetails(StudyProfile profile) throws IOException {
 		StudyProfileController spc = new StudyProfileController(profile);
 		// Load in the .fxml file:
-		FXMLLoader loader = new FXMLLoader(studyProfileFXML);
+		FXMLLoader loader = new FXMLLoader(studyProfileFxml);
 		loader.setController(spc);
 		Parent root = loader.load();
 		// Set the scene:
@@ -311,7 +312,7 @@ public class UIManager {
 	public Task addTask() throws Exception {
 		TaskController tc = new TaskController();
 		// Load in the .fxml file:
-		FXMLLoader loader = new FXMLLoader(taskFXML);
+		FXMLLoader loader = new FXMLLoader(taskFxml);
 		loader.setController(tc);
 		Parent root = loader.load();
 		// Set the scene:
@@ -338,7 +339,7 @@ public class UIManager {
 	public void taskDetails(Task task) throws IOException {
 		TaskController tc = new TaskController(task);
 		// Load in the .fxml file:
-		FXMLLoader loader = new FXMLLoader(taskFXML);
+		FXMLLoader loader = new FXMLLoader(taskFxml);
 		loader.setController(tc);
 		Parent root = loader.load();
 		// Set the scene:
@@ -359,7 +360,7 @@ public class UIManager {
 	public Requirement addRequirement() throws Exception {
 		RequirementController rc = new RequirementController();
 		// Load in the .fxml file:
-		FXMLLoader loader = new FXMLLoader(requirementFXML);
+		FXMLLoader loader = new FXMLLoader(requirementFxml);
 		loader.setController(rc);
 		Parent root = loader.load();
 		// Set the scene:
@@ -385,7 +386,7 @@ public class UIManager {
 	public void requirementDetails(Requirement requirement) throws IOException {
 		RequirementController rc = new RequirementController(requirement);
 		// Load in the .fxml file:
-		FXMLLoader loader = new FXMLLoader(requirementFXML);
+		FXMLLoader loader = new FXMLLoader(requirementFxml);
 		loader.setController(rc);
 		Parent root = loader.load();
 		// Set the scene:
@@ -404,7 +405,7 @@ public class UIManager {
 	public void showStartup() throws IOException {
 		StartupController sc = new StartupController();
 		// Load in the .fxml file:
-		FXMLLoader loader = new FXMLLoader(startupFXML);
+		FXMLLoader loader = new FXMLLoader(startupFxml);
 		loader.setController(sc);
 		Parent root = loader.load();
 		// Set the scene:
