@@ -278,8 +278,8 @@ public class MenuController implements Initializable {
 			Image image = SwingFXUtils.toFXImage(buff, null);
 			Pane badge = new Pane();
 
-			VBox.setMargin(badge, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.15));	//Set the distance from left edge to badge 15% of vbox width
-			badge.setPrefHeight(vbox.getPrefWidth() * 0.7);	//Set the badge width to 70% that of vbox
+			VBox.setMargin(badge, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.17));	//Set the distance from left edge to badge 17% of vbox width
+			badge.setPrefHeight(vbox.getPrefWidth() * 0.66);	//Set the badge width to 66% that of vbox
 
 			badge.setBackground(new Background(new BackgroundImage(image,
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
