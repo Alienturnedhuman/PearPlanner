@@ -46,8 +46,6 @@ public class ICalExport {
 
 	/**Method creates an event to be exported to an ICS file.
 	 * @param event - User created event
-	 * @param counter - Counter used to ensure
-	 * 				unique file names, counts how many files have been created
 	 */
 	public void createExportEvent(Event event) {
 		seteStart(event.getDate());
@@ -89,8 +87,8 @@ public class ICalExport {
 		ical = new ICalendar();
 	}
 
-	/**Method exports the created ical event file to a user readable file that can be imported to a calendar app of choice.
-	 * 
+	/**Method exports the prepared ical events to an ICS file.
+	 *
 	 */
 	public void exportFile() {
 		File file = new File("calendarExport/exportFile.ics");
