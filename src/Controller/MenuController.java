@@ -261,9 +261,11 @@ public class MenuController implements Initializable {
 		int colIdx = 0;
 		for (Module module : profile.getModules()) {
 			VBox vbox = new VBox();
-			vbox.setSpacing(13);
-			vbox.setMinWidth(174);
-			vbox.setMaxWidth(174);
+
+			vbox.setPrefWidth(Screen.getPrimary().getVisualBounds().getWidth() * 0.14);	//Set the width of the module to 15% of the screen resolution
+			vbox.setPrefHeight(vbox.getPrefWidth() * 1.12);	//Set the height of the module to 112% of its width
+			vbox.setSpacing(vbox.getPrefWidth() * 0.1);	//Set margin between text and badge to 10% vbox width
+			
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setCursor(Cursor.HAND);
 
@@ -275,8 +277,10 @@ public class MenuController implements Initializable {
 					GanttishDiagram.getBadge(module.calculateProgress(), true, 1);
 			Image image = SwingFXUtils.toFXImage(buff, null);
 			Pane badge = new Pane();
-			VBox.setMargin(badge, new Insets(0, 0, 0, 37));
-			badge.setPrefHeight(100);
+
+			VBox.setMargin(badge, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.15));	//Set the distance from left edge to badge 15% of vbox width
+			badge.setPrefHeight(vbox.getPrefWidth() * 0.7);	//Set the badge width to 70% that of vbox
+
 			badge.setBackground(new Background(new BackgroundImage(image,
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 					BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO,
@@ -289,7 +293,6 @@ public class MenuController implements Initializable {
 
 			vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK));
 			vbox.setStyle("-fx-background-color: white");
-			vbox.setPrefHeight(187);
 
 			colIdx++;
 			modules.getChildren().add(vbox);
@@ -297,7 +300,7 @@ public class MenuController implements Initializable {
 					Screen.getPrimary().getVisualBounds().getHeight() * 0.033,
 					0,
 					Screen.getPrimary().getVisualBounds().getHeight() * 0.022,
-					Screen.getPrimary().getVisualBounds().getWidth() * 0.04));
+					Screen.getPrimary().getVisualBounds().getWidth() * 0.037));
 		}
 
 		//Allow modules to be scrollable if window is too small to display them all on screen simultaneously
@@ -307,7 +310,6 @@ public class MenuController implements Initializable {
 		moduleBox.setFitToHeight(true);
 		moduleBox.setFitToWidth(true);
 
-		GridPane.setMargin(modules, new Insets(10));
 		this.mainContent.addRow(2, moduleBox);
 	}
 
