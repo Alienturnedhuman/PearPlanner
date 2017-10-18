@@ -21,11 +21,10 @@
 
 package Model;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by bijan on 12/05/2017.
@@ -36,7 +35,7 @@ public class AssignmentTest {
     Person person1;
     Person person2;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception
     {
         person1 = new Person("Dr.", "Mark Fisher", true);
@@ -44,7 +43,7 @@ public class AssignmentTest {
         assignment = new Assignment(30, person1, person1, person2, 100);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception
     {
         person1 = null;

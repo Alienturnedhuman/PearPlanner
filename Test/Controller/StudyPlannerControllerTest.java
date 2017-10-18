@@ -23,17 +23,16 @@ package Controller;
 
 import Model.Account;
 import Model.Person;
-import org.junit.Before;
-import org.junit.Test;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by bijan on 08/05/2017.
  */
 public class StudyPlannerControllerTest {
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception
     {
         Account a = new Account(new Person("Mr","Adrew",true),"100125464");

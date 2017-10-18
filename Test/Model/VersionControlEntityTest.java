@@ -23,23 +23,24 @@ package Model;
 
 import Controller.MainController;
 import javafx.stage.Stage;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+
 import org.testfx.framework.junit.ApplicationTest;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by bijan on 06/05/2017.
  */
-@Ignore
+@Disabled
 public class VersionControlEntityTest extends ApplicationTest {
 
 	VersionControlEntity versionControlEntity = new VersionControlEntity();
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		versionControlEntity = new VersionControlEntity();
 	}
@@ -97,7 +98,7 @@ public class VersionControlEntityTest extends ApplicationTest {
 //		assertFalse(versionControlEntity.setUID("5678-ID", 2));
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		versionControlEntity = null;
 	}

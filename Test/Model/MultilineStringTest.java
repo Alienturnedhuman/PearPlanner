@@ -21,13 +21,12 @@
 
 package Model;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by bijan on 06/05/2017.
@@ -36,7 +35,7 @@ public class MultilineStringTest {
 
     private MultilineString multilineStringEmpty, multilineStringNormal, multilineStringArray;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception
     {
         multilineStringEmpty = new MultilineString();
@@ -126,7 +125,7 @@ public class MultilineStringTest {
         assertEquals(text, multilineStringArray.getAsString());
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception
     {
         multilineStringEmpty = null;

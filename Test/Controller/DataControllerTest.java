@@ -21,17 +21,15 @@
 
 package Controller;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by bijan on 08/05/2017.
  */
 public class DataControllerTest {
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception
     {
     }

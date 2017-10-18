@@ -22,20 +22,20 @@
 package Model;
 
 import Controller.MainController;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by bijan on 08/05/2017.
  */
-@Ignore
+@Disabled
 public class ModelEntityTest {
 
     private ModelEntity modelEntity;
@@ -45,7 +45,7 @@ public class ModelEntityTest {
     private Note note;
     private ArrayList<Note> notes;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception
     {
         gregorianCalendar = new GregorianCalendar(2017, 06, 02, 3,
@@ -56,7 +56,7 @@ public class ModelEntityTest {
         modelEntity = new ModelEntity("name1", detailsArray, notes);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception
     {
         modelEntity = null;

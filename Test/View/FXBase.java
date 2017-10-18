@@ -32,11 +32,12 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
-import org.junit.After;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 
 import java.util.concurrent.TimeoutException;
+
+import org.junit.jupiter.api.AfterEach;
 
 /**
  * PearPlanner/RaiderPlanner
@@ -67,7 +68,7 @@ public abstract class FXBase extends ApplicationTest {
         stage.show();
     }
 
-    @After
+    @AfterEach
     public void afterEachTest() throws TimeoutException
     {
        FxToolkit.hideStage();
