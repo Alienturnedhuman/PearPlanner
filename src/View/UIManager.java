@@ -121,10 +121,10 @@ public class UIManager {
 		loader.setController(UIManager.mc);
 		Parent root = loader.load();
 
-		// Set the scene:
+		// Set the scene, with dimensions based on the screen resolution.
 		mainStage.setScene(new Scene(root,
-				Screen.getPrimary().getVisualBounds().getWidth() / 1.3,
-				Screen.getPrimary().getVisualBounds().getHeight() / 1.1,
+				Screen.getPrimary().getVisualBounds().getWidth() * 0.77,
+				Screen.getPrimary().getVisualBounds().getHeight() * 0.9,
 				true, SceneAntialiasing.BALANCED));
 		mainStage.setTitle("RaiderPlanner");
 		
