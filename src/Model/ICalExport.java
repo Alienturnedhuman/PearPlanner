@@ -48,6 +48,7 @@ public class ICalExport {
 	 * @param event - User created event
 	 */
 	public void createExportEvent(Event event) {
+		icalSetup();
 		seteStart(event.getDate());
 		setTitle(event.getName());
 		setDescription(event.getDetails());
@@ -76,7 +77,7 @@ public class ICalExport {
 
 	/**Method creates directory required to export ICS files.
 	 */
-	public void icalSetup() {
+	private void icalSetup() {
 		File newDir = new File("calendarExport");
 		if (newDir.exists()) {
 			System.out.println("CALENDAR Export Directory"

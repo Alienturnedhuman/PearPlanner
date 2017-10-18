@@ -476,10 +476,11 @@ public class MenuController implements Initializable {
 		HBox.setHgrow(xx, Priority.ALWAYS);
 		// =================
 		// Buttons:
+		Button export = new Button("Export");
 		Button agendaFwd = new Button(">");
 		Button agendaBwd = new Button("<");
 		// =================
-		nav.getChildren().addAll(title, xx, agendaBwd, agendaFwd);
+		nav.getChildren().addAll(title, xx, agendaBwd, agendaFwd, export);
 		// Content:
 		Agenda content = new Agenda();
 		VBox.setVgrow(content, Priority.ALWAYS);
@@ -488,19 +489,20 @@ public class MenuController implements Initializable {
 		content.autosize();
 		content.setActionCallback(param -> null);
 		content.setEditAppointmentCallback(param -> null);
+		//Creation of ICS export factory
+		ICalExport icalExport = new ICalExport();
 		// Agenda buttons:
 		agendaBwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
 		agendaFwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
+		export.setOnMouseClicked(event -> icalExport.exportFile());
 		// =================
 		// Populate Agenda:
 		ArrayList<Event> calendar =
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
-		//Creation of ICS export factory
-		ICalExport icalExport = new ICalExport();
 		//Preparation of export directory
-		icalExport.icalSetup();
+		//icalExport.icalSetup();
 		for (Event e : calendar) {
 			//Create an event to be exported to an ICS file
 			icalExport.createExportEvent(e);
@@ -542,8 +544,8 @@ public class MenuController implements Initializable {
 								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
 			}
 		}
-		//After all events are created, export the file to export directory
-		icalExport.exportFile();
+//		//After all events are created, export the file to export directory
+//		icalExport.exportFile();
 		layout.getChildren().addAll(nav, content);
 		Platform.runLater(() -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusMinutes(1050)));
