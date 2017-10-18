@@ -42,18 +42,19 @@ public class ICalExport {
 	private MultilineString description;
 	private int hours;
 	private int minutes;
-	private int counter;
+//	private int counter;
+	private ICalendar ical;
 
 	/**Method creates an event to be exported to an ICS file.
 	 * @param event - User created event
 	 * @param counter - Counter used to ensure
 	 * 				unique file names, counts how many files have been created
 	 */
-	public void createExportEvent(Event event, int counter) {
+	public void createExportEvent(Event event) {
 		seteStart(event.getDate());
 		setTitle(event.getName());
 		setDescription(event.getDetails());
-		this.counter = counter;
+//		this.counter = counter;
 
 
 		VEvent calEvent = new VEvent();
@@ -75,11 +76,8 @@ public class ICalExport {
 		//Set start date
 		calEvent.setDateStart(eventStart);
 		//Add new event to ICS File
-		ICalendar ical = new ICalendar();
 		ical.addEvent(calEvent);
-		//Create ICS File
-		File file = new File("calendarExport/" + createFileName(counter));
-		createIcs(ical, file);
+		
 	}
 
 
@@ -93,6 +91,12 @@ public class ICalExport {
 		} else {
 			newDir.mkdirs();
 		}
+		ical = new ICalendar();
+	}
+	
+	public void exportFile() {
+		File file = new File("calendarExport/exportFile.ics");
+		createIcs(ical, file);
 	}
 
 	/**createIcs generates the ICS file for export.
@@ -107,14 +111,14 @@ public class ICalExport {
 		}
 	}
 
-	/**Method creates unique file names.
+/*	*//**Method creates unique file names.
 	 * @param counter - imported to count number of files created, ensures unique file name
 	 * @return - Returns string file name
-	 */
+	 *//*
 	private String createFileName(int counter) {
 		String str = "calendarExport" + counter + ".ics";
 		return str;
-	}
+	}*/
 
 	/**Method gets current language of user.
 	 * @return - Returns string formatted to provide user location and language
