@@ -170,7 +170,7 @@ public class DataController {
 	 */
 	public static <T extends VersionControlEntity> T
 			inList(Map<String, VersionControlEntity> list, String uid)
-					throws Exception {
+					throws IOException {
 
 		VersionControlEntity vce = null;
 		if (list.containsKey(uid)) {
