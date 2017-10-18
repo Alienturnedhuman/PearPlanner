@@ -82,9 +82,9 @@ public class DataController {
 	 * @param nodes the list of nodes to process for the update.
 	 *
 	 * @return The updated HUB file.
-	 * @throws Exception TODO - fix this (#108).
+	 * @throws IOException, FileNotFoundException
 	 */
-	private static HubFile processUpdateHubFile(NodeList nodes) throws Exception {
+	private static HubFile processUpdateHubFile(NodeList nodes) throws IOException, FileNotFoundException {
 
 		HubFile hub = null;
 		XMLcontroller xmlTools = new XMLcontroller();
@@ -166,7 +166,7 @@ public class DataController {
 	 * @param uid the identifier to look up.
 	 *
 	 * @return the entity from the list or the library.
-	 * @throws Exception TODO - fix this  (#108).
+	 * @throws IOException
 	 */
 	public static <T extends VersionControlEntity> T
 			inList(Map<String, VersionControlEntity> list, String uid)
@@ -214,9 +214,9 @@ public class DataController {
 	 * @param nodes the list of nodes to use for constituting the HUB file.
 	 *
 	 * @return the HUB file.
-	 * @throws Exception TODO - fix this (#108).
+	 * @throws IOException
 	 */
-	private static HubFile processNewHubFile(NodeList nodes) throws Exception {
+	private static HubFile processNewHubFile(NodeList nodes) throws IOException {
 
 		int beginLog = ConsoleIO.getLogSize();
 		ConsoleIO.setConsoleMessage("Importing New Hub File", true);
