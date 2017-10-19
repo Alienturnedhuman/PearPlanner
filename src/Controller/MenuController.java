@@ -262,8 +262,8 @@ public class MenuController implements Initializable {
 		//				true));
 		int colIdx = 0;
 		
-		double screenWidth = Screen.getPrimary().getVisualBounds().getWidth() * 0.14;
-		double screenHeight = Screen.getPrimary().getVisualBounds().getHeight() * 0.14;
+		double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+		double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 		for (Module module : profile.getModules()) {
 			VBox vbox = new VBox();
 
