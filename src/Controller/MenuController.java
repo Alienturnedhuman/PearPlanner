@@ -300,19 +300,19 @@ public class MenuController implements Initializable {
 
 
 			vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e ->
-			vbox.setEffect(new DropShadow(31, 0, 0, Color.BLACK)));
+				vbox.setEffect(new DropShadow(31, 0, 0, Color.BLACK)));
 
 			vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e ->
-			vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK)));
+				vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK)));
 
 			vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e ->
-			vbox.setStyle("-fx-background-color: #d1bf3a"));
+				vbox.setStyle("-fx-background-color: #d1bf3a"));
 
 			vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e ->
-			vbox.setStyle("-fx-background-color: white"));
+				vbox.setStyle("-fx-background-color: white"));
 
 			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
-			module.open(this.current));
+				module.open(this.current));
 
 			vbox.setOnTouchPressed(new EventHandler<TouchEvent>() {
 				@Override public void handle(TouchEvent event) {
@@ -339,7 +339,8 @@ public class MenuController implements Initializable {
 					Screen.getPrimary().getVisualBounds().getWidth() * 0.037));
 		}
 
-		//Allow modules to be scrollable if window is too small to display them all on screen simultaneously
+		/*Allow modules to be scrollable if window is
+		too small to display them all on screen simultaneously*/
 		ScrollPane moduleBox = new ScrollPane();
 		moduleBox.setContent(modules);
 		moduleBox.setStyle("-fx-background-color: transparent");
