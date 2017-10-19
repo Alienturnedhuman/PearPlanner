@@ -261,16 +261,16 @@ public class MenuController implements Initializable {
 		//				VPos.CENTER,
 		//				true));
 		int colIdx = 0;
-		
+
 		double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
 		double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 		for (Module module : profile.getModules()) {
 			VBox vbox = new VBox();
 
 			//Set the width of the module to 15% of the screen resolution
-			if(screenWidth > screenHeight) {
+			if (screenWidth > screenHeight) {
 				vbox.setPrefWidth(screenWidth * 0.14);
-			}else {	//If device is in portrait mode, set vbox width based on height
+			} else {	//If device is in portrait mode, set vbox width based on height
 				vbox.setPrefWidth(screenHeight * 0.14);
 			}
 			//Set the height of the module to 112% of its width
@@ -1223,18 +1223,19 @@ public class MenuController implements Initializable {
 		this.milestones.setOnAction(e -> this.main(Window.MILESTONES));
 		this.calendar.setOnAction(e -> this.main(Window.CALENDAR));
 		// =================
-		
+
 		//Set nav to close when clicking outside of it
 		this.mainContent.addEventHandler(MouseEvent.MOUSE_PRESSED,
-				e -> {
-					TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
-					closeNot.setToY(-(notifications.getHeight() + this.shadowRadius + 56));
-					closeNot.play();
+			e -> {
+				TranslateTransition closeNot =
+						new TranslateTransition(new Duration(173), notifications);
+				closeNot.setToY(-(notifications.getHeight() + this.shadowRadius + 56));
+				closeNot.play();
 
-					if(this.isNavOpen) {
-						this.openMenu.fire();
-					}
-				});
+				if (this.isNavOpen) {
+					this.openMenu.fire();
+				}
+			});
 
 		// Welcome text:
 		this.welcome = new Label(
