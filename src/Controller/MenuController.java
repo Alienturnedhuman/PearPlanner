@@ -132,7 +132,9 @@ public class MenuController implements Initializable {
 	private int navShadowRadius = 44;
 	private int navShadowOffset = 7;
 	private DropShadow notifShadow = new DropShadow(27, 0, 13, Color.BLACK);
+	private DropShadow moduleDefaultShadow = new DropShadow(7, 0, 0, Color.BLACK);
 	private DropShadow moduleHoverShadow = new DropShadow(31, 0, 0, Color.BLACK);
+	private InnerShadow modulePressedShadow = new InnerShadow(23, 0, 0, Color.BLACK);
 
 	// Labels:
 	private Label welcome;
@@ -311,10 +313,10 @@ public class MenuController implements Initializable {
 				vbox.setEffect(this.moduleHoverShadow));
 
 			vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e ->
-				vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK)));
+				vbox.setEffect(this.moduleDefaultShadow));
 
 			vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e ->
-				vbox.setEffect(new InnerShadow(23, 0, 0, Color.BLACK)));
+				vbox.setEffect(this.modulePressedShadow));
 
 			vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e ->
 				vbox.setStyle("-fx-background-color: white"));
@@ -324,16 +326,16 @@ public class MenuController implements Initializable {
 
 			vbox.setOnTouchPressed(new EventHandler<TouchEvent>() {
 				@Override public void handle(TouchEvent event) {
-					vbox.setEffect(new InnerShadow(23, 0, 0, Color.BLACK));
+					vbox.setEffect(modulePressedShadow);
 				}
 			});
 			vbox.setOnTouchReleased(new EventHandler<TouchEvent>() {
 				@Override public void handle(TouchEvent event) {
-					vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK));
+					vbox.setEffect(moduleDefaultShadow);
 				}
 			});
 
-			vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK));
+			vbox.setEffect(this.moduleDefaultShadow);
 			vbox.setStyle("-fx-background-color: white");
 
 			colIdx++;
