@@ -264,16 +264,22 @@ public class MenuController implements Initializable {
 		for (Module module : profile.getModules()) {
 			VBox vbox = new VBox();
 
-			vbox.setPrefWidth(Screen.getPrimary().getVisualBounds().getWidth() * 0.14);	//Set the width of the module to 15% of the screen resolution
-			vbox.setPrefHeight(vbox.getPrefWidth() * 1.12);	//Set the height of the module to 112% of its width
-			vbox.setSpacing(vbox.getPrefWidth() * 0.1);	//Set margin between text and badge to 10% vbox width
-			
+			//Set the width of the module to 15% of the screen resolution
+			vbox.setPrefWidth(Screen.getPrimary().getVisualBounds().getWidth() * 0.14);
+			//Set the height of the module to 112% of its width
+			vbox.setPrefHeight(vbox.getPrefWidth() * 1.12);
+			//Set margin between text and badge to 10% vbox width
+			vbox.setSpacing(vbox.getPrefWidth() * 0.1);
+
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setCursor(Cursor.HAND);
 
 			Label name = new Label(module.getName());
 			name.setTextAlignment(TextAlignment.CENTER);
-			VBox.setMargin(name, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.04));	//Set left margin for title, which creates padding in case title is very long 
+
+			//Set left margin for title, which creates padding in case title is very long
+			VBox.setMargin(name, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.04));
+
 			vbox.getChildren().add(name);
 
 			BufferedImage buff =
@@ -281,8 +287,10 @@ public class MenuController implements Initializable {
 			Image image = SwingFXUtils.toFXImage(buff, null);
 			Pane badge = new Pane();
 
-			VBox.setMargin(badge, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.17));	//Set the distance from left edge to badge 17% of vbox width
-			badge.setPrefHeight(vbox.getPrefWidth() * 0.66);	//Set the badge width to 66% that of vbox
+			//Set the distance from left edge to badge 17% of vbox width
+			VBox.setMargin(badge, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.17));
+			//Set the badge width to 66% that of vbox
+			badge.setPrefHeight(vbox.getPrefWidth() * 0.66);
 
 			badge.setBackground(new Background(new BackgroundImage(image,
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
@@ -296,7 +304,7 @@ public class MenuController implements Initializable {
 			vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> vbox.setStyle("-fx-background-color: #d1bf3a"));
 			vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> vbox.setStyle("-fx-background-color: white"));
 			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> module.open(this.current));
-			
+
 			vbox.setOnTouchPressed(new EventHandler<TouchEvent>() {
 				@Override public void handle(TouchEvent event) {
 					vbox.setStyle("-fx-background-color: #d1bf3a");
