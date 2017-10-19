@@ -299,11 +299,20 @@ public class MenuController implements Initializable {
 			vbox.getChildren().add(badge);
 
 
-			vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> vbox.setEffect(new DropShadow(31, 0, 0, Color.BLACK)));
-			vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e -> vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK)));
-			vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> vbox.setStyle("-fx-background-color: #d1bf3a"));
-			vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> vbox.setStyle("-fx-background-color: white"));
-			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> module.open(this.current));
+			vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e ->
+			vbox.setEffect(new DropShadow(31, 0, 0, Color.BLACK)));
+
+			vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e ->
+			vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK)));
+
+			vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e ->
+			vbox.setStyle("-fx-background-color: #d1bf3a"));
+
+			vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e ->
+			vbox.setStyle("-fx-background-color: white"));
+
+			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
+			module.open(this.current));
 
 			vbox.setOnTouchPressed(new EventHandler<TouchEvent>() {
 				@Override public void handle(TouchEvent event) {
