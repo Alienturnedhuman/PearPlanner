@@ -138,9 +138,12 @@ public class MenuController implements Initializable {
 	private int navShadowOffset = (int)(screenAverage * 0.01);
 	private DropShadow navShadow = new DropShadow(navShadowRadius, navShadowOffset, 0, Color.BLACK);
 	private DropShadow notifShadow = new DropShadow(screenAverage * 0.02, 0, 0.009, Color.BLACK);
-	private DropShadow moduleDefaultShadow = new DropShadow(screenAverage * 0.005, 0, 0, Color.BLACK);
-	private DropShadow moduleHoverShadow = new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
-	private InnerShadow modulePressedShadow = new InnerShadow(screenAverage * 0.017, 0, 0, Color.BLACK);
+	private DropShadow moduleDefaultShadow =
+			new DropShadow(screenAverage * 0.005, 0, 0, Color.BLACK);
+	private DropShadow moduleHoverShadow =
+			new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
+	private InnerShadow modulePressedShadow =
+			new InnerShadow(screenAverage * 0.017, 0, 0, Color.BLACK);
 
 	// Labels:
 	private Label welcome;
