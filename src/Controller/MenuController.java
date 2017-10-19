@@ -128,10 +128,11 @@ public class MenuController implements Initializable {
 	private boolean isNavOpen;
 
 	//Shadows
-	private int shadowRadius = 44;
-	private int shadowOffset = 7;
-	private int shadowRadius2 = 27;
-	private int shadowOffset2 = 13;
+	private DropShadow navShadow = new DropShadow(44, 7, 0, Color.BLACK);
+	private int navShadowRadius = 44;
+	private int navShadowOffset = 7;
+	private DropShadow notifShadow = new DropShadow(27, 0, 13, Color.BLACK);
+	private DropShadow moduleHoverShadow = new DropShadow(31, 0, 0, Color.BLACK);
 
 	// Labels:
 	private Label welcome;
@@ -306,9 +307,8 @@ public class MenuController implements Initializable {
 							BackgroundSize.AUTO, false, false, true, false))));
 			vbox.getChildren().add(badge);
 
-
 			vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e ->
-				vbox.setEffect(new DropShadow(31, 0, 0, Color.BLACK)));
+				vbox.setEffect(this.moduleHoverShadow));
 
 			vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e ->
 				vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK)));
@@ -329,7 +329,7 @@ public class MenuController implements Initializable {
 			});
 			vbox.setOnTouchReleased(new EventHandler<TouchEvent>() {
 				@Override public void handle(TouchEvent event) {
-					vbox.setStyle("-fx-background-color: white");
+					vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK));
 				}
 			});
 
@@ -1211,10 +1211,8 @@ public class MenuController implements Initializable {
 		this.isNavOpen = false;
 
 		//Set shadows
-		notifications.setEffect(new DropShadow(
-				this.shadowRadius2, 0, this.shadowOffset2, Color.BLACK));
-		navList.setEffect(new DropShadow(
-				this.shadowRadius, this.shadowOffset, 0, Color.BLACK));
+		notifications.setEffect(notifShadow);
+		navList.setEffect(navShadow);
 
 		// Set button actions:
 		this.closeDrawer.setOnAction(e -> openMenu.fire());
@@ -1230,7 +1228,7 @@ public class MenuController implements Initializable {
 			e -> {
 				TranslateTransition closeNot =
 						new TranslateTransition(new Duration(173), notifications);
-				closeNot.setToY(-(notifications.getHeight() + this.shadowRadius + 56));
+				closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56));
 				closeNot.play();
 
 				if (this.isNavOpen) {
@@ -1379,7 +1377,7 @@ public class MenuController implements Initializable {
 			if (navList.getTranslateX() != 0) {
 				openNav.play();
 			} else {
-				closeNav.setToX(-(navList.getWidth() + this.shadowRadius + this.shadowOffset));
+				closeNav.setToX(-(navList.getWidth() + this.navShadowRadius + this.navShadowOffset));
 				closeNav.play();
 			}
 		});
@@ -1392,7 +1390,7 @@ public class MenuController implements Initializable {
 			if (notifications.getTranslateY() != 0) {
 				openNot.play();
 			} else {
-				closeNot.setToY(-(notifications.getHeight() + this.shadowRadius + 56));
+				closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56));
 				closeNot.play();
 			}
 		});
