@@ -224,7 +224,7 @@ public class MenuController implements Initializable {
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.topBox.getChildren().add(this.welcome);
-		this.title.setText("Study DASHBOARD");
+		this.title.setText("Study Dashboard");
 		// =================
 
 		StudyProfile profile = MainController.getSpc().getPlanner().getCurrentStudyProfile();
@@ -323,13 +323,7 @@ public class MenuController implements Initializable {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.title.setText("");
-		// =================
-
-		// Display milestones:
-		Label milestones = new Label("MILESTONES");
-		milestones.getStyleClass().add("title");
-		this.mainContent.addRow(1, milestones);
+		this.title.setText("Milestones");
 		// =================
 
 		// Columns:
@@ -456,7 +450,7 @@ public class MenuController implements Initializable {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.title.setText("");
+		this.title.setText("Calendar");
 		// =================
 		// Layout:
 		VBox layout = new VBox();
@@ -469,9 +463,6 @@ public class MenuController implements Initializable {
 		HBox nav = new HBox();
 		nav.setSpacing(15.0);
 		// =================
-		// Title:
-		Label title = new Label("CALENDAR");
-		title.getStyleClass().add("title");
 		HBox xx = new HBox();
 		HBox.setHgrow(xx, Priority.ALWAYS);
 		// =================
@@ -479,7 +470,7 @@ public class MenuController implements Initializable {
 		Button agendaFwd = new Button(">");
 		Button agendaBwd = new Button("<");
 		// =================
-		nav.getChildren().addAll(title, xx, agendaBwd, agendaFwd);
+		nav.getChildren().addAll(xx, agendaBwd, agendaFwd);
 		// Content:
 		Agenda content = new Agenda();
 		VBox.setVgrow(content, Priority.ALWAYS);
@@ -557,13 +548,7 @@ public class MenuController implements Initializable {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.title.setText("");
-		// =================
-
-		// Display profiles:
-		Label profiles = new Label("Study PROFILES");
-		profiles.getStyleClass().add("title");
-		this.mainContent.addRow(1, profiles);
+		this.title.setText("Study Profiles");
 		// =================
 
 		// Columns:
@@ -633,15 +618,8 @@ public class MenuController implements Initializable {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.title.setText("");
+		this.title.setText("Modules");
 		// =================
-
-		// Display modules:
-		Label modules = new Label("MODULES");
-		modules.getStyleClass().add("title");
-		this.mainContent.addRow(1, modules);
-		// =================
-
 		// Columns:
 		TableColumn<Module, String> codeColumn = new TableColumn<>("Module code");
 		codeColumn.setCellValueFactory(new PropertyValueFactory<>("moduleCode"));
@@ -700,17 +678,11 @@ public class MenuController implements Initializable {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.title.setText("");
+		this.title.setText(module.getModuleCode() + " " + module.getName());
 		// =================
 
 		// Create a back button:
 		this.backButton(previousWindow, previous);
-		// =================
-
-		// Display modules:
-		Label modules = new Label(module.getModuleCode() + " " + module.getName());
-		modules.getStyleClass().add("title");
-		this.mainContent.addRow(1, modules);
 		// =================
 
 		// Create a details pane:
@@ -794,7 +766,6 @@ public class MenuController implements Initializable {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.title.setText("");
 		// =================
 
 		// Create a back button:
