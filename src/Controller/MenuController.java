@@ -126,6 +126,7 @@ public class MenuController implements Initializable {
 
 	private Window current;
 	private boolean isNavOpen;
+	private boolean mouseDown = false;
 
 	//Screen size
 	private double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
@@ -312,17 +313,34 @@ public class MenuController implements Initializable {
 							BackgroundSize.AUTO, false, false, true, false))));
 			vbox.getChildren().add(badge);
 
-			vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e ->
-				vbox.setEffect(this.moduleHoverShadow));
+			/*If mouse clicks on module, depress it.
+			 * If mouse leaves module while depressed, undepress button.
+			 * If mouse re-enters, then re-depress module.
+			 * If mouse is not depressed when it enters module, show hover effect.
+			 */
+			vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
+				if(mouseDown) {
+					vbox.setEffect(this.modulePressedShadow);
+				} else {
+					vbox.setEffect(this.moduleHoverShadow);
+				}
+			});
+			vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
+				if(mouseDown) {
+					vbox.setEffect(this.moduleDefaultShadow);
+				} else {
+					vbox.setEffect(this.modulePressedShadow);
+				}
+			});
 
-			vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e ->
-				vbox.setEffect(this.moduleDefaultShadow));
-
-			vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e ->
-				vbox.setEffect(this.modulePressedShadow));
-
-			vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e ->
-				vbox.setStyle("-fx-background-color: white"));
+			vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+				vbox.setEffect(this.modulePressedShadow);
+				mouseDown = true;
+			});
+			vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
+				vbox.setEffect(this.moduleDefaultShadow);
+				mouseDown = false;
+			});
 
 			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
 				module.open(this.current));
