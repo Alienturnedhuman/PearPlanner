@@ -1223,6 +1223,14 @@ public class MenuController implements Initializable {
 		this.milestones.setOnAction(e -> this.main(Window.MILESTONES));
 		this.calendar.setOnAction(e -> this.main(Window.CALENDAR));
 		// =================
+		
+		//Set nav to close when clicking outside of it
+		this.mainContent.addEventHandler(MouseEvent.MOUSE_PRESSED,
+				e -> {
+					if(this.isNavOpen) {
+						this.openMenu.fire();
+					}
+				});
 
 		// Welcome text:
 		this.welcome = new Label(
