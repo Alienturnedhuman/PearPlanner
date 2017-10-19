@@ -261,14 +261,17 @@ public class MenuController implements Initializable {
 		//				VPos.CENTER,
 		//				true));
 		int colIdx = 0;
+		
+		double screenWidth = Screen.getPrimary().getVisualBounds().getWidth() * 0.14;
+		double screenHeight = Screen.getPrimary().getVisualBounds().getHeight() * 0.14;
 		for (Module module : profile.getModules()) {
 			VBox vbox = new VBox();
 
 			//Set the width of the module to 15% of the screen resolution
-			if(Screen.getPrimary().getVisualBounds().getWidth() > Screen.getPrimary().getVisualBounds().getHeight()) {
-				vbox.setPrefWidth(Screen.getPrimary().getVisualBounds().getWidth() * 0.14);
-			}else {
-				vbox.setPrefWidth(Screen.getPrimary().getVisualBounds().getHeight() * 0.14);
+			if(screenWidth > screenHeight) {
+				vbox.setPrefWidth(screenWidth * 0.14);
+			}else {	//If device is in portrait mode, set vbox width based on height
+				vbox.setPrefWidth(screenHeight * 0.14);
 			}
 			//Set the height of the module to 112% of its width
 			vbox.setPrefHeight(vbox.getPrefWidth() * 1.12);
@@ -337,10 +340,10 @@ public class MenuController implements Initializable {
 
 			//Ensure shadows don't overlap with edge of FlowPane
 			FlowPane.setMargin(vbox, new Insets(
-					Screen.getPrimary().getVisualBounds().getHeight() * 0.033,
+					screenHeight * 0.033,
 					0,
-					Screen.getPrimary().getVisualBounds().getHeight() * 0.022,
-					Screen.getPrimary().getVisualBounds().getWidth() * 0.037));
+					screenHeight * 0.022,
+					screenWidth * 0.037));
 		}
 
 		/*Allow modules to be scrollable if window is
