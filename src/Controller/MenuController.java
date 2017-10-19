@@ -52,6 +52,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -75,6 +76,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TouchEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -294,6 +296,17 @@ public class MenuController implements Initializable {
 			vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> vbox.setStyle("-fx-background-color: #d1bf3a"));
 			vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> vbox.setStyle("-fx-background-color: white"));
 			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> module.open(this.current));
+			
+			vbox.setOnTouchPressed(new EventHandler<TouchEvent>() {
+				@Override public void handle(TouchEvent event) {
+					vbox.setStyle("-fx-background-color: #d1bf3a");
+				}
+			});
+			vbox.setOnTouchReleased(new EventHandler<TouchEvent>() {
+				@Override public void handle(TouchEvent event) {
+					vbox.setStyle("-fx-background-color: white");
+				}
+			});
 
 			vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK));
 			vbox.setStyle("-fx-background-color: white");
