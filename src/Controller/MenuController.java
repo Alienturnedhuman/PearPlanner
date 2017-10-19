@@ -271,6 +271,7 @@ public class MenuController implements Initializable {
 
 			Label name = new Label(module.getName());
 			name.setTextAlignment(TextAlignment.CENTER);
+			VBox.setMargin(name, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.04));	//Set left margin for title, which creates padding in case title is very long 
 			vbox.getChildren().add(name);
 
 			BufferedImage buff =
@@ -287,16 +288,18 @@ public class MenuController implements Initializable {
 							BackgroundSize.AUTO, false, false, true, false))));
 			vbox.getChildren().add(badge);
 
-			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED,  e -> module.open(this.current));
-			vbox.addEventHandler(MouseEvent.MOUSE_ENTERED,  e -> vbox.setEffect(new DropShadow(31, 0, 0, Color.BLACK)));
-			vbox.addEventHandler(MouseEvent.MOUSE_EXITED,  e -> vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK)));
+			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> module.open(this.current));
+			vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> vbox.setEffect(new DropShadow(31, 0, 0, Color.BLACK)));
+			vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e -> vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK)));
 
 			vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK));
 			vbox.setStyle("-fx-background-color: white");
 
 			colIdx++;
 			modules.getChildren().add(vbox);
-			modules.setMargin(vbox, new Insets(
+
+			//Ensure shadows don't overlap with edge of FlowPane
+			FlowPane.setMargin(vbox, new Insets(
 					Screen.getPrimary().getVisualBounds().getHeight() * 0.033,
 					0,
 					Screen.getPrimary().getVisualBounds().getHeight() * 0.022,
