@@ -44,34 +44,46 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Created by bendickson on 5/4/17.
+ * A helper class of static methods and fields which are used to handle the
+ * loading and saving of application state data.
+ *
+ * @author Ben Dickson
  */
 public class MainController {
+
+	/**
+	 * Private constructor to prevent object instantiation.
+	 */
+	private MainController() {
+	}
+
+	// TODO - Determine if this really should be public
 	public static UIManager ui = new UIManager();
 
-	private static StudyPlannerController SPC;
+	// TODO - StudyPlannerController is a public class; determine if managing an
+	// instance in this way is best
+	private static StudyPlannerController spc;
 
+	// TODO - Use an approach where a key is generated and stored on the user's system
 	// Used for serialization:
 	private static SecretKey key64 = new SecretKeySpec(
 			new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07 }, "Blowfish");
 	private static File plannerFile = null;
 
 	/**
-	 * Returns a StudyPlannerController.
-	 *
-	 * @return StudyPlannerController.
+	 * @return the StudyPlannerController managed by this MainController.
 	 */
-	public static StudyPlannerController getSPC() {
-		return SPC;
+	public static StudyPlannerController getSpc() {
+		return spc;
 	}
 
 	/**
-	 * Sets StudyPlannerController SPC
+	 * Sets the StudyPlannerController managed by this MainController.
 	 *
-	 * @param s SPC is set to s.
+	 * @param newSpc the new StudyPlannerController.
 	 */
-	public static void setSPC(StudyPlannerController s) {
-		SPC = s;
+	public static void setSpc(StudyPlannerController newSpc) {
+		spc = newSpc;
 	}
 
 	/**
@@ -85,25 +97,28 @@ public class MainController {
 			if (plannerFile.exists()) {
 				Cipher cipher = Cipher.getInstance("Blowfish");
 				cipher.init(Cipher.DECRYPT_MODE, key64);
-				CipherInputStream cipherInputStream = new CipherInputStream(
+				try (CipherInputStream cis = new CipherInputStream(
 						new BufferedInputStream(new FileInputStream(plannerFile)), cipher);
-				ObjectInputStream inputStream = new ObjectInputStream(cipherInputStream);
-				SealedObject sealedObject = (SealedObject) inputStream.readObject();
-				SPC = new StudyPlannerController((StudyPlanner) sealedObject.getObject(cipher));
+						ObjectInputStream ois = new ObjectInputStream(cis)) {
 
-				// Sample note
-				if (SPC.getPlanner().getCurrentStudyProfile() != null && SPC.getPlanner()
-						.getCurrentStudyProfile().getName().equals("First year Gryffindor")) {
-					UIManager.reportSuccess(
-							"Note: This is a pre-loaded sample StudyPlanner, as used by Harry "
-							+ "Potter. To make your own StudyPlanner, restart the application "
-							+ "and choose \"New File\".");
+					SealedObject sealedObject = (SealedObject) ois.readObject();
+					spc = new StudyPlannerController((StudyPlanner) sealedObject.getObject(cipher));
+
+					// Sample note
+					if (spc.getPlanner().getCurrentStudyProfile() != null && spc.getPlanner()
+							.getCurrentStudyProfile().getName().equals("First year Gryffindor")) {
+						UIManager.reportSuccess(
+								"Note: This is a pre-loaded sample StudyPlanner, as used by Harry "
+								+ "Potter. To make your own StudyPlanner, restart the application "
+								+ "and choose \"New File\".");
+					}
 				}
 
 			} else {
-				// This should never happen unless a file changes permissions or existence in the
-				// miliseconds
-				// that it runs the above code after checks in StartupController
+				// TODO - fix this, as it is clearly a race condition
+				// This should never happen unless a file changes permissions
+				// or existence in the milliseconds that it runs the above code
+				// after checks in StartupController
 				UIManager.reportError("Failed to load file.");
 				System.exit(1);
 			}
@@ -161,7 +176,8 @@ public class MainController {
 			// If a file was selected, process the file:
 			HubFile fileData = DataController.loadHubFile(tempFile);
 			if (fileData != null) {
-				if (!fileData.isUpdate() && !MainController.SPC.createStudyProfile(fileData)) {
+				if (!fileData.isUpdate()
+						&& !MainController.spc.createStudyProfile(fileData)) {
 					UIManager.reportError("This Study Profile is already created!");
 				} else {
 					return true;
@@ -172,13 +188,13 @@ public class MainController {
 	}
 
 	/**
-	 * Save the current state of the program to file
+	 * Save the current state of the program to file.
 	 *
-	 * @return whether saved successfully.
+	 * @return true for a successful save, false otherwise
 	 */
 	public static boolean save() {
 		try {
-			SPC.save(MainController.key64, MainController.plannerFile.getAbsolutePath());
+			spc.save(MainController.key64, MainController.plannerFile.getAbsolutePath());
 			return true;
 		} catch (Exception e) {
 			UIManager.reportError("FAILED TO SAVE YOUR DATA!");
@@ -189,11 +205,11 @@ public class MainController {
 	/**
 	 * Sets the planner file that is loaded/saved.
 	 *
-	 * @param file is the path used to load and save files.
+	 * @param file the File object from which the planner file will be loaded or
+	 * 				to which it will be saved.
 	 */
 	public static void setPlannerFile(File file) {
 		plannerFile = file;
-		return;
 	}
 
 	/**
@@ -205,7 +221,8 @@ public class MainController {
 	 * <p>http://stackoverflow.com/a/1102916
 	 *
 	 * @param str String to be tested
-	 * @return whether the given String is numeric.
+	 * @return true the given String is numeric (i.e., can be parsed into a
+	 * 				Double), false otherwise.
 	 */
 	public static boolean isNumeric(String str) {
 		try {

@@ -36,132 +36,131 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Zilvinas on 04/05/2017.
+ * Handle actions associated with the GUI window for creating new accounts.
+ * This includes validating the data contained in the various text fields,
+ * retrieving the validated data, and storing the submitted data to the proper
+ * objects.
+ *
+ * @author Zilvinas Ceikauskas
  */
-public class AccountController implements Initializable
-{
-    @FXML private TextField account_no;
-    @FXML private TextField salutation;
-    @FXML private TextField full_name;
-    @FXML private TextField email;
-    @FXML private CheckBox fam_last;
-    @FXML private Button submit;
-    @FXML private GridPane pane;
+public class AccountController implements Initializable {
+	@FXML private TextField accountNo;
+	@FXML private TextField salutation;
+	@FXML private TextField fullName;
+	@FXML private TextField email;
+	@FXML private CheckBox famLast;
+	@FXML private Button submit;
+	@FXML private GridPane pane;
 
-    private Account account;
-    private boolean success = false;
+	private Account account;
+	private boolean success = false;
 
-    public Account getAccount()
-    {
-        return account;
-    }
+	/**
+	 * @return the Account object being managed by this controller.
+	 */
+	public Account getAccount() {
+		return account;
+	}
 
-    public boolean isSuccess()
-    {
-        return success;
-    }
+	/**
+	 * @return true if the last submit operation succeeded, false otherwise.
+	 */
+	public boolean isSuccess() {
+		return success;
+	}
 
-    /**
-     * Handle changes to the text fields
-     */
-    public void handleChange()
-    {
-        if (Person.validSalutation(this.salutation.getText().trim()) &&
-                Person.validName(this.full_name.getText().trim()) &&
-                (this.email.getText().trim().isEmpty() || Person.validEmail(this.email.getText().trim())) &&
-                !account_no.getText().trim().isEmpty())
+	/**
+	 * Handle changes to the text fields.
+	 */
+	public void handleChange() {
+		if (Person.validSalutation(this.salutation.getText().trim())
+				&& Person.validName(this.fullName.getText().trim())
+				&& (this.email.getText().trim().isEmpty()
+						|| Person.validEmail(this.email.getText().trim()))
+				&& !accountNo.getText().trim().isEmpty()) {
+			this.submit.setDisable(false);
+		}
+	}
 
-            this.submit.setDisable(false);
-    }
+	/**
+	 * Validate data in the Salutation field.
+	 */
+	public void validateSalutation() {
+		if (!Person.validSalutation(this.salutation.getText().trim())) {
+			this.salutation.setStyle("-fx-text-box-border:red;");
+			this.submit.setDisable(true);
+		} else {
+			this.salutation.setStyle("");
+			this.handleChange();
+		}
+	}
 
-    /**
-     * Validate data in the Salutation field
-     */
-    public void validateSalutation()
-    {
-        if (!Person.validSalutation(this.salutation.getText().trim()))
-        {
-            this.salutation.setStyle("-fx-text-box-border:red;");
-            this.submit.setDisable(true);
-        } else
-        {
-            this.salutation.setStyle("");
-            this.handleChange();
-        }
-    }
+	/**
+	 * Validate data in the Name field.
+	 */
+	public void validateName() {
+		if (!Person.validName(this.fullName.getText().trim())) {
+			this.fullName.setStyle("-fx-text-box-border:red;");
+			this.submit.setDisable(true);
+		} else {
+			this.fullName.setStyle("");
+			this.handleChange();
+		}
+	}
 
-    /**
-     * Validate data in the Name field
-     */
-    public void validateName()
-    {
-        if (!Person.validName(this.full_name.getText().trim()))
-        {
-            this.full_name.setStyle("-fx-text-box-border:red;");
-            this.submit.setDisable(true);
-        } else
-        {
-            this.full_name.setStyle("");
-            this.handleChange();
-        }
-    }
+	/**
+	 * Validate data in the Email field.
+	 */
+	public void validateEmail() {
+		if (this.email.getText().trim().isEmpty()
+				|| Person.validEmail(this.email.getText().trim())) {
+			this.email.setStyle("");
+			this.handleChange();
+		} else {
+			this.email.setStyle("-fx-text-box-border:red;");
+			this.submit.setDisable(true);
+		}
+	}
 
-    /**
-     * Validate data in the Email field
-     */
-    public void validateEmail()
-    {
-        if (this.email.getText().trim().isEmpty() || Person.validEmail(this.email.getText().trim()))
-        {
-            this.email.setStyle("");
-            this.handleChange();
-        } else
-        {
-            this.email.setStyle("-fx-text-box-border:red;");
-            this.submit.setDisable(true);
-        }
-    }
+	/**
+	 * Validate data in the Account Number field.
+	 */
+	public void validateNumber() {
+		if (accountNo.getText().trim().isEmpty()) {
+			this.submit.setDisable(true);
+		} else {
+			this.submit.setStyle("-fx-text-box-border:red;");
+			this.handleChange();
+		}
+	}
 
-    /**
-     * Validate data in the Account Number field
-     */
-    public void validateNumber()
-    {
-        if (account_no.getText().trim().isEmpty())
-            this.submit.setDisable(true);
-        else
-            this.handleChange();
-    }
+	/**
+	 * Submit the form and create a new Account.
+	 */
+	public void handleSubmit() {
+		Person pers = new Person(this.salutation.getText().trim(),
+				this.fullName.getText().trim(), this.famLast.isSelected());
 
-    /**
-     * Submit the form and create a new Account
-     */
-    public void handleSubmit()
-    {
-        Person p = new Person(this.salutation.getText().trim(), this.full_name.getText().trim(),
-                this.fam_last.isSelected());
+		if (!this.email.getText().trim().isEmpty()) {
+			pers.setEmail(this.email.getText().trim());
+		}
 
-        if (!this.email.getText().trim().isEmpty())
-            p.setEmail(this.email.getText().trim());
+		this.account = new Account(pers, this.accountNo.getText().trim());
+		this.success = true;
+		Stage stage = (Stage) this.submit.getScene().getWindow();
+		stage.close();
+	}
 
-        this.account = new Account(p, this.account_no.getText().trim());
-        this.success = true;
-        Stage stage = (Stage) this.submit.getScene().getWindow();
-        stage.close();
-    }
+	/**
+	 * Handle Quit button.
+	 */
+	public void handleQuit() {
+		Stage stage = (Stage) this.submit.getScene().getWindow();
+		stage.close();
+	}
 
-    /**
-     * Handle Quit button
-     */
-    public void handleQuit()
-    {
-        Stage stage = (Stage) this.submit.getScene().getWindow();
-        stage.close();
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources)
-    {
-        Platform.runLater(() -> this.pane.requestFocus());
-    }
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		Platform.runLater(() -> this.pane.requestFocus());
+	}
 }

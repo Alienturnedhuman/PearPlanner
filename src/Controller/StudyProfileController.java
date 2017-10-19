@@ -54,7 +54,7 @@ public class StudyProfileController implements Initializable
      */
     public void setCurrent()
     {
-        MainController.getSPC().getPlanner().setCurrentStudyProfile(this.profile);
+        MainController.getSpc().getPlanner().setCurrentStudyProfile(this.profile);
         this.setCurrent.setDisable(true);
     }
 
@@ -87,7 +87,7 @@ public class StudyProfileController implements Initializable
         this.milestones.setText(this.profile.getMilestones().length + " milestone(s).");
         this.extensions.setText(this.profile.getExtensions().length + " extension application(s).");
 
-        if (MainController.getSPC().getPlanner().getCurrentStudyProfile().equals(this.profile))
+        if (MainController.getSpc().getPlanner().getCurrentStudyProfile().equals(this.profile))
             this.setCurrent.setDisable(true);
     }
 }

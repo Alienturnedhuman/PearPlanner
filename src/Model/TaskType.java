@@ -109,8 +109,8 @@ public class TaskType extends ModelEntity
     public static TaskType create(String cName, String cDetails)
     {
         TaskType t = new TaskType(cName, cDetails);
-        if (MainController.getSPC() != null)
-            MainController.getSPC().addTaskType(t);
+        if (MainController.getSpc() != null)
+            MainController.getSpc().addTaskType(t);
         return t;
     }
 
@@ -123,8 +123,8 @@ public class TaskType extends ModelEntity
     public static TaskType create(String cName)
     {
         TaskType t = new TaskType(cName);
-        if (MainController.getSPC() != null)
-            MainController.getSPC().addTaskType(t);
+        if (MainController.getSpc() != null)
+            MainController.getSpc().addTaskType(t);
         return t;
     }
 
@@ -138,8 +138,8 @@ public class TaskType extends ModelEntity
         if (!TaskType.taskDatabase.contains(type))
         {
             TaskType.taskDatabase.add(type);
-            if (MainController.getSPC() != null)
-                MainController.getSPC().addTaskType(type);
+            if (MainController.getSpc() != null)
+                MainController.getSpc().addTaskType(type);
         }
     }
 
