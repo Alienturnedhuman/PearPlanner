@@ -265,7 +265,11 @@ public class MenuController implements Initializable {
 			VBox vbox = new VBox();
 
 			//Set the width of the module to 15% of the screen resolution
-			vbox.setPrefWidth(Screen.getPrimary().getVisualBounds().getWidth() * 0.14);
+			if(Screen.getPrimary().getVisualBounds().getWidth() > Screen.getPrimary().getVisualBounds().getHeight()) {
+				vbox.setPrefWidth(Screen.getPrimary().getVisualBounds().getWidth() * 0.14);
+			}else {
+				vbox.setPrefWidth(Screen.getPrimary().getVisualBounds().getHeight() * 0.14);
+			}
 			//Set the height of the module to 112% of its width
 			vbox.setPrefHeight(vbox.getPrefWidth() * 1.12);
 			//Set margin between text and badge to 10% vbox width
