@@ -71,6 +71,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -313,7 +314,7 @@ public class MenuController implements Initializable {
 				vbox.setEffect(new DropShadow(7, 0, 0, Color.BLACK)));
 
 			vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e ->
-				vbox.setStyle("-fx-background-color: #d1bf3a"));
+				vbox.setEffect(new InnerShadow(23, 0, 0, Color.BLACK)));
 
 			vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e ->
 				vbox.setStyle("-fx-background-color: white"));
@@ -323,7 +324,7 @@ public class MenuController implements Initializable {
 
 			vbox.setOnTouchPressed(new EventHandler<TouchEvent>() {
 				@Override public void handle(TouchEvent event) {
-					vbox.setStyle("-fx-background-color: #d1bf3a");
+					vbox.setEffect(new InnerShadow(23, 0, 0, Color.BLACK));
 				}
 			});
 			vbox.setOnTouchReleased(new EventHandler<TouchEvent>() {
