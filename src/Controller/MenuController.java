@@ -127,14 +127,19 @@ public class MenuController implements Initializable {
 	private Window current;
 	private boolean isNavOpen;
 
+	//Screen size
+	private double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+	private double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+	private double screenAverage = (screenWidth + screenHeight) / 2;
+
 	//Shadows
-	private DropShadow navShadow = new DropShadow(44, 7, 0, Color.BLACK);
-	private int navShadowRadius = 44;
-	private int navShadowOffset = 7;
-	private DropShadow notifShadow = new DropShadow(27, 0, 13, Color.BLACK);
-	private DropShadow moduleDefaultShadow = new DropShadow(7, 0, 0, Color.BLACK);
-	private DropShadow moduleHoverShadow = new DropShadow(31, 0, 0, Color.BLACK);
-	private InnerShadow modulePressedShadow = new InnerShadow(23, 0, 0, Color.BLACK);
+	private int navShadowRadius = (int)(screenAverage * 0.03);
+	private int navShadowOffset = (int)(screenAverage * 0.01);
+	private DropShadow navShadow = new DropShadow(navShadowRadius, navShadowOffset, 0, Color.BLACK);
+	private DropShadow notifShadow = new DropShadow(screenAverage * 0.02, 0, 0.009, Color.BLACK);
+	private DropShadow moduleDefaultShadow = new DropShadow(screenAverage * 0.005, 0, 0, Color.BLACK);
+	private DropShadow moduleHoverShadow = new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
+	private InnerShadow modulePressedShadow = new InnerShadow(screenAverage * 0.017, 0, 0, Color.BLACK);
 
 	// Labels:
 	private Label welcome;
@@ -266,8 +271,6 @@ public class MenuController implements Initializable {
 		//				true));
 		int colIdx = 0;
 
-		double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
-		double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 		for (Module module : profile.getModules()) {
 			VBox vbox = new VBox();
 
