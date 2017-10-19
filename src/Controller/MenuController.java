@@ -479,7 +479,6 @@ public class MenuController implements Initializable {
 		Button export = new Button("Export");
 		Button agendaFwd = new Button(">");
 		Button agendaBwd = new Button("<");
-		// =================
 		nav.getChildren().addAll(title, xx, agendaBwd, agendaFwd, export);
 		// Content:
 		Agenda content = new Agenda();
@@ -497,12 +496,9 @@ public class MenuController implements Initializable {
 		agendaFwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
 		export.setOnMouseClicked(event -> icalExport.exportFile());
-		// =================
 		// Populate Agenda:
 		ArrayList<Event> calendar =
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
-		//Preparation of export directory
-		//icalExport.icalSetup();
 		for (Event e : calendar) {
 			//Create an event to be exported to an ICS file
 			icalExport.createExportEvent(e);
@@ -544,8 +540,6 @@ public class MenuController implements Initializable {
 								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
 			}
 		}
-//		//After all events are created, export the file to export directory
-//		icalExport.exportFile();
 		layout.getChildren().addAll(nav, content);
 		Platform.runLater(() -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusMinutes(1050)));

@@ -42,17 +42,15 @@ public class ICalExport {
 	private MultilineString description;
 	private int hours;
 	private int minutes;
-	private ICalendar ical;
+	private ICalendar ical = new ICalendar();
 
 	/**Method creates an event to be exported to an ICS file.
 	 * @param event - User created event
 	 */
 	public void createExportEvent(Event event) {
-		icalSetup();
 		seteStart(event.getDate());
 		setTitle(event.getName());
 		setDescription(event.getDetails());
-
 
 		VEvent calEvent = new VEvent();
 		Summary summary = calEvent.setSummary(title);
@@ -75,9 +73,10 @@ public class ICalExport {
 		ical.addEvent(calEvent);
 	}
 
-	/**Method creates directory required to export ICS files.
+	/**Method exports the prepared ical events to an ICS file.
+	 *
 	 */
-	private void icalSetup() {
+	public void exportFile() {
 		File newDir = new File("calendarExport");
 		if (newDir.exists()) {
 			System.out.println("CALENDAR Export Directory"
@@ -85,13 +84,6 @@ public class ICalExport {
 		} else {
 			newDir.mkdirs();
 		}
-		ical = new ICalendar();
-	}
-
-	/**Method exports the prepared ical events to an ICS file.
-	 *
-	 */
-	public void exportFile() {
 		File file = new File("calendarExport/exportFile.ics");
 		createIcs(ical, file);
 	}
