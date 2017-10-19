@@ -1227,6 +1227,10 @@ public class MenuController implements Initializable {
 		//Set nav to close when clicking outside of it
 		this.mainContent.addEventHandler(MouseEvent.MOUSE_PRESSED,
 				e -> {
+					TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
+					closeNot.setToY(-(notifications.getHeight() + this.shadowRadius + 56));
+					closeNot.play();
+
 					if(this.isNavOpen) {
 						this.openMenu.fire();
 					}
