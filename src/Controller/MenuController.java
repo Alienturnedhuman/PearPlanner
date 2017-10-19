@@ -224,7 +224,7 @@ public class MenuController implements Initializable {
 		openMenu.setTooltip(new Tooltip("Menu"));
 		showNotification.setTooltip(new Tooltip("Notifications"));
 		addActivity.setTooltip(new Tooltip("Add activity"));
-		calendar.setTooltip(new Tooltip("Open CALENDAR"));
+		calendar.setTooltip(new Tooltip("Open Calendar"));
 
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
@@ -383,7 +383,7 @@ public class MenuController implements Initializable {
 		// =================
 
 		// Display milestones:
-		Label milestones = new Label("MILESTONES");
+		Label milestones = new Label("Milestones");
 		milestones.getStyleClass().add("title");
 		this.mainContent.addRow(1, milestones);
 		// =================
@@ -526,7 +526,7 @@ public class MenuController implements Initializable {
 		nav.setSpacing(15.0);
 		// =================
 		// Title:
-		Label title = new Label("CALENDAR");
+		Label title = new Label("Calendar");
 		title.getStyleClass().add("title");
 		HBox xx = new HBox();
 		HBox.setHgrow(xx, Priority.ALWAYS);
@@ -617,7 +617,7 @@ public class MenuController implements Initializable {
 		// =================
 
 		// Display profiles:
-		Label profiles = new Label("Study PROFILES");
+		Label profiles = new Label("Study Profiles");
 		profiles.getStyleClass().add("title");
 		this.mainContent.addRow(1, profiles);
 		// =================
@@ -693,7 +693,7 @@ public class MenuController implements Initializable {
 		// =================
 
 		// Display modules:
-		Label modules = new Label("MODULES");
+		Label modules = new Label("Modules");
 		modules.getStyleClass().add("title");
 		this.mainContent.addRow(1, modules);
 		// =================
