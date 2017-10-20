@@ -329,11 +329,7 @@ public class MenuController implements Initializable {
 				}
 			});
 			vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
-				if(mouseDown) {
-					vbox.setEffect(this.moduleDefaultShadow);
-				} else {
-					vbox.setEffect(this.modulePressedShadow);
-				}
+				vbox.setEffect(this.moduleDefaultShadow);
 			});
 
 			vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
