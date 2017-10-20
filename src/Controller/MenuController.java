@@ -88,6 +88,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import jfxtras.scene.control.agenda.Agenda;
 
@@ -780,7 +781,7 @@ public class MenuController implements Initializable {
 
 		// Ganttish chart button:
 		Button gantt = new Button("Generate a Ganttish Diagram");
-		gantt.setOnAction(e -> MainController.ui.showGantt(assignment));
+		gantt.setOnAction(e -> showGantt(assignment,previousWindow,previous));
 		GridPane.setHalignment(gantt, HPos.RIGHT);
 		GridPane.setColumnSpan(gantt, GridPane.REMAINING);
 		this.mainContent.add(gantt, 0, 1);
@@ -1404,4 +1405,66 @@ public class MenuController implements Initializable {
 		});
 		return row;
 	}
+
+	/**
+	 * Displays a GanttishDiagram window for the given Assignment.
+	 *
+	 * @param assignment
+	 *            Assignment for which to generate the GanttishDiagram.
+	 */
+	public void showGantt(Assignment assignment, Window previousWindow, ModelEntity previous) {
+		Stage stage = new Stage();
+		mainContent.getChildren().remove(1, mainContent.getChildren().size());
+		topBox.getChildren().clear();
+		title.setText(assignment.getName() + " Gantt Diagram");
+
+		// Layout:
+		VBox layout = new VBox();
+		layout.setSpacing(10);
+		layout.setPadding(new Insets(15));
+		layout.getStylesheets().add("/Content/stylesheet.css");
+		// =================
+
+		// Nav bar:
+		HBox nav = new HBox();
+		nav.setSpacing(15.0);
+		// =================
+		HBox xx = new HBox();
+		HBox.setHgrow(xx, Priority.ALWAYS);
+		// =================
+
+		// Buttons:
+		Button back = new Button();
+		back.getStyleClass().addAll("button-image", "back-button");
+		back.setOnAction(e -> {
+			this.title.setText(assignment.getName());
+			this.loadAssignment(assignment, previousWindow, previous);
+		});
+		Button save = new Button("Save");
+		save.setOnAction(e -> {
+			String path = MainController.ui.saveFileDialog(stage);
+			GanttishDiagram.createGanttishDiagram(MainController.getSpc().getPlanner(), assignment,
+					path);
+		});
+		// =================
+
+		nav.getChildren().addAll(back, xx, save);
+
+		// Content:
+		BufferedImage gantt = GanttishDiagram
+				.createGanttishDiagram(MainController.getSpc().getPlanner(), assignment);
+		Image image = SwingFXUtils.toFXImage(gantt, null);
+		Pane content = new Pane();
+		VBox.setVgrow(content, Priority.ALWAYS);
+		content.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
+				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(
+						BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false))));
+		// =================
+
+		layout.getChildren().addAll(nav, content);
+		layout.setMinSize(333, 555);
+		// Set the scene:
+		mainContent.getChildren().add(layout);
+	}
+
 }

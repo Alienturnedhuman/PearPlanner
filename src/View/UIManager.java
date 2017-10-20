@@ -23,7 +23,6 @@ package View;
 
 import Controller.AccountController;
 import Controller.ActivityController;
-import Controller.MainController;
 import Controller.MenuController;
 import Controller.MilestoneController;
 import Controller.RequirementController;
@@ -39,31 +38,17 @@ import Model.Module;
 import Model.Requirement;
 import Model.StudyProfile;
 import Model.Task;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -430,71 +415,6 @@ public class UIManager {
 			System.exit(0);
 		});
 		stage.showAndWait();
-	}
-
-	/**
-	 * Displays a GanttishDiagram window for the given Assignment.
-	 *
-	 * @param assignment Assignment for which to generate the GanttishDiagram.
-	 */
-	public void showGantt(Assignment assignment) {
-		Stage stage = new Stage();
-
-		// Layout:
-		VBox layout = new VBox();
-		layout.setSpacing(10);
-		layout.setPadding(new Insets(15));
-		layout.getStylesheets().add("/Content/stylesheet.css");
-		// =================
-
-		// Nav bar:
-		HBox nav = new HBox();
-		nav.setSpacing(15.0);
-		// =================
-
-		// Title:
-		Label title = new Label("Ganttish Diagram");
-		title.getStyleClass().add("title");
-		HBox xx = new HBox();
-		HBox.setHgrow(xx, Priority.ALWAYS);
-		// =================
-
-		// Buttons:
-		Button save = new Button("Save");
-		save.setOnAction(e -> {
-			String path = this.saveFileDialog(stage);
-			GanttishDiagram.createGanttishDiagram(
-					MainController.getSpc().getPlanner(), assignment, path);
-		});
-		Button close = new Button("Close");
-		close.setOnAction(e -> ((Stage) close.getScene().getWindow()).close());
-		// =================
-
-		nav.getChildren().addAll(title, xx, save, close);
-
-		// Content:
-		BufferedImage gantt = GanttishDiagram.createGanttishDiagram(
-				MainController.getSpc().getPlanner(), assignment);
-		Image image = SwingFXUtils.toFXImage(gantt, null);
-		Pane content = new Pane();
-		VBox.setVgrow(content, Priority.ALWAYS);
-		content.setBackground(new Background(
-				new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
-						BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-						new BackgroundSize(BackgroundSize.AUTO,
-								BackgroundSize.AUTO, false, false, true, false))));
-		// =================
-
-		layout.getChildren().addAll(nav, content);
-
-		// Set the scene:
-		stage.setScene(new Scene(layout, 1300, 800, true, SceneAntialiasing.BALANCED));
-		stage.setTitle("Ganttish Diagram");
-		stage.resizableProperty().setValue(true);
-		stage.getIcons().add(new Image("file:icon.png"));
-		stage.setFullScreen(true);
-		stage.showAndWait();
-		// =================
 	}
 
 	/**
