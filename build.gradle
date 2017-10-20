@@ -97,8 +97,6 @@ repositories {
 
 dependencies {
 
-	testCompile 'junit:junit:4.12'
-
 	compile 'net.sf.biweekly:biweekly:0.6.1'
 	compile 'commons-validator:commons-validator:1.6'
 	compile 'com.google.guava:guava:21.0'
