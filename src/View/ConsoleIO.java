@@ -28,6 +28,7 @@ import Model.HubFile;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -115,7 +116,7 @@ public class ConsoleIO {
 				bw.write(logged.get(i));
 			}
 			bw.close();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			setConsoleMessage("File not written", true);
 		}
 	}
