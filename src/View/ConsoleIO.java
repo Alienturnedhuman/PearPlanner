@@ -52,6 +52,7 @@ public class ConsoleIO {
 			System.out.println(message);
 			r = scan.nextLine();
 		}
+		scan.close();
 		return r;
 	}
 
@@ -68,6 +69,7 @@ public class ConsoleIO {
 			System.out.println(message);
 			r = scan.next();
 		}
+		scan.close();
 		return r.equals("y");
 	}
 
@@ -104,17 +106,16 @@ public class ConsoleIO {
 			endLine = logged.size();
 		}
 		int i = startLine - 1;
-		try {
-			File logFile = new File(filePath);
-			FileOutputStream fos = new FileOutputStream(logFile);
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+		File logFile = new File(filePath);
+		try (	FileOutputStream fos = new FileOutputStream(logFile);
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));) {
+
 			while (++i < endLine) {
 				if (i != startLine) {
 					bw.newLine();
 				}
 				bw.write(logged.get(i));
 			}
-			bw.close();
 		} catch (Exception e) {
 			setConsoleMessage("File not written", true);
 		}
@@ -159,6 +160,7 @@ public class ConsoleIO {
 			}
 			option = scan.nextInt();
 		}
+		scan.close();
 		return option;
 	}
 

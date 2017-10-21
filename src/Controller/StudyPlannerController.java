@@ -52,17 +52,19 @@ public class StudyPlannerController
      */
     public boolean save(SecretKey key64, String fileName)
     {
-        try
-        {
-            Cipher cipher = Cipher.getInstance("Blowfish");
+    	try {
+        	Cipher cipher = Cipher.getInstance("Blowfish");
             cipher.init(Cipher.ENCRYPT_MODE, key64);
             SealedObject sealedObject = new SealedObject(this.planner, cipher);
-            CipherOutputStream cipherOutputStream = new CipherOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)), cipher);
-            ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);
-            outputStream.writeObject(sealedObject);
-            outputStream.close();
-            return true;
-        } catch (Exception e)
+            
+            try (   CipherOutputStream cipherOutputStream = new CipherOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)), cipher);
+                    ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);)
+            {
+                outputStream.writeObject(sealedObject);
+                return true;
+            }
+    	}
+    	catch (Exception e)
         {
             e.printStackTrace();
             return false;
