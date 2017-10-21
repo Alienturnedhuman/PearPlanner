@@ -25,6 +25,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
+
+import View.UIManager;
 import biweekly.Biweekly;
 import biweekly.ICalendar;
 import biweekly.component.VEvent;
@@ -103,7 +105,7 @@ public class ICalExport {
 		try {
 			Biweekly.write(ical).go(file);
 		} catch (IOException e) {
-			e.printStackTrace();
+			UIManager.reportError("File does not exist: " + e.getMessage());
 		}
 	}
 

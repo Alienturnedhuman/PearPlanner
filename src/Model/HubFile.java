@@ -548,7 +548,7 @@ public class HubFile implements Serializable {
 			String linkedResit = examValues.get("resit").getString();
 			try {
 				exExamResit = DataController.inList(assetList, linkedResit);
-			} catch (Exception e) {
+			} catch (Exception e) { // does this catch need to be here?
 				// do nothing!
 				//exExamResit = null;
 			}
