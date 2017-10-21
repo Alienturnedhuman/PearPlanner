@@ -31,7 +31,7 @@ apply plugin: 'findbugs'
  * This line specifies where the main.java file is found.
  */
 
-mainClassName='View.Main'
+mainClassName='view.Main'
 
 /**
  * This statement declares where Gradle is to find directories
