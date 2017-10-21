@@ -194,7 +194,7 @@ public class Assignment extends VersionControlEntity {
 			}
 		}
 
-		return sum / n;
+		return n == 0 ? 0 : sum / n;
 	}
 
 	@Override
