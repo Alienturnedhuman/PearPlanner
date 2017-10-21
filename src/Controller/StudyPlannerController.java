@@ -22,10 +22,12 @@
 package Controller;
 
 import Model.*;
+import View.UIManager;
 
 import javax.crypto.*;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -62,9 +64,12 @@ public class StudyPlannerController
             outputStream.writeObject(sealedObject);
             outputStream.close();
             return true;
+        } catch (IOException e) {
+        	UIManager.reportError("File does not exist: " + e.getMessage());
+        	return false;
         } catch (Exception e)
         {
-            e.printStackTrace();
+            UIManager.reportError(e.getMessage());
             return false;
         }
     }
