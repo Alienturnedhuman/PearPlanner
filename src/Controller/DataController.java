@@ -41,6 +41,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -183,7 +184,7 @@ public class DataController {
 		if (vce != null) {
 			try {
 				return (T) vce;
-			} catch (Exception e) {
+			} catch (Exception e) { // what Exception is thrown here?
 				throw new Exception("Incorrect type referenced for '" + uid + "'");
 			}
 		}
@@ -528,7 +529,7 @@ public class DataController {
 					UIManager.reportError("Invalid XML file");
 				}
 
-			} catch (Exception e) {
+			} catch (IOException e) {
 				UIManager.reportError("Invalid File: \n" + e.getMessage());
 			}
 		}
