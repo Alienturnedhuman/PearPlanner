@@ -31,7 +31,13 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -43,18 +49,23 @@ import java.util.ResourceBundle;
 /**
  * Created by Žilvinas on 14/05/2017.
  */
-public class MilestoneController implements Initializable
-{
+public class MilestoneController implements Initializable {
 	private Milestone milestone;
 	private boolean success = false;
+	/**
+	 * Standard getter method for milestone.
+	 * @return milestone
+	 */
 
-	public Milestone getMilestone()
-	{
+	public Milestone getMilestone() {
 		return this.milestone;
 	}
 
-	public boolean isSuccess()
-	{
+	/**
+	 * Getter for checking if milestone controller initialized successful.
+	 * @return boolean bases on initialized success
+	 */
+	public boolean isSuccess() {
 		return success;
 	}
 
@@ -79,58 +90,56 @@ public class MilestoneController implements Initializable
 	@FXML private ListView<Task> tasks;
 
 	/**
-	 * Handle changes to the input fields
+	 * Handle changes to the input fields.
 	 */
-	public void handleChange()
-	{
+	public void handleChange() {
 		// Check the input fields:
-		if (!this.name.getText().trim().isEmpty() &&
-				!this.deadline.getEditor().getText().trim().isEmpty() &&
-				this.tasks.getItems().size() > 0)
-
+		if (!this.name.getText().trim().isEmpty()
+				&&
+				!this.deadline.getEditor().getText().trim().isEmpty()
+				&&
+				this.tasks.getItems().size() > 0) {
 			this.submit.setDisable(false);
+		}
 		// =================
 
 		// Process tasks:
-		if (this.milestone != null)
-		{
+		if (this.milestone != null) {
 			this.milestone.replaceTasks(this.tasks.getItems());
 
-			if (!this.milestone.isComplete())
-			{
+			if (!this.milestone.isComplete()) {
 				this.completed.setVisible(false);
-			} else
+			} else {
 				this.completed.setVisible(true);
+			}
 		}
 		// =================
 	}
 
 	/**
-	 * Validate data in the Deadline field
+	 * Validate data in the Deadline field.
 	 */
-	public void validateDeadline()
-	{
-		if (this.deadline.getValue().isBefore(LocalDate.now()))
-		{
+	public void validateDeadline() {
+		if (this.deadline.getValue().isBefore(LocalDate.now())) {
 			this.deadline.setStyle("-fx-border-color:red;");
 			this.submit.setDisable(true);
-		} else
-		{
+		} else {
 			this.deadline.setStyle("");
 			this.handleChange();
 		}
 	}
 
 	/**
-	 * Handle the 'Add Task' button action
+	 * Handle the 'Add Task' button action.
 	 */
-	public void addTask()
-	{
+	public void addTask() {
 		// Table items:
-		ObservableList<Task> list = FXCollections.observableArrayList(MainController.getSpc().getCurrentTasks());
+		ObservableList<Task> list =
+				FXCollections.observableArrayList(MainController.getSpc().getCurrentTasks());
 		list.removeAll(this.tasks.getItems());
-		if (this.milestone != null)
+		if (this.milestone != null) {
 			list.removeAll(this.milestone.getTasks());
+		}
 		// =================
 
 		// Parse selected Tasks:
@@ -139,18 +148,17 @@ public class MilestoneController implements Initializable
 	}
 
 	/**
-	 * Submit the form and create a new Milestone
+	 * Submit the form and create a new Milestone.
 	 */
-	public void handleSubmit()
-	{
-		if (this.milestone == null)
-		{
+	public void handleSubmit() {
+		if (this.milestone == null) {
 			// Create a new Milestone:
-			this.milestone = new Milestone(this.name.getText(), this.details.getText(), this.deadline.getValue());
+			this.milestone =
+					new Milestone(
+							this.name.getText(), this.details.getText(), this.deadline.getValue());
 			this.milestone.addTasks(this.tasks.getItems());
 			// =================
-		} else
-		{
+		} else {
 			// Update the current Milestone:
 			this.milestone.setName(this.name.getText());
 			this.milestone.setDetails(this.details.getText());
@@ -164,10 +172,9 @@ public class MilestoneController implements Initializable
 	}
 
 	/**
-	 * Handle Quit button
+	 * Handle Quit button.
 	 */
-	public void handleQuit()
-	{
+	public void handleQuit() {
 		Stage stage = (Stage) this.submit.getScene().getWindow();
 		stage.close();
 	}
@@ -175,65 +182,58 @@ public class MilestoneController implements Initializable
 	// Constructors:
 
 	/**
-	 * Constructor for the MilestoneController
+	 * Constructor for the MilestoneController.
 	 */
-	public MilestoneController()
-	{
+	public MilestoneController() {
 	}
 
 	/**
-	 * Constructor for an MilestoneController with an existing Milestone
+	 * Constructor for an MilestoneController with an existing Milestone.
 	 *
-	 * @param milestone
+	 * @param milestone constructs milestone from milestone
 	 */
-	public MilestoneController(Milestone milestone)
-	{
+	public MilestoneController(Milestone milestone) {
 		this.milestone = milestone;
 	}
 
-	@Override public void initialize(URL location, ResourceBundle resources)
-	{
+	@Override public void initialize(URL location, ResourceBundle resources) {
 		// Bind properties on buttons:
-		this.remove.disableProperty().bind(new BooleanBinding()
-		{
+		this.remove.disableProperty().bind(new BooleanBinding() {
 			{
 				bind(tasks.getSelectionModel().getSelectedItems());
 			}
 
 			@Override
-			protected boolean computeValue()
-			{
-				return !(tasks.getItems().size() > 0 && tasks.getSelectionModel().getSelectedItem() != null);
+			protected boolean computeValue() {
+				return !(tasks.getItems().size() > 0
+						&& tasks.getSelectionModel().getSelectedItem() != null);
 			}
 		});
 		// =================
 
 		// Button actions:
 		this.remove.setOnAction(e -> {
-			if (UIManager.confirm("Are you sure you want to remove this dependency?"))
-			{
-				Task t = this.tasks.getSelectionModel().getSelectedItem();
-				this.tasks.getItems().remove(t);
-				if (this.milestone != null)
-					this.milestone.removeTask(t);
+			if (UIManager.confirm("Are you sure you want to remove this dependency?")) {
+				Task tempTask = this.tasks.getSelectionModel().getSelectedItem();
+				this.tasks.getItems().remove(tempTask);
+				if (this.milestone != null) {
+					this.milestone.removeTask(tempTask);
+				}
 			}
 		});
 
 		this.tasks.setCellFactory(e -> {
-			ListCell<Task> cell = new ListCell<Task>()
-			{
+			ListCell<Task> cell = new ListCell<Task>() {
 				@Override
-				protected void updateItem(final Task item, final boolean empty)
-				{
+				protected void updateItem(final Task item, final boolean empty) {
 					super.updateItem(item, empty);
 					// If completed, mark:
-					if (!empty && item != null)
-					{
+					if (!empty && item != null) {
 						setText(item.toString());
-						if (item.isCheckedComplete())
+						if (item.isCheckedComplete()) {
 							this.getStyleClass().add("current-item");
-					} else
-					{
+						}
+					} else {
 						setText(null);
 						this.getStyleClass().remove("current-item");
 					}
@@ -244,13 +244,11 @@ public class MilestoneController implements Initializable
 		// =================
 
 		// Handle Milestone details:
-		if (this.milestone != null)
-		{
+		if (this.milestone != null) {
 			// Disable/modify elements:
 			this.title.setText("Milestone");
 
-			if (this.milestone.isComplete())
-			{
+			if (this.milestone.isComplete()) {
 				this.completed.setVisible(true);
 			}
 			// =================
@@ -258,7 +256,9 @@ public class MilestoneController implements Initializable
 			// Fill in data:
 			this.name.setText(this.milestone.getName());
 			this.details.setText(this.milestone.getDetails().getAsString());
-			this.deadline.setValue(this.milestone.getDeadlineDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+			this.deadline.setValue(
+					this.milestone.getDeadlineDate().toInstant().atZone(ZoneId.systemDefault()
+							).toLocalDate());
 			this.tasks.getItems().addAll(this.milestone.getTasks());
 			// =================
 		}
