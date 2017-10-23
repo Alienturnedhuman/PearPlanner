@@ -512,6 +512,7 @@ public class UIManager {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Select a HUB file");
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML file", "*.xml"));
+		fileChooser.setInitialDirectory(new File("StudyProfiles"));
 		File file = fileChooser.showOpenDialog(mainStage);
 		return file;
 	}
