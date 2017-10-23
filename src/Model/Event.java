@@ -123,12 +123,4 @@ public class Event extends VersionControlEntity {
 	public String toString() {
 		return this.date.getTime().toString();
 	}
-<<<<<<< HEAD
-
 }
-||||||| merged common ancestors
-
-}
-=======
-}
->>>>>>> upstream/master
