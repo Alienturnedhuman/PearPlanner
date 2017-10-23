@@ -127,11 +127,11 @@ public class UIManager {
 				Screen.getPrimary().getVisualBounds().getHeight() * 0.9,
 				true, SceneAntialiasing.BALANCED));
 		mainStage.setTitle("RaiderPlanner");
-		
-		//Set minimum resolution to around 360p in 3:5 aspect ratio for small phones
+
+		// Set minimum resolution to around 360p in 3:5 aspect ratio for small phones
 		mainStage.setMinHeight(555);
 		mainStage.setMinWidth(333);
-		
+
 		mainStage.getIcons().add(new Image("file:icon.png"));
 		mainStage.showAndWait();
 	}

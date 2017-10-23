@@ -25,12 +25,19 @@ import Model.Assignment;
 import Model.StudyPlanner;
 import Model.Task;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -145,8 +152,10 @@ public class GanttishDiagram {
 
 		/**
 		 * Returns a color based on a progress out of 100.
-		 * @param progress	The progress of the module
-		 * @return	Returns a color based on progress
+		 *
+		 * @param progress The progress of the module
+		 *
+		 * @return a color based on progress
 		 */
 		private Color getPaint(int progress) {
 			if (progress > 100) {

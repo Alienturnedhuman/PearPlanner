@@ -128,16 +128,18 @@ public class MenuController implements Initializable {
 	private boolean isNavOpen;
 	private boolean mouseDown = false;
 
-	//Screen size
+	// Screen size:
 	private double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
 	private double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 	private double screenAverage = (screenWidth + screenHeight) / 2;
 
-	//Shadows
+	// Shadows:
 	private int navShadowRadius = (int)(screenAverage * 0.03);
 	private int navShadowOffset = (int)(screenAverage * 0.01);
-	private DropShadow navShadow = new DropShadow(navShadowRadius, navShadowOffset, 0, Color.BLACK);
-	private DropShadow notifShadow = new DropShadow(screenAverage * 0.02, 0, 0.009, Color.BLACK);
+	private DropShadow navShadow =
+			new DropShadow(navShadowRadius, navShadowOffset, 0, Color.BLACK);
+	private DropShadow notifShadow =
+			new DropShadow(screenAverage * 0.02, 0, 0.009, Color.BLACK);
 	private DropShadow moduleDefaultShadow =
 			new DropShadow(screenAverage * 0.005, 0, 0, Color.BLACK);
 	private DropShadow moduleHoverShadow =
@@ -273,20 +275,20 @@ public class MenuController implements Initializable {
 		//				Priority.ALWAYS,
 		//				VPos.CENTER,
 		//				true));
-		int colIdx = 0;
 
 		for (Module module : profile.getModules()) {
 			VBox vbox = new VBox();
 
-			//Set the width of the module to 15% of the screen resolution
+			// Set the width of the module to 15% of the screen resolution
 			if (screenWidth > screenHeight) {
 				vbox.setPrefWidth(screenWidth * 0.14);
-			} else {	//If device is in portrait mode, set vbox width based on height
+			} else {
+				//If device is in portrait mode, set vbox width based on height
 				vbox.setPrefWidth(screenHeight * 0.14);
 			}
-			//Set the height of the module to 112% of its width
+			// Set the height of the module to 112% of its width
 			vbox.setPrefHeight(vbox.getPrefWidth() * 1.12);
-			//Set margin between text and badge to 10% vbox width
+			// Set margin between text and badge to 10% vbox width
 			vbox.setSpacing(vbox.getPrefWidth() * 0.1);
 
 			vbox.setAlignment(Pos.CENTER);
@@ -295,7 +297,7 @@ public class MenuController implements Initializable {
 			Label name = new Label(module.getName());
 			name.setTextAlignment(TextAlignment.CENTER);
 
-			//Set left margin for title, which creates padding in case title is very long
+			// Set left margin for title, which creates padding in case title is very long
 			VBox.setMargin(name, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.04));
 
 			vbox.getChildren().add(name);
@@ -305,9 +307,9 @@ public class MenuController implements Initializable {
 			Image image = SwingFXUtils.toFXImage(buff, null);
 			Pane badge = new Pane();
 
-			//Set the distance from left edge to badge 17% of vbox width
+			// Set the distance from left edge to badge 17% of vbox width
 			VBox.setMargin(badge, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.17));
-			//Set the badge width to 66% that of vbox
+			// Set the badge width to 66% that of vbox
 			badge.setPrefHeight(vbox.getPrefWidth() * 0.66);
 
 			badge.setBackground(new Background(new BackgroundImage(image,
@@ -316,13 +318,14 @@ public class MenuController implements Initializable {
 							BackgroundSize.AUTO, false, false, true, false))));
 			vbox.getChildren().add(badge);
 
-			/*If mouse clicks on module, depress it.
+			/*
+			 * If mouse clicks on module, depress it.
 			 * If mouse leaves module while depressed, undepress button.
 			 * If mouse re-enters, then re-depress module.
 			 * If mouse is not depressed when it enters module, show hover effect.
 			 */
 			vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
-				if(mouseDown) {
+				if (mouseDown) {
 					vbox.setEffect(this.modulePressedShadow);
 				} else {
 					vbox.setEffect(this.moduleHoverShadow);
@@ -358,10 +361,9 @@ public class MenuController implements Initializable {
 			vbox.setEffect(this.moduleDefaultShadow);
 			vbox.setStyle("-fx-background-color: white");
 
-			colIdx++;
 			modules.getChildren().add(vbox);
 
-			//Ensure shadows don't overlap with edge of FlowPane
+			// Ensure shadows don't overlap with edge of FlowPane
 			FlowPane.setMargin(vbox, new Insets(
 					screenHeight * 0.033,
 					0,
@@ -369,8 +371,10 @@ public class MenuController implements Initializable {
 					screenWidth * 0.037));
 		}
 
-		/*Allow modules to be scrollable if window is
-		too small to display them all on screen simultaneously*/
+		/*
+		 * Allow modules to be scrollable if window is too small to display them
+		 * all on screen simultaneously.
+		 */
 		ScrollPane moduleBox = new ScrollPane();
 		moduleBox.setContent(modules);
 		moduleBox.setStyle("-fx-background-color: transparent");
@@ -1245,7 +1249,7 @@ public class MenuController implements Initializable {
 		this.calendar.setOnAction(e -> this.main(Window.CALENDAR));
 		// =================
 
-		//Set nav to close when clicking outside of it
+		// Set nav to close when clicking outside of it
 		this.mainContent.addEventHandler(MouseEvent.MOUSE_PRESSED,
 			e -> {
 				TranslateTransition closeNot =
@@ -1399,7 +1403,8 @@ public class MenuController implements Initializable {
 			if (navList.getTranslateX() != 0) {
 				openNav.play();
 			} else {
-				closeNav.setToX(-(navList.getWidth() + this.navShadowRadius + this.navShadowOffset));
+				closeNav.setToX(-(navList.getWidth()
+						+ this.navShadowRadius + this.navShadowOffset));
 				closeNav.play();
 			}
 		});
