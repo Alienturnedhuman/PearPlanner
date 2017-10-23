@@ -61,19 +61,23 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
 
 /**
  * Created by Zilvinas on 04/05/2017.
  */
 
 public class UIManager {
-	public static Stage mainStage = new Stage();
+	private static Stage mainStage = new Stage();
 	private static MenuController mc = new MenuController();
 
 	/**
@@ -121,17 +125,12 @@ public class UIManager {
 		loader.setController(UIManager.mc);
 		Parent root = loader.load();
 
-		// Set the scene, with dimensions based on the screen resolution.
-		mainStage.setScene(new Scene(root,
-				Screen.getPrimary().getVisualBounds().getWidth() * 0.77,
-				Screen.getPrimary().getVisualBounds().getHeight() * 0.9,
-				true, SceneAntialiasing.BALANCED));
+		// Set the scene:
+		mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
 		mainStage.setTitle("RaiderPlanner");
-
-		// Set minimum resolution to around 360p in 3:5 aspect ratio for small phones
-		mainStage.setMinHeight(555);
-		mainStage.setMinWidth(333);
-
+		// Minimum screen width set to fit with the current layout where the modules do not wrap.
+		mainStage.setMinWidth(1000);
+		mainStage.setMinHeight(500);
 		mainStage.getIcons().add(new Image("file:icon.png"));
 		mainStage.showAndWait();
 	}
@@ -559,11 +558,47 @@ public class UIManager {
 	}
 
 	/**
-	 * Displays an error message.
-	 *
-	 * @param message to be displayed
+	 * reporting errors without logging.
+	 * @param displayMessage message to display to user
 	 */
-	public static void reportError(String message) {
+	public static void reportError(String displayMessage) {
+		displayError(displayMessage);
+	}
+
+	/**
+	 * Error reporting with stack trace.
+	 * @param displayMessage message to display to user.
+	 * @param stackTrace StackTrace from thrown exception
+	 */
+	public static void reportError(String displayMessage,StackTraceElement[] stackTrace) {
+		reportError(displayMessage,Arrays.toString(stackTrace));
+	}
+
+	/**
+	 * Error reporting with string.
+	 * @param displayMessage message to be displayed to user
+	 * @param errorMessage error to log, can be string or stack trace
+	 */
+	public static void reportError(String displayMessage,String errorMessage) {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter("errorlog.txt", true));) {
+			//Time stamp code from
+			//https://stackoverflow.com/questions/5175728/how-to-get-the-current-date-time-in-java
+			String timeStamp = new SimpleDateFormat(
+					"yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+			bw.write(timeStamp + " " +  displayMessage + " " + errorMessage);
+			bw.newLine();
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		displayError(displayMessage);
+	}
+
+	/**
+	 * Displays an error to the user.
+	 * @param message to be displayed to user
+	 */
+	public static void displayError(String message) {
 		Alert alert = new Alert(Alert.AlertType.ERROR, message);
 		alert.showAndWait();
 	}
