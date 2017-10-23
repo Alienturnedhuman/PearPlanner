@@ -47,6 +47,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -57,7 +58,7 @@ import java.io.IOException;
  */
 
 public class UIManager {
-	private static Stage mainStage = new Stage();
+	public static Stage mainStage = new Stage();
 	private static MenuController mc = new MenuController();
 
 	/**
@@ -105,12 +106,17 @@ public class UIManager {
 		loader.setController(UIManager.mc);
 		Parent root = loader.load();
 
-		// Set the scene:
-		mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
+		// Set the scene, with dimensions based on the screen resolution.
+		mainStage.setScene(new Scene(root,
+				Screen.getPrimary().getVisualBounds().getWidth() * 0.77,
+				Screen.getPrimary().getVisualBounds().getHeight() * 0.9,
+				true, SceneAntialiasing.BALANCED));
 		mainStage.setTitle("RaiderPlanner");
-		// Minimum screen width set to fit with the current layout where the modules do not wrap.
-		mainStage.setMinWidth(1000);
-		mainStage.setMinHeight(500);
+
+		// Set minimum resolution to around 360p in 3:5 aspect ratio for small phones
+		mainStage.setMinHeight(555);
+		mainStage.setMinWidth(333);
+
 		mainStage.getIcons().add(new Image("file:icon.png"));
 		mainStage.showAndWait();
 	}
