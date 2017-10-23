@@ -1236,7 +1236,7 @@ public class MenuController implements Initializable {
 		this.prepareAnimations();
 		this.isNavOpen = false;
 
-		//Set shadows
+		// Set shadows
 		notifications.setEffect(notifShadow);
 		navList.setEffect(navShadow);
 
