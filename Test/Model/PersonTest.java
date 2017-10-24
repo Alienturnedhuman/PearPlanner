@@ -50,7 +50,7 @@ public class PersonTest {
 	public void setUp() throws Exception {
 		personName.add("Andrew");
 		person1 = new Person("Mr", personName, "Odintsov", true, "Andrew.odi@apple.com");
-		person2 = new Person("Mr","Zilvinas Ceikauskas", true, "Zill.cei@apple.com");
+		person2 = new Person("Mr", "Zilvinas Ceikauskas", true, "Zill.cei@apple.com");
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class PersonTest {
 		expectedFullName = "Mr Zilvinas Ceikauskas";
 		assertEquals(expectedFullName, person2.getFullName());
 
-		person2 = new Person("Mr","Ceikauskas Zilvinas", false, "Zill.cei@apple.com");
+		person2 = new Person("Mr", "Ceikauskas Zilvinas", false, "Zill.cei@apple.com");
 		expectedFullName = "Mr Ceikauskas Zilvinas";
 		assertEquals(expectedFullName, person2.getFullName());
 	}
@@ -118,7 +118,7 @@ public class PersonTest {
 		person2GivenNames.add("Zilvinas");
 		assertEquals(person2GivenNames, person2.getGivenNames());
 
-		person2 = new Person("Mr","Zilvinas Ben Ceikauskas", true, "Zill.cei@apple.com");
+		person2 = new Person("Mr", "Zilvinas Ben Ceikauskas", true, "Zill.cei@apple.com");
 		person2GivenNames.add("Ben");
 		assertEquals(person2GivenNames, person2.getGivenNames());
 	}
@@ -129,7 +129,7 @@ public class PersonTest {
 		assertTrue(person1.getFamilyNameLast());
 
 		// Testing with FALSE value for familyNameLast
-		person2 = new Person("Mr","Zilvinas Ceikauskas", false, "Zill.cei@apple.com");
+		person2 = new Person("Mr", "Zilvinas Ceikauskas", false, "Zill.cei@apple.com");
 		assertFalse(person2.getFamilyNameLast());
 	}
 
@@ -148,7 +148,7 @@ public class PersonTest {
 		assertEquals(true, person1.hasSalutation());
 
 		// Testing without salutation
-		person2 = new Person("","Zilvinas Ceikauskas", true, "Zill.cei@apple.com");
+		person2 = new Person("", "Zilvinas Ceikauskas", true, "Zill.cei@apple.com");
 		assertEquals(false, person2.hasSalutation());
 	}
 
@@ -163,7 +163,7 @@ public class PersonTest {
 		person1 = new Person("Mr", personName, "Odintsov", true, "Andrew.odi@apple.com");
 		assertEquals(personName.get(0), person1.getPreferredName());
 
-		person2 = new Person("Mr","Zilvinas Ben Ceikauskas", true, "Zill.cei@apple.com");
+		person2 = new Person("Mr", "Zilvinas Ben Ceikauskas", true, "Zill.cei@apple.com");
 		assertEquals("Zilvinas", person2.getPreferredName());
 
 		// Testing with no names
@@ -171,7 +171,7 @@ public class PersonTest {
 		person1 = new Person("Mr", personName, "Odintsov", true, "Andrew.odi@apple.com");
 		assertEquals("Odintsov", person1.getPreferredName());
 
-		person2 = new Person("Mr","Ceikauskas", true, "Zill.cei@apple.com");
+		person2 = new Person("Mr", "Ceikauskas", true, "Zill.cei@apple.com");
 		assertEquals("Ceikauskas", person2.getPreferredName());
 
 		// Testing with Preferred Name set
