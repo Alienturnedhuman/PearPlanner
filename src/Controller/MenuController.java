@@ -550,10 +550,10 @@ public class MenuController implements Initializable {
 		HBox.setHgrow(xx, Priority.ALWAYS);
 		// =================
 		// Buttons:
+		Button export = new Button("Export");
 		Button agendaFwd = new Button(">");
 		Button agendaBwd = new Button("<");
-		// =================
-		nav.getChildren().addAll(title, xx, agendaBwd, agendaFwd);
+		nav.getChildren().addAll(title, xx, agendaBwd, agendaFwd, export);
 		// Content:
 		Agenda content = new Agenda();
 		VBox.setVgrow(content, Priority.ALWAYS);
@@ -562,23 +562,20 @@ public class MenuController implements Initializable {
 		content.autosize();
 		content.setActionCallback(param -> null);
 		content.setEditAppointmentCallback(param -> null);
+		//Creation of ICS export factory
+		ICalExport icalExport = new ICalExport();
 		// Agenda buttons:
 		agendaBwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
 		agendaFwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
-		// =================
+		export.setOnMouseClicked(event -> icalExport.exportFile());
 		// Populate Agenda:
 		ArrayList<Event> calendar =
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
-		//Counter to create unique ICS file names for export
-		int counter = 0;
-		//Creation of ICS export factory
-		ICalExport icalExport = new ICalExport();
-		//Preparation of export directory
-		icalExport.icalSetup();
 		for (Event e : calendar) {
-			icalExport.createExportEvent(e, counter);
+			//Create an event to be exported to an ICS file
+			icalExport.createExportEvent(e);
 			// TODO - find a way to eliminate this if/else-if/instanceof anti-pattern
 			if (e instanceof TimetableEvent) {
 				LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
@@ -616,7 +613,6 @@ public class MenuController implements Initializable {
 						.withEndLocalDateTime(stime.plusMinutes(60)).withAppointmentGroup(
 								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
 			}
-			counter++;
 		}
 		layout.getChildren().addAll(nav, content);
 		Platform.runLater(() -> content
