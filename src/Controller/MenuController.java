@@ -1250,7 +1250,9 @@ public class MenuController implements Initializable {
 		this.mainContent.addEventHandler(MouseEvent.MOUSE_PRESSED,
 			e -> {
 				if(this.showNotification.getTranslateY() == 0) {
-					this.showNotification.fire();
+					TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
+					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
+					closeNot.play();
 				}
 
 				if (this.isNavOpen) {
@@ -1406,14 +1408,14 @@ public class MenuController implements Initializable {
 		});
 
 		TranslateTransition openNot = new TranslateTransition(new Duration(222), notifications);
-		openNot.setToY(0);
+		openNot.setToY(17);
 		TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
 
 		showNotification.setOnAction((ActionEvent e1) -> {
-			if (notifications.getTranslateY() != 0) {
+			if (notifications.getTranslateY() != 17) {
 				openNot.play();
 			} else {
-				closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56));
+				closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
 				closeNot.play();
 			}
 		});
