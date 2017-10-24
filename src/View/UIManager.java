@@ -69,7 +69,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-
 /**
  * Created by Zilvinas on 04/05/2017.
  */
@@ -79,12 +78,12 @@ public class UIManager {
 	private static MenuController mc = new MenuController();
 	private static File savesFolder = new File("./saves");
 	private static Image icon = new Image("file:icon.png");
-	private static FileChooser.ExtensionFilter datExtension = new FileChooser.ExtensionFilter(
-			"dat file", "*.dat");
-	private static FileChooser.ExtensionFilter xmlExtension = new FileChooser.ExtensionFilter(
-			"XML file", "*.xml");
-	private static FileChooser.ExtensionFilter pngExtension = new FileChooser.ExtensionFilter(
-			"PNG file", "*.png");
+	private static FileChooser.ExtensionFilter datExtension =
+			new FileChooser.ExtensionFilter("dat file", "*.dat");
+	private static FileChooser.ExtensionFilter xmlExtension =
+			new FileChooser.ExtensionFilter("XML file", "*.xml");
+	private static FileChooser.ExtensionFilter pngExtension =
+			new FileChooser.ExtensionFilter("PNG file", "*.png");
 	private URL activityFxml = getClass().getResource("/View/Activity.fxml");
 	private URL milestoneFxml = getClass().getResource("/View/Milestone.fxml");
 	private URL taskFxml = getClass().getResource("/View/Task.fxml");
