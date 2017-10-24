@@ -21,9 +21,18 @@
 
 package Controller;
 
-import Model.*;
+import Model.Account;
+import Model.Activity;
+import Model.Event;
+import Model.HubFile;
+import Model.Milestone;
+import Model.Notification;
+import Model.QuantityType;
+import Model.StudyPlanner;
+import Model.StudyProfile;
+import Model.Task;
+import Model.TaskType;
 
-import javax.crypto.*;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
@@ -31,278 +40,255 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import javax.crypto.Cipher;
+import javax.crypto.CipherOutputStream;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SealedObject;
+import javax.crypto.SecretKey;
+
+
 /**
  * Created by bendickson on 5/4/17.
  */
-public class StudyPlannerController
-{
-    private StudyPlanner planner;
+public class StudyPlannerController {
+	private StudyPlanner planner;
 
-    public StudyPlanner getPlanner()
-    {
-        return planner;
-    }
+	/**
+	 * @return SPC's StudyPlanner file, planner.
+	 */
+	public StudyPlanner getPlanner() {
+		return planner;
+	}
 
-    /**
-     * Save the current StudyPlanner into a serialized file.
-     *
-     * @param key64    SecretKey used for encoding.
-     * @param fileName name of the file.
-     * @return whether saved successfully.
-     */
-    public boolean save(SecretKey key64, String fileName)
-    {
-        try
-        {
-            Cipher cipher = Cipher.getInstance("Blowfish");
-            cipher.init(Cipher.ENCRYPT_MODE, key64);
-            SealedObject sealedObject = new SealedObject(this.planner, cipher);
-            CipherOutputStream cipherOutputStream = new CipherOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)), cipher);
-            ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);
-            outputStream.writeObject(sealedObject);
-            outputStream.close();
-            return true;
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-            return false;
-        }
-    }
+	/**
+	 * Save the current StudyPlanner into a serialized file.
+	 *
+	 * @param key64
+	 *            SecretKey used for encoding.
+	 * @param fileName
+	 *            name of the file.
+	 * @return whether saved successfully.
+	 */
+	public boolean save(SecretKey key64, String fileName) {
+		try {
+			Cipher cipher = Cipher.getInstance("Blowfish");
+			cipher.init(Cipher.ENCRYPT_MODE, key64);
+			SealedObject sealedObject = new SealedObject(this.planner, cipher);
 
-    /**
-     * '
-     * Checks whether a StudyProfile for this year and semester is loaded in.
-     *
-     * @param year     year to be checked
-     * @param semester semester number to be checked
-     * @return whether this StudyProfile exists in this StudyPlanner
-     */
-    public boolean containsStudyProfile(int year, int semester)
-    {
-        return planner.containsStudyProfile(year, semester);
-    }
+			try (CipherOutputStream cipherOutputStream = new CipherOutputStream(
+					new BufferedOutputStream(new FileOutputStream(fileName)), cipher);
+					ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);) {
+				outputStream.writeObject(sealedObject);
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
-    /**
-     * if valid, this method creates a new StudyProfile and returns true
-     * if invalid, it returns false
-     *
-     * @param hubFile HubFile containing the newly loaded in profile
-     * @return whether created successfully.
-     */
-    public boolean createStudyProfile(HubFile hubFile)
-    {
-        if (!this.planner.containsStudyProfile(hubFile.getYear(), hubFile.getSemester()))
-        {
-            // Create a profile:
-            StudyProfile profile = new StudyProfile(hubFile);
-            this.planner.addStudyProfile(profile);
-            if (this.planner.getCurrentStudyProfile() == null)
-            {
-                this.planner.setCurrentStudyProfile(profile);
-                profile.setCurrent(true);
-            }
-            // =================
+	/**
+	 * ' Checks whether a StudyProfile for this year and semester is loaded in.
+	 *
+	 * @param year
+	 *            year to be checked
+	 * @param semester
+	 *            semester number to be checked
+	 * @return whether this StudyProfile exists in this StudyPlanner
+	 */
+	public boolean containsStudyProfile(int year, int semester) {
+		return planner.containsStudyProfile(year, semester);
+	}
 
-            // Fill the global calendar with newly imported events:
-            ArrayList<Event> cal = hubFile.getCalendarList();
-            int i = -1;
-            int ii = cal.size();
-            while (++i < ii)
-            {
-                //ConsoleIO.setConsoleMessage("Adding " + cal.get(i).toString() + " to calendar", true);
-                this.planner.addEventToCalendar(cal.get(i));
-                profile.addEventToCalendar(cal.get(i));
-            }
-            // =================
+	/**
+	 * if valid, this method creates a new StudyProfile and returns true if invalid, it returns
+	 * false
+	 *
+	 * @param hubFile
+	 *            HubFile containing the newly loaded in profile
+	 * @return whether created successfully.
+	 */
+	public boolean createStudyProfile(HubFile hubFile) {
+		if (!this.planner.containsStudyProfile(hubFile.getYear(), hubFile.getSemester())) {
+			// Create a profile:
+			StudyProfile profile = new StudyProfile(hubFile);
+			this.planner.addStudyProfile(profile);
+			if (this.planner.getCurrentStudyProfile() == null) {
+				this.planner.setCurrentStudyProfile(profile);
+				profile.setCurrent(true);
+			}
+			// =================
 
-            // Notify user:
-            Notification not = new Notification("New study profile created!", new GregorianCalendar(),
-                    "\"" + profile.getName() + "\"", profile);
-            this.planner.addNotification(not);
-            // =================
+			// Fill the global calendar with newly imported events:
+			ArrayList<Event> cal = hubFile.getCalendarList();
+			int i1 = -1;
+			int i2 = cal.size();
+			while (++i1 < i2) {
+				// ConsoleIO.setConsoleMessage("Adding " + cal.get(i).toString() + " to calendar",
+				// true);
+				this.planner.addEventToCalendar(cal.get(i1));
+				profile.addEventToCalendar(cal.get(i1));
+			}
+			// =================
 
-            return true;
-        }
-        return false;
-    }
+			// Notify user:
+			Notification not = new Notification("New study profile created!",
+					new GregorianCalendar(), "\"" + profile.getName() + "\"", profile);
+			this.planner.addNotification(not);
+			// =================
 
-    /**
-     * returns a list of tasks in the current StudyProfile if it exists
-     * or an empty list if it doesn't
-     */
-    public ArrayList<Task> getCurrentTasks()
-    {
-        if (this.getPlanner().getCurrentStudyProfile() != null)
-            return this.getPlanner().getCurrentStudyProfile().getTasks();
-        else
-            return new ArrayList<>();
-    }
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * Checker whether the user needs to be notified about something.
-     * (Deadlines etc.)
-     */
-    public void checkForNotifications()
-    {
-        // TODO notifications
-        /*int hours1 = 168, hours2 = 48; // temporary values until a Settings page is present
+	/**
+	 * Returns a list of tasks in the current StudyProfile if it exists or an empty list if it.
+	 * doesn't
+	 */
+	public ArrayList<Task> getCurrentTasks() {
+		if (this.getPlanner().getCurrentStudyProfile() != null) {
+			return this.getPlanner().getCurrentStudyProfile().getTasks();
+		} else {
+			return new ArrayList<>();
+		}
+	}
 
-        for (Map.Entry<ModelEntity, boolean[]> entry : this.planner.getDeadlineNotifications().entrySet())
-        {
-            if (entry.getKey() instanceof Assignment)
-            {
-                if (!entry.getValue()[0])
-                {
-                    GregorianCalendar temp = new GregorianCalendar();
-                    temp.add(CALENDAR.HOUR, -hours1);
-                    Date date = temp.getTime();
+	/**
+	 * Checker whether the user needs to be notified about something. (Deadlines etc.)
+	 */
+	public void checkForNotifications() {
+		// TODO notifications
+		/*
+		 * int hours1 = 168, hours2 = 48; // temporary values until a Settings page is present
+		 * for (Map.Entry<ModelEntity, boolean[]> entry :
+		 * this.planner.getDeadlineNotifications().entrySet()) { if (entry.getKey() instanceof
+		 * Assignment) { if (!entry.getValue()[0]) { GregorianCalendar temp = new
+		 * GregorianCalendar(); temp.add(CALENDAR.HOUR, -hours1); Date date = temp.getTime();
+		 * if (entry.getKey() instanceof Coursework) { if (date.after((((Coursework)
+		 * entry.getKey()).getDeadline().getDate()))) { Notification not = new
+		 * Notification("Assignment due in a week!", new GregorianCalendar(),
+		 * entry.getKey().getName(), entry.getKey());
+		 * MainController.getSPC().getPlanner().addNotification(not); entry.getValue()[0] = true; }
+		 * } if (entry.getKey() instanceof Exam) { if (date.after((((Exam)
+		 * entry.getKey()).getTimeSlot().getDate()))) { Notification not = new
+		 * Notification("You have an exam in a week!", new GregorianCalendar(),
+		 * entry.getKey().getName(), entry.getKey());
+		 * MainController.getSPC().getPlanner().addNotification(not); entry.getValue()[0] = true; }
+		 * } } else if (!entry.getValue()[1]) { GregorianCalendar temp = new GregorianCalendar();
+		 * temp.add(CALENDAR.HOUR, -hours2); Date date = temp.getTime();
+		 * if (entry.getKey() instanceof Coursework) { if (date.after((((Coursework)
+		 * entry.getKey()).getDeadline().getDate()))) { Notification not = new
+		 * Notification("Assignment due in a two days!", new GregorianCalendar(),
+		 * entry.getKey().getName(), entry.getKey());
+		 * MainController.getSPC().getPlanner().addNotification(not); entry.getValue()[1] = true; }
+		 * } if (entry.getKey() instanceof Exam) { if (date.after((((Exam)
+		 * entry.getKey()).getTimeSlot().getDate()))) { Notification not = new
+		 * Notification("You have an exam in two days!", new GregorianCalendar(),
+		 * entry.getKey().getName(), entry.getKey());
+		 * MainController.getSPC().getPlanner().addNotification(not); entry.getValue()[1] = true; }
+		 * } } else this.planner.getDeadlineNotifications().remove(entry); } }
+		 */
+	}
 
-                    if (entry.getKey() instanceof Coursework)
-                    {
-                        if (date.after((((Coursework) entry.getKey()).getDeadline().getDate())))
-                        {
-                            Notification not = new Notification("Assignment due in a week!",
-                                    new GregorianCalendar(), entry.getKey().getName(), entry.getKey());
-                            MainController.getSPC().getPlanner().addNotification(not);
-                            entry.getValue()[0] = true;
-                        }
-                    }
-                    if (entry.getKey() instanceof Exam)
-                    {
-                        if (date.after((((Exam) entry.getKey()).getTimeSlot().getDate())))
-                        {
-                            Notification not = new Notification("You have an exam in a week!",
-                                    new GregorianCalendar(), entry.getKey().getName(), entry.getKey());
-                            MainController.getSPC().getPlanner().addNotification(not);
-                            entry.getValue()[0] = true;
-                        }
-                    }
-                } else if (!entry.getValue()[1])
-                {
-                    GregorianCalendar temp = new GregorianCalendar();
-                    temp.add(CALENDAR.HOUR, -hours2);
-                    Date date = temp.getTime();
+	/**
+	 * Adds a new Activity to this StudyPlanner.
+	 *
+	 * @param activity
+	 *            Activity to be added.
+	 */
+	public void addActivity(Activity activity) {
+		this.planner.addActivity(activity);
+	}
 
-                    if (entry.getKey() instanceof Coursework)
-                    {
-                        if (date.after((((Coursework) entry.getKey()).getDeadline().getDate())))
-                        {
-                            Notification not = new Notification("Assignment due in a two days!",
-                                    new GregorianCalendar(), entry.getKey().getName(), entry.getKey());
-                            MainController.getSPC().getPlanner().addNotification(not);
-                            entry.getValue()[1] = true;
-                        }
-                    }
-                    if (entry.getKey() instanceof Exam)
-                    {
-                        if (date.after((((Exam) entry.getKey()).getTimeSlot().getDate())))
-                        {
-                            Notification not = new Notification("You have an exam in two days!",
-                                    new GregorianCalendar(), entry.getKey().getName(), entry.getKey());
-                            MainController.getSPC().getPlanner().addNotification(not);
-                            entry.getValue()[1] = true;
-                        }
-                    }
-                } else this.planner.getDeadlineNotifications().remove(entry);
-            }
-        }*/
-    }
+	/**
+	 * Adds a new Milestone to this StudyPlanner.
+	 *
+	 * @param milestone
+	 *            Milestone to be added.
+	 */
+	public void addMilestone(Milestone milestone) {
+		this.planner.getCurrentStudyProfile().addMilestone(milestone);
+	}
 
-    /**
-     * Adds a new Activity to this StudyPlanner.
-     *
-     * @param activity Activity to be added.
-     */
-    public void addActivity(Activity activity)
-    {
-        this.planner.addActivity(activity);
-    }
+	/**
+	 * Removes the given Milestone from this StudyPlanner
+	 *
+	 * @param milestone
+	 *            Milestone to be removed.
+	 * @return Whether the Milestone was removed successfully.
+	 */
+	public boolean removeMilestone(Milestone milestone) {
+		return this.planner.getCurrentStudyProfile().removeMilestone(milestone);
+	}
 
-    /**
-     * Adds a new Milestone to this StudyPlanner.
-     *
-     * @param milestone Milestone to be added.
-     */
-    public void addMilestone(Milestone milestone)
-    {
-        this.planner.getCurrentStudyProfile().addMilestone(milestone);
-    }
+	/**
+	 * Add a new QuantityType to this StudyPlanner.
+	 *
+	 * @param quantity
+	 *            QuantityType to be added
+	 * @return whether added successfully.
+	 */
+	public boolean addQuantityType(QuantityType quantity) {
+		if (!this.planner.getQuantityTypes().contains(quantity)) {
+			this.planner.getQuantityTypes().add(quantity);
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * Removes the given Milestone from this StudyPlanner
-     *
-     * @param milestone Milestone to be removed.
-     * @return Whether the Milestone was removed successfully.
-     */
-    public boolean removeMilestone(Milestone milestone)
-    {
-        return this.planner.getCurrentStudyProfile().removeMilestone(milestone);
-    }
+	/**
+	 * Add a new TaskType to this StudyPlanner.
+	 *
+	 * @param taskType
+	 *            TaskType to be added
+	 * @return whether added successfully.
+	 */
+	public boolean addTaskType(TaskType taskType) {
+		if (!this.planner.getTaskTypes().contains(taskType)) {
+			this.planner.getTaskTypes().add(taskType);
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * Add a new QuantityType to this StudyPlanner.
-     *
-     * @param quantity QuantityType to be added
-     * @return whether added successfully.
-     */
-    public boolean addQuantityType(QuantityType quantity)
-    {
-        if (!this.planner.getQuantityTypes().contains(quantity))
-        {
-            this.planner.getQuantityTypes().add(quantity);
-            return true;
-        }
-        return false;
-    }
+	// Constructors:
+	/**
+	 * Empty Constructor.
+	 */
+	public StudyPlannerController() {
+	}
 
-    /**
-     * Add a new TaskType to this StudyPlanner.
-     *
-     * @param taskType TaskType to be added
-     * @return whether added successfully.
-     */
-    public boolean addTaskType(TaskType taskType)
-    {
-        if (!this.planner.getTaskTypes().contains(taskType))
-        {
-            this.planner.getTaskTypes().add(taskType);
-            return true;
-        }
-        return false;
-    }
+	/**
+	 * Constructor for testing UI.
+	 *
+	 * @param newAccount New account for planner
+	 */
+	public StudyPlannerController(Account newAccount)
+			throws NoSuchAlgorithmException, NoSuchPaddingException {
+		planner = new StudyPlanner(newAccount);
+	}
 
-    // Constructors:
-    public StudyPlannerController()
-    {
-    }
+	/**
+	 * Used when loading from a file
+	 *
+	 * @param planner
+	 *            StudyPlanner to be loaded.
+	 */
+	public StudyPlannerController(StudyPlanner planner) {
+		this.planner = planner;
 
-    /**
-     * Constructor for testing UI
-     *
-     * @param newAccount
-     */
-    public StudyPlannerController(Account newAccount) throws NoSuchAlgorithmException, NoSuchPaddingException
-    {
-        planner = new StudyPlanner(newAccount);
-    }
+		// Process Quantity and Task types.
+		if (!this.planner.getQuantityTypes().isEmpty()) {
+			this.planner.getQuantityTypes().forEach(e -> QuantityType.create(e));
+		}
 
-    /**
-     * Used when loading from a file
-     *
-     * @param planner StudyPlanner to be loaded.
-     */
-    public StudyPlannerController(StudyPlanner planner)
-    {
-        this.planner = planner;
+		if (!this.planner.getTaskTypes().isEmpty()) {
+			this.planner.getTaskTypes().forEach(e -> TaskType.create(e));
+		}
 
-        // Process Quantity and Task types.
-        if (!this.planner.getQuantityTypes().isEmpty())
-            this.planner.getQuantityTypes().forEach(e -> QuantityType.create(e));
-
-        if (!this.planner.getTaskTypes().isEmpty())
-            this.planner.getTaskTypes().forEach(e -> TaskType.create(e));
-
-        if (!this.planner.emptyVersionControlLibrary())
-            this.planner.rebuildVersionControlLibrary();
-    }
+		if (!this.planner.emptyVersionControlLibrary()) {
+			this.planner.rebuildVersionControlLibrary();
+		}
+	}
 }
