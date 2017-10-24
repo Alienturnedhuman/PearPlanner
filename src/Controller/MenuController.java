@@ -541,7 +541,6 @@ public class MenuController implements Initializable {
 		HBox.setHgrow(xx, Priority.ALWAYS);
 		// =================
 		// Buttons:
-		Button export = new Button("Export");
 		Button agendaFwd = new Button(">");
 		Button agendaBwd = new Button("<");
 		nav.getChildren().addAll(xx, agendaBwd, agendaFwd);
@@ -556,6 +555,7 @@ public class MenuController implements Initializable {
 		//Creation of ICS export factory
 		ICalExport icalExport = new ICalExport();
 		// Agenda buttons:
+		Button export = new Button("Export");
 		agendaBwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
 		agendaFwd.setOnMouseClicked(event -> content

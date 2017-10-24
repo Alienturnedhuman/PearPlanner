@@ -413,7 +413,7 @@ public class UIManager {
 		stage.showAndWait();
 	}
 
-	/*
+	/**
 	 * Displays a file dialog for importing .xml files
 	 *
 	 * @return a File object
