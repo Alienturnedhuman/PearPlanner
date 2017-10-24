@@ -32,7 +32,6 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 /**
  * Created by bendickson on 5/4/17.
  */
@@ -40,35 +39,39 @@ public class ConsoleIO {
 	static ArrayList<String> logged = new ArrayList<>();
 
 	/**
-	 * Retrieve user input/
+	 * Retrieve user input.
 	 *
-	 * @param message Message to be shown
+	 * @param message
+	 *            Message to be shown
 	 * @return retrieved String
 	 */
-	static public String getDataString(String message) {
+	public static String getDataString(String message) {
 		Scanner scan = new Scanner(System.in);
-		String r = "";
-		while (r.equals("")) {
+		String str = "";
+		while (str.equals("")) {
 			System.out.println(message);
-			r = scan.nextLine();
+			str = scan.nextLine();
 		}
-		return r;
+		scan.close();
+		return str;
 	}
 
 	/**
 	 * Get yes/no input.
 	 *
-	 * @param message Message to be shown.
+	 * @param message
+	 *            Message to be shown.
 	 * @return true for yes, false for no.
 	 */
-	static public boolean getDataBool(String message) {
+	public static boolean getDataBool(String message) {
 		Scanner scan = new Scanner(System.in);
-		String r = "";
-		while (!(r.equals("y") || r.equals("n"))) {
+		String str = "";
+		while (!(str.equals("y") || str.equals("n"))) {
 			System.out.println(message);
-			r = scan.next();
+			str = scan.next();
 		}
-		return r.equals("y");
+		scan.close();
+		return str.equals("y");
 	}
 
 	/**
@@ -76,45 +79,48 @@ public class ConsoleIO {
 	 *
 	 * @return number of lines.
 	 */
-	static public int getLogSize() {
+	public static int getLogSize() {
 		return logged.size();
 	}
 
 	/**
 	 * Save the full log to a file.
 	 *
-	 * @param filePath file path
+	 * @param filePath
+	 *            file path
 	 */
-	static public void saveLog(String filePath) {
+	public static void saveLog(String filePath) {
 		saveLog(filePath, 0, logged.size());
 	}
 
 	/**
 	 * Save specific lines to a file.
 	 *
-	 * @param filePath  file path
-	 * @param startLine starting line
-	 * @param endLine   end line
+	 * @param filePath
+	 *            file path
+	 * @param startLine
+	 *            starting line
+	 * @param endLine
+	 *            end line
 	 */
-	static public void saveLog(String filePath, int startLine, int endLine) {
+	public static void saveLog(String filePath, int startLine, int endLine) {
 		if (startLine < 0) {
 			startLine = 0;
 		}
 		if (endLine > logged.size()) {
 			endLine = logged.size();
 		}
-		int i = startLine - 1;
-		try {
-			File logFile = new File(filePath);
-			FileOutputStream fos = new FileOutputStream(logFile);
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-			while (++i < endLine) {
-				if (i != startLine) {
+		int itr = startLine - 1;
+		File logFile = new File(filePath);
+		try (FileOutputStream fos = new FileOutputStream(logFile);
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));) {
+
+			while (++itr < endLine) {
+				if (itr != startLine) {
 					bw.newLine();
 				}
-				bw.write(logged.get(i));
+				bw.write(logged.get(itr));
 			}
-			bw.close();
 		} catch (Exception e) {
 			setConsoleMessage("File not written", true);
 		}
@@ -123,19 +129,22 @@ public class ConsoleIO {
 	/**
 	 * Display a message on a console.
 	 *
-	 * @param message message to be displayed.
+	 * @param message
+	 *            message to be displayed.
 	 */
-	static public void setConsoleMessage(String message) {
+	public static void setConsoleMessage(String message) {
 		System.out.println(message);
 	}
 
 	/**
 	 * Display a message with an option of saving it to a log.
 	 *
-	 * @param message	message to be displayed (or logged)
-	 * @param logMessage whether to log it
+	 * @param message
+	 *            message to be displayed (or logged)
+	 * @param logMessage
+	 *            whether to log it
 	 */
-	static public void setConsoleMessage(String message, boolean logMessage) {
+	public static void setConsoleMessage(String message, boolean logMessage) {
 		System.out.println(message);
 		if (logMessage) {
 			logged.add(message);
@@ -145,10 +154,11 @@ public class ConsoleIO {
 	/**
 	 * Get user selection of a menu option.
 	 *
-	 * @param menuOptions available options
+	 * @param menuOptions
+	 *            available options
 	 * @return user selection
 	 */
-	static public int getMenuOption(String[] menuOptions) {
+	public static int getMenuOption(String[] menuOptions) {
 		Scanner scan = new Scanner(System.in);
 		int option = -1;
 		while (option < 0 || option >= menuOptions.length) {
@@ -159,58 +169,78 @@ public class ConsoleIO {
 			}
 			option = scan.nextInt();
 		}
+		scan.close();
 		return option;
 	}
 
-
 	// Console view below
-	static public String view_main() {
+	/**
+	 * Displays main menu.
+	 * @return menu choice
+	 */
+	public static String view_main() {
 		View.ConsoleIO.setConsoleMessage("MAIN MENU");
 		// list of options
-		String[] menuOptions = {"Create Study Profile", "View Study Profile", "View Notifications", "Quit Program"};
+		String[] menuOptions = { "Create Study Profile", "View Study Profile", "View Notifications",
+				"Quit Program" };
 		int choice = View.ConsoleIO.getMenuOption(menuOptions);
 
 		return menuOptions[choice];
 
 	}
 
-	static public String view_createSP() {
+	/**
+	 * Displays Study Profile creation.
+	 * @return Returns menu choice
+	 */
+	public static String view_createStudyP() {
 		View.ConsoleIO.setConsoleMessage("CREATE A STUDY PROFILE");
 		// list of options
-		String[] menuOptions = {"Load Study Profile File", "Return to Main Menu"};
+		String[] menuOptions = { "Load Study Profile File", "Return to Main Menu" };
 		int choice = View.ConsoleIO.getMenuOption(menuOptions);
 
 		return menuOptions[choice];
 
 	}
 
-	static public String view_viewSP(StudyPlannerController SPC) {
+	/**
+	 * Shows a study profile.
+	 * @param spController input StudyPlannerController
+	 * @return menu option
+	 */
+	public static String view_viewStudyP(StudyPlannerController spController) {
 		View.ConsoleIO.setConsoleMessage("VIEW A STUDY PROFILE");
-		String[] studyProfiles = SPC.getPlanner().getListOfStudyProfileNames();
-		int i = -1, ii = studyProfiles.length;
+		String[] studyProfiles = spController.getPlanner().getListOfStudyProfileNames();
+		int i1 = -1;
+		int i2 = studyProfiles.length;
 
-		if (ii < 1) {
+		if (i2 < 1) {
 			View.ConsoleIO.setConsoleMessage("No existing study profiles");
 		}
 
-		String[] menuOptions = new String[ii + 1];
-		while (++i < ii) {
-			menuOptions[i] = studyProfiles[i];
+		String[] menuOptions = new String[i2 + 1];
+		while (++i1 < i2) {
+			menuOptions[i1] = studyProfiles[i1];
 		}
-		menuOptions[ii] = "Return to Main Menu";
+		menuOptions[i2] = "Return to Main Menu";
 
-		int m = -1;
-		while (m < ii) {
-			m = View.ConsoleIO.getMenuOption(menuOptions);
-			if (m < ii) {
-
-			}
+		int i3 = -1;
+		while (i3 < i2) {
+			i3 = View.ConsoleIO.getMenuOption(menuOptions);
+//			if (i3 < i2) {
+//				Not sure why this was here.
+//			}
 		}
 
-		return menuOptions[ii];
+		return menuOptions[i2];
 	}
 
-	static public String view_loadSP(StudyPlannerController SPC) {
+	/**
+	 * Loads a Study Profile.
+	 * @param spController input StudyPlannerController
+	 * @return a static string
+	 */
+	public static String view_loadStudyP(StudyPlannerController spController) {
 		View.ConsoleIO.setConsoleMessage("LOAD A STUDY PROFILE");
 
 		String filename = getDataString("Enter filepath:");
