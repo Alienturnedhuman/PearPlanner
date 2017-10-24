@@ -194,6 +194,7 @@ public class Assignment extends VersionControlEntity {
 			}
 		}
 
+		// TODO Revisit #92, investigate and determine the proper course of action
 		try {
 			return sum / n;
 		} catch (ArithmeticException e) {
