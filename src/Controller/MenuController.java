@@ -569,7 +569,7 @@ public class MenuController implements Initializable {
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
 		agendaFwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
-		export.setOnMouseClicked(event -> icalExport.exportFile());
+		export.setOnMouseClicked(event -> icalExport.exportToFile());
 		// Populate Agenda:
 		ArrayList<Event> calendar =
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();

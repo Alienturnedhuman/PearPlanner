@@ -145,7 +145,7 @@ launch4j {
 
 checkstyle {
 	configFile = '.checkstyle.xml' as File
-	maxWarnings = 2966
+	maxWarnings = 2961
 }
 
 tasks.withType(FindBugs) {
