@@ -26,6 +26,7 @@
 apply plugin: 'application'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
+apply plugin: 'edu.sc.seis.launch4j'
 
 /**
  * This line specifies where the main.java file is found.
@@ -63,12 +64,21 @@ sourceSets {
  * is pulled from the sonatype URL.
  */
 
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'edu.sc.seis.gradle:launch4j:2.4.2'
+	}
+}
+
 repositories {
 	mavenCentral()
-
+	jcenter()
 	maven {
-        url "https://github.com/screamingfrog/Maven/blob/master/uk/co/screamingfrog/AppleJavaExtensions/1.6/"
-        url "https://oss.sonatype.org/content/repositories/snapshots/org/testfx/testfx-core/4.0.0-SNAPSHOT/"
+	url "https://github.com/screamingfrog/Maven/blob/master/uk/co/screamingfrog/AppleJavaExtensions/1.6/"
+	url "https://oss.sonatype.org/content/repositories/snapshots/org/testfx/testfx-core/4.0.0-SNAPSHOT/"
     }
 }
 
@@ -98,8 +108,7 @@ dependencies {
 	compile 'org.testfx:testfx-junit5:4.0.6-alpha'
 	compile 'org.testfx:testfx-legacy:4.0.6-alpha'
 	compile 'com.github.mangstadt:vinnie:2.0.1'
-
-	compile fileTree(dir: 'src')
+	compile fileTree(dir: 'src', include: ['*.jar'])
 
 }
 
@@ -117,11 +126,26 @@ test {
 
 jar {
 	manifest.attributes "Main-Class": mainClassName
+	baseName = project.name
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+/**
+ * Create executable from jar
+ */
+launch4j {
+	outputDir = 'libs'
+	outfile = 'raiderplanner.exe'
+	icon = '/../../icon.ico'
+	mainClassName = mainClassName
+	jar = "raiderplanner.jar"
+	productName = 'Raider Planner'
+	fileDescription = 'The best study planner since the Gantt Diagram'
 }
 
 checkstyle {
 	configFile = '.checkstyle.xml' as File
-	maxWarnings = 2973
+	maxWarnings = 2746
 }
 
 tasks.withType(FindBugs) {

@@ -16,20 +16,20 @@
                         style="-fx-background-image: url('/Content/menu.png');"/>
                 <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label fx:id="title" style="-fx-text-fill: white; -fx-background-color: #5C8B76; -fx-font-size: 1.5em" text="Study Dashboard"/>
-                        <Label fx:id="title" style="-fx-font-family: Garamond; -fx-text-fill: white; -fx-font-size: 3.0em" text="Study Dashboard"/>
+                        <Label fx:id="title" style="-fx-font-family: Garamond; -fx-text-fill: white; -fx-font-size: 2.5em" text="Study Dashboard"/>
                     </children>
                 </HBox>
-
-                <Button fx:id="addActivity" onAction="#addActivity" prefHeight="33" prefWidth="33" styleClass="button-image" style="-fx-background-image: url('/Content/addactivity.png'); -fx-background-color: #5C8B76" />
-
-                <HBox prefWidth="11"></HBox>
-
-                <Button fx:id="calendar" prefHeight="33.0" prefWidth="33.0" styleClass="button-image" style="-fx-background-image: url('/Content/calendar.png'); -fx-background-color: #5C8B76"/>
-
                 <HBox prefWidth="13"></HBox>
 
-                <Button fx:id="showNotification" styleClass="button-image" prefWidth="39.0" prefHeight="35.0" style="-fx-background-color: #5C8B76"/>
+                <Button fx:id="showNotification" styleClass="button-image" prefWidth="39.0" prefHeight="35.0" style="-fx-background-color: #026937"/>
+                <HBox prefWidth="8"></HBox>
+
+                <Button fx:id="calendar" prefHeight="33.0" prefWidth="33.0" styleClass="button-image" style="-fx-background-image: url('/Content/calendar.png'); -fx-background-color: #026937"/>
+                <HBox prefWidth="11"></HBox>
+
+                <Button fx:id="addActivity" onAction="#addActivity" prefHeight="33" prefWidth="33" styleClass="button-image" style="-fx-background-image: url('/Content/addactivity.png'); -fx-background-color: #026937"/>
+                <HBox prefWidth="9"></HBox>
+
             </items>
         </ToolBar>
         <GridPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
