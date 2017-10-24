@@ -26,6 +26,7 @@ import Controller.XMLcontroller;
 import org.w3c.dom.NodeList;
 
 import java.io.Serializable;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -440,6 +441,9 @@ public class HubFile implements Serializable {
 		return r;
 	}
 
+	/**
+	 * @throws IOException if IO error is triggered
+	 */
 	public static Coursework createCoursework(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws IOException {
 		Coursework r;
 		HashMap<String, XMLcontroller.NodeReturn> courseworkValues = xmlTools.getSchemaValues(nc,
@@ -504,6 +508,9 @@ public class HubFile implements Serializable {
 		return r;
 	}
 
+	/**
+	 * @throws IOException if IO error is triggered
+	 */
 	public static Exam createExam(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws IOException {
 
 		HashMap<String, XMLcontroller.NodeReturn> examValues = xmlTools.getSchemaValues(nc,
@@ -571,6 +578,9 @@ public class HubFile implements Serializable {
 		return newExam;
 	}
 
+	/**
+	 * @throws IOException if IO error is triggered
+	 */
 	public static TimetableEvent createTimetableEvent(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws IOException {
 		TimetableEvent newTTE;
 

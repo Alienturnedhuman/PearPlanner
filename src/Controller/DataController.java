@@ -41,6 +41,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,7 +84,7 @@ public class DataController {
 	 * @param nodes the list of nodes to process for the update.
 	 *
 	 * @return The updated HUB file.
-	 * @throws IOException, FileNotFoundException
+	 * @throws IOException if IO error is triggered, FileNotFoundException if file not found
 	 */
 	private static HubFile processUpdateHubFile(NodeList nodes) throws IOException, FileNotFoundException {
 
@@ -166,7 +168,7 @@ public class DataController {
 	 * @param uid the identifier to look up.
 	 *
 	 * @return the entity from the list or the library.
-	 * @throws IOException
+	 * @throws IOException if IO error is triggered
 	 */
 	public static <T extends VersionControlEntity> T
 			inList(Map<String, VersionControlEntity> list, String uid)
@@ -214,7 +216,7 @@ public class DataController {
 	 * @param nodes the list of nodes to use for constituting the HUB file.
 	 *
 	 * @return the HUB file.
-	 * @throws IOException
+	 * @throws IOException if IO error is triggered
 	 */
 	private static HubFile processNewHubFile(NodeList nodes) throws IOException {
 
