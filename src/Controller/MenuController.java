@@ -242,6 +242,7 @@ public class MenuController implements Initializable {
 		calendar.setTooltip(new Tooltip("Open Calendar"));
 
 		// Update main pane:
+
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.topBox.getChildren().add(this.welcome);
@@ -254,27 +255,15 @@ public class MenuController implements Initializable {
 		Label studyProfile = new Label(profile.getName());
 		studyProfile.getStyleClass().add("title");
 		GridPane.setMargin(studyProfile, new Insets(10));
-		this.mainContent.addRow(1, studyProfile);
-		this.mainContent.setMaxSize(Control.USE_COMPUTED_SIZE, 1000);
 		this.mainContent.getColumnConstraints().add(
 				new ColumnConstraints(
 						Control.USE_COMPUTED_SIZE,
-						Double.POSITIVE_INFINITY,
-						2000,
+						Control.USE_COMPUTED_SIZE,
+						Control.USE_COMPUTED_SIZE,
 						Priority.ALWAYS,
 						HPos.CENTER,
 						true));
 		FlowPane modules = new FlowPane();
-
-		// This code will be added when wanting to resize the modules to grow with the page
-		//modules.getRowConstraints().add(
-		//		new RowConstraints(
-		//				1,
-		//				Control.USE_COMPUTED_SIZE,
-		//				200,
-		//				Priority.ALWAYS,
-		//				VPos.CENTER,
-		//				true));
 
 		for (Module module : profile.getModules()) {
 			VBox vbox = new VBox();
@@ -380,7 +369,7 @@ public class MenuController implements Initializable {
 		moduleBox.setStyle("-fx-background-color: transparent");
 		moduleBox.setFitToHeight(true);
 		moduleBox.setFitToWidth(true);
-
+		GridPane.setColumnSpan(moduleBox, GridPane.REMAINING);
 		this.mainContent.addRow(2, moduleBox);
 	}
 
@@ -477,6 +466,7 @@ public class MenuController implements Initializable {
 
 		this.mainContent.addRow(2, table);
 		this.mainContent.getStyleClass().add("list-item");
+		GridPane.setColumnSpan(table, GridPane.REMAINING);
 
 		// Actions toolbar:
 		HBox actions = new HBox();
@@ -544,6 +534,7 @@ public class MenuController implements Initializable {
 		// Layout:
 		VBox layout = new VBox();
 		GridPane.setHgrow(layout, Priority.ALWAYS);
+		GridPane.setColumnSpan(layout, GridPane.REMAINING);
 		layout.setSpacing(10);
 		layout.setPadding(new Insets(15));
 		layout.getStylesheets().add("/Content/stylesheet.css");
@@ -559,10 +550,10 @@ public class MenuController implements Initializable {
 		HBox.setHgrow(xx, Priority.ALWAYS);
 		// =================
 		// Buttons:
+		Button export = new Button("Export");
 		Button agendaFwd = new Button(">");
 		Button agendaBwd = new Button("<");
-		// =================
-		nav.getChildren().addAll(title, xx, agendaBwd, agendaFwd);
+		nav.getChildren().addAll(title, xx, agendaBwd, agendaFwd, export);
 		// Content:
 		Agenda content = new Agenda();
 		VBox.setVgrow(content, Priority.ALWAYS);
@@ -571,23 +562,20 @@ public class MenuController implements Initializable {
 		content.autosize();
 		content.setActionCallback(param -> null);
 		content.setEditAppointmentCallback(param -> null);
+		//Creation of ICS export factory
+		ICalExport icalExport = new ICalExport();
 		// Agenda buttons:
 		agendaBwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
 		agendaFwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
-		// =================
+		export.setOnMouseClicked(event -> icalExport.exportToFile());
 		// Populate Agenda:
 		ArrayList<Event> calendar =
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
-		//Counter to create unique ICS file names for export
-		int counter = 0;
-		//Creation of ICS export factory
-		ICalExport icalExport = new ICalExport();
-		//Preparation of export directory
-		icalExport.icalSetup();
 		for (Event e : calendar) {
-			icalExport.createExportEvent(e, counter);
+			//Create an event to be exported to an ICS file
+			icalExport.createExportEvent(e);
 			// TODO - find a way to eliminate this if/else-if/instanceof anti-pattern
 			if (e instanceof TimetableEvent) {
 				LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
@@ -625,7 +613,6 @@ public class MenuController implements Initializable {
 						.withEndLocalDateTime(stime.plusMinutes(60)).withAppointmentGroup(
 								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
 			}
-			counter++;
 		}
 		layout.getChildren().addAll(nav, content);
 		Platform.runLater(() -> content
@@ -647,6 +634,7 @@ public class MenuController implements Initializable {
 		Label profiles = new Label("Study Profiles");
 		profiles.getStyleClass().add("title");
 		this.mainContent.addRow(1, profiles);
+		GridPane.setColumnSpan(profiles, GridPane.REMAINING);
 		// =================
 
 		// Columns:
@@ -706,6 +694,7 @@ public class MenuController implements Initializable {
 		// =================
 
 		this.mainContent.addRow(2, table);
+		GridPane.setColumnSpan(table, GridPane.REMAINING);
 		this.mainContent.getStyleClass().add("list-item");
 	}
 
@@ -723,6 +712,7 @@ public class MenuController implements Initializable {
 		Label modules = new Label("Modules");
 		modules.getStyleClass().add("title");
 		this.mainContent.addRow(1, modules);
+		GridPane.setColumnSpan(modules, GridPane.REMAINING);
 		// =================
 
 		// Columns:
@@ -773,6 +763,7 @@ public class MenuController implements Initializable {
 		// =================
 
 		this.mainContent.addRow(2, table);
+		GridPane.setColumnSpan(table, GridPane.REMAINING);
 		this.mainContent.getStyleClass().add("list-item");
 	}
 
@@ -804,6 +795,7 @@ public class MenuController implements Initializable {
 				details);
 		GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
 		GridPane.setHgrow(detailsBox, Priority.ALWAYS);
+		GridPane.setColumnSpan(detailsBox, GridPane.REMAINING);
 		// =================
 
 		mainContent.addRow(2, detailsBox);
@@ -868,6 +860,7 @@ public class MenuController implements Initializable {
 		// =================
 
 		this.mainContent.addRow(3, moduleContent);
+		GridPane.setColumnSpan(moduleContent, GridPane.REMAINING);
 	}
 
 	/**
@@ -888,6 +881,7 @@ public class MenuController implements Initializable {
 		Label assignments = new Label(assignment.getName());
 		assignments.getStyleClass().add("title");
 		this.mainContent.addRow(1, assignments);
+		GridPane.setColumnSpan(assignments, GridPane.REMAINING);
 		// =================
 
 		// Ganttish chart button:
@@ -920,11 +914,13 @@ public class MenuController implements Initializable {
 		// =================
 
 		mainContent.addRow(2, detailsBox);
+		GridPane.setColumnSpan(detailsBox, GridPane.REMAINING);
 
 		// Content pane:
 		GridPane content = new GridPane();
 		GridPane.setVgrow(content, Priority.ALWAYS);
 		GridPane.setHgrow(content, Priority.ALWAYS);
+		GridPane.setColumnSpan(content, GridPane.REMAINING);
 		content.setVgap(5);
 		// =================
 
@@ -1159,6 +1155,7 @@ public class MenuController implements Initializable {
 		content.add(actionsTask, 1, 1);
 
 		this.mainContent.addRow(3, content);
+		GridPane.setColumnSpan(content, GridPane.REMAINING);
 	}
 
 	/**
