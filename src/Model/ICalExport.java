@@ -21,15 +21,16 @@
 
 package Model;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Locale;
 import biweekly.Biweekly;
 import biweekly.ICalendar;
 import biweekly.component.VEvent;
 import biweekly.property.Summary;
 import biweekly.util.Duration;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Locale;
 
 /**Class used to create ICS files for export.
  * @author Amila Dias
@@ -42,22 +43,20 @@ public class ICalExport {
 	private MultilineString description;
 	private int hours;
 	private int minutes;
-	private int counter;
+	private ICalendar ical = new ICalendar();
 
-	/**Method creates an event to be exported to an ICS file.
-	 * @param event - User created event
-	 * @param counter - Counter used to ensure
-	 * 				unique file names, counts how many files have been created
+	/**
+	 * Take a user-created Event and add it to the ICalender for later export.
+	 * to an ICS file.
+	 *
+	 * @param event User created event
 	 */
-	public void createExportEvent(Event event, int counter) {
-		seteStart(event.getDate());
+	public void createExportEvent(Event event) {
+		setEventStart(event.getDate());
 		setTitle(event.getName());
 		setDescription(event.getDetails());
-		this.counter = counter;
-
 
 		VEvent calEvent = new VEvent();
-
 		Summary summary = calEvent.setSummary(title);
 		summary.setLanguage(getLang());
 
@@ -75,17 +74,13 @@ public class ICalExport {
 		//Set start date
 		calEvent.setDateStart(eventStart);
 		//Add new event to ICS File
-		ICalendar ical = new ICalendar();
 		ical.addEvent(calEvent);
-		//Create ICS File
-		File file = new File("calendarExport/" + createFileName(counter));
-		createIcs(ical, file);
 	}
 
-
-	/**Method creates directory required to export ICS files.
+	/**
+	 * Export the prepared ical events to an ICS file.
 	 */
-	public void icalSetup() {
+	public void exportToFile() {
 		File newDir = new File("calendarExport");
 		if (newDir.exists()) {
 			System.out.println("CALENDAR Export Directory"
@@ -93,11 +88,15 @@ public class ICalExport {
 		} else {
 			newDir.mkdirs();
 		}
+		File file = new File("calendarExport/exportFile.ics");
+		createIcs(ical, file);
 	}
 
-	/**createIcs generates the ICS file for export.
-	 * @param ical - ICS object that contains items for new ICS file
-	 * @param file - File object to be created by ICalendar information
+	/**
+	 * Generate the ICS file for export.
+	 *
+	 * @param ical ICalender that contains items for new ICS file
+	 * @param file File object to be created by ICalendar information
 	 */
 	private void createIcs(ICalendar ical, File file) {
 		try {
@@ -107,17 +106,10 @@ public class ICalExport {
 		}
 	}
 
-	/**Method creates unique file names.
-	 * @param counter - imported to count number of files created, ensures unique file name
-	 * @return - Returns string file name
-	 */
-	private String createFileName(int counter) {
-		String str = "calendarExport" + counter + ".ics";
-		return str;
-	}
-
-	/**Method gets current language of user.
-	 * @return - Returns string formatted to provide user location and language
+	/**
+	 * Gets the current language of user based on the environment and locale.
+	 *
+	 * @return String formatted to provide user location and language
 	 */
 	private String getLang() {
 		Locale currentLocale = Locale.getDefault();
@@ -126,24 +118,31 @@ public class ICalExport {
 		return langCode;
 	}
 
-	/**Method sets the event start date.
-	 * @param eventStart the eStart to set
+	/**
+	 * Sets the event start date.
+	 *
+	 * @param eventStart the event start date to set
 	 */
-	public void seteStart(Date eventStart) {
+	public void setEventStart(Date eventStart) {
 		this.eventStart = eventStart;
 	}
 
-	/**Method sets title of the event.
-	 * @param title the title to set
+	/**
+	 * Sets the title of the event.
+	 *
+	 * @param title the event title to set
 	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	/**Method sets description of event.
-	 * @param description the description to set
+	/**
+	 * Sets the description of the event.
+	 *
+	 * @param description the event description to set
 	 */
 	public void setDescription(MultilineString description) {
 		this.description = description;
 	}
+
 }
