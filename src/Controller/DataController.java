@@ -86,7 +86,7 @@ public class DataController {
 	 * @return The updated HUB file.
 	 * @throws IOException if IO error is triggered, FileNotFoundException if file not found
 	 */
-	private static HubFile processUpdateHubFile(NodeList nodes) throws IOException, FileNotFoundException {
+	private static HubFile processUpdateHubFile(NodeList nodes) throws IOException, FileNotFoundException, Exception {
 
 		HubFile hub = null;
 		XMLcontroller xmlTools = new XMLcontroller();
