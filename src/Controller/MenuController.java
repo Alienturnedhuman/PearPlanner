@@ -200,8 +200,9 @@ public class MenuController implements Initializable {
 		if (isNavOpen) {
 			openMenu.fire();
 		}
-		if(this.showNotification.getTranslateY() == 0 && !initialLoad) {
-			TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
+		if (this.showNotification.getTranslateY() == 0 && !initialLoad) {
+			TranslateTransition closeNot =
+					new TranslateTransition(new Duration(173), notifications);
 			closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
 			closeNot.play();
 		}
@@ -299,7 +300,7 @@ public class MenuController implements Initializable {
 
 				Label name = new Label(module.getName());
 				name.setTextAlignment(TextAlignment.CENTER);
-	
+
 				// Set left margin for title, which creates padding in case title is very long
 				VBox.setMargin(name, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.04));
 
@@ -314,7 +315,7 @@ public class MenuController implements Initializable {
 				VBox.setMargin(badge, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.17));
 				// Set the badge width to 66% that of vbox
 				badge.setPrefHeight(vbox.getPrefWidth() * 0.66);
-	
+
 				badge.setBackground(new Background(new BackgroundImage(image,
 						BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 						BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO,
@@ -368,7 +369,7 @@ public class MenuController implements Initializable {
 					modules.getChildren().add(vbox);
 				});
 				Platform.runLater(addModule);
-	
+
 				// Ensure shadows don't overlap with edge of FlowPane
 				FlowPane.setMargin(vbox, new Insets(
 						screenHeight * 0.033,
@@ -473,11 +474,12 @@ public class MenuController implements Initializable {
 				}
 			};
 			row.setOnMouseClicked(event -> {
-				if(this.isNavOpen) {
+				if (this.isNavOpen) {
 					closeDrawer.fire();
 				}
-				if(this.showNotification.getTranslateY() == 0) {
-					TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
+				if (this.showNotification.getTranslateY() == 0) {
+					TranslateTransition closeNot =
+							new TranslateTransition(new Duration(173), notifications);
 					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
 					closeNot.play();
 				}
@@ -711,11 +713,12 @@ public class MenuController implements Initializable {
 				}
 			};
 			row.setOnMouseClicked(event -> {
-				if(this.isNavOpen) {
+				if (this.isNavOpen) {
 					closeDrawer.fire();
 				}
-				if(this.showNotification.getTranslateY() == 0) {
-					TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
+				if (this.showNotification.getTranslateY() == 0) {
+					TranslateTransition closeNot =
+							new TranslateTransition(new Duration(173), notifications);
 					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
 					closeNot.play();
 				}
@@ -794,11 +797,12 @@ public class MenuController implements Initializable {
 		table.setRowFactory(e -> {
 			TableRow<Module> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
-				if(this.isNavOpen) {
+				if (this.isNavOpen) {
 					closeDrawer.fire();
 				}
-				if(this.showNotification.getTranslateY() == 0) {
-					TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
+				if (this.showNotification.getTranslateY() == 0) {
+					TranslateTransition closeNot =
+							new TranslateTransition(new Duration(173), notifications);
 					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
 					closeNot.play();
 				}
@@ -1299,8 +1303,9 @@ public class MenuController implements Initializable {
 		// Set nav to close when clicking outside of it
 		this.mainContent.addEventHandler(MouseEvent.MOUSE_PRESSED,
 			e -> {
-				if(this.showNotification.getTranslateY() == 0) {
-					TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
+				if (this.showNotification.getTranslateY() == 0) {
+					TranslateTransition closeNot =
+							new TranslateTransition(new Duration(173), notifications);
 					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
 					closeNot.play();
 				}
