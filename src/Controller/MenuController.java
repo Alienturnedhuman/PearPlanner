@@ -265,100 +265,106 @@ public class MenuController implements Initializable {
 						true));
 		FlowPane modules = new FlowPane();
 
-		for (Module module : profile.getModules()) {
-			VBox vbox = new VBox();
+		Thread renderModules = new Thread(() -> {
+			for (Module module : profile.getModules()) {
+				VBox vbox = new VBox();
 
-			// Set the width of the module to 15% of the screen resolution
-			if (screenWidth > screenHeight) {
-				vbox.setPrefWidth(screenWidth * 0.14);
-			} else {
-				//If device is in portrait mode, set vbox width based on height
-				vbox.setPrefWidth(screenHeight * 0.14);
-			}
-			// Set the height of the module to 112% of its width
-			vbox.setPrefHeight(vbox.getPrefWidth() * 1.12);
-			// Set margin between text and badge to 10% vbox width
-			vbox.setSpacing(vbox.getPrefWidth() * 0.1);
-
-			vbox.setAlignment(Pos.CENTER);
-			vbox.setCursor(Cursor.HAND);
-
-			Label name = new Label(module.getName());
-			name.setTextAlignment(TextAlignment.CENTER);
-
-			// Set left margin for title, which creates padding in case title is very long
-			VBox.setMargin(name, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.04));
-
-			vbox.getChildren().add(name);
-
-			BufferedImage buff =
-					GanttishDiagram.getBadge(module.calculateProgress(), true, 1);
-			Image image = SwingFXUtils.toFXImage(buff, null);
-			Pane badge = new Pane();
-
-			// Set the distance from left edge to badge 17% of vbox width
-			VBox.setMargin(badge, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.17));
-			// Set the badge width to 66% that of vbox
-			badge.setPrefHeight(vbox.getPrefWidth() * 0.66);
-
-			badge.setBackground(new Background(new BackgroundImage(image,
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-					BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO,
-							BackgroundSize.AUTO, false, false, true, false))));
-			vbox.getChildren().add(badge);
-
-			/*
-			 * If mouse clicks on module, depress it.
-			 * If mouse leaves module while depressed, undepress button.
-			 * If mouse re-enters, then re-depress module.
-			 * If mouse is not depressed when it enters module, show hover effect.
-			 */
-			vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
-				if (mouseDown) {
-					vbox.setEffect(this.modulePressedShadow);
+				// Set the width of the module to 15% of the screen resolution
+				if (screenWidth > screenHeight) {
+					vbox.setPrefWidth(screenWidth * 0.14);
 				} else {
-					vbox.setEffect(this.moduleHoverShadow);
+					//If device is in portrait mode, set vbox width based on height
+					vbox.setPrefWidth(screenHeight * 0.14);
 				}
-			});
-			vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
+				// Set the height of the module to 112% of its width
+				vbox.setPrefHeight(vbox.getPrefWidth() * 1.12);
+				// Set margin between text and badge to 10% vbox width
+				vbox.setSpacing(vbox.getPrefWidth() * 0.1);
+
+				vbox.setAlignment(Pos.CENTER);
+				vbox.setCursor(Cursor.HAND);
+
+				Label name = new Label(module.getName());
+				name.setTextAlignment(TextAlignment.CENTER);
+	
+				// Set left margin for title, which creates padding in case title is very long
+				VBox.setMargin(name, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.04));
+
+				vbox.getChildren().add(name);
+
+				BufferedImage buff =
+						GanttishDiagram.getBadge(module.calculateProgress(), true, 1);
+				Image image = SwingFXUtils.toFXImage(buff, null);
+				Pane badge = new Pane();
+
+				// Set the distance from left edge to badge 17% of vbox width
+				VBox.setMargin(badge, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.17));
+				// Set the badge width to 66% that of vbox
+				badge.setPrefHeight(vbox.getPrefWidth() * 0.66);
+	
+				badge.setBackground(new Background(new BackgroundImage(image,
+						BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+						BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO,
+								BackgroundSize.AUTO, false, false, true, false))));
+				vbox.getChildren().add(badge);
+
+				/*
+				 * If mouse clicks on module, depress it.
+				 * If mouse leaves module while depressed, undepress button.
+				 * If mouse re-enters, then re-depress module.
+				 * If mouse is not depressed when it enters module, show hover effect.
+				 */
+				vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
+					if (mouseDown) {
+						vbox.setEffect(this.modulePressedShadow);
+					} else {
+						vbox.setEffect(this.moduleHoverShadow);
+					}
+				});
+				vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
+					vbox.setEffect(this.moduleDefaultShadow);
+				});
+
+				vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+					vbox.setEffect(this.modulePressedShadow);
+					mouseDown = true;
+				});
+				vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
+					vbox.setEffect(this.moduleDefaultShadow);
+					mouseDown = false;
+				});
+
+				vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
+					module.open(this.current));
+
+				vbox.setOnTouchPressed(new EventHandler<TouchEvent>() {
+					@Override public void handle(TouchEvent event) {
+						vbox.setEffect(modulePressedShadow);
+					}
+				});
+				vbox.setOnTouchReleased(new EventHandler<TouchEvent>() {
+					@Override public void handle(TouchEvent event) {
+						vbox.setEffect(moduleDefaultShadow);
+					}
+				});
+
 				vbox.setEffect(this.moduleDefaultShadow);
-			});
+				vbox.setStyle("-fx-background-color: white");
 
-			vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
-				vbox.setEffect(this.modulePressedShadow);
-				mouseDown = true;
-			});
-			vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
-				vbox.setEffect(this.moduleDefaultShadow);
-				mouseDown = false;
-			});
-
-			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
-				module.open(this.current));
-
-			vbox.setOnTouchPressed(new EventHandler<TouchEvent>() {
-				@Override public void handle(TouchEvent event) {
-					vbox.setEffect(modulePressedShadow);
-				}
-			});
-			vbox.setOnTouchReleased(new EventHandler<TouchEvent>() {
-				@Override public void handle(TouchEvent event) {
-					vbox.setEffect(moduleDefaultShadow);
-				}
-			});
-
-			vbox.setEffect(this.moduleDefaultShadow);
-			vbox.setStyle("-fx-background-color: white");
-
-			modules.getChildren().add(vbox);
-
-			// Ensure shadows don't overlap with edge of FlowPane
-			FlowPane.setMargin(vbox, new Insets(
-					screenHeight * 0.033,
-					0,
-					screenHeight * 0.022,
-					screenWidth * 0.037));
-		}
+				Thread addModule = new Thread(() -> {
+					modules.getChildren().add(vbox);
+				});
+				Platform.runLater(addModule);
+	
+				// Ensure shadows don't overlap with edge of FlowPane
+				FlowPane.setMargin(vbox, new Insets(
+						screenHeight * 0.033,
+						0,
+						screenHeight * 0.022,
+						screenWidth * 0.037));
+			}
+		});
+		renderModules.start();
 
 		/*
 		 * Allow modules to be scrollable if window is too small to display them
