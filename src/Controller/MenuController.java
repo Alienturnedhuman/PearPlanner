@@ -127,6 +127,7 @@ public class MenuController implements Initializable {
 	private Window current;
 	private boolean isNavOpen;
 	private boolean mouseDown = false;
+	private boolean initialLoad = true;
 
 	// Screen size:
 	private double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
@@ -199,6 +200,12 @@ public class MenuController implements Initializable {
 		if (isNavOpen) {
 			openMenu.fire();
 		}
+		if(this.showNotification.getTranslateY() == 0 && !initialLoad) {
+			TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
+			closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
+			closeNot.play();
+		}
+		initialLoad = false;
 
 		this.updateNotifications();
 		this.updateMenu();
@@ -456,6 +463,15 @@ public class MenuController implements Initializable {
 				}
 			};
 			row.setOnMouseClicked(event -> {
+				if(this.isNavOpen) {
+					closeDrawer.fire();
+				}
+				if(this.showNotification.getTranslateY() == 0) {
+					TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
+					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
+					closeNot.play();
+				}
+
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
 						&& event.getClickCount() == 2) {
 					try {
@@ -685,6 +701,15 @@ public class MenuController implements Initializable {
 				}
 			};
 			row.setOnMouseClicked(event -> {
+				if(this.isNavOpen) {
+					closeDrawer.fire();
+				}
+				if(this.showNotification.getTranslateY() == 0) {
+					TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
+					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
+					closeNot.play();
+				}
+
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
 						&& event.getClickCount() == 2) {
 					try {
@@ -759,6 +784,15 @@ public class MenuController implements Initializable {
 		table.setRowFactory(e -> {
 			TableRow<Module> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
+				if(this.isNavOpen) {
+					closeDrawer.fire();
+				}
+				if(this.showNotification.getTranslateY() == 0) {
+					TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
+					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
+					closeNot.play();
+				}
+
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
 						&& event.getClickCount() == 2) {
 					this.loadModule(row.getItem(), this.current, null);
@@ -1406,6 +1440,7 @@ public class MenuController implements Initializable {
 			this.isNavOpen = !isNavOpen;
 			if (navList.getTranslateX() != 0) {
 				openNav.play();
+				this.isNavOpen = true;
 			} else {
 				closeNav.setToX(-(navList.getWidth()
 						+ this.navShadowRadius + this.navShadowOffset));
