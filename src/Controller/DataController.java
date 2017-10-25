@@ -216,9 +216,9 @@ public class DataController {
 	 * @param nodes the list of nodes to use for constituting the HUB file.
 	 *
 	 * @return the HUB file.
-	 * @throws IOException if IO error is triggered
+	 * @throws Exception
 	 */
-	private static HubFile processNewHubFile(NodeList nodes) throws IOException {
+	private static HubFile processNewHubFile(NodeList nodes) throws Exception {
 
 		int beginLog = ConsoleIO.getLogSize();
 		ConsoleIO.setConsoleMessage("Importing New Hub File", true);
