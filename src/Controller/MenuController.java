@@ -273,6 +273,12 @@ public class MenuController implements Initializable {
 		FlowPane modules = new FlowPane();
 
 		Thread renderModules = new Thread(() -> {
+			Label oldLabel = new Label(this.welcome.getText());
+			Thread sayLoading = new Thread(() -> {
+				this.welcome.setText(this.welcome.getText() + "  LOADING...");
+			});
+			Platform.runLater(sayLoading);
+
 			for (Module module : profile.getModules()) {
 				VBox vbox = new VBox();
 
@@ -370,6 +376,10 @@ public class MenuController implements Initializable {
 						screenHeight * 0.022,
 						screenWidth * 0.037));
 			}
+			Thread removeLoading = new Thread(() -> {
+				this.welcome.setText(oldLabel.getText());
+			});
+			Platform.runLater(removeLoading);
 		});
 		renderModules.start();
 
