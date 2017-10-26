@@ -146,9 +146,7 @@ public class UIManager {
 		// Set minimum resolution to around 360p in 3:5 aspect ratio for small phones
 		mainStage.setMinHeight(555);
 		mainStage.setMinWidth(333);
-
 		mainStage.getIcons().add(icon);
-
 		mainStage.showAndWait();
 	}
 
