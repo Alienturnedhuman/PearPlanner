@@ -25,15 +25,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import controller.AccountController;
+import controller.MainController;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import controller.AccountController;
-import controller.MainController;
-
 import java.util.ArrayList;
-
 
 /**
  * Created by bijan on 04/05/2017.

@@ -21,6 +21,15 @@
 
 package view;
 
+import controller.AccountController;
+import controller.ActivityController;
+import controller.MainController;
+import controller.MenuController;
+import controller.MilestoneController;
+import controller.RequirementController;
+import controller.StartupController;
+import controller.StudyProfileController;
+import controller.TaskController;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -59,16 +68,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-
-import controller.AccountController;
-import controller.ActivityController;
-import controller.MainController;
-import controller.MenuController;
-import controller.MilestoneController;
-import controller.RequirementController;
-import controller.StartupController;
-import controller.StudyProfileController;
-import controller.TaskController;
 
 /**
  * Created by Zilvinas on 04/05/2017.
