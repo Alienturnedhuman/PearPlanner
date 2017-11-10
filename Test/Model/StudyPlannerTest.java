@@ -28,19 +28,16 @@ import org.junit.jupiter.api.Test;
  */
 public class StudyPlannerTest {
 
-    @Test
-    public void getListOfStudyProfiles() throws Exception
-    {
-    }
+	@Test
+	public void getListOfStudyProfiles() throws Exception {
+	}
 
-    @Test
-    public void loadFile() throws Exception
-    {
-    }
+	@Test
+	public void loadFile() throws Exception {
+	}
 
-    @Test
-    public void processHubFile() throws Exception
-    {
-    }
+	@Test
+	public void processHubFile() throws Exception {
+	}
 
 }
