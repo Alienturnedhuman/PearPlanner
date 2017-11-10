@@ -28,14 +28,12 @@ import org.junit.jupiter.api.Test;
  */
 public class RequirementTest {
 
-    @Test
-    public void isComplete() throws Exception
-    {
-    }
+	@Test
+	public void isComplete() throws Exception {
+	}
 
-    @Test
-    public void requirementProgress() throws Exception
-    {
-    }
+	@Test
+	public void requirementProgress() throws Exception {
+	}
 
 }
