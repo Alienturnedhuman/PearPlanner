@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Disabled;
  *
  * @author Team BRONZE
  */
-public class CreateAccountUiTest extends FXBase {
+public class CreateAccountUiTest extends FxBase {
 	/**
 	 * WIP: This test case should enter sample data into the CreateAccountUi dialog and
 	 * 		submit it. Currently, this test causes the build to crash, so it is
