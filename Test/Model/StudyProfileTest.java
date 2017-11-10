@@ -28,14 +28,12 @@ import org.junit.jupiter.api.Test;
  */
 public class StudyProfileTest {
 
-    @Test
-    public void milestonesCompleted() throws Exception
-    {
-    }
+	@Test
+	public void milestonesCompleted() throws Exception {
+	}
 
-    @Test
-    public void milestonesProgress() throws Exception
-    {
-    }
+	@Test
+	public void milestonesProgress() throws Exception {
+	}
 
 }
