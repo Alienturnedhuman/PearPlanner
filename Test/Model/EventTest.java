@@ -21,19 +21,19 @@
 
 package Model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import Controller.MainController;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseButton;
+
 import javafx.stage.Stage;
-import org.testfx.api.FxToolkit;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+// import org.junit.jupiter.api.Test;
+
 import org.testfx.framework.junit.ApplicationTest;
 
 import java.util.GregorianCalendar;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Disabled;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by bijan on 12/05/2017.
