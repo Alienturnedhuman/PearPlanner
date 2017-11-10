@@ -43,7 +43,7 @@ import org.junit.jupiter.api.AfterEach;
  * PearPlanner/RaiderPlanner
  * Created by Team BRONZE on 08/05/2017
  */
-public abstract class FXBase extends ApplicationTest {
+public abstract class FxBase extends ApplicationTest {
 
 
 
