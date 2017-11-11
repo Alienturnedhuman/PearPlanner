@@ -93,17 +93,20 @@ public class MainController {
 	public static void initialise() {
 		try {
 			ui.showStartup();
-			// If a file is present:
-			if (plannerFile.exists()) {
+		} catch (IOException e) {
+			UIManager.reportError("Invalid file.");
+			System.exit(1);
+		}
+		// If a file is present:
+		if (plannerFile.exists()) {
+			try {
 				Cipher cipher = Cipher.getInstance("Blowfish");
 				cipher.init(Cipher.DECRYPT_MODE, key64);
 				try (CipherInputStream cis = new CipherInputStream(
 						new BufferedInputStream(new FileInputStream(plannerFile)), cipher);
 						ObjectInputStream ois = new ObjectInputStream(cis)) {
-
 					SealedObject sealedObject = (SealedObject) ois.readObject();
 					spc = new StudyPlannerController((StudyPlanner) sealedObject.getObject(cipher));
-
 					// Sample note
 					if (spc.getPlanner().getCurrentStudyProfile() != null && spc.getPlanner()
 							.getCurrentStudyProfile().getName().equals("First year Gryffindor")) {
@@ -113,42 +116,40 @@ public class MainController {
 								+ "and choose \"New File\".");
 					}
 				}
-
-			} else {
-				// TODO - fix this, as it is clearly a race condition
-				// This should never happen unless a file changes permissions
-				// or existence in the milliseconds that it runs the above code
-				// after checks in StartupController
-				UIManager.reportError("Failed to load file.");
+			} catch (FileNotFoundException e) {
+				UIManager.reportError("Error, File does not exist.");
+				System.exit(1);
+			} catch (ClassNotFoundException e) {
+				UIManager.reportError("Error, Class NotFoundException.");
+				System.exit(1);
+			} catch (BadPaddingException e) {
+				UIManager.reportError("Error, Invalid file, Bad Padding Exception.");
+				System.exit(1);
+			} catch (IOException e) {
+				UIManager.reportError("Error, Invalid file.");
+				System.exit(1);
+			} catch (IllegalBlockSizeException e) {
+				UIManager.reportError("Error, Invalid file, Illegal Block Size Exception.");
+				System.exit(1);
+			}  catch (InvalidKeyException e) {
+				UIManager.reportError("Error, Invalid Key, Cannot decode the given file.");
+				System.exit(1);
+			} catch (NoSuchAlgorithmException e) {
+				UIManager.reportError("Error, Cannot decode the given file.");
+				System.exit(1);
+			} catch (NoSuchPaddingException e) {
+				UIManager.reportError("Error, Invalid file, No Such Padding.");
+				System.exit(1);
+			}  catch (Exception e) {
+				UIManager.reportError(e.getMessage() + "Unknown error.");
 				System.exit(1);
 			}
-
-		} catch (FileNotFoundException e) {
-			UIManager.reportError("File does not exist");
-			System.exit(1);
-		} catch (ClassNotFoundException e) {
-			UIManager.reportError("Invalid file");
-			System.exit(1);
-		} catch (NoSuchAlgorithmException e) {
-			UIManager.reportError("Cannot decode the given file");
-			System.exit(1);
-		} catch (BadPaddingException e) {
-			UIManager.reportError("Invalid file");
-			System.exit(1);
-		} catch (InvalidKeyException e) {
-			UIManager.reportError("Cannot decode the given file");
-			System.exit(1);
-		} catch (NoSuchPaddingException e) {
-			UIManager.reportError("Invalid file");
-			System.exit(1);
-		} catch (IOException e) {
-			UIManager.reportError("Invalid file");
-			System.exit(1);
-		} catch (IllegalBlockSizeException e) {
-			UIManager.reportError("Invalid file");
-			System.exit(1);
-		} catch (Exception e) {
-			UIManager.reportError(e.getMessage());
+		} else {
+			// TODO - fix this, as it is clearly a race condition
+			// This should never happen unless a file changes permissions
+			// or existence in the milliseconds that it runs the above code
+			// after checks in StartupController
+			UIManager.reportError("Failed to load file.");
 			System.exit(1);
 		}
 	}
