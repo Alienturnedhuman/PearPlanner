@@ -10,3 +10,10 @@ addons:
     packages:
       - oracle-java8-installer
 
+notifications:
+  slack:
+    secure: BxGzrZ41FnMPNi0D4ABLLc+YnmgtC4bizhK3my+TkbF/E/skZU08akuTxaneXgRIbT0wgD6OqgGEAQ/s/mIh94gLXPEaTuPEKr18fJKM14FyfFFy6eiRgJQhegxjtRexuNAfVk06y0jp7e8s1Nsnq2jVr7aBpJyoH95feSyuc0UTkFPL6LvdSJD1UwAGryM5mEIT7AZeOCnDX3I/aRr4y2k6A9Cu3hvpj8evuYWV03X5kPzn/9/9hiGkpeUnLWVewPmirGKCLAG21ND+ceERLnXSHrkvb/OA6x4ZWbvo22BlhCBeFrOfoT5pQQom8hEBGYId6eQq1acdnaiGSNdATxQG3a+LfQP1ia/HyOsj0GOq5I8Y8RwJ6GjTGvQcbsfcuf7Qc8+036yBYUMHyn27u/Vu+KX9JscAfcGeUv1uG330f0bSl0bJB9BagJFD/qRh7P4VpV22sNn/c1FBS4DSvl7l55bOa2fGPXzF99oDw41CYXmPXoC8fNPl5hnQZz/z5si5QHsA1/Fks5I4eDpl7UZ2UBBleAVOmP8mV3M43+Pfb5QRJvuvFHCjrHl8Sdg3ph15rbeG4Z33MANPqiuUyICeGU/i11q0vhBROwZ5E75Qz0/AdAmLoWOVr3Yv/YtuEXmbYfObNcxpDaPld/eDeNJRgDaWwF6/JpAtXp9R4FM=
+branches:
+  except:
+  - "/^.*-dev/"
+

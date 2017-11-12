@@ -1,3 +1,24 @@
+/*
+ * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
+ * Bijan Ghasemi Afshar
+ *
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package Controller;
 
 import Model.StudyProfile;
@@ -33,7 +54,7 @@ public class StudyProfileController implements Initializable
      */
     public void setCurrent()
     {
-        MainController.getSPC().getPlanner().setCurrentStudyProfile(this.profile);
+        MainController.getSpc().getPlanner().setCurrentStudyProfile(this.profile);
         this.setCurrent.setDisable(true);
     }
 
@@ -66,7 +87,7 @@ public class StudyProfileController implements Initializable
         this.milestones.setText(this.profile.getMilestones().length + " milestone(s).");
         this.extensions.setText(this.profile.getExtensions().length + " extension application(s).");
 
-        if (MainController.getSPC().getPlanner().getCurrentStudyProfile().equals(this.profile))
+        if (MainController.getSpc().getPlanner().getCurrentStudyProfile().equals(this.profile))
             this.setCurrent.setDisable(true);
     }
 }
