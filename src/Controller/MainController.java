@@ -25,12 +25,15 @@ import Model.HubFile;
 import Model.StudyPlanner;
 import View.UIManager;
 
+import java.awt.Desktop;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -235,4 +238,18 @@ public class MainController {
 		return true;
 	}
 
+	/**
+	 * Launches the default browser to display a URI.
+	 */
+	public static void openBrowser() {
+		if (Desktop.isDesktopSupported()) {
+			try {
+				Desktop.getDesktop().browse(new URI("https://rsanchez-wsu.github.io/RaiderPlanner/"));
+			} catch (IOException e) {
+				UIManager.reportError("Default browser not found or failed to launch");
+			} catch (URISyntaxException e) {
+				UIManager.reportError("Invaild URI syntax");
+			}
+		}
+	}
 }

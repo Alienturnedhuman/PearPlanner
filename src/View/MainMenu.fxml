@@ -150,7 +150,21 @@
                                     text="Import HUB file"
                             />
                           </HBox>
-
+                          
+                          <HBox GridPane.rowIndex="3">
+	                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+	                             <HBox.margin>
+	                                 <Insets left="5"/>
+	                             </HBox.margin>
+	                             <image>
+	                                 <Image url="/Content/help.png"/>
+	                             </image>
+	                         </ImageView>
+	                         <Button onAction="#openBrowser" fx:id="help" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
+	                                  text="Help"
+	                         />
+	                     </HBox>
+                      
                           <HBox GridPane.rowIndex="6">
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                   <HBox.margin>
@@ -165,7 +179,6 @@
                             />
                           </HBox>
                           </GridPane>
-
                     </children>
                 </GridPane>
             </children>
