@@ -21,20 +21,20 @@
 
 package Model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
 
 /**
  * Created by bijan on 04/05/2017.
  */
+
 public class PersonTest {
 
 	private ArrayList<String> personName = new ArrayList<>();
@@ -46,7 +46,7 @@ public class PersonTest {
 	 * Ran before the actual test.
 	 * @throws Exception if person cannot be loaded properly
 	 */
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		personName.add("Andrew");
 		person1 = new Person("Mr", personName, "Odintsov", true, "Andrew.odi@apple.com");
@@ -286,7 +286,7 @@ public class PersonTest {
 	 * Completed after the test.
 	 * @throws Exception exception if person cannot be nullified
 	 */
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		personName = null;
 		person1 = null;

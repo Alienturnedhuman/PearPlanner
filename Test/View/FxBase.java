@@ -21,9 +21,8 @@
 
 package View;
 
-
-
 import Controller.AccountController;
+
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -32,51 +31,56 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
-import org.junit.After;
+
+import org.junit.jupiter.api.AfterEach;
+
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 
 import java.util.concurrent.TimeoutException;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 08/05/2017
  */
-public abstract class FXBase extends ApplicationTest {
+public abstract class FxBase extends ApplicationTest {
+	@Override
+	public void start(Stage stage) throws Exception {
+		AccountController accountControl = new AccountController();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateAccount.fxml"));
+		loader.setController(accountControl);
+		Parent root = loader.load();
 
+		stage.setOnCloseRequest(e -> {
+			Platform.exit();
+			System.exit(0);
+		});
 
+		Scene scene = new Scene(root, 550, 232);
 
-    @Override
-    public void start(Stage stage) throws Exception
-    {
+		stage.setScene(scene);
 
-        AccountController accountControl = new AccountController();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateAccount.fxml"));
-        loader.setController(accountControl);
-        Parent root = loader.load();
+		stage.show();
+	}
 
-        stage.setOnCloseRequest(e -> {
-            Platform.exit();
-            System.exit(0);
-        });
+	/**
+	 * This test should handle the cleanup of the CreateAccountUi dialog after each run.
+	 * @throws TimeoutException if the operation takes too long or hangs.
+	 */
+	@AfterEach
+	public void afterEachTest() throws TimeoutException {
+		FxToolkit.hideStage();
+		release(new KeyCode[]{});
+		release(new MouseButton[]{});
+	}
 
-        Scene scene = new Scene(root, 550, 232);
+	/**
+	 * This method attempts to retrieve UI Node objects from the CreateAccountUi dialog.
+	 * @param query the Node we want to retrieve.
+	 * @return the requested Node.
+	 */
+	public <T extends Node> T find(final String query) {
+		return (T) lookup(query).queryAll().iterator().next();
+	}
 
-        stage.setScene(scene);
-
-        stage.show();
-    }
-
-    @After
-    public void afterEachTest() throws TimeoutException
-    {
-       FxToolkit.hideStage();
-       release(new KeyCode[]{});
-       release(new MouseButton[]{});
-    }
-
-
-    public <T extends Node> T find (final String query) {
-        return (T) lookup(query).queryAll().iterator().next();
-    }
 }
