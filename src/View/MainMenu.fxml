@@ -150,7 +150,21 @@
                                     text="Import HUB file"
                             />
                           </HBox>
-                        </GridPane>
+
+                          <HBox GridPane.rowIndex="6">
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                  <HBox.margin>
+                                      <Insets left="5"/>
+                                  </HBox.margin>
+                                  <image>
+                                      <Image url="/Content/milestones.png"/>
+                                  </image>
+                              </ImageView>
+                            <Button fx:id="chat" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
+                                    text="Chat" GridPane.rowIndex="7"
+                            />
+                          </HBox>
+                          </GridPane>
 
                     </children>
                 </GridPane>
