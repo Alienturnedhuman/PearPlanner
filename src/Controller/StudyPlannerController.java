@@ -21,7 +21,17 @@
 
 package Controller;
 
-import Model.*;
+import Model.Account;
+import Model.Activity;
+import Model.Event;
+import Model.HubFile;
+import Model.Milestone;
+import Model.Notification;
+import Model.QuantityType;
+import Model.StudyPlanner;
+import Model.StudyProfile;
+import Model.Task;
+import Model.TaskType;
 import View.UIManager;
 
 import java.io.BufferedOutputStream;
@@ -46,6 +56,10 @@ import javax.crypto.SecretKey;
 public class StudyPlannerController {
 	private StudyPlanner planner;
 
+	/**
+	 *
+	 * @return SPC's StudyPlanner file, planner.
+	 */
 	public StudyPlanner getPlanner() {
 		return planner;
 	}
