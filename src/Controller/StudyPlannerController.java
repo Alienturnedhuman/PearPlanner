@@ -43,43 +43,39 @@ import javax.crypto.SecretKey;
  * Created by bendickson on 5/4/17.
  */
 
-public class StudyPlannerController
-{
-    private StudyPlanner planner;
+public class StudyPlannerController {
+	private StudyPlanner planner;
 
-    public StudyPlanner getPlanner()
-    {
-        return planner;
-    }
+	public StudyPlanner getPlanner() {
+		return planner;
+	}
 
-    /**
+	/**
      * Save the current StudyPlanner into a serialized file.
      *
      * @param key64    SecretKey used for encoding.
      * @param fileName name of the file.
      * @return whether saved successfully.
      */
-    public boolean save(SecretKey key64, String fileName)
-    {
-        try
-        {
-            Cipher cipher = Cipher.getInstance("Blowfish");
-            cipher.init(Cipher.ENCRYPT_MODE, key64);
-            SealedObject sealedObject = new SealedObject(this.planner, cipher);
-            CipherOutputStream cipherOutputStream = new CipherOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)), cipher);
-            ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);
-            outputStream.writeObject(sealedObject);
-            outputStream.close();
-            return true;
-        } catch (IOException e) {
-        	UIManager.reportError("File does not exist: " + e.getMessage());
-        	return false;
-        } catch (Exception e)
-        {
-            UIManager.reportError(e.getMessage());
-            return false;
-        }
-    }
+	public boolean save(SecretKey key64, String fileName) {
+		try {
+			Cipher cipher = Cipher.getInstance("Blowfish");
+			cipher.init(Cipher.ENCRYPT_MODE, key64);
+			SealedObject sealedObject = new SealedObject(this.planner, cipher);
+			CipherOutputStream cipherOutputStream = new CipherOutputStream(
+					new BufferedOutputStream(new FileOutputStream(fileName)), cipher);
+			ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);
+			outputStream.writeObject(sealedObject);
+			outputStream.close();
+			return true;
+		} catch (IOException e) {
+			UIManager.reportError("File does not exist: " + e.getMessage());
+			return false;
+		} catch (Exception e) {
+			UIManager.reportError(e.getMessage());
+			return false;
+		}
+	}
 
 	/**
 	 * ' Checks whether a StudyProfile for this year and semester is loaded in.

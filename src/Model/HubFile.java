@@ -571,7 +571,8 @@ public class HubFile implements Serializable {
 		return newExam;
 	}
 
-	public static TimetableEvent createTimetableEvent(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws Exception {
+	public static TimetableEvent createTimetableEvent(
+			NodeList nc, HashMap<String, VersionControlEntity> assetList) throws Exception {
 		TimetableEvent newTTE;
 
 
