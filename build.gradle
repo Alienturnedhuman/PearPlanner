@@ -23,9 +23,20 @@
  * The application plugin facilitates creating an executable JVM application.
  */
 
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
+	}
+}
+
 apply plugin: 'application'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
+apply plugin: 'edu.sc.seis.launch4j'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 /**
  * This line specifies where the main.java file is found.
@@ -63,12 +74,21 @@ sourceSets {
  * is pulled from the sonatype URL.
  */
 
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'edu.sc.seis.gradle:launch4j:2.4.2'
+	}
+}
+
 repositories {
 	mavenCentral()
-
+	jcenter()
 	maven {
-        url "https://github.com/screamingfrog/Maven/blob/master/uk/co/screamingfrog/AppleJavaExtensions/1.6/"
-        url "https://oss.sonatype.org/content/repositories/snapshots/org/testfx/testfx-core/4.0.0-SNAPSHOT/"
+	url "https://github.com/screamingfrog/Maven/blob/master/uk/co/screamingfrog/AppleJavaExtensions/1.6/"
+	url "https://oss.sonatype.org/content/repositories/snapshots/org/testfx/testfx-core/4.0.0-SNAPSHOT/"
     }
 }
 
@@ -77,8 +97,6 @@ repositories {
  */
 
 dependencies {
-
-	testCompile 'junit:junit:4.12'
 
 	compile 'net.sf.biweekly:biweekly:0.6.1'
 	compile 'commons-validator:commons-validator:1.6'
@@ -98,9 +116,11 @@ dependencies {
 	compile 'org.testfx:testfx-junit5:4.0.6-alpha'
 	compile 'org.testfx:testfx-legacy:4.0.6-alpha'
 	compile 'com.github.mangstadt:vinnie:2.0.1'
-
-	compile fileTree(dir: 'src')
-
+	compile 'org.junit.jupiter:junit-jupiter-api:5.0.1'
+	compile 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
+	compile 'org.junit.platform:junit-platform-runner:1.0.1'
+	compile 'org.junit.vintage:junit-vintage-engine:4.12.1'
+	compile fileTree(dir: 'src', include: ['*.jar'])
 }
 
 /**
@@ -108,7 +128,7 @@ dependencies {
  */
 
 test {
-	ignoreFailures = true
+	ignoreFailures = false
 }
 
 /**
@@ -117,11 +137,31 @@ test {
 
 jar {
 	manifest.attributes "Main-Class": mainClassName
+	baseName = project.name
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+/**
+ * Create executable from jar
+ */
+launch4j {
+	outputDir = 'libs'
+	outfile = 'raiderplanner.exe'
+	icon = '/../../icon.ico'
+	mainClassName = mainClassName
+	jar = "raiderplanner.jar"
+	productName = 'Raider Planner'
+	fileDescription = 'The best study planner since the Gantt Diagram'
+}
+
+junitPlatform {
+    platformVersion '1.0.0'
+    reportsDir file('build/test-results/junit-platform') // this is the default
 }
 
 checkstyle {
 	configFile = '.checkstyle.xml' as File
-	maxWarnings = 2973
+	maxWarnings = 2698
 }
 
 tasks.withType(FindBugs) {

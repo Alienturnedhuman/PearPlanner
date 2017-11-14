@@ -52,6 +52,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -62,25 +63,34 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TouchEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -88,6 +98,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import jfxtras.scene.control.agenda.Agenda;
 
@@ -114,17 +126,32 @@ public class MenuController implements Initializable {
 	 * Initializes switch names and other buttons.
 	 */
 	public enum Window {
-		EMPTY, DASHBOARD, PROFILES, MODULES, MILESTONES, CALENDAR
+		EMPTY, DASHBOARD, PROFILES, MODULES, MILESTONES, CALENDAR, CHAT
 	}
 
 	private Window current;
 	private boolean isNavOpen;
+	private boolean mouseDown = false;
+	private boolean initialLoad = true;
 
-	//Shadows
-	private int shadowRadius = 44;
-	private int shadowOffset = 7;
-	private int shadowRadius2 = 27;
-	private int shadowOffset2 = 13;
+	// Screen size:
+	private double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+	private double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+	private double screenAverage = (screenWidth + screenHeight) / 2;
+
+	// Shadows:
+	private int navShadowRadius = (int)(screenAverage * 0.03);
+	private int navShadowOffset = (int)(screenAverage * 0.01);
+	private DropShadow navShadow =
+			new DropShadow(navShadowRadius, navShadowOffset, 0, Color.BLACK);
+	private DropShadow notifShadow =
+			new DropShadow(screenAverage * 0.02, 0, 0.009, Color.BLACK);
+	private DropShadow moduleDefaultShadow =
+			new DropShadow(screenAverage * 0.005, 0, 0, Color.BLACK);
+	private DropShadow moduleHoverShadow =
+			new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
+	private InnerShadow modulePressedShadow =
+			new InnerShadow(screenAverage * 0.017, 0, 0, Color.BLACK);
 
 	// Labels:
 	private Label welcome;
@@ -149,6 +176,8 @@ public class MenuController implements Initializable {
 	@FXML
 	private Button calendar;
 	@FXML
+	private Button chat;
+	@FXML
 	private Button closeDrawer;
 
 	// Panes:
@@ -162,6 +191,23 @@ public class MenuController implements Initializable {
 	private GridPane mainContent;
 	@FXML
 	private HBox topBox;
+	//chat variables
+	private final BorderPane mainPane = new BorderPane();
+	private final GridPane firstPane = new GridPane();
+	private final GridPane userMessagePane = new GridPane();
+	private final HBox spacingBox = new HBox();
+	private TextField tfName = new TextField("");
+	private TextField tfHost = new TextField("");
+	private TextField tfMessageToSend = new TextField();
+	private TextArea msgArea = new TextArea();
+	private final Label name = new Label("Name:");
+	private final Label host = new Label("Host:");
+	private final Button submitButton = new Button("Submit");
+	private final Button sendButton = new Button("Send");
+
+	private String userName;
+	private String hostName;
+	private int portNumber = 1111;
 
 	/**
 	 * Sets this.current to equal passed variable and calls this.main().
@@ -178,6 +224,13 @@ public class MenuController implements Initializable {
 		if (isNavOpen) {
 			openMenu.fire();
 		}
+		if (this.showNotification.getTranslateY() == 0 && !initialLoad) {
+			TranslateTransition closeNot =
+					new TranslateTransition(new Duration(173), notifications);
+			closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
+			closeNot.play();
+		}
+		initialLoad = false;
 
 		this.updateNotifications();
 		this.updateMenu();
@@ -205,27 +258,30 @@ public class MenuController implements Initializable {
 			this.loadCalendar();
 			break;
 		}
+		case CHAT: {
+			this.obtainUserInformation();
+			break;
+		}
 		default:
 			break;
 		}
 	}
 
 	/**
-	 * Display the Study DASHBOARD pane.
+	 * Display the Study Dashboard pane.
 	 */
 	public void loadDashboard() {
 		//set ToolTips
 		openMenu.setTooltip(new Tooltip("Menu"));
 		showNotification.setTooltip(new Tooltip("Notifications"));
 		addActivity.setTooltip(new Tooltip("Add activity"));
-		calendar.setTooltip(new Tooltip("Open CALENDAR"));
+		calendar.setTooltip(new Tooltip("Open Calendar"));
 
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.topBox.getChildren().add(this.welcome);
-		this.title.setText("Study DASHBOARD");
-		// =================
+		this.title.setText("Study Dashboard");
 
 		StudyProfile profile = MainController.getSpc().getPlanner().getCurrentStudyProfile();
 
@@ -233,72 +289,138 @@ public class MenuController implements Initializable {
 		Label studyProfile = new Label(profile.getName());
 		studyProfile.getStyleClass().add("title");
 		GridPane.setMargin(studyProfile, new Insets(10));
-		this.mainContent.addRow(1, studyProfile);
-		this.mainContent.setMaxSize(Control.USE_COMPUTED_SIZE, 1000);
 		this.mainContent.getColumnConstraints().add(
 				new ColumnConstraints(
 						Control.USE_COMPUTED_SIZE,
-						Double.POSITIVE_INFINITY,
-						2000,
+						Control.USE_COMPUTED_SIZE,
+						Control.USE_COMPUTED_SIZE,
 						Priority.ALWAYS,
 						HPos.CENTER,
 						true));
-		GridPane modules = new GridPane();
-		modules.setHgap(30);
-		modules.setVgap(20);
-		// This code will be added when wanting to resize the modules to grow with the page
-		//modules.getRowConstraints().add(
-		//		new RowConstraints(
-		//				1,
-		//				Control.USE_COMPUTED_SIZE,
-		//				200,
-		//				Priority.ALWAYS,
-		//				VPos.CENTER,
-		//				true));
-		int colIdx = 0;
-		for (Module module : profile.getModules()) {
-			VBox vbox = new VBox();
-			vbox.setSpacing(5);
-			vbox.setMinWidth(200);
-			vbox.setMaxWidth(200);
-			vbox.setAlignment(Pos.CENTER);
+		FlowPane modules = new FlowPane();
 
-			Label name = new Label(module.getName());
-			name.setTextAlignment(TextAlignment.CENTER);
-			vbox.getChildren().add(name);
+		Thread renderModules = new Thread(() -> {
+			Label oldLabel = new Label(this.welcome.getText());
+			Thread sayLoading = new Thread(() -> {
+				this.welcome.setText(this.welcome.getText() + "  LOADING...");
+			});
+			Platform.runLater(sayLoading);
 
-			BufferedImage buff =
-					GanttishDiagram.getBadge(module.calculateProgress(), true, 1);
-			Image image = SwingFXUtils.toFXImage(buff, null);
-			Pane badge = new Pane();
-			VBox.setMargin(badge, new Insets(0, 0, 0, 50));
-			badge.setPrefHeight(100);
-			badge.setBackground(new Background(new BackgroundImage(image,
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-					BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO,
-							BackgroundSize.AUTO, false, false, true, false))));
+			for (Module module : profile.getModules()) {
+				VBox vbox = new VBox();
 
-			vbox.getChildren().add(badge);
-			Button view = new Button("View");
-			view.setOnAction(e -> module.open(this.current));
-			vbox.getChildren().add(view);
-			modules.setMaxSize(800, 1000);
-			modules.getColumnConstraints().add(
-					new ColumnConstraints(
-							Control.USE_COMPUTED_SIZE,
-							Double.POSITIVE_INFINITY,
-							1000,
-							Priority.ALWAYS,
-							HPos.CENTER,
-							true));
-			colIdx++;
-			modules.addColumn(colIdx,vbox);
-		}
-		// =================
+				// Set the width of the module to 15% of the screen resolution
+				if (screenWidth > screenHeight) {
+					vbox.setPrefWidth(screenWidth * 0.14);
+				} else {
+					//If device is in portrait mode, set vbox width based on height
+					vbox.setPrefWidth(screenHeight * 0.14);
+				}
+				// Set the height of the module to 112% of its width
+				vbox.setPrefHeight(vbox.getPrefWidth() * 1.12);
+				// Set margin between text and badge to 10% vbox width
+				vbox.setSpacing(vbox.getPrefWidth() * 0.1);
 
-		GridPane.setColumnSpan(modules, GridPane.REMAINING);
-		GridPane.setMargin(modules, new Insets(10));
-		this.mainContent.addRow(2, modules);
+				vbox.setAlignment(Pos.CENTER);
+				vbox.setCursor(Cursor.HAND);
+
+				Label name = new Label(module.getName());
+				name.setTextAlignment(TextAlignment.CENTER);
+
+				// Set left margin for title, which creates padding in case title is very long
+				VBox.setMargin(name, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.04));
+
+				vbox.getChildren().add(name);
+
+				BufferedImage buff =
+						GanttishDiagram.getBadge(module.calculateProgress(), true, 1);
+				Image image = SwingFXUtils.toFXImage(buff, null);
+				Pane badge = new Pane();
+
+				// Set the distance from left edge to badge 17% of vbox width
+				VBox.setMargin(badge, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.17));
+				// Set the badge width to 66% that of vbox
+				badge.setPrefHeight(vbox.getPrefWidth() * 0.66);
+
+				badge.setBackground(new Background(new BackgroundImage(image,
+						BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+						BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO,
+								BackgroundSize.AUTO, false, false, true, false))));
+				vbox.getChildren().add(badge);
+
+				/*
+				 * If mouse clicks on module, depress it.
+				 * If mouse leaves module while depressed, undepress button.
+				 * If mouse re-enters, then re-depress module.
+				 * If mouse is not depressed when it enters module, show hover effect.
+				 */
+				vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
+					if (mouseDown) {
+						vbox.setEffect(this.modulePressedShadow);
+					} else {
+						vbox.setEffect(this.moduleHoverShadow);
+					}
+				});
+				vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
+					vbox.setEffect(this.moduleDefaultShadow);
+				});
+
+				vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+					vbox.setEffect(this.modulePressedShadow);
+					mouseDown = true;
+				});
+				vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
+					vbox.setEffect(this.moduleDefaultShadow);
+					mouseDown = false;
+				});
+
+				vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
+					module.open(this.current));
+
+				vbox.setOnTouchPressed(new EventHandler<TouchEvent>() {
+					@Override public void handle(TouchEvent event) {
+						vbox.setEffect(modulePressedShadow);
+					}
+				});
+				vbox.setOnTouchReleased(new EventHandler<TouchEvent>() {
+					@Override public void handle(TouchEvent event) {
+						vbox.setEffect(moduleDefaultShadow);
+					}
+				});
+
+				vbox.setEffect(this.moduleDefaultShadow);
+				vbox.setStyle("-fx-background-color: white");
+
+				Thread addModule = new Thread(() -> {
+					modules.getChildren().add(vbox);
+				});
+				Platform.runLater(addModule);
+
+				// Ensure shadows don't overlap with edge of FlowPane
+				FlowPane.setMargin(vbox, new Insets(
+						screenHeight * 0.033,
+						0,
+						screenHeight * 0.022,
+						screenWidth * 0.037));
+			}
+			Thread removeLoading = new Thread(() -> {
+				this.welcome.setText(oldLabel.getText());
+			});
+			Platform.runLater(removeLoading);
+		});
+		renderModules.start();
+
+		/*
+		 * Allow modules to be scrollable if window is too small to display them
+		 * all on screen simultaneously.
+		 */
+		ScrollPane moduleBox = new ScrollPane();
+		moduleBox.setContent(modules);
+		moduleBox.setStyle("-fx-background-color: transparent");
+		moduleBox.setFitToHeight(true);
+		moduleBox.setFitToWidth(true);
+		GridPane.setColumnSpan(moduleBox, GridPane.REMAINING);
+		this.mainContent.addRow(2, moduleBox);
 	}
 
 	/**
@@ -317,20 +439,13 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * Display the MILESTONES pane.
+	 * Display the Milestones pane.
 	 */
 	public void loadMilestones() {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.title.setText("");
-		// =================
-
-		// Display milestones:
-		Label milestones = new Label("MILESTONES");
-		milestones.getStyleClass().add("title");
-		this.mainContent.addRow(1, milestones);
-		// =================
+		this.title.setText("Milestones");
 
 		// Columns:
 		TableColumn<Milestone, String> nameColumn = new TableColumn<>("Milestone");
@@ -354,7 +469,6 @@ public class MenuController implements Initializable {
 
 		ObservableList<Milestone> list = FXCollections.observableArrayList(
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getMilestones());
-		// =================
 
 		// Create a table:
 		TableView<Milestone> table = new TableView<>();
@@ -378,6 +492,16 @@ public class MenuController implements Initializable {
 				}
 			};
 			row.setOnMouseClicked(event -> {
+				if (this.isNavOpen) {
+					closeDrawer.fire();
+				}
+				if (this.showNotification.getTranslateY() == 0) {
+					TranslateTransition closeNot =
+							new TranslateTransition(new Duration(173), notifications);
+					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
+					closeNot.play();
+				}
+
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
 						&& event.getClickCount() == 2) {
 					try {
@@ -390,23 +514,21 @@ public class MenuController implements Initializable {
 			});
 			return row;
 		});
-		// =================
 
 		this.mainContent.addRow(2, table);
 		this.mainContent.getStyleClass().add("list-item");
+		GridPane.setColumnSpan(table, GridPane.REMAINING);
 
 		// Actions toolbar:
 		HBox actions = new HBox();
 		GridPane.setHgrow(actions, Priority.ALWAYS);
 		actions.setSpacing(5);
 		actions.setPadding(new Insets(5, 5, 10, 0));
-		// =================
 
 		// Buttons:
 		Button add = new Button("Add a new Milestone");
 		Button remove = new Button("Remove");
 		remove.setDisable(true);
-		// =================
 
 		// Bind properties on buttons:
 		remove.disableProperty().bind(new BooleanBinding() {
@@ -419,7 +541,6 @@ public class MenuController implements Initializable {
 				return !(list.size() > 0 && table.getSelectionModel().getSelectedItem() != null);
 			}
 		});
-		// =================
 
 		// Bind actions on buttons:
 		add.setOnAction(e -> {
@@ -441,45 +562,38 @@ public class MenuController implements Initializable {
 				MainController.getSpc().removeMilestone(mm);
 			}
 		});
-		// =================
 
 		actions.getChildren().addAll(add, remove);
 
 		mainContent.addRow(3, actions);
-		// =================
 	}
 
 	/**
-	 * Display the CALENDAR pane.
+	 * Display the Calendar pane.
 	 */
 	public void loadCalendar() {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.title.setText("");
+		this.title.setText("Calendar");
 		// =================
 		// Layout:
 		VBox layout = new VBox();
 		GridPane.setHgrow(layout, Priority.ALWAYS);
+		GridPane.setColumnSpan(layout, GridPane.REMAINING);
 		layout.setSpacing(10);
 		layout.setPadding(new Insets(15));
 		layout.getStylesheets().add("/Content/stylesheet.css");
-		// =================
 		// Nav bar:
 		HBox nav = new HBox();
 		nav.setSpacing(15.0);
 		// =================
-		// Title:
-		Label title = new Label("CALENDAR");
-		title.getStyleClass().add("title");
 		HBox xx = new HBox();
 		HBox.setHgrow(xx, Priority.ALWAYS);
-		// =================
 		// Buttons:
 		Button agendaFwd = new Button(">");
 		Button agendaBwd = new Button("<");
-		// =================
-		nav.getChildren().addAll(title, xx, agendaBwd, agendaFwd);
+		nav.getChildren().addAll(xx, agendaBwd, agendaFwd);
 		// Content:
 		Agenda content = new Agenda();
 		VBox.setVgrow(content, Priority.ALWAYS);
@@ -488,23 +602,22 @@ public class MenuController implements Initializable {
 		content.autosize();
 		content.setActionCallback(param -> null);
 		content.setEditAppointmentCallback(param -> null);
+		//Creation of ICS export factory
+		ICalExport icalExport = new ICalExport();
 		// Agenda buttons:
+		Button export = new Button("Export");
 		agendaBwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
 		agendaFwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
-		// =================
+
+		export.setOnMouseClicked(event -> icalExport.exportToFile());
 		// Populate Agenda:
 		ArrayList<Event> calendar =
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
-		//Counter to create unique ICS file names for export
-		int counter = 0;
-		//Creation of ICS export factory
-		ICalExport icalExport = new ICalExport();
-		//Preparation of export directory
-		icalExport.icalSetup();
 		for (Event e : calendar) {
-			icalExport.createExportEvent(e, counter);
+			//Create an event to be exported to an ICS file
+			icalExport.createExportEvent(e);
 			// TODO - find a way to eliminate this if/else-if/instanceof anti-pattern
 			if (e instanceof TimetableEvent) {
 				LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
@@ -542,7 +655,6 @@ public class MenuController implements Initializable {
 						.withEndLocalDateTime(stime.plusMinutes(60)).withAppointmentGroup(
 								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
 			}
-			counter++;
 		}
 		layout.getChildren().addAll(nav, content);
 		Platform.runLater(() -> content
@@ -551,19 +663,13 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * Display the Study PROFILES pane.
+	 * Display the Study Profiles pane.
 	 */
 	public void loadStudyProfiles() {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.title.setText("");
-		// =================
-
-		// Display profiles:
-		Label profiles = new Label("Study PROFILES");
-		profiles.getStyleClass().add("title");
-		this.mainContent.addRow(1, profiles);
+		this.title.setText("Study Profiles");
 		// =================
 
 		// Columns:
@@ -583,7 +689,6 @@ public class MenuController implements Initializable {
 
 		ObservableList<StudyProfile> list = FXCollections
 				.observableArrayList(MainController.getSpc().getPlanner().getStudyProfiles());
-		// =================
 
 		// Create a table:
 
@@ -593,7 +698,6 @@ public class MenuController implements Initializable {
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		GridPane.setHgrow(table, Priority.ALWAYS);
 		GridPane.setVgrow(table, Priority.ALWAYS);
-		// =================
 
 		// Set click event:
 		table.setRowFactory(e -> {
@@ -608,6 +712,16 @@ public class MenuController implements Initializable {
 				}
 			};
 			row.setOnMouseClicked(event -> {
+				if (this.isNavOpen) {
+					closeDrawer.fire();
+				}
+				if (this.showNotification.getTranslateY() == 0) {
+					TranslateTransition closeNot =
+							new TranslateTransition(new Duration(173), notifications);
+					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
+					closeNot.play();
+				}
+
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
 						&& event.getClickCount() == 2) {
 					try {
@@ -620,28 +734,20 @@ public class MenuController implements Initializable {
 			});
 			return row;
 		});
-		// =================
 
 		this.mainContent.addRow(2, table);
+		GridPane.setColumnSpan(table, GridPane.REMAINING);
 		this.mainContent.getStyleClass().add("list-item");
 	}
 
 	/**
-	 * Display the MODULES pane.
+	 * Display the Modules pane.
 	 */
 	public void loadModules() {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.title.setText("");
-		// =================
-
-		// Display modules:
-		Label modules = new Label("MODULES");
-		modules.getStyleClass().add("title");
-		this.mainContent.addRow(1, modules);
-		// =================
-
+		this.title.setText("Modules");
 		// Columns:
 		TableColumn<Module, String> codeColumn = new TableColumn<>("Module code");
 		codeColumn.setCellValueFactory(new PropertyValueFactory<>("moduleCode"));
@@ -665,7 +771,6 @@ public class MenuController implements Initializable {
 
 		ObservableList<Module> list = FXCollections.observableArrayList(
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getModules());
-		// =================
 
 		// Create a table:
 		TableView<Module> table = new TableView<>();
@@ -674,12 +779,21 @@ public class MenuController implements Initializable {
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		GridPane.setHgrow(table, Priority.ALWAYS);
 		GridPane.setVgrow(table, Priority.ALWAYS);
-		// =================
 
 		// Set click event:
 		table.setRowFactory(e -> {
 			TableRow<Module> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
+				if (this.isNavOpen) {
+					closeDrawer.fire();
+				}
+				if (this.showNotification.getTranslateY() == 0) {
+					TranslateTransition closeNot =
+							new TranslateTransition(new Duration(173), notifications);
+					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
+					closeNot.play();
+				}
+
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
 						&& event.getClickCount() == 2) {
 					this.loadModule(row.getItem(), this.current, null);
@@ -687,7 +801,6 @@ public class MenuController implements Initializable {
 			});
 			return row;
 		});
-		// =================
 
 		this.mainContent.addRow(2, table);
 		this.mainContent.getStyleClass().add("list-item");
@@ -700,17 +813,11 @@ public class MenuController implements Initializable {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.title.setText("");
+		this.title.setText(module.getModuleCode() + " " + module.getName());
 		// =================
 
 		// Create a back button:
 		this.backButton(previousWindow, previous);
-		// =================
-
-		// Display modules:
-		Label modules = new Label(module.getModuleCode() + " " + module.getName());
-		modules.getStyleClass().add("title");
-		this.mainContent.addRow(1, modules);
 		// =================
 
 		// Create a details pane:
@@ -721,7 +828,7 @@ public class MenuController implements Initializable {
 				details);
 		GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
 		GridPane.setHgrow(detailsBox, Priority.ALWAYS);
-		// =================
+		GridPane.setColumnSpan(detailsBox, GridPane.REMAINING);
 
 		mainContent.addRow(2, detailsBox);
 
@@ -760,7 +867,6 @@ public class MenuController implements Initializable {
 
 		ObservableList<Assignment> list = FXCollections
 				.observableArrayList(module.getAssignments());
-		// =================
 
 		// Create a moduleContent:
 		TableView<Assignment> moduleContent = new TableView<>();
@@ -782,9 +888,123 @@ public class MenuController implements Initializable {
 			});
 			return row;
 		});
-		// =================
 
 		this.mainContent.addRow(3, moduleContent);
+		GridPane.setColumnSpan(moduleContent, GridPane.REMAINING);
+	}
+
+	/**
+	 * This method will create a window that will prompt the user for a username and
+	 * host name.  If a name is not entered then a username is randomly chosen.
+	 * When the submit button is pressed a new interface will be loaded which is the chat window.
+	 */
+	public void obtainUserInformation() {
+
+		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+		this.topBox.getChildren().clear();
+		this.title.setText("");
+		this.mainContent.getChildren().addAll(firstPane);
+		createFirstWindow();
+		submitButtonAction();
+	}
+
+	/**
+	 * This method will create the peer to peer chat
+	 * window.  It will load the text area where the user will see messages from
+	 * peers and a place for the user to send his or her own message.
+	 */
+	public void loadChatWindow() {
+
+		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+		this.topBox.getChildren().clear();
+		this.title.setText("");
+		this.mainContent.getChildren().addAll(mainPane);
+		createUserMessagePane();
+		createMainPane();
+	}
+
+	/**
+	 * This will load the msg_area which is where the user will see messages from other users
+	 * and him or herself.  This will also load the text field where the user will be able to send
+	 * his or her own message to peers.
+	 */
+	public void createMainPane() {
+		mainPane.setCenter(msgArea);
+		mainPane.setBottom(userMessagePane);
+	}
+
+	/**
+	 * This will set the message area to uneditable and set the size for all the buttons
+	 * This method will also create padding between the textarea and the message area.
+	 * and the send button.
+	 */
+	public void createUserMessagePane() {
+		msgArea.setEditable(false);
+		tfMessageToSend.setPrefWidth(500);
+		userMessagePane.setPadding(new Insets(10, 10, 10, 10));
+		sendButton.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
+		spacingBox.setPadding(new Insets(0, 5, 0, 5));
+		userMessagePane.add(tfMessageToSend, 0, 0);
+		userMessagePane.add(spacingBox, 1, 0);
+		userMessagePane.add(sendButton, 2, 0);
+	}
+
+	/**
+	 * This will load all the textfields,labels and buttons for the
+	 * window that prompts the user for his or her username and host name.
+	 */
+	public void createFirstWindow() {
+		firstPane.add(name, 0, 0);
+		firstPane.add(tfName, 1, 0);
+		firstPane.add(host, 0, 1);
+		firstPane.add(tfHost, 1, 1);
+		firstPane.add(submitButton, 1, 2);
+	}
+
+	/**
+	 * This will take in the action of when the submit button is pressed.
+	 * The submit button is for the chat window where the user inputs his or her
+	 * information.  If the user does not enter a username then one will be appointed for
+	 * them.  Then at the very end the chat window will be loaded.
+	 */
+	public void submitButtonAction() {
+		submitButton.setOnAction((ActionEvent exception1) -> {
+			if (tfName.getText().equals("")) {
+				tfName.setText("User" + Math.random());
+			} else {
+				userName = tfName.getText();
+			}
+			hostName = tfHost.getText();
+			loadChatWindow();
+		});
+	}
+
+	/**
+	 *This will set the username for the peer-to-peer chat.
+	 */
+	public void setUserName(String user) {
+		userName = user;
+	}
+
+	/**
+	 * This will set the PortNumber for the peer-to-peer chat.
+	 */
+	public void setPortNumber(int userPort) {
+		portNumber = userPort;
+	}
+
+	/**
+	 * @return this will get the currently registed users chat ID.
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * @return This will get the current host name registed to the chat user.
+	 */
+	public String getHostName() {
+		return hostName;
 	}
 
 	/**
@@ -794,26 +1014,23 @@ public class MenuController implements Initializable {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.title.setText("");
 		// =================
 
 		// Create a back button:
 		this.backButton(previousWindow, previous);
-		// =================
 
 		// Display modules:
 		Label assignments = new Label(assignment.getName());
 		assignments.getStyleClass().add("title");
 		this.mainContent.addRow(1, assignments);
-		// =================
+		GridPane.setColumnSpan(assignments, GridPane.REMAINING);
 
 		// Ganttish chart button:
 		Button gantt = new Button("Generate a Ganttish Diagram");
-		gantt.setOnAction(e -> MainController.ui.showGantt(assignment));
+		gantt.setOnAction(e -> showGantt(assignment,previousWindow,previous));
 		GridPane.setHalignment(gantt, HPos.RIGHT);
 		GridPane.setColumnSpan(gantt, GridPane.REMAINING);
 		this.mainContent.add(gantt, 0, 1);
-		// =================
 
 		// Create a details pane:
 		VBox detailsBox = new VBox(5);
@@ -834,16 +1051,16 @@ public class MenuController implements Initializable {
 				details);
 		GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
 		GridPane.setHgrow(detailsBox, Priority.ALWAYS);
-		// =================
 
 		mainContent.addRow(2, detailsBox);
+		GridPane.setColumnSpan(detailsBox, GridPane.REMAINING);
 
 		// Content pane:
 		GridPane content = new GridPane();
 		GridPane.setVgrow(content, Priority.ALWAYS);
 		GridPane.setHgrow(content, Priority.ALWAYS);
+		GridPane.setColumnSpan(content, GridPane.REMAINING);
 		content.setVgap(5);
-		// =================
 
 		// Requirements columns:
 		TableColumn<Requirement, String> reqNameColumn = new TableColumn<>("Requirement");
@@ -861,7 +1078,6 @@ public class MenuController implements Initializable {
 
 		ObservableList<Requirement> requirementList = FXCollections
 				.observableArrayList(assignment.getRequirements());
-		// =================
 
 		// Create Requirements table:
 		TableView<Requirement> requirements = new TableView<>();
@@ -870,7 +1086,6 @@ public class MenuController implements Initializable {
 		requirements.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		GridPane.setHgrow(requirements, Priority.ALWAYS);
 		GridPane.setVgrow(requirements, Priority.ALWAYS);
-		// =================
 
 		// Set RowFactory:
 		requirements
@@ -884,14 +1099,12 @@ public class MenuController implements Initializable {
 		GridPane.setHgrow(actionsReq, Priority.ALWAYS);
 		actionsReq.setSpacing(5);
 		actionsReq.setPadding(new Insets(5, 5, 10, 0));
-		// =================
 
 		// Buttons:
 		Button addNewReq = new Button("Add a new requirement");
 
 		Button deleteReq = new Button("Remove");
 		deleteReq.setDisable(true);
-		// =================
 
 		// Bind properties on buttons:
 		deleteReq.disableProperty().bind(new BooleanBinding() {
@@ -905,7 +1118,6 @@ public class MenuController implements Initializable {
 						&& requirements.getSelectionModel().getSelectedItem() != null);
 			}
 		});
-		// =================
 
 		// Bind actions on buttons:
 		addNewReq.setOnAction(e -> {
@@ -929,12 +1141,10 @@ public class MenuController implements Initializable {
 				requirements.refresh();
 			}
 		});
-		// =================
 
 		actionsReq.getChildren().addAll(addNewReq, deleteReq);
 
 		content.add(actionsReq, 0, 1);
-		// =================
 
 		// Tasks columns:
 		TableColumn<Task, String> nameColumn = new TableColumn<>("Task");
@@ -952,7 +1162,6 @@ public class MenuController implements Initializable {
 				new ArrayList<>(Arrays.asList(nameColumn, deadlineColumn, canComplete));
 
 		ObservableList<Task> list = FXCollections.observableArrayList(assignment.getTasks());
-		// =================
 
 		// Create Tasks table:
 		TableView<Task> tasks = new TableView<>();
@@ -961,7 +1170,6 @@ public class MenuController implements Initializable {
 		tasks.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		GridPane.setHgrow(tasks, Priority.ALWAYS);
 		GridPane.setVgrow(tasks, Priority.ALWAYS);
-		// =================
 
 		// Set click event:
 		tasks.setRowFactory(e -> {
@@ -990,7 +1198,6 @@ public class MenuController implements Initializable {
 			});
 			return row;
 		});
-		// =================
 
 		content.addColumn(1, tasks);
 
@@ -999,7 +1206,6 @@ public class MenuController implements Initializable {
 		GridPane.setHgrow(actionsTask, Priority.ALWAYS);
 		actionsTask.setSpacing(5);
 		actionsTask.setPadding(new Insets(5, 5, 10, 0));
-		// =================
 
 		// Buttons:
 		Button addNew = new Button("Add a new task");
@@ -1010,7 +1216,6 @@ public class MenuController implements Initializable {
 
 		Button delete = new Button("Remove");
 		delete.setDisable(true);
-		// =================
 
 		// Bind properties on buttons:
 		delete.disableProperty().bind(new BooleanBinding() {
@@ -1035,7 +1240,6 @@ public class MenuController implements Initializable {
 						&& tasks.getSelectionModel().getSelectedItem().canCheckComplete());
 			}
 		});
-		// =================
 
 		// Bind actions on buttons:
 		addNew.setOnAction(e -> {
@@ -1064,18 +1268,17 @@ public class MenuController implements Initializable {
 				this.updateMenu();
 			}
 		});
-		// =================
 
 		// Gap:
 		HBox gap = new HBox();
 		HBox.setHgrow(gap, Priority.ALWAYS);
-		// =================
 
 		actionsTask.getChildren().addAll(addNew, gap, check, delete);
 
 		content.add(actionsTask, 1, 1);
 
 		this.mainContent.addRow(3, content);
+		GridPane.setColumnSpan(content, GridPane.REMAINING);
 	}
 
 	/**
@@ -1148,16 +1351,21 @@ public class MenuController implements Initializable {
 		this.main();
 	}
 
+	/**
+	 * Handles the 'Help' event.
+	 */
+	public void openBrowser() {
+		MainController.openBrowser();
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.prepareAnimations();
 		this.isNavOpen = false;
 
-		//Set shadows
-		notifications.setEffect(new DropShadow(
-				this.shadowRadius2, 0, this.shadowOffset2, Color.BLACK));
-		navList.setEffect(new DropShadow(
-				this.shadowRadius, this.shadowOffset, 0, Color.BLACK));
+		// Set shadows
+		notifications.setEffect(notifShadow);
+		navList.setEffect(navShadow);
 
 		// Set button actions:
 		this.closeDrawer.setOnAction(e -> openMenu.fire());
@@ -1166,21 +1374,34 @@ public class MenuController implements Initializable {
 		this.modules.setOnAction(e -> this.main(Window.MODULES));
 		this.milestones.setOnAction(e -> this.main(Window.MILESTONES));
 		this.calendar.setOnAction(e -> this.main(Window.CALENDAR));
-		// =================
+		this.chat.setOnAction(e -> this.main(Window.CHAT));
+
+		// Set nav to close when clicking outside of it
+		this.mainContent.addEventHandler(MouseEvent.MOUSE_PRESSED,
+			e -> {
+				if (this.showNotification.getTranslateY() == 0) {
+					TranslateTransition closeNot =
+							new TranslateTransition(new Duration(173), notifications);
+					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
+					closeNot.play();
+				}
+
+				if (this.isNavOpen) {
+					this.openMenu.fire();
+				}
+			});
 
 		// Welcome text:
 		this.welcome = new Label(
 				"Welcome back, " + MainController.getSpc().getPlanner().getUserName() + "!");
 		this.welcome.setPadding(new Insets(10, 15, 10, 15));
 		this.topBox.getChildren().add(this.welcome);
-		// =================
 
 		this.mainContent.setVgap(10);
 		this.mainContent.setPadding(new Insets(15));
 
 		// Render dashboard:
 		this.main(Window.DASHBOARD);
-		// =================
 	}
 
 	/**
@@ -1308,21 +1529,23 @@ public class MenuController implements Initializable {
 			this.isNavOpen = !isNavOpen;
 			if (navList.getTranslateX() != 0) {
 				openNav.play();
+				this.isNavOpen = true;
 			} else {
-				closeNav.setToX(-(navList.getWidth() + this.shadowRadius + this.shadowOffset));
+				closeNav.setToX(-(navList.getWidth()
+						+ this.navShadowRadius + this.navShadowOffset));
 				closeNav.play();
 			}
 		});
 
 		TranslateTransition openNot = new TranslateTransition(new Duration(222), notifications);
-		openNot.setToY(0);
+		openNot.setToY(17);
 		TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
 
 		showNotification.setOnAction((ActionEvent e1) -> {
-			if (notifications.getTranslateY() != 0) {
+			if (notifications.getTranslateY() != 17) {
 				openNot.play();
 			} else {
-				closeNot.setToY(-(notifications.getHeight() + this.shadowRadius + 56));
+				closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
 				closeNot.play();
 			}
 		});
@@ -1433,4 +1656,66 @@ public class MenuController implements Initializable {
 		});
 		return row;
 	}
+
+	/**
+	 * Displays a GanttishDiagram window for the given Assignment.
+	 *
+	 * @param assignment
+	 *            Assignment for which to generate the GanttishDiagram.
+	 */
+	public void showGantt(Assignment assignment, Window previousWindow, ModelEntity previous) {
+		Stage stage = new Stage();
+		mainContent.getChildren().remove(1, mainContent.getChildren().size());
+		topBox.getChildren().clear();
+		title.setText(assignment.getName() + " Gantt Diagram");
+
+		// Layout:
+		VBox layout = new VBox();
+		layout.setSpacing(10);
+		layout.setPadding(new Insets(15));
+		layout.getStylesheets().add("/Content/stylesheet.css");
+		// =================
+
+		// Nav bar:
+		HBox nav = new HBox();
+		nav.setSpacing(15.0);
+		// =================
+		HBox xx = new HBox();
+		HBox.setHgrow(xx, Priority.ALWAYS);
+		// =================
+
+		// Buttons:
+		Button back = new Button();
+		back.getStyleClass().addAll("button-image", "back-button");
+		back.setOnAction(e -> {
+			this.title.setText(assignment.getName());
+			this.loadAssignment(assignment, previousWindow, previous);
+		});
+		Button save = new Button("Save");
+		save.setOnAction(e -> {
+			String path = MainController.ui.saveFileDialog(stage);
+			GanttishDiagram.createGanttishDiagram(MainController.getSpc().getPlanner(), assignment,
+					path);
+		});
+		// =================
+
+		nav.getChildren().addAll(back, xx, save);
+
+		// Content:
+		BufferedImage gantt = GanttishDiagram
+				.createGanttishDiagram(MainController.getSpc().getPlanner(), assignment);
+		Image image = SwingFXUtils.toFXImage(gantt, null);
+		Pane content = new Pane();
+		VBox.setVgrow(content, Priority.ALWAYS);
+		content.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
+				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(
+						BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false))));
+		// =================
+
+		layout.getChildren().addAll(nav, content);
+		layout.setMinSize(333, 555);
+		// Set the scene:
+		mainContent.getChildren().add(layout);
+	}
+
 }

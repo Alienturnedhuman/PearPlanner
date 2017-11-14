@@ -40,7 +40,7 @@ import java.util.Locale;
  */
 public class Activity extends Event {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -486727251420646703L;
 
 	private ArrayList<Task> taskList = new ArrayList<>();
 	private int activityQuantity;

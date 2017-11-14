@@ -6,3 +6,7 @@ build/
 gradle-app.setting
 reports/
 lib/jfxtras-labs-8.0-r5.jar
+*.dat
+import_report.txt
+*.ics
+errorlog.txt

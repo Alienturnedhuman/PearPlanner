@@ -39,6 +39,7 @@ import java.util.Date;
  */
 public class Task extends ModelEntity {
 	// private data
+	private static final long serialVersionUID = 5768237547422537188L;
 	private ArrayList<Task> dependencies = new ArrayList<>();
 	private Deadline deadline;
 	private ArrayList<Requirement> requirements = new ArrayList<>();
