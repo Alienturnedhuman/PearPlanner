@@ -86,7 +86,8 @@ public class DataController {
 	 * @return The updated HUB file.
 	 * @throws IOException if IO error is triggered, FileNotFoundException if file not found
 	 */
-	private static HubFile processUpdateHubFile(NodeList nodes) throws IOException, FileNotFoundException {
+	private static HubFile processUpdateHubFile(NodeList nodes) throws IOException,
+		FileNotFoundException {
 
 		HubFile hub = null;
 		XMLcontroller xmlTools = new XMLcontroller();
@@ -168,7 +169,7 @@ public class DataController {
 	 * @param uid the identifier to look up.
 	 *
 	 * @return the entity from the list or the library.
-	 * @throws IOException
+	 * @throws IOException throws IO exception when triggered
 	 */
 	public static <T extends VersionControlEntity> T
 			inList(Map<String, VersionControlEntity> list, String uid)
@@ -216,7 +217,7 @@ public class DataController {
 	 * @param nodes the list of nodes to use for constituting the HUB file.
 	 *
 	 * @return the HUB file.
-	 * @throws IOException
+	 * @throws IOException thrown when IOException detected
 	 */
 	private static HubFile processNewHubFile(NodeList nodes) throws IOException {
 
