@@ -184,7 +184,7 @@ public class DataController {
 		if (vce != null) {
 			try {
 				return (T) vce;
-			} catch (Exception e) { // what Exception is thrown here?
+			} catch (Exception e) {
 				throw new Exception("Incorrect type referenced for '" + uid + "'");
 			}
 		}

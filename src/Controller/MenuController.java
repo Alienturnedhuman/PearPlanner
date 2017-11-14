@@ -435,6 +435,8 @@ public class MenuController implements Initializable {
 
 		} catch (IOException e) {
 			UIManager.reportError("Unable to open View file");
+		} catch (Exception e) {
+			UIManager.reportError(e.getMessage());
 		}
 	}
 
@@ -1130,6 +1132,8 @@ public class MenuController implements Initializable {
 				}
 			} catch (IOException e1) {
 				UIManager.reportError("Unable to open View file");
+			} catch (Exception e1) {
+				UIManager.reportError(e1.getMessage());
 			}
 		});
 
@@ -1252,6 +1256,8 @@ public class MenuController implements Initializable {
 				this.updateMenu();
 			} catch (IOException e1) {
 				UIManager.reportError("Unable to open View file");
+			} catch (Exception e1) {
+				UIManager.reportError(e1.getMessage());
 			}
 		});
 
