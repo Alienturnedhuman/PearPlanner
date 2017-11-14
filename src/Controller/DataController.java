@@ -39,6 +39,7 @@ import View.UIManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
@@ -531,6 +532,10 @@ public class DataController {
 
 			} catch (IOException e) {
 				UIManager.reportError("Invalid File: \n" + e.getMessage());
+			} catch (SAXException e) {
+				UIManager.reportError("SAX Exception");
+			} catch (Exception e) {
+				UIManager.reportError(e.getMessage());
 			}
 		}
 		return hub;
