@@ -25,8 +25,8 @@ import Controller.DataController;
 import Controller.XMLcontroller;
 import org.w3c.dom.NodeList;
 
-import java.io.Serializable;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -442,9 +442,10 @@ public class HubFile implements Serializable {
 	}
 
 	/**
-	 * @throws IOException if IO error is triggered
+	 * @throws IOException if IO error is triggered.
 	 */
-	public static Coursework createCoursework(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws IOException {
+	public static Coursework createCoursework(NodeList nc, HashMap<String,
+		VersionControlEntity> assetList) throws IOException {
 		Coursework r;
 		HashMap<String, XMLcontroller.NodeReturn> courseworkValues = xmlTools.getSchemaValues(nc,
 				HubFile.SCHEMA_COURSEWORK);
@@ -509,9 +510,10 @@ public class HubFile implements Serializable {
 	}
 
 	/**
-	 * @throws IOException if IO error is triggered
+	 * @throws IOException if IO error is triggered.
 	 */
-	public static Exam createExam(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws IOException {
+	public static Exam createExam(NodeList nc, HashMap<String,
+		VersionControlEntity> assetList) throws IOException {
 
 		HashMap<String, XMLcontroller.NodeReturn> examValues = xmlTools.getSchemaValues(nc,
 				HubFile.SCHEMA_EXAM);
@@ -579,9 +581,10 @@ public class HubFile implements Serializable {
 	}
 
 	/**
-	 * @throws IOException if IO error is triggered
+	 * @throws IOException if IO error is triggered.
 	 */
-	public static TimetableEvent createTimetableEvent(NodeList nc, HashMap<String, VersionControlEntity> assetList) throws IOException {
+	public static TimetableEvent createTimetableEvent(NodeList nc,
+		HashMap<String, VersionControlEntity> assetList) throws IOException {
 		TimetableEvent newTTE;
 
 
