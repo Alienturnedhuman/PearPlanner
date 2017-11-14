@@ -47,6 +47,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.awt.image.BufferedImage;
@@ -126,7 +127,10 @@ public class UIManager {
 		Parent root = loader.load();
 
 		// Set the scene:
-		mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
+		mainStage.setScene(new Scene(root,
+				Screen.getPrimary().getVisualBounds().getWidth() * 0.77,
+				Screen.getPrimary().getVisualBounds().getHeight() * 0.9,
+				true, SceneAntialiasing.BALANCED));
 		mainStage.setTitle("RaiderPlanner");
 
 		// Set minimum resolution to around 360p in 3:5 aspect ratio for small phones
