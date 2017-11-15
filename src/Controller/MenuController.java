@@ -191,6 +191,9 @@ public class MenuController implements Initializable {
 	private GridPane mainContent;
 	@FXML
 	private HBox topBox;
+	@FXML
+	private HBox exportCalBox;
+
 	//chat variables
 	private final BorderPane mainPane = new BorderPane();
 	private final GridPane firstPane = new GridPane();
@@ -204,6 +207,7 @@ public class MenuController implements Initializable {
 	private final Label host = new Label("Host:");
 	private final Button submitButton = new Button("Submit");
 	private final Button sendButton = new Button("Send");
+	private boolean calendarOpen = false; //Used to monitor status of calendar (open or closed)
 
 	private String userName;
 	private String hostName;
@@ -234,37 +238,48 @@ public class MenuController implements Initializable {
 
 		this.updateNotifications();
 		this.updateMenu();
+		exportCalBox.managedProperty().bind(exportCalBox.visibleProperty());
 
+		//When user chooses different option in menu, calendarOpen changes to monitor status within main window.
 		switch (this.current) {
 		case DASHBOARD: {
 			if (MainController.getSpc().getPlanner().getCurrentStudyProfile() != null) {
 				this.loadDashboard();
+				calendarOpen = false;
 			}
 			break;
 		}
 		case PROFILES: {
 			this.loadStudyProfiles();
+			calendarOpen = false;
 			break;
 		}
 		case MODULES: {
 			this.loadModules();
+			calendarOpen = false;
 			break;
 		}
 		case MILESTONES: {
 			this.loadMilestones();
+			calendarOpen = false;
 			break;
 		}
 		case CALENDAR: {
 			this.loadCalendar();
+			calendarOpen = true;
 			break;
 		}
 		case CHAT: {
 			this.obtainUserInformation();
+			calendarOpen = false;
 			break;
 		}
 		default:
+			calendarOpen = false;
 			break;
 		}
+		//Based on user choice of menu option "Export Calendar" button is shown/hidden
+		exportCalBox.setVisible(calendarOpen);
 	}
 
 	/**
@@ -576,7 +591,7 @@ public class MenuController implements Initializable {
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("Calendar");
-		// =================
+
 		// Layout:
 		VBox layout = new VBox();
 		GridPane.setHgrow(layout, Priority.ALWAYS);
@@ -587,13 +602,13 @@ public class MenuController implements Initializable {
 		// Nav bar:
 		HBox nav = new HBox();
 		nav.setSpacing(15.0);
-		// =================
+
 		HBox xx = new HBox();
 		HBox.setHgrow(xx, Priority.ALWAYS);
 		// Buttons:
 		Button agendaFwd = new Button(">");
 		Button agendaBwd = new Button("<");
-		
+
 		nav.getChildren().addAll(xx, agendaBwd, agendaFwd);
 		// Content:
 		Agenda content = new Agenda();
@@ -664,7 +679,7 @@ public class MenuController implements Initializable {
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("Study Profiles");
-		// =================
+
 
 		// Columns:
 		TableColumn<StudyProfile, String> nameColumn = new TableColumn<>("Profile name");
@@ -869,7 +884,7 @@ public class MenuController implements Initializable {
 		moduleContent.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		GridPane.setHgrow(moduleContent, Priority.ALWAYS);
 		GridPane.setVgrow(moduleContent, Priority.ALWAYS);
-		// =================
+
 
 		// Set click event:
 		moduleContent.setRowFactory(e -> {
@@ -1351,9 +1366,9 @@ public class MenuController implements Initializable {
 	public void openBrowser() {
 		MainController.openBrowser();
 	}
-	
-	/**
-	 * Handles 'Export Calendar' event
+
+	/** Handles 'Export Calendar' event.
+	 *
 	 */
 	public void exportCalendar() {
 		MainController.exportCalendar();

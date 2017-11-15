@@ -192,7 +192,7 @@
                             />
                           </HBox>
                           
-                          <HBox GridPane.rowIndex="3">
+                          <HBox GridPane.rowIndex="3" fx:id="exportCalBox">
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                   <HBox.margin>
                                       <Insets left="5"/>
