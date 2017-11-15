@@ -78,7 +78,7 @@ public class ICalExport {
 	}
 
 	/**
-	 * Export the prepared ical events to an ICS file.
+	 * Merge all existing iCal events and export the prepared ical events to an ICS file.
 	 */
 	public void exportToFile() {
 		File newDir = new File("calendarExport");
