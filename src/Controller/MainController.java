@@ -21,7 +21,9 @@
 
 package Controller;
 
+import Model.Event;
 import Model.HubFile;
+import Model.ICalExport;
 import Model.StudyPlanner;
 import View.UIManager;
 
@@ -36,6 +38,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -252,8 +255,22 @@ public class MainController {
 			}
 		}
 	}
-	
+
+	/** Function exports calendar ICS file to user defined location.
+	 *
+	 */
 	public static void exportCalendar() {
-		System.out.println("this dun work");
+		ICalExport icalExport = new ICalExport();;
+		if (plannerFile.exists()) {
+			ArrayList<Event> exportCal =
+					getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
+			for (Event e : exportCal) {
+				icalExport.createExportEvent(e);
+			}
+			icalExport.exportToFile();
+			UIManager.reportSuccess("File Exported");
+		} else {
+			UIManager.reportError("Calendar does not exist! Export failed");
+		}
 	}
 }
