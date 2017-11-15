@@ -267,7 +267,7 @@ public class MainController {
 			for (Event e : exportCal) {
 				icalExport.createExportEvent(e);
 			}
-			icalExport.exportToFile();
+			icalExport.exportToFile(ui.saveIcsFileDialog());
 			UIManager.reportSuccess("File Exported");
 		} else {
 			UIManager.reportError("Calendar does not exist! Export failed");

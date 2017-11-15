@@ -74,6 +74,8 @@ public class UIManager {
 			new FileChooser.ExtensionFilter("XML file", "*.xml");
 	private static FileChooser.ExtensionFilter pngExtension =
 			new FileChooser.ExtensionFilter("PNG file", "*.png");
+	private static FileChooser.ExtensionFilter icsExtension =
+			new FileChooser.ExtensionFilter("ICS file", "*.ics");
 	private URL activityFxml = getClass().getResource("/View/Activity.fxml");
 	private URL milestoneFxml = getClass().getResource("/View/Milestone.fxml");
 	private URL taskFxml = getClass().getResource("/View/Task.fxml");
@@ -459,13 +461,26 @@ public class UIManager {
 	}
 
 	/**
+	 * Displays a file dialog for saving .ics export files
+	 *
+	 * @return a File object
+	 */
+	public File saveIcsFileDialog() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save your ICS export file");
+		fileChooser.setInitialDirectory(savesFolder);
+		File file = fileChooser.showSaveDialog(mainStage);
+		return file;
+	}
+
+	/**
 	 * Displays a file dialog for saving .dat planner files
 	 *
 	 * @return a File object
 	 */
 	public File savePlannerFileDialog() {
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Save your planner file");
+		fileChooser.setTitle("Save your .dat file");
 		fileChooser.getExtensionFilters().add(datExtension);
 		if (!savesFolder.exists()) {
 			savesFolder.mkdirs();

@@ -594,9 +594,7 @@ public class MenuController implements Initializable {
 		Button agendaFwd = new Button(">");
 		Button agendaBwd = new Button("<");
 		
-//To remove ics export functionality from GUI follow instructions		
-		Button export = new Button("Export"); //Remove line
-		nav.getChildren().addAll(xx, agendaBwd, agendaFwd, export); //remove "export" call
+		nav.getChildren().addAll(xx, agendaBwd, agendaFwd);
 		// Content:
 		Agenda content = new Agenda();
 		VBox.setVgrow(content, Priority.ALWAYS);
@@ -605,20 +603,15 @@ public class MenuController implements Initializable {
 		content.autosize();
 		content.setActionCallback(param -> null);
 		content.setEditAppointmentCallback(param -> null);
-		//Creation of ICS export factory
-		ICalExport icalExport = new ICalExport();
 		// Agenda buttons:
 		agendaBwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
 		agendaFwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
-		export.setOnMouseClicked(event -> icalExport.exportToFile()); //remove line
 		// Populate Agenda:
 		ArrayList<Event> calendar =
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
 		for (Event e : calendar) {
-			//Create an event to be exported to an ICS file
-			icalExport.createExportEvent(e);
 			// TODO - find a way to eliminate this if/else-if/instanceof anti-pattern
 			if (e instanceof TimetableEvent) {
 				LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
