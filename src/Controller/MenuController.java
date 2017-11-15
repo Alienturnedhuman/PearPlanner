@@ -593,7 +593,10 @@ public class MenuController implements Initializable {
 		// Buttons:
 		Button agendaFwd = new Button(">");
 		Button agendaBwd = new Button("<");
-		nav.getChildren().addAll(xx, agendaBwd, agendaFwd);
+		
+//To remove ics export functionality from GUI follow instructions		
+		Button export = new Button("Export"); //Remove line
+		nav.getChildren().addAll(xx, agendaBwd, agendaFwd, export); //remove "export" call
 		// Content:
 		Agenda content = new Agenda();
 		VBox.setVgrow(content, Priority.ALWAYS);
@@ -605,13 +608,11 @@ public class MenuController implements Initializable {
 		//Creation of ICS export factory
 		ICalExport icalExport = new ICalExport();
 		// Agenda buttons:
-		Button export = new Button("Export");
 		agendaBwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
 		agendaFwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
-
-		export.setOnMouseClicked(event -> icalExport.exportToFile());
+		export.setOnMouseClicked(event -> icalExport.exportToFile()); //remove line
 		// Populate Agenda:
 		ArrayList<Event> calendar =
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
