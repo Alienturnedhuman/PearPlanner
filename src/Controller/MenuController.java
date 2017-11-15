@@ -1358,6 +1358,13 @@ public class MenuController implements Initializable {
 	public void openBrowser() {
 		MainController.openBrowser();
 	}
+	
+	/**
+	 * Handles 'Export Calendar' event
+	 */
+	public void exportCalendar() {
+		MainController.exportCalendar();
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

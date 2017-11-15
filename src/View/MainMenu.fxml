@@ -191,7 +191,20 @@
                                     text="Import HUB file"
                             />
                           </HBox>
-
+                          
+                          <HBox GridPane.rowIndex="3">
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                  <HBox.margin>
+                                      <Insets left="5"/>
+                                  </HBox.margin>
+                                  <image>
+                                      <Image url="/Content/importhubfile.png"/>
+                                  </image>
+                              </ImageView>
+                            <Button onAction="#exportCalendar" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;"
+                                    text="Export Calendar"
+                            />
+                          </HBox>
 
                       </GridPane>
                     </children>
