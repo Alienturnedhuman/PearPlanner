@@ -240,7 +240,8 @@ public class MenuController implements Initializable {
 		this.updateMenu();
 		exportCalBox.managedProperty().bind(exportCalBox.visibleProperty());
 
-		//When user chooses different option in menu, calendarOpen changes to monitor status within main window.
+		//When user chooses different option in menu
+		//		calendarOpen changes to monitor status within main window.
 		switch (this.current) {
 		case DASHBOARD: {
 			if (MainController.getSpc().getPlanner().getCurrentStudyProfile() != null) {
