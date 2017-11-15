@@ -59,6 +59,9 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.print.PageLayout;
+import javafx.print.PrintResolution;
+import javafx.print.PrinterJob;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
@@ -113,6 +116,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.swing.ButtonGroup;
 
 /**
  * Actions associated with the menu and its items.
@@ -656,6 +661,22 @@ public class MenuController implements Initializable {
 								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
 			}
 		}
+		Button printBtn = new Button();
+		printBtn.getStyleClass().addAll("button-image", "print-button");
+		printBtn.setOnMouseClicked(event -> {
+			// Prints the currently selected week
+			PrinterJob job = PrinterJob.createPrinterJob();
+			if (job != null) {
+				if (!job.showPrintDialog(null)) {
+					// user cancelled
+					job.cancelJob();
+					return;
+				}
+				content.print(job);
+				job.endJob();
+			}
+		});
+		nav.getChildren().add(1, printBtn);
 		layout.getChildren().addAll(nav, content);
 		Platform.runLater(() -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusMinutes(1050)));
@@ -1717,5 +1738,4 @@ public class MenuController implements Initializable {
 		// Set the scene:
 		mainContent.getChildren().add(layout);
 	}
-
 }
