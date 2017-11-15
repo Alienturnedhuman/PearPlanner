@@ -80,14 +80,7 @@ public class ICalExport {
 	/**
 	 * Merge all existing iCal events and export the prepared ical events to an ICS file.
 	 */
-	public void exportToFile(File newDir) {
-		if (newDir.exists()) {
-			System.out.println("CALENDAR Export Directory"
-					+ " already exists, all files were overwritten");
-		} else {
-			newDir.mkdirs();
-		}
-		File file = new File(newDir + "/exportFile.ics");
+	public void exportToFile(File file) {
 		createIcs(ical, file);
 	}
 

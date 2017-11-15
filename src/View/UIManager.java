@@ -468,6 +468,10 @@ public class UIManager {
 	public File saveIcsFileDialog() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save your ICS export file");
+		fileChooser.getExtensionFilters().add(icsExtension);
+		if (!savesFolder.exists()) {
+			savesFolder.mkdirs();
+		}
 		fileChooser.setInitialDirectory(savesFolder);
 		File file = fileChooser.showSaveDialog(mainStage);
 		return file;

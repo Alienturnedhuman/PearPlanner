@@ -260,8 +260,8 @@ public class MainController {
 	 *
 	 */
 	public static void exportCalendar() {
-		ICalExport icalExport = new ICalExport();;
-		if (plannerFile.exists()) {
+		ICalExport icalExport = new ICalExport();
+		try {
 			ArrayList<Event> exportCal =
 					getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
 			for (Event e : exportCal) {
@@ -269,7 +269,7 @@ public class MainController {
 			}
 			icalExport.exportToFile(ui.saveIcsFileDialog());
 			UIManager.reportSuccess("File Exported");
-		} else {
+		} catch (NullPointerException e) {
 			UIManager.reportError("Calendar does not exist! Export failed");
 		}
 	}
