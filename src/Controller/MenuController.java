@@ -59,8 +59,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.print.PageLayout;
-import javafx.print.PrintResolution;
 import javafx.print.PrinterJob;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -116,8 +114,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.swing.ButtonGroup;
 
 /**
  * Actions associated with the menu and its items.
@@ -1738,4 +1734,5 @@ public class MenuController implements Initializable {
 		// Set the scene:
 		mainContent.getChildren().add(layout);
 	}
+
 }
