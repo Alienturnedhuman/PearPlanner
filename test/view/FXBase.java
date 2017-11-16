@@ -21,7 +21,7 @@
 
 package view;
 
-
+import edu.wright.cs.raiderplanner.controller.AccountController;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -34,8 +34,6 @@ import javafx.stage.Stage;
 import org.junit.After;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
-
-import controller.AccountController;
 
 import java.util.concurrent.TimeoutException;
 

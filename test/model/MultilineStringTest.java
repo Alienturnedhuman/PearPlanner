@@ -21,11 +21,10 @@
 
 package model;
 
+import edu.wright.cs.raiderplanner.model.MultilineString;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import model.MultilineString;
 
 import java.util.ArrayList;
 

@@ -25,8 +25,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import controller.AccountController;
-import controller.MainController;
+import edu.wright.cs.raiderplanner.controller.AccountController;
+import edu.wright.cs.raiderplanner.controller.MainController;
+import edu.wright.cs.raiderplanner.model.Person;
 
 import org.junit.After;
 import org.junit.Before;

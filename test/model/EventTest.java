@@ -21,18 +21,17 @@
 
 package model;
 
+import edu.wright.cs.raiderplanner.controller.MainController;
+import edu.wright.cs.raiderplanner.model.Event;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
-import model.Event;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
-
-import controller.MainController;
 
 import java.util.GregorianCalendar;
 

@@ -21,16 +21,15 @@
 
 package model;
 
+import edu.wright.cs.raiderplanner.controller.MainController;
+import edu.wright.cs.raiderplanner.model.VersionControlEntity;
 import javafx.stage.Stage;
-import model.VersionControlEntity;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-
-import controller.MainController;
 
 import static org.junit.Assert.*;
 

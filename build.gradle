@@ -32,7 +32,7 @@ apply plugin: 'edu.sc.seis.launch4j'
  * This line specifies where the main.java file is found.
  */
 
-mainClassName='view.Main'
+mainClassName='edu.wright.cs.raiderplanner.view.Main'
 
 /**
  * This statement declares where Gradle is to find directories
@@ -51,7 +51,7 @@ sourceSets {
 
 	test {
 		java {
-			srcDirs = ["Test"]
+			srcDirs = ["test"]
 		}
 	}
 }

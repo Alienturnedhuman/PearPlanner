@@ -21,15 +21,14 @@
 
 package model;
 
-import model.MultilineString;
-import model.Note;
+import edu.wright.cs.raiderplanner.controller.MainController;
+import edu.wright.cs.raiderplanner.model.MultilineString;
+import edu.wright.cs.raiderplanner.model.Note;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import controller.MainController;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -42,7 +41,7 @@ import static org.junit.Assert.*;
 @Ignore
 public class ModelEntityTest {
 
-    private ModelEntity modelEntity;
+    private edu.wright.cs.raiderplanner.model.ModelEntity modelEntity;
     private GregorianCalendar gregorianCalendar;
     private String[] detailsArray= {"detail"};
     private MultilineString multilineString;
@@ -57,7 +56,7 @@ public class ModelEntityTest {
         multilineString = new MultilineString("This is some note for testing purposes");
         note = new Note("Note1", gregorianCalendar, multilineString);
         notes = new ArrayList<>();
-        modelEntity = new ModelEntity("name1", detailsArray, notes);
+        modelEntity = new edu.wright.cs.raiderplanner.model.ModelEntity("name1", detailsArray, notes);
     }
 
     @After

@@ -21,12 +21,11 @@
 
 package model;
 
+import edu.wright.cs.raiderplanner.model.Account;
+import edu.wright.cs.raiderplanner.model.Person;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import model.Account;
-import model.Person;
 
 import java.util.ArrayList;
 
@@ -38,11 +37,11 @@ import static org.junit.Assert.*;
 public class AccountTest {
 
 	Person person;
-	Account account;
+	edu.wright.cs.raiderplanner.model.Account account;
 
 	@Before
 	public void setUp() throws Exception {
-		person = new Person("Mr","Andrew Odintsov", true);
+		person = new edu.wright.cs.raiderplanner.model.Person("Mr","Andrew Odintsov", true);
 		account = new Account(person, "10012721-UG");
 	}
 

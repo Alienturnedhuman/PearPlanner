@@ -21,12 +21,11 @@
 
 package model;
 
+import edu.wright.cs.raiderplanner.model.Assignment;
+import edu.wright.cs.raiderplanner.model.Person;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import model.Assignment;
-import model.Person;
 
 import static org.junit.Assert.*;
 

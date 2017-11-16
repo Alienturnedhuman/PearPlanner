@@ -21,12 +21,11 @@
 
 package controller;
 
+import edu.wright.cs.raiderplanner.controller.StudyPlannerController;
+import edu.wright.cs.raiderplanner.model.Account;
+import edu.wright.cs.raiderplanner.model.Person;
 import org.junit.Before;
 import org.junit.Test;
-
-import controller.StudyPlannerController;
-import model.Account;
-import model.Person;
 
 import static org.junit.Assert.*;
 
