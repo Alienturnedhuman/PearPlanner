@@ -29,7 +29,7 @@ package Model;
  */
 public class TimetableEvent extends Event {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 939793921119553866L;
 
 	private Room room;
 	private Person lecturer;

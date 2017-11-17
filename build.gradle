@@ -23,10 +23,20 @@
  * The application plugin facilitates creating an executable JVM application.
  */
 
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
+	}
+}
+
 apply plugin: 'application'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'edu.sc.seis.launch4j'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 /**
  * This line specifies where the main.java file is found.
@@ -88,8 +98,6 @@ repositories {
 
 dependencies {
 
-	testCompile 'junit:junit:4.12'
-
 	compile 'net.sf.biweekly:biweekly:0.6.1'
 	compile 'commons-validator:commons-validator:1.6'
 	compile 'com.google.guava:guava:21.0'
@@ -108,8 +116,11 @@ dependencies {
 	compile 'org.testfx:testfx-junit5:4.0.6-alpha'
 	compile 'org.testfx:testfx-legacy:4.0.6-alpha'
 	compile 'com.github.mangstadt:vinnie:2.0.1'
+	compile 'org.junit.jupiter:junit-jupiter-api:5.0.1'
+	compile 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
+	compile 'org.junit.platform:junit-platform-runner:1.0.1'
+	compile 'org.junit.vintage:junit-vintage-engine:4.12.1'
 	compile fileTree(dir: 'src', include: ['*.jar'])
-
 }
 
 /**
@@ -117,7 +128,7 @@ dependencies {
  */
 
 test {
-	ignoreFailures = true
+	ignoreFailures = false
 }
 
 /**
@@ -143,9 +154,14 @@ launch4j {
 	fileDescription = 'The best study planner since the Gantt Diagram'
 }
 
+junitPlatform {
+    platformVersion '1.0.0'
+    reportsDir file('build/test-results/junit-platform') // this is the default
+}
+
 checkstyle {
 	configFile = '.checkstyle.xml' as File
-	maxWarnings = 2746
+	maxWarnings = 2698
 }
 
 tasks.withType(FindBugs) {

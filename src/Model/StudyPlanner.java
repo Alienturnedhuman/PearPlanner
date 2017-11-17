@@ -27,6 +27,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import View.UIManager;
 
 /**
  * PearPlanner/RaiderPlanner
@@ -364,11 +365,22 @@ public class StudyPlanner implements Serializable {
 
 	// constructors
 
-	public StudyPlanner(Account newAccount) throws NoSuchPaddingException, NoSuchAlgorithmException {
+	public StudyPlanner(Account newAccount) {
 		this.account = newAccount;
-		// Add Default Quantity types:
-		Collections.addAll(this.quantityTypes, QuantityType.listOfQuantityTypes());
-		// Add Default Task types:
-		Collections.addAll(this.taskTypes, TaskType.listOfTaskTypes());
+		try {
+			// Add Default Quantity types:
+			Collections.addAll(this.quantityTypes, QuantityType.listOfQuantityTypes());
+			// Add Default Task types:
+			Collections.addAll(this.taskTypes, TaskType.listOfTaskTypes());
+		} catch (UnsupportedOperationException e) {
+			UIManager.reportError("Error, Unsupported Operation Exception.");
+			System.exit(1);
+		} catch (NullPointerException e) {
+			UIManager.reportError("Error, Null Pointer Exception.");
+			System.exit(1);
+		} catch (IllegalArgumentException e) {
+			UIManager.reportError("Error, Illegal Argument Exception.");
+			System.exit(1);
+		}
 	}
 }
