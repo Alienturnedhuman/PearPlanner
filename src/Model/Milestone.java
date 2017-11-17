@@ -193,8 +193,8 @@ public class Milestone extends ModelEntity {
 	 * @param tasks a Collection of Tasks to be added.
 	 * @return whether the provided Tasks were added successfully.
 	 */
-	public boolean addTasks(Collection<Task> tasks) {
-		if (this.tasks.contains(tasks)) {
+	public boolean addTasks(ArrayList<Task> tasks) {
+		if (tasks.equals(this.tasks)) {
 			return false;
 		}
 		this.tasks.addAll(tasks);
