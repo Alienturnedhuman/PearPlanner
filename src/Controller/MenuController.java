@@ -779,6 +779,7 @@ public class MenuController implements Initializable {
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		GridPane.setHgrow(table, Priority.ALWAYS);
 		GridPane.setVgrow(table, Priority.ALWAYS);
+		GridPane.setColumnSpan(table, GridPane.REMAINING);
 
 		// Set click event:
 		table.setRowFactory(e -> {
