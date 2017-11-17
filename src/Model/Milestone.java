@@ -40,6 +40,18 @@ public class Milestone extends ModelEntity {
 
 	// public methods
 
+	// Constructors:
+	/**
+	 * Milestone class constructor.
+	 * @param name name of deadline
+	 * @param details details of deadline
+	 * @param deadline time of deadline
+	 */
+	public Milestone(String name, String details, LocalDate deadline) {
+		super(name, details);
+		this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+				+ "T00:00:01Z");
+	}
 	// Getters:
 
 	/**
@@ -124,7 +136,7 @@ public class Milestone extends ModelEntity {
 	 * Returns a String representation of completed Tasks (e.g. 3/4).
 	 * Used in JavaFX.
 	 *
-	 * @return String represenation of completed Tasks.
+	 * @return String representation of completed Tasks.
 	 */
 	public String getTaskCompletedAsString() {
 		return this.tasksCompleted() + "/" + this.tasks.size();
@@ -215,19 +227,6 @@ public class Milestone extends ModelEntity {
 	 */
 	public void setDeadline(LocalDate date) {
 		this.deadline.setDate(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-				+ "T00:00:01Z");
-	}
-
-	// Constructors:
-	/**
-	 * Milestone class constructor.
-	 * @param name name of deadline
-	 * @param details details of deadline
-	 * @param deadline time of deadline
-	 */
-	public Milestone(String name, String details, LocalDate deadline) {
-		super(name, details);
-		this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
 				+ "T00:00:01Z");
 	}
 }
