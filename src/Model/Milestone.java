@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javafx.collections.ObservableList;
+
 /**
  * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
@@ -193,8 +195,8 @@ public class Milestone extends ModelEntity {
 	 * @param tasks a Collection of Tasks to be added.
 	 * @return whether the provided Tasks were added successfully.
 	 */
-	public boolean addTasks(ArrayList<Task> tasks) {
-		if (tasks.equals(this.tasks)) {
+	public boolean addTasks(Collection<Task> tasks) {
+		if (tasks.contains(this.tasks)) {
 			return false;
 		}
 		this.tasks.addAll(tasks);
