@@ -26,7 +26,7 @@ import Controller.MainController;
 import java.util.HashMap;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
 public class VersionControlEntity extends ModelEntity {
@@ -38,16 +38,16 @@ public class VersionControlEntity extends ModelEntity {
 	// private methods
 
 	/**
-	 * This method overwrites the data in the received object with that received
+	 * This method overwrites the data in the received object with that received.
 	 * This method will need to overrode in every class that extends it
 	 *
-	 * @param receivedVCE
+	 * @param receivedVce VersionControlEntity to override
 	 */
-	protected void replace(VersionControlEntity receivedVCE) {
-		name = receivedVCE.getName();
-		details = receivedVCE.getDetails();
-		version = receivedVCE.getVersion();
-		// super.replace(receivedVCE);
+	protected void replace(VersionControlEntity receivedVce) {
+		name = receivedVce.getName();
+		details = receivedVce.getDetails();
+		version = receivedVce.getVersion();
+		// super.replace(receivedVce);
 	}
 
 	// public methods
@@ -55,12 +55,12 @@ public class VersionControlEntity extends ModelEntity {
 	/**
 	 * Update ths VCE with a given one.
 	 *
-	 * @param receivedVCE received VCE for updating the current one.
+	 * @param receivedVce received VCE for updating the current one.
 	 * @return whether updated successfully.
 	 */
-	public boolean update(VersionControlEntity receivedVCE) {
-		if (uid.equals(receivedVCE.getUID()) && version < receivedVCE.getVersion()) {
-			replace(receivedVCE);
+	public boolean update(VersionControlEntity receivedVce) {
+		if (uid.equals(receivedVce.getUID()) && version < receivedVce.getVersion()) {
+			replace(receivedVce);
 			return true;
 		} else {
 			return false;
@@ -70,19 +70,23 @@ public class VersionControlEntity extends ModelEntity {
 	/**
 	 * Find the given VCE in the library and then update it.
 	 *
-	 * @param receivedVCE a VCE to be looked for and updated.
+	 * @param receivedVce a VCE to be looked for and updated.
 	 * @return whether found and updated successfully.
 	 */
-	public static boolean findAndUpdate(VersionControlEntity receivedVCE) {
-		String UID = receivedVCE.getUID();
-		if (inLibrary(UID)) {
-			library.get(UID).update(receivedVCE);
+	public static boolean findAndUpdate(VersionControlEntity receivedVce) {
+		String uid = receivedVce.getUID();
+		if (inLibrary(uid)) {
+			library.get(uid).update(receivedVce);
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * Creates a importer if not sealed.
+	 * @return boolean
+	 */
 	public boolean makeImporter() {
 		if (!sealed) {
 			importer = true;
@@ -92,6 +96,10 @@ public class VersionControlEntity extends ModelEntity {
 		}
 	}
 
+	/**
+	 * Checks if it is an importer.
+	 * @return boolean
+	 */
 	public boolean isImporter() {
 		return importer;
 	}
@@ -118,14 +126,14 @@ public class VersionControlEntity extends ModelEntity {
 	}
 
 	/**
-	 * Get a VCE from the library by it's UID
+	 * Get a VCE from the library by it's UID.
 	 *
 	 * @param UID UID to be looked for.
 	 * @return a valid VCE if found, null otherwise.
 	 */
-	public static VersionControlEntity get(String UID) {
-		if (inLibrary(UID)) {
-			return library.get(UID);
+	public static VersionControlEntity get(String uid) {
+		if (inLibrary(uid)) {
+			return library.get(uid);
 		} else {
 			return null;
 		}
@@ -137,8 +145,8 @@ public class VersionControlEntity extends ModelEntity {
 	 * @param UID UID to be checked for.
 	 * @return true if found, false otherwise.
 	 */
-	public static boolean inLibrary(String UID) {
-		return library.containsKey(UID);
+	public static boolean inLibrary(String uid) {
+		return library.containsKey(uid);
 	}
 
 	// getters
@@ -171,20 +179,20 @@ public class VersionControlEntity extends ModelEntity {
 	/**
 	 * Set a new UID and version for this VCE.
 	 *
-	 * @param newUID	 new UID
+	 * @param newUid	 new UID
 	 * @param newVersion new version
 	 * @return whether changed successfully.
 	 */
-	public boolean setUID(String newUID, int newVersion) {
+	public boolean setUID(String newUid, int newVersion) {
 //		setUID(newUID);
 		if (importer) {
-			setUID(newUID);
+			setUid(newUid);
 			version = newVersion;
 			return true;
-		} else if (sealed || library.containsKey(newUID)) {
+		} else if (sealed || library.containsKey(newUid)) {
 			return false;
 		} else {
-			setUID(newUID);
+			setUid(newUid);
 			version = newVersion;
 			return true;
 		}
@@ -193,18 +201,18 @@ public class VersionControlEntity extends ModelEntity {
 	/**
 	 * Set a new UID for this VCE.
 	 *
-	 * @param newUID new UID
+	 * @param newUid new UID
 	 * @return whether changed successfully.
 	 */
-	public boolean setUID(String newUID) {
+	public boolean setUid(String newUid) {
 		if (importer) {
-			uid = newUID;
+			uid = newUid;
 			return true;
-		} else if (sealed || library.containsKey(newUID)) {
+		} else if (sealed || library.containsKey(newUid)) {
 			return false;
 		} else {
-			uid = newUID;
-			library.put(newUID, this);
+			uid = newUid;
+			library.put(newUid, this);
 			MainController.getSpc().getPlanner().addToVersionControlLibrary(this);
 			return true;
 		}
@@ -230,9 +238,9 @@ public class VersionControlEntity extends ModelEntity {
 		sealed = false;
 	}
 
-	public VersionControlEntity(String UID) {
+	public VersionControlEntity(String uid) {
 		super();
-		sealed = setUID(UID);
+		sealed = setUid(uid);
 	}
 
 }
