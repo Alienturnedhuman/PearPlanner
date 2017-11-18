@@ -226,7 +226,12 @@ public class QuantityType extends ModelEntity {
 	@Override
 	public boolean equals(Object obj) {
 		QuantityType that = (QuantityType) obj;
-		return getName().equals(that.getName());
+		try {
+			return that.getName().equals(getName());
+		} catch (NullPointerException e) {
+			System.out.println("QuantityType name was null");
+			return false;
+		}
 	}
 
 	/**
