@@ -28,7 +28,7 @@ import java.util.Arrays;
 /**
  * Created by bendickson on 4/27/17.
  */
-public class MultilineString implements Serializable
+public class MultilineString implements Serializable, Cloneable
 {
     // private Data;
     private ArrayList<String> lines;
