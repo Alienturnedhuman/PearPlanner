@@ -266,10 +266,12 @@ public class GanttishDiagram {
 		String possible = "possible to start";
 		String impossible = "Not possible to start";
 
+		/**
 		BadgeColors[][] badges = {{BadgeColors.FINISHED, BadgeColors.FINISHED_FILL},
 				{BadgeColors.started, BadgeColors.started_FILL},
 				{BadgeColors.CANSTART, BadgeColors.CANSTART_FILL},
 				{BadgeColors.CANNOTSTART, BadgeColors.CANNOTSTART_FILL}};
+		 */
 
 		catTasks.put(completed, new ArrayList<>());
 		catTasks.put(started, new ArrayList<>());
