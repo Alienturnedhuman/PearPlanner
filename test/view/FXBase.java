@@ -74,7 +74,8 @@ public abstract class FXBase extends ApplicationTest {
 	   release(new MouseButton[]{});
 	}
 
-
+	//Supressing because converting to type T should work with all objects of Node.
+	@SuppressWarnings("unchecked")
 	public <T extends Node> T find (final String query) {
 		Node result = lookup(query).queryAll().iterator().next();
 		if (result instanceof Node) {
