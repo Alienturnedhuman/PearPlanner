@@ -13,6 +13,11 @@ body {
         padding-top: 56px;
     }
 }
+/* For mobile phones: */
+@media only screen and (max-width: 768px)
+[class*="col-"] {
+    width: 100%;
+}
 
 header.masthead {
     background: url('https://unsplash.it/1900/1080?image=304') no-repeat center center scroll;
