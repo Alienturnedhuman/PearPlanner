@@ -128,7 +128,7 @@ public class VersionControlEntity extends ModelEntity {
 	/**
 	 * Get a VCE from the library by it's UID.
 	 *
-	 * @param UID UID to be looked for.
+	 * @param uid UID to be looked for.
 	 * @return a valid VCE if found, null otherwise.
 	 */
 	public static VersionControlEntity get(String uid) {
@@ -142,7 +142,7 @@ public class VersionControlEntity extends ModelEntity {
 	/**
 	 * Check whether a VCE with the given UID exists in the library.
 	 *
-	 * @param UID UID to be checked for.
+	 * @param uid UID to be checked for.
 	 * @return true if found, false otherwise.
 	 */
 	public static boolean inLibrary(String uid) {
@@ -150,6 +150,11 @@ public class VersionControlEntity extends ModelEntity {
 	}
 
 	// getters
+
+	/**
+	 * gets the version of the entity.
+	 * @return version
+	 */
 	public int getVersion() {
 		return version;
 	}
@@ -232,16 +237,28 @@ public class VersionControlEntity extends ModelEntity {
 	}
 
 	// Constructors
+
+	/**
+	 * Constructor with a boolean if it should stay sealed.
+	 * @param leaveUnsealed if it should be sealed
+	 */
 	public VersionControlEntity(boolean leaveUnsealed) {
 		super();
 		sealed = !leaveUnsealed;
 	}
 
+	/**
+	 * Constructor with no String UID.
+	 */
 	public VersionControlEntity() {
 		super();
 		sealed = false;
 	}
 
+	/**
+	 * Constructor with a String UID.
+	 * @param uid UID of user
+	 */
 	public VersionControlEntity(String uid) {
 		super();
 		sealed = setUid(uid);
