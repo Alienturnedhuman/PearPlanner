@@ -53,13 +53,13 @@ public class VersionControlEntity extends ModelEntity {
 	// public methods
 
 	/**
-	 * Update ths VCE with a given one.
+	 * Update this VCE with a given one.
 	 *
 	 * @param receivedVce received VCE for updating the current one.
 	 * @return whether updated successfully.
 	 */
 	public boolean update(VersionControlEntity receivedVce) {
-		if (uid.equals(receivedVce.getUID()) && version < receivedVce.getVersion()) {
+		if (uid.equals(receivedVce.getUid()) && version < receivedVce.getVersion()) {
 			replace(receivedVce);
 			return true;
 		} else {
@@ -74,7 +74,7 @@ public class VersionControlEntity extends ModelEntity {
 	 * @return whether found and updated successfully.
 	 */
 	public static boolean findAndUpdate(VersionControlEntity receivedVce) {
-		String uid = receivedVce.getUID();
+		String uid = receivedVce.getUid();
 		if (inLibrary(uid)) {
 			library.get(uid).update(receivedVce);
 			return true;
@@ -154,7 +154,11 @@ public class VersionControlEntity extends ModelEntity {
 		return version;
 	}
 
-	public String getUID() {
+	/**
+	 * gets the UID of user.
+	 * @return boolean
+	 */
+	public String getUid() {
 		return uid;
 	}
 
@@ -183,8 +187,8 @@ public class VersionControlEntity extends ModelEntity {
 	 * @param newVersion new version
 	 * @return whether changed successfully.
 	 */
-	public boolean setUID(String newUid, int newVersion) {
-//		setUID(newUID);
+	public boolean setUid(String newUid, int newVersion) {
+//		setUid(newUID);
 		if (importer) {
 			setUid(newUid);
 			version = newVersion;
