@@ -199,12 +199,15 @@ public class TaskType extends ModelEntity
         }
     }
 
-    @Override
-    public boolean equals(Object obj)
-    {
-        TaskType that = (TaskType) obj;
-        return getName().equals(that.getName());
-    }
+	@Override
+	public boolean equals(Object obj) {
+		TaskType that = (TaskType) obj;
+		if (getName() != null && that.getName() != null) {
+			return getName().equals(that.getName());
+		} else {
+			return false;
+		}
+	}
 
     public boolean equals(String c)
     {
