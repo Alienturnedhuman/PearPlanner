@@ -76,6 +76,11 @@ public abstract class FXBase extends ApplicationTest {
 
 
 	public <T extends Node> T find (final String query) {
-		return (T) lookup(query).queryAll().iterator().next();
+		Node result = lookup(query).queryAll().iterator().next();
+		if (result instanceof Node) {
+			return (T) result;
+		} else {
+			return null;
+		}
 	}
 }
