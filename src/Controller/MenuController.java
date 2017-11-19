@@ -1440,9 +1440,7 @@ public class MenuController implements Initializable {
 				pane.setId(Integer.toString(notifications.length - i - 1));
 				pane.setOnMouseClicked(e ->
 					this.handleRead(Integer.parseInt(pane.getId()))
-				
 				);
-
 				// Check if unread:
 				if (!notifications[i].isRead()) {
 					pane.getStyleClass().add("unread-item");
