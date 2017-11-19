@@ -1,0 +1,12 @@
+header.masthead {
+  background-image: url(images/wsu.jpg);
+    background-position-x: center;
+    background-position-y: center;
+    background-size: cover;
+    background-repeat-x: no-repeat;
+    background-repeat-y: no-repeat;
+    background-attachment: scroll;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #55BE8C;
+}
