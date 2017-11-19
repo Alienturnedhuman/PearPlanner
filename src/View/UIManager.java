@@ -166,7 +166,7 @@ public class UIManager {
 	 * Displays the Activity details page
 	 *
 	 * @param activity for which the details should be displayed.
-	 * @throws IOException if IO error is triggered
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void activityDetails(Activity activity) throws IOException {
 		ActivityController ac = new ActivityController(activity);
@@ -188,7 +188,7 @@ public class UIManager {
 	 * Displays the 'Add Milestone' window.
 	 *
 	 * @return newly created Milestone object.
-	 * @throws IOException if IO error is triggered
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public Milestone addMilestone() throws IOException {
 		MilestoneController mc = new MilestoneController();
@@ -215,7 +215,7 @@ public class UIManager {
 	 * Displays the Milestone details page
 	 *
 	 * @param milestone for which the details should be shown.
-	 * @throws IOException if IO error is triggered
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void milestoneDetails(Milestone milestone) throws IOException {
 		MilestoneController mc = new MilestoneController(milestone);
@@ -237,7 +237,7 @@ public class UIManager {
 	 * Displays the StudyProfile details page
 	 *
 	 * @param profile StudyProfile for which the details should be shown.
-	 * @throws IOException if IO error is triggered
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void studyProfileDetails(StudyProfile profile) throws IOException {
 		StudyProfileController spc = new StudyProfileController(profile);
@@ -260,9 +260,8 @@ public class UIManager {
 	 *
 	 * @param module for which the details should be shown.
 	 * @param current Window from which this method is called.
-	 * @throws IOException if IO error is triggered
 	 */
-	public void moduleDetails(Module module, MenuController.Window current) throws IOException {
+	public void moduleDetails(Module module, MenuController.Window current) {
 		UIManager.mc.loadModule(module, current, null);
 	}
 
@@ -271,9 +270,8 @@ public class UIManager {
 	 *
 	 * @param module for which the details should be shown.
 	 * @param current Window from which this method is called.
-	 * @throws IOException if IO error is triggered
 	 */
-	public void moduleDetails(Module module, ModelEntity current) throws IOException {
+	public void moduleDetails(Module module, ModelEntity current) {
 		UIManager.mc.loadModule(module, MenuController.Window.EMPTY, current);
 	}
 
@@ -282,10 +280,8 @@ public class UIManager {
 	 *
 	 * @param assignment for which the details should be shown.
 	 * @param current Window from which this method is called.
-	 * @throws IOException if IO error is triggered
 	 */
-	public void assignmentDetails(Assignment assignment, MenuController.Window current)
-			throws IOException {
+	public void assignmentDetails(Assignment assignment, MenuController.Window current) {
 		UIManager.mc.loadAssignment(assignment, current, null);
 	}
 
@@ -294,9 +290,8 @@ public class UIManager {
 	 *
 	 * @param assignment for which the details should be shown.
 	 * @param current Window from which this method is called.
-	 * @throws IOException if IO error is triggered
 	 */
-	public void assignmentDetails(Assignment assignment, ModelEntity current) throws IOException {
+	public void assignmentDetails(Assignment assignment, ModelEntity current) {
 		UIManager.mc.loadAssignment(assignment, MenuController.Window.EMPTY, current);
 	}
 
@@ -304,7 +299,7 @@ public class UIManager {
 	 * Creates a window for adding a new Task.
 	 *
 	 * @return newly created Task
-	 * @throws IOException if IO error is triggered
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public Task addTask() throws IOException {
 		TaskController tc = new TaskController();
@@ -331,7 +326,7 @@ public class UIManager {
 	 * Displays the Task details page
 	 *
 	 * @param task for which the details should be displayed.
-	 * @throws IOException if IO error is triggered from loading .fxml
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void taskDetails(Task task) throws IOException {
 		TaskController tc = new TaskController(task);
@@ -353,7 +348,7 @@ public class UIManager {
 	 * Creates a window for adding a new Requirement.
 	 *
 	 * @return newly created Requirement
-	 * @throws IOException if IO error is triggered
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public Requirement addRequirement() throws IOException {
 		RequirementController rc = new RequirementController();
@@ -380,7 +375,7 @@ public class UIManager {
 	 * Displays the Requirement details page.
 	 *
 	 * @param requirement for which the details should be displayed
-	 * @throws IOException if IO error is triggered
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void requirementDetails(Requirement requirement) throws IOException {
 		RequirementController rc = new RequirementController(requirement);
@@ -400,7 +395,7 @@ public class UIManager {
 
 	/**
 	 * Display startup window.
-	 * @throws IOException if IO error is triggered
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void showStartup() throws IOException {
 		StartupController sc = new StartupController();
