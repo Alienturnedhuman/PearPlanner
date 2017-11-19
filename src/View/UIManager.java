@@ -87,8 +87,7 @@ public class UIManager {
 	 * Displays a 'Create Account' window and handles the creation of a new Account object.
 	 *
 	 * @return newly created Account
-	 * @throws Exception
-	 *             if user quits
+	 * @throws Exception if user quits
 	 */
 	public Account createAccount() throws Exception {
 		AccountController accountControl = new AccountController();
@@ -140,8 +139,9 @@ public class UIManager {
 	 * Display the 'Add Activity' window.
 	 *
 	 * @return newly created Activity
+	 * @throws IOException exception if IO error is triggered
 	 */
-	public Activity addActivity() throws Exception {
+	public Activity addActivity() throws IOException {
 		ActivityController ac = new ActivityController();
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(activityFxml);
@@ -166,6 +166,7 @@ public class UIManager {
 	 * Displays the Activity details page
 	 *
 	 * @param activity for which the details should be displayed.
+	 * @throws IOException if IO error is triggered
 	 */
 	public void activityDetails(Activity activity) throws IOException {
 		ActivityController ac = new ActivityController(activity);
@@ -187,6 +188,7 @@ public class UIManager {
 	 * Displays the 'Add Milestone' window.
 	 *
 	 * @return newly created Milestone object.
+	 * @throws IOException if IO error is triggered
 	 */
 	public Milestone addMilestone() throws IOException {
 		MilestoneController mc = new MilestoneController();
@@ -213,6 +215,7 @@ public class UIManager {
 	 * Displays the Milestone details page
 	 *
 	 * @param milestone for which the details should be shown.
+	 * @throws IOException if IO error is triggered
 	 */
 	public void milestoneDetails(Milestone milestone) throws IOException {
 		MilestoneController mc = new MilestoneController(milestone);
@@ -234,6 +237,7 @@ public class UIManager {
 	 * Displays the StudyProfile details page
 	 *
 	 * @param profile StudyProfile for which the details should be shown.
+	 * @throws IOException if IO error is triggered
 	 */
 	public void studyProfileDetails(StudyProfile profile) throws IOException {
 		StudyProfileController spc = new StudyProfileController(profile);
@@ -256,7 +260,7 @@ public class UIManager {
 	 *
 	 * @param module for which the details should be shown.
 	 * @param current Window from which this method is called.
-	 * @throws IOException exception if IO error is triggered
+	 * @throws IOException if IO error is triggered
 	 */
 	public void moduleDetails(Module module, MenuController.Window current) throws IOException {
 		UIManager.mc.loadModule(module, current, null);
@@ -300,8 +304,9 @@ public class UIManager {
 	 * Creates a window for adding a new Task.
 	 *
 	 * @return newly created Task
+	 * @throws IOException if IO error is triggered
 	 */
-	public Task addTask() throws Exception {
+	public Task addTask() throws IOException {
 		TaskController tc = new TaskController();
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(taskFxml);
@@ -348,8 +353,9 @@ public class UIManager {
 	 * Creates a window for adding a new Requirement.
 	 *
 	 * @return newly created Requirement
+	 * @throws IOException if IO error is triggered
 	 */
-	public Requirement addRequirement() throws Exception {
+	public Requirement addRequirement() throws IOException {
 		RequirementController rc = new RequirementController();
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(requirementFxml);
@@ -374,6 +380,7 @@ public class UIManager {
 	 * Displays the Requirement details page.
 	 *
 	 * @param requirement for which the details should be displayed
+	 * @throws IOException if IO error is triggered
 	 */
 	public void requirementDetails(Requirement requirement) throws IOException {
 		RequirementController rc = new RequirementController(requirement);
@@ -393,6 +400,7 @@ public class UIManager {
 
 	/**
 	 * Display startup window.
+	 * @throws IOException if IO error is triggered
 	 */
 	public void showStartup() throws IOException {
 		StartupController sc = new StartupController();
