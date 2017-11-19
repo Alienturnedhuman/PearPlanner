@@ -484,8 +484,8 @@ public class MenuController implements Initializable {
 					}
 				}
 			};
-			row.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-				if (e.getButton() == MouseButton.PRIMARY) {
+			row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+				if (event.getButton() == MouseButton.PRIMARY) {
 					if (this.isNavOpen) {
 						closeDrawer.fire();
 					}
@@ -497,8 +497,8 @@ public class MenuController implements Initializable {
 						closeNot.play();
 					}
 
-					if (!row.isEmpty() && e.getButton() == MouseButton.PRIMARY
-							&& e.getClickCount() == 2) {
+					if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
+							&& event.getClickCount() == 2) {
 						try {
 							MainController.ui.milestoneDetails(row.getItem());
 							this.main();
@@ -716,8 +716,8 @@ public class MenuController implements Initializable {
 					}
 				}
 			};
-			row.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-				if (e.getButton() == MouseButton.PRIMARY) {
+			row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+				if (event.getButton() == MouseButton.PRIMARY) {
 					if (this.isNavOpen) {
 						closeDrawer.fire();
 					}
@@ -728,8 +728,8 @@ public class MenuController implements Initializable {
 								+ 17));
 						closeNot.play();
 					}
-					if (!row.isEmpty() && e.getButton() == MouseButton.PRIMARY
-							&& e.getClickCount() == 2) {
+					if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
+							&& event.getClickCount() == 2) {
 						try {
 							MainController.ui.studyProfileDetails(row.getItem());
 							this.main();
@@ -790,8 +790,8 @@ public class MenuController implements Initializable {
 		// Set click event:
 		table.setRowFactory(e -> {
 			TableRow<Module> row = new TableRow<>();
-			row.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-				if (e.getButton() == MouseButton.PRIMARY) {
+			row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+				if (event.getButton() == MouseButton.PRIMARY) {
 					if (this.isNavOpen) {
 						closeDrawer.fire();
 					}
@@ -889,13 +889,8 @@ public class MenuController implements Initializable {
 		// Set click event:
 		moduleContent.setRowFactory(e -> {
 			TableRow<Assignment> row = new TableRow<>();
-			vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-				if (e.getButton() == MouseButton.PRIMARY) {
-					module.open(this.current);
-				}
-			});
-			row.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-				if (!row.isEmpty() && e.getButton() == MouseButton.PRIMARY
+			row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
 						&& event.getClickCount() == 2) {
 					this.loadAssignment(row.getItem(), Window.EMPTY, module);
 				}
