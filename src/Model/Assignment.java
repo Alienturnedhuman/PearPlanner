@@ -204,11 +204,7 @@ public class Assignment extends VersionControlEntity {
 
 	@Override
 	public void open(MenuController.Window current) {
-		try {
-			MainController.ui.assignmentDetails(this, current);
-		} catch (IOException e) {
-			UIManager.reportError("Unable to open View file");
-		}
+		MainController.ui.assignmentDetails(this, current);
 	}
 
 	// Constructor
