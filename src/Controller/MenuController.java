@@ -59,6 +59,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.print.PrinterJob;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
@@ -666,6 +667,22 @@ public class MenuController implements Initializable {
 								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
 			}
 		}
+		Button printBtn = new Button();
+		printBtn.getStyleClass().addAll("button-image", "print-button");
+		printBtn.setOnMouseClicked(event -> {
+			// Prints the currently selected week
+			PrinterJob job = PrinterJob.createPrinterJob();
+			if (job != null) {
+				if (!job.showPrintDialog(null)) {
+					// user cancelled
+					job.cancelJob();
+					return;
+				}
+				content.print(job);
+				job.endJob();
+			}
+		});
+		nav.getChildren().add(1, printBtn);
 		layout.getChildren().addAll(nav, content);
 		Platform.runLater(() -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusMinutes(1050)));
