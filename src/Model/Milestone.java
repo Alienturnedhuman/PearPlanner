@@ -51,8 +51,8 @@ public class Milestone extends ModelEntity {
 			if (!t.isCheckedComplete()) {
 				return false;
 			}
-			return true;
 		}
+		return true;
 	}
 
 	/**
