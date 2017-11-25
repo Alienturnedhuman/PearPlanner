@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 /**
  * PearPlanner/RaiderPlanner
- * Created by Team BRONZE on 4/27/17
+ * Created by Team BRONZE on 4/27/17.
  */
 public class Coursework extends Assignment {
 	private Event startDate;
@@ -94,8 +94,9 @@ public class Coursework extends Assignment {
 	}
 
 	// Constructors
-	public Coursework(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks, Event cStartDate,
-					  Deadline cDeadline, ArrayList<Extension> cExtensions) {
+	public Coursework(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy,
+			int cMarks, Event cStartDate, Deadline cDeadline,
+			ArrayList<Extension> cExtensions) {
 		super(cWeighting, cSetBy, cMarkedBy, cReviewedBy, cMarks);
 		startDate = cStartDate;
 		deadline = cDeadline;

@@ -126,7 +126,8 @@ public class XMLcontroller {
 		}
 	}
 
-	public HashMap<String, NodeReturn> getSchemaValues(NodeList nodes, HashMap<String, ImportAs> schema) {
+	public HashMap<String, NodeReturn> getSchemaValues(NodeList nodes, 
+			HashMap<String, ImportAs> schema) {
 		HashMap<String, NodeReturn> r = new HashMap<>();
 		int i = -1;
 		int ii = nodes.getLength();
@@ -136,15 +137,17 @@ public class XMLcontroller {
 			if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
 				nodeName = nodes.item(i).getNodeName();
 				if (schema.containsKey(nodeName) && !r.containsKey(nodeName)) {
-				switch (schema.get(nodeName)) {
+					switch (schema.get(nodeName)) {
 					case BOOLEAN:
-						r.put(nodeName, new NodeReturn(nodes.item(i).getTextContent().equals("true")));
+						r.put(nodeName, new NodeReturn(nodes.item(i)
+								.getTextContent().equals("true")));
 						break;
 					case STRING:
 						r.put(nodeName, new NodeReturn(nodes.item(i).getTextContent()));
 						break;
 					case MULTILINESTRING:
-						r.put(nodeName, new NodeReturn(new MultilineString(nodes.item(i).getTextContent())));
+						r.put(nodeName, new NodeReturn(new MultilineString(nodes.item(i)
+								.getTextContent())));
 						break;
 					case INTEGER:
 						temp = nodes.item(i).getTextContent();
@@ -200,7 +203,8 @@ public class XMLcontroller {
 		int i = -1;
 		int ii = nodes.getLength();
 		while (++i < ii) {
-			if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE && schema.containsKey(nodes.item(i).getNodeName())) {
+			if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE
+					&& schema.containsKey(nodes.item(i).getNodeName())) {
 				match.add(nodes.item(i).getNodeName());
 			}
 		}
