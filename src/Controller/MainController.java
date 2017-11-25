@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar
+ * Bijan Ghasemi Afshar, Amila Dias
  *
  *
  *
@@ -256,8 +256,8 @@ public class MainController {
 		}
 	}
 
-	/** Function exports calendar ICS file to user defined location.
-	 *
+	/**
+         * Function exports calendar ICS file to user defined location.
 	 */
 	public static void exportCalendar() {
 		ICalExport icalExport = new ICalExport();

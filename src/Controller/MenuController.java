@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar
+ * Bijan Ghasemi Afshar, Amila Dias
  *
  *
  *
@@ -1368,8 +1368,8 @@ public class MenuController implements Initializable {
 		MainController.openBrowser();
 	}
 
-	/** Handles 'Export Calendar' event.
-	 *
+	/**
+         * Handles 'Export Calendar' event.
 	 */
 	public void exportCalendar() {
 		MainController.exportCalendar();
