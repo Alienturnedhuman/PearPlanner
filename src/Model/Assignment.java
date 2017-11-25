@@ -194,16 +194,17 @@ public class Assignment extends VersionControlEntity {
 			}
 		}
 
-		return sum / n;
+		// TODO Revisit #92, investigate and determine the proper course of action
+		try {
+			return sum / n;
+		} catch (ArithmeticException e) {
+			return 0;
+		}
 	}
 
 	@Override
 	public void open(MenuController.Window current) {
-		try {
-			MainController.ui.assignmentDetails(this, current);
-		} catch (IOException e) {
-			UIManager.reportError("Unable to open View file");
-		}
+		MainController.ui.assignmentDetails(this, current);
 	}
 
 	// Constructor

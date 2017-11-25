@@ -21,69 +21,71 @@
 
 package Model;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by bijan on 12/05/2017.
  */
 public class AssignmentTest {
+	Assignment assignment;
+	Person person1;
+	Person person2;
 
-    Assignment assignment;
-    Person person1;
-    Person person2;
+	/**
+	 * This test case creates two Person objects and an Assignment object for use in
+	 * 			this test suite.
+	 * @throws Exception to handle when new Person or Assignment objects cannot be created.
+	 */
+	@BeforeEach
+	public void setUp() throws Exception {
+		person1 = new Person("Dr.", "Mark Fisher", true);
+		person2 = new Person("Dr.", "Steven Laycock", true);
+		assignment = new Assignment(30, person1, person1, person2, 100);
+	}
 
-    @Before
-    public void setUp() throws Exception
-    {
-        person1 = new Person("Dr.", "Mark Fisher", true);
-        person2 = new Person("Dr.", "Steven Laycock", true);
-        assignment = new Assignment(30, person1, person1, person2, 100);
-    }
+	/**
+	 * This test case removes all data from the Person and Assignment objects after each run
+	 * 			of the test suite to avoid any orphan data interfering with further tests.
+	 * @throws Exception to handle when the Person or Assignment objects cannot be accessed.
+	 */
+	@AfterEach
+	public void tearDown() throws Exception {
+		person1 = null;
+		person2 = null;
+		assignment = null;
+	}
 
-    @After
-    public void tearDown() throws Exception
-    {
-        person1 = null;
-        person2 = null;
-        assignment = null;
-    }
+	@Test
+	public void toStringTest() throws Exception {
+		String expected = "Assignment '" + assignment.getName() + "'";
+		assertEquals(expected, assignment.toString());
+	}
 
-    @Test
-    public void toStringTest() throws Exception
-    {
-        String expected = "Assignment '"+assignment.getName()+"'";
-        assertEquals(expected, assignment.toString());
-    }
+	@Test
+	public void toStringTest2() throws Exception {
+		// Testing with a true verbose
+		StringBuilder testString2 = new StringBuilder();
+		testString2.append(assignment);
+		testString2.append("\n");
+		testString2.append("Total marks: " + 100);
+		testString2.append("\n");
+		testString2.append("Total weighting: " + 30);
 
-    @Test
-    public void toStringTest2() throws Exception
-    {
-        // Testing with a true verbose
-        StringBuilder r = new StringBuilder();
-        r.append(assignment);
-        r.append("\n");
-        r.append("Total marks: "+100);
-        r.append("\n");
-        r.append("Total weighting: "+30);
+		testString2.append("\n");
+		testString2.append("Set By: " + person1.toString());
+		testString2.append("\n");
+		testString2.append("Marked By: " + person1.toString());
+		testString2.append("\n");
+		testString2.append("Reviewed By: " + person2.toString());
 
-        r.append("\n");
-        r.append("Set By: "+person1.toString());
-        r.append("\n");
-        r.append("Marked By: "+person1.toString());
-        r.append("\n");
-        r.append("Reviewed By: "+person2.toString());
+		assertEquals(testString2.toString(), assignment.toString(true));
 
-        assertEquals(r.toString(), assignment.toString(true));
-
-
-        // Testing with a false verbose
-        assertEquals(assignment.toString(), assignment.toString(false));
-    }
-
-
+		// Testing with a false verbose
+		assertEquals(assignment.toString(), assignment.toString(false));
+	}
 
 }

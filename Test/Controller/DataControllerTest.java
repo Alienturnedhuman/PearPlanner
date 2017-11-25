@@ -21,39 +21,51 @@
 
 package Controller;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by bijan on 08/05/2017.
  */
 public class DataControllerTest {
+	/**
+	 * WIP: This test class should set up required data and fields.
+	 * @throws Exception to handle when the test setup fails for any given reason.
+	 */
+	@BeforeEach
+	public void setUp() throws Exception {
+	}
 
-    @Before
-    public void setUp() throws Exception
-    {
-    }
+	/**
+	 * WIP: This test case should verify that there is a settings file present.
+	 * @throws Exception to handle when there is no settings file.
+	 */
+	@Test
+	public void existingSettingsFile() throws Exception {
+	}
 
-    @Test
-    public void existingSettingsFile() throws Exception
-    {
-    }
+	/**
+	 * WIP: This test case should verify that the UI nodes are reachable.
+	 * @throws Exception to handle when the nodes can not be retrieved.
+	 */
+	@Test
+	public void getNodes() throws Exception {
+	}
 
-    @Test
-    public void getNodes() throws Exception
-    {
-    }
+	/**
+	 * WIP: This test case should verify that the nodes gathered are valid.
+	 * @throws Exception to handle when an invalid node is found.
+	 */
+	@Test
+	public void validNodeList() throws Exception {
+	}
 
-    @Test
-    public void validNodeList() throws Exception
-    {
-    }
-
-    @Test
-    public void loadHubFile() throws Exception
-    {
-    }
+	/**
+	 * WIP: This test case should attempt to load a sample hub file (a default, for instance).
+	 * @throws Exception to handle when the hub file cannot be properly instantiated.
+	 */
+	@Test
+	public void loadHubFile() throws Exception {
+	}
 
 }

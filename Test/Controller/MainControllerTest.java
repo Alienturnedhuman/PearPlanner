@@ -21,29 +21,38 @@
 
 package Controller;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by bijan on 08/05/2017.
  */
 public class MainControllerTest {
+	/**
+	 * WIP: This test case should contain data and fields to set up further test cases.
+	 * @throws Exception to handle anything that may cause this method to fail.
+	 */
+	@BeforeEach
+	public void setUp() throws Exception {
+	}
 
-    @Before
-    public void setUp() throws Exception
-    {
-    }
+	/**
+	 * WIP: This test case should set up the components of the main controller
+	 * and ensure that all assets are available.
+	 * @throws Exception to handle any initialization failures.
+	 */
+	@Test
+	public void initialise() throws Exception {
+	}
 
-    @Test
-    public void initialise() throws Exception
-    {
-    }
-
-    @Test
-    public void reportError() throws Exception
-    {
-    }
+	/**
+	 * WIP: This test case should be used to test error reporting handled by the
+	 * main controller.
+	 * @throws Exception to handle cases when the error reporting structure does not work
+	 * 				as expected.
+	 */
+	@Test
+	public void reportError() throws Exception {
+	}
 
 }

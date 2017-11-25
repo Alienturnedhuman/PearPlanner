@@ -21,25 +21,33 @@
 
 package Model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import Controller.MainController;
 import javafx.stage.Stage;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.testfx.framework.junit.ApplicationTest;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import org.testfx.framework.junit.ApplicationTest;
 
 /**
  * Created by bijan on 06/05/2017.
  */
-@Ignore
+@Disabled
 public class VersionControlEntityTest extends ApplicationTest {
 
 	VersionControlEntity versionControlEntity = new VersionControlEntity();
 
-	@Before
+	/**
+	 * This test case create a new instance of the VersionControlEntity.
+	 * @throws Exception if the VersionControlEntity cannot be created.
+	 */
+	@BeforeEach
 	public void setUp() throws Exception {
 		versionControlEntity = new VersionControlEntity();
 	}
@@ -75,12 +83,12 @@ public class VersionControlEntityTest extends ApplicationTest {
 	}
 
 	@Test
-	public void getUID() throws Exception {
+	public void getUid() throws Exception {
 		assertEquals(null, versionControlEntity.getUID());
 	}
 
 	@Test
-	public void setUID() throws Exception {
+	public void setUid() throws Exception {
 		// Testing setUID with one argument
 		versionControlEntity.setUID("1234-ID");
 		assertEquals("1234-ID", versionControlEntity.getUID());
@@ -97,7 +105,12 @@ public class VersionControlEntityTest extends ApplicationTest {
 //		assertFalse(versionControlEntity.setUID("5678-ID", 2));
 	}
 
-	@After
+	/**
+	 * This test case removes the data from the VersionControlEntity object to avoid
+	 * 			interference with future test runs.
+	 * @throws Exception if the VersionControlEntity cannot be accessed.
+	 */
+	@AfterEach
 	public void tearDown() throws Exception {
 		versionControlEntity = null;
 	}
