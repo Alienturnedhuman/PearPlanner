@@ -39,7 +39,7 @@ public class Event extends VersionControlEntity {
 	private static final int DEFAULT_DURATION = 0;
 	private static Pattern dateRegex =
 			Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)Z");
-	private static SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy'T'hh:mm:ss'Z'");
+	private SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy'T'hh:mm:ss'Z'");
 
 	protected GregorianCalendar date = null;
 	protected int duration = DEFAULT_DURATION;
