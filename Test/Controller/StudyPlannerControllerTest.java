@@ -35,12 +35,15 @@ public class StudyPlannerControllerTest {
 	 * This test cases sets up the Account and Controller necessary for this test suite.
 	 * @throws Exception to handle errors when creating the objects.
 	 */
-	@BeforeEach
+	//Was causing a FindBugs issue because the test wasnt fully created.
+	//commented out until the test gets created in full.
+	/**
+	@BeforeEach .
 	public void setUp() throws Exception {
 		Account account = new Account(new Person("Mr","Adrew",true),"100125464");
 		StudyPlannerController studyPlannerController = new StudyPlannerController(account);
 	}
-
+	*/
 	/**
 	 * WIP: This test case should attempt to retrieve user study profiles
 	 * @throws Exception to handle when the study profiles cannot be found or loaded properly.

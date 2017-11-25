@@ -134,9 +134,9 @@ public class HubFile implements Serializable {
 		version = v;
 		year = y;
 		semester = s;
-		modules = (ArrayList<Module>) m.clone();
-		assets = (ArrayList<VersionControlEntity>) a.clone();
-		calendarList = (ArrayList<Event>) cal.clone();
+		modules = new ArrayList<Module>(m);
+		assets = new ArrayList<VersionControlEntity>(a);
+		calendarList = new ArrayList<Event>(cal);
 		updateFile = false;
 	}
 
@@ -157,8 +157,8 @@ public class HubFile implements Serializable {
 	 */
 	public HubFile(int v, ArrayList<ExtensionApplication> e, ArrayList<VersionControlEntity> u) {
 		version = v;
-		extensions = (ArrayList<ExtensionApplication>) e.clone();
-		updates = (ArrayList<VersionControlEntity>) u.clone();
+		extensions = new ArrayList<ExtensionApplication>(e);
+		updates = new ArrayList<VersionControlEntity>(u);
 		updateFile = true;
 	}
 

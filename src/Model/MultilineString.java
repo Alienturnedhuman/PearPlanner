@@ -28,11 +28,15 @@ import java.util.Arrays;
 /**
  * Created by bendickson on 4/27/17.
  */
-public class MultilineString implements Serializable {
+public class MultilineString implements Serializable, Cloneable {
 	// private Data;
 	private ArrayList<String> lines;
 
 	// public methods
+  
+	/**
+	 * gets the multi-string clone from the array.
+	 */
 	public MultilineString clone() {
 		return new MultilineString(this.getAsArray());
 	}
@@ -40,37 +44,62 @@ public class MultilineString implements Serializable {
 	// getters
 
 	/**
-     * Returns the number of lines in this MultilineString.
-     *
-     * @return number of lines
-     */
+	 * Returns the number of lines in this MultilineString.
+	 *
+	 * @return number of lines
+	 */
 	public int getLines() {
 		return lines.size();
 	}
 
+	/**
+	 * Gets the arrayList.
+	 * @return arrayList of type string
+	 */
 	public ArrayList<String> getAsArrayList() {
 		return lines;
 	}
 
+	/**
+	 * get the lines as an array.
+	 * @return an array of lines
+	 */
 	public String[] getAsArray() {
-		String r[] = new String[lines.size()];
-		r = lines.toArray(r);
-		return r;
+		String[] line = new String [(lines.size())];
+		line = lines.toArray(line);
+		return line;
 	}
 
+	/**
+	 * get the arrayList as a string.
+	 * @return the string joiner
+	 */
 	public String getAsString() {
 		return String.join("\n", getAsArray());
 	}
 
+	//Constructors
+
+	/**
+	 * Constructor with no arguments.
+	 */
 	public MultilineString() {
 		lines = new ArrayList<>();
 	}
 
-	public MultilineString(String mString) {
-		lines = new ArrayList<>(Arrays.asList(mString.split("\n")));
+	/**
+	 * Constructor with a String.
+	 * @param string string to construct the multilineString
+	 */
+	public MultilineString(String string) {
+		lines = new ArrayList<>(Arrays.asList(string.split("\n")));
 	}
 
-	public MultilineString(String[] mString) {
-		lines = new ArrayList<>(Arrays.asList(mString));
+	/**
+	 * Constructor with an Array of type String.
+	 * @param string array of strings to construct the multilineString
+	 */
+	public MultilineString(String[] string) {
+		lines = new ArrayList<>(Arrays.asList(string));
 	}
 }

@@ -61,3 +61,9 @@
 .current-item {
     -fx-background-color: #CEA052;
 }
+
+.print-button {
+    -fx-background-image: url("/Content/print.png");
+    -fx-min-width: 30;
+    -fx-background-color: transparent;
+}
