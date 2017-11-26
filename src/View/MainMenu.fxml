@@ -48,7 +48,7 @@
                 <HBox style="-fx-background-color: #5C7167; -fx-padding: 8;"
                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                      <Button styleClass="button-image" prefWidth="21" fx:id="closeDrawer" style="-fx-background-image: url('/Content/close.png');
+                      <Button styleClass="button-image" prefWidth="21" fx:id="closeDrawer" style="-fx-background-image: url('/Content/close_small.png');
                         -fx-background-color: transparent; -fx-cursor: hand;">
                       </Button>
 
@@ -117,7 +117,7 @@
                                     <Insets left="5"/>
                                 </HBox.margin>
                                 <image>
-                                    <Image url="/Content/studyprofiles.png"/>
+                                    <Image url="/Content/studyprofiles_small.png"/>
                                 </image>
                             </ImageView>
                             <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
@@ -184,7 +184,7 @@
                                       <Insets left="5"/>
                                   </HBox.margin>
                                   <image>
-                                      <Image url="/Content/importhubfile.png"/>
+                                      <Image url="/Content/importhubfile_small.png"/>
                                   </image>
                               </ImageView>
                             <Button onAction="#importFile" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;"
@@ -198,7 +198,7 @@
                                       <Insets left="5"/>
                                   </HBox.margin>
                                   <image>
-                                      <Image url="/Content/importhubfile.png"/>
+                                      <Image url="/Content/importhubfile_small.png"/>
                                   </image>
                               </ImageView>
                             <Button onAction="#exportCalendar" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;"
