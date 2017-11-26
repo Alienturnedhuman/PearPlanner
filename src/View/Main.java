@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage) {
 		// Initialize the StudyPlanner:
 		MainController.initialise();
 		// If initialization passed, call the Main menu:

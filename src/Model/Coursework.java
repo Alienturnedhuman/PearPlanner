@@ -99,7 +99,7 @@ public class Coursework extends Assignment {
 		super(cWeighting, cSetBy, cMarkedBy, cReviewedBy, cMarks);
 		startDate = cStartDate;
 		deadline = cDeadline;
-		extensions = (ArrayList<Extension>) cExtensions.clone();
+		extensions = new ArrayList<Extension>(cExtensions);
 	}
 
 }

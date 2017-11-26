@@ -47,6 +47,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.awt.image.BufferedImage;
@@ -74,6 +75,8 @@ public class UIManager {
 			new FileChooser.ExtensionFilter("XML file", "*.xml");
 	private static FileChooser.ExtensionFilter pngExtension =
 			new FileChooser.ExtensionFilter("PNG file", "*.png");
+	private static FileChooser.ExtensionFilter icsExtension =
+			new FileChooser.ExtensionFilter("ICS file", "*.ics");
 	private URL activityFxml = getClass().getResource("/View/Activity.fxml");
 	private URL milestoneFxml = getClass().getResource("/View/Milestone.fxml");
 	private URL taskFxml = getClass().getResource("/View/Task.fxml");
@@ -87,8 +90,7 @@ public class UIManager {
 	 * Displays a 'Create Account' window and handles the creation of a new Account object.
 	 *
 	 * @return newly created Account
-	 * @throws Exception
-	 *             if user quits
+	 * @throws Exception if user quits
 	 */
 	public Account createAccount() throws Exception {
 		AccountController accountControl = new AccountController();
@@ -126,7 +128,10 @@ public class UIManager {
 		Parent root = loader.load();
 
 		// Set the scene:
-		mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
+		mainStage.setScene(new Scene(root,
+				Screen.getPrimary().getVisualBounds().getWidth() * 0.77,
+				Screen.getPrimary().getVisualBounds().getHeight() * 0.9,
+				true, SceneAntialiasing.BALANCED));
 		mainStage.setTitle("RaiderPlanner");
 
 		// Set minimum resolution to around 360p in 3:5 aspect ratio for small phones
@@ -140,8 +145,9 @@ public class UIManager {
 	 * Display the 'Add Activity' window.
 	 *
 	 * @return newly created Activity
+	 * @throws IOException exception if IO error is triggered
 	 */
-	public Activity addActivity() throws Exception {
+	public Activity addActivity() throws IOException {
 		ActivityController ac = new ActivityController();
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(activityFxml);
@@ -166,6 +172,7 @@ public class UIManager {
 	 * Displays the Activity details page
 	 *
 	 * @param activity for which the details should be displayed.
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void activityDetails(Activity activity) throws IOException {
 		ActivityController ac = new ActivityController(activity);
@@ -187,6 +194,7 @@ public class UIManager {
 	 * Displays the 'Add Milestone' window.
 	 *
 	 * @return newly created Milestone object.
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public Milestone addMilestone() throws IOException {
 		MilestoneController mc = new MilestoneController();
@@ -213,6 +221,7 @@ public class UIManager {
 	 * Displays the Milestone details page
 	 *
 	 * @param milestone for which the details should be shown.
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void milestoneDetails(Milestone milestone) throws IOException {
 		MilestoneController mc = new MilestoneController(milestone);
@@ -234,6 +243,7 @@ public class UIManager {
 	 * Displays the StudyProfile details page
 	 *
 	 * @param profile StudyProfile for which the details should be shown.
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void studyProfileDetails(StudyProfile profile) throws IOException {
 		StudyProfileController spc = new StudyProfileController(profile);
@@ -256,9 +266,8 @@ public class UIManager {
 	 *
 	 * @param module for which the details should be shown.
 	 * @param current Window from which this method is called.
-	 * @throws IOException exception if IO error is triggered
 	 */
-	public void moduleDetails(Module module, MenuController.Window current) throws IOException {
+	public void moduleDetails(Module module, MenuController.Window current) {
 		UIManager.mc.loadModule(module, current, null);
 	}
 
@@ -267,9 +276,8 @@ public class UIManager {
 	 *
 	 * @param module for which the details should be shown.
 	 * @param current Window from which this method is called.
-	 * @throws IOException if IO error is triggered
 	 */
-	public void moduleDetails(Module module, ModelEntity current) throws IOException {
+	public void moduleDetails(Module module, ModelEntity current) {
 		UIManager.mc.loadModule(module, MenuController.Window.EMPTY, current);
 	}
 
@@ -278,10 +286,8 @@ public class UIManager {
 	 *
 	 * @param assignment for which the details should be shown.
 	 * @param current Window from which this method is called.
-	 * @throws IOException if IO error is triggered
 	 */
-	public void assignmentDetails(Assignment assignment, MenuController.Window current)
-			throws IOException {
+	public void assignmentDetails(Assignment assignment, MenuController.Window current) {
 		UIManager.mc.loadAssignment(assignment, current, null);
 	}
 
@@ -290,9 +296,8 @@ public class UIManager {
 	 *
 	 * @param assignment for which the details should be shown.
 	 * @param current Window from which this method is called.
-	 * @throws IOException if IO error is triggered
 	 */
-	public void assignmentDetails(Assignment assignment, ModelEntity current) throws IOException {
+	public void assignmentDetails(Assignment assignment, ModelEntity current) {
 		UIManager.mc.loadAssignment(assignment, MenuController.Window.EMPTY, current);
 	}
 
@@ -300,8 +305,9 @@ public class UIManager {
 	 * Creates a window for adding a new Task.
 	 *
 	 * @return newly created Task
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
-	public Task addTask() throws Exception {
+	public Task addTask() throws IOException {
 		TaskController tc = new TaskController();
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(taskFxml);
@@ -326,7 +332,7 @@ public class UIManager {
 	 * Displays the Task details page
 	 *
 	 * @param task for which the details should be displayed.
-	 * @throws IOException if IO error is triggered from loading .fxml
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void taskDetails(Task task) throws IOException {
 		TaskController tc = new TaskController(task);
@@ -348,8 +354,9 @@ public class UIManager {
 	 * Creates a window for adding a new Requirement.
 	 *
 	 * @return newly created Requirement
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
-	public Requirement addRequirement() throws Exception {
+	public Requirement addRequirement() throws IOException {
 		RequirementController rc = new RequirementController();
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(requirementFxml);
@@ -374,6 +381,7 @@ public class UIManager {
 	 * Displays the Requirement details page.
 	 *
 	 * @param requirement for which the details should be displayed
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void requirementDetails(Requirement requirement) throws IOException {
 		RequirementController rc = new RequirementController(requirement);
@@ -393,6 +401,7 @@ public class UIManager {
 
 	/**
 	 * Display startup window.
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void showStartup() throws IOException {
 		StartupController sc = new StartupController();
@@ -459,13 +468,30 @@ public class UIManager {
 	}
 
 	/**
+	 * Displays a file dialog for saving .ics export files
+	 *
+	 * @return a File object
+	 */
+	public File saveIcsFileDialog() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save your ICS export file");
+		fileChooser.getExtensionFilters().add(icsExtension);
+		if (!savesFolder.exists()) {
+			savesFolder.mkdirs();
+		}
+		fileChooser.setInitialDirectory(savesFolder);
+		File file = fileChooser.showSaveDialog(mainStage);
+		return file;
+	}
+
+	/**
 	 * Displays a file dialog for saving .dat planner files
 	 *
 	 * @return a File object
 	 */
 	public File savePlannerFileDialog() {
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Save your planner file");
+		fileChooser.setTitle("Save your .dat file");
 		fileChooser.getExtensionFilters().add(datExtension);
 		if (!savesFolder.exists()) {
 			savesFolder.mkdirs();
