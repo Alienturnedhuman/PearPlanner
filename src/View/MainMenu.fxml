@@ -48,7 +48,7 @@
                 <HBox style="-fx-background-color: #5C7167; -fx-padding: 8;"
                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                      <Button styleClass="button-image" prefWidth="21" fx:id="closeDrawer" style="-fx-background-image: url('/Content/close_small.png');
+                      <Button styleClass="button-image" prefWidth="21" fx:id="closeDrawer" style="-fx-background-image: url('/Content/close.png');
                         -fx-background-color: transparent; -fx-cursor: hand;">
                       </Button>
 
