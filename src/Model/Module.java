@@ -194,13 +194,7 @@ public class Module extends VersionControlEntity
     @Override
     public void open(MenuController.Window current)
     {
-        try
-        {
-            MainController.ui.moduleDetails(this, current);
-        } catch (IOException e)
-        {
-            UIManager.reportError("Unable to open View file");
-        }
+        MainController.ui.moduleDetails(this, current);
     }
 
     // constructors

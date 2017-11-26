@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar
+ * Bijan Ghasemi Afshar, Amila Dias
  *
  *
  *
@@ -59,6 +59,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.print.PrinterJob;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
@@ -191,6 +192,9 @@ public class MenuController implements Initializable {
 	private GridPane mainContent;
 	@FXML
 	private HBox topBox;
+	@FXML
+	private HBox exportCalBox;
+
 	//chat variables
 	private final BorderPane mainPane = new BorderPane();
 	private final GridPane firstPane = new GridPane();
@@ -204,6 +208,7 @@ public class MenuController implements Initializable {
 	private final Label host = new Label("Host:");
 	private final Button submitButton = new Button("Submit");
 	private final Button sendButton = new Button("Send");
+	private boolean calendarOpen = false; //Used to monitor status of calendar (open or closed)
 
 	private String userName;
 	private String hostName;
@@ -234,37 +239,49 @@ public class MenuController implements Initializable {
 
 		this.updateNotifications();
 		this.updateMenu();
+		exportCalBox.managedProperty().bind(exportCalBox.visibleProperty());
 
+		//When user chooses different option in menu
+		//		calendarOpen changes to monitor status within main window.
 		switch (this.current) {
 		case DASHBOARD: {
 			if (MainController.getSpc().getPlanner().getCurrentStudyProfile() != null) {
 				this.loadDashboard();
+				calendarOpen = false;
 			}
 			break;
 		}
 		case PROFILES: {
 			this.loadStudyProfiles();
+			calendarOpen = false;
 			break;
 		}
 		case MODULES: {
 			this.loadModules();
+			calendarOpen = false;
 			break;
 		}
 		case MILESTONES: {
 			this.loadMilestones();
+			calendarOpen = false;
 			break;
 		}
 		case CALENDAR: {
 			this.loadCalendar();
+			calendarOpen = true;
 			break;
 		}
 		case CHAT: {
 			this.obtainUserInformation();
+			calendarOpen = false;
 			break;
 		}
 		default:
+			calendarOpen = false;
 			break;
 		}
+		//Based on user choice of menu option "Export Calendar" button is shown/hidden
+		exportCalBox.setVisible(calendarOpen);
 	}
 
 	/**
@@ -576,7 +593,7 @@ public class MenuController implements Initializable {
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("Calendar");
-		// =================
+
 		// Layout:
 		VBox layout = new VBox();
 		GridPane.setHgrow(layout, Priority.ALWAYS);
@@ -587,12 +604,13 @@ public class MenuController implements Initializable {
 		// Nav bar:
 		HBox nav = new HBox();
 		nav.setSpacing(15.0);
-		// =================
+
 		HBox xx = new HBox();
 		HBox.setHgrow(xx, Priority.ALWAYS);
 		// Buttons:
 		Button agendaFwd = new Button(">");
 		Button agendaBwd = new Button("<");
+
 		nav.getChildren().addAll(xx, agendaBwd, agendaFwd);
 		// Content:
 		Agenda content = new Agenda();
@@ -602,22 +620,15 @@ public class MenuController implements Initializable {
 		content.autosize();
 		content.setActionCallback(param -> null);
 		content.setEditAppointmentCallback(param -> null);
-		//Creation of ICS export factory
-		ICalExport icalExport = new ICalExport();
 		// Agenda buttons:
-		Button export = new Button("Export");
 		agendaBwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
 		agendaFwd.setOnMouseClicked(event -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
-
-		export.setOnMouseClicked(event -> icalExport.exportToFile());
 		// Populate Agenda:
 		ArrayList<Event> calendar =
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
 		for (Event e : calendar) {
-			//Create an event to be exported to an ICS file
-			icalExport.createExportEvent(e);
 			// TODO - find a way to eliminate this if/else-if/instanceof anti-pattern
 			if (e instanceof TimetableEvent) {
 				LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
@@ -656,6 +667,22 @@ public class MenuController implements Initializable {
 								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
 			}
 		}
+		Button printBtn = new Button();
+		printBtn.getStyleClass().addAll("button-image", "print-button");
+		printBtn.setOnMouseClicked(event -> {
+			// Prints the currently selected week
+			PrinterJob job = PrinterJob.createPrinterJob();
+			if (job != null) {
+				if (!job.showPrintDialog(null)) {
+					// user cancelled
+					job.cancelJob();
+					return;
+				}
+				content.print(job);
+				job.endJob();
+			}
+		});
+		nav.getChildren().add(1, printBtn);
 		layout.getChildren().addAll(nav, content);
 		Platform.runLater(() -> content
 				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusMinutes(1050)));
@@ -670,7 +697,7 @@ public class MenuController implements Initializable {
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("Study Profiles");
-		// =================
+
 
 		// Columns:
 		TableColumn<StudyProfile, String> nameColumn = new TableColumn<>("Profile name");
@@ -876,7 +903,7 @@ public class MenuController implements Initializable {
 		moduleContent.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		GridPane.setHgrow(moduleContent, Priority.ALWAYS);
 		GridPane.setVgrow(moduleContent, Priority.ALWAYS);
-		// =================
+
 
 		// Set click event:
 		moduleContent.setRowFactory(e -> {
@@ -1357,6 +1384,13 @@ public class MenuController implements Initializable {
 	 */
 	public void openBrowser() {
 		MainController.openBrowser();
+	}
+
+	/**
+         * Handles 'Export Calendar' event.
+	 */
+	public void exportCalendar() {
+		MainController.exportCalendar();
 	}
 
 	@Override

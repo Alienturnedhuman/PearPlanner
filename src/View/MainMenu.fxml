@@ -125,7 +125,48 @@
                             />
                         </HBox>
 
-                        <GridPane GridPane.rowIndex="4" vgap="11">
+                        <GridPane GridPane.rowIndex="4" vgap="15">
+                          <HBox GridPane.rowIndex="1">
+                            <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false">
+                                <HBox.margin>
+                                    <Insets left="0"/>
+                                </HBox.margin>
+                                <image>
+                                    <Image url="/Content/line.png"/>
+                                </image>
+                            </ImageView>
+                          </HBox>
+
+                          <HBox GridPane.rowIndex="2">
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                  <HBox.margin>
+                                      <Insets left="5"/>
+                                  </HBox.margin>
+                                  <image>
+                                      <Image url="/Content/milestones.png"/>
+                                  </image>
+                              </ImageView>
+                            <Button fx:id="chat" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
+                                    text="Chat" GridPane.rowIndex="7"
+                            />
+                          </HBox>
+
+                          <HBox GridPane.rowIndex="3">
+	                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+	                             <HBox.margin>
+	                                 <Insets left="5"/>
+	                             </HBox.margin>
+	                             <image>
+	                                 <Image url="/Content/help.png"/>
+	                             </image>
+	                         </ImageView>
+	                         <Button onAction="#openBrowser" fx:id="help" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
+	                                  text="Help"
+	                         />
+	                     </HBox>
+                      </GridPane>
+
+                        <GridPane GridPane.rowIndex="5" vgap="15">
                           <HBox GridPane.rowIndex="1">
                             <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false">
                                 <HBox.margin>
@@ -150,35 +191,22 @@
                                     text="Import HUB file"
                             />
                           </HBox>
-                          
-                          <HBox GridPane.rowIndex="3">
-	                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-	                             <HBox.margin>
-	                                 <Insets left="5"/>
-	                             </HBox.margin>
-	                             <image>
-	                                 <Image url="/Content/help.png"/>
-	                             </image>
-	                         </ImageView>
-	                         <Button onAction="#openBrowser" fx:id="help" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
-	                                  text="Help"
-	                         />
-	                     </HBox>
-                      
-                          <HBox GridPane.rowIndex="6">
+
+                          <HBox GridPane.rowIndex="3" fx:id="exportCalBox">
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                   <HBox.margin>
                                       <Insets left="5"/>
                                   </HBox.margin>
                                   <image>
-                                      <Image url="/Content/milestones.png"/>
+                                      <Image url="/Content/importhubfile.png"/>
                                   </image>
                               </ImageView>
-                            <Button fx:id="chat" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
-                                    text="Chat" GridPane.rowIndex="7"
+                            <Button onAction="#exportCalendar" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;"
+                                    text="Export Calendar"
                             />
                           </HBox>
-                          </GridPane>
+
+                      </GridPane>
                     </children>
                 </GridPane>
             </children>

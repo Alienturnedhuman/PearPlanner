@@ -116,9 +116,8 @@ public class ModelEntity implements Serializable
         notes = new ArrayList<>();
     }
 
-    public ModelEntity(String cName, String[] cDetails, ArrayList<Note> cNotes)
-    {
-        this(cName, cDetails);
-        notes = (ArrayList<Note>) cNotes.clone();
-    }
+	public ModelEntity(String cName, String[] cDetails, ArrayList<Note> cNotes){
+	this(cName, cDetails);
+		notes = new ArrayList<Note>(cNotes);
+	}
 }
