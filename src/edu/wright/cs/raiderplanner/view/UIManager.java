@@ -447,7 +447,7 @@ public class UIManager {
 		VBox layout = new VBox();
 		layout.setSpacing(10);
 		layout.setPadding(new Insets(15));
-		layout.getStylesheets().add("/edu/wright/cs/raiderplanner/Content/stylesheet.css");
+		layout.getStylesheets().add("/edu/wright/cs/raiderplanner/content/stylesheet.css");
 		// Nav bar:
 		HBox nav = new HBox();
 		nav.setSpacing(15.0);

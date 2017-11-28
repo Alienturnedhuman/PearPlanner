@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-          prefHeight="189.0" prefWidth="600.0" stylesheets="@../content/stylesheet.css"
+          prefHeight="189.0" prefWidth="600.0" stylesheets="@../edu/wright/cs/raiderplanner/content/stylesheet.css"
           xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>

@@ -7,7 +7,7 @@
 <?import javafx.geometry.Insets?>
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            stylesheets="@../content/stylesheet.css">
+            stylesheets="@../edu/wright/cs/raiderplanner/content/stylesheet.css">
     <children>
         <ToolBar minHeight="56.0" style="-fx-background-color: #026937" AnchorPane.leftAnchor="0.0"
                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
