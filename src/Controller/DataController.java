@@ -41,6 +41,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +69,7 @@ public class DataController {
 	 * @param vce the entity to update.
 	 */
 	private static void processVceUpdate(VersionControlEntity vce) {
-		if (vce.addToLibrary() || VersionControlEntity.get(vce.getUID()).update(vce)) {
+		if (vce.addToLibrary() || VersionControlEntity.get(vce.getUid()).update(vce)) {
 			ConsoleIO.setConsoleMessage(vce + " added", true);
 		} else {
 			ConsoleIO.setConsoleMessage(vce + " not added", true);
@@ -82,9 +83,10 @@ public class DataController {
 	 * @param nodes the list of nodes to process for the update.
 	 *
 	 * @return The updated HUB file.
-	 * @throws Exception TODO - fix this (#108).
+	 * @throws IOException if there is a problem creating an entity from the
+	 * 				serialized representation
 	 */
-	private static HubFile processUpdateHubFile(NodeList nodes) throws Exception {
+	private static HubFile processUpdateHubFile(NodeList nodes) throws IOException {
 
 		HubFile hub = null;
 		XMLcontroller xmlTools = new XMLcontroller();
@@ -166,11 +168,11 @@ public class DataController {
 	 * @param uid the identifier to look up.
 	 *
 	 * @return the entity from the list or the library.
-	 * @throws Exception TODO - fix this  (#108).
+	 * @throws IOException if the requested entity is not in the list or cannot
+	 * 				be cast to the specified type
 	 */
-	public static <T extends VersionControlEntity> T
-			inList(Map<String, VersionControlEntity> list, String uid)
-					throws Exception {
+	public static <T extends VersionControlEntity> T inList(
+			Map<String, VersionControlEntity> list, String uid) throws IOException {
 
 		VersionControlEntity vce = null;
 		if (list.containsKey(uid)) {
@@ -184,10 +186,12 @@ public class DataController {
 			try {
 				return (T) vce;
 			} catch (Exception e) {
-				throw new Exception("Incorrect type referenced for '" + uid + "'");
+				// TODO this should be IllegalStateException, RuntimeException, or other
+				throw new IOException("Incorrect type referenced for '" + uid + "'");
 			}
 		}
-		throw new Exception("UID referenced is not in database for '" + uid + "'");
+		// TODO this should not be here, rather callers should receive the null return
+		throw new IOException("UID referenced is not in database for '" + uid + "'");
 
 	}
 
@@ -204,7 +208,7 @@ public class DataController {
 				values.get("details").getMultilineString());
 		String uid = values.get("uid").getString();
 		vce.makeImporter();
-		vce.setUID(uid, values.get("version").getInt());
+		vce.setUid(uid, values.get("version").getInt());
 
 	}
 
@@ -214,9 +218,11 @@ public class DataController {
 	 * @param nodes the list of nodes to use for constituting the HUB file.
 	 *
 	 * @return the HUB file.
-	 * @throws Exception TODO - fix this (#108).
+	 * @throws IOException when attempting to import an already existing study
+	 * 				profile, or for errors connected with creating objects from
+	 * 				their serialized representations
 	 */
-	private static HubFile processNewHubFile(NodeList nodes) throws Exception {
+	private static HubFile processNewHubFile(NodeList nodes) throws IOException {
 
 		int beginLog = ConsoleIO.getLogSize();
 		ConsoleIO.setConsoleMessage("Importing New Hub File", true);
@@ -242,7 +248,8 @@ public class DataController {
 			int semester = studyProfileValues.get("semester").getInt();
 
 			if (MainController.getSpc().containsStudyProfile(year, semester)) {
-				throw new Exception("Study profile for " + year + " semester "
+				// TODO this should be IllegalStateException, RuntimeException, or other
+				throw new IOException("Study profile for " + year + " semester "
 						+ semester + " already imported");
 			}
 
@@ -274,7 +281,7 @@ public class DataController {
 
 							tp = HubFile.createPerson(nc);
 
-							assetList.put(tp.getUID(), tp);
+							assetList.put(tp.getUid(), tp);
 
 							ConsoleIO.setConsoleMessage("Adding person: " + tp.toString(), true);
 						}
@@ -300,7 +307,7 @@ public class DataController {
 
 							tb = HubFile.createBuilding(nc);
 
-							assetList.put(tb.getUID(), tb);
+							assetList.put(tb.getUid(), tb);
 							ConsoleIO.setConsoleMessage("Adding buiding: " + tb.toString(), true);
 						}
 					}
@@ -323,7 +330,7 @@ public class DataController {
 							ConsoleIO.setConsoleMessage("Valid Node found:", true);
 
 							tr = HubFile.createRoom(nc, assetList);
-							assetList.put(tr.getUID(), tr);
+							assetList.put(tr.getUid(), tr);
 							ConsoleIO.setConsoleMessage("Adding room: " + tr.toString(), true);
 						}
 					}
@@ -347,7 +354,7 @@ public class DataController {
 							TimeTableEventType ttet = HubFile.createTimetableEventType(nc);
 
 
-							assetList.put(ttet.getUID(), ttet);
+							assetList.put(ttet.getUid(), ttet);
 							ConsoleIO.setConsoleMessage("Adding timetable event: "
 									+ ttet.toString(), true);
 						}
@@ -397,7 +404,7 @@ public class DataController {
 									ConsoleIO.setConsoleMessage("Valid Node found:", true);
 									Coursework newCoursework =
 											HubFile.createCoursework(nc, assetList);
-									assetList.put(newCoursework.getUID(), newCoursework);
+									assetList.put(newCoursework.getUid(), newCoursework);
 									thisModule.addAssignment(newCoursework);
 									ConsoleIO.setConsoleMessage("Adding coursework: "
 											+ newCoursework.toString(), true);
@@ -412,7 +419,7 @@ public class DataController {
 
 
 									Exam newExam = HubFile.createExam(nc, assetList);
-									assetList.put(newExam.getUID(), newExam);
+									assetList.put(newExam.getUid(), newExam);
 									thisModule.addAssignment(newExam);
 									ConsoleIO.setConsoleMessage("Adding exam: "
 											+ newExam.toString(), true);
@@ -439,7 +446,7 @@ public class DataController {
 
 							TimetableEvent newTte =
 									HubFile.createTimetableEvent(nc, assetList);
-							assetList.put(newTte.getUID(), newTte);
+							assetList.put(newTte.getUid(), newTte);
 							thisModule.addTimetableEvent(newTte);
 
 							ConsoleIO.setConsoleMessage("Adding TimetableEvent: "

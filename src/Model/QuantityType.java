@@ -26,197 +26,222 @@ import Controller.MainController;
 import java.util.ArrayList;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
-public class QuantityType extends ModelEntity
-{
-    private static ArrayList<QuantityType> quantityDatabase = new ArrayList<>();
+public class QuantityType extends ModelEntity {
+	private static ArrayList<QuantityType> quantityDatabase = new ArrayList<>();
 
-    public static String[] listOfNames()
-    {
-        String[] rr = new String[quantityDatabase.size()];
-        int ii = quantityDatabase.size();
-        int i = -1;
-        while (++i < ii)
-        {
-            rr[i] = quantityDatabase.get(i).getName();
-        }
-        return rr;
-    }
+	/**
+	 * gets a list of names inside the database.
+	 * @return array of names
+	 */
+	public static String[] listOfNames() {
+		String[] rr = new String[quantityDatabase.size()];
+		int ii = quantityDatabase.size();
+		int jj = -1;
+		while (++jj < ii) {
+			rr[jj] = quantityDatabase.get(jj).getName();
+		}
+		return rr;
+	}
 
-    public static QuantityType[] listOfQuantityTypes()
-    {
-        QuantityType[] r = new QuantityType[quantityDatabase.size()];
-        int i = -1;
-        int ii = quantityDatabase.size();
-        while (++i < ii)
-        {
-            r[i] = quantityDatabase.get(i);
-        }
-        return r;
-    }
+	/**
+	 * gets an array of quantityTypes.
+	 * @return array of quantityTypes
+	 */
+	public static QuantityType[] listOfQuantityTypes() {
+		QuantityType[] rr = new QuantityType[quantityDatabase.size()];
+		int jj = -1;
+		int ii = quantityDatabase.size();
+		while (++jj < ii) {
+			rr[jj] = quantityDatabase.get(jj);
+		}
+		return rr;
+	}
 
-    public static QuantityType get(String tt)
-    {
-        int i = -1;
-        int ii = quantityDatabase.size();
-        while (++i < ii)
-        {
-            if (quantityDatabase.get(i).equals(tt))
-            {
-                return quantityDatabase.get(i);
-            }
-        }
-        return DEFAULT;
-    }
+	/**
+	 * gets the quantityType.
+	 * @param tt string of the quantity
+	 * @return the quantity type
+	 */
+	public static QuantityType get(String tt) {
+		int jj = -1;
+		int ii = quantityDatabase.size();
+		while (++jj < ii) {
+			if (quantityDatabase.get(jj).equals(tt)) {
+				return quantityDatabase.get(jj);
+			}
+		}
+		return DEFAULT;
+	}
 
-    public static boolean exists(QuantityType qt)
-    {
-        int i = -1;
-        int ii = quantityDatabase.size();
-        while (++i < ii)
-        {
-            if (quantityDatabase.get(i).equals(qt))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+	/**
+	 * checks if the quantityType exists.
+	 * @param qt quantityType
+	 * @return true or false if it exists
+	 */
+	public static boolean exists(QuantityType qt) {
+		int jj = -1;
+		int ii = quantityDatabase.size();
+		while (++jj < ii) {
+			if (quantityDatabase.get(jj).equals(qt)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    public static boolean exists(String tt)
-    {
-        int i = -1;
-        int ii = quantityDatabase.size();
-        while (++i < ii)
-        {
-            if (quantityDatabase.get(i).equals(tt))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+	/**
+	 * checks to see if the string exists in the database.
+	 * @param tt name of the quantity
+	 * @return  true or false depending on if it is in database
+	 */
+	public static boolean exists(String tt) {
+		int jj = -1;
+		int ii = quantityDatabase.size();
+		while (++jj < ii) {
+			if (quantityDatabase.get(jj).equals(tt)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    /**
-     * Create a new QuantityType.
-     *
-     * @param cName    Name of the quantity.
-     * @param cDetails Details of the quantity.
-     * @return
-     */
-    public static QuantityType create(String cName, String cDetails)
-    {
-        QuantityType t = new QuantityType(cName, cDetails);
-        if (MainController.getSpc() != null)
-            MainController.getSpc().addQuantityType(t);
-        return t;
-    }
+	/**
+	 * Create a new QuantityType.
+	 *
+	 * @param name	Name of the quantity.
+	 * @param details Details of the quantity.
+	 * @return quantityType
+	 */
+	public static QuantityType create(String name, String details) {
+		QuantityType type = new QuantityType(name, details);
+		if (MainController.getSpc() != null) {
+			MainController.getSpc().addQuantityType(type);
+		}
+		return type;
+	}
 
-    /**
-     * Create a new QuantityType.
-     *
-     * @param cName Name of the quantity.
-     * @return
-     */
-    public static QuantityType create(String cName)
-    {
-        QuantityType t = new QuantityType(cName);
-        if (MainController.getSpc() != null)
-            MainController.getSpc().addQuantityType(t);
-        return t;
-    }
+	/**
+	 * Create a new QuantityType.
+	 *
+	 * @param name Name of the quantity.
+	 * @return quantityType
+	 */
+	public static QuantityType create(String name) {
+		QuantityType type = new QuantityType(name);
+		if (MainController.getSpc() != null) {
+			MainController.getSpc().addQuantityType(type);
+		}
+		return type;
+	}
 
-    /**
-     * Create a new QuantityType from an existing one.
-     *
-     * @param type QuantityType object
-     */
-    public static void create(QuantityType type)
-    {
-        if (!QuantityType.quantityDatabase.contains(type))
-        {
-            QuantityType.quantityDatabase.add(type);
-            if (MainController.getSpc() != null)
-                MainController.getSpc().addQuantityType(type);
-        }
-    }
+	/**
+	 * Create a new QuantityType from an existing one.
+	 *
+	 * @param type QuantityType object
+	 */
+	public static void create(QuantityType type) {
+		if (!QuantityType.quantityDatabase.contains(type)) {
+			QuantityType.quantityDatabase.add(type);
+			if (MainController.getSpc() != null) {
+				MainController.getSpc().addQuantityType(type);
+			}
+		}
+	}
 
-    /**
-     * A toString method used in TableView
-     *
-     * @return
-     */
-    public String toString()
-    {
-        return this.name;
-    }
+	/**
+	 * A toString method used in TableView.
+	 * @return name
+	 */
+	public String toString() {
+		return this.name;
+	}
 
-    // this is a temporary way to populate the array until we later replace from reading a set up file
-    static
-    {
-        class pair
-        {
-            public String a;
-            public String b;
+	// a temporary way to populate the array until we later replace from reading a set up file
+	static {
+		/**
+		 * Class to populate the quantityType until it is better implemented.
+		 * @author Eric Sweet
+		 *
+		 */
+		class Pair {
+			public String one;
+			public String two;
 
-            pair(String name, String details)
-            {
-                a = name;
-                b = details;
-            }
-        }
-        pair[] staticTypes = {
-                new pair("Other", "Other")
-                ,
-                new pair("Hours", "Work in hours")
-                ,
-                new pair("Books read", "Read this number of books")
-                ,
-                new pair("Videos watched", "Watched this number of videos")
-                ,
-                new pair("thousand words written", "Number of thousand words written")
-                ,
-                new pair("questions answered", "Number of questions answered")
-        };
-        int i = -1;
-        int ii = staticTypes.length;
-        while (++i < ii)
-        {
-            QuantityType t = new QuantityType(staticTypes[i].a, staticTypes[i].b);
-        }
-    }
+			/**
+			 * Constructor of the pair.
+			 * @param name name of the type
+			 * @param details detail of the type
+			 */
+			Pair(String name, String details) {
+				one = name;
+				two = details;
+			}
+		}
 
-    private QuantityType(String cName)
-    {
-        super(cName);
-        if (!exists(this))
-        {
-            quantityDatabase.add(this);
-        }
-    }
+		Pair[] staticTypes = {
+				new Pair("Other", "Other"),
+				new Pair("Hours", "Work in hours"),
+				new Pair("Books read", "Read this number of books"),
+				new Pair("Videos watched", "Watched this number of videos"),
+				new Pair("thousand words written", "Number of thousand words written"),
+				new Pair("questions answered", "Number of questions answered")
+		};
+		int jj = -1;
+		int ii = staticTypes.length;
+		while (++jj < ii) {
+			QuantityType type = new QuantityType(staticTypes[jj].one, staticTypes[jj].two);
+		}
+	}
 
-    private QuantityType(String cName, String cDetails)
-    {
-        super(cName, cDetails);
-        if (!exists(this))
-        {
-            quantityDatabase.add(this);
-        }
-    }
+	/**
+	 * adds the quantity to the database if it does not exist.
+	 * @param name name of the quantity
+	 */
+	private QuantityType(String name) {
+		super(name);
+		if (!exists(this)) {
+			quantityDatabase.add(this);
+		}
+	}
 
-    @Override
-    public boolean equals(Object obj)
-    {
-        QuantityType that = (QuantityType) obj;
-        return getName().equals(that.getName());
-    }
+	/**
+	 * adds the quantity to database if it does not exist.
+	 * @param name name of quantity
+	 * @param details details of quantity
+	 */
+	private QuantityType(String name, String details) {
+		super(name, details);
+		if (!exists(this)) {
+			quantityDatabase.add(this);
+		}
+	}
 
-    public boolean equals(String c)
-    {
-        return getName().equals(c);
-    }
+	/**
+	 * Test to see if the object name is equal to type.
+	 * @return if they are equal
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		QuantityType that = (QuantityType) obj;
+		try {
+			return that.getName().equals(getName());
+		} catch (NullPointerException e) {
+			System.out.println("QuantityType name was null");
+			return false;
+		}
+	}
 
-    public static QuantityType DEFAULT = quantityDatabase.get(0);
+	/**
+	 * Sees if the name is equal to string c.
+	 * @param name name to check against
+	 * @return returns if they are equal
+	 */
+	public boolean equals(String name) {
+		return getName().equals(name);
+	}
+
+	public static QuantityType DEFAULT = quantityDatabase.get(0);
 }

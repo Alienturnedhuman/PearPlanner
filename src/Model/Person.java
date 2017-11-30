@@ -74,7 +74,7 @@ public class Person extends VersionControlEntity {
 
 		super(true);
 		setFamilyName(famName);
-		this.givenNames = (ArrayList<String>) givenNames.clone();
+		this.givenNames = new ArrayList<String>(givenNames);
 		setSalutation(salutation);
 		familyNameLast = famNameLast;
 		email = "";
@@ -140,7 +140,7 @@ public class Person extends VersionControlEntity {
 			Boolean famNameLast, String newEmail) {
 
 		setFamilyName(famName);
-		this.givenNames = (ArrayList<String>) givenNames.clone();
+		this.givenNames = new ArrayList<String>(givenNames);
 		setSalutation(salutation);
 		familyNameLast = famNameLast;
 		email = newEmail;
@@ -217,7 +217,7 @@ public class Person extends VersionControlEntity {
 	 * @return a list of given names for this person
 	 */
 	public ArrayList<String> getGivenNames() {
-		return (ArrayList<String>) givenNames.clone();
+		return new ArrayList<String>(givenNames);
 	}
 
 	/**

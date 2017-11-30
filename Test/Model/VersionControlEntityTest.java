@@ -63,17 +63,17 @@ public class VersionControlEntityTest extends ApplicationTest {
 	public void findAndUpdate() throws Exception {
 		assertFalse(VersionControlEntity.findAndUpdate(versionControlEntity));
 
-		versionControlEntity.setUID("99856-ID");
+		versionControlEntity.setUid("99856-ID");
 		assertTrue(VersionControlEntity.findAndUpdate(versionControlEntity));
 	}
 
 	@Test
 	public void inLibrary() throws Exception {
-		versionControlEntity.setUID("1234-ID");
+		versionControlEntity.setUid("1234-ID");
 		assertTrue(VersionControlEntity.inLibrary("1234-ID"));
 
 		assertFalse(VersionControlEntity.inLibrary("10132-ID"));
-		versionControlEntity.setUID("10132-ID");
+		versionControlEntity.setUid("10132-ID");
 		assertTrue(VersionControlEntity.inLibrary("10132-ID"));
 	}
 
@@ -84,25 +84,25 @@ public class VersionControlEntityTest extends ApplicationTest {
 
 	@Test
 	public void getUid() throws Exception {
-		assertEquals(null, versionControlEntity.getUID());
+		assertEquals(null, versionControlEntity.getUid());
 	}
 
 	@Test
 	public void setUid() throws Exception {
-		// Testing setUID with one argument
-		versionControlEntity.setUID("1234-ID");
-		assertEquals("1234-ID", versionControlEntity.getUID());
+		// Testing setUid with one argument
+		versionControlEntity.setUid("1234-ID");
+		assertEquals("1234-ID", versionControlEntity.getUid());
 
 		// Testing the duplication
-		versionControlEntity.setUID("1234-ID");
+		versionControlEntity.setUid("1234-ID");
 
-		// Testing setUID with two argument
-		assertEquals(true, versionControlEntity.setUID("95657-ID",1));
-		assertEquals("95657-ID", versionControlEntity.getUID());
+		// Testing setUid with two argument
+		assertEquals(true, versionControlEntity.setUid("95657-ID",1));
+		assertEquals("95657-ID", versionControlEntity.getUid());
 		assertEquals(1, versionControlEntity.getVersion());
 
 		// Testing the duplication
-//		assertFalse(versionControlEntity.setUID("5678-ID", 2));
+//		assertFalse(versionControlEntity.setUid("5678-ID", 2));
 	}
 
 	/**
