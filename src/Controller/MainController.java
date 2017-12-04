@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar
+ * Bijan Ghasemi Afshar, Amila Dias
  *
  *
  *
@@ -21,7 +21,9 @@
 
 package Controller;
 
+import Model.Event;
 import Model.HubFile;
+import Model.ICalExport;
 import Model.StudyPlanner;
 import View.UIManager;
 
@@ -36,6 +38,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -252,6 +255,24 @@ public class MainController {
 			} catch (URISyntaxException e) {
 				UIManager.reportError("Invaild URI syntax");
 			}
+		}
+	}
+
+	/**
+         * Function exports calendar ICS file to user defined location.
+	 */
+	public static void exportCalendar() {
+		ICalExport icalExport = new ICalExport();
+		try {
+			ArrayList<Event> exportCal =
+					getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
+			for (Event e : exportCal) {
+				icalExport.createExportEvent(e);
+			}
+			icalExport.exportToFile(ui.saveIcsFileDialog());
+			UIManager.reportSuccess("File Exported");
+		} catch (NullPointerException e) {
+			UIManager.reportError("Calendar does not exist! Export failed");
 		}
 	}
 }

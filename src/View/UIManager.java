@@ -47,6 +47,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.awt.image.BufferedImage;
@@ -74,6 +75,8 @@ public class UIManager {
 			new FileChooser.ExtensionFilter("XML file", "*.xml");
 	private static FileChooser.ExtensionFilter pngExtension =
 			new FileChooser.ExtensionFilter("PNG file", "*.png");
+	private static FileChooser.ExtensionFilter icsExtension =
+			new FileChooser.ExtensionFilter("ICS file", "*.ics");
 	private URL activityFxml = getClass().getResource("/View/Activity.fxml");
 	private URL milestoneFxml = getClass().getResource("/View/Milestone.fxml");
 	private URL taskFxml = getClass().getResource("/View/Task.fxml");
@@ -125,7 +128,10 @@ public class UIManager {
 		Parent root = loader.load();
 
 		// Set the scene:
-		mainStage.setScene(new Scene(root, 1000, 750, true, SceneAntialiasing.BALANCED));
+		mainStage.setScene(new Scene(root,
+				Screen.getPrimary().getVisualBounds().getWidth() * 0.77,
+				Screen.getPrimary().getVisualBounds().getHeight() * 0.9,
+				true, SceneAntialiasing.BALANCED));
 		mainStage.setTitle("RaiderPlanner");
 
 		// Set minimum resolution to around 360p in 3:5 aspect ratio for small phones
@@ -462,13 +468,30 @@ public class UIManager {
 	}
 
 	/**
+	 * Displays a file dialog for saving .ics export files
+	 *
+	 * @return a File object
+	 */
+	public File saveIcsFileDialog() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save your ICS export file");
+		fileChooser.getExtensionFilters().add(icsExtension);
+		if (!savesFolder.exists()) {
+			savesFolder.mkdirs();
+		}
+		fileChooser.setInitialDirectory(savesFolder);
+		File file = fileChooser.showSaveDialog(mainStage);
+		return file;
+	}
+
+	/**
 	 * Displays a file dialog for saving .dat planner files
 	 *
 	 * @return a File object
 	 */
 	public File savePlannerFileDialog() {
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Save your planner file");
+		fileChooser.setTitle("Save your .dat file");
 		fileChooser.getExtensionFilters().add(datExtension);
 		if (!savesFolder.exists()) {
 			savesFolder.mkdirs();

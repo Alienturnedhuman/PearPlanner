@@ -28,18 +28,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javafx.collections.ObservableList;
+
 /**
- * PearPlanner/RaiderPlanner
- * Created by Team BRONZE on 4/27/17.
+ * PearPlanner/RaiderPlanner.
+ * Created by Team BRONZE on 4/27/17
  */
 public class Milestone extends ModelEntity {
-	// private data
 	private ArrayList<Task> tasks = new ArrayList<>();
 	private Deadline deadline;
 
 	// public methods
-
-	// Getters:
 
 	/**
      * Check whether this Milestone is complete.
@@ -54,6 +53,20 @@ public class Milestone extends ModelEntity {
 		}
 		return true;
 	}
+
+	// Constructors:
+	/**
+	 * Milestone class constructor.
+	 * @param name name of deadline
+	 * @param details details of deadline
+	 * @param deadline time of deadline
+	 */
+	public Milestone(String name, String details, LocalDate deadline) {
+		super(name, details);
+		this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+				+ "T00:00:01Z");
+	}
+	// Getters:
 
 	/**
      * Computes progress based on Task weighting and Tasks completed.
@@ -161,32 +174,32 @@ public class Milestone extends ModelEntity {
 		if (this.tasks.contains(task)) {
 			return false;
 		}
-
 		this.tasks.add(task);
 		return true;
 	}
 
 	/**
-     * Checks if the Milestone contains the requested task
-     *
-     * @param task Task to be checked for
-     * @return Whether the teask is contained.
-     */
+	 * Checks if the Milestone contains the requested task
+	 *
+	 * @param task Task to be checked for
+	 * @return Whether the task is contained.
+	 */
 	public boolean containsTask(Task task) {
 		return this.tasks.contains(task);
 	}
 
-	/**
-     * Add all given Tasks to this Milestone.
-     *
-     * @param tasks a Collection of Tasks to be added.
-     * @return whether the provided Tasks were added successfully.
-     */
+	 /** Add all given Tasks to this Milestone.
+	 *
+	 * @param tasks
+	 * a Collection of Tasks to be added.
+	 * @return whether the provided Tasks were added successfully.
+	 */
 	public boolean addTasks(Collection<Task> tasks) {
-		if (this.tasks.contains(tasks)) {
-			return false;
+		for (Task curr : tasks) {
+			if (this.tasks.contains(curr)) {
+				return false;
+			}
 		}
-
 		this.tasks.addAll(tasks);
 		return true;
 	}
@@ -217,13 +230,6 @@ public class Milestone extends ModelEntity {
      */
 	public void setDeadline(LocalDate date) {
 		this.deadline.setDate(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-				+ "T00:00:01Z");
-	}
-
-	// Constructors:
-	public Milestone(String name, String details, LocalDate deadline) {
-		super(name, details);
-		this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
 				+ "T00:00:01Z");
 	}
 }
