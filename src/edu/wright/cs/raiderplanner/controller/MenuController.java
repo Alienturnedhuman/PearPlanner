@@ -102,6 +102,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import jfxtras.scene.control.agenda.Agenda;
 
+import java.awt.MouseInfo;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -139,18 +140,15 @@ public class MenuController implements Initializable {
 	private double screenAverage = (screenWidth + screenHeight) / 2;
 
 	// Shadows:
-	private int navShadowRadius = (int)(screenAverage * 0.03);
-	private int navShadowOffset = (int)(screenAverage * 0.01);
-	private DropShadow navShadow =
-			new DropShadow(navShadowRadius, navShadowOffset, 0, Color.BLACK);
-	private DropShadow notifShadow =
-			new DropShadow(screenAverage * 0.02, 0, 0.009, Color.BLACK);
-	private DropShadow moduleDefaultShadow =
-			new DropShadow(screenAverage * 0.005, 0, 0, Color.BLACK);
-	private DropShadow moduleHoverShadow =
-			new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
-	private InnerShadow modulePressedShadow =
-			new InnerShadow(screenAverage * 0.017, 0, 0, Color.BLACK);
+	private int navShadowRadius = (int) (screenAverage * 0.03);
+	private int navShadowOffset = (int) (screenAverage * 0.01);
+	private DropShadow navShadow = new DropShadow(navShadowRadius, navShadowOffset, 0, Color.BLACK);
+	private DropShadow notifShadow = new DropShadow(screenAverage * 0.02, 0, 0.009, Color.BLACK);
+	private DropShadow moduleDefaultShadow = new DropShadow(screenAverage * 0.005, 0, 0,
+			Color.BLACK);
+	private DropShadow moduleHoverShadow = new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
+	private InnerShadow modulePressedShadow = new InnerShadow(screenAverage * 0.017, 0, 0,
+			Color.BLACK);
 
 	// Labels:
 	private Label welcome;
@@ -228,8 +226,8 @@ public class MenuController implements Initializable {
 			openMenu.fire();
 		}
 		if (this.showNotification.getTranslateY() == 0 && !initialLoad) {
-			TranslateTransition closeNot =
-					new TranslateTransition(new Duration(173), notifications);
+			TranslateTransition closeNot = new TranslateTransition(new Duration(173),
+					notifications);
 			closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
 			closeNot.play();
 		}
@@ -286,7 +284,7 @@ public class MenuController implements Initializable {
 	 * Display the Study Dashboard pane.
 	 */
 	public void loadDashboard() {
-		//set ToolTips
+		// set ToolTips
 		openMenu.setTooltip(new Tooltip("Menu"));
 		showNotification.setTooltip(new Tooltip("Notifications"));
 		addActivity.setTooltip(new Tooltip("Add activity"));
@@ -304,14 +302,9 @@ public class MenuController implements Initializable {
 		Label studyProfile = new Label(profile.getName());
 		studyProfile.getStyleClass().add("title");
 		GridPane.setMargin(studyProfile, new Insets(10));
-		this.mainContent.getColumnConstraints().add(
-				new ColumnConstraints(
-						Control.USE_COMPUTED_SIZE,
-						Control.USE_COMPUTED_SIZE,
-						Control.USE_COMPUTED_SIZE,
-						Priority.ALWAYS,
-						HPos.CENTER,
-						true));
+		this.mainContent.getColumnConstraints()
+				.add(new ColumnConstraints(Control.USE_COMPUTED_SIZE, Control.USE_COMPUTED_SIZE,
+						Control.USE_COMPUTED_SIZE, Priority.ALWAYS, HPos.CENTER, true));
 		FlowPane modules = new FlowPane();
 
 		Thread renderModules = new Thread(() -> {
@@ -328,7 +321,7 @@ public class MenuController implements Initializable {
 				if (screenWidth > screenHeight) {
 					vbox.setPrefWidth(screenWidth * 0.14);
 				} else {
-					//If device is in portrait mode, set vbox width based on height
+					// If device is in portrait mode, set vbox width based on height
 					vbox.setPrefWidth(screenHeight * 0.14);
 				}
 				// Set the height of the module to 112% of its width
@@ -347,8 +340,7 @@ public class MenuController implements Initializable {
 
 				vbox.getChildren().add(name);
 
-				BufferedImage buff =
-						GanttishDiagram.getBadge(module.calculateProgress(), true, 1);
+				BufferedImage buff = GanttishDiagram.getBadge(module.calculateProgress(), true, 1);
 				Image image = SwingFXUtils.toFXImage(buff, null);
 				Pane badge = new Pane();
 
@@ -364,10 +356,9 @@ public class MenuController implements Initializable {
 				vbox.getChildren().add(badge);
 
 				/*
-				 * If mouse clicks on module, depress it.
-				 * If mouse leaves module while depressed, undepress button.
-				 * If mouse re-enters, then re-depress module.
-				 * If mouse is not depressed when it enters module, show hover effect.
+				 * If mouse clicks on module, depress it. If mouse leaves module while depressed,
+				 * undepress button. If mouse re-enters, then re-depress module. If mouse is not
+				 * depressed when it enters module, show hover effect.
 				 */
 				vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
 					if (mouseDown) {
@@ -379,26 +370,32 @@ public class MenuController implements Initializable {
 				vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
 					vbox.setEffect(this.moduleDefaultShadow);
 				});
-
 				vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
-					vbox.setEffect(this.modulePressedShadow);
-					mouseDown = true;
+					if (e.getButton() == MouseButton.PRIMARY) {
+						vbox.setEffect(this.modulePressedShadow);
+						mouseDown = true;
+					}
 				});
 				vbox.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
-					vbox.setEffect(this.moduleDefaultShadow);
-					mouseDown = false;
+					if (e.getButton() == MouseButton.PRIMARY) {
+						vbox.setEffect(this.moduleDefaultShadow);
+						mouseDown = false;
+					}
 				});
-
-				vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
-					module.open(this.current));
-
+				vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+					if (e.getButton() == MouseButton.PRIMARY) {
+						module.open(this.current);
+					}
+				});
 				vbox.setOnTouchPressed(new EventHandler<TouchEvent>() {
-					@Override public void handle(TouchEvent event) {
+					@Override
+					public void handle(TouchEvent event) {
 						vbox.setEffect(modulePressedShadow);
 					}
 				});
 				vbox.setOnTouchReleased(new EventHandler<TouchEvent>() {
-					@Override public void handle(TouchEvent event) {
+					@Override
+					public void handle(TouchEvent event) {
 						vbox.setEffect(moduleDefaultShadow);
 					}
 				});
@@ -412,10 +409,7 @@ public class MenuController implements Initializable {
 				Platform.runLater(addModule);
 
 				// Ensure shadows don't overlap with edge of FlowPane
-				FlowPane.setMargin(vbox, new Insets(
-						screenHeight * 0.033,
-						0,
-						screenHeight * 0.022,
+				FlowPane.setMargin(vbox, new Insets(screenHeight * 0.033, 0, screenHeight * 0.022,
 						screenWidth * 0.037));
 			}
 			Thread removeLoading = new Thread(() -> {
@@ -426,8 +420,8 @@ public class MenuController implements Initializable {
 		renderModules.start();
 
 		/*
-		 * Allow modules to be scrollable if window is too small to display them
-		 * all on screen simultaneously.
+		 * Allow modules to be scrollable if window is too small to display them all on screen
+		 * simultaneously.
 		 */
 		ScrollPane moduleBox = new ScrollPane();
 		moduleBox.setContent(modules);
@@ -480,9 +474,8 @@ public class MenuController implements Initializable {
 		progressColumn.setCellValueFactory(new PropertyValueFactory<>("progressPercentage"));
 		progressColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
-		ArrayList<TableColumn<Milestone, ?>> colList =
-				new ArrayList<>(Arrays.asList(
-						nameColumn, deadlineColumn, completedColumn, progressColumn));
+		ArrayList<TableColumn<Milestone, ?>> colList = new ArrayList<>(
+				Arrays.asList(nameColumn, deadlineColumn, completedColumn, progressColumn));
 
 		ObservableList<Milestone> list = FXCollections.observableArrayList(
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getMilestones());
@@ -508,24 +501,27 @@ public class MenuController implements Initializable {
 					}
 				}
 			};
-			row.setOnMouseClicked(event -> {
-				if (this.isNavOpen) {
-					closeDrawer.fire();
-				}
-				if (this.showNotification.getTranslateY() == 0) {
-					TranslateTransition closeNot =
-							new TranslateTransition(new Duration(173), notifications);
-					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
-					closeNot.play();
-				}
+			row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+				if (event.getButton() == MouseButton.PRIMARY) {
+					if (this.isNavOpen) {
+						closeDrawer.fire();
+					}
+					if (this.showNotification.getTranslateY() == 0) {
+						TranslateTransition closeNot = new TranslateTransition(new Duration(173),
+								notifications);
+						closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56
+								+ 17));
+						closeNot.play();
+					}
 
-				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
-						&& event.getClickCount() == 2) {
-					try {
-						MainController.ui.milestoneDetails(row.getItem());
-						this.main();
-					} catch (IOException e1) {
-						UIManager.reportError("Unable to open view file");
+					if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
+							&& event.getClickCount() == 2) {
+						try {
+							MainController.ui.milestoneDetails(row.getItem());
+							this.main();
+						} catch (IOException e1) {
+							UIManager.reportError("Unable to open View file");
+						}
 					}
 				}
 			});
@@ -621,13 +617,19 @@ public class MenuController implements Initializable {
 		content.setActionCallback(param -> null);
 		content.setEditAppointmentCallback(param -> null);
 		// Agenda buttons:
-		agendaBwd.setOnMouseClicked(event -> content
-				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7)));
-		agendaFwd.setOnMouseClicked(event -> content
-				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7)));
+		agendaBwd.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			if (e.getButton() == MouseButton.PRIMARY) {
+				content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7));
+			}
+		});
+		agendaFwd.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			if (e.getButton() == MouseButton.PRIMARY) {
+				content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7));
+			}
+		});
 		// Populate Agenda:
-		ArrayList<Event> calendar =
-				MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
+		ArrayList<Event> calendar = MainController.getSpc().getPlanner().getCurrentStudyProfile()
+				.getCalendar();
 		for (Event e : calendar) {
 			// TODO - find a way to eliminate this if/else-if/instanceof anti-pattern
 			if (e instanceof TimetableEvent) {
@@ -711,8 +713,8 @@ public class MenuController implements Initializable {
 		semesterColumn.setCellValueFactory(new PropertyValueFactory<>("semesterNo"));
 		semesterColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
-		ArrayList<TableColumn<StudyProfile, ?>> colList =
-				new ArrayList<>(Arrays.asList(nameColumn, yearColumn, semesterColumn));
+		ArrayList<TableColumn<StudyProfile, ?>> colList = new ArrayList<>(
+				Arrays.asList(nameColumn, yearColumn, semesterColumn));
 
 		ObservableList<StudyProfile> list = FXCollections
 				.observableArrayList(MainController.getSpc().getPlanner().getStudyProfiles());
@@ -738,24 +740,26 @@ public class MenuController implements Initializable {
 					}
 				}
 			};
-			row.setOnMouseClicked(event -> {
-				if (this.isNavOpen) {
-					closeDrawer.fire();
-				}
-				if (this.showNotification.getTranslateY() == 0) {
-					TranslateTransition closeNot =
-							new TranslateTransition(new Duration(173), notifications);
-					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
-					closeNot.play();
-				}
-
-				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
-						&& event.getClickCount() == 2) {
-					try {
-						MainController.ui.studyProfileDetails(row.getItem());
-						this.main();
-					} catch (IOException e1) {
-						UIManager.reportError("Unable to open view file");
+			row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+				if (event.getButton() == MouseButton.PRIMARY) {
+					if (this.isNavOpen) {
+						closeDrawer.fire();
+					}
+					if (this.showNotification.getTranslateY() == 0) {
+						TranslateTransition closeNot = new TranslateTransition(new Duration(173),
+								notifications);
+						closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56
+								+ 17));
+						closeNot.play();
+					}
+					if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
+							&& event.getClickCount() == 2) {
+						try {
+							MainController.ui.studyProfileDetails(row.getItem());
+							this.main();
+						} catch (IOException e1) {
+							UIManager.reportError("Unable to open View file");
+						}
 					}
 				}
 			});
@@ -787,14 +791,14 @@ public class MenuController implements Initializable {
 			@Override
 			public ObservableValue<Number> call(
 					TableColumn.CellDataFeatures<Module, Number> param) {
-				return new SimpleIntegerProperty(MainController.getSpc().getPlanner()
-						.getTimeSpent(param.getValue()));
+				return new SimpleIntegerProperty(
+						MainController.getSpc().getPlanner().getTimeSpent(param.getValue()));
 			}
 		});
 		timeSpent.setStyle("-fx-alignment: CENTER-RIGHT;");
 
-		ArrayList<TableColumn<Module, ?>> colList =
-				new ArrayList<>(Arrays.asList(codeColumn, nameColumn, timeSpent));
+		ArrayList<TableColumn<Module, ?>> colList = new ArrayList<>(
+				Arrays.asList(codeColumn, nameColumn, timeSpent));
 
 		ObservableList<Module> list = FXCollections.observableArrayList(
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().getModules());
@@ -811,25 +815,27 @@ public class MenuController implements Initializable {
 		// Set click event:
 		table.setRowFactory(e -> {
 			TableRow<Module> row = new TableRow<>();
-			row.setOnMouseClicked(event -> {
-				if (this.isNavOpen) {
-					closeDrawer.fire();
-				}
-				if (this.showNotification.getTranslateY() == 0) {
-					TranslateTransition closeNot =
-							new TranslateTransition(new Duration(173), notifications);
-					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
-					closeNot.play();
-				}
+			row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+				if (event.getButton() == MouseButton.PRIMARY) {
+					if (this.isNavOpen) {
+						closeDrawer.fire();
+					}
+					if (this.showNotification.getTranslateY() == 0) {
+						TranslateTransition closeNot = new TranslateTransition(new Duration(173),
+								notifications);
+						closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56
+								+ 17));
+						closeNot.play();
+					}
 
-				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
-						&& event.getClickCount() == 2) {
-					this.loadModule(row.getItem(), this.current, null);
+					if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
+							&& event.getClickCount() == 2) {
+						this.loadModule(row.getItem(), this.current, null);
+					}
 				}
 			});
 			return row;
 		});
-
 		this.mainContent.addRow(2, table);
 		this.mainContent.getStyleClass().add("list-item");
 	}
@@ -890,8 +896,8 @@ public class MenuController implements Initializable {
 		weightingColumn.setCellValueFactory(new PropertyValueFactory<>("weighting"));
 		weightingColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
 
-		ArrayList<TableColumn<Assignment, ?>> colList =
-				new ArrayList<>(Arrays.asList(nameColumn, deadlineColumn, weightingColumn));
+		ArrayList<TableColumn<Assignment, ?>> colList = new ArrayList<>(
+				Arrays.asList(nameColumn, deadlineColumn, weightingColumn));
 
 		ObservableList<Assignment> list = FXCollections
 				.observableArrayList(module.getAssignments());
@@ -908,7 +914,7 @@ public class MenuController implements Initializable {
 		// Set click event:
 		moduleContent.setRowFactory(e -> {
 			TableRow<Assignment> row = new TableRow<>();
-			row.setOnMouseClicked(event -> {
+			row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
 						&& event.getClickCount() == 2) {
 					this.loadAssignment(row.getItem(), Window.EMPTY, module);
@@ -916,15 +922,14 @@ public class MenuController implements Initializable {
 			});
 			return row;
 		});
-
 		this.mainContent.addRow(3, moduleContent);
 		GridPane.setColumnSpan(moduleContent, GridPane.REMAINING);
 	}
 
 	/**
-	 * This method will create a window that will prompt the user for a username and
-	 * host name.  If a name is not entered then a username is randomly chosen.
-	 * When the submit button is pressed a new interface will be loaded which is the chat window.
+	 * This method will create a window that will prompt the user for a username and host name. If a
+	 * name is not entered then a username is randomly chosen. When the submit button is pressed a
+	 * new interface will be loaded which is the chat window.
 	 */
 	public void obtainUserInformation() {
 
@@ -937,9 +942,8 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * This method will create the peer to peer chat
-	 * window.  It will load the text area where the user will see messages from
-	 * peers and a place for the user to send his or her own message.
+	 * This method will create the peer to peer chat window. It will load the text area where the
+	 * user will see messages from peers and a place for the user to send his or her own message.
 	 */
 	public void loadChatWindow() {
 
@@ -952,9 +956,9 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * This will load the msg_area which is where the user will see messages from other users
-	 * and him or herself.  This will also load the text field where the user will be able to send
-	 * his or her own message to peers.
+	 * This will load the msg_area which is where the user will see messages from other users and
+	 * him or herself. This will also load the text field where the user will be able to send his or
+	 * her own message to peers.
 	 */
 	public void createMainPane() {
 		mainPane.setCenter(msgArea);
@@ -962,9 +966,8 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * This will set the message area to uneditable and set the size for all the buttons
-	 * This method will also create padding between the textarea and the message area.
-	 * and the send button.
+	 * This will set the message area to uneditable and set the size for all the buttons This method
+	 * will also create padding between the textarea and the message area. and the send button.
 	 */
 	public void createUserMessagePane() {
 		msgArea.setEditable(false);
@@ -978,8 +981,8 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * This will load all the textfields,labels and buttons for the
-	 * window that prompts the user for his or her username and host name.
+	 * This will load all the textfields,labels and buttons for the window that prompts the user for
+	 * his or her username and host name.
 	 */
 	public void createFirstWindow() {
 		firstPane.add(name, 0, 0);
@@ -990,10 +993,10 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * This will take in the action of when the submit button is pressed.
-	 * The submit button is for the chat window where the user inputs his or her
-	 * information.  If the user does not enter a username then one will be appointed for
-	 * them.  Then at the very end the chat window will be loaded.
+	 * This will take in the action of when the submit button is pressed. The submit button is for
+	 * the chat window where the user inputs his or her information. If the user does not enter a
+	 * username then one will be appointed for them. Then at the very end the chat window will be
+	 * loaded.
 	 */
 	public void submitButtonAction() {
 		submitButton.setOnAction((ActionEvent exception1) -> {
@@ -1008,7 +1011,7 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 *This will set the username for the peer-to-peer chat.
+	 * This will set the username for the peer-to-peer chat.
 	 */
 	public void setUserName(String user) {
 		userName = user;
@@ -1055,7 +1058,7 @@ public class MenuController implements Initializable {
 
 		// Ganttish chart button:
 		Button gantt = new Button("Generate a Ganttish Diagram");
-		gantt.setOnAction(e -> showGantt(assignment,previousWindow,previous));
+		gantt.setOnAction(e -> showGantt(assignment, previousWindow, previous));
 		GridPane.setHalignment(gantt, HPos.RIGHT);
 		GridPane.setColumnSpan(gantt, GridPane.REMAINING);
 		this.mainContent.add(gantt, 0, 1);
@@ -1101,8 +1104,8 @@ public class MenuController implements Initializable {
 		TableColumn<Requirement, QuantityType> typeColumn = new TableColumn<>("Quantity type");
 		typeColumn.setCellValueFactory(new PropertyValueFactory<>("quantityType"));
 
-		ArrayList<TableColumn<Requirement, ?>> colList =
-				new ArrayList<>(Arrays.asList(reqNameColumn, remainingColumn, typeColumn));
+		ArrayList<TableColumn<Requirement, ?>> colList = new ArrayList<>(
+				Arrays.asList(reqNameColumn, remainingColumn, typeColumn));
 
 		ObservableList<Requirement> requirementList = FXCollections
 				.observableArrayList(assignment.getRequirements());
@@ -1188,8 +1191,8 @@ public class MenuController implements Initializable {
 		canComplete.setCellValueFactory(new PropertyValueFactory<>("possibleToComplete"));
 		canComplete.setStyle("-fx-alignment: CENTER-RIGHT;");
 
-		ArrayList<TableColumn<Task, ?>> taskColList =
-				new ArrayList<>(Arrays.asList(nameColumn, deadlineColumn, canComplete));
+		ArrayList<TableColumn<Task, ?>> taskColList = new ArrayList<>(
+				Arrays.asList(nameColumn, deadlineColumn, canComplete));
 
 		ObservableList<Task> list = FXCollections.observableArrayList(assignment.getTasks());
 
@@ -1341,7 +1344,8 @@ public class MenuController implements Initializable {
 	/**
 	 * Handles clicking on a specific notification.
 	 *
-	 * @param id The identifier of the notification which was clicked.
+	 * @param id
+	 *            The identifier of the notification which was clicked.
 	 */
 	public void handleRead(int id) {
 		// Get notification:
@@ -1416,19 +1420,19 @@ public class MenuController implements Initializable {
 		this.chat.setOnAction(e -> this.main(Window.CHAT));
 
 		// Set nav to close when clicking outside of it
-		this.mainContent.addEventHandler(MouseEvent.MOUSE_PRESSED,
-			e -> {
+		this.mainContent.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+			if (e.getButton() == MouseButton.PRIMARY) {
 				if (this.showNotification.getTranslateY() == 0) {
-					TranslateTransition closeNot =
-							new TranslateTransition(new Duration(173), notifications);
+					TranslateTransition closeNot = new TranslateTransition(new Duration(173),
+						notifications);
 					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
 					closeNot.play();
 				}
-
 				if (this.isNavOpen) {
 					this.openMenu.fire();
 				}
-			});
+			}
+		});
 
 		// Welcome text:
 		this.welcome = new Label(
@@ -1470,8 +1474,9 @@ public class MenuController implements Initializable {
 			if (notifications[i].getLink() != null || !notifications[i].isRead()) {
 				pane.setCursor(Cursor.HAND);
 				pane.setId(Integer.toString(notifications.length - i - 1));
-				pane.setOnMouseClicked(e -> this.handleRead(Integer.parseInt(pane.getId())));
-
+				pane.setOnMouseClicked(e ->
+					this.handleRead(Integer.parseInt(pane.getId()))
+				);
 				// Check if unread:
 				if (!notifications[i].isRead()) {
 					pane.getStyleClass().add("unread-item");
@@ -1489,13 +1494,12 @@ public class MenuController implements Initializable {
 			details.getStyleClass().add("notificationItem-details");
 			details.setMaxWidth(250.0);
 
-			String dateFormatted =
-					notifications[i].getDateTime().get(Calendar.DAY_OF_MONTH)
-					+ " " + notifications[i].getDateTime()
-							.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
-					+ " at " + notifications[i].getDateTime().get(Calendar.HOUR)
-					+ " " + notifications[i].getDateTime()
-							.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+			String dateFormatted = notifications[i].getDateTime().get(Calendar.DAY_OF_MONTH) + " "
+					+ notifications[i].getDateTime().getDisplayName(Calendar.MONTH, Calendar.LONG,
+							Locale.getDefault())
+					+ " at " + notifications[i].getDateTime().get(Calendar.HOUR) + " "
+					+ notifications[i].getDateTime().getDisplayName(Calendar.AM_PM, Calendar.LONG,
+							Locale.getDefault());
 			Label date = new Label(dateFormatted);
 			date.getStyleClass().addAll("notificationItem-date");
 			GridPane.setHalignment(date, HPos.RIGHT);
@@ -1570,8 +1574,8 @@ public class MenuController implements Initializable {
 				openNav.play();
 				this.isNavOpen = true;
 			} else {
-				closeNav.setToX(-(navList.getWidth()
-						+ this.navShadowRadius + this.navShadowOffset));
+				closeNav.setToX(
+						-(navList.getWidth() + this.navShadowRadius + this.navShadowOffset));
 				closeNav.play();
 			}
 		});
@@ -1593,12 +1597,13 @@ public class MenuController implements Initializable {
 	/**
 	 * RowFactory for a TableView of Requirement.
 	 *
-	 * @param e1 TableView that contains the RowFactory.
+	 * @param e1
+	 *            TableView that contains the RowFactory.
 	 *
 	 * @return new RowFactory
 	 */
-	protected static TableRow<Requirement> requirementRowFactory(
-			TableView<Requirement> e1, Assignment assignment) {
+	protected static TableRow<Requirement> requirementRowFactory(TableView<Requirement> e1,
+			Assignment assignment) {
 
 		TableRow<Requirement> row = new TableRow<Requirement>() {
 			@Override
