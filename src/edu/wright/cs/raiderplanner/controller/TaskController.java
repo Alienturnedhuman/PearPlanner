@@ -192,6 +192,7 @@ public class TaskController implements Initializable
             UIManager.reportError("Unable to open view file");
         } catch (Exception e1)
         {
+        	UIManager.reportError(e1.getMessage());
         }
     }
 

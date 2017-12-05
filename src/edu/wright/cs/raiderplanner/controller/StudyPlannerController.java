@@ -32,9 +32,11 @@ import edu.wright.cs.raiderplanner.model.StudyPlanner;
 import edu.wright.cs.raiderplanner.model.StudyProfile;
 import edu.wright.cs.raiderplanner.model.Task;
 import edu.wright.cs.raiderplanner.model.TaskType;
+import edu.wright.cs.raiderplanner.view.UIManager;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -50,10 +52,12 @@ import javax.crypto.SecretKey;
 /**
  * Created by bendickson on 5/4/17.
  */
+
 public class StudyPlannerController {
 	private StudyPlanner planner;
 
 	/**
+	 *
 	 * @return SPC's StudyPlanner file, planner.
 	 */
 	public StudyPlanner getPlanner() {
@@ -61,28 +65,28 @@ public class StudyPlannerController {
 	}
 
 	/**
-	 * Save the current StudyPlanner into a serialized file.
-	 *
-	 * @param key64
-	 *            SecretKey used for encoding.
-	 * @param fileName
-	 *            name of the file.
-	 * @return whether saved successfully.
-	 */
+     * Save the current StudyPlanner into a serialized file.
+     *
+     * @param key64    SecretKey used for encoding.
+     * @param fileName name of the file.
+     * @return whether saved successfully.
+     */
 	public boolean save(SecretKey key64, String fileName) {
 		try {
 			Cipher cipher = Cipher.getInstance("Blowfish");
 			cipher.init(Cipher.ENCRYPT_MODE, key64);
 			SealedObject sealedObject = new SealedObject(this.planner, cipher);
-
-			try (CipherOutputStream cipherOutputStream = new CipherOutputStream(
+			CipherOutputStream cipherOutputStream = new CipherOutputStream(
 					new BufferedOutputStream(new FileOutputStream(fileName)), cipher);
-					ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);) {
-				outputStream.writeObject(sealedObject);
-				return true;
-			}
+			ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);
+			outputStream.writeObject(sealedObject);
+			outputStream.close();
+			return true;
+		} catch (IOException e) {
+			UIManager.reportError("File does not exist: " + e.getMessage());
+			return false;
 		} catch (Exception e) {
-			e.printStackTrace();
+			UIManager.reportError(e.getMessage());
 			return false;
 		}
 	}
