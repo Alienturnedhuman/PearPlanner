@@ -33,7 +33,7 @@ public class MultilineString implements Serializable, Cloneable {
 	private ArrayList<String> lines;
 
 	// public methods
-
+  
 	/**
 	 * gets the multi-string clone from the array.
 	 */

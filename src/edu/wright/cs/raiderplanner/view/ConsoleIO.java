@@ -28,6 +28,7 @@ import edu.wright.cs.raiderplanner.model.HubFile;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -121,7 +122,8 @@ public class ConsoleIO {
 				}
 				bw.write(logged.get(itr));
 			}
-		} catch (Exception e) {
+			bw.close();
+		} catch (IOException e) {
 			setConsoleMessage("File not written", true);
 		}
 	}

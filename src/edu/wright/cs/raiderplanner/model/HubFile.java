@@ -558,7 +558,7 @@ public class HubFile implements Serializable {
 			String linkedResit = examValues.get("resit").getString();
 			try {
 				exExamResit = DataController.inList(assetList, linkedResit);
-			} catch (Exception e) {
+			} catch (Exception e) { // TODO maybe delete
 				// do nothing!
 				//exExamResit = null;
 			}
@@ -586,6 +586,7 @@ public class HubFile implements Serializable {
 	 */
 	public static TimetableEvent createTimetableEvent(NodeList nc,
 			HashMap<String, VersionControlEntity> assetList) throws IOException {
+
 		TimetableEvent newTTE;
 
 

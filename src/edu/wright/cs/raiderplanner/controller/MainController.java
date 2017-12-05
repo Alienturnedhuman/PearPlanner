@@ -166,6 +166,8 @@ public class MainController {
 	public static void main() {
 		try {
 			ui.mainMenu();
+		} catch (IOException e) {
+			UIManager.reportError("File does not exist: " + e.getMessage());
 		} catch (Exception e) {
 			UIManager.reportError(e.getMessage());
 		}
@@ -203,7 +205,7 @@ public class MainController {
 		try {
 			spc.save(MainController.key64, MainController.plannerFile.getAbsolutePath());
 			return true;
-		} catch (Exception e) {
+		} catch (Exception e) { // the save() method already catches an Exception. TODO maybe delete
 			UIManager.reportError("FAILED TO SAVE YOUR DATA!");
 			return false;
 		}
