@@ -16,7 +16,7 @@
                         style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/menu.png');"/>
                 <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label fx:id="title" style="-fx-font-family: Garamond; -fx-text-fill: white; -fx-font-size: 2.5em" text="Study Dashboard"/>
+                        <Label fx:id="title" style="-fx-font-family: Ariel; -fx-text-fill: white; -fx-font-size: 2.5em" text="Study Dashboard"/>
                     </children>
                 </HBox>
                 <HBox prefWidth="13"></HBox>
@@ -27,7 +27,7 @@
                 <Button fx:id="calendar" prefHeight="33.0" prefWidth="33.0" styleClass="button-image" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/calendar.png'); -fx-background-color: #026937"/>
                 <HBox prefWidth="11"></HBox>
 
-                <Button fx:id="addActivity" onAction="#addActivity" prefHeight="33" prefWidth="33" styleClass="button-image" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/addactivity.png'); -fx-background-color: #026937"/>
+                <Button fx:id="addActivity" onAction="#addActivity" prefHeight="33" prefWidth="33" styleClass="button-image" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/addactivity_small.png'); -fx-background-color: #026937"/>
                 <HBox prefWidth="9"></HBox>
 
             </items>
@@ -117,7 +117,7 @@
                                     <Insets left="5"/>
                                 </HBox.margin>
                                 <image>
-                                    <Image url="/edu/wright/cs/raiderplanner/content/studyprofiles.png"/>
+                                    <Image url="/edu/wright/cs/raiderplanner/content/studyprofiles_small.png"/>
                                 </image>
                             </ImageView>
                             <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
@@ -184,7 +184,7 @@
                                       <Insets left="5"/>
                                   </HBox.margin>
                                   <image>
-                                      <Image url="/edu/wright/cs/raiderplanner/content/importhubfile.png"/>
+                                      <Image url="/edu/wright/cs/raiderplanner/content/importhubfile_small.png"/>
                                   </image>
                               </ImageView>
                             <Button onAction="#importFile" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;"
@@ -198,7 +198,7 @@
                                       <Insets left="5"/>
                                   </HBox.margin>
                                   <image>
-                                      <Image url="/edu/wright/cs/raiderplanner/content/importhubfile.png"/>
+                                      <Image url="/edu/wright/cs/raiderplanner/content/importhubfile_small.png"/>
                                   </image>
                               </ImageView>
                             <Button onAction="#exportCalendar" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;"
