@@ -29,17 +29,15 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * PearPlanner/RaiderPlanner
- * Created by Team BRONZE on 4/27/17.
+ * PearPlanner/RaiderPlanner.
+ * Created by Team BRONZE on 4/27/17
  */
 public class Milestone extends ModelEntity {
 
-	// private data
 	private ArrayList<Task> tasks = new ArrayList<>();
 	private Deadline deadline;
 
 	// public methods
-
 
 	// Constructors:
 	/**
@@ -53,6 +51,7 @@ public class Milestone extends ModelEntity {
 		this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
 				+ "T00:00:01Z");
 	}
+
 	// Getters:
 
 	/**
@@ -82,7 +81,7 @@ public class Milestone extends ModelEntity {
 				completed += t.getWeighting();
 			}
 		}
-  
+
 		int result = (int) (completed / this.totalWeighting() * 100);
 
 		return Integer.toString(result) + '%';
@@ -98,11 +97,10 @@ public class Milestone extends ModelEntity {
 	}
 
 	/**
-     * Returns the number of Tasks completed.
-     *
-     * @return integer representation of completed Tasks.
-     */
-
+	 * Returns the number of Tasks completed.
+	 *
+	 * @return integer representation of completed Tasks.
+	 */
 	public int tasksCompleted() {
 		int completed = 0;
 		for (Task t : this.tasks) {
@@ -114,19 +112,19 @@ public class Milestone extends ModelEntity {
 	}
 
 	/**
-     * Returns the number of Tasks associated with this Milestone.
-     *
-     * @return number of Tasks.
-     */
+	 * Returns the number of Tasks associated with this Milestone.
+	 *
+	 * @return number of Tasks.
+	 */
 	public int size() {
 		return this.tasks.size();
 	}
 
 	/**
-     * Return the sum of all Tasks weighting.
-     *
-     * @return integer representation of weightings sum.
-     */
+	 * Return the sum of all Tasks weighting.
+	 *
+	 * @return integer representation of weightings sum.
+	 */
 	public int totalWeighting() {
 		int sum = 0;
 		for (Task t : this.tasks) {
@@ -136,30 +134,30 @@ public class Milestone extends ModelEntity {
 	}
 
 	/**
-     * Returns a String representation of completed Tasks (e.g. 3/4).
-     * Used in JavaFX.
-     *
-     * @return String represenation of completed Tasks.
-     */
+	 * Returns a String representation of completed Tasks (e.g. 3/4).
+	 * Used in JavaFX.
+	 *
+	 * @return String represenation of completed Tasks.
+	 */
 	public String getTaskCompletedAsString() {
 		return this.tasksCompleted() + "/" + this.tasks.size();
 	}
 
 	/**
-     * Returns a String representation of the Deadline for this Milestone.
-     * Used in JavaFX.
-     *
-     * @return String representation of a Deadline.
-     */
+	 * Returns a String representation of the Deadline for this Milestone.
+	 * Used in JavaFX.
+	 *
+	 * @return String representation of a Deadline.
+	 */
 	public String getDeadline() {
 		return new SimpleDateFormat("dd/MM/yyyy").format(this.deadline.getDate());
 	}
 
 	/**
-     * Returns a Date object representing the Deadline of this Milestone.
-     *
-     * @return Date object.
-     */
+	 * Returns a Date object representing the Deadline of this Milestone.
+	 *
+	 * @return Date object.
+	 */
 	public Date getDeadlineDate() {
 		return this.deadline.getDate();
 	}
@@ -167,11 +165,11 @@ public class Milestone extends ModelEntity {
 	// Setters:
 
 	/**
-     * Add the given Task to this Milestone.
-     *
-     * @param task Task to be added.
-     * @return Whether the Task was successfully added.
-     */
+	 * Add the given Task to this Milestone.
+	 *
+	 * @param task Task to be added.
+	 * @return Whether the Task was successfully added.
+	 */
 	public boolean addTask(Task task) {
 		if (this.tasks.contains(task)) {
 			return false;
@@ -181,11 +179,11 @@ public class Milestone extends ModelEntity {
 	}
 
 	/**
-     * Checks if the Milestone contains the requested task
-     *
-     * @param task Task to be checked for
-     * @return Whether the teask is contained.
-     */
+	 * Checks if the Milestone contains the requested task
+	 *
+	 * @param task Task to be checked for
+	 * @return Whether the task is contained.
+	 */
 	public boolean containsTask(Task task) {
 		return this.tasks.contains(task);
 	}
@@ -194,7 +192,7 @@ public class Milestone extends ModelEntity {
 	 * Add all given Tasks to this Milestone.
 	 *
 	 * @param tasks
-	 *            a Collection of Tasks to be added.
+	 * a Collection of Tasks to be added.
 	 * @return whether the provided Tasks were added successfully.
 	 */
 	public boolean addTasks(Collection<Task> tasks) {
