@@ -22,8 +22,9 @@
 
 package edu.wright.cs.raiderplanner.model;
 
+import org.apache.commons.lang3.time.FastDateFormat;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
@@ -31,7 +32,7 @@ import java.util.regex.Pattern;
 
 /**
  * A basic event with a calendar date and duration.
- *
+ * Using FastDateFormat because it is threadsafe.
  * @author Andrew Odintsov
  */
 public class Event extends VersionControlEntity {
@@ -41,7 +42,8 @@ public class Event extends VersionControlEntity {
 	private static final int DEFAULT_DURATION = 0;
 	private static Pattern dateRegex =
 			Pattern.compile("(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)Z");
-	private SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy'T'hh:mm:ss'Z'");
+	private static FastDateFormat formatter =
+			FastDateFormat.getInstance("MM/dd/yyyy'T'hh:mm:ss'Z'");
 
 	protected GregorianCalendar date = null;
 	protected int duration = DEFAULT_DURATION;
