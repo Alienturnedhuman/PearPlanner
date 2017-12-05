@@ -1753,6 +1753,7 @@ public class MenuController implements Initializable {
 
 		layout.getChildren().addAll(nav, content);
 		layout.setMinSize(333, 555);
+		GridPane.setColumnSpan(layout, GridPane.REMAINING);
 		// Set the scene:
 		mainContent.getChildren().add(layout);
 	}
