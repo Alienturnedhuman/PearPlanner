@@ -42,7 +42,7 @@ apply plugin: 'org.junit.platform.gradle.plugin'
  * This line specifies where the main.java file is found.
  */
 
-mainClassName='View.Main'
+mainClassName='edu.wright.cs.raiderplanner.view.Main'
 
 /**
  * This statement declares where Gradle is to find directories
@@ -61,7 +61,7 @@ sourceSets {
 
 	test {
 		java {
-			srcDirs = ["Test"]
+			srcDirs = ["test"]
 		}
 	}
 }
