@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.image.* ?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -45,7 +46,7 @@
       </GridPane>
       <ImageView fx:id="banner" fitHeight="150.0" fitWidth="225.0" pickOnBounds="true" GridPane.valignment="CENTER" GridPane.halignment="CENTER" >
       	<image>
-      		<Image url="file:src/content/banner.png" />
+                <Image url="/edu/wright/cs/raiderplanner/content/banner.png" />
         </image>
       </ImageView>
    </children>
