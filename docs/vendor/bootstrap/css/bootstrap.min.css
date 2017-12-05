@@ -2940,6 +2940,7 @@ tbody.collapse.show {
 }
 .nav-link {
     display: block;
+    float: right;
     padding: .5rem 1rem
 }
 .nav-link:focus,
