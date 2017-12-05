@@ -1711,7 +1711,7 @@ public class MenuController implements Initializable {
 		VBox layout = new VBox();
 		layout.setSpacing(10);
 		layout.setPadding(new Insets(15));
-		layout.getStylesheets().add("/Content/stylesheet.css");
+		layout.getStylesheets().add("/edu/wright/cs/raiderplanner/content/stylesheet.css");
 		// =================
 
 		// Nav bar:
