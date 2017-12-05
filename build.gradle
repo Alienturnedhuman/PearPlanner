@@ -1,4 +1,3 @@
-
 /*
  * Copyright (C) 2017 - Matthew Barrett, Randy Forte, Brandon Hulbert,
  * Donald Miller
@@ -162,7 +161,7 @@ junitPlatform {
 
 checkstyle {
 	configFile = '.checkstyle.xml' as File
-	maxWarnings = 1795
+	maxWarnings = 1791
 }
 
 tasks.withType(FindBugs) {
