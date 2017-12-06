@@ -143,7 +143,7 @@
                                       <Insets left="5"/>
                                   </HBox.margin>
                                   <image>
-                                      <Image url="/edu/wright/cs/raiderplanner/content/milestones.png"/>
+                                      <Image url="/edu/wright/cs/raiderplanner/content/chat.png"/>
                                   </image>
                               </ImageView>
                             <Button fx:id="chat" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;"
