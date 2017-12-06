@@ -24,14 +24,14 @@ package edu.wright.cs.raiderplanner.model;
 import java.io.Serializable;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
 public class ExtensionApplication implements Serializable {
 	// private data
 	private Extension extension;
 	private String moduleCode;
-	private String assignmentUID;
+	private String assignmentUId;
 	private Account account;
 
 	// public methods
@@ -47,9 +47,9 @@ public class ExtensionApplication implements Serializable {
 		return moduleCode;
 	}
 
-	public String getAssignmentUID() {
+	public String getAssignmentUIds() {
 		// initial set up code below - check if this needs updating
-		return assignmentUID;
+		return assignmentUId;
 	}
 
 	// constructors

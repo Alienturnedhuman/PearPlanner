@@ -34,60 +34,57 @@ import java.util.ResourceBundle;
 /**
  * Created by Žilvinas on 10/05/2017.
  */
-public class StudyProfileController implements Initializable
-{
-    private StudyProfile profile;
+public class StudyProfileController implements Initializable {
+	private StudyProfile profile;
 
-    // Labels:
-    @FXML private Label title;
-    @FXML private Label name;
-    @FXML private Label details;
-    @FXML private Label modules;
-    @FXML private Label milestones;
-    @FXML private Label extensions;
+	// Labels:
+	@FXML private Label title;
+	@FXML private Label name;
+	@FXML private Label details;
+	@FXML private Label modules;
+	@FXML private Label milestones;
+	@FXML private Label extensions;
 
-    // Buttons:
-    @FXML private Button setCurrent;
+	// Buttons:
+	@FXML private Button setCurrent;
 
-    /**
-     * Set this StudyProfile as the current profile
-     */
-    public void setCurrent()
-    {
-        MainController.getSpc().getPlanner().setCurrentStudyProfile(this.profile);
-        this.setCurrent.setDisable(true);
-    }
+	/**
+	 * Set this StudyProfile as the current profile.
+	 */
+	public void setCurrent() {
+		MainController.getSpc().getPlanner().setCurrentStudyProfile(this.profile);
+		this.setCurrent.setDisable(true);
+	}
 
-    /**
-     * Close this window
-     */
-    public void handleClose()
-    {
-        Stage stage = (Stage) this.title.getScene().getWindow();
-        stage.close();
-    }
+	/**
+	 * Close this window.
+	 */
+	public void handleClose() {
+		Stage stage = (Stage) this.title.getScene().getWindow();
+		stage.close();
+	}
 
-    /**
-     * Constructor for the StudyProfileController
-     */
-    public StudyProfileController(StudyProfile profile)
-    {
-        this.profile = profile;
-    }
+	/**
+	 * Constructor for the StudyProfileController.
+	 */
+	public StudyProfileController(StudyProfile profile) {
+		this.profile = profile;
+	}
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources)
-    {
-        this.title.setText("Year " + this.profile.getYear() + ", Semester " + this.profile.getSemesterNo());
-        this.name.setText(this.profile.getName());
-        this.details.setText(this.profile.getDetails().getAsString());
-        this.details.setWrapText(true);
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		this.title.setText("Year " + this.profile.getYear()
+			+ ", Semester " + this.profile.getSemesterNo());
+		this.name.setText(this.profile.getName());
+		this.details.setText(this.profile.getDetails().getAsString());
+		this.details.setWrapText(true);
 
-        this.modules.setText(this.profile.getModules().length + " module(s).");
-        this.milestones.setText(this.profile.getMilestones().length + " milestone(s).");
-        this.extensions.setText(this.profile.getExtensions().length + " extension application(s).");
+		this.modules.setText(this.profile.getModules().length + " module(s).");
+		this.milestones.setText(this.profile.getMilestones().length + " milestone(s).");
+		this.extensions.setText(this.profile.getExtensions().length + " extension application(s).");
 
-        if (MainController.getSpc().getPlanner().getCurrentStudyProfile().equals(this.profile))
-            this.setCurrent.setDisable(true);
-    }
+		if (MainController.getSpc().getPlanner().getCurrentStudyProfile().equals(this.profile)) {
+			this.setCurrent.setDisable(true);
+		}
+	}
 }

@@ -22,7 +22,7 @@
 package edu.wright.cs.raiderplanner.model;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
 public class Video /*extends Requirement*/ {
@@ -37,7 +37,7 @@ public class Video /*extends Requirement*/ {
 	}
 
 	// setters
-	public void setUrl(String newURL) {
-		url = newURL;
+	public void setUrl(String newUrl) {
+		url = newUrl;
 	}
 }

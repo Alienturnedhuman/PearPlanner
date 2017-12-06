@@ -27,178 +27,150 @@ import edu.wright.cs.raiderplanner.controller.MenuController;
 import java.util.ArrayList;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17 at 20:59
  */
-public class Module extends VersionControlEntity
-{
-    // private data
-    private ArrayList<Assignment> assignments = new ArrayList<>();
-    private Person organiser;
-    private String moduleCode;
-    private ArrayList<TimetableEvent> timetable = new ArrayList<>();
+public class Module extends VersionControlEntity {
+	// private data
+	private ArrayList<Assignment> assignments = new ArrayList<>();
+	private Person organiser;
+	private String moduleCode;
+	private ArrayList<TimetableEvent> timetable = new ArrayList<>();
 
-    @Override
-    protected void replace(VersionControlEntity receivedVCE)
-    {
-        if (receivedVCE instanceof Module)
-        {
-            Module castedVCE = (Module) receivedVCE;
-            if (castedVCE.getOrganiser() != null)
-            {
-                this.organiser = castedVCE.getOrganiser();
-            }
-            if (castedVCE.getModuleCode() != null)
-            {
-                this.moduleCode = castedVCE.getModuleCode();
-            }
-            if (castedVCE.getAssignments() != null)
-            {
-                this.assignments = castedVCE.getAssignments();
-            }
-            if (castedVCE.getAssignments() != null)
-            {
-                this.timetable = castedVCE.getTimetable();
-            }
-        }
+	@Override
+	protected void replace(VersionControlEntity receivedVce) {
+		if (receivedVce instanceof Module) {
+			Module castedVce = (Module) receivedVce;
+			if (castedVce.getOrganiser() != null) {
+				this.organiser = castedVce.getOrganiser();
+			}
+			if (castedVce.getModuleCode() != null) {
+				this.moduleCode = castedVce.getModuleCode();
+			}
+			if (castedVce.getAssignments() != null) {
+				this.assignments = castedVce.getAssignments();
+			}
+			if (castedVce.getAssignments() != null) {
+				this.timetable = castedVce.getTimetable();
+			}
+		}
 
-        super.replace(receivedVCE);
-    }
+		super.replace(receivedVce);
+	}
 
 
-    // public methods
-    public String toString(boolean verbose)
-    {
-        if (verbose)
-        {
-            StringBuilder r = new StringBuilder();
-            r.append(toString());
-            r.append("\n");
-            r.append("Organiser: " + organiser.toString());
-            r.append("\n");
-            r.append("Total Assignments: " + Integer.toString(assignments.size()));
-            r.append("\n");
+	// public methods
+	public String toString(boolean verbose) {
+		if (verbose) {
+			StringBuilder verboseString = new StringBuilder();
+			verboseString.append(toString());
+			verboseString.append("\n");
+			verboseString.append("Organiser: " + organiser.toString());
+			verboseString.append("\n");
+			verboseString.append("Total Assignments: " + Integer.toString(assignments.size()));
+			verboseString.append("\n");
 
-            int i = -1;
-            int ii = assignments.size();
+			int num = -1;
+			int ii = assignments.size();
 
-            while (++i < ii)
-            {
-                r.append("\n");
-                r.append(assignments.get(i).toString(true));
-            }
+			while (++num < ii) {
+				verboseString.append("\n");
+				verboseString.append(assignments.get(num).toString(true));
+			}
 
-            return r.toString();
+			return verboseString.toString();
 
-        } else
-        {
-            return toString();
-        }
-    }
+		} else {
+			return toString();
+		}
+	}
 
-    @Override
-    public String toString()
-    {
-        return "Module: " + this.name + " ( " + this.moduleCode + " )";
-    }
+	@Override
+	public String toString() {
+		return "Module: " + this.name + " ( " + this.moduleCode + " )";
+	}
 
-    // getters
-    public ArrayList<Assignment> getAssignments()
-    {
-        return assignments;
-    }
+	// getters
+	public ArrayList<Assignment> getAssignments() {
+		return assignments;
+	}
 
-    public Person getOrganiser()
-    {
-        return organiser;
-    }
+	public Person getOrganiser() {
+		return organiser;
+	}
 
-    public String getModuleCode()
-    {
-        return moduleCode;
-    }
+	public String getModuleCode() {
+		return moduleCode;
+	}
 
-    public ArrayList<TimetableEvent> getTimetable()
-    {
-        return timetable;
-    }
+	public ArrayList<TimetableEvent> getTimetable() {
+		return timetable;
+	}
 
-    public int getNoOfAssignments()
-    {
-        return this.assignments.size();
-    }
+	public int getNoOfAssignments() {
+		return this.assignments.size();
+	}
 
-    /**
-     * Calculates how much of this Module has been completed in percentage.
-     *
-     * @return int (0-100)
-     */
-    public int calculateProgress()
-    {
-        if (this.assignments.size() == 0)
-            return 0;
+	/**
+	 * Calculates how much of this Module has been completed in percentage.
+	 *
+	 * @return int (0-100)
+	 */
+	public int calculateProgress() {
+		if (this.assignments.size() == 0) {
+			return 0;
+		}
 
-        int sum = 0;
-        for (Assignment assignment : this.assignments)
-            sum += assignment.calculateProgress();
-        return sum / this.assignments.size();
-    }
+		int sum = 0;
+		for (Assignment assignment : this.assignments) {
+			sum += assignment.calculateProgress();
+		}
+		return sum / this.assignments.size();
+	}
 
-    // setters
-    public void addAssignment(Assignment newAssignment)
-    {
-        // initial set up code below - check if this needs updating
-        if (!assignments.contains(newAssignment))
-        {
-            assignments.add(newAssignment);
-        }
-    }
+	// setters
+	public void addAssignment(Assignment newAssignment) {
+		// initial set up code below - check if this needs updating
+		if (!assignments.contains(newAssignment)) {
+			assignments.add(newAssignment);
+		}
+	}
 
-    public void removeAssignment(Assignment newAssignment)
-    {
-        // initial set up code below - check if this needs updating
-        if (assignments.contains(newAssignment))
-        {
-            assignments.remove(newAssignment);
-        }
-    }
+	public void removeAssignment(Assignment newAssignment) {
+		// initial set up code below - check if this needs updating
+		if (assignments.contains(newAssignment)) {
+			assignments.remove(newAssignment);
+		}
+	}
 
-    public void setOrganiser(Person newOrganiser)
-    {
-        organiser = newOrganiser;
-    }
+	public void setOrganiser(Person newOrganiser) {
+		organiser = newOrganiser;
+	}
 
-    public void setModuleCode(String newModuleCode)
-    {
-        moduleCode = newModuleCode;
-    }
+	public void setModuleCode(String newModuleCode) {
+		moduleCode = newModuleCode;
+	}
 
-    public void addTimetableEvent(TimetableEvent newTimetableEvent)
-    {
-        if (!timetable.contains(newTimetableEvent))
-        {
-            timetable.add(newTimetableEvent);
-        }
-    }
+	public void addTimetableEvent(TimetableEvent newTimetableEvent) {
+		if (!timetable.contains(newTimetableEvent)) {
+			timetable.add(newTimetableEvent);
+		}
+	}
 
-    public void removeTimetableEvent(TimetableEvent newTimetableEvent)
-    {
-        if (timetable.contains(newTimetableEvent))
-        {
-            timetable.remove(newTimetableEvent);
-        }
-    }
+	public void removeTimetableEvent(TimetableEvent newTimetableEvent) {
+		if (timetable.contains(newTimetableEvent)) {
+			timetable.remove(newTimetableEvent);
+		}
+	}
 
-    @Override
-    public void open(MenuController.Window current)
-    {
-        MainController.ui.moduleDetails(this, current);
-    }
+	@Override
+	public void open(MenuController.Window current) {
+		MainController.ui.moduleDetails(this, current);
+	}
 
-    // constructors
-    public Module(Person cOrganiser, String cModuleCode)
-    {
-        setOrganiser(cOrganiser);
-        setModuleCode(cModuleCode);
-    }
+	// constructors
+	public Module(Person corganiser, String cmoduleCode) {
+		setOrganiser(corganiser);
+		setModuleCode(cmoduleCode);
+	}
 }

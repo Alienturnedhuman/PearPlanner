@@ -80,7 +80,7 @@ public class RequirementController implements Initializable {
 	@FXML private Label completed;
 
 	/**
-	 * Handle changes to the input fields
+	 * Handle changes to the input fields.
 	 */
 	public void handleChange() {
 		// Check the input fields:
@@ -94,10 +94,11 @@ public class RequirementController implements Initializable {
 	}
 
 	/**
-	 * Validate data in the Time field
+	 * Validate data in the Time field.
 	 */
 	public void validateTime() {
-		if (!MainController.isNumeric(this.time.getText()) || Double.parseDouble(this.time.getText()) < 0) {
+		if (!MainController.isNumeric(this.time.getText())
+				|| Double.parseDouble(this.time.getText()) < 0) {
 			this.time.setStyle("-fx-text-box-border:red;");
 			this.submit.setDisable(true);
 		} else {
@@ -107,10 +108,11 @@ public class RequirementController implements Initializable {
 	}
 
 	/**
-	 * Validate data in the Quantity field
+	 * Validate data in the Quantity field.
 	 */
 	public void validateQuantity() {
-		if (!MainController.isNumeric(this.quantity.getText()) || Integer.parseInt(this.quantity.getText()) < 0) {
+		if (!MainController.isNumeric(this.quantity.getText())
+				|| Integer.parseInt(this.quantity.getText()) < 0) {
 			this.quantity.setStyle("-fx-text-box-border:red;");
 			this.submit.setDisable(true);
 		} else {
@@ -123,7 +125,7 @@ public class RequirementController implements Initializable {
 	}
 
 	/**
-	 * Validate data in the QuantityType field
+	 * Validate data in the QuantityType field.
 	 */
 	public void validateNewQuantity() {
 		if (!this.quantityName.getText().trim().isEmpty()) {
@@ -134,18 +136,18 @@ public class RequirementController implements Initializable {
 	}
 
 	/**
-	 * Add a new QuantityType
+	 * Add a new QuantityType.
 	 */
 	public void newQuantity() {
 		if (UIManager.confirm("Create a new Quantity '" + this.quantityName.getText() + '?')) {
 			// Create a new type:
-			QuantityType t = QuantityType.create(this.quantityName.getText());
+			QuantityType quantity = QuantityType.create(this.quantityName.getText());
 			// =================
 
 			// Update the current list:
 			this.quantityType.getItems().clear();
 			this.quantityType.getItems().addAll(QuantityType.listOfNames());
-			this.quantityType.getSelectionModel().select(t.getName());
+			this.quantityType.getSelectionModel().select(quantity.getName());
 			// =================
 		}
 		this.quantityName.clear();
@@ -153,13 +155,14 @@ public class RequirementController implements Initializable {
 	}
 
 	/**
-	 * Submit the form and create a new Task
+	 * Submit the form and create a new Task.
 	 */
 	public void handleSubmit() {
 		if (this.requirement == null) {
 			// Create a new Requirement:
 			this.requirement = new Requirement(this.name.getText(), this.details.getText(),
-					Double.parseDouble(this.time.getText()), Integer.parseInt(this.quantity.getText()),
+					Double.parseDouble(this.time.getText()),
+					Integer.parseInt(this.quantity.getText()),
 					this.quantityType.getValue());
 			// =================
 		} else {
@@ -178,7 +181,7 @@ public class RequirementController implements Initializable {
 	}
 
 	/**
-	 * Handle Quit button
+	 * Handle Quit button.
 	 */
 	public void handleQuit() {
 		Stage stage = (Stage) this.submit.getScene().getWindow();
@@ -186,15 +189,15 @@ public class RequirementController implements Initializable {
 	}
 
 	/**
-	 * Constructor for the RequirementController
+	 * Constructor for the RequirementController.
 	 */
 	public RequirementController() {
 	}
 
 	/**
-	 * Constructor for a RequirementController with an existing Requirement
+	 * Constructor for a RequirementController with an existing Requirement.
 	 *
-	 * @param requirement
+	 * @param requirement.
 	 */
 	public RequirementController(Requirement requirement) {
 		this.requirement = requirement;
@@ -207,7 +210,8 @@ public class RequirementController implements Initializable {
 		this.activities.setRowFactory(e -> {
 			TableRow<Activity> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
-				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+				if (!row.isEmpty() && event.getButton()
+						== MouseButton.PRIMARY && event.getClickCount() == 2) {
 					try {
 						MainController.ui.activityDetails(row.getItem());
 						this.activities.refresh();
@@ -259,7 +263,8 @@ public class RequirementController implements Initializable {
 			this.details.setText(this.requirement.getDetails().getAsString());
 			this.time.setText(Double.toString(this.requirement.getEstimatedTimeInHours()));
 			this.quantity.setText(Integer.toString(this.requirement.getInitialQuantity()));
-			this.quantityType.getSelectionModel().select(this.requirement.getQuantityType().getName());
+			this.quantityType.getSelectionModel().select(
+					this.requirement.getQuantityType().getName());
 			this.activities.getItems().addAll(this.requirement.getActivityLog());
 			// =================
 		}

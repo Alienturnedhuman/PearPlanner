@@ -127,86 +127,88 @@ public class XMLcontroller {
 		}
 	}
 
-	public HashMap<String, NodeReturn> getSchemaValues(NodeList nodes, 
+	public HashMap<String, NodeReturn> getSchemaValues(NodeList nodes,
 			HashMap<String, ImportAs> schema) {
-		HashMap<String, NodeReturn> r = new HashMap<>();
-		int i = -1;
+		HashMap<String, NodeReturn> hash = new HashMap<>();
+		int num = -1;
 		int ii = nodes.getLength();
 		String nodeName;
 		String temp;
-		while (++i < ii) {
-			if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
-				nodeName = nodes.item(i).getNodeName();
-				if (schema.containsKey(nodeName) && !r.containsKey(nodeName)) {
+		while (++num < ii) {
+			if (nodes.item(num).getNodeType() == Node.ELEMENT_NODE) {
+				nodeName = nodes.item(num).getNodeName();
+				if (schema.containsKey(nodeName) && !hash.containsKey(nodeName)) {
 					switch (schema.get(nodeName)) {
 					case BOOLEAN:
-						r.put(nodeName, new NodeReturn(nodes.item(i)
+						hash.put(nodeName, new NodeReturn(nodes.item(num)
 								.getTextContent().equals("true")));
 						break;
 					case STRING:
-						r.put(nodeName, new NodeReturn(nodes.item(i).getTextContent()));
+						hash.put(nodeName, new NodeReturn(nodes.item(num).getTextContent()));
 						break;
 					case MULTILINESTRING:
-						r.put(nodeName, new NodeReturn(new MultilineString(nodes.item(i)
+						hash.put(nodeName, new NodeReturn(new MultilineString(nodes.item(num)
 								.getTextContent())));
 						break;
 					case INTEGER:
-						temp = nodes.item(i).getTextContent();
+						temp = nodes.item(num).getTextContent();
 						if (isNumeric(temp)) {
-							r.put(nodeName, new NodeReturn(Integer.parseInt(temp)));
+							hash.put(nodeName, new NodeReturn(Integer.parseInt(temp)));
 						}
 						break;
 					case DOUBLE:
-						temp = nodes.item(i).getTextContent();
+						temp = nodes.item(num).getTextContent();
 						if (isNumeric(temp)) {
-							r.put(nodeName, new NodeReturn(Double.parseDouble(temp)));
+							hash.put(nodeName, new NodeReturn(Double.parseDouble(temp)));
 						}
 						break;
 					case NODELIST:
-						if (nodes.item(i).hasChildNodes()) {
-							r.put(nodeName, new NodeReturn(nodes.item(i).getChildNodes()));
+						if (nodes.item(num).hasChildNodes()) {
+							hash.put(nodeName, new NodeReturn(nodes.item(num).getChildNodes()));
 						}
+					default:
+						break;
 					}
 				}
 			}
 		}
-		return r;
+		return hash;
 	}
 
-	static public NodeList getNodes(Node parentNode) {
-		NodeList tList = parentNode.getChildNodes();
-		int i = tList.getLength();
-		while (0 < i--) {
-			if (tList.item(i).getNodeType() != Node.ELEMENT_NODE) {
-				parentNode.removeChild(tList.item(i));
+	public static NodeList getNodes(Node parentNode) {
+		NodeList tlist = parentNode.getChildNodes();
+		int count = tlist.getLength();
+		while (0 < count--) {
+			if (tlist.item(count).getNodeType() != Node.ELEMENT_NODE) {
+				parentNode.removeChild(tlist.item(count));
 			}
 		}
 		return parentNode.getChildNodes();
 	}
 
 	@Deprecated
-	static public boolean validNodeList(NodeList nodes, String[] nodeNames) {
-		int i = -1;
+	public static boolean validNodeList(NodeList nodes, String[] nodeNames) {
+		int num = -1;
 		int ii = nodeNames.length;
 		if (nodes.getLength() != ii) {
 			return false;
 		}
-		while (++i < ii) {
-			if (!nodes.item(i).getNodeName().equals(nodeNames[i])) {
+		while (++num < ii) {
+			if (!nodes.item(num).getNodeName().equals(nodeNames[num])) {
 				return false;
 			}
 		}
 		return true;
 	}
 
-	static public boolean matchesSchema(NodeList nodes, HashMap<String, XMLcontroller.ImportAs> schema) {
+	public static boolean matchesSchema(NodeList nodes, HashMap<String, XMLcontroller.ImportAs> schema) {
 		HashSet<String> match = new HashSet<>();
-		int i = -1;
+		int num = -1;
 		int ii = nodes.getLength();
-		while (++i < ii) {
-			if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE
-					&& schema.containsKey(nodes.item(i).getNodeName())) {
-				match.add(nodes.item(i).getNodeName());
+		while (++num < ii) {
+			if (nodes.item(num).getNodeType() == Node.ELEMENT_NODE
+					&& schema.containsKey(nodes.item(num).getNodeName())) {
+				match.add(nodes.item(num).getNodeName());
 			}
 		}
 		return match.size() == schema.size();

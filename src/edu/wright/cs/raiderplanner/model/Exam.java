@@ -22,60 +22,51 @@
 package edu.wright.cs.raiderplanner.model;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
-public class Exam extends Assignment
-{
-    // private data
-    private Exam resit = null;
-    private ExamEvent timeSlot = null;
+public class Exam extends Assignment {
+	// private data
+	private Exam resit = null;
+	private ExamEvent timeSlot = null;
 
-    @Override
-    protected void replace(VersionControlEntity receivedVCE)
-    {
-        if (receivedVCE instanceof Exam)
-        {
-            Exam castedVCE = (Exam) receivedVCE;
-            if (castedVCE.getResit() != null)
-            {
-                this.resit = castedVCE.getResit();
-            }
-            if (castedVCE.getTimeSlot() != null)
-            {
-                this.timeSlot = castedVCE.getTimeSlot();
-            }
-        }
+	@Override
+	protected void replace(VersionControlEntity receivedVce) {
+		if (receivedVce instanceof Exam) {
+			Exam castedVce = (Exam) receivedVce;
+			if (castedVce.getResit() != null) {
+				this.resit = castedVce.getResit();
+			}
+			if (castedVce.getTimeSlot() != null) {
+				this.timeSlot = castedVce.getTimeSlot();
+			}
+		}
 
-        super.replace(receivedVCE);
-    }
+		super.replace(receivedVce);
+	}
 
-    // public methods
+	// public methods
 
-    // getters
-    public Exam getResit()
-    {
-        return resit;
-    }
+	// getters
+	public Exam getResit() {
+		return resit;
+	}
 
-    public ExamEvent getTimeSlot()
-    {
-        return timeSlot;
-    }
+	public ExamEvent getTimeSlot() {
+		return timeSlot;
+	}
 
 
-    // constructors
-    public Exam(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks, ExamEvent cTimeSlot, Exam cResit)
-    {
-        super(cWeighting, cSetBy, cMarkedBy, cReviewedBy, cMarks);
-        timeSlot = cTimeSlot;
-        resit = cResit;
-    }
+	// constructors
+	public Exam(int cweighting, Person csetBy, Person cmarkedBy, Person creviewedBy, int cmarks, ExamEvent ctimeSlot, Exam cresit) {
+		super(cweighting, csetBy, cmarkedBy, creviewedBy, cmarks);
+		timeSlot = ctimeSlot;
+		resit = cresit;
+	}
 
-    public Exam(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks, ExamEvent cTimeSlot)
-    {
-        super(cWeighting, cSetBy, cMarkedBy, cReviewedBy, cMarks);
-        timeSlot = cTimeSlot;
-        resit = null;
-    }
+	public Exam(int cweighting, Person csetBy, Person cmarkedBy, Person creviewedBy, int cmarks, ExamEvent ctimeSlot) {
+		super(cweighting, csetBy, cmarkedBy, creviewedBy, cmarks);
+		timeSlot = ctimeSlot;
+		resit = null;
+	}
 }
