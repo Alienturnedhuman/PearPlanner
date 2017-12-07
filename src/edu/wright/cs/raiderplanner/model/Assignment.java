@@ -27,7 +27,7 @@ import edu.wright.cs.raiderplanner.controller.MenuController;
 import java.util.ArrayList;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
 public class Assignment extends VersionControlEntity {
@@ -41,25 +41,25 @@ public class Assignment extends VersionControlEntity {
 	protected StateType state;  // this may not be needed as we can work it out
 
 	@Override
-	protected void replace(VersionControlEntity receivedVCE) {
-		if (receivedVCE instanceof Assignment) {
-			Assignment castedVCE = (Assignment) receivedVCE;
-			// this.tasks = castedVCE.getTasks();
-			// this.requirements = castedVCE.getRequirements();
-			this.weighting = castedVCE.getWeighting();
-			if (castedVCE.getSetBy() != null) {
-				this.setBy = castedVCE.getSetBy();
+	protected void replace(VersionControlEntity receivedVce) {
+		if (receivedVce instanceof Assignment) {
+			Assignment castedVce = (Assignment) receivedVce;
+			// this.tasks = castedVce.getTasks();
+			// this.requirements = castedVce.getRequirements();
+			this.weighting = castedVce.getWeighting();
+			if (castedVce.getSetBy() != null) {
+				this.setBy = castedVce.getSetBy();
 			}
-			if (castedVCE.getMarkedBy() != null) {
-				this.markedBy = castedVCE.getMarkedBy();
+			if (castedVce.getMarkedBy() != null) {
+				this.markedBy = castedVce.getMarkedBy();
 			}
-			if (castedVCE.getReviewedBy() != null) {
-				this.reviewedBy = castedVCE.getReviewedBy();
+			if (castedVce.getReviewedBy() != null) {
+				this.reviewedBy = castedVce.getReviewedBy();
 			}
-			this.marks = castedVCE.getMarks();
-			// this.state = castedVCE.getState();
+			this.marks = castedVce.getMarks();
+			// this.state = castedVce.getState();
 		}
-		super.replace(receivedVCE);
+		super.replace(receivedVce);
 	}
 
 	public enum StateType {
@@ -75,21 +75,21 @@ public class Assignment extends VersionControlEntity {
 
 	public String toString(boolean verbose) {
 		if (verbose) {
-			StringBuilder r = new StringBuilder();
-			r.append(toString());
-			r.append("\n");
-			r.append("Total marks: " + Integer.toString(marks));
-			r.append("\n");
-			r.append("Total weighting: " + Integer.toString(weighting));
+			StringBuilder verboseString = new StringBuilder();
+			verboseString.append(toString());
+			verboseString.append("\n");
+			verboseString.append("Total marks: " + Integer.toString(marks));
+			verboseString.append("\n");
+			verboseString.append("Total weighting: " + Integer.toString(weighting));
 
-			r.append("\n");
-			r.append("Set By: " + setBy.toString());
-			r.append("\n");
-			r.append("Marked By: " + markedBy.toString());
-			r.append("\n");
-			r.append("Reviewed By: " + reviewedBy.toString());
+			verboseString.append("\n");
+			verboseString.append("Set By: " + setBy.toString());
+			verboseString.append("\n");
+			verboseString.append("Marked By: " + markedBy.toString());
+			verboseString.append("\n");
+			verboseString.append("Reviewed By: " + reviewedBy.toString());
 
-			return r.toString();
+			return verboseString.toString();
 		} else {
 			return toString();
 		}
@@ -179,22 +179,23 @@ public class Assignment extends VersionControlEntity {
 			return 0;
 		}
 
-		int sum = 0, n = 0;
+		int sum = 0;
+		int num = 0;
 		for (Requirement req : this.requirements) {
 			sum += req.requirementProgress() * 100;
-			n++;
+			num++;
 		}
 
 		for (Task task : this.tasks) {
 			if (task.getRequirements().length > 0) {
 				sum += task.calculateProgress();
-				n++;
+				num++;
 			}
 		}
 
 		// TODO Revisit #92, investigate and determine the proper course of action
 		try {
-			return sum / n;
+			return sum / num;
 		} catch (ArithmeticException e) {
 			return 0;
 		}
@@ -206,12 +207,12 @@ public class Assignment extends VersionControlEntity {
 	}
 
 	// Constructor
-	public Assignment(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy, int cMarks) {
-		weighting = cWeighting;
-		setBy = cSetBy;
-		markedBy = cMarkedBy;
-		reviewedBy = cReviewedBy;
-		marks = cMarks;
+	public Assignment(int cweighting, Person csetBy, Person cmarkedBy, Person creviewedBy, int cmarks) {
+		weighting = cweighting;
+		setBy = csetBy;
+		markedBy = cmarkedBy;
+		reviewedBy = creviewedBy;
+		marks = cmarks;
 		//MainController.getSPC().getPlanner().getDeadlineNotifications().put(this, new boolean[2]);
 	}
 }

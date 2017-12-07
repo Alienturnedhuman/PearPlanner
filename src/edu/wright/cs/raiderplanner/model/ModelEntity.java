@@ -21,103 +21,89 @@
 
 package edu.wright.cs.raiderplanner.model;
 
+import edu.wright.cs.raiderplanner.controller.MenuController;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import edu.wright.cs.raiderplanner.controller.MenuController;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
-public class ModelEntity implements Serializable
-{
-    protected String name = "";
-    protected MultilineString details = null;
-    protected ArrayList<Note> notes;
+public class ModelEntity implements Serializable {
+	protected String name = "";
+	protected MultilineString details = null;
+	protected ArrayList<Note> notes;
 
 
-    // getters
-    public String getName()
-    {
-        return name;
-    }
+	// getters
+	public String getName() {
+		return name;
+	}
 
-    public MultilineString getDetails()
-    {
-        return details;
-    }
+	public MultilineString getDetails() {
+		return details;
+	}
 
-    public void setName(String newName)
-    {
-        name = newName;
-    }
+	public void setName(String newName) {
+		name = newName;
+	}
 
-    public void setDetails(String newDetails)
-    {
-        details = new MultilineString(newDetails);
-    }
+	public void setDetails(String newDetails) {
+		details = new MultilineString(newDetails);
+	}
 
-    public void setDetails(String[] newDetails)
-    {
-        details = new MultilineString(newDetails);
-    }
+	public void setDetails(String[] newDetails) {
+		details = new MultilineString(newDetails);
+	}
 
-    public void setDetails(ArrayList<String> newDetails)
-    {
-        details = new MultilineString(newDetails.toArray(new String[newDetails.size()]));
-    }
+	public void setDetails(ArrayList<String> newDetails) {
+		details = new MultilineString(newDetails.toArray(new String[newDetails.size()]));
+	}
 
-    public void setDetails(MultilineString newDetails)
-    {
-        details = newDetails;
-    }
+	public void setDetails(MultilineString newDetails) {
+		details = newDetails;
+	}
 
 
-    public void addProperties(String aName, MultilineString aDetails)
-    {
-        setName(aName);
-        setDetails(aDetails.clone());
-    }
+	public void addProperties(String aName, MultilineString aDetails) {
+		setName(aName);
+		setDetails(aDetails.clone());
+	}
 
-    public void addProperties(String aName, String aDetails)
-    {
-        setName(aName);
-        setDetails(aDetails);
-    }
+	public void addProperties(String aName, String aDetails) {
+		setName(aName);
+		setDetails(aDetails);
+	}
 
-    /**
-     * Open the appropriate UI window for this class
-     * To be overridden by children.
-     */
-    public void open(MenuController.Window current)
-    {
-    }
+	/**
+	 * Open the appropriate UI window for this class
+	 * To be overridden by children.
+	 */
+	public void open(MenuController.Window current) {
+	}
 
-    public ModelEntity()
-    {
-        this("");
-    }
+	public ModelEntity() {
+		this("");
+	}
 
-    public ModelEntity(String cName)
-    {
-        this(cName, "");
-    }
+	public ModelEntity(String cname) {
+		this(cname, "");
+	}
 
-    public ModelEntity(String cName, String cDetails)
-    {
-        this(cName, cDetails.split("\n"));
-    }
+	public ModelEntity(String cname, String cdetails) {
+		this(cname, cdetails.split("\n"));
+	}
 
-    public ModelEntity(String cName, String[] cDetails)
-    {
-        setName(cName);
-        setDetails(cDetails);
-        notes = new ArrayList<>();
-    }
+	public ModelEntity(String cname, String[] cdetails) {
+		setName(cname);
+		setDetails(cdetails);
+		notes = new ArrayList<>();
+	}
 
-	public ModelEntity(String cName, String[] cDetails, ArrayList<Note> cNotes){
-	this(cName, cDetails);
-		notes = new ArrayList<Note>(cNotes);
+	public ModelEntity(String cname, String[] cdetails, ArrayList<Note> cnotes){
+	this(cname, cdetails);
+		notes = new ArrayList<Note>(cnotes);
 	}
 }

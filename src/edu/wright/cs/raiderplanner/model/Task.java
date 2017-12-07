@@ -66,7 +66,7 @@ public class Task extends ModelEntity {
 	/**
 	 * Wrapper for JavaFX TableView.
 	 *
-	 * @return
+	 * @return.
 	 */
 	public boolean isCheckedComplete() {
 		return canCheckComplete() && checkedComplete;
@@ -94,14 +94,15 @@ public class Task extends ModelEntity {
 	 * @return integer
 	 */
 	public int requirementsComplete() {
-		int r = 0;
-		int i = -1, ii = requirements.size();
-		while (++i < ii)	{
-			if (requirements.get(i).isComplete()) {
-				r++;
+		int r1 = 0;
+		int i1 = -1;
+		int ii = requirements.size();
+		while (++i1 < ii)	{
+			if (requirements.get(i1).isComplete()) {
+				r1++;
 			}
 		}
-		return r;
+		return r1;
 	}
 
 	/**
@@ -154,7 +155,7 @@ public class Task extends ModelEntity {
 	/**
 	 * Same as canCheckComplete(), wrapper for TableView.
 	 *
-	 * @return
+	 * @return.
 	 */
 	public boolean isPossibleToComplete() {
 		return canCheckComplete();
@@ -164,13 +165,13 @@ public class Task extends ModelEntity {
 	 * Checks whether this Task can be checked as complete. If it cannot, makes sure it is marked as
 	 * incomplete.
 	 *
-	 * @return
+	 * @return.
 	 */
 	public boolean canCheckComplete() {
-		int i = -1;
+		int i1 = -1;
 		int ii = requirements.size();
-		while (++i < ii) {
-			if (!requirements.get(i).isComplete()) {
+		while (++i1 < ii) {
+			if (!requirements.get(i1).isComplete()) {
 				this.checkedComplete = false;
 				return false;
 			}
@@ -291,10 +292,10 @@ public class Task extends ModelEntity {
 	/**
 	 * Mark as complete/incomplete.
 	 *
-	 * @param c boolean value
+	 * @param c1 boolean value.
 	 */
-	public void setComplete(boolean c) {
-		this.checkedComplete = c;
+	public void setComplete(boolean c1) {
+		this.checkedComplete = c1;
 	}
 
 	/**
@@ -310,7 +311,7 @@ public class Task extends ModelEntity {
 	/**
 	 * Set a new weighting for this Task.
 	 *
-	 * @param weighting
+	 * @param weighting.
 	 */
 	public void setWeighting(int weighting) {
 		this.weighting = weighting;

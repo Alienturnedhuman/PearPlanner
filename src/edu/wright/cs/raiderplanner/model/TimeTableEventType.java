@@ -22,13 +22,11 @@
 package edu.wright.cs.raiderplanner.model;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
-public class TimeTableEventType extends VersionControlEntity
-{
-    public String toString()
-    {
-        return name;
-    }
+public class TimeTableEventType extends VersionControlEntity {
+	public String toString() {
+		return name;
+	}
 }

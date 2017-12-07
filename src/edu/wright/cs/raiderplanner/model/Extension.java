@@ -22,7 +22,7 @@
 package edu.wright.cs.raiderplanner.model;
 
 /**
- * PearPlanner/RaiderPlanner
+ * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
 public class Extension extends VersionControlEntity {
@@ -32,15 +32,15 @@ public class Extension extends VersionControlEntity {
 	private ApprovalStatus approvalStatus;
 
 	@Override
-	protected void replace(VersionControlEntity receivedVCE) {
-		if (receivedVCE instanceof Extension) {
-			Extension castedVCE = (Extension) receivedVCE;
-			this.newDeadline = castedVCE.getNewDeadline();
-			this.circumstances = castedVCE.getCircumstances();
-			this.approvalStatus = castedVCE.getApprovalStatus();
+	protected void replace(VersionControlEntity receivedVce) {
+		if (receivedVce instanceof Extension) {
+			Extension castedVce = (Extension) receivedVce;
+			this.newDeadline = castedVce.getNewDeadline();
+			this.circumstances = castedVce.getCircumstances();
+			this.approvalStatus = castedVce.getApprovalStatus();
 		}
 
-		super.replace(receivedVCE);
+		super.replace(receivedVce);
 	}
 
 	public enum ApprovalStatus {

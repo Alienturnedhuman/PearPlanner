@@ -62,12 +62,12 @@ public class StudyPlanner implements Serializable {
 	 */
 
 	public String[] getListOfStudyProfileNames() {
-		int i = -1;
-		String[] r = new String[studyProfiles.size()];
-		while (++i < studyProfiles.size()) {
-			r[i] = studyProfiles.get(i).getName();
+		int num = -1;
+		String[] studyProfileSize = new String[studyProfiles.size()];
+		while (++num < studyProfiles.size()) {
+			studyProfileSize[num] = studyProfiles.get(num).getName();
 		}
-		return r;
+		return studyProfileSize;
 	}
 
 	/**
@@ -81,22 +81,28 @@ public class StudyPlanner implements Serializable {
 
 	/**
 	 * This was added at the last minute before releasing and should be in the Module class, however
-	 * if we had done that our Java Serialized file, which took 3 hours prepare, would no longer have worked.
-	 * This is temporary solution so you can still use our prepared Study Planner save file, but in the next iteration
+	 * if we had done that our Java Serialized file, which took 3 hours prepare,
+	 * would no longer have worked.This is temporary solution so you can still use
+	 * our prepared Study Planner save file, but in the next iteration
 	 * it will be moved to the correct place and would not consist of 4 nested loops.
-	 * Also, for public release, we would create a file format for saving in so Java Serialization issues would not
+	 * Also, for public release, we would create a file format for saving in so
+	 * Java Serialization issues would not
 	 * occur for the end user.
 	 *
-	 * @param module
-	 * @return
+	 * @param module.
+	 * @return.
 	 */
 	public int getTimeSpent(Module module) {
 		int time = 0;
-		for (Assignment assignment : module.getAssignments())
-			for (Task task : assignment.getTasks())
-				for (Requirement requirement : task.getRequirements())
-					for (Activity activity : requirement.getActivityLog())
+		for (Assignment assignment : module.getAssignments()) {
+			for (Task task : assignment.getTasks()) {
+				for (Requirement requirement : task.getRequirements()) {
+					for (Activity activity : requirement.getActivityLog()) {
 						time += activity.getDuration();
+					}
+				}
+			}
+		}
 		return time;
 	}
 
@@ -107,11 +113,11 @@ public class StudyPlanner implements Serializable {
 	 * @param sSem  semester number
 	 * @return whether this StudyProfile exists
 	 */
-	public boolean containsStudyProfile(int sYear, int sSem) {
-		int i = -1;
+	public boolean containsStudyProfile(int syear, int ssem) {
+		int num = -1;
 		int ii = studyProfiles.size();
-		while (++i < ii) {
-			if (studyProfiles.get(i).matches(sYear, sSem)) {
+		while (++num < ii) {
+			if (studyProfiles.get(num).matches(syear, ssem)) {
 				return true;
 			}
 		}
@@ -130,7 +136,7 @@ public class StudyPlanner implements Serializable {
 	}
 
 	/**
-	 * Returns the current StudyProfile
+	 * Returns the current StudyProfile.
 	 *
 	 * @return current StudyProfile
 	 */
@@ -153,9 +159,9 @@ public class StudyPlanner implements Serializable {
 	 * @return an array of notifications.
 	 */
 	public Notification[] getNotifications() {
-		Notification[] r = new Notification[this.notifications.size()];
-		r = this.notifications.toArray(r);
-		return r;
+		Notification[] notification = new Notification[this.notifications.size()];
+		notification = this.notifications.toArray(notification);
+		return notification;
 	}
 
 	/**
@@ -164,14 +170,15 @@ public class StudyPlanner implements Serializable {
 	 * @return an array of unread notifications.
 	 */
 	public Notification[] getUnreadNotifications() {
-		Notification[] r = this.notifications.stream().filter(e -> !e.isRead()).toArray(Notification[]::new);
-		return r;
+		Notification[] notification = this.notifications.stream().filter(e ->
+		!e.isRead()).toArray(Notification[]::new);
+		return notification;
 	}
 
 	/**
 	 * Returns a HashMap that contains information about Deadline notifications.
 	 *
-	 * @return
+	 * @return.
 	 */
 	public HashMap<ModelEntity, boolean[]> getDeadlineNotifications() {
 		return deadlineNotifications;
@@ -221,14 +228,14 @@ public class StudyPlanner implements Serializable {
 	 * @param profileID ID of a Study Profile
 	 * @return whether changed successfully.
 	 */
-	public boolean setCurrentStudyProfile(String profileID) {
+	public boolean setCurrentStudyProfile(String profileId) {
 		this.studyProfiles.forEach(e -> {
-			if (e.getUid().equals(profileID)) {
+			if (e.getUid().equals(profileId)) {
 				this.setCurrentStudyProfile(e);
 			}
 		});
 
-		return this.currentStudyProfile.getUid().equals(profileID);
+		return this.currentStudyProfile.getUid().equals(profileId);
 	}
 
 	/**

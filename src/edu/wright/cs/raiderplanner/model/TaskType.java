@@ -21,9 +21,9 @@
 
 package edu.wright.cs.raiderplanner.model;
 
-import java.util.ArrayList;
-
 import edu.wright.cs.raiderplanner.controller.MainController;
+
+import java.util.ArrayList;
 
 /**
  * PearPlanner/RaiderPlanner Created by Team BRONZE on 4/27/17.

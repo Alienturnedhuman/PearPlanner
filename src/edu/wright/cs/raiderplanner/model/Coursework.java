@@ -35,21 +35,21 @@ public class Coursework extends Assignment {
 
 	// private methods
 	@Override
-	protected void replace(VersionControlEntity receivedVCE) {
-		if (receivedVCE instanceof Coursework) {
-			Coursework castedVCE = (Coursework) receivedVCE;
-			if (castedVCE.getStartDate() != null) {
-				this.startDate = castedVCE.getStartDate();
+	protected void replace(VersionControlEntity receivedVce) {
+		if (receivedVce instanceof Coursework) {
+			Coursework castedVce = (Coursework) receivedVce;
+			if (castedVce.getStartDate() != null) {
+				this.startDate = castedVce.getStartDate();
 			}
-			if (castedVCE.getDeadline() != null) {
-				this.deadline = castedVCE.getDeadline();
+			if (castedVce.getDeadline() != null) {
+				this.deadline = castedVce.getDeadline();
 			}
-			if (castedVCE.getExtensions() != null) {
-				this.extensions = castedVCE.getExtensions();
+			if (castedVce.getExtensions() != null) {
+				this.extensions = castedVce.getExtensions();
 			}
 		}
 
-		super.replace(receivedVCE);
+		super.replace(receivedVce);
 	}
 	// public methods
 
@@ -94,13 +94,13 @@ public class Coursework extends Assignment {
 	}
 
 	// Constructors
-	public Coursework(int cWeighting, Person cSetBy, Person cMarkedBy, Person cReviewedBy,
-			int cMarks, Event cStartDate, Deadline cDeadline,
-			ArrayList<Extension> cExtensions) {
-		super(cWeighting, cSetBy, cMarkedBy, cReviewedBy, cMarks);
-		startDate = cStartDate;
-		deadline = cDeadline;
-		extensions = new ArrayList<Extension>(cExtensions);
+	public Coursework(int cweighting, Person csetBy, Person cmarkedBy, Person creviewedBy,
+			int cmarks, Event cstartDate, Deadline cdeadline,
+			ArrayList<Extension> cextensions) {
+		super(cweighting, csetBy, cmarkedBy, creviewedBy, cmarks);
+		startDate = cstartDate;
+		deadline = cdeadline;
+		extensions = new ArrayList<Extension>(cextensions);
 	}
 
 }
