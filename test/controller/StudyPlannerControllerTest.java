@@ -21,39 +21,56 @@
 
 package controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import edu.wright.cs.raiderplanner.controller.StudyPlannerController;
+import edu.wright.cs.raiderplanner.model.Account;
+import edu.wright.cs.raiderplanner.model.Event;
+import edu.wright.cs.raiderplanner.model.HubFile;
+import edu.wright.cs.raiderplanner.model.Module;
+import edu.wright.cs.raiderplanner.model.Person;
+import edu.wright.cs.raiderplanner.model.Task;
+import edu.wright.cs.raiderplanner.model.VersionControlEntity;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 /**
  * Created by bijan on 08/05/2017.
  */
 public class StudyPlannerControllerTest {
+
+	StudyPlannerController studyPlannerController;
 	/**
 	 * This test cases sets up the Account and Controller necessary for this test suite.
 	 * @throws Exception to handle errors when creating the objects.
 	 */
-	//Was causing a FindBugs issue because the test wasnt fully created.
-	//commented out until the test gets created in full.
-	/**
-	@BeforeEach .
+
+	@BeforeEach
 	public void setUp() throws Exception {
 		Account account = new Account(new Person("Mr","Adrew",true),"100125464");
-		StudyPlannerController studyPlannerController = new StudyPlannerController(account);
+		studyPlannerController = new StudyPlannerController(account);
+
+		int v1 = 2;
+		int y1 = 2017;
+		int s1 = 3;
+		ArrayList<Module> m1 = new ArrayList<Module>();
+		ArrayList<VersionControlEntity> a1 = new ArrayList<VersionControlEntity>();
+		ArrayList<Event> cal1 = new ArrayList<Event>();
+		HubFile hubFile = new HubFile(v1, y1, s1, m1, a1, cal1);
+		studyPlannerController.createStudyProfile(hubFile);
 	}
-	*/
 	/**
 	 * WIP: This test case should attempt to retrieve user study profiles
 	 * @throws Exception to handle when the study profiles cannot be found or loaded properly.
 	 */
+
 	@Test
 	public void getStudyProfiles() throws Exception {
-	}
-
-	/**
-	 * WIP: This test case should verify the presence of the study profile file.
-	 * @throws Exception to handle when the study planner file is missing.
-	 */
-	@Test
-	public void fileValidation() throws Exception {
+		assertEquals(1, studyPlannerController.getPlanner().getStudyProfiles().length);
 	}
 
 	/**
@@ -62,6 +79,7 @@ public class StudyPlannerControllerTest {
 	 */
 	@Test
 	public void containsStudyProfile() throws Exception {
+		assertEquals(true, studyPlannerController.containsStudyProfile(2017, 3));
 	}
 
 	/**
@@ -70,6 +88,8 @@ public class StudyPlannerControllerTest {
 	 */
 	@Test
 	public void getCurrentVersion() throws Exception {
+		studyPlannerController.getPlanner().setVersion(5);
+		assertEquals(5, studyPlannerController.getPlanner().getVersion());
 	}
 
 	/**
@@ -78,6 +98,14 @@ public class StudyPlannerControllerTest {
 	 */
 	@Test
 	public void createStudyProfile() throws Exception {
+		int v1 = 5;
+		int y1 = 1997;
+		int s1 = 30;
+		ArrayList<Module> m1 = new ArrayList<Module>();
+		ArrayList<VersionControlEntity> a1 = new ArrayList<VersionControlEntity>();
+		ArrayList<Event> cal1 = new ArrayList<Event>();
+		HubFile newHubFile = new HubFile(v1, y1, s1, m1, a1, cal1);
+		assertEquals(true, studyPlannerController.createStudyProfile(newHubFile));
 	}
 
 	/**
@@ -86,6 +114,9 @@ public class StudyPlannerControllerTest {
 	 */
 	@Test
 	public void updateStudyProfile() throws Exception {
+		studyPlannerController.getPlanner().getStudyProfiles()[0].setName("John Doe");
+		String profileName = studyPlannerController.getPlanner().getStudyProfiles()[0].getName();
+		assertEquals("John Doe", profileName);
 	}
 
 	/**
@@ -94,6 +125,8 @@ public class StudyPlannerControllerTest {
 	 */
 	@Test
 	public void getListOfTasks() throws Exception {
+		ArrayList<Task> task = studyPlannerController.getPlanner().getStudyProfiles()[0].getTasks();
+		assertEquals(new ArrayList<Task>(), task);
 	}
 
 	/**
@@ -104,4 +137,13 @@ public class StudyPlannerControllerTest {
 	public void newActivity() throws Exception {
 	}
 
+	/**
+	 * This test case erases the data from the StudyPlannerController object to avoid any
+	 * 				leftover data which could conflict with future tests.
+	 * @throws Exception to handle when the StudyPlannerController object cannot be found.
+	 */
+	@AfterEach
+	public void tearDown() throws Exception {
+		studyPlannerController = null;
+	}
 }
