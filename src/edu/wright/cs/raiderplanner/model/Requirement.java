@@ -42,7 +42,10 @@ public class Requirement extends ModelEntity {
 
 	// public methods
 
-	// Getters:
+	/**
+	 * checks if it is complete.
+	 * @return boolean true or false
+	 */
 	public boolean isComplete() {
 		return this.checkedCompleted;
 	}
@@ -99,7 +102,10 @@ public class Requirement extends ModelEntity {
 		return (double) (this.initialQuantity - this.remainingQuantity) / this.initialQuantity;
 	}
 
-	// Setters:
+	/**
+	 * sets the estimated time in hours.
+	 * @param estimatedTimeInHours estimated time
+	 */
 	public void setEstimatedTimeInHours(double estimatedTimeInHours) {
 		this.estimatedTimeInHours = estimatedTimeInHours;
 	}

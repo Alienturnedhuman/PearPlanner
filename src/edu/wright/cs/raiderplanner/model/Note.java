@@ -36,42 +36,79 @@ public class Note implements Serializable {
 
 	// public methods
 
-	// getters
+	/**
+	 * This getter gets the title of the note.
+	 * @return the title
+	 */
 	public String getTitle() {
 		// initial set up code below - check if this needs updating
 		return title;
 	}
 
+	/**
+	 * This getter gets the time stamp of the note.
+	 * @return the time stamp
+	 */
 	public GregorianCalendar getTimeStamp() {
 		// initial set up code below - check if this needs updating
 		return timeStamp;
 	}
 
+	/**
+	 * This getter gets the text of the note.
+	 * @return the text
+	 */
 	public MultilineString getText() {
 		return text;
 	}
 
-	// setters
+	/**
+	 * This setter sets the title of the note.
+	 * @param newTitle this is the new title to be set
+	 */
 	public void setTitle(String newTitle) {
 		// initial set up code below - check if this needs updating
 		title = newTitle;
 	}
 
+	/**
+	 * This setter sets the time stamp of the note.
+	 * @param newTimeStamp This is the new time stamp to be set
+	 */
 	public void setTimeStamp(GregorianCalendar newTimeStamp) {
 		// initial set up code below - check if this needs updating
 		timeStamp = newTimeStamp;
 	}
 
-	public void setTimeStamp(int Y1, int M1, int D1, int h1, int m1, int s1) {
+	/**
+	 * This setter sets the time stamp of the note.
+	 * @param yr for year
+	 * @param month for month
+	 * @param day for day
+	 * @param hr for hour
+	 * @param min for minute
+	 * @param sec for second
+	 */
+	public void setTimeStamp(int yr, int month, int day, int hr, int min, int sec) {
 		// initial set up code below - check if this needs updating
-		timeStamp = new GregorianCalendar(Y1, M1, D1, h1, m1, s1);
+		timeStamp = new GregorianCalendar(yr, month, day, hr, min, sec);
 	}
 
+	/**
+	 * This setter sets the text of the note.
+	 * @param newText This is the new text to be set
+	 */
 	public void setText(MultilineString newText) {
 		// initial set up code below - check if this needs updating
 		text = newText;
 	}
 
+	/**
+	 * This is the constructor for the class.
+	 * @param title This is the title
+	 * @param timeStamp This is the time stamp
+	 * @param text This is the text
+	 */
 	public Note(String title, GregorianCalendar timeStamp, MultilineString text) {
 		this.title = title;
 		this.timeStamp = timeStamp;

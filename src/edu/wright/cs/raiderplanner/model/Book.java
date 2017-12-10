@@ -33,19 +33,28 @@ public class Book /*extends Requirement*/ {
 
 	// public methods
 
-	// getters
+	/**
+	 * gets Chapters.
+	 * @return chapters
+	 */
 	public ArrayList<String> getChapters() {
 		// initial set up code below - check if this needs updating
 		return chapters;
 	}
 
-	// setters
+	/**
+	 * sets Chapters.
+	 * @param newChapters the new chapters
+	 */
 	public void setChapters(ArrayList<String> newChapters) {
 		// initial set up code below - check if this needs updating
 		chapters = newChapters;
 	}
 
-	// constructor
+	/**
+	 * constructor.
+	 * @param chapters the chapters
+	 */
 	public Book(ArrayList<String> chapters) {
 		this.chapters = chapters;
 	}
