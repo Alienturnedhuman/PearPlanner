@@ -38,13 +38,11 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherOutputStream;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SealedObject;
 import javax.crypto.SecretKey;
 
@@ -76,12 +74,12 @@ public class StudyPlannerController {
 			Cipher cipher = Cipher.getInstance("Blowfish");
 			cipher.init(Cipher.ENCRYPT_MODE, key64);
 			SealedObject sealedObject = new SealedObject(this.planner, cipher);
-			CipherOutputStream cipherOutputStream = new CipherOutputStream(
+			try (CipherOutputStream cipherOutputStream = new CipherOutputStream(
 					new BufferedOutputStream(new FileOutputStream(fileName)), cipher);
-			ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);
-			outputStream.writeObject(sealedObject);
-			outputStream.close();
-			return true;
+					ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream)) {
+				outputStream.writeObject(sealedObject);
+				return true;
+			}
 		} catch (IOException e) {
 			UIManager.reportError("File does not exist: " + e.getMessage());
 			return false;
@@ -268,8 +266,7 @@ public class StudyPlannerController {
 	 *
 	 * @param newAccount New account for planner
 	 */
-	public StudyPlannerController(Account newAccount)
-			throws NoSuchAlgorithmException, NoSuchPaddingException {
+	public StudyPlannerController(Account newAccount) {
 		planner = new StudyPlanner(newAccount);
 	}
 
