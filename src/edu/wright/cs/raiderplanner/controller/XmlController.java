@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar
+ * Bijan Ghasemi Afshar, Roberto C. Sánchez
  *
  *
  *
@@ -21,12 +21,12 @@
 
 package edu.wright.cs.raiderplanner.controller;
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import static edu.wright.cs.raiderplanner.controller.MainController.isNumeric;
 
 import edu.wright.cs.raiderplanner.model.MultilineString;
 
-import static edu.wright.cs.raiderplanner.controller.MainController.isNumeric;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -34,12 +34,25 @@ import java.util.HashSet;
 /**
  * Created by bendickson on 5/6/17.
  */
-public class XMLcontroller {
-	public enum ImportAs {
+public class XmlController {
+
+	/**
+	 * Signals the type as which to interpret an XML node being processed.
+	 */
+	public static enum ImportAs {
 		BOOLEAN, STRING, INTEGER, DOUBLE, MULTILINESTRING, NODELIST
 	}
 
-	public class NodeReturn {
+	/**
+	 * The class represents a node which has been parsed from an XML file as a
+	 * specific primitive type or Object type.
+	 */
+	public static class NodeReturn {
+		// TODO: The premise of this class seems wrong; replace with something less fragile
+		// In particular, the fact that attempting to retrieve a primitive type
+		// when that is not the type as which the node was imported will return
+		// a value which may be confused with a legitimate value makes the whole
+		// thing rather fragile.
 		private ImportAs importedAs;
 		private String stringValue;
 		private int integerValue;
@@ -48,6 +61,9 @@ public class XMLcontroller {
 		private NodeList nodeList;
 		private boolean booleanValue = false;
 
+		/**
+		 * @return The boolean value that was parsed from the XML.
+		 */
 		public boolean getBoolean() {
 			if (importedAs == ImportAs.BOOLEAN) {
 				return booleanValue;
@@ -56,6 +72,9 @@ public class XMLcontroller {
 			}
 		}
 
+		/**
+		 * @return The String value that was parsed from the XML.
+		 */
 		public String getString() {
 			if (importedAs == ImportAs.STRING) {
 				return stringValue;
@@ -64,6 +83,9 @@ public class XMLcontroller {
 			}
 		}
 
+		/**
+		 * @return The MultilineString value that was parsed from the XML.
+		 */
 		public MultilineString getMultilineString() {
 			if (importedAs == ImportAs.MULTILINESTRING) {
 				return multilineStringValue;
@@ -72,6 +94,9 @@ public class XMLcontroller {
 			}
 		}
 
+		/**
+		 * @return The int value that was parsed from the XML.
+		 */
 		public int getInt() {
 			if (importedAs == ImportAs.INTEGER) {
 				return integerValue;
@@ -80,6 +105,9 @@ public class XMLcontroller {
 			}
 		}
 
+		/**
+		 * @return The double value that was parsed from the XML.
+		 */
 		public double getDouble() {
 			if (importedAs == ImportAs.DOUBLE) {
 				return doubleValue;
@@ -88,6 +116,9 @@ public class XMLcontroller {
 			}
 		}
 
+		/**
+		 * @return The NodeList value that was parsed from the XML.
+		 */
 		public NodeList getNodeList() {
 			if (importedAs == ImportAs.NODELIST) {
 				return nodeList;
@@ -96,37 +127,76 @@ public class XMLcontroller {
 			}
 		}
 
-		NodeReturn(boolean nv) {
+		/**
+		 * Create a NodeReturn containing the given boolean value.
+		 *
+		 * @param nv The boolean value that was parsed from the XML.
+		 */
+		private NodeReturn(boolean nv) {
 			importedAs = ImportAs.BOOLEAN;
 			booleanValue = nv;
 		}
 
-		NodeReturn(int nv) {
+		/**
+		 * Create a NodeReturn containing the given int value.
+		 *
+		 * @param nv The int value that was parsed from the XML.
+		 */
+		private NodeReturn(int nv) {
 			importedAs = ImportAs.INTEGER;
 			integerValue = nv;
 		}
 
-		NodeReturn(double nv) {
+		/**
+		 * Create a NodeReturn containing the given double value.
+		 *
+		 * @param nv The double value that was parsed from the XML.
+		 */
+		private NodeReturn(double nv) {
 			importedAs = ImportAs.DOUBLE;
 			doubleValue = nv;
 		}
 
-		NodeReturn(String nv) {
+		/**
+		 * Create a NodeReturn containing the given String value.
+		 *
+		 * @param nv The String value that was parsed from the XML.
+		 */
+		private NodeReturn(String nv) {
 			importedAs = ImportAs.STRING;
 			stringValue = nv;
 		}
 
-		NodeReturn(MultilineString nv) {
+		/**
+		 * Create a NodeReturn containing the given MultilineString value.
+		 *
+		 * @param nv The MultilineString value that was parsed from the XML.
+		 */
+		private NodeReturn(MultilineString nv) {
 			importedAs = ImportAs.MULTILINESTRING;
 			multilineStringValue = nv;
 		}
 
-		NodeReturn(NodeList nv) {
+		/**
+		 * Create a NodeReturn containing the given NodeList value.
+		 *
+		 * @param nv The NodeList value that was parsed from the XML.
+		 */
+		private NodeReturn(NodeList nv) {
 			importedAs = ImportAs.NODELIST;
 			nodeList = nv;
 		}
 	}
 
+	/**
+	 * Process the given NodeList using the given schema and return a map of
+	 * node names and their corresponding values.
+	 *
+	 * @param nodes The NodeList to process
+	 * @param schema The schema of types for each node name
+	 *
+	 * @return A map of node names and their corresponding values
+	 */
 	public HashMap<String, NodeReturn> getSchemaValues(NodeList nodes,
 			HashMap<String, ImportAs> schema) {
 		HashMap<String, NodeReturn> hash = new HashMap<>();
@@ -166,8 +236,9 @@ public class XMLcontroller {
 						if (nodes.item(num).hasChildNodes()) {
 							hash.put(nodeName, new NodeReturn(nodes.item(num).getChildNodes()));
 						}
-					default:
 						break;
+					default:
+						// Do nothing
 					}
 				}
 			}
@@ -175,6 +246,13 @@ public class XMLcontroller {
 		return hash;
 	}
 
+	/**
+	 * Returns the NodeList of children under a given parent node.
+	 *
+	 * @param parentNode The parent node to process
+	 *
+	 * @return The NodeList of child nodes
+	 */
 	public static NodeList getNodes(Node parentNode) {
 		NodeList tlist = parentNode.getChildNodes();
 		int count = tlist.getLength();
@@ -186,22 +264,17 @@ public class XMLcontroller {
 		return parentNode.getChildNodes();
 	}
 
-	@Deprecated
-	public static boolean validNodeList(NodeList nodes, String[] nodeNames) {
-		int num = -1;
-		int ii = nodeNames.length;
-		if (nodes.getLength() != ii) {
-			return false;
-		}
-		while (++num < ii) {
-			if (!nodes.item(num).getNodeName().equals(nodeNames[num])) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	public static boolean matchesSchema(NodeList nodes, HashMap<String, XMLcontroller.ImportAs> schema) {
+	/**
+	 * Determines if the given list of nodes and associated schema contain
+	 * matching sets of node names.
+	 *
+	 * @param nodes The list of nodes to match against the schema
+	 * @param schema The schema to match against the list of nodes
+	 *
+	 * @return True if the node list and schema match, false otherwise
+	 */
+	public static boolean matchesSchema(NodeList nodes,
+			HashMap<String, XmlController.ImportAs> schema) {
 		HashSet<String> match = new HashSet<>();
 		int num = -1;
 		int ii = nodes.getLength();

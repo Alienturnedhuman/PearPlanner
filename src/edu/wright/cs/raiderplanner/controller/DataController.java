@@ -90,9 +90,9 @@ public class DataController {
 	private static HubFile processUpdateHubFile(NodeList nodes) throws IOException {
 
 		HubFile hub = null;
-		XMLcontroller xmlTools = new XMLcontroller();
+		XmlController xmlTools = new XmlController();
 
-		HashMap<String, XMLcontroller.NodeReturn> fileValues =
+		HashMap<String, XmlController.NodeReturn> fileValues =
 				xmlTools.getSchemaValues(nodes, HubFile.SCHEMA_UPDATE_FILE);
 
 		NodeList updates = fileValues.get("updates").getNodeList();
@@ -101,9 +101,9 @@ public class DataController {
 			Node node = updates.item(i);
 			if (node.getNodeType() == Node.ELEMENT_NODE
 					&& HubFile.updateableNode(node.getNodeName())
-					&& XMLcontroller.matchesSchema(node.getChildNodes(), HubFile.SCHEMA_VCE)) {
+					&& XmlController.matchesSchema(node.getChildNodes(), HubFile.SCHEMA_VCE)) {
 				String nodeName = node.getNodeName();
-				HashMap<String, XMLcontroller.NodeReturn> nodeValues =
+				HashMap<String, XmlController.NodeReturn> nodeValues =
 						xmlTools.getSchemaValues(node.getChildNodes(),
 								HubFile.schemaList.get(nodeName));
 
@@ -112,7 +112,7 @@ public class DataController {
 				if (VersionControlEntity.inLibrary(uid)
 						&& VersionControlEntity.get(uid).getVersion() < version) {
 
-					NodeList nc = XMLcontroller.getNodes(node);
+					NodeList nc = XmlController.getNodes(node);
 					switch (nodeName) {
 					case "person":
 						processVceUpdate(HubFile.createPerson(nc));
@@ -203,7 +203,7 @@ public class DataController {
 	 * @param values the values to use for the update.
 	 */
 	public static void addVceProperties(VersionControlEntity vce,
-			Map<String, XMLcontroller.NodeReturn> values) {
+			Map<String, XmlController.NodeReturn> values) {
 
 		vce.addProperties(values.get("name").getString(),
 				values.get("details").getMultilineString());
@@ -228,21 +228,21 @@ public class DataController {
 		int beginLog = ConsoleIO.getLogSize();
 		ConsoleIO.setConsoleMessage("Importing New Hub File", true);
 		HubFile hub = null;
-		XMLcontroller xmlTools = new XMLcontroller();
+		XmlController xmlTools = new XmlController();
 
-		HashMap<String, XMLcontroller.NodeReturn> fileValues =
+		HashMap<String, XmlController.NodeReturn> fileValues =
 				xmlTools.getSchemaValues(nodes, HubFile.SCHEMA_NEW_STUDYPROFILE);
 
 		int version = fileValues.get("version").getInt();
 		NodeList assetNodes = fileValues.get("assets").getNodeList();
 		NodeList studyProfileNodes = fileValues.get("studyProfile").getNodeList();
 
-		if (XMLcontroller.matchesSchema(assetNodes, HubFile.SCHEMA_ASSETS)
-				&& XMLcontroller.matchesSchema(studyProfileNodes, HubFile.SCHEMA_STUDYPROFILE)) {
+		if (XmlController.matchesSchema(assetNodes, HubFile.SCHEMA_ASSETS)
+				&& XmlController.matchesSchema(studyProfileNodes, HubFile.SCHEMA_STUDYPROFILE)) {
 			ConsoleIO.setConsoleMessage("Schema Validates: assets", true);
 			ConsoleIO.setConsoleMessage("Schema Validates: studyProfile", true);
 
-			HashMap<String, XMLcontroller.NodeReturn> studyProfileValues =
+			HashMap<String, XmlController.NodeReturn> studyProfileValues =
 					xmlTools.getSchemaValues(studyProfileNodes, HubFile.SCHEMA_STUDYPROFILE);
 
 			int year = studyProfileValues.get("year").getInt();
@@ -255,7 +255,7 @@ public class DataController {
 			}
 
 			HashMap<String, VersionControlEntity> assetList = new HashMap<>();
-			HashMap<String, XMLcontroller.NodeReturn> assetValues =
+			HashMap<String, XmlController.NodeReturn> assetValues =
 					xmlTools.getSchemaValues(assetNodes, HubFile.SCHEMA_ASSETS);
 
 			ArrayList<Module> newModules = new ArrayList<>();
@@ -274,9 +274,9 @@ public class DataController {
 				for (int i = 0; i < pll; i++) {
 					node = personList.item(i);
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
-						nc = XMLcontroller.getNodes(node);
+						nc = XmlController.getNodes(node);
 						if (node.getNodeName().equals("person")
-								&& XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_PERSON)) {
+								&& XmlController.matchesSchema(nc, HubFile.SCHEMA_PERSON)) {
 
 							ConsoleIO.setConsoleMessage("Valid Node found:", true);
 
@@ -300,9 +300,9 @@ public class DataController {
 				for (int i = 0; i < bll; i++) {
 					node = buildingList.item(i);
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
-						nc = XMLcontroller.getNodes(node);
+						nc = XmlController.getNodes(node);
 						if (node.getNodeName().equals("building")
-								&& XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_BUILDING)) {
+								&& XmlController.matchesSchema(nc, HubFile.SCHEMA_BUILDING)) {
 							ConsoleIO.setConsoleMessage("Valid Node found:", true);
 
 
@@ -325,9 +325,9 @@ public class DataController {
 				for (int i = 0; i < rll; i++) {
 					node = roomList.item(i);
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
-						nc = XMLcontroller.getNodes(node);
+						nc = XmlController.getNodes(node);
 						if (node.getNodeName().equals("room")
-								&& XMLcontroller.matchesSchema(nc, HubFile.SCHEMA_ROOM)) {
+								&& XmlController.matchesSchema(nc, HubFile.SCHEMA_ROOM)) {
 							ConsoleIO.setConsoleMessage("Valid Node found:", true);
 
 							tr = HubFile.createRoom(nc, assetList);
@@ -347,9 +347,9 @@ public class DataController {
 				for (int i = 0; i < tll; i++) {
 					node = ttetList.item(i);
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
-						nc = XMLcontroller.getNodes(node);
+						nc = XmlController.getNodes(node);
 						if (node.getNodeName().equals("timetableEventType")
-								&& XMLcontroller.matchesSchema(nc,
+								&& XmlController.matchesSchema(nc,
 										HubFile.SCHEMA_TIMETABLE_EVENT_TYPE)) {
 							ConsoleIO.setConsoleMessage("Valid Node found:", true);
 							TimeTableEventType ttet = HubFile.createTimetableEventType(nc);
@@ -371,10 +371,10 @@ public class DataController {
 				if (modules.item(i).getNodeType() == Node.ELEMENT_NODE
 						&& modules.item(i).getNodeName().equals("module")
 						&& modules.item(i).hasChildNodes()
-						&& XMLcontroller.matchesSchema(modules.item(i).getChildNodes(),
+						&& XmlController.matchesSchema(modules.item(i).getChildNodes(),
 								HubFile.SCHEMA_MODULE)) {
 
-					HashMap<String, XMLcontroller.NodeReturn> moduleValues =
+					HashMap<String, XmlController.NodeReturn> moduleValues =
 							xmlTools.getSchemaValues(modules.item(i).getChildNodes(),
 									HubFile.SCHEMA_MODULE);
 
@@ -399,7 +399,7 @@ public class DataController {
 							String nodeName = assignments.item(j).getNodeName();
 							switch (nodeName) {
 							case "coursework":
-								if (XMLcontroller.matchesSchema(
+								if (XmlController.matchesSchema(
 										assignments.item(j).getChildNodes(),
 										HubFile.SCHEMA_COURSEWORK)) {
 									ConsoleIO.setConsoleMessage("Valid Node found:", true);
@@ -413,7 +413,7 @@ public class DataController {
 								break;
 
 							case "exam":
-								if (XMLcontroller.matchesSchema(
+								if (XmlController.matchesSchema(
 										assignments.item(j).getChildNodes(),
 										HubFile.SCHEMA_EXAM)) {
 									ConsoleIO.setConsoleMessage("Valid Node found:", true);
@@ -440,7 +440,7 @@ public class DataController {
 					for (int j = 0; j < ttll; j++) {
 						if (timetable.item(j).getNodeType() == Node.ELEMENT_NODE
 								&& timetable.item(j).getNodeName().equals("timetableEvent")
-								&& XMLcontroller.matchesSchema(timetable.item(j).getChildNodes(),
+								&& XmlController.matchesSchema(timetable.item(j).getChildNodes(),
 										HubFile.SCHEMA_TIMETABLE_EVENT)) {
 							ConsoleIO.setConsoleMessage("Valid Node found:", true);
 							nc = timetable.item(j).getChildNodes();
@@ -524,10 +524,10 @@ public class DataController {
 				// check it is a hubfile
 				if (rootElementTag.equals("hubfile")
 						&& rootElement.hasChildNodes()) {
-					NodeList nodes = XMLcontroller.getNodes(rootElement);
-					if (XMLcontroller.matchesSchema(nodes, HubFile.SCHEMA_NEW_STUDYPROFILE)) {
+					NodeList nodes = XmlController.getNodes(rootElement);
+					if (XmlController.matchesSchema(nodes, HubFile.SCHEMA_NEW_STUDYPROFILE)) {
 						hub = processNewHubFile(nodes);
-					} else if (XMLcontroller.matchesSchema(nodes, HubFile.SCHEMA_UPDATE_FILE)) {
+					} else if (XmlController.matchesSchema(nodes, HubFile.SCHEMA_UPDATE_FILE)) {
 						hub = processUpdateHubFile(nodes);
 					} else {
 						UIManager.reportError("Invalid Parent Nodes");

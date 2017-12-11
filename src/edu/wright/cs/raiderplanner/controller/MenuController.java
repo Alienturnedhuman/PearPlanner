@@ -60,7 +60,6 @@ import javafx.geometry.Pos;
 import javafx.print.PrinterJob;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
@@ -94,6 +93,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
@@ -102,7 +102,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import jfxtras.scene.control.agenda.Agenda;
 
-import java.awt.MouseInfo;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -303,8 +302,8 @@ public class MenuController implements Initializable {
 		studyProfile.getStyleClass().add("title");
 		GridPane.setMargin(studyProfile, new Insets(10));
 		this.mainContent.getColumnConstraints()
-				.add(new ColumnConstraints(Control.USE_COMPUTED_SIZE, Control.USE_COMPUTED_SIZE,
-						Control.USE_COMPUTED_SIZE, Priority.ALWAYS, HPos.CENTER, true));
+				.add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE,
+						Region.USE_COMPUTED_SIZE, Priority.ALWAYS, HPos.CENTER, true));
 		FlowPane modules = new FlowPane();
 
 		Thread renderModules = new Thread(() -> {
