@@ -34,25 +34,43 @@ public class Account implements Serializable {
 
 	// public methods
 
-	// getters
+	/**
+	 * gets Student Details.
+	 * @return studentDetails.
+	 */
 	public Person getStudentDetails() {
 		return studentDetails;
 	}
 
+	/**
+	 * gets Student Number.
+	 * @return studentNumber.
+	 */
 	public String getStudentNumber() {
 		return studentNumber;
 	}
 
-	// setters
+	/**
+	 * sets Student Details.
+	 * @param newStudentDetails.
+	 */
 	public void setStudentDetails(Person newStudentDetails) {
 		studentDetails = newStudentDetails;
 	}
 
+	/**
+	 * sets Student Number.
+	 * @param newStudentNumber.
+	 */
 	public void setStudentNumber(String newStudentNumber) {
 		studentNumber = newStudentNumber;
 	}
 
-	// constructors
+	/**
+	 * Constructor.
+	 * @param studentDetails.
+	 * @param studentNumber.
+	 */
 	public Account(Person studentDetails, String studentNumber) {
 		this.studentDetails = studentDetails;
 		this.studentNumber = studentNumber;

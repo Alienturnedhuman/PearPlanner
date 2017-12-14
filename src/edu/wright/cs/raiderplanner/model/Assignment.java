@@ -62,6 +62,10 @@ public class Assignment extends VersionControlEntity {
 		super.replace(receivedVce);
 	}
 
+	/**
+	 * outputs State Type.
+	 *
+	 */
 	public enum StateType {
 		IN_PROGRESS, DEADLINE_PASSED, NOT_STARTED
 	}
@@ -73,6 +77,10 @@ public class Assignment extends VersionControlEntity {
 		return "Assignment '" + name + "'";
 	}
 
+	/**
+	 * @param verbose.
+	 * @return verboseString.
+	 */
 	public String toString(boolean verbose) {
 		if (verbose) {
 			StringBuilder verboseString = new StringBuilder();
@@ -95,34 +103,66 @@ public class Assignment extends VersionControlEntity {
 		}
 	}
 
+	/**
+	 * gets tasks.
+	 * @return tasks.
+	 */
 	public ArrayList<Task> getTasks() {
 		return tasks;
 	}
 
+	/**
+	 * gets Requirements.
+	 * @return requirements.
+	 */
 	public ArrayList<Requirement> getRequirements() {
 		return requirements;
 	}
 
+	/**
+	 * gets Weight.
+	 * @return weights.
+	 */
 	public int getWeighting() {
 		return weighting;
 	}
 
+	/**
+	 * gets SetBy.
+	 * @return setBy.
+	 */
 	public Person getSetBy() {
 		return setBy;
 	}
 
+	/**
+	 * gets MarkedBy.
+	 * @return markedBy.
+	 */
 	public Person getMarkedBy() {
 		return markedBy;
 	}
 
+	/**
+	 * gets ReviewedBy.
+	 * @return reviewedBy.
+	 */
 	public Person getReviewedBy() {
 		return reviewedBy;
 	}
 
+	/**
+	 * gets Marks.
+	 * @return marks.
+	 */
 	public int getMarks() {
 		return marks;
 	}
 
+	/**
+	 * gets State String.
+	 * @return state.
+	 */
 	public StateType getState() {
 		return state;
 	}
@@ -206,8 +246,16 @@ public class Assignment extends VersionControlEntity {
 		MainController.ui.assignmentDetails(this, current);
 	}
 
-	// Constructor
-	public Assignment(int cweighting, Person csetBy, Person cmarkedBy, Person creviewedBy, int cmarks) {
+	/**
+	 * Constructor
+	 * @param cweighting.
+	 * @param csetBy.
+	 * @param cmarkedBy.
+	 * @param creviewedBy.
+	 * @param cmarks.
+	 */
+	public Assignment(int cweighting, Person csetBy, Person cmarkedBy,
+			Person creviewedBy, int cmarks) {
 		weighting = cweighting;
 		setBy = csetBy;
 		markedBy = cmarkedBy;
