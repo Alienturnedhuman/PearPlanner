@@ -10,7 +10,7 @@ You are welcome to participate and contribute even if you are not a student in C
 
 ## Before Your First Pull Request
 
-There are a few items which **must** becompleted **before** you can participate in the RaiderPlanner project. Here is an itemized list (a bit more on each item follows the list):
+There are a few items which **must** be completed **before** you can participate in the RaiderPlanner project. Here is an itemized list (a bit more on each item follows the list):
 
  * Install and configure the [development toolchain](TOOLCHAIN.md)
  * Join the [RaiderPlanner Slack team](https://raiderplanner.slack.com)
