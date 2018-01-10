@@ -132,7 +132,8 @@ public class HubFile implements Serializable {
 	 * @param a1   VersionControlEntity list
 	 * @param cal1 CALENDAR events list
 	 */
-	public HubFile(int v1, int y1, int s1, ArrayList<Module> m1, ArrayList<VersionControlEntity> a1, ArrayList<Event> cal1) {
+	public HubFile(int v1, int y1, int s1, ArrayList<Module> m1,
+			ArrayList<VersionControlEntity> a1, ArrayList<Event> cal1) {
 		version = v1;
 		year = y1;
 		semester = s1;
@@ -142,7 +143,8 @@ public class HubFile implements Serializable {
 		updateFile = false;
 	}
 
-	public HubFile(int v1, int y1, int s1, ArrayList<Module> m1, ArrayList<VersionControlEntity> a1, ArrayList<Event> cal1,
+	public HubFile(int v1, int y1, int s1, ArrayList<Module> m1,
+			ArrayList<VersionControlEntity> a1, ArrayList<Event> cal1,
 				String n1, MultilineString d1, String u1) {
 		this(v1, y1, s1, m1, a1, cal1);
 		semesterName = n1;
@@ -374,7 +376,8 @@ public class HubFile implements Serializable {
 		SCHEMA_EXAMEVENT.put("duration", XmlController.ImportAs.INTEGER);
 	}
 
-	public static HashMap<String, HashMap<String, XmlController.ImportAs>> schemaList = new HashMap<>();
+	public static HashMap<String, HashMap<String, XmlController.ImportAs>> schemaList =
+			new HashMap<>();
 
 	static {
 		schemaList.put("person",SCHEMA_PERSON);
@@ -394,15 +397,17 @@ public class HubFile implements Serializable {
 	private static XmlController xmlTools = new XmlController();
 
 	public static Person createPerson(NodeList nc) {
-		HashMap<String, XmlController.NodeReturn> pValues = xmlTools.getSchemaValues(nc,
-				HubFile.SCHEMA_PERSON);
+		HashMap<String, XmlController.NodeReturn> personValues =
+				xmlTools.getSchemaValues(nc, HubFile.SCHEMA_PERSON);
 
-		Person r = new Person(pValues.get("salutation").getString(), pValues.get("givenNames").getString(),
-				pValues.get("familyName").getString(), pValues.get("familyNameLast").getBoolean(),
-				pValues.get("email").getString());
+		Person person = new Person(personValues.get("salutation").getString(),
+				personValues.get("givenNames").getString(),
+				personValues.get("familyName").getString(),
+				personValues.get("familyNameLast").getBoolean(),
+				personValues.get("email").getString());
 
-		DataController.addVceProperties(r, pValues);
-		return r;
+		DataController.addVceProperties(person, personValues);
+		return person;
 	}
 
 	public static Building createBuilding(NodeList nc) {
@@ -449,10 +454,9 @@ public class HubFile implements Serializable {
 	 */
 	public static Coursework createCoursework(NodeList nc,
 			HashMap<String, VersionControlEntity> assetList) throws IOException {
-		Coursework coursework;
+
 		HashMap<String, XmlController.NodeReturn> courseworkValues = xmlTools.getSchemaValues(nc,
 				HubFile.SCHEMA_COURSEWORK);
-
 
 		Person cwSetBy;
 		Person cwMarkedBy;
@@ -462,11 +466,9 @@ public class HubFile implements Serializable {
 
 		// extensions to be added later
 
-
 		String linkedSetBy = courseworkValues.get("setBy").getString();
 		String linkedMarkedBy = courseworkValues.get("markedBy").getString();
 		String linkedReviewedBy = courseworkValues.get("reviewedBy").getString();
-
 
 		cwSetBy = DataController.inList(assetList, linkedSetBy);
 		cwMarkedBy = DataController.inList(assetList, linkedMarkedBy);
@@ -506,13 +508,13 @@ public class HubFile implements Serializable {
 			cwDeadline = null;
 		}
 
-
-		coursework = new Coursework(courseworkValues.get("weighting").getInt(),
+		Coursework coursework = new Coursework(courseworkValues.get("weighting").getInt(),
 				cwSetBy, cwMarkedBy, cwReviewedBy, courseworkValues.get("marks").getInt(),
 				cwStartDate, cwDeadline, cwExtensions);
 
 		DataController.addVceProperties(coursework, courseworkValues);
 		return coursework;
+
 	}
 
 	/**
