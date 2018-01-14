@@ -61,6 +61,7 @@ public class ModelEntityTest {
 		multilineString = new MultilineString("This is some note for testing purposes");
 		note = new Note("Note1", gregorianCalendar, multilineString);
 		notes = new ArrayList<>();
+		notes.add(note);
 		modelEntity = new ModelEntity("name1", detailsArray, notes);
 	}
 

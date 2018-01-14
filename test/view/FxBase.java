@@ -79,15 +79,10 @@ public abstract class FxBase extends ApplicationTest {
 	 * @param query the Node we want to retrieve.
 	 * @return the requested Node.
 	 */
-	//Supressing because converting to type T should work with all objects of Node.
+	// Suppressing because converting to type T should work with all objects of Node.
 	@SuppressWarnings("unchecked")
-	public <T extends Node> T find (final String query) {
-		Node result = lookup(query).queryAll().iterator().next();
-		if (result instanceof Node) {
-			return (T) result;
-		} else {
-			return null;
-		}
+	public <T extends Node> T find(final String query) {
+		return (T) lookup(query).queryAll().iterator().next();
 	}
 
 }

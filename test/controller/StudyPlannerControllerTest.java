@@ -44,11 +44,11 @@ import java.util.ArrayList;
 public class StudyPlannerControllerTest {
 
 	StudyPlannerController studyPlannerController;
+
 	/**
 	 * This test cases sets up the Account and Controller necessary for this test suite.
 	 * @throws Exception to handle errors when creating the objects.
 	 */
-
 	@BeforeEach
 	public void setUp() throws Exception {
 		Account account = new Account(new Person("Mr","Adrew",true),"100125464");
@@ -57,14 +57,15 @@ public class StudyPlannerControllerTest {
 		int v1 = 2;
 		int y1 = 2017;
 		int s1 = 3;
-		ArrayList<Module> m1 = new ArrayList<Module>();
-		ArrayList<VersionControlEntity> a1 = new ArrayList<VersionControlEntity>();
-		ArrayList<Event> cal1 = new ArrayList<Event>();
+		ArrayList<Module> m1 = new ArrayList<>();
+		ArrayList<VersionControlEntity> a1 = new ArrayList<>();
+		ArrayList<Event> cal1 = new ArrayList<>();
 		HubFile hubFile = new HubFile(v1, y1, s1, m1, a1, cal1);
 		studyPlannerController.createStudyProfile(hubFile);
 	}
+
 	/**
-	 * WIP: This test case should attempt to retrieve user study profiles
+	 * WIP: This test case should attempt to retrieve user study profiles.
 	 * @throws Exception to handle when the study profiles cannot be found or loaded properly.
 	 */
 
@@ -101,9 +102,9 @@ public class StudyPlannerControllerTest {
 		int v1 = 5;
 		int y1 = 1997;
 		int s1 = 30;
-		ArrayList<Module> m1 = new ArrayList<Module>();
-		ArrayList<VersionControlEntity> a1 = new ArrayList<VersionControlEntity>();
-		ArrayList<Event> cal1 = new ArrayList<Event>();
+		ArrayList<Module> m1 = new ArrayList<>();
+		ArrayList<VersionControlEntity> a1 = new ArrayList<>();
+		ArrayList<Event> cal1 = new ArrayList<>();
 		HubFile newHubFile = new HubFile(v1, y1, s1, m1, a1, cal1);
 		assertEquals(true, studyPlannerController.createStudyProfile(newHubFile));
 	}
