@@ -25,7 +25,7 @@ import edu.wright.cs.raiderplanner.model.Assignment;
 import edu.wright.cs.raiderplanner.model.Requirement;
 import edu.wright.cs.raiderplanner.model.Task;
 import edu.wright.cs.raiderplanner.model.TaskType;
-import edu.wright.cs.raiderplanner.view.UIManager;
+import edu.wright.cs.raiderplanner.view.UiManager;
 import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
@@ -201,9 +201,9 @@ public class TaskController implements Initializable {
 				this.requirements.getItems().add(req);
 			}
 		} catch (IOException e1) {
-			UIManager.reportError("Unable to open view file");
+			UiManager.reportError("Unable to open view file");
 		} catch (Exception e1) {
-			UIManager.reportError(e1.getMessage());
+			UiManager.reportError(e1.getMessage());
 		}
 	}
 
@@ -256,7 +256,7 @@ public class TaskController implements Initializable {
 	 * Add a new TaskType.
 	 */
 	public void newTaskType() {
-		if (UIManager.confirm("Create a new Task type '" + this.taskTypeName.getText() + '?')) {
+		if (UiManager.confirm("Create a new Task type '" + this.taskTypeName.getText() + '?')) {
 			// Create a new type:
 			TaskType task = TaskType.create(this.taskTypeName.getText());
 			// =================
@@ -359,7 +359,7 @@ public class TaskController implements Initializable {
 
 		// Button actions:
 		this.removeDep.setOnAction(e -> {
-			if (UIManager.confirm("Are you sure you want to remove this dependency?")) {
+			if (UiManager.confirm("Are you sure you want to remove this dependency?")) {
 				Task task = this.dependencies.getSelectionModel().getSelectedItem();
 				this.dependencies.getItems().remove(task);
 				if (this.task != null) {
@@ -369,7 +369,7 @@ public class TaskController implements Initializable {
 		});
 
 		this.removeReq.setOnAction(e -> {
-			if (UIManager.confirm("Are you sure you want to remove this requirement?")) {
+			if (UiManager.confirm("Are you sure you want to remove this requirement?")) {
 				Requirement requirement = this.requirements.getSelectionModel().getSelectedItem();
 				this.requirements.getItems().remove(requirement);
 				if (this.task != null) {
@@ -565,7 +565,7 @@ public class TaskController implements Initializable {
 					MainController.ui.requirementDetails(cell.getItem());
 					elistView.refresh();
 				} catch (IOException e1) {
-					UIManager.reportError("Unable to open view file");
+					UiManager.reportError("Unable to open view file");
 				}
 			}
 		});

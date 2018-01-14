@@ -36,43 +36,41 @@ import java.util.Scanner;
 /**
  * Created by bendickson on 5/4/17.
  */
-public class ConsoleIO {
+public class ConsoleIo {
 	static ArrayList<String> logged = new ArrayList<>();
 
 	/**
 	 * Retrieve user input.
 	 *
-	 * @param message
-	 *            Message to be shown
+	 * @param message Message to be shown
 	 * @return retrieved String
 	 */
 	public static String getDataString(String message) {
-		Scanner scan = new Scanner(System.in);
-		String str = "";
-		while (str.equals("")) {
-			System.out.println(message);
-			str = scan.nextLine();
+		try (Scanner scan = new Scanner(System.in)) {
+			String str = "";
+			while ("".equals(str)) {
+				System.out.println(message);
+				str = scan.nextLine();
+			}
+			return str;
 		}
-		scan.close();
-		return str;
 	}
 
 	/**
 	 * Get yes/no input.
 	 *
-	 * @param message
-	 *            Message to be shown.
+	 * @param message Message to be shown.
 	 * @return true for yes, false for no.
 	 */
 	public static boolean getDataBool(String message) {
-		Scanner scan = new Scanner(System.in);
-		String str = "";
-		while (!(str.equals("y") || str.equals("n"))) {
-			System.out.println(message);
-			str = scan.next();
+		try (Scanner scan = new Scanner(System.in)) {
+			String str = "";
+			while (!("y".equals(str) || "n".equals(str))) {
+				System.out.println(message);
+				str = scan.next();
+			}
+			return "y".equals(str);
 		}
-		scan.close();
-		return str.equals("y");
 	}
 
 	/**
@@ -87,8 +85,7 @@ public class ConsoleIO {
 	/**
 	 * Save the full log to a file.
 	 *
-	 * @param filePath
-	 *            file path
+	 * @param filePath file path
 	 */
 	public static void saveLog(String filePath) {
 		saveLog(filePath, 0, logged.size());
@@ -97,12 +94,9 @@ public class ConsoleIO {
 	/**
 	 * Save specific lines to a file.
 	 *
-	 * @param filePath
-	 *            file path
-	 * @param startLine
-	 *            starting line
-	 * @param endLine
-	 *            end line
+	 * @param filePath file path
+	 * @param startLine starting line
+	 * @param endLine end line
 	 */
 	public static void saveLog(String filePath, int startLine, int endLine) {
 		if (startLine < 0) {
@@ -122,7 +116,6 @@ public class ConsoleIO {
 				}
 				bw.write(logged.get(itr));
 			}
-			bw.close();
 		} catch (IOException e) {
 			setConsoleMessage("File not written", true);
 		}
@@ -131,8 +124,7 @@ public class ConsoleIO {
 	/**
 	 * Display a message on a console.
 	 *
-	 * @param message
-	 *            message to be displayed.
+	 * @param message message to be displayed.
 	 */
 	public static void setConsoleMessage(String message) {
 		System.out.println(message);
@@ -141,10 +133,8 @@ public class ConsoleIO {
 	/**
 	 * Display a message with an option of saving it to a log.
 	 *
-	 * @param message
-	 *            message to be displayed (or logged)
-	 * @param logMessage
-	 *            whether to log it
+	 * @param message message to be displayed (or logged)
+	 * @param logMessage whether to log it
 	 */
 	public static void setConsoleMessage(String message, boolean logMessage) {
 		System.out.println(message);
@@ -156,36 +146,40 @@ public class ConsoleIO {
 	/**
 	 * Get user selection of a menu option.
 	 *
-	 * @param menuOptions
-	 *            available options
+	 * @param menuOptions available options
 	 * @return user selection
 	 */
 	public static int getMenuOption(String[] menuOptions) {
-		Scanner scan = new Scanner(System.in);
-		int option = -1;
-		while (option < 0 || option >= menuOptions.length) {
-			System.out.println("Please select an option\n");
-			option = -1;
-			while (++option < menuOptions.length) {
-				System.out.printf("%d - " + menuOptions[option] + "\n", option);
+		try (Scanner scan = new Scanner(System.in)) {
+			int option = -1;
+			while (option < 0 || option >= menuOptions.length) {
+				System.out.println("Please select an option\n");
+				option = -1;
+				while (++option < menuOptions.length) {
+					System.out.printf("%d - " + menuOptions[option] + "\n", option);
+				}
+				option = scan.nextInt();
 			}
-			option = scan.nextInt();
+			return option;
 		}
-		scan.close();
-		return option;
 	}
 
 	// Console view below
 	/**
 	 * Displays main menu.
+	 *
 	 * @return menu choice
 	 */
 	public static String view_main() {
-		edu.wright.cs.raiderplanner.view.ConsoleIO.setConsoleMessage("MAIN MENU");
+		setConsoleMessage("MAIN MENU");
 		// list of options
-		String[] menuOptions = { "Create Study Profile", "View Study Profile", "View Notifications",
-				"Quit Program" };
-		int choice = edu.wright.cs.raiderplanner.view.ConsoleIO.getMenuOption(menuOptions);
+		String[] menuOptions = {
+				"Create Study Profile",
+				"View Study Profile",
+				"View Notifications",
+				"Quit Program"
+		};
+		int choice = getMenuOption(menuOptions);
 
 		return menuOptions[choice];
 
@@ -193,13 +187,17 @@ public class ConsoleIO {
 
 	/**
 	 * Displays Study Profile creation.
+	 *
 	 * @return Returns menu choice
 	 */
 	public static String view_createStudyP() {
-		edu.wright.cs.raiderplanner.view.ConsoleIO.setConsoleMessage("CREATE A STUDY PROFILE");
+		setConsoleMessage("CREATE A STUDY PROFILE");
 		// list of options
-		String[] menuOptions = { "Load Study Profile File", "Return to Main Menu" };
-		int choice = edu.wright.cs.raiderplanner.view.ConsoleIO.getMenuOption(menuOptions);
+		String[] menuOptions = {
+				"Load Study Profile File",
+				"Return to Main Menu"
+		};
+		int choice = getMenuOption(menuOptions);
 
 		return menuOptions[choice];
 
@@ -207,18 +205,18 @@ public class ConsoleIO {
 
 	/**
 	 * Shows a study profile.
+	 *
 	 * @param spController input StudyPlannerController
 	 * @return menu option
 	 */
 	public static String view_viewStudyP(StudyPlannerController spController) {
-		edu.wright.cs.raiderplanner.view.ConsoleIO.setConsoleMessage("VIEW A STUDY PROFILE");
+		setConsoleMessage("VIEW A STUDY PROFILE");
 		String[] studyProfiles = spController.getPlanner().getListOfStudyProfileNames();
 		int i1 = -1;
 		int i2 = studyProfiles.length;
 
 		if (i2 < 1) {
-			edu.wright.cs.raiderplanner.view.ConsoleIO.setConsoleMessage(
-					"No existing study profiles");
+			setConsoleMessage("No existing study profiles");
 		}
 
 		String[] menuOptions = new String[i2 + 1];
@@ -230,10 +228,7 @@ public class ConsoleIO {
 
 		int i3 = -1;
 		while (i3 < i2) {
-			i3 = edu.wright.cs.raiderplanner.view.ConsoleIO.getMenuOption(menuOptions);
-//			if (i3 < i2) {
-//				Not sure why this was here.
-//			}
+			i3 = getMenuOption(menuOptions);
 		}
 
 		return menuOptions[i2];
@@ -241,11 +236,12 @@ public class ConsoleIO {
 
 	/**
 	 * Loads a Study Profile.
+	 *
 	 * @param spController input StudyPlannerController
 	 * @return a static string
 	 */
 	public static String view_loadStudyP(StudyPlannerController spController) {
-		edu.wright.cs.raiderplanner.view.ConsoleIO.setConsoleMessage("LOAD A STUDY PROFILE");
+		setConsoleMessage("LOAD A STUDY PROFILE");
 
 		String filename = getDataString("Enter filepath:");
 		File tempFile = new File(filename);

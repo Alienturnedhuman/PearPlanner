@@ -32,7 +32,7 @@ import edu.wright.cs.raiderplanner.model.StudyPlanner;
 import edu.wright.cs.raiderplanner.model.StudyProfile;
 import edu.wright.cs.raiderplanner.model.Task;
 import edu.wright.cs.raiderplanner.model.TaskType;
-import edu.wright.cs.raiderplanner.view.UIManager;
+import edu.wright.cs.raiderplanner.view.UiManager;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
@@ -81,10 +81,10 @@ public class StudyPlannerController {
 				return true;
 			}
 		} catch (IOException e) {
-			UIManager.reportError("File does not exist: " + e.getMessage());
+			UiManager.reportError("File does not exist: " + e.getMessage());
 			return false;
 		} catch (Exception e) {
-			UIManager.reportError(e.getMessage());
+			UiManager.reportError(e.getMessage());
 			return false;
 		}
 	}
@@ -126,7 +126,7 @@ public class StudyPlannerController {
 			int i1 = -1;
 			int i2 = cal.size();
 			while (++i1 < i2) {
-				// ConsoleIO.setConsoleMessage("Adding " + cal.get(i).toString() + " to calendar",
+				// ConsoleIo.setConsoleMessage("Adding " + cal.get(i).toString() + " to calendar",
 				// true);
 				this.planner.addEventToCalendar(cal.get(i1));
 				profile.addEventToCalendar(cal.get(i1));

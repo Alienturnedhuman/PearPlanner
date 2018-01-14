@@ -24,7 +24,7 @@ package edu.wright.cs.raiderplanner.controller;
 import edu.wright.cs.raiderplanner.model.Activity;
 import edu.wright.cs.raiderplanner.model.QuantityType;
 import edu.wright.cs.raiderplanner.model.Requirement;
-import edu.wright.cs.raiderplanner.view.UIManager;
+import edu.wright.cs.raiderplanner.view.UiManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -155,7 +155,7 @@ public class RequirementController implements Initializable {
 	 * Add a new QuantityType.
 	 */
 	public void newQuantity() {
-		if (UIManager.confirm("Create a new Quantity '" + this.quantityName.getText() + '?')) {
+		if (UiManager.confirm("Create a new Quantity '" + this.quantityName.getText() + '?')) {
 			// Create a new type:
 			QuantityType quantity = QuantityType.create(this.quantityName.getText());
 			// =================
@@ -232,7 +232,7 @@ public class RequirementController implements Initializable {
 						MainController.ui.activityDetails(row.getItem());
 						this.activities.refresh();
 					} catch (IOException e1) {
-						UIManager.reportError("Unable to open view file");
+						UiManager.reportError("Unable to open view file");
 					}
 				}
 			});

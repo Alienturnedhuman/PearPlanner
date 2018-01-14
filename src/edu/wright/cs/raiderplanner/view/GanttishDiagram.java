@@ -117,7 +117,7 @@ public class GanttishDiagram {
 						BasicStroke.JOIN_MITER,
 						10.0f, pat, 0.0f);
 			} else {
-				return new BasicStroke((float) widthMult * (float) thickness);
+				return new BasicStroke((float) widthMult * thickness);
 			}
 		}
 
@@ -359,8 +359,8 @@ public class GanttishDiagram {
 				g2d.drawRoundRect(ox, oyk, GANTT_COLUMN_WIDTH, GANTT_ENTRY_HEIGHT, 15, 15);
 
 				g2d.setPaint(GANTT_ENTRY_FONT_COLOR);
-				drawMessage(g2d, GANTT_ENTRY_FONT_SIZE, dt.getName(), ox, oyk, GANTT_COLUMN_WIDTH -
-						GANTT_ENTRY_HEIGHT, GANTT_ENTRY_HEIGHT);
+				drawMessage(g2d, GANTT_ENTRY_FONT_SIZE, dt.getName(), ox, oyk, GANTT_COLUMN_WIDTH
+						- GANTT_ENTRY_HEIGHT, GANTT_ENTRY_HEIGHT);
 				int percentage;
 				if (dt.requirementCount() <= 0) {
 					percentage = dt.isCheckedComplete() ? 100 : 0;
@@ -406,9 +406,9 @@ public class GanttishDiagram {
 	 * @return generated Badge
 	 */
 	public static BufferedImage getBadge(int progress, boolean canStart, double multiplier) {
-		int canvasSize = (int) ((double) badgeSize * multiplier + .5);
-		int ringSize = (int) ((double) badgeRingSize * multiplier + .5);
-		int badgeRingThickness = (int) ((double) getBadgeRingThickness * multiplier + .5);
+		int canvasSize = (int) (badgeSize * multiplier + .5);
+		int ringSize = (int) (badgeRingSize * multiplier + .5);
+		int badgeRingThickness = (int) (getBadgeRingThickness * multiplier + .5);
 
 		BufferedImage imageBufferR = new BufferedImage(canvasSize, canvasSize, imageType);
 		Graphics2D g2d = imageBufferR.createGraphics();
@@ -431,7 +431,7 @@ public class GanttishDiagram {
 		g2d.setPaint(fillColor);
 		g2d.fillOval(ovalOffset, ovalOffset, ringSize, ringSize);
 
-		int badgeFontSize = (int) ((double) fontSize * multiplier + .5);
+		int badgeFontSize = (int) (fontSize * multiplier + .5);
 		Font font = new Font("Helvetica", Font.PLAIN, badgeFontSize);
 		FontMetrics metrics = g2d.getFontMetrics(font);
 
@@ -447,7 +447,7 @@ public class GanttishDiagram {
 		} else {
 			g2d.setPaint(ringColor);
 			int startAngle = 90;
-			int endAngle = -((int) (((float) arc / 100f) * 360));
+			int endAngle = -((int) ((arc / 100f) * 360));
 			g2d.drawArc(ovalOffset, ovalOffset, ringSize, ringSize, startAngle, endAngle);
 		}
 
@@ -474,21 +474,19 @@ public class GanttishDiagram {
 	 * @param g2d 2d graphics
 	 * @param fontSize font size
 	 * @param msg message
-	 * @param c_x x-axis
-	 * @param c_y y-axis
-	 * @param c_width width
-	 * @param c_height height
+	 * @param cx x-axis
+	 * @param cy y-axis
+	 * @param width width
+	 * @param height height
 	 */
-	static void drawMessage(Graphics2D g2d, int fontSize, String msg, int c_x,
-			int c_y, int c_width, int c_height) {
+	private static void drawMessage(Graphics2D g2d, int fontSize, String msg,
+			int cx, int cy, int width, int height) {
 
 		Font font = new Font("Helvetica", Font.PLAIN, fontSize);
 		FontMetrics metrics = g2d.getFontMetrics(font);
 
-
-		int msgX = c_x + (c_width - metrics.stringWidth(msg)) / 2;
-		int msgY = c_y + (c_height - metrics.getHeight()) / 2 + metrics.getAscent();
-
+		int msgX = cx + (width - metrics.stringWidth(msg)) / 2;
+		int msgY = cy + (height - metrics.getHeight()) / 2 + metrics.getAscent();
 
 		g2d.setFont(font);
 		g2d.drawString(msg, msgX, msgY);

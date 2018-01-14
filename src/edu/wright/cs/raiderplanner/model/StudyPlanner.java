@@ -21,7 +21,7 @@
 
 package edu.wright.cs.raiderplanner.model;
 
-import edu.wright.cs.raiderplanner.view.UIManager;
+import edu.wright.cs.raiderplanner.view.UiManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -374,13 +374,13 @@ public class StudyPlanner implements Serializable {
 			// Add Default Task types:
 			Collections.addAll(this.taskTypes, TaskType.listOfTaskTypes());
 		} catch (UnsupportedOperationException e) {
-			UIManager.reportError("Error, Unsupported Operation Exception.");
+			UiManager.reportError("Error, Unsupported Operation Exception.");
 			System.exit(1);
 		} catch (NullPointerException e) {
-			UIManager.reportError("Error, Null Pointer Exception.");
+			UiManager.reportError("Error, Null Pointer Exception.");
 			System.exit(1);
 		} catch (IllegalArgumentException e) {
-			UIManager.reportError("Error, Illegal Argument Exception.");
+			UiManager.reportError("Error, Illegal Argument Exception.");
 			System.exit(1);
 		}
 	}

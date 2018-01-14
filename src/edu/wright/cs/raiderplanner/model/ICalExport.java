@@ -27,7 +27,7 @@ import biweekly.component.VEvent;
 import biweekly.property.Summary;
 import biweekly.util.Duration;
 
-import edu.wright.cs.raiderplanner.view.UIManager;
+import edu.wright.cs.raiderplanner.view.UiManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -96,7 +96,7 @@ public class ICalExport {
 		try {
 			Biweekly.write(ical).go(file);
 		} catch (IOException e) {
-			UIManager.reportError("File does not exist: " + e.getMessage());
+			UiManager.reportError("File does not exist: " + e.getMessage());
 		}
 	}
 

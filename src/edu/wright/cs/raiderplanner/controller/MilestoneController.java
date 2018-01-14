@@ -23,7 +23,7 @@ package edu.wright.cs.raiderplanner.controller;
 
 import edu.wright.cs.raiderplanner.model.Milestone;
 import edu.wright.cs.raiderplanner.model.Task;
-import edu.wright.cs.raiderplanner.view.UIManager;
+import edu.wright.cs.raiderplanner.view.UiManager;
 import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
@@ -213,7 +213,7 @@ public class MilestoneController implements Initializable {
 
 		// Button actions:
 		this.remove.setOnAction(e -> {
-			if (UIManager.confirm("Are you sure you want to remove this dependency?")) {
+			if (UiManager.confirm("Are you sure you want to remove this dependency?")) {
 				Task tempTask = this.tasks.getSelectionModel().getSelectedItem();
 				this.tasks.getItems().remove(tempTask);
 				if (this.milestone != null) {

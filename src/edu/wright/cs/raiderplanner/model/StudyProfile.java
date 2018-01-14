@@ -23,7 +23,7 @@ package edu.wright.cs.raiderplanner.model;
 
 import edu.wright.cs.raiderplanner.controller.MainController;
 import edu.wright.cs.raiderplanner.controller.MenuController;
-import edu.wright.cs.raiderplanner.view.UIManager;
+import edu.wright.cs.raiderplanner.view.UiManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -159,7 +159,7 @@ public class StudyProfile extends VersionControlEntity {
 		try {
 			MainController.ui.studyProfileDetails(this);
 		} catch (IOException e) {
-			UIManager.reportError("Unable to open view file");
+			UiManager.reportError("Unable to open view file");
 		}
 	}
 

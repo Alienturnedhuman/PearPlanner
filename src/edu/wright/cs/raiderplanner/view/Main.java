@@ -32,7 +32,7 @@ public class Main extends Application {
 		MainController.initialise();
 		// If initialization passed, call the Main menu:
 		MainController.main();
-		//UIManager.areYouFeelingLucky();
+		//UiManager.areYouFeelingLucky();
 	}
 
 	public static void main(String[] args) {

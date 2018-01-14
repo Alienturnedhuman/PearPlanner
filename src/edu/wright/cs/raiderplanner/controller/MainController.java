@@ -25,7 +25,7 @@ import edu.wright.cs.raiderplanner.model.Event;
 import edu.wright.cs.raiderplanner.model.HubFile;
 import edu.wright.cs.raiderplanner.model.ICalExport;
 import edu.wright.cs.raiderplanner.model.StudyPlanner;
-import edu.wright.cs.raiderplanner.view.UIManager;
+import edu.wright.cs.raiderplanner.view.UiManager;
 
 import java.awt.Desktop;
 import java.io.BufferedInputStream;
@@ -64,7 +64,7 @@ public class MainController {
 	}
 
 	// TODO - Determine if this really should be public
-	public static UIManager ui = new UIManager();
+	public static UiManager ui = new UiManager();
 
 	// TODO - StudyPlannerController is a public class; determine if managing an
 	// instance in this way is best
@@ -100,7 +100,7 @@ public class MainController {
 		try {
 			ui.showStartup();
 		} catch (IOException e) {
-			UIManager.reportError("Invalid file.");
+			UiManager.reportError("Invalid file.");
 			System.exit(1);
 		}
 		// If a file is present:
@@ -116,38 +116,38 @@ public class MainController {
 					// Sample note
 					if (spc.getPlanner().getCurrentStudyProfile() != null && spc.getPlanner()
 							.getCurrentStudyProfile().getName().equals("First year Gryffindor")) {
-						UIManager.reportSuccess(
+						UiManager.reportSuccess(
 								"Note: This is a pre-loaded sample StudyPlanner, as used by Harry "
 								+ "Potter. To make your own StudyPlanner, restart the application "
 								+ "and choose \"New File\".");
 					}
 				}
 			} catch (FileNotFoundException e) {
-				UIManager.reportError("Error, File does not exist.");
+				UiManager.reportError("Error, File does not exist.");
 				System.exit(1);
 			} catch (ClassNotFoundException e) {
-				UIManager.reportError("Error, Class NotFoundException.");
+				UiManager.reportError("Error, Class NotFoundException.");
 				System.exit(1);
 			} catch (BadPaddingException e) {
-				UIManager.reportError("Error, Invalid file, Bad Padding Exception.");
+				UiManager.reportError("Error, Invalid file, Bad Padding Exception.");
 				System.exit(1);
 			} catch (IOException e) {
-				UIManager.reportError("Error, Invalid file.");
+				UiManager.reportError("Error, Invalid file.");
 				System.exit(1);
 			} catch (IllegalBlockSizeException e) {
-				UIManager.reportError("Error, Invalid file, Illegal Block Size Exception.");
+				UiManager.reportError("Error, Invalid file, Illegal Block Size Exception.");
 				System.exit(1);
 			}  catch (InvalidKeyException e) {
-				UIManager.reportError("Error, Invalid Key, Cannot decode the given file.");
+				UiManager.reportError("Error, Invalid Key, Cannot decode the given file.");
 				System.exit(1);
 			} catch (NoSuchAlgorithmException e) {
-				UIManager.reportError("Error, Cannot decode the given file.");
+				UiManager.reportError("Error, Cannot decode the given file.");
 				System.exit(1);
 			} catch (NoSuchPaddingException e) {
-				UIManager.reportError("Error, Invalid file, No Such Padding.");
+				UiManager.reportError("Error, Invalid file, No Such Padding.");
 				System.exit(1);
 			}  catch (Exception e) {
-				UIManager.reportError(e.getMessage() + "Unknown error.");
+				UiManager.reportError(e.getMessage() + "Unknown error.");
 				System.exit(1);
 			}
 		} else {
@@ -155,7 +155,7 @@ public class MainController {
 			// This should never happen unless a file changes permissions
 			// or existence in the milliseconds that it runs the above code
 			// after checks in StartupController
-			UIManager.reportError("Failed to load file.");
+			UiManager.reportError("Failed to load file.");
 			System.exit(1);
 		}
 	}
@@ -167,9 +167,9 @@ public class MainController {
 		try {
 			ui.mainMenu();
 		} catch (IOException e) {
-			UIManager.reportError("File does not exist: " + e.getMessage());
+			UiManager.reportError("File does not exist: " + e.getMessage());
 		} catch (Exception e) {
-			UIManager.reportError(e.getMessage());
+			UiManager.reportError(e.getMessage());
 		}
 	}
 
@@ -187,7 +187,7 @@ public class MainController {
 			if (fileData != null) {
 				if (!fileData.isUpdate()
 						&& !MainController.spc.createStudyProfile(fileData)) {
-					UIManager.reportError("This Study Profile is already created!");
+					UiManager.reportError("This Study Profile is already created!");
 				} else {
 					return true;
 				}
@@ -206,7 +206,7 @@ public class MainController {
 			spc.save(MainController.key64, MainController.plannerFile.getAbsolutePath());
 			return true;
 		} catch (Exception e) { // the save() method already catches an Exception. TODO maybe delete
-			UIManager.reportError("FAILED TO SAVE YOUR DATA!");
+			UiManager.reportError("FAILED TO SAVE YOUR DATA!");
 			return false;
 		}
 	}
@@ -251,9 +251,9 @@ public class MainController {
 			try {
 				Desktop.getDesktop().browse(new URI("https://rsanchez-wsu.github.io/RaiderPlanner/"));
 			} catch (IOException e) {
-				UIManager.reportError("Default browser not found or failed to launch");
+				UiManager.reportError("Default browser not found or failed to launch");
 			} catch (URISyntaxException e) {
-				UIManager.reportError("Invaild URI syntax");
+				UiManager.reportError("Invaild URI syntax");
 			}
 		}
 	}
@@ -270,9 +270,9 @@ public class MainController {
 				icalExport.createExportEvent(e);
 			}
 			icalExport.exportToFile(ui.saveIcsFileDialog());
-			UIManager.reportSuccess("File Exported");
+			UiManager.reportSuccess("File Exported");
 		} catch (NullPointerException e) {
-			UIManager.reportError("Calendar does not exist! Export failed");
+			UiManager.reportError("Calendar does not exist! Export failed");
 		}
 	}
 }

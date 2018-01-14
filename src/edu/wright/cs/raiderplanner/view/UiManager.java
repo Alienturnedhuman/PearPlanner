@@ -62,8 +62,7 @@ import java.util.Calendar;
 /**
  * Created by Zilvinas on 04/05/2017.
  */
-
-public class UIManager {
+public class UiManager {
 	private static Stage mainStage = new Stage();
 	private static MenuController mc = new MenuController();
 	private static File savesFolder = new File("./saves");
@@ -131,7 +130,7 @@ public class UIManager {
 		// Load in the .fxml file:
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
 		FXMLLoader loader = new FXMLLoader(mainMenuFxml);
-		loader.setController(UIManager.mc);
+		loader.setController(UiManager.mc);
 		Parent root = loader.load();
 
 		// Set the scene:
@@ -176,9 +175,9 @@ public class UIManager {
 	}
 
 	/**
-	 * Displays the Activity details page
+	 * Displays the Activity details page.
 	 *
-	 * @param activity for which the details should be displayed.
+	 * @param activity for which the details should be displayed
 	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void activityDetails(Activity activity) throws IOException {
@@ -225,9 +224,9 @@ public class UIManager {
 	}
 
 	/**
-	 * Displays the Milestone details page
+	 * Displays the Milestone details page.
 	 *
-	 * @param milestone for which the details should be shown.
+	 * @param milestone for which the details should be shown
 	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void milestoneDetails(Milestone milestone) throws IOException {
@@ -247,9 +246,9 @@ public class UIManager {
 	}
 
 	/**
-	 * Displays the StudyProfile details page
+	 * Displays the StudyProfile details page.
 	 *
-	 * @param profile StudyProfile for which the details should be shown.
+	 * @param profile StudyProfile for which the details should be shown
 	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void studyProfileDetails(StudyProfile profile) throws IOException {
@@ -269,43 +268,43 @@ public class UIManager {
 	}
 
 	/**
-	 * Displays the Module details page
+	 * Displays the Module details page.
 	 *
-	 * @param module for which the details should be shown.
-	 * @param current Window from which this method is called.
+	 * @param module for which the details should be shown
+	 * @param current Window from which this method is called
 	 */
 	public void moduleDetails(Module module, MenuController.Window current) {
-		UIManager.mc.loadModule(module, current, null);
+		UiManager.mc.loadModule(module, current, null);
 	}
 
 	/**
-	 * Displays the Module details page
+	 * Displays the Module details page.
 	 *
-	 * @param module for which the details should be shown.
-	 * @param current Window from which this method is called.
+	 * @param module for which the details should be shown
+	 * @param current Window from which this method is called
 	 */
 	public void moduleDetails(Module module, ModelEntity current) {
-		UIManager.mc.loadModule(module, MenuController.Window.EMPTY, current);
+		UiManager.mc.loadModule(module, MenuController.Window.EMPTY, current);
 	}
 
 	/**
-	 * Displays the Assignment details page
+	 * Displays the Assignment details page.
 	 *
-	 * @param assignment for which the details should be shown.
-	 * @param current Window from which this method is called.
+	 * @param assignment for which the details should be shown
+	 * @param current Window from which this method is called
 	 */
 	public void assignmentDetails(Assignment assignment, MenuController.Window current) {
-		UIManager.mc.loadAssignment(assignment, current, null);
+		UiManager.mc.loadAssignment(assignment, current, null);
 	}
 
 	/**
-	 * Displays the Assignment details page
+	 * Displays the Assignment details page.
 	 *
-	 * @param assignment for which the details should be shown.
-	 * @param current Window from which this method is called.
+	 * @param assignment for which the details should be shown
+	 * @param current Window from which this method is called
 	 */
 	public void assignmentDetails(Assignment assignment, ModelEntity current) {
-		UIManager.mc.loadAssignment(assignment, MenuController.Window.EMPTY, current);
+		UiManager.mc.loadAssignment(assignment, MenuController.Window.EMPTY, current);
 	}
 
 	/**
@@ -336,9 +335,9 @@ public class UIManager {
 	}
 
 	/**
-	 * Displays the Task details page
+	 * Displays the Task details page.
 	 *
-	 * @param task for which the details should be displayed.
+	 * @param task for which the details should be displayed
 	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void taskDetails(Task task) throws IOException {
@@ -509,7 +508,8 @@ public class UIManager {
 	}
 
 	/**
-	 * reporting errors without logging.
+	 * Reporting errors without logging.
+	 *
 	 * @param displayMessage message to display to user
 	 */
 	public static void reportError(String displayMessage) {
@@ -518,6 +518,7 @@ public class UIManager {
 
 	/**
 	 * Error reporting with stack trace.
+	 *
 	 * @param displayMessage message to display to user.
 	 * @param stackTrace StackTrace from thrown exception
 	 */
@@ -527,6 +528,7 @@ public class UIManager {
 
 	/**
 	 * Error reporting with string.
+	 *
 	 * @param displayMessage message to be displayed to user
 	 * @param errorMessage error to log, can be string or stack trace
 	 */
@@ -547,6 +549,7 @@ public class UIManager {
 
 	/**
 	 * Displays an error to the user.
+	 *
 	 * @param message to be displayed to user
 	 */
 	public static void displayError(String message) {
@@ -573,10 +576,10 @@ public class UIManager {
 	}
 
 	/**
-	 * Confirm box with 'Yes' or 'No' as available options
+	 * Confirm box with 'Yes' or 'No' as available options.
 	 *
 	 * @param message to be displayed
-	 * @return true for yes, false for no.
+	 * @return true for yes, false for no
 	 */
 	public static boolean confirm(String message) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, message, ButtonType.YES,
@@ -589,7 +592,7 @@ public class UIManager {
 	 * Please don't use.
 	 */
 	public static void areYouFeelingLucky() {
-		while (UIManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5)) {
+		while (UiManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5)) {
 		}
 	}
 

@@ -25,7 +25,7 @@ import edu.wright.cs.raiderplanner.controller.MainController;
 import edu.wright.cs.raiderplanner.model.Activity;
 import edu.wright.cs.raiderplanner.model.QuantityType;
 import edu.wright.cs.raiderplanner.model.Task;
-import edu.wright.cs.raiderplanner.view.UIManager;
+import edu.wright.cs.raiderplanner.view.UiManager;
 import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
@@ -242,7 +242,7 @@ public class ActivityController implements Initializable {
 
 		// Button actions:
 		this.removeTask.setOnAction(e -> {
-			if (UIManager.confirm("Are you sure you want to remove this Task from the list?")) {
+			if (UiManager.confirm("Are you sure you want to remove this Task from the list?")) {
 				Task task = this.tasks.getSelectionModel().getSelectedItem();
 				this.tasks.getItems().remove(task);
 				if (this.activity != null) {
