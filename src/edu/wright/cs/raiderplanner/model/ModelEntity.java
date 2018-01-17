@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar
- *
+ * Copyright (C) 2018 - Roberto C. Sánchez
  *
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ import edu.wright.cs.raiderplanner.controller.MenuController;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+import java.util.List;
 
 /**
  * PearPlanner/RaiderPlanner.
@@ -36,45 +36,142 @@ public class ModelEntity implements Serializable {
 	protected MultilineString details = null;
 	protected ArrayList<Note> notes;
 
+	/**
+	 * Default constructor.
+	 */
+	public ModelEntity() {
+		this("");
+	}
 
-	// getters
+	/**
+	 * Construct a ModelEntity with the given name and no details or notes.
+	 *
+	 * @param cname The name of the entity
+	 */
+	public ModelEntity(String cname) {
+		this(cname, "");
+	}
+
+	/**
+	 * Construct a ModelEntity with the given name and white space-separated
+	 * list of details and no notes.
+	 *
+	 * @param cname The name of the entity
+	 * @param cdetails The entity details (white space-separated list)
+	 */
+	public ModelEntity(String cname, String cdetails) {
+		this(cname, cdetails.split("\n"));
+	}
+
+	/**
+	 * Construct a ModelEntity with the given name and array of details and no
+	 * notes.
+	 *
+	 * @param cname The name of the entity
+	 * @param cdetails The entity details (array)
+	 */
+	public ModelEntity(String cname, String[] cdetails) {
+		setName(cname);
+		setDetails(cdetails);
+		notes = new ArrayList<>();
+	}
+
+	/**
+	 * Construct a ModelEntity with the given name and white space-separated
+	 * list of details and list of notes.
+	 *
+	 * @param cname The name of the entity
+	 * @param cdetails The entity details (array)
+	 * @param cnotes The entity notes
+	 */
+	public ModelEntity(String cname, String[] cdetails, List<Note> cnotes) {
+		this(cname, cdetails);
+		notes = new ArrayList<>(cnotes);
+	}
+
+	/**
+	 * Returns the name of the entity.
+	 *
+	 * @return The name of the entity
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Returns the details of the entity.
+	 *
+	 * @return The details of the entity
+	 */
 	public MultilineString getDetails() {
 		return details;
 	}
 
+	/**
+	 * Set a new name for the entity.
+	 *
+	 * @param newName The new name for the entity
+	 */
 	public void setName(String newName) {
 		name = newName;
 	}
 
+	/**
+	 * Set new details for the entity.
+	 *
+	 * @param newDetails The new details for the entity
+	 */
 	public void setDetails(String newDetails) {
 		details = new MultilineString(newDetails);
 	}
 
+	/**
+	 * Set new details for the entity.
+	 *
+	 * @param newDetails The new details for the entity
+	 */
 	public void setDetails(String[] newDetails) {
 		details = new MultilineString(newDetails);
 	}
 
-	public void setDetails(ArrayList<String> newDetails) {
+	/**
+	 * Set new details for the entity.
+	 *
+	 * @param newDetails The new details for the entity
+	 */
+	public void setDetails(List<String> newDetails) {
 		details = new MultilineString(newDetails.toArray(new String[newDetails.size()]));
 	}
 
+	/**
+	 * Set new details for the entity.
+	 *
+	 * @param newDetails The new details for the entity
+	 */
 	public void setDetails(MultilineString newDetails) {
 		details = newDetails;
 	}
 
-
-	public void addProperties(String aName, MultilineString aDetails) {
-		setName(aName);
-		setDetails(aDetails.clone());
+	/**
+	 * Set new name and details for the entity.
+	 *
+	 * @param aname The new entity name
+	 * @param adetails The new details for the entity
+	 */
+	public void addProperties(String aname, MultilineString adetails) {
+		setName(aname);
+		setDetails(adetails.clone());
 	}
 
-	public void addProperties(String aName, String aDetails) {
-		setName(aName);
-		setDetails(aDetails);
+	/**
+	 * Set new name and details for the entity.
+	 *
+	 * @param aname The new entity name
+	 * @param adetails The new details for the entity
+	 */
+	public void addProperties(String aname, String adetails) {
+		setName(aname);
+		setDetails(adetails);
 	}
 
 	/**
@@ -84,26 +181,4 @@ public class ModelEntity implements Serializable {
 	public void open(MenuController.Window current) {
 	}
 
-	public ModelEntity() {
-		this("");
-	}
-
-	public ModelEntity(String cname) {
-		this(cname, "");
-	}
-
-	public ModelEntity(String cname, String cdetails) {
-		this(cname, cdetails.split("\n"));
-	}
-
-	public ModelEntity(String cname, String[] cdetails) {
-		setName(cname);
-		setDetails(cdetails);
-		notes = new ArrayList<>();
-	}
-
-	public ModelEntity(String cname, String[] cdetails, ArrayList<Note> cnotes){
-	this(cname, cdetails);
-		notes = new ArrayList<Note>(cnotes);
-	}
 }

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar
- *
+ * Copyright (C) 2018 - Roberto C. Sánchez
  *
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,13 +30,15 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
 public class HubFile implements Serializable {
-	// private data
+
 	private ArrayList<VersionControlEntity> assets = new ArrayList<>();
 	private ArrayList<Module> modules = new ArrayList<>();
 	private ArrayList<ExtensionApplication> extensions = new ArrayList<>();
@@ -49,126 +51,6 @@ public class HubFile implements Serializable {
 	private String semesterName;
 	private String semesterUId;
 	private MultilineString semesterDetails;
-
-	// public methods
-
-	// getters
-	public ArrayList<Module> getModules() {
-		return modules;
-	}
-
-	public ArrayList<ExtensionApplication> getExtensions() {
-		return extensions;
-	}
-
-	public ArrayList<Event> getCalendarList() {
-		return calendarList;
-	}
-
-	public ArrayList<VersionControlEntity> getUpdates() {
-		return updates;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public int getSemester() {
-		return semester;
-	}
-
-	public int getYear() {
-		return year;
-	}
-
-	public String getSemesterName() {
-		return semesterName;
-	}
-
-	public String getSemesterUId() {
-		return semesterUId;
-	}
-
-	public MultilineString getSemesterDetails() {
-		return semesterDetails;
-	}
-
-	public boolean isUpdate() {
-		return updateFile;
-	}
-
-	@Override
-	public String toString() {
-		return "HubFile for " + Integer.toString(year) + " semester: "
-				+ Integer.toString(semester) + " | Module Count: "
-				+ Integer.toString(modules.size());
-	}
-
-	public String toString(boolean verbose) {
-		if (verbose) {
-			StringBuilder verboseString = new StringBuilder();
-
-			verboseString.append(toString());
-			int num = -1;
-			int ii = modules.size();
-			while (++num < ii) {
-				verboseString.append(modules.get(num).toString(true));
-			}
-
-			return verboseString.toString();
-		} else {
-			return toString();
-		}
-	}
-	// constructors
-
-	/**
-	 * Constructor for new Study Profile.
-	 *
-	 * @param v1   version
-	 * @param y1   year
-	 * @param s1   semester
-	 * @param m1   Module list
-	 * @param a1   VersionControlEntity list
-	 * @param cal1 CALENDAR events list
-	 */
-	public HubFile(int v1, int y1, int s1, ArrayList<Module> m1,
-			ArrayList<VersionControlEntity> a1, ArrayList<Event> cal1) {
-		version = v1;
-		year = y1;
-		semester = s1;
-		modules = new ArrayList<Module>(m1);
-		assets = new ArrayList<VersionControlEntity>(a1);
-		calendarList = new ArrayList<Event>(cal1);
-		updateFile = false;
-	}
-
-	public HubFile(int v1, int y1, int s1, ArrayList<Module> m1,
-			ArrayList<VersionControlEntity> a1, ArrayList<Event> cal1,
-				String n1, MultilineString d1, String u1) {
-		this(v1, y1, s1, m1, a1, cal1);
-		semesterName = n1;
-		semesterDetails = d1;
-		semesterUId = u1;
-	}
-
-	/**
-	 * Constructor for update.
-	 *
-	 * @param v2 version
-	 * @param e2 ExtensionApplication list
-	 * @param u2 VersionControlEntity list
-	 */
-	public HubFile(int v2, ArrayList<ExtensionApplication> e2, ArrayList<VersionControlEntity> u2) {
-		version = v2;
-		extensions = new ArrayList<ExtensionApplication>(e2);
-		updates = new ArrayList<VersionControlEntity>(u2);
-		updateFile = true;
-	}
-
-	public static boolean updateableNode(String name) {
-		return schemaList.containsKey(name);
-	}
 
 	// schemas
 	// note, for the time being these are hard coded into the code
@@ -393,9 +275,209 @@ public class HubFile implements Serializable {
 		schemaList.put("room",SCHEMA_ROOM);
 	}
 
-
 	private static XmlController xmlTools = new XmlController();
 
+	/**
+	 * Constructor for new Study Profile.
+	 *
+	 * @param v1 version
+	 * @param y1 year
+	 * @param s1 semester
+	 * @param m1 Module list
+	 * @param a1 VersionControlEntity list
+	 * @param cal1 CALENDAR events list
+	 */
+	public HubFile(int v1, int y1, int s1, List<Module> m1,
+			List<VersionControlEntity> a1, List<Event> cal1) {
+		version = v1;
+		year = y1;
+		semester = s1;
+		modules = new ArrayList<>(m1);
+		assets = new ArrayList<>(a1);
+		calendarList = new ArrayList<>(cal1);
+		updateFile = false;
+	}
+
+	/**
+	 * Constructor for new Study Profile.
+	 *
+	 * @param v1 version
+	 * @param y1 year
+	 * @param s1 semester
+	 * @param m1 Module list
+	 */
+	public HubFile(int v1, int y1, int s1, List<Module> m1,
+			List<VersionControlEntity> a1, List<Event> cal1, String n1,
+			MultilineString d1, String u1) {
+		this(v1, y1, s1, m1, a1, cal1);
+		semesterName = n1;
+		semesterDetails = d1;
+		semesterUId = u1;
+	}
+
+	/**
+	 * Constructor for update.
+	 *
+	 * @param v2 version
+	 * @param e2 ExtensionApplication list
+	 * @param u2 VersionControlEntity list
+	 */
+	public HubFile(int v2, List<ExtensionApplication> e2,
+			List<VersionControlEntity> u2) {
+		version = v2;
+		extensions = new ArrayList<>(e2);
+		updates = new ArrayList<>(u2);
+		updateFile = true;
+	}
+
+	/**
+	 * Returns the modules of the file.
+	 *
+	 * @return The modules of the file
+	 */
+	public ArrayList<Module> getModules() {
+		return modules;
+	}
+
+	/**
+	 * Returns the extensions of the file.
+	 *
+	 * @return The extensions of the file
+	 */
+	public ArrayList<ExtensionApplication> getExtensions() {
+		return extensions;
+	}
+
+	/**
+	 * Returns the calendar list of the file.
+	 *
+	 * @return The calendar list of the file
+	 */
+	public ArrayList<Event> getCalendarList() {
+		return calendarList;
+	}
+
+	/**
+	 * Returns the updates of the file.
+	 *
+	 * @return The updates of the file
+	 */
+	public ArrayList<VersionControlEntity> getUpdates() {
+		return updates;
+	}
+
+	/**
+	 * Returns the version of the file.
+	 *
+	 * @return the version of the file
+	 */
+	public int getVersion() {
+		return version;
+	}
+
+	/**
+	 * Returns the semester of the file.
+	 *
+	 * @return The semester of the file
+	 */
+	public int getSemester() {
+		return semester;
+	}
+
+	/**
+	 * Returns the year of the file.
+	 *
+	 * @return The year of the file
+	 */
+	public int getYear() {
+		return year;
+	}
+
+	/**
+	 * Returns the semester name of the file.
+	 *
+	 * @return The semester name of the file
+	 */
+	public String getSemesterName() {
+		return semesterName;
+	}
+
+	/**
+	 * Returns the semester UID of the file.
+	 *
+	 * @return The semester UID of the file
+	 */
+	public String getSemesterUId() {
+		return semesterUId;
+	}
+
+	/**
+	 * Returns the semester details of the file.
+	 *
+	 * @return The semester details of the file
+	 */
+	public MultilineString getSemesterDetails() {
+		return semesterDetails;
+	}
+
+	/**
+	 * Returns whether the file is an update file.
+	 *
+	 * @return True for an update file, false for any other file
+	 */
+	public boolean isUpdate() {
+		return updateFile;
+	}
+
+	@Override
+	public String toString() {
+		return "HubFile for " + Integer.toString(year) + " semester: "
+				+ Integer.toString(semester) + " | Module Count: "
+				+ Integer.toString(modules.size());
+	}
+
+	/**
+	 * An additional toString() method that allows for more verbose output.
+	 *
+	 * @param verbose True for verbose output, false for standard output
+	 * @return A string representation of the object with the requested
+	 * 				verbosity level
+	 */
+	public String toString(boolean verbose) {
+		if (verbose) {
+			StringBuilder verboseString = new StringBuilder();
+
+			verboseString.append(toString());
+			int num = -1;
+			int ii = modules.size();
+			while (++num < ii) {
+				verboseString.append(modules.get(num).toString(true));
+			}
+
+			return verboseString.toString();
+		} else {
+			return toString();
+		}
+	}
+
+	/**
+	 * Returns true if the given node name is recognized and can therefore be
+	 * updated. Returns false otherwise.
+	 *
+	 * @param name The node name to check
+	 * @return true if the given node name is recognized and can therefore be
+	 * 				updated, false otherwise
+	 */
+	public static boolean updateableNode(String name) {
+		return schemaList.containsKey(name);
+	}
+
+	/**
+	 * Create a Person object from the specified node list.
+	 *
+	 * @param nc The node list containing the Person attributes
+	 * @return a Person object
+	 */
 	public static Person createPerson(NodeList nc) {
 		HashMap<String, XmlController.NodeReturn> personValues =
 				xmlTools.getSchemaValues(nc, HubFile.SCHEMA_PERSON);
@@ -410,9 +492,15 @@ public class HubFile implements Serializable {
 		return person;
 	}
 
+	/**
+	 * Create a Building object from the specified node list.
+	 *
+	 * @param nc The node list containing the Building attributes
+	 * @return a Building object
+	 */
 	public static Building createBuilding(NodeList nc) {
-		HashMap<String, XmlController.NodeReturn> pvalues = xmlTools.getSchemaValues(nc,
-				HubFile.SCHEMA_BUILDING);
+		HashMap<String, XmlController.NodeReturn> pvalues =
+				xmlTools.getSchemaValues(nc, HubFile.SCHEMA_BUILDING);
 
 		Building build = new Building(pvalues.get("code").getString(),
 				pvalues.get("latitude").getDouble(),
@@ -422,9 +510,15 @@ public class HubFile implements Serializable {
 		return build;
 	}
 
+	/**
+	 * Create a Room object from the specified node list.
+	 *
+	 * @param nc The node list containing the Room attributes
+	 * @return a Room object
+	 */
 	public static Room createRoom(NodeList nc, HashMap<String, VersionControlEntity> assetList) {
-		HashMap<String, XmlController.NodeReturn> pvalues = xmlTools.getSchemaValues(nc,
-				HubFile.SCHEMA_ROOM);
+		HashMap<String, XmlController.NodeReturn> pvalues =
+				xmlTools.getSchemaValues(nc, HubFile.SCHEMA_ROOM);
 
 		Room room;
 		String linkedBuilding = pvalues.get("building").getString();
@@ -439,9 +533,15 @@ public class HubFile implements Serializable {
 		return room;
 	}
 
+	/**
+	 * Create a TimeTableEventType object from the specified node list.
+	 *
+	 * @param nc The node list containing the TimeTableEventType attributes
+	 * @return a TimeTableEventType object
+	 */
 	public static TimeTableEventType createTimetableEventType(NodeList nc) {
-		HashMap<String, XmlController.NodeReturn> pvalues = xmlTools.getSchemaValues(nc,
-				HubFile.SCHEMA_TIMETABLE_EVENT_TYPE);
+		HashMap<String, XmlController.NodeReturn> pvalues =
+				xmlTools.getSchemaValues(nc, HubFile.SCHEMA_TIMETABLE_EVENT_TYPE);
 
 		TimeTableEventType table = new TimeTableEventType();
 
@@ -450,13 +550,18 @@ public class HubFile implements Serializable {
 	}
 
 	/**
-	 * @throws IOException if requested item is not found in the list.
+	 * Create a Coursework object from the specified node list and asset list.
+	 *
+	 * @param nc The node list containing the Coursework attributes
+	 * @param assetList The assets belonging to the Coursework
+	 * @return a Coursework object
+	 * @throws IOException if requested item is not found in the list
 	 */
 	public static Coursework createCoursework(NodeList nc,
-			HashMap<String, VersionControlEntity> assetList) throws IOException {
+			Map<String, VersionControlEntity> assetList) throws IOException {
 
-		HashMap<String, XmlController.NodeReturn> courseworkValues = xmlTools.getSchemaValues(nc,
-				HubFile.SCHEMA_COURSEWORK);
+		HashMap<String, XmlController.NodeReturn> courseworkValues =
+				xmlTools.getSchemaValues(nc, HubFile.SCHEMA_COURSEWORK);
 
 		Person cwSetBy;
 		Person cwMarkedBy;
@@ -500,7 +605,6 @@ public class HubFile implements Serializable {
 
 			cwDeadline = new Deadline(eventValues.get("date").getString());
 
-
 			DataController.addVceProperties(cwDeadline, eventValues);
 			assetList.put(eventValues.get("uid").getString(), cwDeadline);
 
@@ -518,14 +622,18 @@ public class HubFile implements Serializable {
 	}
 
 	/**
-	 * @throws IOException if requested item is not found in the list.
+	 * Create an Exam object from the specified node list and asset list.
+	 *
+	 * @param nc The node list containing the Exam attributes
+	 * @param assetList The assets belonging to the Exam
+	 * @return an Exam object
+	 * @throws IOException if requested item is not found in the list
 	 */
-	public static Exam createExam(NodeList nc, HashMap<String, VersionControlEntity> assetList)
-			throws IOException {
+	public static Exam createExam(NodeList nc,
+			Map<String, VersionControlEntity> assetList) throws IOException {
 
-		HashMap<String, XmlController.NodeReturn> examValues = xmlTools.getSchemaValues(nc,
-				HubFile.SCHEMA_EXAM);
-
+		HashMap<String, XmlController.NodeReturn> examValues =
+				xmlTools.getSchemaValues(nc, HubFile.SCHEMA_EXAM);
 
 		Person exSetBy;
 		Person exMarkedBy;
@@ -573,7 +681,6 @@ public class HubFile implements Serializable {
 			}
 		}
 
-
 		Exam newExam;
 		if (exExamResit == null) {
 			newExam = new Exam(examValues.get("weighting").getInt(),
@@ -591,17 +698,20 @@ public class HubFile implements Serializable {
 	}
 
 	/**
-	 * @throws IOException if requested item is not found in the list.
+	 * Create a TimetableEvent object from the specified node list and asset list.
+	 *
+	 * @param nc The node list containing the TimetableEvent attributes
+	 * @param assetList The assets belonging to the TimetableEvent
+	 * @return a TimetableEvent object
+	 * @throws IOException if requested item is not found in the list
 	 */
 	public static TimetableEvent createTimetableEvent(NodeList nc,
-			HashMap<String, VersionControlEntity> assetList) throws IOException {
+			Map<String, VersionControlEntity> assetList) throws IOException {
 
 		TimetableEvent newTte;
 
-
 		HashMap<String, XmlController.NodeReturn> tteValues = xmlTools.getSchemaValues(nc,
 				HubFile.SCHEMA_TIMETABLE_EVENT);
-
 
 		String linkedRoom = tteValues.get("room").getString();
 		String linkedLecturer = tteValues.get("lecturer").getString();
@@ -611,14 +721,11 @@ public class HubFile implements Serializable {
 		Person tlecturer = DataController.inList(assetList, linkedLecturer);
 		TimeTableEventType tttet = DataController.inList(assetList, linkedTtet);
 
-
 		newTte = new TimetableEvent(tteValues.get("date").getString(), troom, tlecturer,
 				tttet, tteValues.get("duration").getInt());
 		DataController.addVceProperties(newTte, tteValues);
 
-
 		return newTte;
 	}
-
 
 }
