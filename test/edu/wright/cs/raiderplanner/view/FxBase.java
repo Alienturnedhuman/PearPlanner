@@ -19,7 +19,7 @@
  *
  */
 
-package view;
+package edu.wright.cs.raiderplanner.view;
 
 import edu.wright.cs.raiderplanner.controller.AccountController;
 

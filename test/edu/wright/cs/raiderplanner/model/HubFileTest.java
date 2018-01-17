@@ -19,21 +19,24 @@
  *
  */
 
-package model;
+package edu.wright.cs.raiderplanner.model;
 
 import org.junit.jupiter.api.Test;
 
 /**
  * Created by bijan on 06/05/2017.
  */
-public class StudyProfileTest {
-
+public class HubFileTest {
 	@Test
-	public void milestonesCompleted() throws Exception {
+	public void getModules() throws Exception {
 	}
 
 	@Test
-	public void milestonesProgress() throws Exception {
+	public void getExtensions() throws Exception {
+	}
+
+	@Test
+	public void getUpdates() throws Exception {
 	}
 
 }

@@ -19,7 +19,7 @@
  *
  */
 
-package view;
+package edu.wright.cs.raiderplanner.view;
 
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isDisabled;

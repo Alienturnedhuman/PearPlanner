@@ -19,41 +19,25 @@
  *
  */
 
-package model;
+package edu.wright.cs.raiderplanner.model;
 
 import org.junit.jupiter.api.Test;
 
 /**
  * Created by bijan on 06/05/2017.
  */
-public class ModuleTest {
+public class StudyPlannerTest {
 
 	@Test
-	public void replace() throws Exception {
+	public void getListOfStudyProfiles() throws Exception {
 	}
 
 	@Test
-	public void addAssignment() throws Exception {
+	public void loadFile() throws Exception {
 	}
 
 	@Test
-	public void removeAssignment() throws Exception {
-	}
-
-	@Test
-	public void setOrganiser() throws Exception {
-	}
-
-	@Test
-	public void setModuleCode() throws Exception {
-	}
-
-	@Test
-	public void addTimetableEvent() throws Exception {
-	}
-
-	@Test
-	public void removeTimetableEvent() throws Exception {
+	public void processHubFile() throws Exception {
 	}
 
 }

@@ -19,7 +19,7 @@
  *
  */
 
-package controller;
+package edu.wright.cs.raiderplanner.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

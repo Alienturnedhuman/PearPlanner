@@ -19,7 +19,7 @@
  *
  */
 
-package controller;
+package edu.wright.cs.raiderplanner.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

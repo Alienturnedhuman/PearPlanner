@@ -19,21 +19,41 @@
  *
  */
 
-package model;
+package edu.wright.cs.raiderplanner.model;
 
 import org.junit.jupiter.api.Test;
 
 /**
  * Created by bijan on 06/05/2017.
  */
-public class RequirementTest {
+public class ModuleTest {
 
 	@Test
-	public void isComplete() throws Exception {
+	public void replace() throws Exception {
 	}
 
 	@Test
-	public void requirementProgress() throws Exception {
+	public void addAssignment() throws Exception {
+	}
+
+	@Test
+	public void removeAssignment() throws Exception {
+	}
+
+	@Test
+	public void setOrganiser() throws Exception {
+	}
+
+	@Test
+	public void setModuleCode() throws Exception {
+	}
+
+	@Test
+	public void addTimetableEvent() throws Exception {
+	}
+
+	@Test
+	public void removeTimetableEvent() throws Exception {
 	}
 
 }

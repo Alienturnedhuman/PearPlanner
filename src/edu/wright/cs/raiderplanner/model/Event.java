@@ -28,7 +28,6 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
-//import controller.MainController;
 
 /**
  * A basic event with a calendar date and duration.

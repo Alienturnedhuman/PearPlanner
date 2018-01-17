@@ -19,7 +19,7 @@
  *
  */
 
-package model;
+package edu.wright.cs.raiderplanner.model;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
