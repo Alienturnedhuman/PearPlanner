@@ -94,6 +94,8 @@ If you are a CEG 3120 student and your submission is being made for course credi
        * Temporary files
        * Line ending flips (the `git status` and `git diff` commands should warn you if this is happening, but it is your responsibility to ensure that line ending changes are not made unnecessarily)
        * Changes to the project metadata files (e.g., `.project`, `.classpath`, etc.)
+   * If this is your first contribution to the project, add your name and email to the AUTHORS file (note that names are listed alphabetically by surname)
+   * Ensure that you add the current year and your name to the copyright header in any file to which you made significant changes
    * Confirm that you are on the branch you created for the specific issue you are working
    * Each commit should represent a discrete work unit, issue, task, etc.
    * Commits which contain very large changes should be coordinated in advance, or your pull request may be rejected
