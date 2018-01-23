@@ -77,6 +77,8 @@ public class MainController {
 	private static File plannerFile = null;
 
 	/**
+	 * Returns the StudyPlannerController managed by this MainController.
+	 *
 	 * @return the StudyPlannerController managed by this MainController.
 	 */
 	public static StudyPlannerController getSpc() {

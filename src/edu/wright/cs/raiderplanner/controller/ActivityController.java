@@ -77,6 +77,8 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
+	 * Returns the Activity object being managed by this controller.
+	 *
 	 * @return the Activity object being managed by this controller.
 	 */
 	public Activity getActivity() {
@@ -84,6 +86,8 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
+	 * Returns true if the last submit operation succeeded, false otherwise.
+	 *
 	 * @return true if the last submit operation succeeded, false otherwise.
 	 */
 	public boolean isSuccess() {
