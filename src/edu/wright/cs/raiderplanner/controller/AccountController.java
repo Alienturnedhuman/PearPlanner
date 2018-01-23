@@ -62,7 +62,8 @@ public class AccountController implements Initializable {
 	private boolean success = false;
 
 	/**
-	 * Gets the new account.
+	 * Returns the Account object being managed by this controller.
+	 *
 	 * @return the Account object being managed by this controller.
 	 */
 	public Account getAccount() {
@@ -70,7 +71,8 @@ public class AccountController implements Initializable {
 	}
 
 	/**
-	 * Determines if the account submit was a success.
+	 * Returns true if the last submit operation succeeded, false otherwise.
+	 *
 	 * @return true if the last submit operation succeeded, false otherwise.
 	 */
 	public boolean isSuccess() {
