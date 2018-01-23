@@ -304,7 +304,7 @@ public class MenuController implements Initializable {
 		this.mainContent.getColumnConstraints()
 				.add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE,
 						Region.USE_COMPUTED_SIZE, Priority.ALWAYS, HPos.CENTER, true));
-		FlowPane modules = new FlowPane();
+		FlowPane modulesPane = new FlowPane();
 
 		Thread renderModules = new Thread(() -> {
 			Label oldLabel = new Label(this.welcome.getText());
@@ -331,13 +331,13 @@ public class MenuController implements Initializable {
 				vbox.setAlignment(Pos.CENTER);
 				vbox.setCursor(Cursor.HAND);
 
-				Label name = new Label(module.getName());
-				name.setTextAlignment(TextAlignment.CENTER);
+				Label nameLabel = new Label(module.getName());
+				nameLabel.setTextAlignment(TextAlignment.CENTER);
 
 				// Set left margin for title, which creates padding in case title is very long
-				VBox.setMargin(name, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.04));
+				VBox.setMargin(nameLabel, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.04));
 
-				vbox.getChildren().add(name);
+				vbox.getChildren().add(nameLabel);
 
 				BufferedImage buff = GanttishDiagram.getBadge(module.calculateProgress(), true, 1);
 				Image image = SwingFXUtils.toFXImage(buff, null);
@@ -403,7 +403,7 @@ public class MenuController implements Initializable {
 				vbox.setStyle("-fx-background-color: white");
 
 				Thread addModule = new Thread(() -> {
-					modules.getChildren().add(vbox);
+					modulesPane.getChildren().add(vbox);
 				});
 				Platform.runLater(addModule);
 
@@ -423,7 +423,7 @@ public class MenuController implements Initializable {
 		 * simultaneously.
 		 */
 		ScrollPane moduleBox = new ScrollPane();
-		moduleBox.setContent(modules);
+		moduleBox.setContent(modulesPane);
 		moduleBox.setStyle("-fx-background-color: transparent");
 		moduleBox.setFitToHeight(true);
 		moduleBox.setFitToWidth(true);
@@ -627,9 +627,9 @@ public class MenuController implements Initializable {
 			}
 		});
 		// Populate Agenda:
-		ArrayList<Event> calendar = MainController.getSpc().getPlanner().getCurrentStudyProfile()
-				.getCalendar();
-		for (Event e : calendar) {
+		ArrayList<Event> calendarEvents =
+				MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
+		for (Event e : calendarEvents) {
 			// TODO - find a way to eliminate this if/else-if/instanceof anti-pattern
 			if (e instanceof TimetableEvent) {
 				LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
@@ -1040,14 +1040,18 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * @return this will get the currently registed users chat ID.
+	 * Returns the currently registered user's chat ID.
+	 *
+	 * @return the currently registered user's chat ID.
 	 */
 	public String getUserName() {
 		return userName;
 	}
 
 	/**
-	 * @return This will get the current host name registed to the chat user.
+	 * Returns the current host name registered to the chat user.
+	 *
+	 * @return the current host name registered to the chat user.
 	 */
 	public String getHostName() {
 		return hostName;
@@ -1481,50 +1485,51 @@ public class MenuController implements Initializable {
 
 		// Process notifications:
 		this.notificationList.getChildren().clear();
-		Notification[] notifications = MainController.getSpc().getPlanner().getNotifications();
-		for (int i = notifications.length - 1; i >= 0; i--) {
+		Notification[] pendingNotifs =
+				MainController.getSpc().getPlanner().getNotifications();
+		for (int i = pendingNotifs.length - 1; i >= 0; i--) {
 			GridPane pane = new GridPane();
 
 			// Check if has a link or is unread:
-			if (notifications[i].getLink() != null || !notifications[i].isRead()) {
+			if (pendingNotifs[i].getLink() != null || !pendingNotifs[i].isRead()) {
 				pane.setCursor(Cursor.HAND);
-				pane.setId(Integer.toString(notifications.length - i - 1));
+				pane.setId(Integer.toString(pendingNotifs.length - i - 1));
 				pane.setOnMouseClicked(e ->
 					this.handleRead(Integer.parseInt(pane.getId()))
 				);
 				// Check if unread:
-				if (!notifications[i].isRead()) {
+				if (!pendingNotifs[i].isRead()) {
 					pane.getStyleClass().add("unread-item");
 				}
 			}
 
 			// Create labels:
-			Label title = new Label(notifications[i].getTitle());
-			title.getStyleClass().add("notificationItem-title");
-			title.setMaxWidth(250.0);
+			Label titleLabel = new Label(pendingNotifs[i].getTitle());
+			titleLabel.getStyleClass().add("notificationItem-title");
+			titleLabel.setMaxWidth(250.0);
 
-			Label details = (notifications[i].getDetails() != null)
-					? new Label(notifications[i].getDetailsAsString())
+			Label details = (pendingNotifs[i].getDetails() != null)
+					? new Label(pendingNotifs[i].getDetailsAsString())
 					: new Label();
 			details.getStyleClass().add("notificationItem-details");
 			details.setMaxWidth(250.0);
 
-			String dateFormatted = notifications[i].getDateTime().get(Calendar.DAY_OF_MONTH) + " "
-					+ notifications[i].getDateTime().getDisplayName(Calendar.MONTH, Calendar.LONG,
+			String dateFormatted = pendingNotifs[i].getDateTime().get(Calendar.DAY_OF_MONTH) + " "
+					+ pendingNotifs[i].getDateTime().getDisplayName(Calendar.MONTH, Calendar.LONG,
 							Locale.getDefault())
-					+ " at " + notifications[i].getDateTime().get(Calendar.HOUR) + " "
-					+ notifications[i].getDateTime().getDisplayName(Calendar.AM_PM, Calendar.LONG,
+					+ " at " + pendingNotifs[i].getDateTime().get(Calendar.HOUR) + " "
+					+ pendingNotifs[i].getDateTime().getDisplayName(Calendar.AM_PM, Calendar.LONG,
 							Locale.getDefault());
 			Label date = new Label(dateFormatted);
 			date.getStyleClass().addAll("notificationItem-date");
 			GridPane.setHalignment(date, HPos.RIGHT);
 			GridPane.setHgrow(date, Priority.ALWAYS);
 
-			pane.addRow(1, title);
+			pane.addRow(1, titleLabel);
 			pane.addRow(2, details);
 			pane.addRow(3, date);
 			pane.addRow(4, new Separator(Orientation.HORIZONTAL));
-			this.notificationList.addRow(notifications.length - i - 1, pane);
+			this.notificationList.addRow(pendingNotifs.length - i - 1, pane);
 		}
 	}
 

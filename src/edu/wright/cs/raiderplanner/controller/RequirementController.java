@@ -56,15 +56,20 @@ public class RequirementController implements Initializable {
 	private boolean success = false;
 
 	/**
-	 * @return The Requirement contained by this RequirementController.
+	 * Returns the Requirement contained by this RequirementController.
+	 *
+	 * @return the Requirement contained by this RequirementController.
 	 */
 	public Requirement getRequirement() {
 		return this.requirement;
 	}
 
 	/**
-	 * @return Whether this RequirementController has successfully handled a
-	 * 				Requirement submission.
+	 * Returns true if this RequirementController has successfully handled a
+	 * Requirement submission at any point in its existence.
+	 *
+	 * @return true if this RequirementController has successfully handled a
+	 * 				Requirement submission at any point in its existence.
 	 */
 	public boolean isSuccess() {
 		return success;
@@ -157,13 +162,13 @@ public class RequirementController implements Initializable {
 	public void newQuantity() {
 		if (UiManager.confirm("Create a new Quantity '" + this.quantityName.getText() + '?')) {
 			// Create a new type:
-			QuantityType quantity = QuantityType.create(this.quantityName.getText());
+			QuantityType qtyType = QuantityType.create(this.quantityName.getText());
 			// =================
 
 			// Update the current list:
 			this.quantityType.getItems().clear();
 			this.quantityType.getItems().addAll(QuantityType.listOfNames());
-			this.quantityType.getSelectionModel().select(quantity.getName());
+			this.quantityType.getSelectionModel().select(qtyType.getName());
 			// =================
 		}
 		this.quantityName.clear();
@@ -213,7 +218,7 @@ public class RequirementController implements Initializable {
 	/**
 	 * Constructor for a RequirementController with an existing Requirement.
 	 *
-	 * @param requirement.
+	 * @param requirement the Requirement to manage
 	 */
 	public RequirementController(Requirement requirement) {
 		this.requirement = requirement;

@@ -34,6 +34,9 @@ import java.io.File;
 import java.util.GregorianCalendar;
 
 /**
+ * Controller for the first window that is presented when the application
+ * launches (i.e., New/Open/Exit buttons).
+ *
  * @author Eric Levine on 9/26/2017.
  */
 public class StartupController {
@@ -51,8 +54,8 @@ public class StartupController {
 	private ImageView banner;
 
 	/**
-	 * Handles Close button event. Shouldn't need to save as you only see this prompt before a file
-	 * is loaded or started.
+	 * Handles Close button event. Shouldn't need to save as you only see this
+	 * prompt before a file is loaded or started.
 	 */
 	@FXML
 	void exitB(ActionEvent event) {
