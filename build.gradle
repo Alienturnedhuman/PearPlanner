@@ -170,7 +170,8 @@ tasks.withType(FindBugs) {
 }
 
 /**
- * This chagnes the Gradle plugin's Access Rule when they are set to default 
+ * This chagnes the Gradle plugin's Access Rule when they are set to default
+ * 
  */
 eclipse.classpath.file.whenMerged {
     def container = entries.find { it.path.contains 'org.eclipse.jdt.launching.JRE_CONTAINER' }
