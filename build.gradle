@@ -33,6 +33,7 @@ buildscript {
 	}
 }
 apply plugin: 'java'
+apply plugin: 'eclipse'
 apply plugin: 'application'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
@@ -157,4 +158,12 @@ tasks.withType(FindBugs) {
 		// html.stylesheet resources.text.fromFile( 'config/xsl/findbugs-custom.xsl' )
 	}
 	ignoreFailures = true
+}
+
+/**
+ * This chagnes the Gradle plugin's Access Rule when they are set to default 
+ */
+eclipse.classpath.file.whenMerged {
+    def container = entries.find { it.path.contains 'org.eclipse.jdt.launching.JRE_CONTAINER' }
+    container.accessRules << new org.gradle.plugins.ide.eclipse.model.AccessRule("accessible", "javafx/**")
 }
