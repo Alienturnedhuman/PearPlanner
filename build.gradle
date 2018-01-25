@@ -40,6 +40,15 @@ apply plugin: 'findbugs'
 apply plugin: 'edu.sc.seis.launch4j'
 apply plugin: 'org.junit.platform.gradle.plugin'
 
+
+compileJava { 
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+	
+}
+if(JavaVersion.current() != JavaVersion.VERSION_1_8) 
+	throw new GradleException("This project requires Java 8, but it's running on "+JavaVersion.current())
+
 /**
  * This line specifies where the main.java file is found.
  */
