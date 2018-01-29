@@ -61,8 +61,8 @@ public class Room extends VersionControlEntity {
 	@Override
 	public String toString() {
 		// TODO: Figure out if there is a better approach here, perhaps including
-        // "unknown" or similar if build is null; also make output consistent with
-        // other methods, like getLocation() and getRoomNumber()
+		// "unknown" or similar if build is null; also make output consistent with
+		// other methods, like getLocation() and getRoomNumber()
 		if (building == null) {
 			return name + "( " + roomNumber + " )";
 		} else {
