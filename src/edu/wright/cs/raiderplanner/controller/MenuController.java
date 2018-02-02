@@ -1407,6 +1407,14 @@ public class MenuController implements Initializable {
 	}
 
 	/**
+	 * Handles the 'Settings' Event
+	 * Author: Clayton D. Terrill  1/29/2018
+	 */
+    public void showSettings() {
+        MainController.showSettings();
+    }
+
+	/**
 	 * Handles the 'Help' event.
 	 */
 	public void openBrowser() {

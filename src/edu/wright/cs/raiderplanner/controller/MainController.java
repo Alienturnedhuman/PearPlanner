@@ -176,6 +176,19 @@ public class MainController {
 	}
 
 	/**
+	 * Display the main menu.
+	 */
+	public static void showSettings() {
+		try {
+			ui.showSettings();
+		} catch (IOException e) {
+			UiManager.reportError("File does not exist: " + e.getMessage());
+		} catch (Exception e) {
+			UiManager.reportError(e.getMessage());
+		}
+	}
+
+	/**
 	 * Handles importing a new file.
 	 *
 	 * @return whether imported successfully.
@@ -261,7 +274,7 @@ public class MainController {
 	}
 
 	/**
-         * Function exports calendar ICS file to user defined location.
+		 * Function exports calendar ICS file to user defined location.
 	 */
 	public static void exportCalendar() {
 		ICalExport icalExport = new ICalExport();

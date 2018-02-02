@@ -91,6 +91,8 @@ public class UiManager {
 			"/edu/wright/cs/raiderplanner/view/StudyProfile.fxml");
 	private URL startupFxml = getClass().getResource(
 			"/edu/wright/cs/raiderplanner/view/Startup.fxml");
+	private URL settingsFxml = getClass().getResource(
+			"/edu/wright/cs/raiderplanner/view/Settings.fxml");
 
 	/**
 	 * Displays a 'Create Account' window and handles the creation of a new Account object.
@@ -145,6 +147,22 @@ public class UiManager {
 		mainStage.setMinWidth(333);
 		mainStage.getIcons().add(icon);
 		mainStage.showAndWait();
+	}
+
+	/**
+	 * Displays the settings menu.
+	 * Added by Clayton D. Terrill 1/31/2018
+	 * @throws Exception when the FXMLLoader is unable to load
+	 */
+	public void showSettings() throws Exception {
+		// Load in the .fxml file:
+		FXMLLoader loader = new FXMLLoader(settingsFxml);
+		Parent root = loader.load();
+		loader.setController(UiManager.mc);
+
+		// Set the scene with the SettingsFxml:
+		mainStage.getScene().setRoot(root);
+		mainStage.setTitle("RaiderPlanner-Settings");
 	}
 
 	/**
