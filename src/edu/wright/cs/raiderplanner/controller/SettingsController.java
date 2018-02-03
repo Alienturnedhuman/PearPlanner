@@ -131,7 +131,7 @@ public class SettingsController implements Initializable {
 	 * what it does may be applied in the main method's switch statement.
 	 */
 	public enum Window {
-		EMPTY, INFO, GENERAL, ACCOUNT, THEME, NOTIFICATIONS
+		EMPTY, ABOUT, GENERAL, ACCOUNT, THEME, NOTIFICATIONS
 	}
 
 	private Window current;
@@ -172,6 +172,8 @@ public class SettingsController implements Initializable {
 	@FXML
 	private Button notificationsBtn;
 	@FXML
+	private Button aboutBtn;
+	@FXML
 	private Button closeDrawer;
 
 	// Panes:
@@ -207,10 +209,11 @@ public class SettingsController implements Initializable {
 		//When user chooses different option in menu
 		//		calendarOpen changes to monitor status within main window.
 		switch (this.current) {
-		case INFO: {
+		case ABOUT: {
 			if (MainController.getSpc().getPlanner().getCurrentStudyProfile() != null) {
-				this.loadInfo();
+				this.loadAbout();
 			}
+			loadAboutText();
 			break;
 		}
 		case GENERAL: {
@@ -235,10 +238,10 @@ public class SettingsController implements Initializable {
 	}
 
 	/**
-	 * Display the Study INFO pane. Loads at settings startup.
+	 * Display the Study ABOUT pane. Loads at settings startup.
 	 * This also initializes aspects of the settings scene.
 	 */
-	public void loadInfo() {
+	public void loadAbout() {
 		// set ToolTips
 
 		StudyProfile profile = MainController.getSpc().getPlanner().getCurrentStudyProfile();
@@ -368,12 +371,12 @@ public class SettingsController implements Initializable {
 		GridPane.setColumnSpan(moduleBox, GridPane.REMAINING);
 		this.mainContent.addRow(2, moduleBox);
 		 */
-		
+
 		// Create a details pane:
 	}
 
 	/**
-	 * Display the Study INFO pane.
+	 * Display the Study ABOUT pane.
 	 * NOT IMPLEMENTED
 	 */
 	public void loadGeneral() {
@@ -383,7 +386,7 @@ public class SettingsController implements Initializable {
 		this.welcome.setText("GENERAL");
 		this.topBox.getChildren().add(this.welcome);
 		this.title.setText("General Settings");
-		
+
 		/*
 		VBox detailsBox = new VBox(5);
 		Label details = new Label("Testing details label");
@@ -403,7 +406,7 @@ public class SettingsController implements Initializable {
 	}
 
 	/**
-	 * Display the Study INFO pane.
+	 * Display the Study ABOUT pane.
 	 * NOT IMPLEMENTED
 	 */
 	public void loadAccount() {
@@ -416,7 +419,7 @@ public class SettingsController implements Initializable {
 	}
 
 	/**
-	 * Display the Study INFO pane.
+	 * Display the Study ABOUT pane.
 	 * NOT IMPLEMENTED
 	 */
 	public void loadTheme() {
@@ -429,7 +432,7 @@ public class SettingsController implements Initializable {
 	}
 
 	/**
-	 * Display the Study INFO pane.
+	 * Display the Study ABOUT pane.
 	 * NOT IMPLEMENTED
 	 */
 	public void loadNotification() {
@@ -464,6 +467,7 @@ public class SettingsController implements Initializable {
 		this.accountBtn.setOnAction(e -> this.main(Window.ACCOUNT));
 		this.themeBtn.setOnAction(e -> this.main(Window.THEME));
 		this.notificationsBtn.setOnAction(e -> this.main(Window.NOTIFICATIONS));
+		this.aboutBtn.setOnAction(e -> this.main(Window.ABOUT));
 
 		// Set nav to close when clicking outside of it
 		this.mainContent.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
@@ -474,22 +478,43 @@ public class SettingsController implements Initializable {
 			}
 		});
 
-		//  text:
-		this.welcome = new Label("RaiderPlanner");
-		this.welcome.setFont(Font.font("Ariel", FontWeight.BOLD , 42));
+		this.welcome = new Label(""); //Not initially needed
+		loadAboutText();
+
+		// Render ABOUT initially:
+		this.main(Window.ABOUT);
+	}
+
+	/**
+	 * Loads the About Menu's Text into the mainContent Pane.
+	 * 2/3/2018
+	 * Author: Clayton D. Terrill
+	 */
+	public void loadAboutText() {
+		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+		this.topBox.getChildren().clear();
+		this.title.setText("About");
+		//Text Labels:
+		Label appName = new Label("RaiderPlanner");
+		appName.setFont(Font.font("Ariel", FontWeight.BOLD , 42));
+
 		Label versionNo = new Label("Version 1.0.1\nCopyright © 2017");
 		versionNo.setFont(Font.font("Ariel", 12));
 		versionNo.setTextFill(Color.GRAY);
 		versionNo.setTextAlignment(TextAlignment.CENTER);
+
 		Label details = new Label("\"The best study planner since the Gantt Diagram\"");
 		details.setFont(Font.font("Ariel", FontPosture.ITALIC , 24));
+
 		Label stayOnTrack = new Label("Stay on track.");
 		stayOnTrack.setFont(Font.font("Ariel", FontWeight.BOLD, 18));
+
 		Label summary = new Label("Life gets complicated, and keeping track of homework and exam\n"
 				+ "dates is not the first thing on your mind. RaiderPlanner will be "
 				+ "there to help you out.");
 		summary.setFont(Font.font("Ariel", 18));
 		summary.setTextAlignment(TextAlignment.CENTER);
+
 		Label credits = new Label("Created By:\n"
 				+ "Roberto Sánchez\n"
 				+ "Wright State University's CEG3120 class\n\n"
@@ -504,13 +529,15 @@ public class SettingsController implements Initializable {
 
 		VBox detailsBox = new VBox(5);
 		details.setWrapText(true);
-		detailsBox.getChildren().addAll(this.welcome,
+		detailsBox.getChildren().addAll(
+				appName,
 				versionNo,
 				details,
 				stayOnTrack,
 				summary,
 				credits);
 		detailsBox.setAlignment(Pos.TOP_CENTER);
+
 		GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
 		GridPane.setHgrow(detailsBox, Priority.ALWAYS);
 		GridPane.setColumnSpan(detailsBox, GridPane.REMAINING);
@@ -519,9 +546,6 @@ public class SettingsController implements Initializable {
 		this.mainContent.setVgap(10);
 		this.mainContent.setPadding(new Insets(15));
 		this.mainContent.setAlignment(Pos.CENTER);
-
-		// Render INFO initially:
-		this.main(Window.INFO);
 	}
 
 	/**

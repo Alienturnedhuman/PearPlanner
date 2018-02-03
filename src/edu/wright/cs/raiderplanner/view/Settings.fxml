@@ -24,7 +24,7 @@
         </ToolBar>
         <GridPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
             <children>
-                <HBox fx:id="topBox"  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <HBox fx:id="topBox" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
                     </children>
                 </HBox>
@@ -43,7 +43,7 @@
                       <Button fx:id="closeDrawer" prefWidth="21" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/close.png'); -fx-background-color: transparent; -fx-cursor: hand;" styleClass="button-image">
                       </Button>
 
-                      <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="   Settings"/>
+                      <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="   Settings" />
                     </children>
                 </HBox>
                 <GridPane vgap="15" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
@@ -122,6 +122,19 @@
                         </HBox>
                   <HBox GridPane.rowIndex="4">
                      <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="/edu/wright/cs/raiderplanner/content/settings_about.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="5" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Button fx:id="aboutBtn" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="About" />
+                     </children>
+                  </HBox>
+                  <HBox GridPane.rowIndex="5">
+                     <children>
                         <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false">
                            <image>
                               <Image url="/edu/wright/cs/raiderplanner/content/line.png" />
@@ -132,7 +145,7 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <HBox GridPane.rowIndex="5">
+                  <HBox GridPane.rowIndex="6">
                      <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -145,7 +158,7 @@
                         <Button fx:id="backBtn" onAction="#goBack" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;" text="Back" />
                      </children>
                   </HBox>
-                  <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false" GridPane.rowIndex="6">
+                  <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false" GridPane.rowIndex="7">
                      <image>
                         <Image url="/edu/wright/cs/raiderplanner/content/line.png" />
                      </image>
