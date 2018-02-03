@@ -198,6 +198,7 @@ public class SettingsController implements Initializable {
 
 	/**
 	 * Main method containing switch statements.
+	 * Switch statements detect what state the app is in.
 	 */
 	public void main() {
 		if (isNavOpen) {
@@ -233,10 +234,7 @@ public class SettingsController implements Initializable {
 	}
 
 	/**
-	 * Display About.
-	 * This also initializes aspects of the settings scene.
-	 * Created: 2/3/2018
-	 * Author: Clayton D. Terrill
+	 * Display the About menu.
 	 */
 	public void loadAbout() {
 		// set ToolTips
@@ -351,8 +349,8 @@ public class SettingsController implements Initializable {
 	}
 
 	/**
-	 * Handles the 'Back' Event
-	 * Author: Clayton D. Terrill  1/29/2018
+	 * Handles the 'Back' Event.
+	 * Will close the settings menu and open the main menu.
 	 */
 	public void goBack() {
 		initialLoad = true; //Required so class may be reused.

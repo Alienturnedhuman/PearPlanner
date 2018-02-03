@@ -164,6 +164,7 @@ public class MainController {
 
 	/**
 	 * Display the main menu.
+	 * Stage will be created.
 	 */
 	public static void main() {
 		try {
@@ -177,7 +178,7 @@ public class MainController {
 
 	/**
 	 * Display the main menu.
-	 * Author: Clayton D. Terrill 1/31/2018
+	 * Stage is already present.
 	 */
 	public static void showMain() {
 		try {
@@ -191,7 +192,7 @@ public class MainController {
 
 	/**
 	 * Display the settings menu.
-	 * Author: Clayton D. Terrill 1/29/2018
+	 * Stage is already present.
 	 */
 	public static void showSettings() {
 		try {
