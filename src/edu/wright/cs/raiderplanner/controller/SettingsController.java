@@ -119,7 +119,7 @@ import java.util.ResourceBundle;
  * @author Zilvinas Ceikauskas
  */
 
-public class MenuController implements Initializable {
+public class SettingsController implements Initializable {
 
 	/**
 	 * Initializes switch names and other buttons.
@@ -154,9 +154,11 @@ public class MenuController implements Initializable {
 	@FXML
 	private Label title;
 
+	
 	// Buttons:
 	@FXML
 	private Button openMenu;
+	/*
 	@FXML
 	private Button showNotification;
 	@FXML
@@ -173,22 +175,17 @@ public class MenuController implements Initializable {
 	private Button calendar;
 	@FXML
 	private Button chat;
+	*/
 	@FXML
 	private Button closeDrawer;
-
 	// Panes:
 	@FXML
 	private AnchorPane navList;
-	@FXML
-	private AnchorPane notifications;
-	@FXML
-	private GridPane notificationList;
 	@FXML
 	private GridPane mainContent;
 	@FXML
 	private HBox topBox;
 	@FXML
-	private HBox exportCalBox;
 
 	//chat variables
 	private final BorderPane mainPane = new BorderPane();
@@ -224,17 +221,10 @@ public class MenuController implements Initializable {
 		if (isNavOpen) {
 			openMenu.fire();
 		}
-		if (this.showNotification.getTranslateY() == 0 && !initialLoad) {
-			TranslateTransition closeNot = new TranslateTransition(new Duration(173),
-					notifications);
-			closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
-			closeNot.play();
-		}
+		
 		initialLoad = false;
 
-		this.updateNotifications();
 		this.updateMenu();
-		exportCalBox.managedProperty().bind(exportCalBox.visibleProperty());
 
 		//When user chooses different option in menu
 		//		calendarOpen changes to monitor status within main window.
@@ -276,7 +266,6 @@ public class MenuController implements Initializable {
 			break;
 		}
 		//Based on user choice of menu option "Export Calendar" button is shown/hidden
-		exportCalBox.setVisible(calendarOpen);
 	}
 
 	/**
@@ -285,9 +274,6 @@ public class MenuController implements Initializable {
 	public void loadDashboard() {
 		// set ToolTips
 		openMenu.setTooltip(new Tooltip("Menu"));
-		showNotification.setTooltip(new Tooltip("Notifications"));
-		addActivity.setTooltip(new Tooltip("Add activity"));
-		calendar.setTooltip(new Tooltip("Open Calendar"));
 
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
@@ -383,7 +369,7 @@ public class MenuController implements Initializable {
 				});
 				vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 					if (e.getButton() == MouseButton.PRIMARY) {
-						module.open(this.current);
+						//module.open(this.current);
 					}
 				});
 				vbox.setOnTouchPressed(new EventHandler<TouchEvent>() {
@@ -504,13 +490,6 @@ public class MenuController implements Initializable {
 				if (event.getButton() == MouseButton.PRIMARY) {
 					if (this.isNavOpen) {
 						closeDrawer.fire();
-					}
-					if (this.showNotification.getTranslateY() == 0) {
-						TranslateTransition closeNot = new TranslateTransition(new Duration(173),
-								notifications);
-						closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56
-								+ 17));
-						closeNot.play();
 					}
 
 					if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
@@ -744,13 +723,6 @@ public class MenuController implements Initializable {
 					if (this.isNavOpen) {
 						closeDrawer.fire();
 					}
-					if (this.showNotification.getTranslateY() == 0) {
-						TranslateTransition closeNot = new TranslateTransition(new Duration(173),
-								notifications);
-						closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56
-								+ 17));
-						closeNot.play();
-					}
 					if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
 							&& event.getClickCount() == 2) {
 						try {
@@ -819,14 +791,6 @@ public class MenuController implements Initializable {
 					if (this.isNavOpen) {
 						closeDrawer.fire();
 					}
-					if (this.showNotification.getTranslateY() == 0) {
-						TranslateTransition closeNot = new TranslateTransition(new Duration(173),
-								notifications);
-						closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56
-								+ 17));
-						closeNot.play();
-					}
-
 					if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
 							&& event.getClickCount() == 2) {
 						this.loadModule(row.getItem(), this.current, null);
@@ -1139,7 +1103,7 @@ public class MenuController implements Initializable {
 
 		// Set RowFactory:
 		requirements
-				.setRowFactory(e -> MenuController.requirementRowFactory(requirements, assignment));
+				.setRowFactory(e -> SettingsController.requirementRowFactory(requirements, assignment));
 		// =================
 
 		content.addColumn(0, requirements);
@@ -1336,67 +1300,6 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * Handles the 'Mark all as read' button event.
-	 */
-	public void handleMarkAll() {
-		Notification[] nots = MainController.getSpc().getPlanner().getUnreadNotifications();
-		// Mark all notifications as read:
-		for (int i = 0; i < nots.length; ++i) {
-			int index = this.notificationList.getChildren().size() - 1 - i;
-			nots[i].read();
-			// Remove cursor:
-			if (nots[i].getLink() == null) {
-				this.notificationList.getChildren().get(index).setCursor(Cursor.DEFAULT);
-			}
-
-			// Change style:
-			this.notificationList.getChildren().get(index).getStyleClass().remove("unread-item");
-		}
-
-		// Handle styles:
-		this.showNotification.getStyleClass().remove("unread-button");
-		if (!this.showNotification.getStyleClass().contains("read-button")) {
-			this.showNotification.getStyleClass().add("read-button");
-		}
-	}
-
-	/**
-	 * Handles clicking on a specific notification.
-	 *
-	 * @param id
-	 *			The identifier of the notification which was clicked.
-	 */
-	public void handleRead(int id) {
-		// Get notification:
-		int idInList = MainController.getSpc().getPlanner().getNotifications().length - 1 - id;
-		Notification not = MainController.getSpc().getPlanner().getNotifications()[idInList];
-
-		// If not read:
-		if (!not.isRead()) {
-			// Mark notification as read:
-			not.read();
-
-			// Swap styles:
-			this.notificationList.getChildren().get(id).getStyleClass().remove("unread-item");
-			if (MainController.getSpc().getPlanner().getUnreadNotifications().length <= 0) {
-				this.showNotification.getStyleClass().remove("unread-button");
-				if (!this.showNotification.getStyleClass().contains("read-button")) {
-					this.showNotification.getStyleClass().add("read-button");
-				}
-			}
-
-			if (not.getLink() == null) {
-				this.notificationList.getChildren().get(id).setCursor(Cursor.DEFAULT);
-			}
-		}
-
-		if (not.getLink() != null) {
-			not.getLink().open(this.current);
-			this.main();
-		}
-	}
-
-	/**
 	 * Handles the 'Import HUB file' event.
 	 */
 	public void importFile() {
@@ -1407,12 +1310,12 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * Handles the 'Settings' Event
+	 * Handles the 'Back' Event
 	 * Author: Clayton D. Terrill  1/29/2018
 	 */
-	public void showSettings() {
+	public void showMainMenu() {
 		initialLoad = true; //Required so the notifications don't appear.
-		MainController.showSettings();
+		MainController.showMain();
 	}
 
 	/**
@@ -1435,27 +1338,22 @@ public class MenuController implements Initializable {
 		this.isNavOpen = false;
 
 		// Set shadows
-		notifications.setEffect(notifShadow);
 		navList.setEffect(navShadow);
 
 		// Set button actions:
 		this.closeDrawer.setOnAction(e -> openMenu.fire());
+		/*
 		this.showDash.setOnAction(e -> this.main(Window.DASHBOARD));
 		this.studyProfiles.setOnAction(e -> this.main(Window.PROFILES));
 		this.modules.setOnAction(e -> this.main(Window.MODULES));
 		this.milestones.setOnAction(e -> this.main(Window.MILESTONES));
 		this.calendar.setOnAction(e -> this.main(Window.CALENDAR));
 		this.chat.setOnAction(e -> this.main(Window.CHAT));
+		*/
 
 		// Set nav to close when clicking outside of it
 		this.mainContent.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
 			if (e.getButton() == MouseButton.PRIMARY) {
-				if (this.showNotification.getTranslateY() == 0) {
-					TranslateTransition closeNot = new TranslateTransition(new Duration(173),
-						notifications);
-					closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
-					closeNot.play();
-				}
 				if (this.isNavOpen) {
 					this.openMenu.fire();
 				}
@@ -1464,10 +1362,10 @@ public class MenuController implements Initializable {
 
 		//  text:
 		this.welcome = new Label(
-				"Welcome back, " + MainController.getSpc().getPlanner().getUserName() + "!");
+				"Welcome to Settings!");
 		this.welcome.setPadding(new Insets(10, 15, 10, 15));
+		this.welcome.setTextAlignment(TextAlignment.CENTER);
 		this.topBox.getChildren().add(this.welcome);
-
 		this.mainContent.setVgap(10);
 		this.mainContent.setPadding(new Insets(15));
 
@@ -1476,76 +1374,10 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * Prepare notifications.
-	 */
-	private void updateNotifications() {
-		MainController.getSpc().checkForNotifications();
-
-		// Set notification button style:
-		if (MainController.getSpc().getPlanner().getUnreadNotifications().length > 0) {
-			if (!this.showNotification.getStyleClass().contains("unread-button")) {
-				this.showNotification.getStyleClass().remove("read-button");
-				this.showNotification.getStyleClass().add("unread-button");
-			}
-		} else if (!this.showNotification.getStyleClass().contains("read-button")) {
-			this.showNotification.getStyleClass().add("read-button");
-			this.showNotification.getStyleClass().remove("unread-button");
-		}
-
-		// Process notifications:
-		this.notificationList.getChildren().clear();
-		Notification[] pendingNotifs =
-				MainController.getSpc().getPlanner().getNotifications();
-		for (int i = pendingNotifs.length - 1; i >= 0; i--) {
-			GridPane pane = new GridPane();
-
-			// Check if has a link or is unread:
-			if (pendingNotifs[i].getLink() != null || !pendingNotifs[i].isRead()) {
-				pane.setCursor(Cursor.HAND);
-				pane.setId(Integer.toString(pendingNotifs.length - i - 1));
-				pane.setOnMouseClicked(e ->
-					this.handleRead(Integer.parseInt(pane.getId()))
-				);
-				// Check if unread:
-				if (!pendingNotifs[i].isRead()) {
-					pane.getStyleClass().add("unread-item");
-				}
-			}
-
-			// Create labels:
-			Label titleLabel = new Label(pendingNotifs[i].getTitle());
-			titleLabel.getStyleClass().add("notificationItem-title");
-			titleLabel.setMaxWidth(250.0);
-
-			Label details = (pendingNotifs[i].getDetails() != null)
-					? new Label(pendingNotifs[i].getDetailsAsString())
-					: new Label();
-			details.getStyleClass().add("notificationItem-details");
-			details.setMaxWidth(250.0);
-
-			String dateFormatted = pendingNotifs[i].getDateTime().get(Calendar.DAY_OF_MONTH) + " "
-					+ pendingNotifs[i].getDateTime().getDisplayName(Calendar.MONTH, Calendar.LONG,
-							Locale.getDefault())
-					+ " at " + pendingNotifs[i].getDateTime().get(Calendar.HOUR) + " "
-					+ pendingNotifs[i].getDateTime().getDisplayName(Calendar.AM_PM, Calendar.LONG,
-							Locale.getDefault());
-			Label date = new Label(dateFormatted);
-			date.getStyleClass().addAll("notificationItem-date");
-			GridPane.setHalignment(date, HPos.RIGHT);
-			GridPane.setHgrow(date, Priority.ALWAYS);
-
-			pane.addRow(1, titleLabel);
-			pane.addRow(2, details);
-			pane.addRow(3, date);
-			pane.addRow(4, new Separator(Orientation.HORIZONTAL));
-			this.notificationList.addRow(pendingNotifs.length - i - 1, pane);
-		}
-	}
-
-	/**
 	 * Handles menu options.
 	 */
 	private void updateMenu() {
+		/*
 		this.addActivity.setDisable(false);
 		this.milestones.setDisable(false);
 		this.studyProfiles.setDisable(false);
@@ -1570,6 +1402,7 @@ public class MenuController implements Initializable {
 				this.modules.setDisable(true);
 			}
 		}
+		*/
 	}
 
 	/**
@@ -1583,7 +1416,7 @@ public class MenuController implements Initializable {
 			if (previous == null && previousWindow != Window.EMPTY) {
 				back.setOnAction(e -> this.main(previousWindow));
 			} else {
-				back.setOnAction(e -> previous.open(this.current));
+				//back.setOnAction(e -> previous.open(this.current));
 			}
 
 			this.topBox.getChildren().add(back);
@@ -1606,19 +1439,6 @@ public class MenuController implements Initializable {
 				closeNav.setToX(
 						-(navList.getWidth() + this.navShadowRadius + this.navShadowOffset));
 				closeNav.play();
-			}
-		});
-
-		TranslateTransition openNot = new TranslateTransition(new Duration(222), notifications);
-		openNot.setToY(17);
-		TranslateTransition closeNot = new TranslateTransition(new Duration(173), notifications);
-
-		showNotification.setOnAction((ActionEvent e1) -> {
-			if (notifications.getTranslateY() != 17) {
-				openNot.play();
-			} else {
-				closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
-				closeNot.play();
 			}
 		});
 	}

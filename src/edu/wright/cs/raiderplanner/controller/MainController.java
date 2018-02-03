@@ -178,6 +178,19 @@ public class MainController {
 	/**
 	 * Display the main menu.
 	 */
+	public static void showMain() {
+		try {
+			ui.showMain();
+		} catch (IOException e) {
+			UiManager.reportError("File does not exist: " + e.getMessage());
+		} catch (Exception e) {
+			UiManager.reportError(e.getMessage());
+		}
+	}
+
+	/**
+	 * Display the main menu.
+	 */
 	public static void showSettings() {
 		try {
 			ui.showSettings();

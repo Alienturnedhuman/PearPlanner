@@ -26,6 +26,7 @@ import edu.wright.cs.raiderplanner.controller.ActivityController;
 import edu.wright.cs.raiderplanner.controller.MenuController;
 import edu.wright.cs.raiderplanner.controller.MilestoneController;
 import edu.wright.cs.raiderplanner.controller.RequirementController;
+import edu.wright.cs.raiderplanner.controller.SettingsController;
 import edu.wright.cs.raiderplanner.controller.StartupController;
 import edu.wright.cs.raiderplanner.controller.StudyProfileController;
 import edu.wright.cs.raiderplanner.controller.TaskController;
@@ -65,6 +66,7 @@ import java.util.Calendar;
 public class UiManager {
 	private static Stage mainStage = new Stage();
 	private static MenuController mc = new MenuController();
+	private static SettingsController sc = new SettingsController();
 	private static File savesFolder = new File("./saves");
 	private static Image icon = new Image("file:icon.png");
 	private static FileChooser.ExtensionFilter datExtension =
@@ -150,14 +152,31 @@ public class UiManager {
 	}
 
 	/**
-	 * Displays the settings menu.
+	 * Displays the main menu in the current stage.
+	 * Added by Clayton D. Terrill 1/31/2018
+	 * @throws Exception when the FXMLLoader is unable to load
+	 */
+	public void showMain() throws Exception {
+		// Load in the .fxml file:
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
+		FXMLLoader loader = new FXMLLoader(mainMenuFxml);
+		loader.setController(UiManager.mc);
+		Parent root = loader.load();
+
+		// Set the scene with the SettingsFxml:
+		mainStage.getScene().setRoot(root);
+		mainStage.setTitle("RaiderPlanner");
+	}
+
+	/**
+	 * Displays the settings menu in the current stage.
 	 * Added by Clayton D. Terrill 1/31/2018
 	 * @throws Exception when the FXMLLoader is unable to load
 	 */
 	public void showSettings() throws Exception {
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(settingsFxml);
-		loader.setController(UiManager.mc);
+		loader.setController(sc);
 		Parent root = loader.load();
 
 		// Set the scene with the SettingsFxml:
