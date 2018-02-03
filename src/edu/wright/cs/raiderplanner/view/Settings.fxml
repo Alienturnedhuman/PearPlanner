@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
@@ -16,10 +18,10 @@
                 <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/menu.png');" styleClass="button-image" />
                 <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label fx:id="title" style="-fx-font-family: Ariel; -fx-text-fill: white; -fx-font-size: 2.5em" text="Settings" />
+                        <Label fx:id="title" style="-fx-font-family: Ariel; -fx-text-fill: white; -fx-font-size: 2.5em;" text="Settings" />
                     </children>
                 </HBox>
-
+                <HBox prefWidth="25" />
             </items>
         </ToolBar>
         <GridPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
