@@ -157,8 +157,8 @@ public class UiManager {
 	public void showSettings() throws Exception {
 		// Load in the .fxml file:
 		FXMLLoader loader = new FXMLLoader(settingsFxml);
-		Parent root = loader.load();
 		loader.setController(UiManager.mc);
+		Parent root = loader.load();
 
 		// Set the scene with the SettingsFxml:
 		mainStage.getScene().setRoot(root);
