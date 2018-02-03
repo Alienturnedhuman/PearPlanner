@@ -73,7 +73,7 @@
                                        <Image url="/edu/wright/cs/raiderplanner/content/settings_general.png" />
                                    </image>
                                </ImageView>
-                               <Button fx:id="showDash" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="General">
+                               <Button fx:id="generalBtn" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="General">
                             </Button>
                            </children>
                         </HBox>
@@ -88,7 +88,7 @@
                                        <Image url="/edu/wright/cs/raiderplanner/content/settings_account.png" />
                                    </image>
                                </ImageView>
-                               <Button fx:id="milestones" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Account" />
+                               <Button fx:id="accountBtn" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Account" />
    </children>
                         </HBox>
 
@@ -103,7 +103,7 @@
                                        <Image url="/edu/wright/cs/raiderplanner/content/settings_theme.png" />
                                    </image>
                                </ImageView>
-                               <Button fx:id="modules" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Theme" />
+                               <Button fx:id="themeBtn" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Theme" />
    </children>
                         </HBox>
 
@@ -117,7 +117,7 @@
                                        <Image url="/edu/wright/cs/raiderplanner/content/notification0.png" />
                                    </image>
                                </ImageView>
-                               <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Notifications" />
+                               <Button fx:id="notificationsBtn" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Notifications" />
    </children>
                         </HBox>
                   <HBox GridPane.rowIndex="4">
@@ -142,7 +142,7 @@
                               <Insets left="5" />
                            </HBox.margin>
                         </ImageView>
-                        <Button fx:id="settings" onAction="#showMainMenu" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;" text="Back" />
+                        <Button fx:id="backBtn" onAction="#showMainMenu" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;" text="Back" />
                      </children>
                   </HBox>
                   <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false" GridPane.rowIndex="6">
