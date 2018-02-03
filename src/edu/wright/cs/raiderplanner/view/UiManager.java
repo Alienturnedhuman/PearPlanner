@@ -153,6 +153,7 @@ public class UiManager {
 
 	/**
 	 * Displays the main menu in the current stage.
+	 * Uses the mainStage set forth by the main menu on start up.
 	 * Added by Clayton D. Terrill 1/31/2018
 	 * @throws Exception when the FXMLLoader is unable to load
 	 */
@@ -170,7 +171,8 @@ public class UiManager {
 
 	/**
 	 * Displays the settings menu in the current stage.
-	 * Added by Clayton D. Terrill 1/31/2018
+	 * Uses the mainStage set forth by the main menu on start up.
+	 * Added by Clayton D. Terrill 1/29/2018
 	 * @throws Exception when the FXMLLoader is unable to load
 	 */
 	public void showSettings() throws Exception {

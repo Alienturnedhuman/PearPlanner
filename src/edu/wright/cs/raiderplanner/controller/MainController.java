@@ -177,6 +177,7 @@ public class MainController {
 
 	/**
 	 * Display the main menu.
+	 * Author: Clayton D. Terrill 1/31/2018
 	 */
 	public static void showMain() {
 		try {
@@ -189,7 +190,8 @@ public class MainController {
 	}
 
 	/**
-	 * Display the main menu.
+	 * Display the settings menu.
+	 * Author: Clayton D. Terrill 1/29/2018
 	 */
 	public static void showSettings() {
 		try {

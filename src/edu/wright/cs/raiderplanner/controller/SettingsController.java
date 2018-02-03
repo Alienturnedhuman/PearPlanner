@@ -96,6 +96,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -115,7 +118,7 @@ import java.util.ResourceBundle;
 
 /**
  * Actions associated with the settings menu and its items.
- * 2/1/2018
+ * 2/1/2018 - Template Created
  * @author Clayton D. Terrill
  */
 
@@ -123,6 +126,9 @@ public class SettingsController implements Initializable {
 
 	/**
 	 * Initializes switch names and other buttons.
+	 * Represent states that the settings menu can be in.
+	 * May be assigned to a button in the initialize method and
+	 * what it does may be applied in the main method's switch statement.
 	 */
 	public enum Window {
 		EMPTY, INFO, GENERAL, ACCOUNT, THEME, NOTIFICATIONS
@@ -229,17 +235,11 @@ public class SettingsController implements Initializable {
 	}
 
 	/**
-	 * Display the Study INFO pane.
+	 * Display the Study INFO pane. Loads at settings startup.
+	 * This also initializes aspects of the settings scene.
 	 */
 	public void loadInfo() {
 		// set ToolTips
-		openMenu.setTooltip(new Tooltip("Menu"));
-
-		// Update main pane:
-		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
-		this.topBox.getChildren().clear();
-		this.topBox.getChildren().add(this.welcome);
-		this.title.setText("Settings");
 
 		StudyProfile profile = MainController.getSpc().getPlanner().getCurrentStudyProfile();
 
@@ -360,7 +360,6 @@ public class SettingsController implements Initializable {
 		/*
 		 * Allow modules to be scrollable if window is too small to display them all on screen
 		 * simultaneously.
-		 */
 		ScrollPane moduleBox = new ScrollPane();
 		moduleBox.setContent(modulesPane);
 		moduleBox.setStyle("-fx-background-color: transparent");
@@ -368,10 +367,14 @@ public class SettingsController implements Initializable {
 		moduleBox.setFitToWidth(true);
 		GridPane.setColumnSpan(moduleBox, GridPane.REMAINING);
 		this.mainContent.addRow(2, moduleBox);
+		 */
+		
+		// Create a details pane:
 	}
 
 	/**
 	 * Display the Study INFO pane.
+	 * NOT IMPLEMENTED
 	 */
 	public void loadGeneral() {
 		// Update main pane:
@@ -380,10 +383,28 @@ public class SettingsController implements Initializable {
 		this.welcome.setText("GENERAL");
 		this.topBox.getChildren().add(this.welcome);
 		this.title.setText("General Settings");
+		
+		/*
+		VBox detailsBox = new VBox(5);
+		Label details = new Label("Testing details label");
+		details.setWrapText(true);
+		detailsBox.getChildren().addAll(new Label("The top line is right here."),
+				new Label("Second sucks"),
+				new Label("Third time is a charm."),
+				new Label("Shake my head, this is fourth."),
+				new Label("This is the last one, I swear."),
+				details);
+		GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
+		GridPane.setHgrow(detailsBox, Priority.ALWAYS);
+
+		this.mainContent.addRow(2, detailsBox);
+		GridPane.setColumnSpan(detailsBox, GridPane.REMAINING);
+		*/
 	}
 
 	/**
 	 * Display the Study INFO pane.
+	 * NOT IMPLEMENTED
 	 */
 	public void loadAccount() {
 		// Update main pane:
@@ -396,6 +417,7 @@ public class SettingsController implements Initializable {
 
 	/**
 	 * Display the Study INFO pane.
+	 * NOT IMPLEMENTED
 	 */
 	public void loadTheme() {
 		// Update main pane:
@@ -408,6 +430,7 @@ public class SettingsController implements Initializable {
 
 	/**
 	 * Display the Study INFO pane.
+	 * NOT IMPLEMENTED
 	 */
 	public void loadNotification() {
 		// Update main pane:
@@ -422,8 +445,8 @@ public class SettingsController implements Initializable {
 	 * Handles the 'Back' Event
 	 * Author: Clayton D. Terrill  1/29/2018
 	 */
-	public void showMainMenu() {
-		initialLoad = true; //Required so the notifications don't appear.
+	public void goBack() {
+		initialLoad = true; //Required so class may be reused.
 		MainController.showMain();
 	}
 
@@ -452,34 +475,53 @@ public class SettingsController implements Initializable {
 		});
 
 		//  text:
-		this.welcome = new Label(
-				"Welcome to Settings!");
-		this.welcome.setPadding(new Insets(10, 15, 10, 15));
-		this.welcome.setTextAlignment(TextAlignment.CENTER);
-		this.topBox.getChildren().add(this.welcome);
+		this.welcome = new Label("RaiderPlanner");
+		this.welcome.setFont(Font.font("Ariel", FontWeight.BOLD , 42));
+		Label versionNo = new Label("Version 1.0.1\nCopyright © 2017");
+		versionNo.setFont(Font.font("Ariel", 12));
+		versionNo.setTextFill(Color.GRAY);
+		versionNo.setTextAlignment(TextAlignment.CENTER);
+		Label details = new Label("\"The best study planner since the Gantt Diagram\"");
+		details.setFont(Font.font("Ariel", FontPosture.ITALIC , 24));
+		Label stayOnTrack = new Label("Stay on track.");
+		stayOnTrack.setFont(Font.font("Ariel", FontWeight.BOLD, 18));
+		Label summary = new Label("Life gets complicated, and keeping track of homework and exam\n"
+				+ "dates is not the first thing on your mind. RaiderPlanner will be "
+				+ "there to help you out.");
+		summary.setFont(Font.font("Ariel", 18));
+		summary.setTextAlignment(TextAlignment.CENTER);
+		Label credits = new Label("Created By:\n"
+				+ "Roberto Sánchez\n"
+				+ "Wright State University's CEG3120 class\n\n"
+				+ "Based on the 'PearPlanner'\n"
+				+ "Created By: \n"
+				+ "Benjamin Dickson\n"
+				+ "Andrew Odintsov\n"
+				+ "Zilvinas Ceikauskas\n"
+				+ "Bijan Ghasemi Afshar\n");
+		credits.setFont(Font.font("Ariel", 14));
+		credits.setTextAlignment(TextAlignment.CENTER);
+
+		VBox detailsBox = new VBox(5);
+		details.setWrapText(true);
+		detailsBox.getChildren().addAll(this.welcome,
+				versionNo,
+				details,
+				stayOnTrack,
+				summary,
+				credits);
+		detailsBox.setAlignment(Pos.TOP_CENTER);
+		GridPane.setVgrow(detailsBox, Priority.SOMETIMES);
+		GridPane.setHgrow(detailsBox, Priority.ALWAYS);
+		GridPane.setColumnSpan(detailsBox, GridPane.REMAINING);
+
+		this.mainContent.addRow(2, detailsBox);
 		this.mainContent.setVgap(10);
 		this.mainContent.setPadding(new Insets(15));
+		this.mainContent.setAlignment(Pos.CENTER);
 
-		// Render INFO:
+		// Render INFO initially:
 		this.main(Window.INFO);
-	}
-
-	/**
-	 * Creates a back button.
-	 */
-	public void backButton(Window previousWindow, ModelEntity previous) {
-		if (previous != null || previousWindow != Window.EMPTY) {
-			Button back = new Button();
-			back.getStyleClass().addAll("button-image", "back-button");
-
-			if (previous == null && previousWindow != Window.EMPTY) {
-				back.setOnAction(e -> this.main(previousWindow));
-			} else {
-				//back.setOnAction(e -> previous.open(this.current));
-			}
-
-			this.topBox.getChildren().add(back);
-		}
 	}
 
 	/**
