@@ -115,6 +115,7 @@ import java.util.ResourceBundle;
 
 /**
  * Actions associated with the settings menu and its items.
+ * Settings menu implemented in correspondence with Issue #238.
  * 2/1/2018 - Template Created
  * @author Clayton D. Terrill
  */
