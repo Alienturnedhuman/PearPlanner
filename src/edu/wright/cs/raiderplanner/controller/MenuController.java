@@ -59,6 +59,8 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.print.PrinterJob;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -199,11 +201,14 @@ public class MenuController implements Initializable {
 	private TextField tfHost = new TextField("");
 	private TextField tfMessageToSend = new TextField();
 	private TextArea msgArea = new TextArea();
-	private final Label name = new Label("Name:");
-	private final Label host = new Label("Host:");
+	private final Label name = new Label("Your Name:");
+	private final Label host = new Label("Host User's Name:");
 	private final Button submitButton = new Button("Submit");
 	private final Button sendButton = new Button("Send");
 	private boolean calendarOpen = false; //Used to monitor status of calendar (open or closed)
+	private boolean chatConnection = false;
+	private Alert chatConnectionSuccessful = new Alert(AlertType.INFORMATION);
+	private Alert chatConnectionUnsuccessful = new Alert(AlertType.ERROR);
 
 	private String userName;
 	private String hostName;
@@ -221,6 +226,8 @@ public class MenuController implements Initializable {
 	 * Main method containing switch statements.
 	 */
 	public void main() {
+		chatConnectionUnsuccessful.setContentText("Chat connection unsuccessful.");
+		chatConnectionSuccessful.setContentText("Chat connection successful.");
 		if (isNavOpen) {
 			openMenu.fire();
 		}
@@ -277,6 +284,20 @@ public class MenuController implements Initializable {
 		}
 		//Based on user choice of menu option "Export Calendar" button is shown/hidden
 		exportCalBox.setVisible(calendarOpen);
+	}
+
+	/**
+	 * Returns a boolean value of whether or not there is a successful chat connection.
+	 */
+	public boolean getChatConnection() {
+		return chatConnection;
+	}
+
+	/**
+	 * Sets the boolean variable of whether or not there is a successful chat connection.
+	 */
+	public void setChatConnection(boolean chatConnection) {
+		this.chatConnection = chatConnection;
 	}
 
 	/**
@@ -1006,6 +1027,12 @@ public class MenuController implements Initializable {
 				userName = tfName.getText();
 			}
 			hostName = tfHost.getText();
+			if (chatConnection) {
+				chatConnectionSuccessful.showAndWait();
+			}
+			else {
+				chatConnectionUnsuccessful.showAndWait();
+			}
 			loadChatWindow();
 		});
 	}
