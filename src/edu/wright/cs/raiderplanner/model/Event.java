@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  * Using FastDateFormat because it is threadsafe.
  * @author Andrew Odintsov
  */
-public class Event extends VersionControlEntity {
+public abstract class Event extends VersionControlEntity {
 
 	private static final long serialVersionUID = 4940549364156632405L;
 

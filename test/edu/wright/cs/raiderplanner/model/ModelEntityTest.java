@@ -33,6 +33,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -62,7 +63,7 @@ public class ModelEntityTest {
 		note = new Note("Note1", gregorianCalendar, multilineString);
 		notes = new ArrayList<>();
 		notes.add(note);
-		modelEntity = new ModelEntity("name1", detailsArray, notes);
+		modelEntity = new Milestone("Milestone", "Test", LocalDate.of(2018, 2, 4));
 	}
 
 	/**

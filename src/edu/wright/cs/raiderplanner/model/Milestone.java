@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import edu.wright.cs.raiderplanner.controller.MenuController.Window;
+
 /**
  * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
@@ -232,6 +234,15 @@ public class Milestone extends ModelEntity {
 	public void setDeadline(LocalDate date) {
 		this.deadline.setDate(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
 				+ "T00:00:01Z");
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.wright.cs.raiderplanner.model.ModelEntity#open(edu.wright.cs.raiderplanner.controller.MenuController.Window)
+	 */
+	@Override
+	public void open(Window current) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

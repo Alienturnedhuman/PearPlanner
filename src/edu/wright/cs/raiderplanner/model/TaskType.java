@@ -22,6 +22,7 @@
 package edu.wright.cs.raiderplanner.model;
 
 import edu.wright.cs.raiderplanner.controller.MainController;
+import edu.wright.cs.raiderplanner.controller.MenuController.Window;
 
 import java.util.ArrayList;
 
@@ -227,4 +228,13 @@ public class TaskType extends ModelEntity {
 	}
 
 	public static TaskType DEFAULT = taskDatabase.get(0);
+
+	/* (non-Javadoc)
+	 * @see edu.wright.cs.raiderplanner.model.ModelEntity#open(edu.wright.cs.raiderplanner.controller.MenuController.Window)
+	 */
+	@Override
+	public void open(Window current) {
+		// TODO Auto-generated method stub
+		
+	}
 }

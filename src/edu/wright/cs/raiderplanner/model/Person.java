@@ -23,6 +23,8 @@ package edu.wright.cs.raiderplanner.model;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import edu.wright.cs.raiderplanner.controller.MenuController.Window;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -344,6 +346,15 @@ public class Person extends VersionControlEntity {
 	@Override
 	public String toString() {
 		return getFullName() + " ( " + getEmail() + " )";
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.wright.cs.raiderplanner.model.ModelEntity#open(edu.wright.cs.raiderplanner.controller.MenuController.Window)
+	 */
+	@Override
+	public void open(Window current) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
