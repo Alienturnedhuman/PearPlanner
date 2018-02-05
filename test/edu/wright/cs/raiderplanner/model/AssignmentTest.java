@@ -37,6 +37,7 @@ public class AssignmentTest {
 	Assignment assignment;
 	Person person1;
 	Person person2;
+	ExamEvent cTimeSlot;
 
 	/**
 	 * This test case creates two Person objects and an Assignment object for use in
@@ -47,7 +48,7 @@ public class AssignmentTest {
 	public void setUp() throws Exception {
 		person1 = new Person("Dr.", "Mark Fisher", true);
 		person2 = new Person("Dr.", "Steven Laycock", true);
-		assignment = new Assignment(30, person1, person1, person2, 100);
+		assignment = new Exam(2, person1, person2, person1, 4, cTimeSlot);
 	}
 
 	/**

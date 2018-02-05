@@ -24,6 +24,8 @@ package edu.wright.cs.raiderplanner.model;
 
 import org.apache.commons.lang3.time.FastDateFormat;
 
+import edu.wright.cs.raiderplanner.controller.MenuController.Window;
+
 import java.text.ParseException;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -34,7 +36,7 @@ import java.util.regex.Pattern;
  * Using FastDateFormat because it is threadsafe.
  * @author Andrew Odintsov
  */
-public abstract class Event extends VersionControlEntity {
+public class Event extends VersionControlEntity {
 
 	private static final long serialVersionUID = 4940549364156632405L;
 
@@ -125,5 +127,14 @@ public abstract class Event extends VersionControlEntity {
 	@Override
 	public String toString() {
 		return this.date.getTime().toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.wright.cs.raiderplanner.model.ModelEntity#open(edu.wright.cs.raiderplanner.controller.MenuController.Window)
+	 */
+	@Override
+	public void open(Window current) {
+		// TODO Auto-generated method stub
+		
 	}
 }
