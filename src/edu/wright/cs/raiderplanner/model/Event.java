@@ -130,11 +130,11 @@ public class Event extends VersionControlEntity {
 	}
 
 	/* (non-Javadoc)
-	 * @see edu.wright.cs.raiderplanner.model.ModelEntity#open(edu.wright.cs.raiderplanner.controller.MenuController.Window)
+	 * @see edu.wright.cs.raiderplanner.model.ModelEntity#open
+	 * (edu.wright.cs.raiderplanner.controller.MenuController.Window)
 	 */
 	@Override
 	public void open(Window current) {
 		// TODO Auto-generated method stub
-		
 	}
 }
