@@ -123,8 +123,8 @@ import java.util.ResourceBundle;
 
 public class MenuController implements Initializable {
 
-	/**
-	 * Initializes switch names and other buttons.
+     /**
+     * Initializes switch names and other buttons.
 	 */
 	public enum Window {
 		EMPTY, DASHBOARD, PROFILES, MODULES, MILESTONES, CALENDAR, CHAT
@@ -136,19 +136,27 @@ public class MenuController implements Initializable {
 	private boolean initialLoad = true;
 
 	// Screen size:
-	private double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
-	private double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
-	private double screenAverage = (screenWidth + screenHeight) / 2;
+	private double screenWidth =
+	        Screen.getPrimary().getVisualBounds().getWidth();
+	private double screenHeight =
+	        Screen.getPrimary().getVisualBounds().getHeight();
+	private double screenAverage =
+	        (screenWidth + screenHeight) / 2;
 
 	// Shadows:
 	private int navShadowRadius = (int) (screenAverage * 0.03);
 	private int navShadowOffset = (int) (screenAverage * 0.01);
-	private DropShadow navShadow = new DropShadow(navShadowRadius, navShadowOffset, 0, Color.BLACK);
-	private DropShadow notifShadow = new DropShadow(screenAverage * 0.02, 0, 0.009, Color.BLACK);
-	private DropShadow moduleDefaultShadow = new DropShadow(screenAverage * 0.005, 0, 0,
+	private DropShadow navShadow =
+	        new DropShadow(navShadowRadius, navShadowOffset, 0, Color.BLACK);
+	private DropShadow notifShadow =
+	        new DropShadow(screenAverage * 0.02, 0, 0.009, Color.BLACK);
+	private DropShadow moduleDefaultShadow =
+	        new DropShadow(screenAverage * 0.005, 0, 0,
 			Color.BLACK);
-	private DropShadow moduleHoverShadow = new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
-	private InnerShadow modulePressedShadow = new InnerShadow(screenAverage * 0.017, 0, 0,
+	private DropShadow moduleHoverShadow =
+	        new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
+	private InnerShadow modulePressedShadow =
+	        new InnerShadow(screenAverage * 0.017, 0, 0,
 			Color.BLACK);
 
 	// Labels:
@@ -216,6 +224,7 @@ public class MenuController implements Initializable {
 
 	/**
 	 * Sets this.current to equal passed variable and calls this.main().
+	 * @param wind - the menu window
 	 */
 	public void main(Window wind) {
 		this.current = wind;
@@ -226,28 +235,35 @@ public class MenuController implements Initializable {
 	 * Main method containing switch statements.
 	 */
 	public void main() {
-		chatConnectionUnsuccessful.setContentText("Chat connection unsuccessful.");
-		chatConnectionSuccessful.setContentText("Chat connection successful.");
+		chatConnectionUnsuccessful.setContentText("Chat"
+		        + " connection unsuccessful.");
+		chatConnectionSuccessful.setContentText("Chat"
+		        + " connection successful.");
 		if (isNavOpen) {
 			openMenu.fire();
 		}
-		if (this.showNotification.getTranslateY() == 0 && !initialLoad) {
-			TranslateTransition closeNot = new TranslateTransition(new Duration(173),
+		if (this.showNotification.getTranslateY()
+		        == 0 && !initialLoad) {
+			TranslateTransition closeNot =
+			        new TranslateTransition(new Duration(173),
 					notifications);
-			closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
+			closeNot.setToY(-(notifications.getHeight()
+			        + this.navShadowRadius + 56 + 17));
 			closeNot.play();
 		}
 		initialLoad = false;
 
 		this.updateNotifications();
 		this.updateMenu();
-		exportCalBox.managedProperty().bind(exportCalBox.visibleProperty());
+		exportCalBox.managedProperty()
+		.bind(exportCalBox.visibleProperty());
 
 		//When user chooses different option in menu
-		//		calendarOpen changes to monitor status within main window.
+		//calendarOpen changes to monitor status within main window.
 		switch (this.current) {
 		case DASHBOARD: {
-			if (MainController.getSpc().getPlanner().getCurrentStudyProfile() != null) {
+			if (MainController.getSpc().getPlanner()
+			        .getCurrentStudyProfile() != null) {
 				this.loadDashboard();
 				calendarOpen = false;
 			}
@@ -282,22 +298,31 @@ public class MenuController implements Initializable {
 			calendarOpen = false;
 			break;
 		}
-		//Based on user choice of menu option "Export Calendar" button is shown/hidden
+		//Based on user choice of menu option
+		//"Export Calendar" button is shown/hidden
 		exportCalBox.setVisible(calendarOpen);
 	}
 
 	/**
-	 * Returns a boolean value of whether or not there is a successful chat connection.
+	 * Returns a boolean value of whether or not
+	 * there is a successful chat connection.
+	 *
+	 * @return the boolean value of whether or not
+	 * there is a successful chat connection.
 	 */
 	public boolean getChatConnection() {
 		return chatConnection;
 	}
 
 	/**
-	 * Sets the boolean variable of whether or not there is a successful chat connection.
+	 * Sets the boolean variable of whether or not
+	 * there is a successful chat connection.
+	 *
+	 * @param newChatConnection - the value to which
+	 * to set chatConnection
 	 */
-	public void setChatConnection(boolean chatConnection) {
-		this.chatConnection = chatConnection;
+	public void setChatConnection(boolean newChatConnection) {
+		this.chatConnection = newChatConnection;
 	}
 
 	/**
@@ -311,12 +336,14 @@ public class MenuController implements Initializable {
 		calendar.setTooltip(new Tooltip("Open Calendar"));
 
 		// Update main pane:
-		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
+		this.mainContent.getChildren().remove(1,
+		        this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.topBox.getChildren().add(this.welcome);
 		this.title.setText("Study Dashboard");
 
-		StudyProfile profile = MainController.getSpc().getPlanner().getCurrentStudyProfile();
+		StudyProfile profile = MainController
+		        .getSpc().getPlanner().getCurrentStudyProfile();
 
 		// Display studyProfile:
 		Label studyProfile = new Label(profile.getName());
@@ -330,64 +357,87 @@ public class MenuController implements Initializable {
 		Thread renderModules = new Thread(() -> {
 			Label oldLabel = new Label(this.welcome.getText());
 			Thread sayLoading = new Thread(() -> {
-				this.welcome.setText(this.welcome.getText() + "  LOADING...");
+				this.welcome.setText(this.welcome.getText()
+				        + "  LOADING...");
 			});
 			Platform.runLater(sayLoading);
 
 			for (Module module : profile.getModules()) {
 				VBox vbox = new VBox();
 
-				// Set the width of the module to 15% of the screen resolution
+				// Set the width of the module to
+				// 15% of the screen resolution
 				if (screenWidth > screenHeight) {
 					vbox.setPrefWidth(screenWidth * 0.14);
 				} else {
-					// If device is in portrait mode, set vbox width based on height
+					// If device is in portrait mode, set
+				    // vbox width based on height
 					vbox.setPrefWidth(screenHeight * 0.14);
 				}
-				// Set the height of the module to 112% of its width
+				// Set the height of the
+				// module to 112% of its width
 				vbox.setPrefHeight(vbox.getPrefWidth() * 1.12);
-				// Set margin between text and badge to 10% vbox width
+				// Set margin between text and
+				// badge to 10% vbox width
 				vbox.setSpacing(vbox.getPrefWidth() * 0.1);
 
 				vbox.setAlignment(Pos.CENTER);
 				vbox.setCursor(Cursor.HAND);
 
 				Label nameLabel = new Label(module.getName());
-				nameLabel.setTextAlignment(TextAlignment.CENTER);
+				nameLabel.setTextAlignment(TextAlignment
+				        .CENTER);
 
-				// Set left margin for title, which creates padding in case title is very long
-				VBox.setMargin(nameLabel, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.04));
+				// Set left margin for title, which
+				// creates padding in case title is very long
+				VBox.setMargin(nameLabel, new
+				        Insets(0, 0, 0, vbox.getPrefWidth() * 0.04));
 
 				vbox.getChildren().add(nameLabel);
 
-				BufferedImage buff = GanttishDiagram.getBadge(module.calculateProgress(), true, 1);
-				Image image = SwingFXUtils.toFXImage(buff, null);
+				BufferedImage buff = GanttishDiagram
+				        .getBadge(module
+				        .calculateProgress(), true, 1);
+				Image image = SwingFXUtils
+				        .toFXImage(buff, null);
 				Pane badge = new Pane();
 
-				// Set the distance from left edge to badge 17% of vbox width
-				VBox.setMargin(badge, new Insets(0, 0, 0, vbox.getPrefWidth() * 0.17));
+				// Set the distance from left edge
+				// to badge 17% of vbox width
+				VBox.setMargin(badge, new Insets(0,
+				        0, 0, vbox.getPrefWidth() * 0.17));
 				// Set the badge width to 66% that of vbox
 				badge.setPrefHeight(vbox.getPrefWidth() * 0.66);
 
-				badge.setBackground(new Background(new BackgroundImage(image,
-						BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-						BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO,
+				badge.setBackground(new Background(new
+				        BackgroundImage(image,
+						BackgroundRepeat.NO_REPEAT,
+						BackgroundRepeat.NO_REPEAT,
+						BackgroundPosition.DEFAULT,
+						new BackgroundSize(BackgroundSize.AUTO,
 								BackgroundSize.AUTO, false, false, true, false))));
 				vbox.getChildren().add(badge);
 
 				/*
-				 * If mouse clicks on module, depress it. If mouse leaves module while depressed,
-				 * undepress button. If mouse re-enters, then re-depress module. If mouse is not
-				 * depressed when it enters module, show hover effect.
+				 * If mouse clicks on module, depress it.
+				 * If mouse leaves module while depressed,
+				 * undepress button. If mouse re-enters,
+				 * then re-depress module. If mouse is not
+				 * depressed when it enters module,
+				 * show hover effect.
 				 */
-				vbox.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
+				vbox.addEventHandler(MouseEvent
+				        .MOUSE_ENTERED, e -> {
 					if (mouseDown) {
-						vbox.setEffect(this.modulePressedShadow);
+						vbox.setEffect(this
+						        .modulePressedShadow);
 					} else {
-						vbox.setEffect(this.moduleHoverShadow);
+						vbox.setEffect(this
+						        .moduleHoverShadow);
 					}
 				});
-				vbox.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
+				vbox.addEventHandler(MouseEvent
+				        .MOUSE_EXITED, e -> {
 					vbox.setEffect(this.moduleDefaultShadow);
 				});
 				vbox.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
