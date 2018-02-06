@@ -161,6 +161,7 @@ junitPlatform {
 }
 
 checkstyle {
+    toolVersion "4.1"
 	configFile = '.checkstyle.xml' as File
 	maxWarnings = 106
 }
