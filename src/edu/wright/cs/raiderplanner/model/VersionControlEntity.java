@@ -21,9 +21,9 @@
 
 package edu.wright.cs.raiderplanner.model;
 
-import java.util.HashMap;
-
 import edu.wright.cs.raiderplanner.controller.MainController;
+
+import java.util.HashMap;
 
 /**
  * PearPlanner/RaiderPlanner.

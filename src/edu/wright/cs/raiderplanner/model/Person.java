@@ -21,9 +21,8 @@
 
 package edu.wright.cs.raiderplanner.model;
 
-import org.apache.commons.validator.routines.EmailValidator;
-
 import edu.wright.cs.raiderplanner.controller.MenuController.Window;
+import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.ArrayList;
 import java.util.Arrays;

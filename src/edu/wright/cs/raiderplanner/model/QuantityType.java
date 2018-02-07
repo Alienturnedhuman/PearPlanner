@@ -21,10 +21,10 @@
 
 package edu.wright.cs.raiderplanner.model;
 
-import java.util.ArrayList;
-
 import edu.wright.cs.raiderplanner.controller.MainController;
 import edu.wright.cs.raiderplanner.controller.MenuController.Window;
+
+import java.util.ArrayList;
 
 /**
  * PearPlanner/RaiderPlanner.

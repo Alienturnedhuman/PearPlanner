@@ -21,9 +21,9 @@
 
 package edu.wright.cs.raiderplanner.model;
 
-import java.text.SimpleDateFormat;
-
 import edu.wright.cs.raiderplanner.controller.MenuController.Window;
+
+import java.text.SimpleDateFormat;
 
 /**
  * An exam event with a location/room and a duration.

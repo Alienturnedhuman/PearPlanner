@@ -22,9 +22,8 @@
 
 package edu.wright.cs.raiderplanner.model;
 
-import org.apache.commons.lang3.time.FastDateFormat;
-
 import edu.wright.cs.raiderplanner.controller.MenuController.Window;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.text.ParseException;
 import java.util.Date;
