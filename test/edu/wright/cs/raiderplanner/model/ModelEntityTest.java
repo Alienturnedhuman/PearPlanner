@@ -45,7 +45,6 @@ public class ModelEntityTest {
 
 	private ModelEntity modelEntity;
 	private GregorianCalendar gregorianCalendar;
-	private String[] detailsArray = {"detail"};
 	private MultilineString multilineString;
 	private Note note;
 	private ArrayList<Note> notes;
