@@ -22,33 +22,42 @@
 /**
  * The application plugin facilitates creating an executable JVM application.
  */
-
 buildscript {
 	repositories {
 		mavenCentral()
+		jcenter()
 	}
 	dependencies {
 		classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
+		classpath 'edu.sc.seis.gradle:launch4j:2.4.2'
 	}
 }
-
+apply plugin: 'java'
+apply plugin: 'eclipse'
 apply plugin: 'application'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'edu.sc.seis.launch4j'
 apply plugin: 'org.junit.platform.gradle.plugin'
 
+
+compileJava { 
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+	
+}
+if(JavaVersion.current() != JavaVersion.VERSION_1_8) 
+	throw new GradleException("This project requires Java 8, but it's running on "+JavaVersion.current())
+
 /**
  * This line specifies where the main.java file is found.
  */
-
 mainClassName='edu.wright.cs.raiderplanner.view.Main'
 
 /**
  * This statement declares where Gradle is to find directories
  * for source code, external resources, and test classes
  */
-
 sourceSets {
 	main {
 		java {
@@ -73,16 +82,6 @@ sourceSets {
  * NOTE: The dependency "testfx-core-4.0.0-20150226.214553-8-sources.jar"
  * is pulled from the sonatype URL.
  */
-
-buildscript {
-	repositories {
-		jcenter()
-	}
-	dependencies {
-		classpath 'edu.sc.seis.gradle:launch4j:2.4.2'
-	}
-}
-
 repositories {
 	mavenCentral()
 	jcenter()
@@ -95,9 +94,7 @@ repositories {
 /**
  * Gradle grabs dependencies from the above repositories.
  */
-
 dependencies {
-
 	compile 'net.sf.biweekly:biweekly:0.6.1'
 	compile 'commons-validator:commons-validator:1.6'
 	compile 'com.google.guava:guava:21.0'
@@ -127,7 +124,6 @@ dependencies {
 /**
  * Ensure the build fails if any unit test fails.
  */
-
 test {
 	ignoreFailures = false
 }
@@ -135,7 +131,6 @@ test {
 /**
  * Tells Gradle to assemble a JAR archive.
  */
-
 jar {
 	manifest.attributes "Main-Class": mainClassName
 	baseName = project.name
@@ -172,4 +167,13 @@ tasks.withType(FindBugs) {
 		// html.stylesheet resources.text.fromFile( 'config/xsl/findbugs-custom.xsl' )
 	}
 	ignoreFailures = true
+}
+
+/**
+ * This chagnes the Gradle plugin's Access Rule when they are set to default
+ * 
+ */
+eclipse.classpath.file.whenMerged {
+    def container = entries.find { it.path.contains 'org.eclipse.jdt.launching.JRE_CONTAINER' }
+    container.accessRules << new org.gradle.plugins.ide.eclipse.model.AccessRule("accessible", "javafx/**")
 }
