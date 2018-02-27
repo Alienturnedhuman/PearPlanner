@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 - Matthew Barrett, Randy Forte, Brandon Hulbert,
- * Donald Miller
+ * Donald Miller, Nathaniel C Crossman
  *
  *
  *
@@ -55,7 +55,7 @@ if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
 /**
  * This line specifies where the main.java file is found.
  */
-mainClassName='edu.wright.cs.raiderplanner.view.Main'
+mainClassName = 'edu.wright.cs.raiderplanner.view.Main'
 
 /**
  * This statement declares where Gradle is to find directories
@@ -89,9 +89,9 @@ repositories {
 	mavenCentral()
 	jcenter()
 	maven {
-	url "https://github.com/screamingfrog/Maven/blob/master/uk/co/screamingfrog/AppleJavaExtensions/1.6/"
-	url "https://oss.sonatype.org/content/repositories/snapshots/org/testfx/testfx-core/4.0.0-SNAPSHOT/"
-    }
+		url "https://github.com/screamingfrog/Maven/blob/master/uk/co/screamingfrog/AppleJavaExtensions/1.6/"
+		url "https://oss.sonatype.org/content/repositories/snapshots/org/testfx/testfx-core/4.0.0-SNAPSHOT/"
+	}
 }
 
 /**
@@ -154,8 +154,8 @@ launch4j {
 }
 
 junitPlatform {
-    platformVersion '1.0.0'
-    reportsDir file('build/test-results/junit-platform') // this is the default
+	platformVersion '1.0.0'
+	reportsDir file('build/test-results/junit-platform') // this is the default
 }
 
 checkstyle {
