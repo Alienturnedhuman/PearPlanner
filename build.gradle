@@ -19,6 +19,8 @@
  *
  */
 
+import org.gradle.plugins.ide.eclipse.model.Container
+
 /**
  * The application plugin facilitates creating an executable JVM application.
  */
@@ -32,6 +34,7 @@ buildscript {
 		classpath 'edu.sc.seis.gradle:launch4j:2.4.2'
 	}
 }
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
@@ -40,14 +43,14 @@ apply plugin: 'findbugs'
 apply plugin: 'edu.sc.seis.launch4j'
 apply plugin: 'org.junit.platform.gradle.plugin'
 
-
-compileJava { 
+compileJava {
 	sourceCompatibility = JavaVersion.VERSION_1_8
 	targetCompatibility = JavaVersion.VERSION_1_8
-	
 }
-if(JavaVersion.current() != JavaVersion.VERSION_1_8) 
-	throw new GradleException("This project requires Java 8, but it's running on "+JavaVersion.current())
+
+if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
+	throw new GradleException("This project requires Java 8, but it's running on " + JavaVersion.current())
+}
 
 /**
  * This line specifies where the main.java file is found.
@@ -170,10 +173,9 @@ tasks.withType(FindBugs) {
 }
 
 /**
- * This chagnes the Gradle plugin's Access Rule when they are set to default
- * 
+ * Keep Gradle from rewriting the generic default JRE container configuration
  */
-eclipse.classpath.file.whenMerged {
-    def container = entries.find { it.path.contains 'org.eclipse.jdt.launching.JRE_CONTAINER' }
-    container.accessRules << new org.gradle.plugins.ide.eclipse.model.AccessRule("accessible", "javafx/**")
+eclipse.classpath.file.whenMerged { classpath ->
+	classpath.entries.removeAll { entry -> entry.kind == 'con' }
+	classpath.entries.add(new Container('org.eclipse.jdt.launching.JRE_CONTAINER'))
 }
