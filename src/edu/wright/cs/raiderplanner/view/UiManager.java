@@ -59,6 +59,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 
+import javax.swing.UIManager;
+
 /**
  * Created by Zilvinas on 04/05/2017.
  */
@@ -145,6 +147,17 @@ public class UiManager {
 		mainStage.setMinWidth(333);
 		mainStage.getIcons().add(icon);
 		mainStage.showAndWait();
+	}
+
+	/**
+	 * Relods the main page after a new profile is open.
+	 * @throws Exception When reloading the menu.
+	 */
+	public void reloadMainMenu() throws Exception {
+		FXMLLoader loader = new FXMLLoader(mainMenuFxml);
+		loader.setController(UiManager.mc);
+		Parent root = loader.load();
+		mainStage.getScene().setRoot(root);
 	}
 
 	/**
@@ -594,6 +607,14 @@ public class UiManager {
 	public static void areYouFeelingLucky() {
 		while (UiManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5)) {
 		}
+	}
+
+	/**
+	 * The save folder location.
+	 * @return
+	 */
+	public static File getSavesFolder() {
+		return savesFolder;
 	}
 
 }
