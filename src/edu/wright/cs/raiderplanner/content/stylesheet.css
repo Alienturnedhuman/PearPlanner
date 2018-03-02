@@ -1,0 +1,69 @@
+.button-image {
+    -fx-background-size: 100% 100%;
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+}
+
+.unread-button {
+    -fx-background-image: url('/edu/wright/cs/raiderplanner/content/notification1.png');
+}
+
+.read-button {
+    -fx-background-image: url('/edu/wright/cs/raiderplanner/content/notification0.png');
+}
+
+.set-button {
+    -fx-base: #CEA052;
+}
+
+.back-button {
+    -fx-background-image: url("/edu/wright/cs/raiderplanner/content/back.png");
+    -fx-min-width: 30;
+    -fx-background-color: transparent;
+}
+
+.notificationItem-title {
+    -fx-padding: 5 5 0;
+    -fx-display: block;
+}
+
+.notificationItem-details {
+    -fx-padding: 0 5 5;
+    -fx-display: block;
+    -fx-font-size: 85%;
+}
+
+.notificationItem-date {
+    -fx-font-size: 75%;
+    -fx-text-fill: darkslategrey;
+    -fx-padding: 0 5;
+}
+
+.unread-item {
+    -fx-background-color: lightgray;
+    -fx-display: block;
+}
+
+.title {
+    -fx-font-size: 1.5em;
+    -fx-padding: 0 0 5;
+}
+
+.title-details {
+    -fx-font-size: 1.5em;
+    -fx-padding: 5 15;
+}
+
+.list-item {
+    -fx-padding: 3 15 0;
+}
+
+.current-item {
+    -fx-background-color: #CEA052;
+}
+
+.print-button {
+    -fx-background-image: url("/edu/wright/cs/raiderplanner/content/print.png");
+    -fx-min-width: 30;
+    -fx-background-color: transparent;
+}
