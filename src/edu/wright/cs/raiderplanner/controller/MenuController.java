@@ -1407,7 +1407,7 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * Handles the 'Settings' Event
+	 * Handles the 'Settings' event.
 	 */
 	public void showSettings() {
 		initialLoad = true; // Required so the notifications don't appear.
