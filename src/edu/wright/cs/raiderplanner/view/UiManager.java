@@ -573,8 +573,8 @@ public class UiManager {
 	 */
 	public static void reportError(String displayMessage,String errorMessage) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter("errorlog.txt", true));) {
-			//Time stamp code from
-			//https://stackoverflow.com/questions/5175728/how-to-get-the-current-date-time-in-java
+			// Time stamp code from
+			// https://stackoverflow.com/questions/5175728/how-to-get-the-current-date-time-in-java
 			String timeStamp = new SimpleDateFormat(
 					"yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 			bw.write(timeStamp + " " +  displayMessage + " " + errorMessage);
