@@ -122,7 +122,6 @@ import java.util.ResourceBundle;
  * 2/1/2018 - Template Created
  * @author Clayton D. Terrill
  */
-
 public class SettingsController implements Initializable {
 
 	/**

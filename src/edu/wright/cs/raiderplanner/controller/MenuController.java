@@ -1364,7 +1364,7 @@ public class MenuController implements Initializable {
 	 * Handles clicking on a specific notification.
 	 *
 	 * @param id
-	 *			The identifier of the notification which was clicked.
+	 * The identifier of the notification which was clicked.
 	 */
 	public void handleRead(int id) {
 		// Get notification:
@@ -1422,7 +1422,7 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-		 * Handles 'Export Calendar' event.
+	 * Handles 'Export Calendar' event.
 	 */
 	public void exportCalendar() {
 		MainController.exportCalendar();
@@ -1626,7 +1626,7 @@ public class MenuController implements Initializable {
 	 * RowFactory for a TableView of Requirement.
 	 *
 	 * @param e1
-	 *			TableView that contains the RowFactory.
+	 * TableView that contains the RowFactory.
 	 *
 	 * @return new RowFactory
 	 */
@@ -1733,7 +1733,7 @@ public class MenuController implements Initializable {
 	 * Displays a GanttishDiagram window for the given Assignment.
 	 *
 	 * @param assignment
-	 *			Assignment for which to generate the GanttishDiagram.
+	 * Assignment for which to generate the GanttishDiagram.
 	 */
 	public void showGantt(Assignment assignment, Window previousWindow, ModelEntity previous) {
 		Stage stage = new Stage();

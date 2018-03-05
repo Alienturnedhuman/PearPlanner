@@ -290,7 +290,7 @@ public class MainController {
 	}
 
 	/**
-		 * Function exports calendar ICS file to user defined location.
+	 * Function exports calendar ICS file to user defined location.
 	 */
 	public static void exportCalendar() {
 		ICalExport icalExport = new ICalExport();
