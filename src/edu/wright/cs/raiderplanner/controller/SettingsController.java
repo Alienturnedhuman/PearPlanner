@@ -221,7 +221,7 @@ public class SettingsController implements Initializable {
 
 	/**
 	 * Display the general settings.
-	 * NOT IMPLEMENTED
+	 * TODO - Implement the general settings.
 	 */
 	public void loadGeneral() {
 		// Update main pane:
@@ -233,8 +233,8 @@ public class SettingsController implements Initializable {
 	}
 
 	/**
-	 * Display the general settings.
-	 * NOT IMPLEMENTED
+	 * Display the account settings.
+	 * TODO - Implement the account settings.
 	 */
 	public void loadAccount() {
 		// Update main pane:
@@ -247,7 +247,7 @@ public class SettingsController implements Initializable {
 
 	/**
 	 * Display theme settings.
-	 * NOT IMPLEMENTED
+	 * TODO - Implement the theme settings.
 	 */
 	public void loadTheme() {
 		// Update main pane:
@@ -260,7 +260,7 @@ public class SettingsController implements Initializable {
 
 	/**
 	 * Display the notification settings.
-	 * NOT IMPLEMENTED
+	 * TODO - Implement the notification settings.
 	 */
 	public void loadNotification() {
 		// Update main pane:
