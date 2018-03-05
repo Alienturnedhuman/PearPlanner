@@ -190,7 +190,7 @@ public class MenuController implements Initializable {
 	@FXML
 	private HBox exportCalBox;
 
-	//chat variables
+	// chat variables
 	private final BorderPane mainPane = new BorderPane();
 	private final GridPane firstPane = new GridPane();
 	private final GridPane userMessagePane = new GridPane();
@@ -203,7 +203,7 @@ public class MenuController implements Initializable {
 	private final Label host = new Label("Host:");
 	private final Button submitButton = new Button("Submit");
 	private final Button sendButton = new Button("Send");
-	private boolean calendarOpen = false; //Used to monitor status of calendar (open or closed)
+	private boolean calendarOpen = false; // Used to monitor status of calendar (open or closed)
 
 	private String userName;
 	private String hostName;
@@ -236,7 +236,7 @@ public class MenuController implements Initializable {
 		this.updateMenu();
 		exportCalBox.managedProperty().bind(exportCalBox.visibleProperty());
 
-		//When user chooses different option in menu
+		// When user chooses different option in menu
 		//		calendarOpen changes to monitor status within main window.
 		switch (this.current) {
 		case DASHBOARD: {
@@ -275,7 +275,7 @@ public class MenuController implements Initializable {
 			calendarOpen = false;
 			break;
 		}
-		//Based on user choice of menu option "Export Calendar" button is shown/hidden
+		// Based on user choice of menu option "Export Calendar" button is shown/hidden
 		exportCalBox.setVisible(calendarOpen);
 	}
 
@@ -1411,7 +1411,7 @@ public class MenuController implements Initializable {
 	 * Author: Clayton D. Terrill  1/29/2018
 	 */
 	public void showSettings() {
-		initialLoad = true; //Required so the notifications don't appear.
+		initialLoad = true; // Required so the notifications don't appear.
 		MainController.showSettings();
 	}
 
@@ -1462,7 +1462,7 @@ public class MenuController implements Initializable {
 			}
 		});
 
-		//  text:
+		// text:
 		this.welcome = new Label(
 				"Welcome back, " + MainController.getSpc().getPlanner().getUserName() + "!");
 		this.welcome.setPadding(new Insets(10, 15, 10, 15));
