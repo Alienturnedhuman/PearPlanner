@@ -70,8 +70,6 @@ public class SettingsController implements Initializable {
 
 	private Window current;
 	private boolean isNavOpen;
-	private boolean mouseDown = false;
-	private boolean initialLoad = true;
 
 	// Screen size:
 	private double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
@@ -138,8 +136,6 @@ public class SettingsController implements Initializable {
 		if (isNavOpen) {
 			openMenu.fire();
 		}
-
-		initialLoad = false;
 
 		switch (this.current) {
 		case ABOUT: {
@@ -287,7 +283,6 @@ public class SettingsController implements Initializable {
 	 * Will close the settings menu and open the main menu.
 	 */
 	public void goBack() {
-		initialLoad = true; // Required so class may be reused.
 		MainController.showMain();
 	}
 
