@@ -149,7 +149,7 @@ public class SettingsController implements Initializable {
 	private int navShadowRadius = (int) (screenAverage * 0.03);
 	private int navShadowOffset = (int) (screenAverage * 0.01);
 	private DropShadow navShadow = new DropShadow(navShadowRadius, navShadowOffset, 0, Color.BLACK);
-	//private DropShadow notifShadow = new DropShadow(screenAverage * 0.02, 0, 0.009, Color.BLACK);
+	// private DropShadow notifShadow = new DropShadow(screenAverage * 0.02, 0, 0.009, Color.BLACK);
 	private DropShadow moduleDefaultShadow = new DropShadow(screenAverage * 0.005, 0, 0,
 			Color.BLACK);
 	private DropShadow moduleHoverShadow = new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
@@ -186,7 +186,7 @@ public class SettingsController implements Initializable {
 	private HBox topBox;
 	@FXML
 
-	//chat variables
+	// chat variables
 	private final BorderPane mainPane = new BorderPane();
 
 	/**
@@ -243,7 +243,7 @@ public class SettingsController implements Initializable {
 		this.topBox.getChildren().clear();
 		this.title.setText("About");
 
-		//Text Labels:
+		// Text Labels:
 		Label appName = new Label("RaiderPlanner");
 		appName.setFont(Font.font("Ariel", FontWeight.BOLD , 42));
 
@@ -354,7 +354,7 @@ public class SettingsController implements Initializable {
 	 * Will close the settings menu and open the main menu.
 	 */
 	public void goBack() {
-		initialLoad = true; //Required so class may be reused.
+		initialLoad = true; // Required so class may be reused.
 		MainController.showMain();
 	}
 
@@ -383,8 +383,8 @@ public class SettingsController implements Initializable {
 			}
 		});
 
-		this.welcome = new Label(""); //Not initially needed
-		loadAbout(); //Using 'About' as the one to show first.
+		this.welcome = new Label(""); // Not initially needed
+		loadAbout(); // Using 'About' as the one to show first.
 
 		// Render ABOUT initially:
 		this.main(Window.ABOUT);
