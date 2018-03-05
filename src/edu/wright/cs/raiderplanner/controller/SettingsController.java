@@ -30,7 +30,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -81,11 +80,6 @@ public class SettingsController implements Initializable {
 	private int navShadowOffset = (int) (screenAverage * 0.01);
 	private DropShadow navShadow = new DropShadow(navShadowRadius, navShadowOffset, 0, Color.BLACK);
 	// private DropShadow notifShadow = new DropShadow(screenAverage * 0.02, 0, 0.009, Color.BLACK);
-	private DropShadow moduleDefaultShadow = new DropShadow(screenAverage * 0.005, 0, 0,
-			Color.BLACK);
-	private DropShadow moduleHoverShadow = new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
-	private InnerShadow modulePressedShadow = new InnerShadow(screenAverage * 0.017, 0, 0,
-			Color.BLACK);
 
 	// Labels:
 	private Label welcome;
