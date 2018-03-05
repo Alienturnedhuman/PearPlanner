@@ -104,11 +104,13 @@ public class MainController {
 	public static void initialise() {
 		boolean noAccount = false;
 		File[] files = MainController.ui.getSavesFolder().listFiles();
-		if (files.length == 0) {
-			noAccount = true;
-		}
-		if (files.length == 1 && files[0].getName().contains("SamplePlanner.dat")) {
-			noAccount = true;
+		if (files != null) {
+			if (files.length == 0) {
+				noAccount = true;
+			}
+			if (files.length == 1 && files[0].getName().contains("SamplePlanner.dat")) {
+				noAccount = true;
+			}
 		}
 		if (noAccount) {
 			try {
@@ -120,6 +122,7 @@ public class MainController {
 				study.getPlanner().addNotification(not);
 				MainController.setSpc(study);
 				plannerFile = MainController.ui.savePlannerFileDialog();
+				loadFile(plannerFile);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -151,9 +154,9 @@ public class MainController {
 				}
 			}
 			plannerFile = modifiedFile;
+			// If a file is present:
+			loadFile(plannerFile);
 		}
-		// If a file is present:
-		loadFile(plannerFile);
 	}
 
 	/**
