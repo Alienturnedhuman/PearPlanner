@@ -170,7 +170,7 @@ public class SettingsController implements Initializable {
 		Label appName = new Label("RaiderPlanner");
 		appName.setFont(Font.font("Ariel", FontWeight.BOLD , 42));
 
-		Label versionNo = new Label("Version 1.0.1\nCopyright © 2017");
+		Label versionNo = new Label("Version 0.0.0\nCopyright © 2017");
 		versionNo.setFont(Font.font("Ariel", 12));
 		versionNo.setTextFill(Color.GRAY);
 		versionNo.setTextAlignment(TextAlignment.CENTER);
@@ -188,7 +188,6 @@ public class SettingsController implements Initializable {
 		summary.setTextAlignment(TextAlignment.CENTER);
 
 		Label credits = new Label("Created By:\n"
-				+ "Roberto Sánchez\n"
 				+ "Wright State University's CEG3120 class\n\n"
 				+ "Based on the 'PearPlanner'\n"
 				+ "Created By: \n"
