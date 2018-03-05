@@ -102,38 +102,43 @@ public class MainController {
 	 * importing an existing Study Planner file.
 	 */
 	public static void initialise() {
+		boolean noAccount = false;
 		File[] files = MainController.ui.getSavesFolder().listFiles();
-		if (files.length == 0 ) {
-			if (files.length == 1 && files[0].getName().contains("SamplePlanner.dat")) {
-				try {
-					Account newAccount = MainController.ui.createAccount();
-					StudyPlannerController study = new StudyPlannerController(newAccount);
-					// Welcome notification:
-					Notification not = new Notification("Welcome!", new GregorianCalendar(),
-							"Thank you for using RaiderPlanner!");
-					study.getPlanner().addNotification(not);
-					MainController.setSpc(study);
-					plannerFile = MainController.ui.savePlannerFileDialog();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if (plannerFile != null) {
-					if (plannerFile.getParentFile().exists()) {
-						if (plannerFile.getParentFile().canRead()) {
-							if (plannerFile.getParentFile().canWrite()) {
-								MainController.setPlannerFile(plannerFile);
-								MainController.save();
-							} else {
-								UiManager.reportError("Directory can not be written to.");
-							}
+		if (files.length == 0) {
+			noAccount = true;
+		}
+		if (files.length == 1 && files[0].getName().contains("SamplePlanner.dat")) {
+			noAccount = true;
+		}
+		if (noAccount) {
+			try {
+				Account newAccount = MainController.ui.createAccount();
+				StudyPlannerController study = new StudyPlannerController(newAccount);
+				// Welcome notification:
+				Notification not = new Notification("Welcome!", new GregorianCalendar(),
+						"Thank you for using RaiderPlanner!");
+				study.getPlanner().addNotification(not);
+				MainController.setSpc(study);
+				plannerFile = MainController.ui.savePlannerFileDialog();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (plannerFile != null) {
+				if (plannerFile.getParentFile().exists()) {
+					if (plannerFile.getParentFile().canRead()) {
+						if (plannerFile.getParentFile().canWrite()) {
+							MainController.setPlannerFile(plannerFile);
+							MainController.save();
 						} else {
-							UiManager.reportError("Directory cannot be read from.");
+							UiManager.reportError("Directory can not be written to.");
 						}
-
 					} else {
-						UiManager.reportError("Directory does not exist.");
+						UiManager.reportError("Directory cannot be read from.");
 					}
+
+				} else {
+					UiManager.reportError("Directory does not exist.");
 				}
 			}
 		} else {
