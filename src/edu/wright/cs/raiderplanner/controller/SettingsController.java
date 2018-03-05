@@ -1,8 +1,7 @@
 /*
- * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar, Amila Dias
- *
  * Copyright (C) 2018 - Clayton D. Terrill
+ *
+ *
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
