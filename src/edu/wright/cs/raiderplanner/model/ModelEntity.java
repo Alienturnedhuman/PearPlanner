@@ -31,7 +31,7 @@ import java.util.List;
  * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
-public class ModelEntity implements Serializable {
+public abstract class ModelEntity implements Serializable {
 	protected String name = "";
 	protected MultilineString details = null;
 	protected ArrayList<Note> notes;
@@ -177,8 +177,8 @@ public class ModelEntity implements Serializable {
 	/**
 	 * Open the appropriate UI window for this class
 	 * To be overridden by children.
+	 * @return 
 	 */
-	public void open(MenuController.Window current) {
-	}
+	public abstract void open(MenuController.Window current);
 
 }

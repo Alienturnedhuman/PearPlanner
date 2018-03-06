@@ -21,6 +21,8 @@
 
 package edu.wright.cs.raiderplanner.model;
 
+import edu.wright.cs.raiderplanner.controller.MenuController.Window;
+
 /**
  * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
@@ -90,6 +92,15 @@ public class Building extends VersionControlEntity {
 	public String toString() {
 		return code + " " + name + " ( " + Double.toString(latitude)
 				+ " , " + Double.toString(longitude) + " )";
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.wright.cs.raiderplanner.model.ModelEntity#open
+	 * (edu.wright.cs.raiderplanner.controller.MenuController.Window)
+	 */
+	@Override
+	public void open(Window current) {
+		// TODO Auto-generated method stub
 	}
 }
 

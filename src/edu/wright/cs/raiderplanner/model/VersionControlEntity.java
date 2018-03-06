@@ -21,15 +21,15 @@
 
 package edu.wright.cs.raiderplanner.model;
 
-import java.util.HashMap;
-
 import edu.wright.cs.raiderplanner.controller.MainController;
+
+import java.util.HashMap;
 
 /**
  * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
-public class VersionControlEntity extends ModelEntity {
+public abstract class VersionControlEntity extends ModelEntity {
 	protected int version;
 	protected String uid;
 	protected boolean sealed;
