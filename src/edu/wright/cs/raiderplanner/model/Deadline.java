@@ -21,6 +21,8 @@
 
 package edu.wright.cs.raiderplanner.model;
 
+import edu.wright.cs.raiderplanner.controller.MenuController.Window;
+
 /**
  * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
@@ -29,5 +31,14 @@ public class Deadline extends Event {
 	// maybe we can get rid of this
 	public Deadline(String cdate) {
 		super(cdate);
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.wright.cs.raiderplanner.model.ModelEntity#open
+	 * (edu.wright.cs.raiderplanner.controller.MenuController.Window)
+	 */
+	@Override
+	public void open(Window current) {
+		// TODO Auto-generated method stub
 	}
 }

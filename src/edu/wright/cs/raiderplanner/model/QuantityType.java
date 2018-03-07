@@ -21,9 +21,10 @@
 
 package edu.wright.cs.raiderplanner.model;
 
-import java.util.ArrayList;
-
 import edu.wright.cs.raiderplanner.controller.MainController;
+import edu.wright.cs.raiderplanner.controller.MenuController.Window;
+
+import java.util.ArrayList;
 
 /**
  * PearPlanner/RaiderPlanner.
@@ -244,4 +245,13 @@ public class QuantityType extends ModelEntity {
 	}
 
 	public static QuantityType DEFAULT = quantityDatabase.get(0);
+
+	/* (non-Javadoc)
+	 * @see edu.wright.cs.raiderplanner.model.ModelEntity#open
+	 * (edu.wright.cs.raiderplanner.controller.MenuController.Window)
+	 */
+	@Override
+	public void open(Window current) {
+		// TODO Auto-generated method stub
+	}
 }

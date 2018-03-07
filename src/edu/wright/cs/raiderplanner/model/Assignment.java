@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
  */
-public class Assignment extends VersionControlEntity {
+public abstract class Assignment extends VersionControlEntity {
 	protected ArrayList<Task> tasks = new ArrayList<>();
 	protected ArrayList<Requirement> requirements = new ArrayList<>();
 	protected int weighting;
