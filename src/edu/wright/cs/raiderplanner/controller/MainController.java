@@ -2,7 +2,7 @@
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar, Amila Dias
  *
- *
+ * Copyright (C) 2018 - Clayton D. Terrill
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -164,10 +164,39 @@ public class MainController {
 
 	/**
 	 * Display the main menu.
+	 * Stage will be created.
 	 */
 	public static void main() {
 		try {
 			ui.mainMenu();
+		} catch (IOException e) {
+			UiManager.reportError("File does not exist: " + e.getMessage());
+		} catch (Exception e) {
+			UiManager.reportError(e.getMessage());
+		}
+	}
+
+	/**
+	 * Display the main menu.
+	 * Stage is already present.
+	 */
+	public static void showMain() {
+		try {
+			ui.showMain();
+		} catch (IOException e) {
+			UiManager.reportError("File does not exist: " + e.getMessage());
+		} catch (Exception e) {
+			UiManager.reportError(e.getMessage());
+		}
+	}
+
+	/**
+	 * Display the settings menu.
+	 * Stage is already present.
+	 */
+	public static void showSettings() {
+		try {
+			ui.showSettings();
 		} catch (IOException e) {
 			UiManager.reportError("File does not exist: " + e.getMessage());
 		} catch (Exception e) {
@@ -261,7 +290,7 @@ public class MainController {
 	}
 
 	/**
-         * Function exports calendar ICS file to user defined location.
+	 * Function exports calendar ICS file to user defined location.
 	 */
 	public static void exportCalendar() {
 		ICalExport icalExport = new ICalExport();
