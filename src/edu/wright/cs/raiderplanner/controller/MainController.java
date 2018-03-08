@@ -234,6 +234,33 @@ public class MainController {
 	}
 
 	/**
+	 * Display the main menu.
+	 * Stage is already present.
+	 */
+	public static void showMain() {
+		try {
+			ui.showMain();
+		} catch (IOException e) {
+			UiManager.reportError("File does not exist: " + e.getMessage());
+		} catch (Exception e) {
+			UiManager.reportError(e.getMessage());
+		}
+	}
+
+	/**
+	 * Display the settings menu.
+	 * Stage is already present.
+	 */
+	public static void showSettings() {
+		try {
+			ui.showSettings();
+		} catch (IOException e) {
+			UiManager.reportError("File does not exist: " + e.getMessage());
+		} catch (Exception e) {
+			UiManager.reportError(e.getMessage());
+		}
+	}
+	/**
 	 * Handles importing a new file.
 	 *
 	 * @return whether imported successfully.

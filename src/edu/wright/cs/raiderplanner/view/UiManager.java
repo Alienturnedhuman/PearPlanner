@@ -161,6 +161,41 @@ public class UiManager {
 		Parent root = loader.load();
 		mainStage.getScene().setRoot(root);
 	}
+	
+	/**
+	 * Displays the main menu in the current stage.
+	 * Uses the mainStage set forth by the main menu on start up.
+	 *
+	 * @throws Exception when the FXMLLoader is unable to load
+	 */
+	public void showMain() throws Exception {
+		// Load in the .fxml file:
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
+		FXMLLoader loader = new FXMLLoader(mainMenuFxml);
+		loader.setController(UiManager.mc);
+		Parent root = loader.load();
+
+		// Set the scene with the SettingsFxml:
+		mainStage.getScene().setRoot(root);
+		mainStage.setTitle("RaiderPlanner");
+	}
+
+	/**
+	 * Displays the settings menu in the current stage.
+	 * Uses the mainStage set forth by the main menu on start up.
+	 *
+	 * @throws Exception when the FXMLLoader is unable to load
+	 */
+	public void showSettings() throws Exception {
+		// Load in the .fxml file:
+		FXMLLoader loader = new FXMLLoader(settingsFxml);
+		loader.setController(sc);
+		Parent root = loader.load();
+
+		// Set the scene with the SettingsFxml:
+		mainStage.getScene().setRoot(root);
+		mainStage.setTitle("RaiderPlanner-Settings");
+	}
 
 	/**
 	 * Display the 'Add Activity' window.
