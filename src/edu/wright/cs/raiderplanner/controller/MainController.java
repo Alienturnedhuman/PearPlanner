@@ -260,6 +260,7 @@ public class MainController {
 			UiManager.reportError(e.getMessage());
 		}
 	}
+
 	/**
 	 * Handles importing a new file.
 	 *
