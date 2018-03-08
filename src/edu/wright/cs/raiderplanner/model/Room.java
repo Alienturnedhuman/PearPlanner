@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar
+ * Bijan Ghasemi Afshar, Ian Smith
  *
  *
  *
@@ -27,8 +27,9 @@ package edu.wright.cs.raiderplanner.model;
  * Created by Team BRONZE on 4/27/17
  */
 public class Room extends VersionControlEntity {
-	//the value for serialVersionUID is from the value used in Activity.java
-	static final long serialVersionUID = -486727251420646703L;
+	//the value for serialVersionUID is set to 1, since this is the 
+	//first version with a serialVersionUID
+	static final long serialVersionUID = 1L;
 	// private data
 	private Building building = null;
 	private String roomNumber;
@@ -50,7 +51,7 @@ public class Room extends VersionControlEntity {
 	// getters
 	/**
 	 * Default method to return the building this room resides in.
-	 * @return building.
+	 * @return this room's building.
 	 */
 	public Building getBuilding() {
 		return building;
@@ -58,7 +59,7 @@ public class Room extends VersionControlEntity {
 
 	/**
 	 * Default method to return the room number.
-	 * @return roomNumber.
+	 * @return this room's number.
 	 */
 	public String getRoomNumber() {
 		return roomNumber;
@@ -71,13 +72,13 @@ public class Room extends VersionControlEntity {
 	 * If the building is not null, the output message displays
 	 * "name ( room ) located in building" where room represents
 	 * the room number and building represents the building object.
-	 * @return String.
+	 * @return the location of this room.
 	 */
 	public String getLocation() {
 		if (building == null) {
 			return name + " - Unknown Building";
 		} else {
-			return name + "( " + roomNumber + " ) located in " + building.toString();
+			return name + " ( " + roomNumber + " ) located in " + building.toString();
 		}
 	}
 
@@ -87,21 +88,17 @@ public class Room extends VersionControlEntity {
 	 * otherwise the output is formatted as "name ( room ) located in building"
 	 * where room represents the room number and building is the name of the
 	 * building object.
-	 * @return String
+	 * @return
 	 */
 	@Override
 	public String toString() {
-		if (building == null) {
-			return name + " - Unknown Building";
-		} else {
-			return name + "( " + roomNumber + " ) located in " + building.toString();
-		}
+		return this.getLocation();
 	}
 
 	// setters
 	/**
 	 * Sets a value for a building.
-	 * @param newBuilding the new building being assigned a value.
+	 * @param set this room's building to the specified value.
 	 */
 	public void setBuilding(Building newBuilding) {
 		building = newBuilding;
@@ -109,7 +106,7 @@ public class Room extends VersionControlEntity {
 
 	/**
 	 * Sets the value for a roomNumber.
-	 * @param newRoomNumber a String value being assigned to the roomNumber.
+	 * @param set this room's number to the specified value.
 	 */
 	public void setRoomNumber(String newRoomNumber) {
 		roomNumber = newRoomNumber;
@@ -118,7 +115,7 @@ public class Room extends VersionControlEntity {
 	// Constructors:
 	/**
 	 * Constructor to create a room with a building and room number.
-	 * @param constructRoomNumber String value of the number of the room.
+	 * @param constructRoomNumber value of the number of the room.
 	 * @param constructBuilding building in which the room is located.
 	 */
 	public Room(String constructRoomNumber, Building constructBuilding) {
@@ -131,7 +128,7 @@ public class Room extends VersionControlEntity {
 	 * a building. This allows the building to be added at a later time.
 	 * Could be useful if a structure is being built, but has not been
 	 * named, or is being renamed.
-	 * @param constructRoomNumber String value of the number of the room.
+	 * @param constructRoomNumber value of the number of the room.
 	 */
 	public Room(String constructRoomNumber) {
 		setRoomNumber(constructRoomNumber);
