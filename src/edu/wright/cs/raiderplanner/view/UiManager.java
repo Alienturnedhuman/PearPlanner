@@ -161,7 +161,7 @@ public class UiManager {
 		Parent root = loader.load();
 		mainStage.getScene().setRoot(root);
 	}
-	
+
 	/**
 	 * Displays the main menu in the current stage.
 	 * Uses the mainStage set forth by the main menu on start up.
