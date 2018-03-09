@@ -197,8 +197,8 @@ public class MenuController implements Initializable {
 	private final GridPane firstPane = new GridPane();
 	private TextField tfName = new TextField("");
 	private TextField tfHost = new TextField("");
-	private final Label name = new Label("Name:");
-	private final Label host = new Label("Host:");
+	private final Label name = new Label("Your Name:");
+	private final Label host = new Label("Host User's Name:");
 	private final Button submitButton = new Button("Submit");
 	private boolean calendarOpen = false; // Used to monitor status of calendar (open or closed)
 	private boolean chatConnection = true;
