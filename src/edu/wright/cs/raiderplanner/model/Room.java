@@ -21,6 +21,7 @@
 
 package edu.wright.cs.raiderplanner.model;
 
+import edu.wright.cs.raiderplanner.controller.MenuController.Window;
 
 /**
  * PearPlanner/RaiderPlanner.
@@ -132,5 +133,14 @@ public class Room extends VersionControlEntity {
 	 */
 	public Room(String constructRoomNumber) {
 		setRoomNumber(constructRoomNumber);
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.wright.cs.raiderplanner.model.ModelEntity#open
+	 * (edu.wright.cs.raiderplanner.controller.MenuController.Window)
+	 */
+	@Override
+	public void open(Window current) {
+		// TODO Auto-generated method stub
 	}
 }

@@ -42,7 +42,8 @@ import org.testfx.framework.junit.ApplicationTest;
 @Disabled
 public class VersionControlEntityTest extends ApplicationTest {
 
-	VersionControlEntity versionControlEntity = new VersionControlEntity();
+	VersionControlEntity versionControlEntity;
+	ExamEvent examEvent;
 
 	/**
 	 * This test case create a new instance of the VersionControlEntity.
@@ -50,7 +51,8 @@ public class VersionControlEntityTest extends ApplicationTest {
 	 */
 	@BeforeEach
 	public void setUp() throws Exception {
-		versionControlEntity = new VersionControlEntity();
+		Person person = new Person("Mr.", "Greene", true);
+		versionControlEntity = new Exam(4, person, person, person, 4, examEvent);
 	}
 
 

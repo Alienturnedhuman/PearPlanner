@@ -81,7 +81,8 @@ public class Notification implements Serializable {
 	}
 
 	// constructors
-	public Notification(String title, GregorianCalendar dateTime, String details, ModelEntity link) {
+	public Notification(String title, GregorianCalendar dateTime, String details,
+			ModelEntity link) {
 		this.title = title;
 		this.dateTime = dateTime;
 		this.details = new MultilineString(details);
