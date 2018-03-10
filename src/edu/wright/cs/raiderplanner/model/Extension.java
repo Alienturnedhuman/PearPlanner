@@ -45,6 +45,11 @@ public class Extension extends VersionControlEntity {
 		super.replace(receivedVce);
 	}
 
+	/**
+	 * Enumerated values for approval statuses.
+	 * @author unknown
+	 *
+	 */
 	public enum ApprovalStatus {
 		PENDING, APPROVED, DECLINED
 	}
@@ -52,32 +57,59 @@ public class Extension extends VersionControlEntity {
 	// public methods
 
 	// getters
+	/**
+	 * Returns the new deadline for the extension.
+	 * @return the new deadline for the extension.
+	 */
 	public Deadline getNewDeadline() {
 		// initial set up code below - check if this needs updating
 		return newDeadline;
 	}
 
+	/**
+	 * Returns the current extension circumstances as a MultilineString.
+	 * @return current circumstances of the extension.
+	 */
 	public MultilineString getCircumstances() {
 		// initial set up code below - check if this needs updating
 		return circumstances;
 	}
 
+	/**
+	 * Returns the current status of approval for the extension.
+	 * @return the current status of approval for the extension.
+	 */
 	public ApprovalStatus getApprovalStatus() {
 		// initial set up code below - check if this needs updating
 		return approvalStatus;
 	}
 
 	// setters
+	/**
+	 * Sets the current circumstances of the extension.
+	 * @param newCircumstances
+	 * 				The new circumstances to set.
+	 */
 	public void setCircumstances(MultilineString newCircumstances) {
 		// initial set up code below - check if this needs updating
 		circumstances = newCircumstances;
 	}
 
+	/**
+	 * Sets the new deadline for the extension.
+	 * @param newNewDeadline
+	 * 				The new deadline for the extension.
+	 */
 	public void setNewDeadline(Deadline newNewDeadline) {
 		// initial set up code below - check if this needs updating
 		newDeadline = newNewDeadline;
 	}
 
+	/**
+	 * Sets the current extension approval status.
+	 * @param newApprovalStatus
+	 * 				The new extension approval status
+	 */
 	public void setApprovalStatus(ApprovalStatus newApprovalStatus) {
 		// initial set up code below - check if this needs updating
 		approvalStatus = newApprovalStatus;

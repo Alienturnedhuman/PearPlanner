@@ -55,7 +55,7 @@ public class StudyPlannerController {
 	private StudyPlanner planner;
 
 	/**
-	 *
+	 * Returns the current study planner.
 	 * @return SPC's StudyPlanner file, planner.
 	 */
 	public StudyPlanner getPlanner() {
@@ -103,8 +103,8 @@ public class StudyPlannerController {
 	}
 
 	/**
-	 * if valid, this method creates a new StudyProfile and returns true if invalid, it returns
-	 * false
+	 * If valid, this method creates a new StudyProfile and returns true. If invalid, it returns
+	 * false.
 	 *
 	 * @param hubFile
 	 *            HubFile containing the newly loaded in profile
@@ -214,7 +214,7 @@ public class StudyPlannerController {
 	}
 
 	/**
-	 * Removes the given Milestone from this StudyPlanner
+	 * Removes the given Milestone from this StudyPlanner.
 	 *
 	 * @param milestone
 	 *            Milestone to be removed.
@@ -271,7 +271,7 @@ public class StudyPlannerController {
 	}
 
 	/**
-	 * Used when loading from a file
+	 * Used when loading from a file.
 	 *
 	 * @param planner
 	 *            StudyPlanner to be loaded.
