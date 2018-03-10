@@ -21,6 +21,8 @@
 
 package edu.wright.cs.raiderplanner.model;
 
+import edu.wright.cs.raiderplanner.controller.MenuController.Window;
+
 /**
  * PearPlanner/RaiderPlanner.
  * Created by Team BRONZE on 4/27/17
@@ -46,40 +48,78 @@ public class Building extends VersionControlEntity {
 	}
 
 	// getters
+	/**
+	 * Returns the name of the building as a String.
+	 * @return the name of the building
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+     * Returns the code of the building as a String.
+     * @return the code of the building
+     */
 	public String getCode() {
 		return code;
 	}
 
+	/**
+     * Returns the latitude of the building as a double.
+     * @return the latitude of the building
+     */
 	public double getLatitude() {
 		return latitude;
 	}
 
+	/**
+     * Returns the longitude of the building as a double.
+     * @return the longitude of the building
+     */
 	public double getLongitude() {
 		return longitude;
 	}
 
 	// setters
+	/**
+	 * Sets the name of the building.
+	 * @param newName the new name of the building
+	 */
 	public void setName(String newName) {
 		name = newName;
 	}
 
+	/**
+     * Sets the code of the building.
+     * @param newCode the new code of the building
+     */
 	public void setCode(String newCode) {
 		code = newCode;
 	}
 
+	/**
+     * Sets the latitude of the building.
+     * @param newLatitude the new latitude of the building
+     */
 	public void setLatitude(double newLatitude) {
 		latitude = newLatitude;
 	}
 
+	/**
+     * Sets the longitude of the building.
+     * @param newLongitude the new longitude of the building
+     */
 	public void setLongitude(double newLongitude) {
 		longitude = newLongitude;
 	}
 
 	// constructor
+	/**
+	 * Constructor for a building with a code, latitude, and longitude.
+	 * @param ccode the code of the building
+	 * @param clatitude the latitude of the building
+	 * @param clongitude the longitude of the building
+	 */
 	public Building(String ccode, double clatitude, double clongitude) {
 		code = ccode;
 		latitude = clatitude;
@@ -90,6 +130,15 @@ public class Building extends VersionControlEntity {
 	public String toString() {
 		return code + " " + name + " ( " + Double.toString(latitude)
 				+ " , " + Double.toString(longitude) + " )";
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.wright.cs.raiderplanner.model.ModelEntity#open
+	 * (edu.wright.cs.raiderplanner.controller.MenuController.Window)
+	 */
+	@Override
+	public void open(Window current) {
+		// TODO Auto-generated method stub
 	}
 }
 
