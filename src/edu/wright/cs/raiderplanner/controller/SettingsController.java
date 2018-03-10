@@ -30,6 +30,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -44,9 +46,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
+import java.awt.TextField;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -114,6 +119,10 @@ public class SettingsController implements Initializable {
 
 	// chat variables
 	private final BorderPane mainPane = new BorderPane();
+
+	private static FileChooser.ExtensionFilter datExtension =
+			new FileChooser.ExtensionFilter("dat file", "*.dat");
+	private static File savesFolder = new File("./saves");
 
 	/**
 	 * Sets this.current to equal passed variable and calls this.main().
@@ -228,9 +237,64 @@ public class SettingsController implements Initializable {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.welcome.setText("GENERAL");
 		this.topBox.getChildren().add(this.welcome);
 		this.title.setText("General Settings");
+
+		/* Controls for the startup preference */
+		Label launchSetting = new Label("Open on startup:");
+		launchSetting.setUnderline(true);
+		ToggleGroup group = new ToggleGroup();
+		RadioButton rbDefaultStartup = new RadioButton("Open Start Menu\t");
+		rbDefaultStartup.setToggleGroup(group);
+		rbDefaultStartup.setSelected(true);
+		RadioButton rbProfileStartup = new RadioButton("Open User Profile\t");
+		rbProfileStartup.setToggleGroup(group);
+		Label fileName = new Label(" ");
+		fileName.setTextFill(Color.GRAY);
+		Button browseProfiles = new Button("\tBrowse\t");
+		//browseProfiles.setDisable(true);
+		browseProfiles.setOnAction(e -> this.browseForDefault(fileName));
+		VBox launchBox = new VBox(2);
+		launchBox.getChildren().addAll(
+				launchSetting,
+				rbDefaultStartup,
+				rbProfileStartup,
+				browseProfiles,
+				fileName);
+		launchBox.setAlignment(Pos.TOP_CENTER);
+		GridPane.setVgrow(launchBox, Priority.SOMETIMES);
+		GridPane.setHgrow(launchBox, Priority.ALWAYS);
+		GridPane.setColumnSpan(launchBox, GridPane.REMAINING);
+		this.mainContent.add(launchBox, 0, 1);
+
+		/* The Revert and Save Buttons at the bottom */
+		Button revertGeneral = new Button("\tRevert\t");
+		Button saveGeneral = new Button("\tSave\t\t");
+		HBox saveBox = new HBox(2);
+		saveBox.getChildren().addAll(
+				revertGeneral,
+				saveGeneral);
+		saveBox.setAlignment(Pos.BOTTOM_CENTER);
+		GridPane.setVgrow(saveBox, Priority.SOMETIMES);
+		GridPane.setHgrow(saveBox, Priority.ALWAYS);
+		GridPane.setColumnSpan(saveBox, GridPane.REMAINING);
+		this.mainContent.addRow(2, saveBox);
+	}
+
+	/**
+	 * Opens the file browser to find a valid .dat file.
+	 * This selected file will be loaded on startup.
+	 */
+	public void browseForDefault(Label fileName) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Select a planner to load");
+		fileChooser.getExtensionFilters().add(datExtension);
+		if (!savesFolder.exists()) {
+			savesFolder.mkdirs();
+		}
+		fileChooser.setInitialDirectory(savesFolder);
+		File file = fileChooser.showOpenDialog(null);
+		fileName.setText(file.toString());
 	}
 
 	/**
@@ -309,7 +373,7 @@ public class SettingsController implements Initializable {
 		loadAbout(); // Using 'About' as the one to show first.
 
 		// Render ABOUT initially:
-		this.main(Window.ABOUT);
+		this.main(Window.GENERAL);
 	}
 
 	/**
