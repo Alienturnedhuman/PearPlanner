@@ -59,18 +59,21 @@ public class Settings {
 	public void createConfig() {
 		OutputStream output = null;
 		try {
-			System.out.println("Creating config.properties");
+			// Set output stream to config.properties
 			output = new FileOutputStream("config.properties");
-			// Save properties to project root folder
+			// Insert default values into prop
+			this.prop.setProperty("isAccountStartup", String.valueOf(this.isAccountStartup));
+			this.prop.setProperty("filePath", this.accountFilePath);
+			// Save config.properties to project root folder
 			this.prop.store(output, null);
 		} catch (IOException io) {
-			io.printStackTrace();
+			UiManager.reportError("Error, unable to create config.properties.");
 		} finally {
 			if (output != null) {
 				try {
 					output.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					UiManager.reportError("Error, unable to close config.properties.");
 				}
 			}
 		}
@@ -84,29 +87,25 @@ public class Settings {
 	public void loadSettings() {
 		InputStream input = null;
 		try {
-
 			File file = new File("config.properties");
 			if (!file.exists()) {
 				createConfig();
 			}
-
+			// Set input stream to config.properties
 			input = new FileInputStream("config.properties"); // Looks in root directory
-
-			// load the properties file
+			// Load the config.properties file
 			this.prop.load(input);
-
-			// get the property value and assign it to variable
+			// Get the property value and assign it to variable
 			this.isAccountStartup = Boolean.parseBoolean(prop.getProperty("isAccountStartup"));
 			this.accountFilePath = prop.getProperty("filePath");
-
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			UiManager.reportError("Error, unable to load config.properties.");
 		} finally {
 			if (input != null) {
 				try {
 					input.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					UiManager.reportError("Error, unable to close config.properties.");
 				}
 			}
 		}
@@ -123,19 +122,19 @@ public class Settings {
 			// Assign property files
 			this.prop.setProperty("isAccountStartup", String.valueOf(this.isAccountStartup));
 			this.prop.setProperty("filePath", this.accountFilePath);
-			// Determine file to save properties as
+			// Set output stream to config.properties
 			output = new FileOutputStream("config.properties");
 			this.prop.store(output, null); //Stores in root directory
 		} catch (FileNotFoundException e) {
 			UiManager.reportError("Error, config.properties does not exist.");
 		} catch (IOException e) {
-			UiManager.reportError("Error, Invalid file.");
+			UiManager.reportError("Error, unable to save to config.properties.");
 		} finally {
 			if (output != null) {
 				try {
 					output.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					UiManager.reportError("Error, unable to close config.properties.");
 				}
 			}
 		}
