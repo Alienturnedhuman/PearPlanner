@@ -472,7 +472,7 @@ public class SettingsController implements Initializable {
 		loadAbout(); // Using 'About' as the one to show first.
 
 		// Render ABOUT initially:
-		this.main(Window.GENERAL);
+		this.main(Window.ABOUT);
 	}
 
 	/**
