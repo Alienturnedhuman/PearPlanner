@@ -237,7 +237,7 @@ public class SettingsController implements Initializable {
 
 	/**
 	 * Display the general settings.
-	 * TODO - Implement the general settings.
+	 * TODO - Implement more general settings.
 	 */
 	public void loadGeneral() {
 		// Update main pane:
@@ -250,23 +250,21 @@ public class SettingsController implements Initializable {
 		Label launchSetting = new Label("Open on startup:");
 		launchSetting.setUnderline(true);
 		ToggleGroup group = new ToggleGroup();
-		RadioButton rbDefaultStartup = new RadioButton("Open Start Menu\t");
-		rbDefaultStartup.setToggleGroup(group);
-		rbDefaultStartup.setSelected(true);
-		RadioButton rbProfileStartup = new RadioButton("Open User Profile\t");
-		rbProfileStartup.setToggleGroup(group);
-		//rbDefaultStartup.setOnAction(e -> System.out.println("rbDefaultStartup"));
-		//rbProfileStartup.setOnAction(e -> System.out.println("rbProfileStartup"));
+		RadioButton defaultStartup = new RadioButton("Open Start Menu\t");
+		defaultStartup.setToggleGroup(group);
+		defaultStartup.setSelected(true);
+		RadioButton accountStartup = new RadioButton("Open User Profile\t");
+		accountStartup.setToggleGroup(group);
 		Label fileName = new Label("");
 		fileName.setTextFill(Color.GRAY);
-		Button browseProfiles = new Button("\tBrowse\t");
-		//browseProfiles.setDisable(true);
+		Button browseAccounts = new Button("\tBrowse\t");
+		//browseAccounts.setDisable(true);
 		VBox launchBox = new VBox(2);
 		launchBox.getChildren().addAll(
 				launchSetting,
-				rbDefaultStartup,
-				rbProfileStartup,
-				browseProfiles,
+				defaultStartup,
+				accountStartup,
+				browseAccounts,
 				fileName);
 		launchBox.setAlignment(Pos.TOP_CENTER);
 		GridPane.setVgrow(launchBox, Priority.SOMETIMES);
@@ -288,34 +286,34 @@ public class SettingsController implements Initializable {
 		this.mainContent.addRow(2, saveBox);
 
 		fileName.setText(settings.getDefaultFilePath());
-		rbProfileStartup.setSelected(settings.getProfileStartup());
+		accountStartup.setSelected(settings.getAccountStartup());
 
-		rbDefaultStartup.setOnAction(e ->
-				rbDefaultStartupEvent(browseProfiles));
-		rbProfileStartup.setOnAction(e ->
-				rbProfileStartupEvent(browseProfiles));
-		browseProfiles.setOnAction(e ->
-				this.browseForAccount(fileName));
+		defaultStartup.setOnAction(e ->
+				defaultStartupEvent(browseAccounts));
+		accountStartup.setOnAction(e ->
+				accountStartupEvent(browseAccounts));
+		browseAccounts.setOnAction(e ->
+				this.browseAccountsEvent(fileName));
 		saveGeneral.setOnAction(e ->
 				settings.saveSettings());
 		revertGeneral.setOnAction(e ->
-				System.out.println(settings.getProfileStartup()));
+				System.out.println(settings.getAccountStartup()));
 
 	}
 
-	public void rbDefaultStartupEvent (Button browseProfilesTemp) {
-		settings.setProfileStartup(false);
-		browseProfilesTemp.setDisable(true);
+	public void defaultStartupEvent(Button browseAccountsTemp) {
+		settings.setAccountStartup(false);
+		browseAccountsTemp.setDisable(true);
 	}
 
-	public void rbProfileStartupEvent (Button browseProfilesTemp) {
-		settings.setProfileStartup(true);
-		browseProfilesTemp.setDisable(false);
+	public void accountStartupEvent(Button browseAccountsTemp) {
+		settings.setAccountStartup(true);
+		browseAccountsTemp.setDisable(false);
 	}
 	/**
-	 * Opens the file browser to find a valid .dat file.
+	 * Opens the file browser to find a valid dat file.
 	 */
-	public void browseForAccount(Label fileName) {
+	public void browseAccountsEvent(Label fileName) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Select a planner to load");
 		fileChooser.getExtensionFilters().add(datExtension);
@@ -335,7 +333,7 @@ public class SettingsController implements Initializable {
 			filePath = "";
 		}
 		fileName.setText(filePath);
-		settings.setDefaultFilePath(filePath);
+		settings.setAccountFilePath(filePath);
 	}
 
 	/**

@@ -118,15 +118,15 @@ public class Settings {
 		}
 	}
 
-	public void setProfileStartup(boolean isAccountStartupTemp) {
+	public void setAccountStartup(boolean isAccountStartupTemp) {
 		this.isAccountStartup = isAccountStartupTemp;
 	}
 
-	public void setDefaultFilePath(String accountFilePath) {
+	public void setAccountFilePath(String accountFilePath) {
 		this.accountFilePath = accountFilePath;
 	}
 
-	public boolean getProfileStartup() {
+	public boolean getAccountStartup() {
 		return this.isAccountStartup;
 	}
 
