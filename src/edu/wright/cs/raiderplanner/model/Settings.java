@@ -21,6 +21,7 @@
 
 package edu.wright.cs.raiderplanner.model;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,6 +29,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
+
+import edu.wright.cs.raiderplanner.view.UiManager;
 
 /**
  * Class to load and save settings to a
@@ -54,13 +57,12 @@ public class Settings {
 	 * store the setting's properties.
 	 */
 	public void createConfig() {
-		Properties prop = new Properties();
 		OutputStream output = null;
 		try {
+			System.out.println("Creating config.properties");
 			output = new FileOutputStream("config.properties");
 			// Save properties to project root folder
-			prop.store(output, null);
-
+			this.prop.store(output, null);
 		} catch (IOException io) {
 			io.printStackTrace();
 		} finally {
@@ -71,7 +73,6 @@ public class Settings {
 					e.printStackTrace();
 				}
 			}
-
 		}
 	}
 
@@ -84,9 +85,14 @@ public class Settings {
 		InputStream input = null;
 		try {
 
+			File file = new File("config.properties");
+			if (!file.exists()) {
+				createConfig();
+			}
+
 			input = new FileInputStream("config.properties"); // Looks in root directory
 
-			// load a properties file
+			// load the properties file
 			this.prop.load(input);
 
 			// get the property value and assign it to variable
@@ -121,11 +127,9 @@ public class Settings {
 			output = new FileOutputStream("config.properties");
 			this.prop.store(output, null); //Stores in root directory
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			UiManager.reportError("Error, config.properties does not exist.");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			UiManager.reportError("Error, Invalid file.");
 		} finally {
 			if (output != null) {
 				try {
