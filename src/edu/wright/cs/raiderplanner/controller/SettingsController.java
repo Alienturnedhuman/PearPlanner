@@ -21,6 +21,8 @@
 
 package edu.wright.cs.raiderplanner.controller;
 
+import edu.wright.cs.raiderplanner.model.Settings;
+
 import javafx.animation.TranslateTransition;
 
 import javafx.event.ActionEvent;
@@ -50,14 +52,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
-import java.awt.TextField;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import edu.wright.cs.raiderplanner.model.ICalExport;
-import edu.wright.cs.raiderplanner.model.Settings;
-import edu.wright.cs.raiderplanner.view.UiManager;
 
 /**
  * Actions associated with the settings menu and its items.
