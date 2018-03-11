@@ -31,7 +31,9 @@ import java.io.Serializable;
 import java.util.Properties;
 
 /**
- * @author champ
+ * Class to load and save settings to a
+ * config.properties file.
+ * @author Clayton D. Terrill
  *
  */
 public class Settings {
@@ -39,11 +41,19 @@ public class Settings {
 	private String accountFilePath = "";
 	Properties prop = new Properties();
 
+	/**
+	 * Constructor loads the settings from
+	 * the properties file.
+	 */
 	public Settings() {
 		//createConfig();
 		loadSettings();
 	}
 
+	/**
+	 * Creates the config.properties file to
+	 * store the setting's properties.
+	 */
 	public void createConfig() {
 		Properties prop = new Properties();
 		OutputStream output = null;
@@ -66,6 +76,11 @@ public class Settings {
 		}
 	}
 
+	/**
+	 * Loads the settings from the config.properties file
+	 * located within the root folder. The class variables
+	 * are assigned these values.
+	 */
 	public void loadSettings() {
 		InputStream input = null;
 		try {
@@ -92,6 +107,11 @@ public class Settings {
 		}
 	}
 
+	/**
+	 * Saves the settings to the config.properties file
+	 * located within the root folder. Values being saved
+	 * are from the class variables.
+	 */
 	public void saveSettings() {
 		OutputStream output = null;
 		try {
@@ -118,18 +138,34 @@ public class Settings {
 		}
 	}
 
+	/**
+	 * Sets the isAccountStartup variable.
+	 * @param isAccountStartupTemp - Value for isAccountStartup.
+	 */
 	public void setAccountStartup(boolean isAccountStartupTemp) {
 		this.isAccountStartup = isAccountStartupTemp;
 	}
 
-	public void setAccountFilePath(String accountFilePath) {
-		this.accountFilePath = accountFilePath;
+	/**
+	 * Sets the accountFilePath variable.
+	 * @param accountFilePathTemp - Value for accountFilePath.
+	 */
+	public void setAccountFilePath(String accountFilePathTemp) {
+		this.accountFilePath = accountFilePathTemp;
 	}
 
+	/**
+	 * Returns whether the account startup is used or not.
+	 * @return boolean isAccountStartup
+	 */
 	public boolean getAccountStartup() {
 		return this.isAccountStartup;
 	}
 
+	/**
+	 * Returns the account file path.
+	 * @return String accountFilePath
+	 */
 	public String getDefaultFilePath() {
 		return this.accountFilePath;
 	}

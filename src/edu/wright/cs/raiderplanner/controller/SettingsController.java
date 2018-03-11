@@ -76,7 +76,7 @@ public class SettingsController implements Initializable {
 	public enum Window {
 		EMPTY, ABOUT, GENERAL, ACCOUNT, THEME, NOTIFICATIONS
 	}
-	
+
 	private Window current;
 	private boolean isNavOpen;
 
@@ -301,17 +301,31 @@ public class SettingsController implements Initializable {
 
 	}
 
+	/**
+	 * Sets the setting property for account startup to false.
+	 * This means that the startup menu will display first.
+	 * Also, disables the browse button since account path is not needed.
+	 * @param browseAccountsTemp - Button to disable.
+	 */
 	public void defaultStartupEvent(Button browseAccountsTemp) {
 		settings.setAccountStartup(false);
 		browseAccountsTemp.setDisable(true);
 	}
 
+	/**
+	 * Sets the setting property for account startup to true.
+	 * This means that an account will be loaded on startup.
+	 * Also, enables the browse button since account path is needed.
+	 * @param browseAccountsTemp - Button to enable.
+	 */
 	public void accountStartupEvent(Button browseAccountsTemp) {
 		settings.setAccountStartup(true);
 		browseAccountsTemp.setDisable(false);
 	}
+
 	/**
 	 * Opens the file browser to find a valid dat file.
+	 * @param fileName - Label that will display file path.
 	 */
 	public void browseAccountsEvent(Label fileName) {
 		FileChooser fileChooser = new FileChooser();
