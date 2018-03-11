@@ -41,7 +41,7 @@ public class Settings {
 
 	public Settings() {
 		//createConfig();
-		loadConfig();
+		loadSettings();
 	}
 
 	public void createConfig() {
@@ -49,7 +49,7 @@ public class Settings {
 		OutputStream output = null;
 		try {
 			output = new FileOutputStream("config.properties");
-			// save properties to project root folder
+			// Save properties to project root folder
 			prop.store(output, null);
 
 		} catch (IOException io) {
@@ -66,23 +66,18 @@ public class Settings {
 		}
 	}
 
-	public void loadConfig() {
-		Properties prop = new Properties();
+	public void loadSettings() {
 		InputStream input = null;
-
 		try {
 
 			input = new FileInputStream("config.properties"); // Looks in root directory
 
 			// load a properties file
-			prop.load(input);
+			this.prop.load(input);
 
+			// get the property value and assign it to variable
 			this.isAccountStartup = Boolean.parseBoolean(prop.getProperty("isAccountStartup"));
-			this.accountFilePath = prop.getProperty("filePath"); 
-
-			// get the property value and print it out
-			System.out.println(this.isAccountStartup);
-			System.out.println(this.accountFilePath);
+			this.accountFilePath = prop.getProperty("filePath");
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -98,17 +93,28 @@ public class Settings {
 	}
 
 	public void saveSettings() {
+		OutputStream output = null;
 		try {
-			prop.setProperty("isAccountStartup", String.valueOf(this.isAccountStartup));
-			prop.setProperty("filePath", this.accountFilePath);
-			OutputStream output = new FileOutputStream("config.properties");
-			prop.store(output, null); //Stores in root directory
+			// Assign property files
+			this.prop.setProperty("isAccountStartup", String.valueOf(this.isAccountStartup));
+			this.prop.setProperty("filePath", this.accountFilePath);
+			// Determine file to save properties as
+			output = new FileOutputStream("config.properties");
+			this.prop.store(output, null); //Stores in root directory
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (output != null) {
+				try {
+					output.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
