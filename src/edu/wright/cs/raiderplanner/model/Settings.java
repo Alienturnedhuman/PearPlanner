@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018
+ * Copyright (C) 2018 - Clayton D. Terrill
  *
  *
  *
