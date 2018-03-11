@@ -285,20 +285,34 @@ public class SettingsController implements Initializable {
 		GridPane.setColumnSpan(saveBox, GridPane.REMAINING);
 		this.mainContent.addRow(2, saveBox);
 
-		fileName.setText(settings.getDefaultFilePath());
-		accountStartup.setSelected(settings.getAccountStartup());
+		// Load control contents at first
+		fillGeneralControls(fileName, accountStartup, browseAccounts);
 
+		/* Button Events */
 		defaultStartup.setOnAction(e ->
-				defaultStartupEvent(browseAccounts));
+				this.defaultStartupEvent(browseAccounts, fileName));
 		accountStartup.setOnAction(e ->
-				accountStartupEvent(browseAccounts));
+				this.accountStartupEvent(browseAccounts, fileName));
 		browseAccounts.setOnAction(e ->
 				this.browseAccountsEvent(fileName));
 		saveGeneral.setOnAction(e ->
 				settings.saveSettings());
 		revertGeneral.setOnAction(e ->
-				System.out.println(settings.getAccountStartup()));
+				this.fillGeneralControls(fileName, accountStartup, browseAccounts));
+	}
 
+	/**
+	 * Fills the general controls with the saved setting properties.
+	 * @param fileNameTemp - Label containing account file path.
+	 * @param accountStartupTemp - RadioButton to determine if account startup is used or not.
+	 * @param browseAccountsTemp - Button to enable or disable.
+	 */
+	public void fillGeneralControls(Label fileNameTemp,
+			RadioButton accountStartupTemp, Button browseAccountsTemp) {
+		settings.loadSettings();
+		fileNameTemp.setText(settings.getDefaultFilePath());
+		accountStartupTemp.setSelected(settings.getAccountStartup());
+		browseAccountsTemp.setDisable(!accountStartupTemp.isSelected());
 	}
 
 	/**
@@ -306,10 +320,12 @@ public class SettingsController implements Initializable {
 	 * This means that the startup menu will display first.
 	 * Also, disables the browse button since account path is not needed.
 	 * @param browseAccountsTemp - Button to disable.
+	 * @param fileNameTemp - Label to hide.
 	 */
-	public void defaultStartupEvent(Button browseAccountsTemp) {
+	public void defaultStartupEvent(Button browseAccountsTemp, Label fileNameTemp) {
 		settings.setAccountStartup(false);
 		browseAccountsTemp.setDisable(true);
+		fileNameTemp.setText("");
 	}
 
 	/**
@@ -317,10 +333,12 @@ public class SettingsController implements Initializable {
 	 * This means that an account will be loaded on startup.
 	 * Also, enables the browse button since account path is needed.
 	 * @param browseAccountsTemp - Button to enable.
+	 * @param fileNameTemp - Label to display.
 	 */
-	public void accountStartupEvent(Button browseAccountsTemp) {
+	public void accountStartupEvent(Button browseAccountsTemp, Label fileNameTemp) {
 		settings.setAccountStartup(true);
 		browseAccountsTemp.setDisable(false);
+		fileNameTemp.setText(settings.getDefaultFilePath());
 	}
 
 	/**
