@@ -21,6 +21,8 @@
 
 package edu.wright.cs.raiderplanner.model;
 
+import edu.wright.cs.raiderplanner.view.UiManager;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,8 +31,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
-
-import edu.wright.cs.raiderplanner.view.UiManager;
 
 /**
  * Class to load and save settings to a
