@@ -250,7 +250,7 @@ public class SettingsController implements Initializable {
 		RadioButton defaultStartup = new RadioButton("Open Start Menu\t");
 		defaultStartup.setToggleGroup(group);
 		defaultStartup.setSelected(true);
-		RadioButton accountStartup = new RadioButton("Open User Profile\t");
+		RadioButton accountStartup = new RadioButton("Open User Account\t");
 		accountStartup.setToggleGroup(group);
 		Label fileName = new Label("");
 		fileName.setTextFill(Color.GRAY);

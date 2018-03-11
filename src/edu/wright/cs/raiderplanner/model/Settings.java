@@ -119,9 +119,16 @@ public class Settings {
 	public void saveSettings() {
 		OutputStream output = null;
 		try {
-			// Assign property files
-			this.prop.setProperty("isAccountStartup", String.valueOf(this.isAccountStartup));
-			this.prop.setProperty("filePath", this.accountFilePath);
+			File file = new File(this.accountFilePath);
+			if (file.exists()) {
+				// Assign property files
+				this.prop.setProperty("isAccountStartup", String.valueOf(this.isAccountStartup));
+				this.prop.setProperty("filePath", this.accountFilePath);
+			} else {
+				// File did not exists so do not use for startup.
+				this.prop.setProperty("isAccountStartup", "False");
+				this.prop.setProperty("filePath", "");
+			}
 			// Set output stream to config.properties
 			output = new FileOutputStream("config.properties");
 			this.prop.store(output, null); //Stores in root directory
