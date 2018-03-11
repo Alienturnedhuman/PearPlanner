@@ -291,9 +291,11 @@ public class SettingsController implements Initializable {
 
 		/* Button Events */
 		defaultStartup.setOnAction(e ->
-				this.defaultStartupEvent(browseAccounts, fileName, revertButton, saveButton));
+				this.toggleAccountStartup(accountStartup, browseAccounts,
+						fileName, revertButton, saveButton));
 		accountStartup.setOnAction(e ->
-				this.accountStartupEvent(browseAccounts, fileName, revertButton, saveButton));
+				this.toggleAccountStartup(accountStartup, browseAccounts,
+						fileName, revertButton, saveButton));
 		browseAccounts.setOnAction(e ->
 				this.browseAccountsEvent(fileName, revertButton, saveButton));
 		saveButton.setOnAction(e ->
@@ -332,41 +334,31 @@ public class SettingsController implements Initializable {
 	}
 
 	/**
-	 * Sets the setting property for account startup to false.
-	 * This means that the startup menu will display first.
-	 * Also, disables the browse button since account path is not needed.
+	 * Toggles the setting property for account startup.
+	 *
+	 * @param accountStartupTemp - RadioButton that determines startup.
 	 * @param browseAccountsTemp - Button to disable.
 	 * @param fileNameTemp - Label to hide.
+	 * @param revertButtonTemp - Button enabled if original setting changed.
+	 * @param saveButtonTemp - Button enabled if original setting changed.
 	 */
-	public void defaultStartupEvent(Button browseAccountsTemp,
-			Label fileNameTemp, Button revertButtonTemp, Button saveButtonTemp) {
-		settings.setAccountStartup(false);
-		browseAccountsTemp.setDisable(true);
-		fileNameTemp.setVisible(false);
-		revertButtonTemp.setDisable(false);
-		saveButtonTemp.setDisable(false);
-	}
+	public void toggleAccountStartup(RadioButton accountStartupTemp,
+			Button browseAccountsTemp, Label fileNameTemp,
+			Button revertButtonTemp, Button saveButtonTemp) {
 
-	/**
-	 * Sets the setting property for account startup to true.
-	 * This means that an account will be loaded on startup.
-	 * Also, enables the browse button since account path is needed.
-	 * @param browseAccountsTemp - Button to enable.
-	 * @param fileNameTemp - Label to display.
-	 */
-	public void accountStartupEvent(Button browseAccountsTemp,
-			Label fileNameTemp, Button revertButtonTemp, Button saveButtonTemp) {
-		settings.setAccountStartup(true);
-		browseAccountsTemp.setDisable(false);
-		fileNameTemp.setText(settings.getDefaultFilePath());
-		fileNameTemp.setVisible(true);
-		revertButtonTemp.setDisable(false);
-		saveButtonTemp.setDisable(false);
+		settings.setAccountStartup(accountStartupTemp.isSelected());
+		browseAccountsTemp.setDisable(!browseAccountsTemp.isDisabled());
+		fileNameTemp.setVisible(!fileNameTemp.isVisible());
+		revertButtonTemp.setDisable(!revertButtonTemp.isDisabled());
+		saveButtonTemp.setDisable(!saveButtonTemp.isDisabled());
 	}
 
 	/**
 	 * Opens the file browser to find a valid dat file.
-	 * @param fileName - Label that will display file path.
+	 *
+	 * @param fileNameTemp - Label that will display file path.
+	 * @param revertButtonTemp - Button enabled if original setting changed.
+	 * @param saveButtonTemp - Button enabled if original setting changed.
 	 */
 	public void browseAccountsEvent(Label fileNameTemp,
 			Button revertButtonTemp, Button saveButtonTemp) {
