@@ -352,6 +352,13 @@ public class SettingsController implements Initializable {
 		settings.setAccountStartup(accountStartupTemp.isSelected());
 		browseAccountsTemp.setDisable(!browseAccountsTemp.isDisabled());
 		fileNameTemp.setVisible(!fileNameTemp.isVisible());
+
+		// NOTE - the following two statements will only function correctly
+		//			if the revert and save buttons are just used by the
+		//			Account Startup RadioButtons. If other general settings
+		//			are implemented, then these should just be set to true.
+		//			As of now, these statements work well with making sure
+		//			the settings have changed or not.
 		revertButtonTemp.setDisable(!revertButtonTemp.isDisabled());
 		saveButtonTemp.setDisable(!saveButtonTemp.isDisabled());
 	}
