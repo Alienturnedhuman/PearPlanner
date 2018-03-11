@@ -318,6 +318,7 @@ public class SettingsController implements Initializable {
 
 	/**
 	 * Fills the general controls with the saved setting properties.
+	 *
 	 * @param fileNameTemp - Label containing account file path.
 	 * @param accountStartupTemp - RadioButton to determine if account startup is used or not.
 	 * @param browseAccountsTemp - Button to enable or disable.
@@ -327,6 +328,7 @@ public class SettingsController implements Initializable {
 	public void fillGeneralControls(Label fileNameTemp,
 			RadioButton accountStartupTemp, Button browseAccountsTemp,
 			Button revertButtonTemp, Button saveButtonTemp) {
+
 		settings.loadSettings();
 		fileNameTemp.setText(settings.getDefaultFilePath());
 		fileNameTemp.setVisible(settings.getAccountStartup());
@@ -372,6 +374,7 @@ public class SettingsController implements Initializable {
 	 */
 	public void browseAccountsEvent(Label fileNameTemp,
 			Button revertButtonTemp, Button saveButtonTemp) {
+
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Select a planner to load");
 		fileChooser.getExtensionFilters().add(datExtension);
