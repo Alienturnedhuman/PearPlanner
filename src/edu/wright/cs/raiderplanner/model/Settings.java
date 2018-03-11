@@ -39,9 +39,13 @@ import java.util.Properties;
  *
  */
 public class Settings {
+
+	// Object Classes
+	Properties prop = new Properties();
+
+	// Global Parameters with default values
 	private boolean isAccountStartup = false;
 	private String accountFilePath = "";
-	Properties prop = new Properties();
 
 	/**
 	 * Constructor loads the settings from
