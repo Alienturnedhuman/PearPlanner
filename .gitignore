@@ -11,3 +11,4 @@ import_report.txt
 *.ics
 errorlog.txt
 .*.sw*
+config.properties
