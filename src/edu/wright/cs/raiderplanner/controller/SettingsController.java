@@ -307,7 +307,8 @@ public class SettingsController implements Initializable {
 
 	/**
 	 * Saves the settings.
-	 * @return
+	 * @param revertButtonTemp - Button disabled since current settings match saved.
+	 * @param saveButtonTemp - Button disabled since current settings match saved.
 	 */
 	public void saveSettings(Button revertButtonTemp, Button saveButtonTemp) {
 		settings.saveSettings();
@@ -320,6 +321,8 @@ public class SettingsController implements Initializable {
 	 * @param fileNameTemp - Label containing account file path.
 	 * @param accountStartupTemp - RadioButton to determine if account startup is used or not.
 	 * @param browseAccountsTemp - Button to enable or disable.
+	 * @param revertButtonTemp - Button disabled since current settings match saved.
+	 * @param saveButtonTemp - Button disabled since current settings match saved.
 	 */
 	public void fillGeneralControls(Label fileNameTemp,
 			RadioButton accountStartupTemp, Button browseAccountsTemp,
@@ -357,8 +360,8 @@ public class SettingsController implements Initializable {
 	 * Opens the file browser to find a valid dat file.
 	 *
 	 * @param fileNameTemp - Label that will display file path.
-	 * @param revertButtonTemp - Button enabled if original setting changed.
-	 * @param saveButtonTemp - Button enabled if original setting changed.
+	 * @param revertButtonTemp - Button enabled if file path changed.
+	 * @param saveButtonTemp - Button enabled if file path changed.
 	 */
 	public void browseAccountsEvent(Label fileNameTemp,
 			Button revertButtonTemp, Button saveButtonTemp) {
