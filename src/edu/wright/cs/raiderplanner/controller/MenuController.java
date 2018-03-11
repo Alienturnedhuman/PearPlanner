@@ -722,6 +722,8 @@ public class MenuController implements Initializable {
 
 		TableView<StudyProfile> table = new TableView<>();
 		table.setItems(list);
+		//limit the number of rows to allow space for buttons below the table
+		GridPane.setRowSpan(table, 20);
 		table.getColumns().addAll(colList);
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		GridPane.setHgrow(table, Priority.ALWAYS);
@@ -805,6 +807,8 @@ public class MenuController implements Initializable {
 		// Create a table:
 		TableView<Module> table = new TableView<>();
 		table.setItems(list);
+		//limit the number of rows to allow space for buttons below the table
+		GridPane.setRowSpan(table, 20);
 		table.getColumns().addAll(colList);
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		GridPane.setHgrow(table, Priority.ALWAYS);
