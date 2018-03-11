@@ -55,6 +55,10 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import edu.wright.cs.raiderplanner.model.ICalExport;
+import edu.wright.cs.raiderplanner.model.Settings;
+import edu.wright.cs.raiderplanner.view.UiManager;
+
 /**
  * Actions associated with the settings menu and its items.
  * Settings menu implemented in correspondence with Issue #238.
@@ -72,7 +76,7 @@ public class SettingsController implements Initializable {
 	public enum Window {
 		EMPTY, ABOUT, GENERAL, ACCOUNT, THEME, NOTIFICATIONS
 	}
-
+	
 	private Window current;
 	private boolean isNavOpen;
 
@@ -123,6 +127,8 @@ public class SettingsController implements Initializable {
 	private static FileChooser.ExtensionFilter datExtension =
 			new FileChooser.ExtensionFilter("dat file", "*.dat");
 	private static File savesFolder = new File("./saves");
+
+	Settings settings = new Settings();
 
 	/**
 	 * Sets this.current to equal passed variable and calls this.main().
@@ -249,11 +255,12 @@ public class SettingsController implements Initializable {
 		rbDefaultStartup.setSelected(true);
 		RadioButton rbProfileStartup = new RadioButton("Open User Profile\t");
 		rbProfileStartup.setToggleGroup(group);
-		Label fileName = new Label(" ");
+		//rbDefaultStartup.setOnAction(e -> System.out.println("rbDefaultStartup"));
+		//rbProfileStartup.setOnAction(e -> System.out.println("rbProfileStartup"));
+		Label fileName = new Label("");
 		fileName.setTextFill(Color.GRAY);
 		Button browseProfiles = new Button("\tBrowse\t");
 		//browseProfiles.setDisable(true);
-		browseProfiles.setOnAction(e -> this.browseForDefault(fileName));
 		VBox launchBox = new VBox(2);
 		launchBox.getChildren().addAll(
 				launchSetting,
@@ -279,13 +286,36 @@ public class SettingsController implements Initializable {
 		GridPane.setHgrow(saveBox, Priority.ALWAYS);
 		GridPane.setColumnSpan(saveBox, GridPane.REMAINING);
 		this.mainContent.addRow(2, saveBox);
+
+		fileName.setText(settings.getDefaultFilePath());
+		rbProfileStartup.setSelected(settings.getProfileStartup());
+
+		rbDefaultStartup.setOnAction(e ->
+				rbDefaultStartupEvent(browseProfiles));
+		rbProfileStartup.setOnAction(e ->
+				rbProfileStartupEvent(browseProfiles));
+		browseProfiles.setOnAction(e ->
+				this.browseForAccount(fileName));
+		saveGeneral.setOnAction(e ->
+				settings.saveSettings());
+		revertGeneral.setOnAction(e ->
+				System.out.println(settings.getProfileStartup()));
+
 	}
 
+	public void rbDefaultStartupEvent (Button browseProfilesTemp) {
+		settings.setProfileStartup(false);
+		browseProfilesTemp.setDisable(true);
+	}
+
+	public void rbProfileStartupEvent (Button browseProfilesTemp) {
+		settings.setProfileStartup(true);
+		browseProfilesTemp.setDisable(false);
+	}
 	/**
 	 * Opens the file browser to find a valid .dat file.
-	 * This selected file will be loaded on startup.
 	 */
-	public void browseForDefault(Label fileName) {
+	public void browseForAccount(Label fileName) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Select a planner to load");
 		fileChooser.getExtensionFilters().add(datExtension);
@@ -293,8 +323,19 @@ public class SettingsController implements Initializable {
 			savesFolder.mkdirs();
 		}
 		fileChooser.setInitialDirectory(savesFolder);
-		File file = fileChooser.showOpenDialog(null);
-		fileName.setText(file.toString());
+		String filePath = "";
+		try {
+			filePath = fileChooser.showOpenDialog(null).toString();
+		} catch (Exception e) {
+			// TODO - Research why this happens.
+			// fileChooser.showOpenDialog(null) throws a general exception when the user exits
+			// without selecting a file. This is bad coding practice, but it allows the application
+			// to run and just sets the filePath string as empty.
+			// Using a try-catch prevents the application from breaking.
+			filePath = "";
+		}
+		fileName.setText(filePath);
+		settings.setDefaultFilePath(filePath);
 	}
 
 	/**
