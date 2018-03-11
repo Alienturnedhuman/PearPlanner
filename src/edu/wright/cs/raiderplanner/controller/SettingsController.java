@@ -273,12 +273,12 @@ public class SettingsController implements Initializable {
 		this.mainContent.add(launchBox, 0, 1);
 
 		/* The Revert and Save Buttons at the bottom */
-		Button revertGeneral = new Button("\tRevert\t");
-		Button saveGeneral = new Button("\tSave\t\t");
+		Button revertButton = new Button("\tRevert\t");
+		Button saveButton = new Button("\tSave\t\t");
 		HBox saveBox = new HBox(2);
 		saveBox.getChildren().addAll(
-				revertGeneral,
-				saveGeneral);
+				revertButton,
+				saveButton);
 		saveBox.setAlignment(Pos.BOTTOM_CENTER);
 		GridPane.setVgrow(saveBox, Priority.SOMETIMES);
 		GridPane.setHgrow(saveBox, Priority.ALWAYS);
@@ -286,19 +286,31 @@ public class SettingsController implements Initializable {
 		this.mainContent.addRow(2, saveBox);
 
 		// Load control contents at first
-		fillGeneralControls(fileName, accountStartup, browseAccounts);
+		fillGeneralControls(fileName, accountStartup,
+				browseAccounts, revertButton, saveButton);
 
 		/* Button Events */
 		defaultStartup.setOnAction(e ->
-				this.defaultStartupEvent(browseAccounts, fileName));
+				this.defaultStartupEvent(browseAccounts, fileName, revertButton, saveButton));
 		accountStartup.setOnAction(e ->
-				this.accountStartupEvent(browseAccounts, fileName));
+				this.accountStartupEvent(browseAccounts, fileName, revertButton, saveButton));
 		browseAccounts.setOnAction(e ->
-				this.browseAccountsEvent(fileName));
-		saveGeneral.setOnAction(e ->
-				settings.saveSettings());
-		revertGeneral.setOnAction(e ->
-				this.fillGeneralControls(fileName, accountStartup, browseAccounts));
+				this.browseAccountsEvent(fileName, revertButton, saveButton));
+		saveButton.setOnAction(e ->
+				this.saveSettings(revertButton, saveButton));
+		revertButton.setOnAction(e ->
+				this.fillGeneralControls(fileName, accountStartup,
+						browseAccounts, revertButton, saveButton));
+	}
+
+	/**
+	 * Saves the settings.
+	 * @return
+	 */
+	public void saveSettings(Button revertButtonTemp, Button saveButtonTemp) {
+		settings.saveSettings();
+		revertButtonTemp.setDisable(true);
+		saveButtonTemp.setDisable(true);
 	}
 
 	/**
@@ -308,11 +320,15 @@ public class SettingsController implements Initializable {
 	 * @param browseAccountsTemp - Button to enable or disable.
 	 */
 	public void fillGeneralControls(Label fileNameTemp,
-			RadioButton accountStartupTemp, Button browseAccountsTemp) {
+			RadioButton accountStartupTemp, Button browseAccountsTemp,
+			Button revertButtonTemp, Button saveButtonTemp) {
 		settings.loadSettings();
 		fileNameTemp.setText(settings.getDefaultFilePath());
+		fileNameTemp.setVisible(settings.getAccountStartup());
 		accountStartupTemp.setSelected(settings.getAccountStartup());
 		browseAccountsTemp.setDisable(!accountStartupTemp.isSelected());
+		revertButtonTemp.setDisable(true);
+		saveButtonTemp.setDisable(true);
 	}
 
 	/**
@@ -322,10 +338,13 @@ public class SettingsController implements Initializable {
 	 * @param browseAccountsTemp - Button to disable.
 	 * @param fileNameTemp - Label to hide.
 	 */
-	public void defaultStartupEvent(Button browseAccountsTemp, Label fileNameTemp) {
+	public void defaultStartupEvent(Button browseAccountsTemp,
+			Label fileNameTemp, Button revertButtonTemp, Button saveButtonTemp) {
 		settings.setAccountStartup(false);
 		browseAccountsTemp.setDisable(true);
-		fileNameTemp.setText("");
+		fileNameTemp.setVisible(false);
+		revertButtonTemp.setDisable(false);
+		saveButtonTemp.setDisable(false);
 	}
 
 	/**
@@ -335,17 +354,22 @@ public class SettingsController implements Initializable {
 	 * @param browseAccountsTemp - Button to enable.
 	 * @param fileNameTemp - Label to display.
 	 */
-	public void accountStartupEvent(Button browseAccountsTemp, Label fileNameTemp) {
+	public void accountStartupEvent(Button browseAccountsTemp,
+			Label fileNameTemp, Button revertButtonTemp, Button saveButtonTemp) {
 		settings.setAccountStartup(true);
 		browseAccountsTemp.setDisable(false);
 		fileNameTemp.setText(settings.getDefaultFilePath());
+		fileNameTemp.setVisible(true);
+		revertButtonTemp.setDisable(false);
+		saveButtonTemp.setDisable(false);
 	}
 
 	/**
 	 * Opens the file browser to find a valid dat file.
 	 * @param fileName - Label that will display file path.
 	 */
-	public void browseAccountsEvent(Label fileName) {
+	public void browseAccountsEvent(Label fileNameTemp,
+			Button revertButtonTemp, Button saveButtonTemp) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Select a planner to load");
 		fileChooser.getExtensionFilters().add(datExtension);
@@ -356,6 +380,8 @@ public class SettingsController implements Initializable {
 		String filePath = "";
 		try {
 			filePath = fileChooser.showOpenDialog(null).toString();
+			revertButtonTemp.setDisable(false);
+			saveButtonTemp.setDisable(false);
 		} catch (Exception e) {
 			// TODO - Research why this happens.
 			// fileChooser.showOpenDialog(null) throws a general exception when the user exits
@@ -364,7 +390,7 @@ public class SettingsController implements Initializable {
 			// Using a try-catch prevents the application from breaking.
 			filePath = "";
 		}
-		fileName.setText(filePath);
+		fileNameTemp.setText(filePath);
 		settings.setAccountFilePath(filePath);
 	}
 
