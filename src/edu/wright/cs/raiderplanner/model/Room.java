@@ -28,8 +28,6 @@ import edu.wright.cs.raiderplanner.controller.MenuController.Window;
  * Created by Team BRONZE on 4/27/17
  */
 public class Room extends VersionControlEntity {
-	//the value for serialVersionUID is set to 1, since this is the 
-	//first version with a serialVersionUID
 	static final long serialVersionUID = 1L;
 	// private data
 	private Building building = null;
@@ -67,12 +65,13 @@ public class Room extends VersionControlEntity {
 	}
 
 	/**
-	 * Method to output the name and room number of a person.
-	 * If the room does not have a building number, the
-	 * output message displays "name - Unknown Building".
-	 * If the building is not null, the output message displays
-	 * "name ( room ) located in building" where room represents
-	 * the room number and building represents the building object.
+	 * Method to output the name and room number of a person. If the room does
+	 * not have a building number, the output message displays &quot;name
+	 * &minus; Unknown Building&quot;. If the building is not null, the output
+	 * message displays &quot;name ( room ) located in building&quot;, where
+	 * {@code room} represents the room number and {@code building} represents
+	 * the building object.
+	 *
 	 * @return the location of this room.
 	 */
 	public String getLocation() {
@@ -84,12 +83,7 @@ public class Room extends VersionControlEntity {
 	}
 
 	/**
-	 * Overrides the toString method for the Room object.
-	 * If the building is null, the output is "name - Unknown Building",
-	 * otherwise the output is formatted as "name ( room ) located in building"
-	 * where room represents the room number and building is the name of the
-	 * building object.
-	 * @return
+	 * Delegates to {@code getLocation()}.
 	 */
 	@Override
 	public String toString() {
@@ -99,7 +93,8 @@ public class Room extends VersionControlEntity {
 	// setters
 	/**
 	 * Sets a value for a building.
-	 * @param set this room's building to the specified value.
+	 *
+	 * @param newBuilding set this room's building to the specified value
 	 */
 	public void setBuilding(Building newBuilding) {
 		building = newBuilding;
@@ -107,7 +102,8 @@ public class Room extends VersionControlEntity {
 
 	/**
 	 * Sets the value for a roomNumber.
-	 * @param set this room's number to the specified value.
+	 *
+	 * @param newRoomNumber set this room's number to the specified value
 	 */
 	public void setRoomNumber(String newRoomNumber) {
 		roomNumber = newRoomNumber;
@@ -116,8 +112,9 @@ public class Room extends VersionControlEntity {
 	// Constructors:
 	/**
 	 * Constructor to create a room with a building and room number.
-	 * @param constructRoomNumber value of the number of the room.
-	 * @param constructBuilding building in which the room is located.
+	 *
+	 * @param constructRoomNumber value of the number of the room
+	 * @param constructBuilding building in which the room is located
 	 */
 	public Room(String constructRoomNumber, Building constructBuilding) {
 		setRoomNumber(constructRoomNumber);
@@ -125,11 +122,12 @@ public class Room extends VersionControlEntity {
 	}
 
 	/**
-	 * Constructor that creates a room with a room number, but without
-	 * a building. This allows the building to be added at a later time.
-	 * Could be useful if a structure is being built, but has not been
-	 * named, or is being renamed.
-	 * @param constructRoomNumber value of the number of the room.
+	 * Constructor that creates a room with a room number, but without a
+	 * building. This allows the building to be added at a later time. Could be
+	 * useful if a structure is being built, but has not been named, or is being
+	 * renamed.
+	 *
+	 * @param constructRoomNumber value of the number of the room
 	 */
 	public Room(String constructRoomNumber) {
 		setRoomNumber(constructRoomNumber);
@@ -143,4 +141,5 @@ public class Room extends VersionControlEntity {
 	public void open(Window current) {
 		// TODO Auto-generated method stub
 	}
+
 }
