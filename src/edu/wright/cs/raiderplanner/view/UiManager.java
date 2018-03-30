@@ -2,7 +2,7 @@
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar
  *
- *
+ * Copyright (C) 2018 - Clayton D. Terrill
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ import edu.wright.cs.raiderplanner.controller.ActivityController;
 import edu.wright.cs.raiderplanner.controller.MenuController;
 import edu.wright.cs.raiderplanner.controller.MilestoneController;
 import edu.wright.cs.raiderplanner.controller.RequirementController;
+import edu.wright.cs.raiderplanner.controller.SettingsController;
 import edu.wright.cs.raiderplanner.controller.StartupController;
 import edu.wright.cs.raiderplanner.controller.StudyProfileController;
 import edu.wright.cs.raiderplanner.controller.TaskController;
@@ -65,6 +66,7 @@ import java.util.Calendar;
 public class UiManager {
 	private static Stage mainStage = new Stage();
 	private static MenuController mc = new MenuController();
+	private static SettingsController sc = new SettingsController();
 	private static File savesFolder = new File("./saves");
 	private static Image icon = new Image("file:icon.png");
 	private static FileChooser.ExtensionFilter datExtension =
@@ -91,6 +93,8 @@ public class UiManager {
 			"/edu/wright/cs/raiderplanner/view/StudyProfile.fxml");
 	private URL startupFxml = getClass().getResource(
 			"/edu/wright/cs/raiderplanner/view/Startup.fxml");
+	private URL settingsFxml = getClass().getResource(
+			"/edu/wright/cs/raiderplanner/view/Settings.fxml");
 
 	/**
 	 * Displays a 'Create Account' window and handles the creation of a new Account object.
@@ -145,6 +149,41 @@ public class UiManager {
 		mainStage.setMinWidth(333);
 		mainStage.getIcons().add(icon);
 		mainStage.showAndWait();
+	}
+
+	/**
+	 * Displays the main menu in the current stage.
+	 * Uses the mainStage set forth by the main menu on start up.
+	 *
+	 * @throws Exception when the FXMLLoader is unable to load
+	 */
+	public void showMain() throws Exception {
+		// Load in the .fxml file:
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
+		FXMLLoader loader = new FXMLLoader(mainMenuFxml);
+		loader.setController(UiManager.mc);
+		Parent root = loader.load();
+
+		// Set the scene with the SettingsFxml:
+		mainStage.getScene().setRoot(root);
+		mainStage.setTitle("RaiderPlanner");
+	}
+
+	/**
+	 * Displays the settings menu in the current stage.
+	 * Uses the mainStage set forth by the main menu on start up.
+	 *
+	 * @throws Exception when the FXMLLoader is unable to load
+	 */
+	public void showSettings() throws Exception {
+		// Load in the .fxml file:
+		FXMLLoader loader = new FXMLLoader(settingsFxml);
+		loader.setController(sc);
+		Parent root = loader.load();
+
+		// Set the scene with the SettingsFxml:
+		mainStage.getScene().setRoot(root);
+		mainStage.setTitle("RaiderPlanner-Settings");
 	}
 
 	/**
@@ -534,8 +573,8 @@ public class UiManager {
 	 */
 	public static void reportError(String displayMessage,String errorMessage) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter("errorlog.txt", true));) {
-			//Time stamp code from
-			//https://stackoverflow.com/questions/5175728/how-to-get-the-current-date-time-in-java
+			// Time stamp code from
+			// https://stackoverflow.com/questions/5175728/how-to-get-the-current-date-time-in-java
 			String timeStamp = new SimpleDateFormat(
 					"yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 			bw.write(timeStamp + " " +  displayMessage + " " + errorMessage);
