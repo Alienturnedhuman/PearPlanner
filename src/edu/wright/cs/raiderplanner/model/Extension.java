@@ -45,39 +45,66 @@ public class Extension extends VersionControlEntity {
 		super.replace(receivedVce);
 	}
 
+	/**
+	 * Enum for Approval Status.
+	 * @author N/A
+	 *
+	 */
 	public enum ApprovalStatus {
 		PENDING, APPROVED, DECLINED
 	}
 
 	// public methods
 
-	// getters
+	/**
+	 * Getter for Deadline.
+	 * @return newDeadline value
+	 */
 	public Deadline getNewDeadline() {
 		// initial set up code below - check if this needs updating
 		return newDeadline;
 	}
 
+	/**
+	 * Getter for Circumstances MultilineString.
+	 * @return MultilineString value
+	 */
 	public MultilineString getCircumstances() {
 		// initial set up code below - check if this needs updating
 		return circumstances;
 	}
 
+	/**
+	 * Getter for Approval Status.
+	 * @return ApprovalStatus value
+	 */
 	public ApprovalStatus getApprovalStatus() {
 		// initial set up code below - check if this needs updating
 		return approvalStatus;
 	}
 
-	// setters
+	/**
+	 * Setter for the Circumstances.
+	 * @param newCircumstances : given values is of type MultilineString
+	 */
 	public void setCircumstances(MultilineString newCircumstances) {
 		// initial set up code below - check if this needs updating
 		circumstances = newCircumstances;
 	}
 
+	/**
+	 * Setter for the new Deadline.
+	 * @param newNewDeadline : given values is of type Deadline
+	 */
 	public void setNewDeadline(Deadline newNewDeadline) {
 		// initial set up code below - check if this needs updating
 		newDeadline = newNewDeadline;
 	}
 
+	/**
+	 * Set's the Approval status.
+	 * @param newApprovalStatus : given value is of type ApprovalStatus
+	 */
 	public void setApprovalStatus(ApprovalStatus newApprovalStatus) {
 		// initial set up code below - check if this needs updating
 		approvalStatus = newApprovalStatus;

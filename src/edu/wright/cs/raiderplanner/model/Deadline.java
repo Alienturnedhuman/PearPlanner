@@ -28,7 +28,10 @@ import edu.wright.cs.raiderplanner.controller.MenuController.Window;
  * Created by Team BRONZE on 4/27/17
  */
 public class Deadline extends Event {
-	// maybe we can get rid of this
+	/**
+	 * Class Constructors.
+	 * @param cdate : given is of type String
+	 */
 	public Deadline(String cdate) {
 		super(cdate);
 	}

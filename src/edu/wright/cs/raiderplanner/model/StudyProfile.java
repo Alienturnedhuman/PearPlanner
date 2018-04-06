@@ -33,7 +33,6 @@ import java.util.ArrayList;
  * Created by Team BRONZE on 4/27/17
  */
 public class StudyProfile extends VersionControlEntity {
-	// private data
 	private ArrayList<Module> modules;
 	private ArrayList<Milestone> milestones;
 	private ArrayList<ExtensionApplication> extensions;
@@ -42,21 +41,30 @@ public class StudyProfile extends VersionControlEntity {
 	private int semesterNo;
 	private boolean current;
 
-	// public methods
-
-	// getters:
+	/**
+	 * This method gets the Modules.
+	 * @return returns an array of type Module
+	 */
 	public Module[] getModules() {
 		Module[] module = new Module[this.modules.size()];
 		module = this.modules.toArray(module);
 		return module;
 	}
 
+	/**
+	 * This method gets a list of Milestones.
+	 * @return returns an array of type Milestones
+	 */
 	public Milestone[] getMilestones() {
 		Milestone[] milestone = new Milestone[this.milestones.size()];
 		milestone = this.milestones.toArray(milestone);
 		return milestone;
 	}
 
+	/**
+	 * This method gets a list of  Application Extension.
+	 * @return returns an array of type Application Extension
+	 */
 	public ExtensionApplication[] getExtensions() {
 		ExtensionApplication[] extension = new ExtensionApplication[this.extensions.size()];
 		extension = this.extensions.toArray(extension);
@@ -72,7 +80,11 @@ public class StudyProfile extends VersionControlEntity {
 		return calendar;
 	}
 
-
+	/**
+	 * This method gets a ArrayList of Tasks.
+	 * These Task themselves can contain a list of their own Task.
+	 * @return  an ArrayList of tasks
+	 */
 	public ArrayList<Task> getTasks() {
 		ArrayList<Task> tasks = new ArrayList<>();
 		this.modules.forEach(e -> e.getAssignments().forEach(ee -> tasks.addAll(ee.getTasks())));
@@ -91,7 +103,7 @@ public class StudyProfile extends VersionControlEntity {
 	/**
 	 * Set/unset this StudyProfile as the current profile of the StudyPlanner.
 	 *
-	 * @param current.
+	 * @param current value to be set
 	 */
 	public void setCurrent(boolean current) {
 		this.current = current;
@@ -102,22 +114,31 @@ public class StudyProfile extends VersionControlEntity {
 	 *
 	 * @param event Event to be added.
 	 */
-	public void addEventToCalendar(Event event)
-	{
-		if (!calendar.contains(event))
-		{
+	public void addEventToCalendar(Event event) {
+		if (!calendar.contains(event)) {
 			calendar.add(event);
 		}
 	}
 
+	/**
+	 * Get Name.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Get Year.
+	 * @return
+	 */
 	public int getYear() {
 		return year;
 	}
 
+	/**
+	 * Get Semester Number.
+	 * @return
+	 */
 	public int getSemesterNo() {
 		return semesterNo;
 	}
@@ -163,7 +184,10 @@ public class StudyProfile extends VersionControlEntity {
 		}
 	}
 
-	// constructors
+	/**
+	 * Class Constructors.
+	 * @param initialHubFile Initial file
+	 */
 	public StudyProfile(HubFile initialHubFile) {
 		this.milestones = new ArrayList<>();
 

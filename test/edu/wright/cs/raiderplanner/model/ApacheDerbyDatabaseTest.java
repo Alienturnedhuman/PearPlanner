@@ -1,6 +1,7 @@
-package edu.wright.cs.raiderplanner.model;
 /*
  * Copyright (C) 2017 - Nathaniel Crossman
+ *
+ *
  *
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,13 +18,15 @@ package edu.wright.cs.raiderplanner.model;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
+package edu.wright.cs.raiderplanner.model;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.derby.jdbc.EmbeddedDriver;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Connection;

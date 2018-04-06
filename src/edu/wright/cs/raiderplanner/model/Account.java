@@ -52,7 +52,7 @@ public class Account implements Serializable {
 
 	/**
 	 * sets Student Details.
-	 * @param newStudentDetails.
+	 * @param newStudentDetails : given value is Person type
 	 */
 	public void setStudentDetails(Person newStudentDetails) {
 		studentDetails = newStudentDetails;
@@ -60,7 +60,7 @@ public class Account implements Serializable {
 
 	/**
 	 * sets Student Number.
-	 * @param newStudentNumber.
+	 * @param newStudentNumber : given value is String
 	 */
 	public void setStudentNumber(String newStudentNumber) {
 		studentNumber = newStudentNumber;
@@ -68,8 +68,8 @@ public class Account implements Serializable {
 
 	/**
 	 * Constructor.
-	 * @param studentDetails.
-	 * @param studentNumber.
+	 * @param studentDetails : given value is Person type
+	 * @param studentNumber  given value is String type
 	 */
 	public Account(Person studentDetails, String studentNumber) {
 		this.studentDetails = studentDetails;
