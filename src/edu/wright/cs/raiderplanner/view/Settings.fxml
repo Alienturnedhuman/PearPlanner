@@ -13,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" stylesheets="@../content/stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ToolBar minHeight="56.0" style="-fx-background-color: #026937" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ToolBar fx:id="toolBar" minHeight="56.0" style="-fx-background-color: #026937" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
                 <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/menu.png');" styleClass="button-image" />
                 <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
