@@ -138,6 +138,7 @@ public class SettingsController implements Initializable {
 	public void main(Window wind) {
 		this.current = wind;
 		this.main();
+		this.applyTheme();
 	}
 
 	/**
@@ -173,6 +174,14 @@ public class SettingsController implements Initializable {
 		default:
 			break;
 		}
+	}
+
+	/**
+	 * Apply the users theme to the fxml.
+	 */
+	public void applyTheme() {
+		this.toolBar.setStyle("-fx-background-color: #"
+				+ settings.getToolBarColor());
 	}
 
 	/**
@@ -460,21 +469,21 @@ public class SettingsController implements Initializable {
 
 		/* Button Events */
 		colorPicker.setOnAction(e ->
-				setToolBarColor(colorPicker));
+				setToolBarColor(Integer.toHexString(colorPicker.getValue().hashCode())));
 		saveButton.setOnAction(e ->
 				this.saveSettings(revertButton, saveButton));
-		revertButton.setOnAction(e -> System.out.println("Revert Button not implemented yet."));
-				//this.fillGeneralControls(fileName, accountStartup,
-						//browseAccounts, revertButton, saveButton));
+		revertButton.setOnAction(e ->
+				this.applyTheme());
 	}
 
 	/**
-	 * Saves the general settings.
-	 * @param colorPicker - Button disabled since current settings match saved.
+	 * Sets the color to be saved for the ToolBar.
+	 * @param colorPicker - String with the color represented by hex.
 	 */
-	public void setToolBarColor(ColorPicker colorPicker) {
+	public void setToolBarColor(String colorPicker) {
 		this.toolBar.setStyle("-fx-background-color: #"
-				+ Integer.toHexString(colorPicker.getValue().hashCode()));
+				+ colorPicker);
+		settings.setToolBarColor(colorPicker);
 	}
 
 
