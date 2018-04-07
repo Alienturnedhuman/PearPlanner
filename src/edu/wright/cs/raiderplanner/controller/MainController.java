@@ -110,9 +110,11 @@ public class MainController {
 					} else {
 						ui.showStartup();
 					}
-				} catch (Exception e) {
-					// File does not exist!
-					System.out.println("File Missing");
+				} catch (FileNotFoundException e) {
+					UiManager.reportError("Error, File does not exist.");
+					ui.showStartup();
+				} catch (IOException e) {
+					UiManager.reportError("Error, Invalid file.");
 					ui.showStartup();
 				}
 			} else {
