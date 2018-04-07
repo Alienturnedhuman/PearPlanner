@@ -476,18 +476,20 @@ public class SettingsController implements Initializable {
 
 		/* Button Events */
 		colorPicker.setOnAction(e ->
-				setToolBarColor(Integer.toHexString(colorPicker.getValue().hashCode())
-						, revertButton, saveButton));
+				setToolBarColor(Integer.toHexString(colorPicker.getValue().hashCode()),
+						revertButton, saveButton));
 		saveButton.setOnAction(e ->
 				this.saveSettings(revertButton, saveButton));
 		revertButton.setOnAction(e ->
 				fillThemeControls(colorPicker, revertButton, saveButton));
+
+		//TODO - Fix Bug that doesn't update MenuController fxml when switching back.
 	}
 
 	/**
-	 * Fills the general controls with the saved setting properties.
+	 * Fills the theme controls with the saved setting properties.
 	 *
-	 * @param colorPicker - Label containing account file path.
+	 * @param colorPicker - ColorPicker control containing the chosen color.
 	 * @param revertButtonTemp - Button disabled since current settings match saved.
 	 * @param saveButtonTemp - Button disabled since current settings match saved.
 	 */
