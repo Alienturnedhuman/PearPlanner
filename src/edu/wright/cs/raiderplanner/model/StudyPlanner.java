@@ -60,7 +60,6 @@ public class StudyPlanner implements Serializable {
 	/**
 	 * @return a String array of studyProfile names.
 	 */
-
 	public String[] getListOfStudyProfileNames() {
 		int num = -1;
 		String[] studyProfileSize = new String[studyProfiles.size()];

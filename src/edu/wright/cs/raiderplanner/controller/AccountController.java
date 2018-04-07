@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar
+ * Bijan Ghasemi Afshar, Alena Brand
  *
  *
  *
@@ -26,13 +26,17 @@ import edu.wright.cs.raiderplanner.model.Person;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -51,6 +55,8 @@ public class AccountController implements Initializable {
 	@FXML private CheckBox famLast;
 	@FXML private Button submit;
 	@FXML private GridPane pane;
+	@FXML private Alert invalidInputAlert = new Alert(AlertType.ERROR);
+	@FXML private Alert emptyNameAlert = new Alert(AlertType.CONFIRMATION);
 
 	private Account account;
 	private boolean success = false;
@@ -74,85 +80,124 @@ public class AccountController implements Initializable {
 	}
 
 	/**
-	 * Handle changes to the text fields.
+	 * Determines if the user has entered a valid salutation and sets the style
+	 * accordingly.
+	 *
+	 * @return true if the user entered a valid salutation.
 	 */
-	public void handleChange() {
-		if (Person.validSalutation(this.salutation.getText().trim())
-				&& Person.validName(this.fullName.getText().trim())
-				&& (this.email.getText().trim().isEmpty()
-						|| Person.validEmail(this.email.getText().trim()))
-				&& !accountNo.getText().trim().isEmpty()) {
-			this.submit.setDisable(false);
-		}
-	}
-
-	/**
-	 * Validate data in the Salutation field.
-	 */
-	public void validateSalutation() {
+	public boolean isValidSalutation() {
 		if (!Person.validSalutation(this.salutation.getText().trim())) {
-			this.salutation.setStyle("-fx-text-box-border:red;");
-			this.submit.setDisable(true);
+			return false;
 		} else {
 			this.salutation.setStyle("");
-			this.handleChange();
+			return true;
 		}
 	}
 
 	/**
-	 * Validate data in the Name field.
+	 * Determines if the user has entered a valid name and sets the style
+	 * accordingly.
+	 *
+	 * @return True if the user entered a valid name.
 	 */
-	public void validateName() {
+	public boolean isValidName() {
 		if (!Person.validName(this.fullName.getText().trim())) {
-			this.fullName.setStyle("-fx-text-box-border:red;");
-			this.submit.setDisable(true);
+			return false;
 		} else {
 			this.fullName.setStyle("");
-			this.handleChange();
+			return true;
 		}
 	}
 
 	/**
-	 * Validate data in the Email field.
+	 * Determines if the user has entered a valid email and sets the style
+	 * accordingly.
+	 *
+	 * @return True if the user entered a valid email.
 	 */
-	public void validateEmail() {
+	public boolean isValidEmail() {
 		if (this.email.getText().trim().isEmpty()
 				|| Person.validEmail(this.email.getText().trim())) {
 			this.email.setStyle("");
-			this.handleChange();
+			return true;
 		} else {
-			this.email.setStyle("-fx-text-box-border:red;");
-			this.submit.setDisable(true);
+			return false;
 		}
 	}
 
 	/**
-	 * Validate data in the Account Number field.
+	 * Determines if the user has entered a valid account number and sets the
+	 * style accordingly.
+	 *
+	 * @return True if the user entered a valid account number.
 	 */
-	public void validateNumber() {
-		if (accountNo.getText().trim().isEmpty()) {
-			this.submit.setDisable(true);
+	public boolean isValidAcctNumber() {
+		if (accountNo.getText().trim().length() == 7) {
+			if (accountNo.getText().trim().charAt(0) != 'w') {
+				return false;
+			} else {
+				for (int i = 1; i < 4; ++i) {
+					if (!Character.isDigit(accountNo.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+				for (int i = 4; i < 7; ++i) {
+					if (!Character.isLetter(accountNo.getText().trim().charAt(i))) {
+						return false;
+					} else if (!Character.isLowerCase(accountNo.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+			}
 		} else {
-			this.submit.setStyle("-fx-text-box-border:red;");
-			this.handleChange();
+			return false;
 		}
+		return true;
 	}
 
 	/**
-	 * Submit the form and create a new Account.
+	 * Handles the actions taken when the user tries to submit a new account.
+	 * The appropriate warnings and errors are displayed if the user enters
+	 * incorrect information. If a user enters an invalid input, they will be
+	 * taken back to the page, to change fields.
 	 */
 	public void handleSubmit() {
-		Person pers = new Person(this.salutation.getText().trim(),
-				this.fullName.getText().trim(), this.famLast.isSelected());
-
-		if (!this.email.getText().trim().isEmpty()) {
-			pers.setEmail(this.email.getText().trim());
+		String invalidMessage = "";
+		boolean validSuccess = true;
+		boolean validName = true;
+		if (!isValidAcctNumber()) {
+			invalidMessage += "Please enter a valid W Number\n";
+			validSuccess = false;
 		}
-
-		this.account = new Account(pers, this.accountNo.getText().trim());
-		this.success = true;
-		Stage stage = (Stage) this.submit.getScene().getWindow();
-		stage.close();
+		if (!isValidName()) {
+			invalidMessage += "Please enter a valid name\n";
+			validSuccess = false;
+		}
+		if (!isValidEmail()) {
+			invalidMessage += "Please enter a valid email\n";
+			validSuccess = false;
+		}
+		if (!isValidSalutation()) {
+			invalidMessage += "Please enter a valid salutation\n";
+			validSuccess = false;
+		}
+		if (this.fullName.getText().trim().isEmpty()) {
+			if (!this.handleEmptyName()) {
+				validName = false;
+			}
+		}
+		if (validSuccess && validName) {
+			Person pers = new Person(this.salutation.getText().trim(),
+					this.fullName.getText().trim(), this.famLast.isSelected());
+			this.account = new Account(pers, this.accountNo.getText().trim());
+			this.success = true;
+			Stage stage = (Stage) this.submit.getScene().getWindow();
+			stage.close();
+		} else if (!validSuccess) {
+			invalidInputAlert.setHeaderText("Invalid Entries");
+			invalidInputAlert.setContentText(invalidMessage);
+			invalidInputAlert.showAndWait();
+		}
 	}
 
 	/**
@@ -161,6 +206,22 @@ public class AccountController implements Initializable {
 	public void handleQuit() {
 		Stage stage = (Stage) this.submit.getScene().getWindow();
 		stage.close();
+	}
+
+	/**
+	 * Displays dialog and handles appropriate user choices if the full name
+	 * field is empty.
+	 *
+	 * @return True if the user selects Okay
+	 */
+	public boolean handleEmptyName() {
+		emptyNameAlert.setContentText("Are you sure you don't want to use your name?");
+		Optional<ButtonType> result = emptyNameAlert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

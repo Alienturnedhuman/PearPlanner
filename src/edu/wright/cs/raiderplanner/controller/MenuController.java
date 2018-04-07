@@ -194,6 +194,7 @@ public class MenuController implements Initializable {
 
 	// chat variables
 	private static final BorderPane mainPane = new BorderPane();
+	private static final BorderPane mainPane = new BorderPane();
 	private final GridPane firstPane = new GridPane();
 	private TextField tfName = new TextField("");
 	private TextField tfHost = new TextField("");
@@ -203,6 +204,10 @@ public class MenuController implements Initializable {
 	private boolean calendarOpen = false; // Used to monitor status of calendar (open or closed)
 	private boolean chatConnection = true;
 	private Alert chatConnectionStatus = new Alert(AlertType.ERROR);
+	private boolean calendarOpen = false; // Used to monitor status of calendar (open or closed)
+	private boolean chatConnection = true;
+	private Alert chatConnectionStatus = new Alert(AlertType.ERROR);
+
 	private String userName;
 	private String hostName;
 	private int portNumber = 1111;
@@ -720,6 +725,8 @@ public class MenuController implements Initializable {
 
 		TableView<StudyProfile> table = new TableView<>();
 		table.setItems(list);
+		//limit the number of rows to allow space for buttons below the table
+		GridPane.setRowSpan(table, 20);
 		table.getColumns().addAll(colList);
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		GridPane.setHgrow(table, Priority.ALWAYS);
@@ -803,6 +810,8 @@ public class MenuController implements Initializable {
 		// Create a table:
 		TableView<Module> table = new TableView<>();
 		table.setItems(list);
+		//limit the number of rows to allow space for buttons below the table
+		GridPane.setRowSpan(table, 20);
 		table.getColumns().addAll(colList);
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		GridPane.setHgrow(table, Priority.ALWAYS);
