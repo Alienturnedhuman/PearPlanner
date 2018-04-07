@@ -203,7 +203,6 @@ public class MenuController implements Initializable {
 	private boolean calendarOpen = false; // Used to monitor status of calendar (open or closed)
 	private boolean chatConnection = true;
 	private Alert chatConnectionStatus = new Alert(AlertType.ERROR);
-
 	private String userName;
 	private String hostName;
 	private int portNumber = 1111;

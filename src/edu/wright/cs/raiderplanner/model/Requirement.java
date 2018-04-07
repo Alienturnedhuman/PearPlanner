@@ -94,7 +94,7 @@ public class Requirement extends ModelEntity {
 	}
 
 	/**
-	 * Returns a double value representing the progress of this Requirement
+	 * Returns a double value representing the progress of this Requirement.
 	 *
 	 * @return value between 0.0 and 0.1
 	 */
@@ -114,7 +114,8 @@ public class Requirement extends ModelEntity {
 	 * Change the initial quantity. This will update the progress of this
 	 * Requirement to reflect the change.
 	 *
-	 * @param initialQuantity.
+	 * @param initialQuantity
+	 * 				The initial quantity to set.
 	 */
 	public void setInitialQuantity(int initialQuantity) {
 		if (this.initialQuantity == this.remainingQuantity) {
@@ -125,6 +126,10 @@ public class Requirement extends ModelEntity {
 		}
 	}
 
+	/**
+	 * Sets the type of quantity.
+	 * @param quantityType The quantity type to set.
+	 */
 	public void setQuantityType(String quantityType) {
 		this.quantityType = QuantityType.get(quantityType);
 	}
@@ -216,6 +221,19 @@ public class Requirement extends ModelEntity {
 	}
 
 	// Constructors:
+	/**
+	 * Constructor for the requirement containing the name, details, time, quantity, and type.
+	 * @param name
+	 * 			The name of the requirement to set.
+	 * @param details
+	 * 			The details of the requirement to set.
+	 * @param time
+	 * 			The time of the requirement to set.
+	 * @param quantity
+	 * 			The quantity of the requirement to set.
+	 * @param type
+	 * 			The type of the requirement to set.
+	 */
 	public Requirement(String name, String details, double time, int quantity, String type) {
 		super(name, details);
 		this.estimatedTimeInHours = time;

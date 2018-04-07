@@ -62,6 +62,7 @@ public class XmlController {
 		private boolean booleanValue = false;
 
 		/**
+		 * Returns the boolean value parsed from the XML.
 		 * @return The boolean value that was parsed from the XML.
 		 */
 		public boolean getBoolean() {
@@ -73,6 +74,7 @@ public class XmlController {
 		}
 
 		/**
+		 * Returns the string value that was parsed from the XML.
 		 * @return The String value that was parsed from the XML.
 		 */
 		public String getString() {
@@ -84,6 +86,7 @@ public class XmlController {
 		}
 
 		/**
+		 * Returns the MultilineString value that was parsed from the XML.
 		 * @return The MultilineString value that was parsed from the XML.
 		 */
 		public MultilineString getMultilineString() {
@@ -95,6 +98,7 @@ public class XmlController {
 		}
 
 		/**
+		 * Returns the integer value that was parsed from the XML.
 		 * @return The int value that was parsed from the XML.
 		 */
 		public int getInt() {
@@ -106,6 +110,7 @@ public class XmlController {
 		}
 
 		/**
+		 * Returns the double value that was parsed from the XML.
 		 * @return The double value that was parsed from the XML.
 		 */
 		public double getDouble() {
@@ -117,6 +122,7 @@ public class XmlController {
 		}
 
 		/**
+		 * Returns the NodeList value that was parsed from the XML.
 		 * @return The NodeList value that was parsed from the XML.
 		 */
 		public NodeList getNodeList() {
