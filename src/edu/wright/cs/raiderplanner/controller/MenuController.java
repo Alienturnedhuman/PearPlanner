@@ -34,6 +34,7 @@ import edu.wright.cs.raiderplanner.model.Module;
 import edu.wright.cs.raiderplanner.model.Notification;
 import edu.wright.cs.raiderplanner.model.QuantityType;
 import edu.wright.cs.raiderplanner.model.Requirement;
+import edu.wright.cs.raiderplanner.model.Settings;
 import edu.wright.cs.raiderplanner.model.StudyProfile;
 import edu.wright.cs.raiderplanner.model.Task;
 import edu.wright.cs.raiderplanner.model.TimetableEvent;
@@ -68,6 +69,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
@@ -190,6 +192,9 @@ public class MenuController implements Initializable {
 	@FXML
 	private HBox exportCalBox;
 
+	@FXML
+	private ToolBar toolBar;
+
 	// chat variables
 	private final BorderPane mainPane = new BorderPane();
 	private final GridPane firstPane = new GridPane();
@@ -209,12 +214,15 @@ public class MenuController implements Initializable {
 	private String hostName;
 	private int portNumber = 1111;
 
+	Settings settings = new Settings();
+
 	/**
 	 * Sets this.current to equal passed variable and calls this.main().
 	 */
 	public void main(Window wind) {
 		this.current = wind;
 		this.main();
+		this.applyTheme();
 	}
 
 	/**
@@ -230,8 +238,8 @@ public class MenuController implements Initializable {
 			closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
 			closeNot.play();
 		}
-		initialLoad = false;
 
+		initialLoad = false;
 		this.updateNotifications();
 		this.updateMenu();
 		exportCalBox.managedProperty().bind(exportCalBox.visibleProperty());
@@ -277,6 +285,14 @@ public class MenuController implements Initializable {
 		}
 		// Based on user choice of menu option "Export Calendar" button is shown/hidden
 		exportCalBox.setVisible(calendarOpen);
+	}
+
+	/**
+	 * Apply the users theme to the fxml.
+	 */
+	public void applyTheme() {
+		this.toolBar.setStyle("-fx-background-color: #"
+				+ settings.getToolBarColor());
 	}
 
 	/**
