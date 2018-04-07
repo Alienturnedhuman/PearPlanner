@@ -191,7 +191,7 @@ public class MenuController implements Initializable {
 	private HBox exportCalBox;
 
 	// chat variables
-	private final BorderPane mainPane = new BorderPane();
+	private static final BorderPane mainPane = new BorderPane();
 	private final GridPane firstPane = new GridPane();
 	private final GridPane userMessagePane = new GridPane();
 	private final HBox spacingBox = new HBox();
@@ -202,8 +202,9 @@ public class MenuController implements Initializable {
 	private final Label name = new Label("Name:");
 	private final Label host = new Label("Host:");
 	private final Button submitButton = new Button("Submit");
-	private final Button sendButton = new Button("Send");
 	private boolean calendarOpen = false; // Used to monitor status of calendar (open or closed)
+	private boolean chatConnection = true;
+	private Alert chatConnectionStatus = new Alert(AlertType.ERROR);
 
 	private String userName;
 	private String hostName;
