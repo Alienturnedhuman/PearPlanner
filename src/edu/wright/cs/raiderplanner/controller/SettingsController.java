@@ -58,6 +58,8 @@ import javafx.util.Duration;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Actions associated with the settings menu and its items.
@@ -180,8 +182,14 @@ public class SettingsController implements Initializable {
 	 * Apply the users theme to the fxml.
 	 */
 	public void applyTheme() {
-		this.toolBar.setStyle("-fx-background-color: #"
-				+ settings.getToolBarColor());
+		// Pattern that designates a hex value
+		Pattern colorPattern = Pattern.compile("([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})");
+
+		// Make sure that a hex value representing a color exists
+		if (colorPattern.matcher(settings.getToolBarColor()).matches()) {
+			this.toolBar.setStyle("-fx-background-color: #"
+					+ settings.getToolBarColor());
+		}
 	}
 
 	/**
@@ -464,26 +472,55 @@ public class SettingsController implements Initializable {
 		this.mainContent.addRow(2, saveBox);
 
 		// Load control contents at first
-		//fillGeneralControls(fileName, accountStartup,
-				//browseAccounts, revertButton, saveButton);
+		fillThemeControls(colorPicker, revertButton, saveButton);
 
 		/* Button Events */
 		colorPicker.setOnAction(e ->
-				setToolBarColor(Integer.toHexString(colorPicker.getValue().hashCode())));
+				setToolBarColor(Integer.toHexString(colorPicker.getValue().hashCode())
+						, revertButton, saveButton));
 		saveButton.setOnAction(e ->
 				this.saveSettings(revertButton, saveButton));
 		revertButton.setOnAction(e ->
-				this.applyTheme());
+				fillThemeControls(colorPicker, revertButton, saveButton));
+	}
+
+	/**
+	 * Fills the general controls with the saved setting properties.
+	 *
+	 * @param colorPicker - Label containing account file path.
+	 * @param revertButtonTemp - Button disabled since current settings match saved.
+	 * @param saveButtonTemp - Button disabled since current settings match saved.
+	 */
+	public void fillThemeControls(ColorPicker colorPicker,
+			Button revertButtonTemp, Button saveButtonTemp) {
+
+		settings.loadSettings();
+
+		// Pattern that designates a hex value
+		Pattern colorPattern = Pattern.compile("([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})");
+
+		// Make sure that a hex value representing a color exists
+		if (colorPattern.matcher(settings.getToolBarColor()).matches()) {
+			colorPicker.setValue(Color.web(settings.getToolBarColor()));
+		}
+
+		revertButtonTemp.setDisable(true);
+		saveButtonTemp.setDisable(true);
 	}
 
 	/**
 	 * Sets the color to be saved for the ToolBar.
 	 * @param colorPicker - String with the color represented by hex.
 	 */
-	public void setToolBarColor(String colorPicker) {
+	public void setToolBarColor(String colorPicker,
+			Button revertButtonTemp, Button saveButtonTemp) {
+
 		this.toolBar.setStyle("-fx-background-color: #"
 				+ colorPicker);
 		settings.setToolBarColor(colorPicker);
+
+		revertButtonTemp.setDisable(false);
+		saveButtonTemp.setDisable(false);
 	}
 
 
