@@ -46,6 +46,7 @@ public class Settings {
 	// Global Parameters with default values
 	private boolean isAccountStartup = false;
 	private String accountFilePath = "";
+	private String toolBarColor = "026937";
 
 	/**
 	 * Constructor loads the settings from
@@ -68,6 +69,7 @@ public class Settings {
 			// Insert default values into prop
 			this.prop.setProperty("isAccountStartup", String.valueOf(this.isAccountStartup));
 			this.prop.setProperty("filePath", this.accountFilePath);
+			this.prop.setProperty("toolBarColor", this.toolBarColor);
 			// Save config.properties to project root folder
 			this.prop.store(output, null);
 		} catch (IOException io) {
@@ -102,6 +104,7 @@ public class Settings {
 			// Get the property value and assign it to variable
 			this.isAccountStartup = Boolean.parseBoolean(prop.getProperty("isAccountStartup"));
 			this.accountFilePath = prop.getProperty("filePath");
+			this.toolBarColor = prop.getProperty("toolBarColor");
 		} catch (IOException ex) {
 			UiManager.reportError("Error, unable to load config.properties.");
 		} finally {
@@ -128,10 +131,12 @@ public class Settings {
 				// Assign property files
 				this.prop.setProperty("isAccountStartup", String.valueOf(this.isAccountStartup));
 				this.prop.setProperty("filePath", this.accountFilePath);
+				this.prop.setProperty("toolBarColor", this.toolBarColor);
 			} else {
 				// File did not exists so do not use for startup.
 				this.prop.setProperty("isAccountStartup", "False");
 				this.prop.setProperty("filePath", "");
+				this.prop.setProperty("toolBarColor", "026937");
 			}
 			// Set output stream to config.properties
 			output = new FileOutputStream("config.properties");
@@ -168,6 +173,14 @@ public class Settings {
 	}
 
 	/**
+	 * Sets the toolBarColor variable.
+	 * @param toolBarColorTemp - Value for toolBarColor.
+	 */
+	public void setToolBarColor(String toolBarColorTemp) {
+		this.toolBarColor = toolBarColorTemp;
+	}
+
+	/**
 	 * Returns whether the account startup is used or not.
 	 * @return boolean isAccountStartup
 	 */
@@ -182,4 +195,13 @@ public class Settings {
 	public String getDefaultFilePath() {
 		return this.accountFilePath;
 	}
+
+	/**
+	 * Returns whether the color of the ToolBar.
+	 * @return String toolBarColor
+	 */
+	public String getToolBarColor() {
+		return this.toolBarColor;
+	}
+
 }
