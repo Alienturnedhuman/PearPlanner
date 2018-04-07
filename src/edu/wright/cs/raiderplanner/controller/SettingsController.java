@@ -31,9 +31,11 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.ToolBar;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -47,6 +49,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
@@ -116,7 +119,9 @@ public class SettingsController implements Initializable {
 	private GridPane mainContent;
 	@FXML
 	private HBox topBox;
+
 	@FXML
+	private ToolBar toolBar;
 
 	// chat variables
 	private final BorderPane mainPane = new BorderPane();
@@ -417,9 +422,33 @@ public class SettingsController implements Initializable {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.welcome.setText("THEME");
 		this.topBox.getChildren().add(this.welcome);
 		this.title.setText("Theme Settings");
+
+		/* Controls for the startup preference */
+		Label toolBarColorLabel = new Label("Toolbar Color:");
+		toolBarColorLabel.setUnderline(true);
+		ColorPicker colorPicker = new ColorPicker();
+		colorPicker.setValue(Color.RED);
+		//browseAccounts.setDisable(true);
+		VBox launchBox = new VBox(2);
+		launchBox.getChildren().addAll(
+				toolBarColorLabel,
+				colorPicker);
+		launchBox.setAlignment(Pos.TOP_CENTER);
+		GridPane.setVgrow(launchBox, Priority.SOMETIMES);
+		GridPane.setHgrow(launchBox, Priority.ALWAYS);
+		GridPane.setColumnSpan(launchBox, GridPane.REMAINING);
+		this.mainContent.add(launchBox, 0, 1);
+
+		// Load control contents at first
+		//fillGeneralControls(fileName, accountStartup,
+				//browseAccounts, revertButton, saveButton);
+
+		/* Button Events */
+		colorPicker.setOnAction(e ->
+				this.toolBar.setStyle("-fx-background-color: #"
+						+ Integer.toHexString(colorPicker.getValue().hashCode())));
 	}
 
 	/**
