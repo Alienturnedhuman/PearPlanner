@@ -46,7 +46,7 @@ public class Exam extends Assignment {
 	}
 
 	/**
-	 * Get's the Resit value.
+	 * This Getter method gets the Resit value.
 	 * @return
 	 */
 	public Exam getResit() {

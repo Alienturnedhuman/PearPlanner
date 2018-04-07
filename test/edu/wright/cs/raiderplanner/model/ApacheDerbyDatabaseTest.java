@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 - Nathaniel Crossman
+ * Copyright (C) 2018 - Nathaniel Crossman
  *
  *
  *

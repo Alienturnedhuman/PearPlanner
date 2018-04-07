@@ -148,7 +148,7 @@ public class MenuController implements Initializable {
 	private DropShadow moduleHoverShadow = new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
 	private InnerShadow modulePressedShadow = new InnerShadow(screenAverage * 0.017, 0, 0,
 			Color.BLACK);
-	private Stage  stage = null;
+	private Stage stage = null;
 	// Labels:
 	private Label welcome;
 	@FXML
