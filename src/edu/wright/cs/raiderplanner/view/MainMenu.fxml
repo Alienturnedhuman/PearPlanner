@@ -12,7 +12,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" stylesheets="@../content/stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ToolBar minHeight="56.0" style="-fx-background-color: #026937" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ToolBar fx:id="toolBar" minHeight="56.0" style="-fx-background-color: #026937" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
                 <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/menu.png');" styleClass="button-image" />
                 <HBox prefWidth="146" />
@@ -23,13 +23,13 @@
                 </HBox>
                 <HBox prefWidth="13" />
 
-                <Button fx:id="showNotification" prefHeight="35.0" prefWidth="39.0" style="-fx-background-color: #026937" styleClass="button-image" />
+                <Button fx:id="showNotification" prefHeight="35.0" prefWidth="39.0" styleClass="button-image" />
                 <HBox prefWidth="8" />
 
-                <Button fx:id="calendar" prefHeight="33.0" prefWidth="33.0" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/calendar.png'); -fx-background-color: #026937" styleClass="button-image" />
+                <Button fx:id="calendar" prefHeight="33.0" prefWidth="33.0" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/calendar.png');" styleClass="button-image" />
                 <HBox prefWidth="11" />
 
-                <Button fx:id="addActivity" onAction="#addActivity" prefHeight="33" prefWidth="33" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/addactivity_small.png'); -fx-background-color: #026937" styleClass="button-image" />
+                <Button fx:id="addActivity" onAction="#addActivity" prefHeight="33" prefWidth="33" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/addactivity_small.png');" styleClass="button-image" />
                 <HBox prefWidth="9" />
 
             </items>
