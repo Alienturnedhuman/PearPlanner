@@ -123,6 +123,8 @@ public class MainController {
 				MainController.setSpc(study);
 				plannerFile = MainController.ui.savePlannerFileDialog();
 				loadFile(plannerFile);
+				/*This is cating a general exception because the
+				 * createAccount method throws a general exception*/
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
