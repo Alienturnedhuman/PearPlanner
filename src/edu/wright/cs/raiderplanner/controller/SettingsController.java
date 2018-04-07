@@ -308,7 +308,7 @@ public class SettingsController implements Initializable {
 	}
 
 	/**
-	 * Saves the settings.
+	 * Saves the general settings.
 	 * @param revertButtonTemp - Button disabled since current settings match saved.
 	 * @param saveButtonTemp - Button disabled since current settings match saved.
 	 */
@@ -441,15 +441,42 @@ public class SettingsController implements Initializable {
 		GridPane.setColumnSpan(launchBox, GridPane.REMAINING);
 		this.mainContent.add(launchBox, 0, 1);
 
+		/* The Revert and Save Buttons at the bottom */
+		Button revertButton = new Button("\tRevert\t");
+		Button saveButton = new Button("\tSave\t\t");
+		HBox saveBox = new HBox(2);
+		saveBox.getChildren().addAll(
+				revertButton,
+				saveButton);
+		saveBox.setAlignment(Pos.BOTTOM_CENTER);
+		GridPane.setVgrow(saveBox, Priority.SOMETIMES);
+		GridPane.setHgrow(saveBox, Priority.ALWAYS);
+		GridPane.setColumnSpan(saveBox, GridPane.REMAINING);
+		this.mainContent.addRow(2, saveBox);
+
 		// Load control contents at first
 		//fillGeneralControls(fileName, accountStartup,
 				//browseAccounts, revertButton, saveButton);
 
 		/* Button Events */
 		colorPicker.setOnAction(e ->
-				this.toolBar.setStyle("-fx-background-color: #"
-						+ Integer.toHexString(colorPicker.getValue().hashCode())));
+				setToolBarColor(colorPicker));
+		saveButton.setOnAction(e ->
+				this.saveSettings(revertButton, saveButton));
+		revertButton.setOnAction(e -> System.out.println("Revert Button not implemented yet."));
+				//this.fillGeneralControls(fileName, accountStartup,
+						//browseAccounts, revertButton, saveButton));
 	}
+
+	/**
+	 * Saves the general settings.
+	 * @param colorPicker - Button disabled since current settings match saved.
+	 */
+	public void setToolBarColor(ColorPicker colorPicker) {
+		this.toolBar.setStyle("-fx-background-color: #"
+				+ Integer.toHexString(colorPicker.getValue().hashCode()));
+	}
+
 
 	/**
 	 * Display the notification settings.
