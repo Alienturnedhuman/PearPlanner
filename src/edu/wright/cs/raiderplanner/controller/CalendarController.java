@@ -21,10 +21,6 @@
 
 package edu.wright.cs.raiderplanner.controller;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-
 import edu.wright.cs.raiderplanner.model.Deadline;
 import edu.wright.cs.raiderplanner.model.Event;
 import edu.wright.cs.raiderplanner.model.ExamEvent;
@@ -40,6 +36,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import jfxtras.scene.control.agenda.Agenda;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+
 
 /**
  * This is a class to handle the code for the calendar feature.
