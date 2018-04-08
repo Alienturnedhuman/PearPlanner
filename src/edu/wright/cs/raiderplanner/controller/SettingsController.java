@@ -200,7 +200,7 @@ public class SettingsController implements Initializable {
 	 * Display the About menu.
 	 */
 	public void loadAbout() {
-		// set ToolTips
+		// Clear main content and change title
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("About");
@@ -266,7 +266,6 @@ public class SettingsController implements Initializable {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.topBox.getChildren().add(this.welcome);
 		this.title.setText("General Settings");
 
 		/* Controls for the startup preference */
@@ -443,7 +442,6 @@ public class SettingsController implements Initializable {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.topBox.getChildren().add(this.welcome);
 		this.title.setText("Theme Settings");
 
 		/* Controls for the ToolBar color preference */
