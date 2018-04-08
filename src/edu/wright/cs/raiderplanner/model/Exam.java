@@ -54,7 +54,7 @@ public class Exam extends Assignment {
 	}
 
 	/**
-	 * Get's the Exam event time slot.
+	 * This Getter method gets the Exam event time slot.
 	 * @return
 	 */
 	public ExamEvent getTimeSlot() {
