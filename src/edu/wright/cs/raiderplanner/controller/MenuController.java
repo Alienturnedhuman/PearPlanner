@@ -293,12 +293,16 @@ public class MenuController implements Initializable {
 	 */
 	public void applyTheme() {
 		settings.loadSettings();
-		// Pattern that designates a hex value
-		Pattern colorPattern = Pattern.compile("([0-9a-f]{8})");
 		// Make sure that a hex value representing a color exists
-		if (colorPattern.matcher(settings.getToolBarColor()).matches()) {
-			this.toolBar.setStyle("-fx-background-color: #"
-					+ settings.getToolBarColor());
+		if (settings.isColorHex(settings.getToolBarColor())) {
+			this.toolBar.setStyle(""
+					+ "-fx-background-color: #" + settings.getToolBarColor());
+		}
+		if (settings.isColorHex(settings.getToolBarTextColor())) {
+			this.title.setStyle(""
+					+ "-fx-font-family: Ariel"
+					+ "; -fx-text-fill: #" + settings.getToolBarTextColor()
+					+ "; -fx-font-size: 2.5em;");
 		}
 	}
 

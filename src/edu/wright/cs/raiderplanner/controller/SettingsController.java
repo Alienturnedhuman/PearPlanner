@@ -183,14 +183,17 @@ public class SettingsController implements Initializable {
 	 */
 	public void applyTheme() {
 		settings.loadSettings();
-		// Pattern that designates a hex value
-		Pattern colorPattern = Pattern.compile("([0-9a-f]{8})");
 		// Make sure that a hex value representing a color exists
-		if (colorPattern.matcher(settings.getToolBarColor()).matches()) {
-			this.toolBar.setStyle("-fx-background-color: #"
-					+ settings.getToolBarColor());
+		if (settings.isColorHex(settings.getToolBarColor())) {
+			this.toolBar.setStyle(""
+					+ "-fx-background-color: #" + settings.getToolBarColor());
 		}
-		
+		if (settings.isColorHex(settings.getToolBarTextColor())) {
+			this.title.setStyle(""
+					+ "-fx-font-family: Ariel"
+					+ "; -fx-text-fill: #" + settings.getToolBarTextColor()
+					+ "; -fx-font-size: 2.5em;");
+		}
 	}
 
 	/**
@@ -443,21 +446,33 @@ public class SettingsController implements Initializable {
 		this.topBox.getChildren().add(this.welcome);
 		this.title.setText("Theme Settings");
 
-		/* Controls for the startup preference */
-		Label toolBarColorLabel = new Label("Toolbar Color:");
-		toolBarColorLabel.setUnderline(true);
-		ColorPicker colorPicker = new ColorPicker();
-		colorPicker.setValue(Color.RED);
-		//browseAccounts.setDisable(true);
-		VBox launchBox = new VBox(2);
-		launchBox.getChildren().addAll(
-				toolBarColorLabel,
-				colorPicker);
-		launchBox.setAlignment(Pos.TOP_CENTER);
-		GridPane.setVgrow(launchBox, Priority.SOMETIMES);
-		GridPane.setHgrow(launchBox, Priority.ALWAYS);
-		GridPane.setColumnSpan(launchBox, GridPane.REMAINING);
-		this.mainContent.add(launchBox, 0, 1);
+		/* Controls for the ToolBar color preference */
+		Label toolBarLabel = new Label("Toolbar Color:");
+		toolBarLabel.setUnderline(true);
+		ColorPicker toolBarPicker = new ColorPicker();
+		toolBarPicker.setValue(Color.RED);
+		VBox toolBarBox = new VBox(2);
+		toolBarBox.getChildren().addAll(
+				toolBarLabel,
+				toolBarPicker);
+		toolBarBox.setAlignment(Pos.TOP_CENTER);
+
+		/* Controls for the ToolBar color preference */
+		Label toolBarTextLabel = new Label("Toolbar Text Color:");
+		toolBarTextLabel.setUnderline(true);
+		ColorPicker toolBarTextPicker = new ColorPicker();
+		toolBarTextPicker.setValue(Color.RED);
+		VBox toolBarTextBox = new VBox(2);
+		toolBarTextBox.getChildren().addAll(
+				toolBarTextLabel,
+				toolBarTextPicker);
+		toolBarTextBox.setAlignment(Pos.TOP_CENTER);
+
+		GridPane.setVgrow(toolBarTextBox, Priority.SOMETIMES);
+		GridPane.setHgrow(toolBarTextBox, Priority.ALWAYS);
+		GridPane.setColumnSpan(toolBarTextBox, GridPane.REMAINING);
+		this.mainContent.add(toolBarBox, 1, 1);
+		this.mainContent.add(toolBarTextBox, 1, 2);
 
 		/* The Revert and Save Buttons at the bottom */
 		Button revertButton = new Button("\tRevert\t");
@@ -470,19 +485,22 @@ public class SettingsController implements Initializable {
 		GridPane.setVgrow(saveBox, Priority.SOMETIMES);
 		GridPane.setHgrow(saveBox, Priority.ALWAYS);
 		GridPane.setColumnSpan(saveBox, GridPane.REMAINING);
-		this.mainContent.addRow(2, saveBox);
+		this.mainContent.addRow(3, saveBox);
 
 		// Load control contents at first
-		fillThemeControls(colorPicker, revertButton, saveButton);
+		fillThemeControls(toolBarPicker, toolBarTextPicker, revertButton, saveButton);
 
 		/* Button Events */
-		colorPicker.setOnAction(e ->
-				setToolBarColor(String.format("%08x", colorPicker.getValue().hashCode()),
+		toolBarPicker.setOnAction(e ->
+				setToolBarColor(String.format("%08x", toolBarPicker.getValue().hashCode()),
+						revertButton, saveButton));
+		toolBarTextPicker.setOnAction(e ->
+				setToolBarText(String.format("%08x", toolBarTextPicker.getValue().hashCode()),
 						revertButton, saveButton));
 		saveButton.setOnAction(e ->
 				this.saveSettings(revertButton, saveButton));
 		revertButton.setOnAction(e ->
-				fillThemeControls(colorPicker, revertButton, saveButton));
+				fillThemeControls(toolBarPicker, toolBarTextPicker, revertButton, saveButton));
 
 		//TODO - Fix Bug that doesn't update MenuController fxml when switching back.
 	}
@@ -490,21 +508,22 @@ public class SettingsController implements Initializable {
 	/**
 	 * Fills the theme controls with the saved setting properties.
 	 *
-	 * @param colorPicker - ColorPicker control containing the chosen color.
+	 * @param toolBarPicker - ColorPicker control containing the chosen color.
 	 * @param revertButtonTemp - Button disabled since current settings match saved.
 	 * @param saveButtonTemp - Button disabled since current settings match saved.
 	 */
-	public void fillThemeControls(ColorPicker colorPicker,
+	public void fillThemeControls(ColorPicker toolBarPicker, ColorPicker toolBarTextPicker,
 			Button revertButtonTemp, Button saveButtonTemp) {
 
 		settings.loadSettings();
-
-		// Pattern that designates a hex value
-		Pattern colorPattern = Pattern.compile("([0-9a-f]{8})");
+		this.applyTheme(); // For revertButton action
 
 		// Make sure that a hex value representing a color exists
-		if (colorPattern.matcher(settings.getToolBarColor()).matches()) {
-			colorPicker.setValue(Color.web(settings.getToolBarColor()));
+		if (settings.isColorHex(settings.getToolBarColor())) {
+			toolBarPicker.setValue(Color.web(settings.getToolBarColor()));
+		}
+		if (settings.isColorHex(settings.getToolBarTextColor())) {
+			toolBarTextPicker.setValue(Color.web(settings.getToolBarTextColor()));
 		}
 
 		revertButtonTemp.setDisable(true);
@@ -513,23 +532,42 @@ public class SettingsController implements Initializable {
 
 	/**
 	 * Sets the color to be saved for the ToolBar.
-	 * @param colorPicker - String with the color represented by hex.
+	 * @param toolBarPicker - String with the color represented by hex.
 	 */
-	public void setToolBarColor(String colorPicker,
+	public void setToolBarColor(String toolBarPicker,
 			Button revertButtonTemp, Button saveButtonTemp) {
 
-		Pattern colorPattern = Pattern.compile("([0-9a-f]{8})");
 		// Make sure that a hex value representing a color exists
-		if (colorPattern.matcher(colorPicker).matches()) {
+		if (settings.isColorHex(toolBarPicker)) {
 			this.toolBar.setStyle("-fx-background-color: #"
-					+ colorPicker);
-			settings.setToolBarColor(colorPicker);
+					+ toolBarPicker);
+			settings.setToolBarColor(toolBarPicker);
 		}
 
 		revertButtonTemp.setDisable(false);
 		saveButtonTemp.setDisable(false);
 	}
 
+	/**
+	 * Sets the color to be saved for the ToolBar Text.
+	 * TODO - Implement font and font size customization.
+	 * @param toolBarTextPicker - String with the color represented by hex.
+	 */
+	public void setToolBarText(String toolBarTextPicker,
+			Button revertButtonTemp, Button saveButtonTemp) {
+
+		// Make sure that a hex value representing a color exists
+		if (settings.isColorHex(toolBarTextPicker)) {
+			this.title.setStyle(""
+					+ "-fx-font-family: Ariel"
+					+ "; -fx-text-fill: #" + toolBarTextPicker
+					+ "; -fx-font-size: 2.5em;");
+			settings.setToolBarTextColor(toolBarTextPicker);
+		}
+
+		revertButtonTemp.setDisable(false);
+		saveButtonTemp.setDisable(false);
+	}
 
 	/**
 	 * Display the notification settings.
