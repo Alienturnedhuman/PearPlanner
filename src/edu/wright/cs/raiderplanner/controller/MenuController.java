@@ -955,6 +955,7 @@ public class MenuController implements Initializable {
 		ChatController.createUserMessagePane();
 		ChatController.createMainPane();
 		ChatController.sendButtonAction(userName);
+	}
 
 	/**
 	 * This will load all the textfields,labels and buttons for the window that prompts the user for
@@ -979,13 +980,13 @@ public class MenuController implements Initializable {
 			if (chatConnection) {
 				if ((tfName.getText() != null && !(tfName.getText().equals("")))
 					&& (tfHost.getText() != null && !(tfHost.getText().equals("")))) {
-				userName = tfName.getText();
-				hostName = tfHost.getText();
-				loadChatWindow();
-			  } else {
-				UiManager.displayError("Username and host are required.");
-			  } 
-      } else {
+					userName = tfName.getText();
+					hostName = tfHost.getText();
+					loadChatWindow();
+				} else {
+					UiManager.displayError("Username and host are required.");
+				}
+			} else {
 				chatConnectionStatus.setContentText("Chat" + " connection unsuccessful.");
 				chatConnectionStatus.showAndWait();
 			}
