@@ -115,7 +115,7 @@ public class Requirement extends ModelEntity {
 	 * Requirement to reflect the change.
 	 *
 	 * @param initialQuantity
-	 * 				The initial quantity to set.
+	 * 				The initial quantity to set of type int.
 	 */
 	public void setInitialQuantity(int initialQuantity) {
 		if (this.initialQuantity == this.remainingQuantity) {
@@ -127,8 +127,8 @@ public class Requirement extends ModelEntity {
 	}
 
 	/**
-	 * Sets the type of quantity.
-	 * @param quantityType The quantity type to set.
+	 * This method set the quantity type.
+	 * @param quantityType The quantity type to set of type String.
 	 */
 	public void setQuantityType(String quantityType) {
 		this.quantityType = QuantityType.get(quantityType);
@@ -182,6 +182,15 @@ public class Requirement extends ModelEntity {
 		return this.name;
 	}
 
+	/**
+	 * Only used to Override has code.
+	 */
+	@Override
+	public int hashCode() {
+		assert false : "hashCode not designed";
+		return 42; // any arbitrary constant will do
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -222,17 +231,17 @@ public class Requirement extends ModelEntity {
 
 	// Constructors:
 	/**
-	 * Constructor for the requirement containing the name, details, time, quantity, and type.
+	 * Class Constructor for the requirement containing the name, details, time, quantity, and type.
 	 * @param name
-	 * 			The name of the requirement to set.
+	 * 			The name of the requirement to set of type String.
 	 * @param details
-	 * 			The details of the requirement to set.
+	 * 			The details of the requirement to set of type String.
 	 * @param time
-	 * 			The time of the requirement to set.
+	 * 			The time of the requirement to set of type double.
 	 * @param quantity
-	 * 			The quantity of the requirement to set.
+	 * 			The quantity of the requirement to set of type int.
 	 * @param type
-	 * 			The type of the requirement to set.
+	 * 			The type of the requirement to set of type String.
 	 */
 	public Requirement(String name, String details, double time, int quantity, String type) {
 		super(name, details);

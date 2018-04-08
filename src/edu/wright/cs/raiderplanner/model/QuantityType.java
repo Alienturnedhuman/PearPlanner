@@ -244,6 +244,15 @@ public class QuantityType extends ModelEntity {
 		return getName().equals(name);
 	}
 
+	/**
+	 * Only used to Override has code.
+	 */
+	@Override
+	public int hashCode() {
+		assert false : "hashCode not designed";
+		return 42; // any arbitrary constant will do
+	}
+
 	public static QuantityType DEFAULT = quantityDatabase.get(0);
 
 	/* (non-Javadoc)

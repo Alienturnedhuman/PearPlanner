@@ -115,10 +115,10 @@ public class Building extends VersionControlEntity {
 
 	// constructor
 	/**
-	 * Constructor for a building with a code, latitude, and longitude.
-	 * @param ccode the code of the building
-	 * @param clatitude the latitude of the building
-	 * @param clongitude the longitude of the building
+	 * Class Constructor for a building with a code, latitude, and longitude.
+	 * @param ccode the code of the building of type String
+	 * @param clatitude the latitude of the building of type double
+	 * @param clongitude the longitude of the building of type double
 	 */
 	public Building(String ccode, double clatitude, double clongitude) {
 		code = ccode;
