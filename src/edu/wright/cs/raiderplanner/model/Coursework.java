@@ -51,21 +51,32 @@ public class Coursework extends Assignment {
 
 		super.replace(receivedVce);
 	}
-	// public methods
 
-	// getters
+	/**
+	 * Getter For Start Date.
+	 */
 	public Event getStartDate() {
 		return startDate;
 	}
 
+	/**
+	 * Getter For deadline.
+	 */
 	public Deadline getDeadline() {
 		return deadline;
 	}
 
+	/**
+	 * Getter For Extensions.
+	 */
 	public ArrayList<Extension> getExtensions() {
 		return extensions;
 	}
 
+	/**
+	 * Getter For Notes.
+	 * @return ArrayList of Note
+	 */
 	public ArrayList<Note> getNotes() {
 		return notes;
 	}
@@ -80,27 +91,43 @@ public class Coursework extends Assignment {
 		return new SimpleDateFormat("dd/MM/yyyy HH:MM").format(this.deadline.getDate());
 	}
 
-	// setters
+	/**
+	 * Setter Method for Note.
+	 * This method adds the new Note to ArrayList
+	 * @param newNote : given value is of type Note
+	 */
 	public void addNote(Note newNote) {
 		if (!notes.contains(newNote)) {
 			notes.add(newNote);
 		}
 	}
 
+	/**
+	 * Removes the old note.
+	 * @param oldNote : given value is of Note Type
+	 */
 	public void removeNote(Note oldNote) {
 		if (notes.contains(oldNote)) {
 			notes.remove(oldNote);
 		}
 	}
 
-	// Constructors
+	/**
+	 * Class Constructors.
+	 * @param cweighting : given value is of int type
+	 * @param csetBy : given value is of Person Type
+	 * @param cmarkedBy : given value is of Person Type
+	 * @param creviewedBy : given value is of Person Type
+	 * @param cmarks : given value is of int Type
+	 * @param cstartDate : given value is of Event Type
+	 * @param cdeadline : given value is of Deadline Type
+	 * @param cextensions : given value is of ArrayList Type
+	 */
 	public Coursework(int cweighting, Person csetBy, Person cmarkedBy, Person creviewedBy,
-			int cmarks, Event cstartDate, Deadline cdeadline,
-			ArrayList<Extension> cextensions) {
+			int cmarks, Event cstartDate, Deadline cdeadline, ArrayList<Extension> cextensions) {
 		super(cweighting, csetBy, cmarkedBy, creviewedBy, cmarks);
 		startDate = cstartDate;
 		deadline = cdeadline;
 		extensions = new ArrayList<Extension>(cextensions);
 	}
-
 }

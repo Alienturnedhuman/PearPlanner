@@ -94,7 +94,7 @@ public class Requirement extends ModelEntity {
 	}
 
 	/**
-	 * Returns a double value representing the progress of this Requirement
+	 * Returns a double value representing the progress of this Requirement.
 	 *
 	 * @return value between 0.0 and 0.1
 	 */
@@ -114,7 +114,7 @@ public class Requirement extends ModelEntity {
 	 * Change the initial quantity. This will update the progress of this
 	 * Requirement to reflect the change.
 	 *
-	 * @param initialQuantity.
+	 * @param initialQuantity : given value is int type
 	 */
 	public void setInitialQuantity(int initialQuantity) {
 		if (this.initialQuantity == this.remainingQuantity) {
@@ -125,6 +125,10 @@ public class Requirement extends ModelEntity {
 		}
 	}
 
+	/**
+	 * This method set the quantity type.
+	 * @param quantityType : given value is String type
+	 */
 	public void setQuantityType(String quantityType) {
 		this.quantityType = QuantityType.get(quantityType);
 	}
@@ -177,6 +181,15 @@ public class Requirement extends ModelEntity {
 		return this.name;
 	}
 
+	/**
+	 * Only used to Override has code.
+	 */
+	@Override
+	public int hashCode() {
+		assert false : "hashCode not designed";
+		return 42; // any arbitrary constant will do
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -215,7 +228,14 @@ public class Requirement extends ModelEntity {
 		}
 	}
 
-	// Constructors:
+	/**
+	 * Class Constructors.
+	 * @param name : given value type is of String
+	 * @param details : given value type is of String
+	 * @param time : given value type is of double
+	 * @param quantity : given value type is of int
+	 * @param type : given value type is of String
+	 */
 	public Requirement(String name, String details, double time, int quantity, String type) {
 		super(name, details);
 		this.estimatedTimeInHours = time;

@@ -148,7 +148,7 @@ public class MenuController implements Initializable {
 	private DropShadow moduleHoverShadow = new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
 	private InnerShadow modulePressedShadow = new InnerShadow(screenAverage * 0.017, 0, 0,
 			Color.BLACK);
-
+	private Stage stage = null;
 	// Labels:
 	private Label welcome;
 	@FXML
@@ -1264,7 +1264,8 @@ public class MenuController implements Initializable {
 		actionsTask.setPadding(new Insets(5, 5, 10, 0));
 
 		// Buttons:
-		Button addNew = new Button("Add a new task");
+		Button addNew = null;
+		addNew = new Button("Add a new task");
 
 		Button check = new Button("Toggle complete");
 		check.getStyleClass().add("set-button");
@@ -1740,7 +1741,7 @@ public class MenuController implements Initializable {
 	 * Assignment for which to generate the GanttishDiagram.
 	 */
 	public void showGantt(Assignment assignment, Window previousWindow, ModelEntity previous) {
-		Stage stage = new Stage();
+		stage = new Stage();
 		mainContent.getChildren().remove(1, mainContent.getChildren().size());
 		topBox.getChildren().clear();
 		title.setText(assignment.getName() + " Gantt Diagram");

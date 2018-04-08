@@ -181,7 +181,7 @@ public class Milestone extends ModelEntity {
 	}
 
 	/**
-	 * Checks if the Milestone contains the requested task
+	 * Checks if the Milestone contains the requested task.
 	 *
 	 * @param task Task to be checked for
 	 * @return Whether the task is contained.

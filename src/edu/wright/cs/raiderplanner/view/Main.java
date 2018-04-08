@@ -25,6 +25,11 @@ import edu.wright.cs.raiderplanner.controller.MainController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * RaidersPlanner's main driver class.
+ * This class launches and instantiates all necessary objects for this project to run successfully.
+ * @author Benjamin Dickson
+ */
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
@@ -32,9 +37,13 @@ public class Main extends Application {
 		MainController.initialise();
 		// If initialization passed, call the Main menu:
 		MainController.main();
-		//UiManager.areYouFeelingLucky();
+		// UiManager.areYouFeelingLucky();
 	}
 
+	/**
+	 * Lunch is the raiderplanner application.
+	 * @param args String.
+	 */
 	public static void main(String[] args) {
 		launch(args);
 		// Upon exit, save the StudyPlanner:

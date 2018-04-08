@@ -47,41 +47,68 @@ public class Building extends VersionControlEntity {
 		super.replace(receivedVce);
 	}
 
-	// getters
+	/**
+	 * Getter for Name.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Getter for Code.
+	 */
 	public String getCode() {
 		return code;
 	}
 
+	/**
+	 * Getter for latitude.
+	 */
 	public double getLatitude() {
 		return latitude;
 	}
 
+	/**
+	 * Getter for longitude.
+	 */
 	public double getLongitude() {
 		return longitude;
 	}
 
-	// setters
+	/**
+	 * Setter for Name.
+	 */
 	public void setName(String newName) {
 		name = newName;
 	}
 
+	/**
+	 * Setter for Code.
+	 */
 	public void setCode(String newCode) {
 		code = newCode;
 	}
 
+	/**
+	 * Setter for latitude.
+	 */
 	public void setLatitude(double newLatitude) {
 		latitude = newLatitude;
 	}
 
+	/**
+	 * Setter for longitude.
+	 */
 	public void setLongitude(double newLongitude) {
 		longitude = newLongitude;
 	}
 
-	// constructor
+	/**
+	 * Class Constructor.
+	 * @param ccode : given value is of type String
+	 * @param clatitude  : given value is of type double
+	 * @param clongitude  : given value is of type double
+	 */
 	public Building(String ccode, double clatitude, double clongitude) {
 		code = ccode;
 		latitude = clatitude;

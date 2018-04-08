@@ -321,7 +321,7 @@ public class TaskController implements Initializable {
 	/**
 	 * Constructor for a TaskController with an existing Task.
 	 *
-	 * @param task.
+	 * @param task : given value is a Task type
 	 */
 	public TaskController(Task task) {
 		this.task = task;
