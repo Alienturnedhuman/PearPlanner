@@ -163,7 +163,7 @@ junitPlatform {
 
 checkstyle {
 	configFile = '.checkstyle.xml' as File
-	maxWarnings = 95
+	maxWarnings = 50
 }
 
 tasks.withType(FindBugs) {
