@@ -21,6 +21,8 @@
 
 package edu.wright.cs.raiderplanner.controller;
 
+import edu.wright.cs.raiderplanner.model.Settings;
+
 import javafx.animation.TranslateTransition;
 
 import javafx.event.ActionEvent;
@@ -30,6 +32,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -44,9 +48,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -114,6 +120,12 @@ public class SettingsController implements Initializable {
 
 	// chat variables
 	private final BorderPane mainPane = new BorderPane();
+
+	private static FileChooser.ExtensionFilter datExtension =
+			new FileChooser.ExtensionFilter("dat file", "*.dat");
+	private static File savesFolder = new File("./saves");
+
+	Settings settings = new Settings();
 
 	/**
 	 * Sets this.current to equal passed variable and calls this.main().
@@ -222,15 +234,166 @@ public class SettingsController implements Initializable {
 
 	/**
 	 * Display the general settings.
-	 * TODO - Implement the general settings.
+	 * TODO - Implement more general settings.
 	 */
 	public void loadGeneral() {
 		// Update main pane:
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
-		this.welcome.setText("GENERAL");
 		this.topBox.getChildren().add(this.welcome);
 		this.title.setText("General Settings");
+
+		/* Controls for the startup preference */
+		Label launchSetting = new Label("Open on startup:");
+		launchSetting.setUnderline(true);
+		ToggleGroup group = new ToggleGroup();
+		RadioButton defaultStartup = new RadioButton("Open Start Menu\t");
+		defaultStartup.setToggleGroup(group);
+		defaultStartup.setSelected(true);
+		RadioButton accountStartup = new RadioButton("Open User Account\t");
+		accountStartup.setToggleGroup(group);
+		Label fileName = new Label("");
+		fileName.setTextFill(Color.GRAY);
+		Button browseAccounts = new Button("\tBrowse\t");
+		//browseAccounts.setDisable(true);
+		VBox launchBox = new VBox(2);
+		launchBox.getChildren().addAll(
+				launchSetting,
+				defaultStartup,
+				accountStartup,
+				browseAccounts,
+				fileName);
+		launchBox.setAlignment(Pos.TOP_CENTER);
+		GridPane.setVgrow(launchBox, Priority.SOMETIMES);
+		GridPane.setHgrow(launchBox, Priority.ALWAYS);
+		GridPane.setColumnSpan(launchBox, GridPane.REMAINING);
+		this.mainContent.add(launchBox, 0, 1);
+
+		/* The Revert and Save Buttons at the bottom */
+		Button revertButton = new Button("\tRevert\t");
+		Button saveButton = new Button("\tSave\t\t");
+		HBox saveBox = new HBox(2);
+		saveBox.getChildren().addAll(
+				revertButton,
+				saveButton);
+		saveBox.setAlignment(Pos.BOTTOM_CENTER);
+		GridPane.setVgrow(saveBox, Priority.SOMETIMES);
+		GridPane.setHgrow(saveBox, Priority.ALWAYS);
+		GridPane.setColumnSpan(saveBox, GridPane.REMAINING);
+		this.mainContent.addRow(2, saveBox);
+
+		// Load control contents at first
+		fillGeneralControls(fileName, accountStartup,
+				browseAccounts, revertButton, saveButton);
+
+		/* Button Events */
+		defaultStartup.setOnAction(e ->
+				this.toggleAccountStartup(accountStartup, browseAccounts,
+						fileName, revertButton, saveButton));
+		accountStartup.setOnAction(e ->
+				this.toggleAccountStartup(accountStartup, browseAccounts,
+						fileName, revertButton, saveButton));
+		browseAccounts.setOnAction(e ->
+				this.browseAccountsEvent(fileName, revertButton, saveButton));
+		saveButton.setOnAction(e ->
+				this.saveSettings(revertButton, saveButton));
+		revertButton.setOnAction(e ->
+				this.fillGeneralControls(fileName, accountStartup,
+						browseAccounts, revertButton, saveButton));
+	}
+
+	/**
+	 * Saves the settings.
+	 * @param revertButtonTemp - Button disabled since current settings match saved.
+	 * @param saveButtonTemp - Button disabled since current settings match saved.
+	 */
+	public void saveSettings(Button revertButtonTemp, Button saveButtonTemp) {
+		settings.saveSettings();
+		revertButtonTemp.setDisable(true);
+		saveButtonTemp.setDisable(true);
+	}
+
+	/**
+	 * Fills the general controls with the saved setting properties.
+	 *
+	 * @param fileNameTemp - Label containing account file path.
+	 * @param accountStartupTemp - RadioButton to determine if account startup is used or not.
+	 * @param browseAccountsTemp - Button to enable or disable.
+	 * @param revertButtonTemp - Button disabled since current settings match saved.
+	 * @param saveButtonTemp - Button disabled since current settings match saved.
+	 */
+	public void fillGeneralControls(Label fileNameTemp,
+			RadioButton accountStartupTemp, Button browseAccountsTemp,
+			Button revertButtonTemp, Button saveButtonTemp) {
+
+		settings.loadSettings();
+		fileNameTemp.setText(settings.getDefaultFilePath());
+		fileNameTemp.setVisible(settings.getAccountStartup());
+		accountStartupTemp.setSelected(settings.getAccountStartup());
+		browseAccountsTemp.setDisable(!accountStartupTemp.isSelected());
+		revertButtonTemp.setDisable(true);
+		saveButtonTemp.setDisable(true);
+	}
+
+	/**
+	 * Toggles the setting property for account startup.
+	 *
+	 * @param accountStartupTemp - RadioButton that determines startup.
+	 * @param browseAccountsTemp - Button to disable.
+	 * @param fileNameTemp - Label to hide.
+	 * @param revertButtonTemp - Button enabled if original setting changed.
+	 * @param saveButtonTemp - Button enabled if original setting changed.
+	 */
+	public void toggleAccountStartup(RadioButton accountStartupTemp,
+			Button browseAccountsTemp, Label fileNameTemp,
+			Button revertButtonTemp, Button saveButtonTemp) {
+
+		settings.setAccountStartup(accountStartupTemp.isSelected());
+		browseAccountsTemp.setDisable(!browseAccountsTemp.isDisabled());
+		fileNameTemp.setVisible(!fileNameTemp.isVisible());
+
+		// NOTE - the following two statements will only function correctly
+		//			if the revert and save buttons are just used by the
+		//			Account Startup RadioButtons. If other general settings
+		//			are implemented, then these should just be set to true.
+		//			As of now, these statements work well with making sure
+		//			the settings have changed or not.
+		revertButtonTemp.setDisable(!revertButtonTemp.isDisabled());
+		saveButtonTemp.setDisable(!saveButtonTemp.isDisabled());
+	}
+
+	/**
+	 * Opens the file browser to find a valid dat file.
+	 *
+	 * @param fileNameTemp - Label that will display file path.
+	 * @param revertButtonTemp - Button enabled if file path changed.
+	 * @param saveButtonTemp - Button enabled if file path changed.
+	 */
+	public void browseAccountsEvent(Label fileNameTemp,
+			Button revertButtonTemp, Button saveButtonTemp) {
+
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Select a planner to load");
+		fileChooser.getExtensionFilters().add(datExtension);
+		if (!savesFolder.exists()) {
+			savesFolder.mkdirs();
+		}
+		fileChooser.setInitialDirectory(savesFolder);
+		String filePath = "";
+		try {
+			filePath = fileChooser.showOpenDialog(null).toString();
+			revertButtonTemp.setDisable(false);
+			saveButtonTemp.setDisable(false);
+		} catch (Exception e) {
+			// TODO - Research why this happens.
+			// fileChooser.showOpenDialog(null) throws a general exception when the user exits
+			// without selecting a file. This is bad coding practice, but it allows the application
+			// to run and just sets the filePath string as empty.
+			// Using a try-catch prevents the application from breaking.
+			filePath = "";
+		}
+		fileNameTemp.setText(filePath);
+		settings.setAccountFilePath(filePath);
 	}
 
 	/**

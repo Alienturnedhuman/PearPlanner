@@ -24,6 +24,7 @@ package edu.wright.cs.raiderplanner.controller;
 import edu.wright.cs.raiderplanner.model.Event;
 import edu.wright.cs.raiderplanner.model.HubFile;
 import edu.wright.cs.raiderplanner.model.ICalExport;
+import edu.wright.cs.raiderplanner.model.Settings;
 import edu.wright.cs.raiderplanner.model.StudyPlanner;
 import edu.wright.cs.raiderplanner.view.UiManager;
 
@@ -65,6 +66,7 @@ public class MainController {
 
 	// TODO - Determine if this really should be public
 	public static UiManager ui = new UiManager();
+	public static Settings settings = new Settings();
 
 	// TODO - StudyPlannerController is a public class; determine if managing an
 	// instance in this way is best
@@ -100,7 +102,24 @@ public class MainController {
 	 */
 	public static void initialise() {
 		try {
-			ui.showStartup();
+			if (settings.getAccountStartup() == true) {
+				try {
+					File file = new File(settings.getDefaultFilePath());
+					if (file.exists() && !file.isDirectory()) {
+						plannerFile = file;
+					} else {
+						ui.showStartup();
+					}
+				} catch (FileNotFoundException e) {
+					UiManager.reportError("Error, File does not exist.");
+					ui.showStartup();
+				} catch (IOException e) {
+					UiManager.reportError("Error, Invalid file.");
+					ui.showStartup();
+				}
+			} else {
+				ui.showStartup();
+			}
 		} catch (IOException e) {
 			UiManager.reportError("Invalid file.");
 			System.exit(1);
