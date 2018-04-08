@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018
+ * Copyright (C) 2018 - Michael Pantoja
  *
  *
  *
@@ -42,118 +42,161 @@ import javafx.scene.layout.VBox;
 import jfxtras.scene.control.agenda.Agenda;
 
 /**
+ * This is a class to handle the code for the calendar feature.
  * @author MichaelPantoja
  *
  */
 public class CalendarController {
+	private VBox layout = new VBox();
+	private HBox nav = new HBox();
+	private HBox xx = new HBox();
+	private Button agendaFwd = new Button(">");
+	private Button agendaBwd = new Button("<");
+	private Agenda content = new Agenda();
+	private Button printBtn = new Button();
+	private PrinterJob job = PrinterJob.createPrinterJob();
+	private ArrayList<Event> calendarEvents;
+	private LocalDateTime stime;
 
 	/**
-	 * 
+	 * This is a class to handle the code for the chat feature.
+	 * @author MichaelPantoja
 	 */
 	public CalendarController() {
-		// TODO Auto-generated constructor stub
+		setupLayout();
+		setupNav();
+		setupContent();
+		setupAgendaButtons();
+		populateAgenda();
+		setupPrintBtn();
+		calendarEvents = MainController.getSpc().getPlanner()
+				.getCurrentStudyProfile().getCalendar();
+		Platform.runLater(() -> content
+				.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusMinutes(1050)));
 	}
 
-	public static VBox tempCalendarFunction() {
-		// Layout:
-				VBox layout = new VBox();
-				GridPane.setHgrow(layout, Priority.ALWAYS);
-				GridPane.setColumnSpan(layout, GridPane.REMAINING);
-				layout.setSpacing(10);
-				layout.setPadding(new Insets(15));
-				layout.getStylesheets().add("/edu/wright/cs/raiderplanner/content/stylesheet.css");
-				// Nav bar:
-				HBox nav = new HBox();
-				nav.setSpacing(15.0);
+	/**
+	 * Temporary function for calendar.
+	 * @return The current layout of the calendar.
+	 *
+	 * @author MichaelPantoja
+	 */
+	public VBox getLayout() {
+		return layout;
+	}
 
-				HBox xx = new HBox();
-				HBox.setHgrow(xx, Priority.ALWAYS);
-				// Buttons:
-				Button agendaFwd = new Button(">");
-				Button agendaBwd = new Button("<");
+	/**
+	 * This function will set up the layout for the calendar.
+	 */
+	private void setupLayout() {
+		GridPane.setHgrow(layout, Priority.ALWAYS);
+		GridPane.setColumnSpan(layout, GridPane.REMAINING);
+		layout.setSpacing(10);
+		layout.setPadding(new Insets(15));
+		layout.getStylesheets().add("/edu/wright/cs/raiderplanner/content/stylesheet.css");
+		layout.getChildren().addAll(nav, content);
+	}
 
-				nav.getChildren().addAll(xx, agendaBwd, agendaFwd);
-				// Content:
-				Agenda content = new Agenda();
-				VBox.setVgrow(content, Priority.ALWAYS);
-				content.setAllowDragging(false);
-				content.setAllowResize(false);
-				content.autosize();
-				content.setActionCallback(param -> null);
-				content.setEditAppointmentCallback(param -> null);
-				// Agenda buttons:
-				agendaBwd.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-					if (e.getButton() == MouseButton.PRIMARY) {
-						content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7));
-					}
-				});
-				agendaFwd.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-					if (e.getButton() == MouseButton.PRIMARY) {
-						content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7));
-					}
-				});
-				// Populate Agenda:
-				ArrayList<Event> calendarEvents =
-						MainController.getSpc().getPlanner().getCurrentStudyProfile().getCalendar();
-				for (Event e : calendarEvents) {
-					// TODO - find a way to eliminate this if/else-if/instanceof anti-pattern
-					if (e instanceof TimetableEvent) {
-						LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
-								ZoneId.systemDefault());
-						content.appointments().addAll(new Agenda.AppointmentImplLocal()
-								.withStartLocalDateTime(stime)
-								.withEndLocalDateTime(stime.plusMinutes(e.getDuration()))
+	/**
+	 * This function will set up the nav bar for the calendar.
+	 */
+	private void setupNav() {
+		nav.setSpacing(15.0);
+		nav.getChildren().addAll(xx, agendaBwd, agendaFwd);
+		HBox.setHgrow(xx, Priority.ALWAYS);
+		nav.getChildren().add(1, printBtn);
+	}
 
-								.withSummary(e.getName() + "\n" + "@ "
-										+ ((TimetableEvent) e).getRoom().getLocation())
-								.withAppointmentGroup(
-										new Agenda.AppointmentGroupImpl().withStyleClass("group5")));
-					} else if (e instanceof ExamEvent) {
-						LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
-								ZoneId.systemDefault());
-						content.appointments().addAll(new Agenda.AppointmentImplLocal()
-								.withStartLocalDateTime(stime)
-								.withSummary(
-										e.getName() + "\n" + "@ " + ((ExamEvent) e).getRoom().getLocation())
-								.withEndLocalDateTime(stime.plusMinutes(e.getDuration()))
-								.withAppointmentGroup(
-										new Agenda.AppointmentGroupImpl().withStyleClass("group20")));
-					} else if (e instanceof Deadline) {
-						LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
-								ZoneId.systemDefault());
-						content.appointments().addAll(new Agenda.AppointmentImplLocal()
-								.withStartLocalDateTime(stime.minusMinutes(60)).withSummary(e.getName())
-								.withEndLocalDateTime(stime).withAppointmentGroup(
-										new Agenda.AppointmentGroupImpl().withStyleClass("group1")));
-					} else {
-						LocalDateTime stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
-								ZoneId.systemDefault());
-						content.appointments().addAll(new Agenda.AppointmentImplLocal()
-								.withStartLocalDateTime(stime).withSummary(e.getName())
-								.withEndLocalDateTime(stime.plusMinutes(60)).withAppointmentGroup(
-										new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
-					}
+	/**
+	 * This function will set up the agenda for the calendar.
+	 */
+	private void setupContent() {
+		content.setAllowDragging(false);
+		content.setAllowResize(false);
+		content.autosize();
+		content.setActionCallback(param -> null);
+		content.setEditAppointmentCallback(param -> null);
+	}
+
+	/**
+	 * This function will set up the agenda buttons for the calendar.
+	 */
+	private void setupAgendaButtons() {
+		agendaBwd.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			if (e.getButton() == MouseButton.PRIMARY) {
+				content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().minusDays(7));
+			}
+		});
+		agendaFwd.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			if (e.getButton() == MouseButton.PRIMARY) {
+				content.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusDays(7));
+			}
+		});
+		VBox.setVgrow(content, Priority.ALWAYS);
+	}
+
+	/**
+	 * This function will populate the agenda for the calendar.
+	 */
+	private void populateAgenda() {
+		for (Event e : calendarEvents) {
+			// TODO - find a way to eliminate this if/else-if/instanceof anti-pattern
+			if (e instanceof TimetableEvent) {
+				stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
+						ZoneId.systemDefault());
+				content.appointments().addAll(new Agenda.AppointmentImplLocal()
+						.withStartLocalDateTime(stime)
+						.withEndLocalDateTime(stime.plusMinutes(e.getDuration()))
+
+						.withSummary(e.getName() + "\n" + "@ "
+								+ ((TimetableEvent) e).getRoom().getLocation())
+						.withAppointmentGroup(
+								new Agenda.AppointmentGroupImpl().withStyleClass("group5")));
+			} else if (e instanceof ExamEvent) {
+				stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
+						ZoneId.systemDefault());
+				content.appointments().addAll(new Agenda.AppointmentImplLocal()
+						.withStartLocalDateTime(stime)
+						.withSummary(
+								e.getName() + "\n" + "@ " + ((ExamEvent) e).getRoom().getLocation())
+						.withEndLocalDateTime(stime.plusMinutes(e.getDuration()))
+						.withAppointmentGroup(
+								new Agenda.AppointmentGroupImpl().withStyleClass("group20")));
+			} else if (e instanceof Deadline) {
+				stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
+						ZoneId.systemDefault());
+				content.appointments().addAll(new Agenda.AppointmentImplLocal()
+						.withStartLocalDateTime(stime.minusMinutes(60)).withSummary(e.getName())
+						.withEndLocalDateTime(stime).withAppointmentGroup(
+								new Agenda.AppointmentGroupImpl().withStyleClass("group1")));
+			} else {
+				stime = LocalDateTime.ofInstant(e.getDate().toInstant(),
+						ZoneId.systemDefault());
+				content.appointments().addAll(new Agenda.AppointmentImplLocal()
+						.withStartLocalDateTime(stime).withSummary(e.getName())
+						.withEndLocalDateTime(stime.plusMinutes(60)).withAppointmentGroup(
+								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
+			}
+		}
+	}
+
+	/**
+	 * This function will set up the print button for the calendar.
+	 */
+	private void setupPrintBtn() {
+		printBtn.getStyleClass().addAll("button-image", "print-button");
+		printBtn.setOnMouseClicked(event -> {
+			// Prints the currently selected week
+			if (job != null) {
+				if (!job.showPrintDialog(null)) {
+					// user cancelled
+					job.cancelJob();
+					return;
 				}
-				Button printBtn = new Button();
-				printBtn.getStyleClass().addAll("button-image", "print-button");
-				printBtn.setOnMouseClicked(event -> {
-					// Prints the currently selected week
-					PrinterJob job = PrinterJob.createPrinterJob();
-					if (job != null) {
-						if (!job.showPrintDialog(null)) {
-							// user cancelled
-							job.cancelJob();
-							return;
-						}
-						content.print(job);
-						job.endJob();
-					}
-				});
-				nav.getChildren().add(1, printBtn);
-				layout.getChildren().addAll(nav, content);
-				Platform.runLater(() -> content
-						.setDisplayedLocalDateTime(content.getDisplayedLocalDateTime().plusMinutes(1050)));
-				return layout;
+				content.print(job);
+				job.endJob();
+			}
+		});
 	}
 
 }
