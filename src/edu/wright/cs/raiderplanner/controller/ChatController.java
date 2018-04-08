@@ -63,6 +63,7 @@ public class ChatController {
 		userMessagePane.add(tfMessageToSend, 0, 0);
 		userMessagePane.add(spacingBox, 1, 0);
 		userMessagePane.add(sendButton, 2, 0);
+		sendButton.setMinWidth(100);
 	}
 
 	/**
@@ -84,8 +85,7 @@ public class ChatController {
 	public static void sendButtonAction(String userName) {
 		sendButton.setOnAction((ActionEvent exception1) -> {
 			if (!(tfMessageToSend.getText().equals(""))) {
-				msgArea.appendText(userName + ": "
-						+ tfMessageToSend.getText() + "\n");
+				msgArea.appendText(userName + ": " + tfMessageToSend.getText() + "\n");
 				tfMessageToSend.setText("");
 			}
 		});
