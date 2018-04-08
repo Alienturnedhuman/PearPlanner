@@ -150,7 +150,7 @@ public class MenuController implements Initializable {
 	private DropShadow moduleHoverShadow = new DropShadow(screenAverage * 0.02, 0, 0, Color.BLACK);
 	private InnerShadow modulePressedShadow = new InnerShadow(screenAverage * 0.017, 0, 0,
 			Color.BLACK);
-
+	private Stage stage = null;
 	// Labels:
 	private Label welcome;
 	@FXML
@@ -955,7 +955,6 @@ public class MenuController implements Initializable {
 		ChatController.createUserMessagePane();
 		ChatController.createMainPane();
 		ChatController.sendButtonAction(userName);
-	}
 
 	/**
 	 * This will load all the textfields,labels and buttons for the window that prompts the user for
@@ -972,20 +971,21 @@ public class MenuController implements Initializable {
 	/**
 	 * This will take in the action of when the submit button is pressed. The submit button is for
 	 * the chat window where the user inputs his or her information. If the user does not enter a
-	 * username then one will be appointed for them. Then at the very end the chat window will be
-	 * loaded.
+	 * username/hostname, an error will pop up notifying them to enter those values. Then at the
+	 * very end the chat window will be loaded.
 	 */
 	public void submitButtonAction() {
 		submitButton.setOnAction((ActionEvent exception1) -> {
 			if (chatConnection) {
-				if (tfName.getText().equals("")) {
-					tfName.setText("User" + Math.random());
-				} else {
-					userName = tfName.getText();
-				}
+				if ((tfName.getText() != null && !(tfName.getText().equals("")))
+					&& (tfHost.getText() != null && !(tfHost.getText().equals("")))) {
+				userName = tfName.getText();
 				hostName = tfHost.getText();
 				loadChatWindow();
-			} else {
+			  } else {
+				UiManager.displayError("Username and host are required.");
+			  } 
+      } else {
 				chatConnectionStatus.setContentText("Chat" + " connection unsuccessful.");
 				chatConnectionStatus.showAndWait();
 			}
@@ -1241,7 +1241,8 @@ public class MenuController implements Initializable {
 
 		Button delete = new Button("Remove");
 		delete.setDisable(true);
-		Button addNew = new Button("Add a new task");
+		Button addNew = null;
+    addNew = new Button("Add a new task");
 		// Bind properties on buttons:
 		delete.disableProperty().bind(new BooleanBinding() {
 			{
@@ -1434,9 +1435,26 @@ public class MenuController implements Initializable {
 			}
 		});
 
-		// text:
-		this.welcome = new Label(
-				"Welcome back, " + MainController.getSpc().getPlanner().getUserName() + "!");
+		/*
+		 * Welcome text. Displays the appropriate welcoming message depending on if the user
+		 * is new or a returning user. Also takes into account if the user entered their
+		 * name or not during account creation.
+		 */
+		if (MainController.getSpc().getPlanner().getCurrentStudyProfile() != null) {
+			if ((MainController.getSpc().getPlanner().getUserName()).isEmpty()) {
+				this.welcome = new Label("Welcome back!");
+			} else {
+				this.welcome = new Label("Welcome back, "
+						+ MainController.getSpc().getPlanner().getUserName() + "!");
+			}
+		} else {
+			if ((MainController.getSpc().getPlanner().getUserName()).isEmpty()) {
+				this.welcome = new Label("Welcome!");
+			} else {
+				this.welcome = new Label(
+						"Welcome " + MainController.getSpc().getPlanner().getUserName() + "!");
+			}
+		}
 		this.welcome.setPadding(new Insets(10, 15, 10, 15));
 		this.topBox.getChildren().add(this.welcome);
 
@@ -1736,7 +1754,7 @@ public class MenuController implements Initializable {
 			this.loadAssignment(assignment, previousWindow, previous);
 		});
 		Button save = new Button("Save");
-		Stage stage = new Stage();
+		stage = new Stage();
 		save.setOnAction(e -> {
 			String path = MainController.ui.saveFileDialog(stage);
 			GanttishDiagram.createGanttishDiagram(MainController.getSpc().getPlanner(), assignment,

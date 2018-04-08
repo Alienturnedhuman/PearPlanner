@@ -65,7 +65,7 @@
                   <RowConstraints />
                     </rowConstraints>
                     <children>
-                        <HBox>
+                        <HBox GridPane.rowIndex="1">
                            <children>
                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                    <HBox.margin>
@@ -80,7 +80,7 @@
                            </children>
                         </HBox>
 
-                        <HBox GridPane.rowIndex="1">
+                        <HBox GridPane.rowIndex="2">
    <children>
                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                    <HBox.margin>
@@ -95,7 +95,7 @@
                         </HBox>
 
 
-                        <HBox GridPane.rowIndex="2">
+                        <HBox GridPane.rowIndex="3">
    <children>
                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                    <HBox.margin>
@@ -109,7 +109,7 @@
    </children>
                         </HBox>
 
-                        <HBox GridPane.rowIndex="3">
+                        <HBox GridPane.rowIndex="4">
    <children>
                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                    <HBox.margin>
@@ -122,7 +122,7 @@
                                <Button fx:id="notificationsBtn" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Notification" />
    </children>
                         </HBox>
-                  <HBox GridPane.rowIndex="4">
+                  <HBox>
                      <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>

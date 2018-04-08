@@ -45,26 +45,51 @@ public class Exam extends Assignment {
 		super.replace(receivedVce);
 	}
 
-	// public methods
-
-	// getters
+	/**
+	 * This Getter method gets the Resit value.
+	 * @return
+	 */
 	public Exam getResit() {
 		return resit;
 	}
 
+	/**
+	 * This Getter method gets the Exam event time slot.
+	 * @return
+	 */
 	public ExamEvent getTimeSlot() {
 		return timeSlot;
 	}
 
 
-	// constructors
-	public Exam(int cweighting, Person csetBy, Person cmarkedBy, Person creviewedBy, int cmarks, ExamEvent ctimeSlot, Exam cresit) {
+	/**
+	 * Class Constructors.
+	 * @param cweighting : given value of type int
+	 * @param csetBy : given value of type Person
+	 * @param cmarkedBy : given value of type Person
+	 * @param creviewedBy : given value of type Person
+	 * @param cmarks : given value of type int
+	 * @param ctimeSlot : given value of type ExamEvent
+	 * @param cresit : given value of type Exam
+	 */
+	public Exam(int cweighting, Person csetBy,
+			Person cmarkedBy, Person creviewedBy, int cmarks, ExamEvent ctimeSlot, Exam cresit) {
 		super(cweighting, csetBy, cmarkedBy, creviewedBy, cmarks);
 		timeSlot = ctimeSlot;
 		resit = cresit;
 	}
 
-	public Exam(int cweighting, Person csetBy, Person cmarkedBy, Person creviewedBy, int cmarks, ExamEvent ctimeSlot) {
+	/**
+	 * Class Constructors.
+	 * @param cweighting : given value of type int
+	 * @param csetBy : given value of type Person
+	 * @param cmarkedBy : given value of type Person
+	 * @param creviewedBy : given value of type Person
+	 * @param cmarks : given value of type int
+	 * @param ctimeSlot : given value of type ExamEvent
+	 */
+	public Exam(int cweighting, Person csetBy, Person cmarkedBy,
+			Person creviewedBy, int cmarks, ExamEvent ctimeSlot) {
 		super(cweighting, csetBy, cmarkedBy, creviewedBy, cmarks);
 		timeSlot = ctimeSlot;
 		resit = null;

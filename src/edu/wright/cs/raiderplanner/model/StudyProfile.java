@@ -33,7 +33,6 @@ import java.util.ArrayList;
  * Created by Team BRONZE on 4/27/17
  */
 public class StudyProfile extends VersionControlEntity {
-	// private data
 	private ArrayList<Module> modules;
 	private ArrayList<Milestone> milestones;
 	private ArrayList<ExtensionApplication> extensions;
@@ -85,8 +84,9 @@ public class StudyProfile extends VersionControlEntity {
 	}
 
 	/**
-     * Returns an array of the Tasks of this StudyProfile.
-     * @return an array of the Tasks
+     * Returns an ArrayList of the Tasks of this StudyProfile.
+     * These Task themselves can contain a list of their own Task.
+     * @return an ArrayList of the Tasks
      */
 	public ArrayList<Task> getTasks() {
 		ArrayList<Task> tasks = new ArrayList<>();
@@ -190,7 +190,7 @@ public class StudyProfile extends VersionControlEntity {
 
 	// constructors
 	/**
-	 * Constructor for a StudyProfile that gets made from an initialHubFile.
+	 * Class Constructor for a StudyProfile that gets made from an initialHubFile.
 	 * @param initialHubFile - the file containing the initial modules, extensions,
 	 *     year, semester number, version, name, and details.
 	 */

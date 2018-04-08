@@ -1,0 +1,41 @@
+To implement functionality for a setting:
+1.	Add controls within the SettingsController. 
+		For reference: https://docs.oracle.com/javafx/2/api/javafx/scene/control/package-summary.html
+2.	Create event handler methods within SettingsController. These should call the methods in with Settings.java.
+3.	Create Global Parameters with default values in the Settings.java. These represent the values that will be saved within the config.properties.
+4.	In the createConfig(), add property values using a string as the key and then the value assigned to it.
+		Example:
+			this.prop.setProperty("keyString", this.globalVariable);
+5.	In the loadSettings(), assign the global variables the config.properties values.
+		Example:
+			this.globalVariable = prop.getProperty("keyString");
+6.	In the saveSettings(), add property values using a string as the key and then the value assigned to it.
+		Example:
+				this.prop.setProperty("keyString", this.globalVariable);
+7.	Create a set function to assign a global variable.
+		Example:
+			public void setGlobalVariable(String globalVariableTemp) {
+				this.globalVariable = globalVariableTemp;
+			}
+8.	Create a get function to assign a global variable.
+		Example:
+			public String getGlobalVariable() {
+				return this.globalVariable;
+			}
+
+To save settings using SettingsController:
+1.	Call set function:
+		Example:
+			settings.setGlobalVariable(control.getText());
+2.	Make sure an event calls saveSettings():
+		Example:
+			settings.saveSettings();
+
+To access settings from any controller:
+1.	Add import:
+		import edu.wright.cs.raiderplanner.model.Settings;
+2.	Create object reference globally:
+		public static Settings settings = new Settings()
+3.	Call get functions.
+		Example:
+			settings.getGlobalVariable()
