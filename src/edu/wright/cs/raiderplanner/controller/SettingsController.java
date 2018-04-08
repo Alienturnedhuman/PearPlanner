@@ -182,14 +182,15 @@ public class SettingsController implements Initializable {
 	 * Apply the users theme to the fxml.
 	 */
 	public void applyTheme() {
+		settings.loadSettings();
 		// Pattern that designates a hex value
-		Pattern colorPattern = Pattern.compile("([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})");
-
+		Pattern colorPattern = Pattern.compile("([0-9a-f]{8})");
 		// Make sure that a hex value representing a color exists
 		if (colorPattern.matcher(settings.getToolBarColor()).matches()) {
 			this.toolBar.setStyle("-fx-background-color: #"
 					+ settings.getToolBarColor());
 		}
+		
 	}
 
 	/**
@@ -476,7 +477,7 @@ public class SettingsController implements Initializable {
 
 		/* Button Events */
 		colorPicker.setOnAction(e ->
-				setToolBarColor(Integer.toHexString(colorPicker.getValue().hashCode()),
+				setToolBarColor(String.format("%08x", colorPicker.getValue().hashCode()),
 						revertButton, saveButton));
 		saveButton.setOnAction(e ->
 				this.saveSettings(revertButton, saveButton));
@@ -499,7 +500,7 @@ public class SettingsController implements Initializable {
 		settings.loadSettings();
 
 		// Pattern that designates a hex value
-		Pattern colorPattern = Pattern.compile("([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})");
+		Pattern colorPattern = Pattern.compile("([0-9a-f]{8})");
 
 		// Make sure that a hex value representing a color exists
 		if (colorPattern.matcher(settings.getToolBarColor()).matches()) {
@@ -517,9 +518,13 @@ public class SettingsController implements Initializable {
 	public void setToolBarColor(String colorPicker,
 			Button revertButtonTemp, Button saveButtonTemp) {
 
-		this.toolBar.setStyle("-fx-background-color: #"
-				+ colorPicker);
-		settings.setToolBarColor(colorPicker);
+		Pattern colorPattern = Pattern.compile("([0-9a-f]{8})");
+		// Make sure that a hex value representing a color exists
+		if (colorPattern.matcher(colorPicker).matches()) {
+			this.toolBar.setStyle("-fx-background-color: #"
+					+ colorPicker);
+			settings.setToolBarColor(colorPicker);
+		}
 
 		revertButtonTemp.setDisable(false);
 		saveButtonTemp.setDisable(false);

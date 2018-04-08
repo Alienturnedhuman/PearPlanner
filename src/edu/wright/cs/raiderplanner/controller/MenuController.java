@@ -292,9 +292,9 @@ public class MenuController implements Initializable {
 	 * Apply the users theme to the fxml.
 	 */
 	public void applyTheme() {
+		settings.loadSettings();
 		// Pattern that designates a hex value
-		Pattern colorPattern = Pattern.compile("([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})");
-
+		Pattern colorPattern = Pattern.compile("([0-9a-f]{8})");
 		// Make sure that a hex value representing a color exists
 		if (colorPattern.matcher(settings.getToolBarColor()).matches()) {
 			this.toolBar.setStyle("-fx-background-color: #"
