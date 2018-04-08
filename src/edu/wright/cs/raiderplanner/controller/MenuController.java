@@ -1469,10 +1469,10 @@ public class MenuController implements Initializable {
 		});
 
 		/*
-		* Welcome text. Displays the appropriate welcoming message depending on if the user
-		* is new or a returning user. Also takes into account if the user entered their
-		* name or not during account creation.
-		*/
+		 * Welcome text. Displays the appropriate welcoming message depending on if the user
+		 * is new or a returning user. Also takes into account if the user entered their
+		 * name or not during account creation.
+		 */
 		if (MainController.getSpc().getPlanner().getCurrentStudyProfile() != null) {
 			if ((MainController.getSpc().getPlanner().getUserName()).isEmpty()) {
 				this.welcome = new Label("Welcome back!");
