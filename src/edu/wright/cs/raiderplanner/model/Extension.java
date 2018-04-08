@@ -47,7 +47,7 @@ public class Extension extends VersionControlEntity {
 
 	/**
 	 * Enumerated values for approval statuses.
-	 * @author unknown
+	 * @author Hayden
 	 *
 	 */
 	public enum ApprovalStatus {
