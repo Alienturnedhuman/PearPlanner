@@ -1461,9 +1461,26 @@ public class MenuController implements Initializable {
 			}
 		});
 
-		// text:
-		this.welcome = new Label(
-				"Welcome back, " + MainController.getSpc().getPlanner().getUserName() + "!");
+		/*
+		* Welcome text. Displays the appropriate welcoming message depending on if the user
+		* is new or a returning user. Also takes into account if the user entered their
+		* name or not during account creation.
+		*/
+		if (MainController.getSpc().getPlanner().getCurrentStudyProfile() != null) {
+			if ((MainController.getSpc().getPlanner().getUserName()).isEmpty()) {
+				this.welcome = new Label("Welcome back!");
+			} else {
+				this.welcome = new Label("Welcome back, "
+						+ MainController.getSpc().getPlanner().getUserName() + "!");
+			}
+		} else {
+			if ((MainController.getSpc().getPlanner().getUserName()).isEmpty()) {
+				this.welcome = new Label("Welcome!");
+			} else {
+				this.welcome = new Label(
+						"Welcome " + MainController.getSpc().getPlanner().getUserName() + "!");
+			}
+		}
 		this.welcome.setPadding(new Insets(10, 15, 10, 15));
 		this.topBox.getChildren().add(this.welcome);
 
