@@ -1243,7 +1243,7 @@ public class MenuController implements Initializable {
 		Button delete = new Button("Remove");
 		delete.setDisable(true);
 		Button addNew = null;
-    addNew = new Button("Add a new task");
+		addNew = new Button("Add a new task");
 		// Bind properties on buttons:
 		delete.disableProperty().bind(new BooleanBinding() {
 			{
