@@ -200,6 +200,17 @@ public class SettingsController implements Initializable {
 	}
 
 	/**
+	 * Saves the settings.
+	 * @param revertButtonTemp - Button disabled since current settings match saved.
+	 * @param saveButtonTemp - Button disabled since current settings match saved.
+	 */
+	public void saveSettings(Button revertButtonTemp, Button saveButtonTemp) {
+		settings.saveSettings();
+		revertButtonTemp.setDisable(true);
+		saveButtonTemp.setDisable(true);
+	}
+
+	/**
 	 * Display the About menu.
 	 */
 	public void loadAbout() {
@@ -328,17 +339,6 @@ public class SettingsController implements Initializable {
 		revertButton.setOnAction(e ->
 				this.fillGeneralControls(fileName, accountStartup,
 						browseAccounts, revertButton, saveButton));
-	}
-
-	/**
-	 * Saves the general settings.
-	 * @param revertButtonTemp - Button disabled since current settings match saved.
-	 * @param saveButtonTemp - Button disabled since current settings match saved.
-	 */
-	public void saveSettings(Button revertButtonTemp, Button saveButtonTemp) {
-		settings.saveSettings();
-		revertButtonTemp.setDisable(true);
-		saveButtonTemp.setDisable(true);
 	}
 
 	/**
