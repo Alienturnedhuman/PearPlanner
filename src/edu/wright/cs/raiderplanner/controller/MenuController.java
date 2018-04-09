@@ -292,6 +292,7 @@ public class MenuController implements Initializable {
 	 * Apply the users theme to the fxml.
 	 */
 	public void applyTheme() {
+		// Reload settings to make sure saved values are used
 		settings.loadSettings();
 		// Make sure that a hex value representing a color exists
 		if (settings.isColorHex(settings.getToolBarColor())) {
@@ -303,6 +304,34 @@ public class MenuController implements Initializable {
 					+ "-fx-font-family: Ariel"
 					+ "; -fx-text-fill: #" + settings.getToolBarTextColor()
 					+ "; -fx-font-size: 2.5em;");
+		}
+		if (settings.isColorHex(settings.getToolBarIconColor())) {
+			this.openMenu.setStyle(""
+					+ "-fx-background-image: "
+					+ "url('/edu/wright/cs/raiderplanner/content/menu.png');"
+					+ "; -fx-background-color: transparent"
+					+ "; -fx-cursor: hand"
+					+ "; -fx-effect: innershadow(gaussian , "
+					+ "#" + settings.getToolBarIconColor() + ", 8, 1, 1, 1);");
+			this.showNotification.setStyle(""
+					+ "; -fx-background-color: transparent"
+					+ "; -fx-cursor: hand"
+					+ "; -fx-effect: innershadow(gaussian , "
+					+ "#" + settings.getToolBarIconColor() + ", 8, 1, 1, 1);");
+			this.calendar.setStyle(""
+					+ "-fx-background-image: "
+					+ "url('/edu/wright/cs/raiderplanner/content/calendar.png');"
+					+ "; -fx-background-color: transparent"
+					+ "; -fx-cursor: hand"
+					+ "; -fx-effect: innershadow(gaussian , "
+					+ "#" + settings.getToolBarIconColor() + ", 8, 1, 1, 1);");
+			this.addActivity.setStyle(""
+					+ "-fx-background-image: "
+					+ "url('/edu/wright/cs/raiderplanner/content/addactivity_small.png');"
+					+ "; -fx-background-color: transparent"
+					+ "; -fx-cursor: hand"
+					+ "; -fx-effect: innershadow(gaussian , "
+					+ "#" + settings.getToolBarIconColor() + ", 8, 1, 1, 1);");
 		}
 	}
 

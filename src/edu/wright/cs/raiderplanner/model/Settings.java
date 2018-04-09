@@ -140,7 +140,7 @@ public class Settings {
 				this.prop.setProperty("filePath", this.accountFilePath);
 				this.prop.setProperty("toolBarColor", this.toolBarColor);
 				this.prop.setProperty("toolBarTextColor", this.toolBarTextColor);
-				this.prop.setProperty("toolBarIconColor", this.toolBarTextColor);
+				this.prop.setProperty("toolBarIconColor", this.toolBarIconColor);
 			} else {
 				// File did not exists so do not use.
 				this.prop.setProperty("isAccountStartup", "False");
@@ -209,8 +209,8 @@ public class Settings {
 	}
 
 	/**
-	 * Sets the toolBarTextColor variable.
-	 * @param toolBarIconColorTemp - Value for toolBarTextColor.
+	 * Sets the toolBarIconColor variable.
+	 * @param toolBarIconColorTemp - Value for toolBarIconColor.
 	 */
 	public void setToolBarIconColor(String toolBarIconColorTemp) {
 		this.toolBarIconColor = toolBarIconColorTemp;
@@ -249,7 +249,7 @@ public class Settings {
 	}
 
 	/**
-	 * Returns the color of the ToolBar Text.
+	 * Returns the color of the ToolBar Icon.
 	 * @return String toolBarColor
 	 */
 	public String getToolBarIconColor() {

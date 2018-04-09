@@ -36,6 +36,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.ToolBar;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -60,6 +64,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.script.Bindings;
 
 /**
  * Actions associated with the settings menu and its items.
@@ -182,6 +188,7 @@ public class SettingsController implements Initializable {
 	 * Apply the users theme to the fxml.
 	 */
 	public void applyTheme() {
+		// Reload settings to make sure saved values are used
 		settings.loadSettings();
 		// Make sure that a hex value representing a color exists
 		if (settings.isColorHex(settings.getToolBarColor())) {
@@ -193,6 +200,15 @@ public class SettingsController implements Initializable {
 					+ "-fx-font-family: Ariel"
 					+ "; -fx-text-fill: #" + settings.getToolBarTextColor()
 					+ "; -fx-font-size: 2.5em;");
+		}
+		if (settings.isColorHex(settings.getToolBarIconColor())) {
+			this.openMenu.setStyle(""
+					+ "-fx-background-image: "
+					+ "url('/edu/wright/cs/raiderplanner/content/menu.png');"
+					+ "; -fx-background-color: transparent"
+					+ "; -fx-cursor: hand"
+					+ "; -fx-effect: innershadow(gaussian , "
+					+ "#" + settings.getToolBarIconColor() + ", 8, 1, 1, 1);");
 		}
 	}
 
@@ -455,7 +471,7 @@ public class SettingsController implements Initializable {
 				toolBarPicker);
 		toolBarBox.setAlignment(Pos.TOP_CENTER);
 
-		/* Controls for the ToolBar color preference */
+		/* Controls for the ToolBar Text color preference */
 		Label toolBarTextLabel = new Label("Toolbar Text Color:");
 		toolBarTextLabel.setUnderline(true);
 		ColorPicker toolBarTextPicker = new ColorPicker();
@@ -466,11 +482,16 @@ public class SettingsController implements Initializable {
 				toolBarTextPicker);
 		toolBarTextBox.setAlignment(Pos.TOP_CENTER);
 
-		GridPane.setVgrow(toolBarTextBox, Priority.SOMETIMES);
-		GridPane.setHgrow(toolBarTextBox, Priority.ALWAYS);
-		GridPane.setColumnSpan(toolBarTextBox, GridPane.REMAINING);
-		this.mainContent.add(toolBarBox, 1, 1);
-		this.mainContent.add(toolBarTextBox, 1, 2);
+		/* Controls for the ToolBar Text color preference */
+		Label toolBarIconLabel = new Label("Toolbar Icon Color:");
+		toolBarIconLabel.setUnderline(true);
+		ColorPicker toolBarIconPicker = new ColorPicker();
+		toolBarIconPicker.setValue(Color.RED);
+		VBox toolBarIconBox = new VBox(2);
+		toolBarIconBox.getChildren().addAll(
+				toolBarIconLabel,
+				toolBarIconPicker);
+		toolBarIconBox.setAlignment(Pos.TOP_CENTER);
 
 		/* The Revert and Save Buttons at the bottom */
 		Button revertButton = new Button("\tRevert\t");
@@ -483,10 +504,16 @@ public class SettingsController implements Initializable {
 		GridPane.setVgrow(saveBox, Priority.SOMETIMES);
 		GridPane.setHgrow(saveBox, Priority.ALWAYS);
 		GridPane.setColumnSpan(saveBox, GridPane.REMAINING);
-		this.mainContent.addRow(3, saveBox);
+
+		this.mainContent.add(toolBarBox, 1, 1);
+		this.mainContent.add(toolBarTextBox, 1, 2);
+		this.mainContent.add(toolBarIconBox, 1, 3);
+		this.mainContent.addRow(4, saveBox);
 
 		// Load control contents at first
-		fillThemeControls(toolBarPicker, toolBarTextPicker, revertButton, saveButton);
+		fillThemeControls(toolBarPicker,
+				toolBarTextPicker, toolBarIconPicker,
+				revertButton, saveButton);
 
 		/* Button Events */
 		toolBarPicker.setOnAction(e ->
@@ -495,10 +522,15 @@ public class SettingsController implements Initializable {
 		toolBarTextPicker.setOnAction(e ->
 				setToolBarText(String.format("%08x", toolBarTextPicker.getValue().hashCode()),
 						revertButton, saveButton));
+		toolBarIconPicker.setOnAction(e ->
+				setToolBarIcon(String.format("%08x", toolBarIconPicker.getValue().hashCode()),
+						revertButton, saveButton));
 		saveButton.setOnAction(e ->
 				this.saveSettings(revertButton, saveButton));
 		revertButton.setOnAction(e ->
-				fillThemeControls(toolBarPicker, toolBarTextPicker, revertButton, saveButton));
+				fillThemeControls(toolBarPicker,
+						toolBarTextPicker, toolBarIconPicker,
+						revertButton, saveButton));
 
 		//TODO - Fix Bug that doesn't update MenuController fxml when switching back.
 	}
@@ -510,7 +542,8 @@ public class SettingsController implements Initializable {
 	 * @param revertButtonTemp - Button disabled since current settings match saved.
 	 * @param saveButtonTemp - Button disabled since current settings match saved.
 	 */
-	public void fillThemeControls(ColorPicker toolBarPicker, ColorPicker toolBarTextPicker,
+	public void fillThemeControls(ColorPicker toolBarPicker,
+			ColorPicker toolBarTextPicker, ColorPicker toolBarIconPicker,
 			Button revertButtonTemp, Button saveButtonTemp) {
 
 		settings.loadSettings();
@@ -522,6 +555,9 @@ public class SettingsController implements Initializable {
 		}
 		if (settings.isColorHex(settings.getToolBarTextColor())) {
 			toolBarTextPicker.setValue(Color.web(settings.getToolBarTextColor()));
+		}
+		if (settings.isColorHex(settings.getToolBarIconColor())) {
+			toolBarIconPicker.setValue(Color.web(settings.getToolBarIconColor()));
 		}
 
 		revertButtonTemp.setDisable(true);
@@ -561,6 +597,29 @@ public class SettingsController implements Initializable {
 					+ "; -fx-text-fill: #" + toolBarTextPicker
 					+ "; -fx-font-size: 2.5em;");
 			settings.setToolBarTextColor(toolBarTextPicker);
+		}
+
+		revertButtonTemp.setDisable(false);
+		saveButtonTemp.setDisable(false);
+	}
+
+	/**
+	 * Sets the color to be saved for the ToolBar Text.
+	 * TODO - Implement font and font size customization.
+	 * @param toolBarIconPicker - String with the color represented by hex.
+	 */
+	public void setToolBarIcon(String toolBarIconPicker,
+			Button revertButtonTemp, Button saveButtonTemp) {
+
+		// Make sure that a hex value representing a color exists
+		if (settings.isColorHex(toolBarIconPicker)) {
+			this.openMenu.setStyle(""
+					+ "-fx-background-image: url('/edu/wright/cs/raiderplanner/content/menu.png');"
+					+ "; -fx-background-color: transparent"
+					+ "; -fx-cursor: hand"
+					+ "; -fx-effect: innershadow(gaussian , "
+					+ "#" + toolBarIconPicker + ", 5, 1, 1, 1);");
+			settings.setToolBarIconColor(toolBarIconPicker);
 		}
 
 		revertButtonTemp.setDisable(false);
