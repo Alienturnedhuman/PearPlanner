@@ -36,15 +36,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.ToolBar;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.ColorInput;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -53,7 +48,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
@@ -62,10 +56,6 @@ import javafx.util.Duration;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.script.Bindings;
 
 /**
  * Actions associated with the settings menu and its items.
@@ -130,9 +120,6 @@ public class SettingsController implements Initializable {
 
 	@FXML
 	private ToolBar toolBar;
-
-	// chat variables
-	private final BorderPane mainPane = new BorderPane();
 
 	private static FileChooser.ExtensionFilter datExtension =
 			new FileChooser.ExtensionFilter("dat file", "*.dat");
