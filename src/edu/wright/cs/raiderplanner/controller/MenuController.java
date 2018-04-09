@@ -238,8 +238,8 @@ public class MenuController implements Initializable {
 			closeNot.setToY(-(notifications.getHeight() + this.navShadowRadius + 56 + 17));
 			closeNot.play();
 		}
-
 		initialLoad = false;
+
 		this.updateNotifications();
 		this.updateMenu();
 		exportCalBox.managedProperty().bind(exportCalBox.visibleProperty());

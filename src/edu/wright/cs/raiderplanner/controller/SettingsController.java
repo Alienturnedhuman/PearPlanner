@@ -277,12 +277,12 @@ public class SettingsController implements Initializable {
 	 * TODO - Implement more general settings.
 	 */
 	public void loadGeneral() {
-		// Update main pane:
+		// Clear main content and change title
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("General Settings");
 
-		/* Controls for the startup preference */
+		// Controls for the startup preference
 		Label launchSetting = new Label("Open on startup:");
 		launchSetting.setUnderline(true);
 		ToggleGroup group = new ToggleGroup();
@@ -308,7 +308,7 @@ public class SettingsController implements Initializable {
 		GridPane.setColumnSpan(launchBox, GridPane.REMAINING);
 		this.mainContent.add(launchBox, 0, 1);
 
-		/* The Revert and Save Buttons at the bottom */
+		// Controls for the Revert and Save Buttons at the bottom
 		Button revertButton = new Button("\tRevert\t");
 		Button saveButton = new Button("\tSave\t\t");
 		HBox saveBox = new HBox(2);
@@ -325,7 +325,7 @@ public class SettingsController implements Initializable {
 		fillGeneralControls(fileName, accountStartup,
 				browseAccounts, revertButton, saveButton);
 
-		/* Button Events */
+		// Button Event Mapping
 		defaultStartup.setOnAction(e ->
 				this.toggleAccountStartup(accountStartup, browseAccounts,
 						fileName, revertButton, saveButton));
@@ -429,7 +429,7 @@ public class SettingsController implements Initializable {
 	 * TODO - Implement the account settings.
 	 */
 	public void loadAccount() {
-		// Update main pane:
+		// Clear main content and change title
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.welcome.setText("ACCOUNT");
@@ -442,12 +442,12 @@ public class SettingsController implements Initializable {
 	 * TODO - Implement the theme settings.
 	 */
 	public void loadTheme() {
-		// Update main pane:
+		// Clear main content and change title
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("Theme Settings");
 
-		/* Controls for the ToolBar color preference */
+		// Controls for the ToolBar color preference
 		Label toolBarLabel = new Label("Toolbar Color:");
 		toolBarLabel.setUnderline(true);
 		ColorPicker toolBarPicker = new ColorPicker();
@@ -458,7 +458,7 @@ public class SettingsController implements Initializable {
 				toolBarPicker);
 		toolBarBox.setAlignment(Pos.TOP_CENTER);
 
-		/* Controls for the ToolBar Text color preference */
+		// Controls for the ToolBar Text color preference
 		Label toolBarTextLabel = new Label("Toolbar Text Color:");
 		toolBarTextLabel.setUnderline(true);
 		ColorPicker toolBarTextPicker = new ColorPicker();
@@ -469,7 +469,7 @@ public class SettingsController implements Initializable {
 				toolBarTextPicker);
 		toolBarTextBox.setAlignment(Pos.TOP_CENTER);
 
-		/* Controls for the ToolBar Text color preference */
+		// Controls for the ToolBar Text color preference
 		Label toolBarIconLabel = new Label("Toolbar Icon Color:");
 		toolBarIconLabel.setUnderline(true);
 		ColorPicker toolBarIconPicker = new ColorPicker();
@@ -480,7 +480,7 @@ public class SettingsController implements Initializable {
 				toolBarIconPicker);
 		toolBarIconBox.setAlignment(Pos.TOP_CENTER);
 
-		/* The Revert and Save Buttons at the bottom */
+		// Controls for the Revert and Save Buttons at the bottom
 		Button revertButton = new Button("\tRevert\t");
 		Button saveButton = new Button("\tSave\t\t");
 		HBox saveBox = new HBox(2);
@@ -492,6 +492,7 @@ public class SettingsController implements Initializable {
 		GridPane.setHgrow(saveBox, Priority.ALWAYS);
 		GridPane.setColumnSpan(saveBox, GridPane.REMAINING);
 
+		// Add controls to the mainContent
 		this.mainContent.add(toolBarBox, 1, 1);
 		this.mainContent.add(toolBarTextBox, 1, 2);
 		this.mainContent.add(toolBarIconBox, 1, 3);
@@ -502,7 +503,7 @@ public class SettingsController implements Initializable {
 				toolBarTextPicker, toolBarIconPicker,
 				revertButton, saveButton);
 
-		/* Button Events */
+		// Button Event Mapping
 		toolBarPicker.setOnAction(e ->
 				setToolBarColor(String.format("%08x", toolBarPicker.getValue().hashCode()),
 						revertButton, saveButton));
@@ -518,14 +519,14 @@ public class SettingsController implements Initializable {
 				fillThemeControls(toolBarPicker,
 						toolBarTextPicker, toolBarIconPicker,
 						revertButton, saveButton));
-
-		//TODO - Fix Bug that doesn't update MenuController fxml when switching back.
 	}
 
 	/**
 	 * Fills the theme controls with the saved setting properties.
 	 *
 	 * @param toolBarPicker - ColorPicker control containing the chosen color.
+	 * @param toolBarTextPicker - ColorPicker control containing the chosen color.
+	 * @param toolBarIconPicker - ColorPicker control containing the chosen color.
 	 * @param revertButtonTemp - Button disabled since current settings match saved.
 	 * @param saveButtonTemp - Button disabled since current settings match saved.
 	 */
@@ -554,6 +555,8 @@ public class SettingsController implements Initializable {
 	/**
 	 * Sets the color to be saved for the ToolBar.
 	 * @param toolBarPicker - String with the color represented by hex.
+	 * @param revertButtonTemp - Button enabled since a value was changed.
+	 * @param saveButtonTemp - Button enabled since a value was changed.
 	 */
 	public void setToolBarColor(String toolBarPicker,
 			Button revertButtonTemp, Button saveButtonTemp) {
@@ -573,6 +576,8 @@ public class SettingsController implements Initializable {
 	 * Sets the color to be saved for the ToolBar Text.
 	 * TODO - Implement font and font size customization.
 	 * @param toolBarTextPicker - String with the color represented by hex.
+	 * @param revertButtonTemp - Button enabled since a value was changed.
+	 * @param saveButtonTemp - Button enabled since a value was changed.
 	 */
 	public void setToolBarText(String toolBarTextPicker,
 			Button revertButtonTemp, Button saveButtonTemp) {
@@ -591,9 +596,11 @@ public class SettingsController implements Initializable {
 	}
 
 	/**
-	 * Sets the color to be saved for the ToolBar Text.
+	 * Modifies the ToolBar Text.
 	 * TODO - Implement font and font size customization.
 	 * @param toolBarIconPicker - String with the color represented by hex.
+	 * @param revertButtonTemp - Button enabled since a value was changed.
+	 * @param saveButtonTemp - Button enabled since a value was changed.
 	 */
 	public void setToolBarIcon(String toolBarIconPicker,
 			Button revertButtonTemp, Button saveButtonTemp) {
@@ -618,7 +625,7 @@ public class SettingsController implements Initializable {
 	 * TODO - Implement the notification settings.
 	 */
 	public void loadNotification() {
-		// Update main pane:
+		// Clear main content and change title
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.welcome.setText("NOTIFICATION");

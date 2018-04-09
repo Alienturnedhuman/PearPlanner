@@ -170,6 +170,7 @@ public class Settings {
 	/**
 	 * Determines if a string is a valid hex color.
 	 * @param colorHexString - String with the color represented by hex.
+	 * @return boolean - Returns true if the colorHexString matches the hex regex pattern.
 	 */
 	public boolean isColorHex(String colorHexString) {
 		Pattern colorPattern = Pattern.compile("([0-9a-fA-F]{8})");
