@@ -26,6 +26,7 @@ import edu.wright.cs.raiderplanner.model.Event;
 import edu.wright.cs.raiderplanner.model.HubFile;
 import edu.wright.cs.raiderplanner.model.ICalExport;
 import edu.wright.cs.raiderplanner.model.Notification;
+import edu.wright.cs.raiderplanner.model.Settings;
 import edu.wright.cs.raiderplanner.model.StudyPlanner;
 import edu.wright.cs.raiderplanner.view.UiManager;
 
@@ -68,6 +69,7 @@ public class MainController {
 
 	// TODO - Determine if this really should be public
 	public static UiManager ui = new UiManager();
+	public static Settings settings = new Settings();
 
 	// TODO - StudyPlannerController is a public class; determine if managing an
 	// instance in this way is best
@@ -102,62 +104,129 @@ public class MainController {
 	 * importing an existing Study Planner file.
 	 */
 	public static void initialise() {
-		boolean noAccount = false;
-		File[] files = MainController.ui.getSavesFolder().listFiles();
-		if (files != null) {
-			if (files.length == 0) {
-				noAccount = true;
-			}
-			if (files.length == 1 && files[0].getName().contains("SamplePlanner.dat")) {
-				noAccount = true;
-			}
-		}
-		if (noAccount) {
-			try {
-				Account newAccount = MainController.ui.createAccount();
-				StudyPlannerController study = new StudyPlannerController(newAccount);
-				// Welcome notification:
-				Notification not = new Notification("Welcome!", new GregorianCalendar(),
-						"Thank you for using RaiderPlanner!");
-				study.getPlanner().addNotification(not);
-				MainController.setSpc(study);
-				plannerFile = MainController.ui.savePlannerFileDialog();
-				loadFile(plannerFile);
-				/*This is cating a general exception because the
-				 * createAccount method throws a general exception*/
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (plannerFile != null) {
-				if (plannerFile.getParentFile().exists()) {
-					if (plannerFile.getParentFile().canRead()) {
-						if (plannerFile.getParentFile().canWrite()) {
-							MainController.setPlannerFile(plannerFile);
-							MainController.save();
-						} else {
-							UiManager.reportError("Directory can not be written to.");
-						}
-					} else {
-						UiManager.reportError("Directory cannot be read from.");
+		if (settings.getAccountStartup() == true) {
+			File file = new File(settings.getDefaultFilePath());
+			if (file.exists() && !file.isDirectory()) {
+				plannerFile = file;
+			} else {
+				boolean noAccount = false;
+				File[] files = MainController.ui.getSavesFolder().listFiles();
+				if (files != null) {
+					if (files.length == 0) {
+						noAccount = true;
 					}
-
+					if (files.length == 1
+							&& files[0].getName().contains("SamplePlanner.dat")) {
+						noAccount = true;
+					}
+				}
+				if (noAccount) {
+					try {
+						Account newAccount = MainController.ui.createAccount();
+						StudyPlannerController study =
+								new StudyPlannerController(newAccount);
+						// Welcome notification:
+						Notification not =
+								new Notification("Welcome!", new GregorianCalendar(),
+								"Thank you for using RaiderPlanner!");
+						study.getPlanner().addNotification(not);
+						MainController.setSpc(study);
+						plannerFile = MainController.ui.savePlannerFileDialog();
+						loadFile(plannerFile);
+						/*This is cating a general exception because the
+						 * createAccount method throws a general exception*/
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if (plannerFile != null) {
+						if (plannerFile.getParentFile().exists()) {
+							if (plannerFile.getParentFile().canRead()) {
+								if (plannerFile.getParentFile().canWrite()) {
+									MainController.setPlannerFile(plannerFile);
+									MainController.save();
+								} else {
+									UiManager.reportError("Directory can't be written to.");
+								}
+							} else {
+								UiManager.reportError("Directory cannot be read from.");
+							}
+						} else {
+							UiManager.reportError("Directory does not exist.");
+						}
+					}
 				} else {
-					UiManager.reportError("Directory does not exist.");
+					long modifiedTime = Long.MIN_VALUE;
+					File modifiedFile = new File("");
+					for (int i = 0; i < files.length; ++i) {
+						if (files[i].lastModified() > modifiedTime) {
+							modifiedFile = files[i];
+							modifiedTime = files[i].lastModified();
+						}
+					}
+					plannerFile = modifiedFile;
+					// If a file is present:
+					loadFile(plannerFile);
 				}
 			}
 		} else {
-			long modifiedTime = Long.MIN_VALUE;
-			File modifiedFile = new File("");
-			for (int i = 0; i < files.length; ++i) {
-				if (files[i].lastModified() > modifiedTime) {
-					modifiedFile = files[i];
-					modifiedTime = files[i].lastModified();
+			boolean noAccount = false;
+			File[] files = MainController.ui.getSavesFolder().listFiles();
+			if (files != null) {
+				if (files.length == 0) {
+					noAccount = true;
+				}
+				if (files.length == 1 && files[0].getName().contains("SamplePlanner.dat")) {
+					noAccount = true;
 				}
 			}
-			plannerFile = modifiedFile;
-			// If a file is present:
-			loadFile(plannerFile);
+			if (noAccount) {
+				try {
+					Account newAccount = MainController.ui.createAccount();
+					StudyPlannerController study = new StudyPlannerController(newAccount);
+					// Welcome notification:
+					Notification not = new Notification("Welcome!", new GregorianCalendar(),
+							"Thank you for using RaiderPlanner!");
+					study.getPlanner().addNotification(not);
+					MainController.setSpc(study);
+					plannerFile = MainController.ui.savePlannerFileDialog();
+					loadFile(plannerFile);
+					/*This is cating a general exception because the
+					 * createAccount method throws a general exception*/
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (plannerFile != null) {
+					if (plannerFile.getParentFile().exists()) {
+						if (plannerFile.getParentFile().canRead()) {
+							if (plannerFile.getParentFile().canWrite()) {
+								MainController.setPlannerFile(plannerFile);
+								MainController.save();
+							} else {
+								UiManager.reportError("Directory can not be written to.");
+							}
+						} else {
+							UiManager.reportError("Directory cannot be read from.");
+						}
+
+					} else {
+						UiManager.reportError("Directory does not exist.");
+					}
+				}
+			} else {
+				long modifiedTime = Long.MIN_VALUE;
+				File modifiedFile = new File("");
+				for (int i = 0; i < files.length; ++i) {
+					if (files[i].lastModified() > modifiedTime) {
+						modifiedFile = files[i];
+						modifiedTime = files[i].lastModified();
+					}
+				}
+				plannerFile = modifiedFile;
+				// If a file is present:
+				loadFile(plannerFile);
+			}
 		}
 	}
 
