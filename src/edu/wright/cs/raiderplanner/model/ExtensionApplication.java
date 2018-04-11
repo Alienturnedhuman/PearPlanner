@@ -36,21 +36,30 @@ public class ExtensionApplication implements Serializable {
 
 	// public methods
 
-	// getters
+	/**
+	 * Getter for the Extension.
+	 * @return
+	 */
 	public Extension getExtension() {
 		// initial set up code below - check if this needs updating
 		return extension;
 	}
 
+	/**
+	 * Getter for the Module Code.
+	 * @return
+	 */
 	public String getModuleCode() {
 		// initial set up code below - check if this needs updating
 		return moduleCode;
 	}
 
+	/**
+	 * Getter for the AssignmentUIds.
+	 * @return
+	 */
 	public String getAssignmentUIds() {
 		// initial set up code below - check if this needs updating
 		return assignmentUId;
 	}
-
-	// constructors
 }

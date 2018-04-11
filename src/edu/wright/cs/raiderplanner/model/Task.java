@@ -133,10 +133,10 @@ public class Task extends ModelEntity {
 	 * @return true if complete, false otherwise.
 	 */
 	public boolean dependenciesComplete() {
-		int i = -1;
+		int indexValue = -1;
 		int ii = dependencies.size();
-		while (++i < ii) {
-			if (!dependencies.get(i).isCheckedComplete()) {
+		while (++indexValue < ii) {
+			if (!dependencies.get(indexValue).isCheckedComplete()) {
 				return false;
 			}
 		}
@@ -311,7 +311,7 @@ public class Task extends ModelEntity {
 	/**
 	 * Set a new weighting for this Task.
 	 *
-	 * @param weighting.
+	 * @param weighting .
 	 */
 	public void setWeighting(int weighting) {
 		this.weighting = weighting;
@@ -357,7 +357,14 @@ public class Task extends ModelEntity {
 		}
 	}
 
-	// Constructors:
+	/**
+	 * Class Constructors.
+	 * @param name : given value is String
+	 * @param details : given value is String
+	 * @param deadline : given value is LocalDate
+	 * @param weighting : given value is int
+	 * @param type : given value is String
+	 */
 	public Task(String name, String details, LocalDate deadline, int weighting, String type) {
 		super(name, details);
 		this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))

@@ -78,8 +78,8 @@ public abstract class Assignment extends VersionControlEntity {
 	}
 
 	/**
-	 * @param verbose.
-	 * @return verboseString.
+	 * @param verbose : given value is a boolean type
+	 * @return verboseString : returns StringBuilder object
 	 */
 	public String toString(boolean verbose) {
 		if (verbose) {
@@ -247,12 +247,12 @@ public abstract class Assignment extends VersionControlEntity {
 	}
 
 	/**
-	 * Constructor
-	 * @param cweighting.
-	 * @param csetBy.
-	 * @param cmarkedBy.
-	 * @param creviewedBy.
-	 * @param cmarks.
+	 * Class Constructor.
+	 * @param cweighting : given value is int
+	 * @param csetBy : given value is Person
+	 * @param cmarkedBy : given value is Person
+	 * @param creviewedBy : given value is Person
+	 * @param cmarks : given value is int
 	 */
 	public Assignment(int cweighting, Person csetBy, Person cmarkedBy,
 			Person creviewedBy, int cmarks) {

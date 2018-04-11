@@ -227,6 +227,17 @@ public class TaskType extends ModelEntity {
 		return getName().equals(name);
 	}
 
+	/**
+	 * Only used to Override has code.
+	 */
+	@Override
+	public int hashCode() {
+		assert false : "hashCode not designed";
+		return 42; // any arbitrary constant will do
+	}
+
+
+
 	public static TaskType DEFAULT = taskDatabase.get(0);
 
 	/* (non-Javadoc)

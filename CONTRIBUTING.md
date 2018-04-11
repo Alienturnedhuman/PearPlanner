@@ -25,7 +25,7 @@ Project contributions are managed by pull requests. Since you will not have perm
 
 It is extraordinarily important that you read the guidelines for writing a Git commit message. Additionally, commit messages must include references to other issues and/or closures as appropriate. [This article](https://help.github.com/articles/autolinked-references-and-urls/#issues-and-pull-requests) and [this article](https://help.github.com/articles/closing-issues-using-keywords/) discuss how to refer to and how to close an issue with a commit message. Every commit message must have one or more issue references and/or closures.
 
-If you submit a pull request with non-confirming commit mesages, your pull request may be rejected.
+If you submit a pull request with non-conforming commit mesages, your pull request may be rejected.
 
 Additional [GitHub help](https://help.github.com/) is available on many different topics.
 

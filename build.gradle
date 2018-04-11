@@ -26,6 +26,7 @@ import org.gradle.plugins.ide.eclipse.model.Container
  */
 buildscript {
 	repositories {
+		mavenLocal()
 		mavenCentral()
 		jcenter()
 	}
@@ -122,6 +123,8 @@ dependencies {
 	compile 'org.junit.platform:junit-platform-runner:1.0.1'
 	compile 'org.junit.vintage:junit-vintage-engine:4.12.1'
 	compile fileTree(dir: 'src', include: ['*.jar'])
+	compile group: 'org.apache.derby', name: 'derby', version: '10.14.1.0'
+	runtime group: 'org.apache.derby', name: 'derby', version: '10.14.1.0'
 }
 
 /**
@@ -160,7 +163,7 @@ junitPlatform {
 
 checkstyle {
 	configFile = '.checkstyle.xml' as File
-	maxWarnings = 105
+	maxWarnings = 50
 }
 
 tasks.withType(FindBugs) {
