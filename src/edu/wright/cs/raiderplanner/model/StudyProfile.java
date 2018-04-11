@@ -55,9 +55,9 @@ public class StudyProfile extends VersionControlEntity {
 	}
 
 	/**
-     * Returns an array of the Milestones of this StudyProfile.
-     * @return an array of the Milestones
-     */
+	 * Returns an array of the Milestones of this StudyProfile.
+	 * @return an array of the Milestones
+	 */
 	public Milestone[] getMilestones() {
 		Milestone[] milestone = new Milestone[this.milestones.size()];
 		milestone = this.milestones.toArray(milestone);
@@ -65,9 +65,9 @@ public class StudyProfile extends VersionControlEntity {
 	}
 
 	/**
-     * Returns an array of the extensions of this StudyProfile.
-     * @return an array of the extensions
-     */
+	 * Returns an array of the extensions of this StudyProfile.
+	 * @return an array of the extensions
+	 */
 	public ExtensionApplication[] getExtensions() {
 		ExtensionApplication[] extension = new ExtensionApplication[this.extensions.size()];
 		extension = this.extensions.toArray(extension);
@@ -84,10 +84,10 @@ public class StudyProfile extends VersionControlEntity {
 	}
 
 	/**
-     * Returns an ArrayList of the Tasks of this StudyProfile.
-     * These Task themselves can contain a list of their own Task.
-     * @return an ArrayList of the Tasks
-     */
+	 * Returns an ArrayList of the Tasks of this StudyProfile.
+	 * These Task themselves can contain a list of their own Task.
+	 * @return an ArrayList of the Tasks
+	 */
 	public ArrayList<Task> getTasks() {
 		ArrayList<Task> tasks = new ArrayList<>();
 		this.modules.forEach(e -> e.getAssignments().forEach(ee -> tasks.addAll(ee.getTasks())));
@@ -124,25 +124,25 @@ public class StudyProfile extends VersionControlEntity {
 	}
 
 	/**
-     * Returns the name of this StudyProfile as a String.
-     * @return the name of this StudyProfile
-     */
+	 * Returns the name of this StudyProfile as a String.
+	 * @return the name of this StudyProfile
+	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-     * Returns the year of this StudyProfile as an int.
-     * @return the year of this StudyProfile
-     */
+	 * Returns the year of this StudyProfile as an int.
+	 * @return the year of this StudyProfile
+	 */
 	public int getYear() {
 		return year;
 	}
 
 	/**
-     * Returns the semester number of this StudyProfile as an int.
-     * @return the semester number of this StudyProfile
-     */
+	 * Returns the semester number of this StudyProfile as an int.
+	 * @return the semester number of this StudyProfile
+	 */
 	public int getSemesterNo() {
 		return semesterNo;
 	}
