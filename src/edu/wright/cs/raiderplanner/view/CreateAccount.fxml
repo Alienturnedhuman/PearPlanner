@@ -42,8 +42,8 @@ stylesheets="@../content/stylesheet.css" xmlns="http://javafx.com/javafx/8" xmln
         </HBox>
         <HBox GridPane.rowIndex="2">
             <children>
-                <TextField fx:id="accountNo" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" 
-                minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="214.0" 
+                <TextField fx:id="accountNo" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity"
+                minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="214.0"
                 promptText="W Number (ex. w000xxx)" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -52,7 +52,7 @@ stylesheets="@../content/stylesheet.css" xmlns="http://javafx.com/javafx/8" xmln
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </HBox.margin>
                 </TextField>
-                <TextField fx:id="email" alignment="TOP_LEFT" layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" 
+                <TextField fx:id="email" alignment="TOP_LEFT" layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity"
                 minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="271.0" promptText="Email (optional)">
                     <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -63,7 +63,7 @@ stylesheets="@../content/stylesheet.css" xmlns="http://javafx.com/javafx/8" xmln
         <HBox GridPane.rowIndex="3">
             <children>
                 <Region prefHeight="51.0" prefWidth="328.0" />
-                <Button fx:id="submit" defaultButton="true" disable="false" mnemonicParsing="false" onMouseClicked="#handleSubmit" 
+                <Button fx:id="submit" defaultButton="true" disable="false" mnemonicParsing="false" onMouseClicked="#handleSubmit"
                 prefHeight="31.0" prefWidth="68.0" text="OK" GridPane.rowIndex="3">
                     <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
