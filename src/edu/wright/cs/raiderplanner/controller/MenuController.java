@@ -59,6 +59,8 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.print.PrinterJob;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -191,20 +193,16 @@ public class MenuController implements Initializable {
 	private HBox exportCalBox;
 
 	// chat variables
-	private final BorderPane mainPane = new BorderPane();
+	private static final BorderPane mainPane = new BorderPane();
 	private final GridPane firstPane = new GridPane();
-	private final GridPane userMessagePane = new GridPane();
-	private final HBox spacingBox = new HBox();
 	private TextField tfName = new TextField("");
 	private TextField tfHost = new TextField("");
-	private TextField tfMessageToSend = new TextField();
-	private TextArea msgArea = new TextArea();
-	private final Label name = new Label("Name:");
-	private final Label host = new Label("Host:");
+	private final Label name = new Label("Your Name:");
+	private final Label host = new Label("Host User's Name:");
 	private final Button submitButton = new Button("Submit");
-	private final Button sendButton = new Button("Send");
 	private boolean calendarOpen = false; // Used to monitor status of calendar (open or closed)
-
+	private boolean chatConnection = true;
+	private Alert chatConnectionStatus = new Alert(AlertType.ERROR);
 	private String userName;
 	private String hostName;
 	private int portNumber = 1111;
@@ -954,35 +952,9 @@ public class MenuController implements Initializable {
 		this.topBox.getChildren().clear();
 		this.title.setText("Chat");
 		this.mainContent.getChildren().addAll(mainPane);
-		createUserMessagePane();
-		createMainPane();
-		sendButtonAction();
-	}
-
-	/**
-	 * This will load the msg_area which is where the user will see messages from other users and
-	 * him or herself. This will also load the text field where the user will be able to send his or
-	 * her own message to peers.
-	 */
-	public void createMainPane() {
-		mainPane.setCenter(msgArea);
-		mainPane.setBottom(userMessagePane);
-	}
-
-	/**
-	 * This will set the message area to uneditable and set the size for all the buttons. The method
-	 * will also create padding between the text area, the message area, and the send button.
-	 */
-	public void createUserMessagePane() {
-		msgArea.setEditable(false);
-		tfMessageToSend.setPrefWidth(800);
-		userMessagePane.setPadding(new Insets(10, 10, 10, 10));
-		sendButton.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
-		spacingBox.setPadding(new Insets(0, 5, 0, 5));
-		userMessagePane.add(tfMessageToSend, 0, 0);
-		userMessagePane.add(spacingBox, 1, 0);
-		userMessagePane.add(sendButton, 2, 0);
-		sendButton.setMinWidth(100);
+		ChatController.createUserMessagePane();
+		ChatController.createMainPane();
+		ChatController.sendButtonAction(userName);
 	}
 
 	/**
@@ -1005,28 +977,18 @@ public class MenuController implements Initializable {
 	 */
 	public void submitButtonAction() {
 		submitButton.setOnAction((ActionEvent exception1) -> {
-			if ((tfName.getText() != null && !(tfName.getText().equals("")))
+			if (chatConnection) {
+				if ((tfName.getText() != null && !(tfName.getText().equals("")))
 					&& (tfHost.getText() != null && !(tfHost.getText().equals("")))) {
-				userName = tfName.getText();
-				hostName = tfHost.getText();
-				loadChatWindow();
+					userName = tfName.getText();
+					hostName = tfHost.getText();
+					loadChatWindow();
+				} else {
+					UiManager.displayError("Username and host are required.");
+				}
 			} else {
-				UiManager.displayError("Username and host are required.");
-			}
-		});
-	}
-
-	/**
-	 *  This will take in the action of when the send button is pressed. If a user sends a message,
-	 *  the line of text will append to the chat log so the user can see what they sent. It follows
-	 *  the format of USER: sentence.
-	 *  The text box with the user input will be set back to blank after a message is sent.
-	 */
-	public void sendButtonAction() {
-		sendButton.setOnAction((ActionEvent exception1) -> {
-			if (!(tfMessageToSend.getText().equals(""))) {
-				msgArea.appendText(userName + ": " + tfMessageToSend.getText() + "\n");
-				tfMessageToSend.setText("");
+				chatConnectionStatus.setContentText("Chat" + " connection unsuccessful.");
+				chatConnectionStatus.showAndWait();
 			}
 		});
 	}
@@ -1061,6 +1023,14 @@ public class MenuController implements Initializable {
 	 */
 	public String getHostName() {
 		return hostName;
+	}
+
+	/**
+	 * Returns the current main pane.
+	 * @return the current main pane
+	 */
+	public static BorderPane getMainPane() {
+		return mainPane;
 	}
 
 	/**
@@ -1266,16 +1236,14 @@ public class MenuController implements Initializable {
 		actionsTask.setPadding(new Insets(5, 5, 10, 0));
 
 		// Buttons:
-		Button addNew = null;
-		addNew = new Button("Add a new task");
-
 		Button check = new Button("Toggle complete");
 		check.getStyleClass().add("set-button");
 		check.setDisable(true);
 
 		Button delete = new Button("Remove");
 		delete.setDisable(true);
-
+		Button addNew = null;
+		addNew = new Button("Add a new task");
 		// Bind properties on buttons:
 		delete.disableProperty().bind(new BooleanBinding() {
 			{
@@ -1760,7 +1728,6 @@ public class MenuController implements Initializable {
 	 * Assignment for which to generate the GanttishDiagram.
 	 */
 	public void showGantt(Assignment assignment, Window previousWindow, ModelEntity previous) {
-		stage = new Stage();
 		mainContent.getChildren().remove(1, mainContent.getChildren().size());
 		topBox.getChildren().clear();
 		title.setText(assignment.getName() + " Gantt Diagram");
@@ -1788,6 +1755,7 @@ public class MenuController implements Initializable {
 			this.loadAssignment(assignment, previousWindow, previous);
 		});
 		Button save = new Button("Save");
+		stage = new Stage();
 		save.setOnAction(e -> {
 			String path = MainController.ui.saveFileDialog(stage);
 			GanttishDiagram.createGanttishDiagram(MainController.getSpc().getPlanner(), assignment,

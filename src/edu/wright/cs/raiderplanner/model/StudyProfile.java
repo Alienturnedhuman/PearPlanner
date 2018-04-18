@@ -41,9 +41,12 @@ public class StudyProfile extends VersionControlEntity {
 	private int semesterNo;
 	private boolean current;
 
+	// public methods
+
+	// getters:
 	/**
-	 * This method gets the Modules.
-	 * @return returns an array of type Module
+	 * Returns an array of the Modules of this StudyProfile.
+	 * @return an array of the Modules
 	 */
 	public Module[] getModules() {
 		Module[] module = new Module[this.modules.size()];
@@ -52,8 +55,8 @@ public class StudyProfile extends VersionControlEntity {
 	}
 
 	/**
-	 * This method gets a list of Milestones.
-	 * @return returns an array of type Milestones
+	 * Returns an array of the Milestones of this StudyProfile.
+	 * @return an array of the Milestones
 	 */
 	public Milestone[] getMilestones() {
 		Milestone[] milestone = new Milestone[this.milestones.size()];
@@ -62,8 +65,8 @@ public class StudyProfile extends VersionControlEntity {
 	}
 
 	/**
-	 * This method gets a list of  Application Extension.
-	 * @return returns an array of type Application Extension
+	 * Returns an array of the extensions of this StudyProfile.
+	 * @return an array of the extensions
 	 */
 	public ExtensionApplication[] getExtensions() {
 		ExtensionApplication[] extension = new ExtensionApplication[this.extensions.size()];
@@ -81,9 +84,9 @@ public class StudyProfile extends VersionControlEntity {
 	}
 
 	/**
-	 * This method gets a ArrayList of Tasks.
+	 * Returns an ArrayList of the Tasks of this StudyProfile.
 	 * These Task themselves can contain a list of their own Task.
-	 * @return  an ArrayList of tasks
+	 * @return an ArrayList of the Tasks
 	 */
 	public ArrayList<Task> getTasks() {
 		ArrayList<Task> tasks = new ArrayList<>();
@@ -103,7 +106,7 @@ public class StudyProfile extends VersionControlEntity {
 	/**
 	 * Set/unset this StudyProfile as the current profile of the StudyPlanner.
 	 *
-	 * @param current value to be set
+	 * @param current true if this is the current profile, false otherwise
 	 */
 	public void setCurrent(boolean current) {
 		this.current = current;
@@ -121,23 +124,24 @@ public class StudyProfile extends VersionControlEntity {
 	}
 
 	/**
-	 * Get Name.
+	 * Returns the name of this StudyProfile as a String.
+	 * @return the name of this StudyProfile
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Get Year.
-	 * @return
+	 * Returns the year of this StudyProfile as an int.
+	 * @return the year of this StudyProfile
 	 */
 	public int getYear() {
 		return year;
 	}
 
 	/**
-	 * Get Semester Number.
-	 * @return
+	 * Returns the semester number of this StudyProfile as an int.
+	 * @return the semester number of this StudyProfile
 	 */
 	public int getSemesterNo() {
 		return semesterNo;
@@ -184,9 +188,11 @@ public class StudyProfile extends VersionControlEntity {
 		}
 	}
 
+	// constructors
 	/**
-	 * Class Constructors.
-	 * @param initialHubFile Initial file
+	 * Class Constructor for a StudyProfile that gets made from an initialHubFile.
+	 * @param initialHubFile - the file containing the initial modules, extensions,
+	 *     year, semester number, version, name, and details.
 	 */
 	public StudyProfile(HubFile initialHubFile) {
 		this.milestones = new ArrayList<>();

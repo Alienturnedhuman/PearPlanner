@@ -47,67 +47,78 @@ public class Building extends VersionControlEntity {
 		super.replace(receivedVce);
 	}
 
+	// getters
 	/**
-	 * Getter for Name.
+	 * Returns the name of the building as a String.
+	 * @return the name of the building
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Getter for Code.
+	 * Returns the code of the building as a String.
+	 * @return the code of the building
 	 */
 	public String getCode() {
 		return code;
 	}
 
 	/**
-	 * Getter for latitude.
+	 * Returns the latitude of the building as a double.
+	 * @return the latitude of the building
 	 */
 	public double getLatitude() {
 		return latitude;
 	}
 
 	/**
-	 * Getter for longitude.
+	 * Returns the longitude of the building as a double.
+	 * @return the longitude of the building
 	 */
 	public double getLongitude() {
 		return longitude;
 	}
 
+	// setters
 	/**
-	 * Setter for Name.
+	 * Sets the name of the building.
+	 * @param newName the new name of the building
 	 */
 	public void setName(String newName) {
 		name = newName;
 	}
 
 	/**
-	 * Setter for Code.
+	 * Sets the code of the building.
+	 * @param newCode the new code of the building
 	 */
 	public void setCode(String newCode) {
 		code = newCode;
 	}
 
 	/**
-	 * Setter for latitude.
+	 * Sets the latitude of the building.
+	 * @param newLatitude the new latitude of the building
 	 */
 	public void setLatitude(double newLatitude) {
 		latitude = newLatitude;
 	}
 
 	/**
-	 * Setter for longitude.
+	 * Sets the longitude of the building.
+	 * @param newLongitude the new longitude of the building
 	 */
 	public void setLongitude(double newLongitude) {
 		longitude = newLongitude;
 	}
 
+	// constructor
 	/**
-	 * Class Constructor.
-	 * @param ccode : given value is of type String
-	 * @param clatitude  : given value is of type double
-	 * @param clongitude  : given value is of type double
+	 * Class Constructor for a building with a code, latitude, and longitude.
+	 * @param ccode the code of the building of type String
+	 * @param clatitude the latitude of the building of type double
+	 * @param clongitude the longitude of the building of type double
 	 */
 	public Building(String ccode, double clatitude, double clongitude) {
 		code = ccode;

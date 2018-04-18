@@ -55,7 +55,7 @@ public class StudyPlannerController {
 	private StudyPlanner planner;
 
 	/**
-	 *
+	 * Returns the current study planner.
 	 * @return SPC's StudyPlanner file, planner.
 	 */
 	public StudyPlanner getPlanner() {
@@ -103,7 +103,7 @@ public class StudyPlannerController {
 	}
 
 	/**
-	 * if valid, this method creates a new StudyProfile and returns true if invalid, it returns
+	 * If valid, this method creates a new StudyProfile and returns true. If invalid, it returns
 	 * false.
 	 *
 	 * @param hubFile

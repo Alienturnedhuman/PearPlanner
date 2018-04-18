@@ -83,6 +83,7 @@ public class TaskController implements Initializable {
 	private boolean success = false;
 
 	/**
+	 * Returns the current task associated with this TaskController.
 	 * @return The Task associated with this TaskController.
 	 */
 	public Task getTask() {
@@ -90,6 +91,7 @@ public class TaskController implements Initializable {
 	}
 
 	/**
+	 * Returns whether the TasksController has successfully handled a Task submission.
 	 * @return Whether this TaskController has successfully handled a Task
 	 * 				submission.
 	 */
@@ -321,7 +323,8 @@ public class TaskController implements Initializable {
 	/**
 	 * Constructor for a TaskController with an existing Task.
 	 *
-	 * @param task : given value is a Task type
+	 * @param task
+	 * 			The current task associated with TaskController.
 	 */
 	public TaskController(Task task) {
 		this.task = task;

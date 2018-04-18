@@ -114,7 +114,8 @@ public class Requirement extends ModelEntity {
 	 * Change the initial quantity. This will update the progress of this
 	 * Requirement to reflect the change.
 	 *
-	 * @param initialQuantity : given value is int type
+	 * @param initialQuantity
+	 * 				The initial quantity to set of type int.
 	 */
 	public void setInitialQuantity(int initialQuantity) {
 		if (this.initialQuantity == this.remainingQuantity) {
@@ -127,7 +128,7 @@ public class Requirement extends ModelEntity {
 
 	/**
 	 * This method set the quantity type.
-	 * @param quantityType : given value is String type
+	 * @param quantityType The quantity type to set of type String.
 	 */
 	public void setQuantityType(String quantityType) {
 		this.quantityType = QuantityType.get(quantityType);
@@ -228,13 +229,19 @@ public class Requirement extends ModelEntity {
 		}
 	}
 
+	// Constructors:
 	/**
-	 * Class Constructors.
-	 * @param name : given value type is of String
-	 * @param details : given value type is of String
-	 * @param time : given value type is of double
-	 * @param quantity : given value type is of int
-	 * @param type : given value type is of String
+	 * Class Constructor for the requirement containing the name, details, time, quantity, and type.
+	 * @param name
+	 * 			The name of the requirement to set of type String.
+	 * @param details
+	 * 			The details of the requirement to set of type String.
+	 * @param time
+	 * 			The time of the requirement to set of type double.
+	 * @param quantity
+	 * 			The quantity of the requirement to set of type int.
+	 * @param type
+	 * 			The type of the requirement to set of type String.
 	 */
 	public Requirement(String name, String details, double time, int quantity, String type) {
 		super(name, details);

@@ -46,8 +46,8 @@ public class Extension extends VersionControlEntity {
 	}
 
 	/**
-	 * Enum for Approval Status.
-	 * @author N/A
+	 * Enumerated values for approval statuses.
+	 * @author Hayden
 	 *
 	 */
 	public enum ApprovalStatus {
@@ -56,9 +56,10 @@ public class Extension extends VersionControlEntity {
 
 	// public methods
 
+	// getters
 	/**
-	 * Getter for Deadline.
-	 * @return newDeadline value
+	 * Returns the new deadline for the extension.
+	 * @return the new deadline for the extension.
 	 */
 	public Deadline getNewDeadline() {
 		// initial set up code below - check if this needs updating
@@ -66,8 +67,8 @@ public class Extension extends VersionControlEntity {
 	}
 
 	/**
-	 * Getter for Circumstances MultilineString.
-	 * @return MultilineString value
+	 * Returns the current extension circumstances as a MultilineString.
+	 * @return current circumstances of the extension.
 	 */
 	public MultilineString getCircumstances() {
 		// initial set up code below - check if this needs updating
@@ -75,17 +76,19 @@ public class Extension extends VersionControlEntity {
 	}
 
 	/**
-	 * Getter for Approval Status.
-	 * @return ApprovalStatus value
+	 * Returns the current status of approval for the extension.
+	 * @return the current status of approval for the extension.
 	 */
 	public ApprovalStatus getApprovalStatus() {
 		// initial set up code below - check if this needs updating
 		return approvalStatus;
 	}
 
+	// setters
 	/**
-	 * Setter for the Circumstances.
-	 * @param newCircumstances : given values is of type MultilineString
+	 * Sets the current circumstances of the extension.
+	 * @param newCircumstances
+	 * 				The new circumstances to set.
 	 */
 	public void setCircumstances(MultilineString newCircumstances) {
 		// initial set up code below - check if this needs updating
@@ -93,8 +96,9 @@ public class Extension extends VersionControlEntity {
 	}
 
 	/**
-	 * Setter for the new Deadline.
-	 * @param newNewDeadline : given values is of type Deadline
+	 * Sets the new deadline for the extension.
+	 * @param newNewDeadline
+	 * 				The new deadline for the extension.
 	 */
 	public void setNewDeadline(Deadline newNewDeadline) {
 		// initial set up code below - check if this needs updating
@@ -102,8 +106,9 @@ public class Extension extends VersionControlEntity {
 	}
 
 	/**
-	 * Set's the Approval status.
-	 * @param newApprovalStatus : given value is of type ApprovalStatus
+	 * Sets the current extension approval status.
+	 * @param newApprovalStatus
+	 * 				The new extension approval status
 	 */
 	public void setApprovalStatus(ApprovalStatus newApprovalStatus) {
 		// initial set up code below - check if this needs updating
