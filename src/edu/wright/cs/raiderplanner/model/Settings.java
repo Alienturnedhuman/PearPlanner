@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 /**
  * Class to load and save settings to a
@@ -46,6 +47,9 @@ public class Settings {
 	// Global Parameters with default values
 	private boolean isAccountStartup = false;
 	private String accountFilePath = "";
+	private String toolBarColor = "026937FF";
+	private String toolBarTextColor = "FFFFFFFF";
+	private String toolBarIconColor = "FFFFFFFF";
 
 	/**
 	 * Constructor loads the settings from
@@ -68,6 +72,9 @@ public class Settings {
 			// Insert default values into prop
 			this.prop.setProperty("isAccountStartup", String.valueOf(this.isAccountStartup));
 			this.prop.setProperty("filePath", this.accountFilePath);
+			this.prop.setProperty("toolBarColor", this.toolBarColor);
+			this.prop.setProperty("toolBarTextColor", this.toolBarTextColor);
+			this.prop.setProperty("toolBarIconColor", this.toolBarIconColor);
 			// Save config.properties to project root folder
 			this.prop.store(output, null);
 		} catch (IOException io) {
@@ -102,6 +109,9 @@ public class Settings {
 			// Get the property value and assign it to variable
 			this.isAccountStartup = Boolean.parseBoolean(prop.getProperty("isAccountStartup"));
 			this.accountFilePath = prop.getProperty("filePath");
+			this.toolBarColor = prop.getProperty("toolBarColor");
+			this.toolBarTextColor = prop.getProperty("toolBarTextColor");
+			this.toolBarIconColor = prop.getProperty("toolBarIconColor");
 		} catch (IOException ex) {
 			UiManager.reportError("Error, unable to load config.properties.");
 		} finally {
@@ -128,10 +138,16 @@ public class Settings {
 				// Assign property files
 				this.prop.setProperty("isAccountStartup", String.valueOf(this.isAccountStartup));
 				this.prop.setProperty("filePath", this.accountFilePath);
+				this.prop.setProperty("toolBarColor", this.toolBarColor);
+				this.prop.setProperty("toolBarTextColor", this.toolBarTextColor);
+				this.prop.setProperty("toolBarIconColor", this.toolBarIconColor);
 			} else {
-				// File did not exists so do not use for startup.
+				// File did not exists so do not use.
 				this.prop.setProperty("isAccountStartup", "False");
 				this.prop.setProperty("filePath", "");
+				this.prop.setProperty("toolBarColor", "026937FF");
+				this.prop.setProperty("toolBarTextColor", "FFFFFFFF");
+				this.prop.setProperty("toolBarIconColor", "FFFFFFFF");
 			}
 			// Set output stream to config.properties
 			output = new FileOutputStream("config.properties");
@@ -152,6 +168,16 @@ public class Settings {
 	}
 
 	/**
+	 * Determines if a string is a valid hex color.
+	 * @param colorHexString - String with the color represented by hex.
+	 * @return boolean - Returns true if the colorHexString matches the hex regex pattern.
+	 */
+	public boolean isColorHex(String colorHexString) {
+		Pattern colorPattern = Pattern.compile("([0-9a-fA-F]{8})");
+		return colorPattern.matcher(colorHexString).matches();
+	}
+
+	/**
 	 * Sets the isAccountStartup variable.
 	 * @param isAccountStartupTemp - Value for isAccountStartup.
 	 */
@@ -168,6 +194,30 @@ public class Settings {
 	}
 
 	/**
+	 * Sets the toolBarColor variable.
+	 * @param toolBarColorTemp - Value for toolBarColor.
+	 */
+	public void setToolBarColor(String toolBarColorTemp) {
+		this.toolBarColor = toolBarColorTemp;
+	}
+
+	/**
+	 * Sets the toolBarTextColor variable.
+	 * @param toolBarColorTextTemp - Value for toolBarTextColor.
+	 */
+	public void setToolBarTextColor(String toolBarColorTextTemp) {
+		this.toolBarTextColor = toolBarColorTextTemp;
+	}
+
+	/**
+	 * Sets the toolBarIconColor variable.
+	 * @param toolBarIconColorTemp - Value for toolBarIconColor.
+	 */
+	public void setToolBarIconColor(String toolBarIconColorTemp) {
+		this.toolBarIconColor = toolBarIconColorTemp;
+	}
+
+	/**
 	 * Returns whether the account startup is used or not.
 	 * @return boolean isAccountStartup
 	 */
@@ -181,5 +231,29 @@ public class Settings {
 	 */
 	public String getDefaultFilePath() {
 		return this.accountFilePath;
+	}
+
+	/**
+	 * Returns the color of the ToolBar.
+	 * @return String toolBarColor
+	 */
+	public String getToolBarColor() {
+		return this.toolBarColor;
+	}
+
+	/**
+	 * Returns the color of the ToolBar Text.
+	 * @return String toolBarColor
+	 */
+	public String getToolBarTextColor() {
+		return this.toolBarTextColor;
+	}
+
+	/**
+	 * Returns the color of the ToolBar Icon.
+	 * @return String toolBarColor
+	 */
+	public String getToolBarIconColor() {
+		return this.toolBarIconColor;
 	}
 }

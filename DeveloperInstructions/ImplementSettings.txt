@@ -1,7 +1,7 @@
 To implement functionality for a setting:
 1.	Add controls within the SettingsController. 
 		For reference: https://docs.oracle.com/javafx/2/api/javafx/scene/control/package-summary.html
-2.	Create event handler methods within SettingsController. These should call the methods in with Settings.java.
+2.	Create event handler methods within SettingsController. These should call the methods in Settings.java.
 3.	Create Global Parameters with default values in the Settings.java. These represent the values that will be saved within the config.properties.
 4.	In the createConfig(), add property values using a string as the key and then the value assigned to it.
 		Example:
