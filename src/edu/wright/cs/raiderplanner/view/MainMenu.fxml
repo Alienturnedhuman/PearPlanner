@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
@@ -15,7 +14,6 @@
         <ToolBar fx:id="toolBar" minHeight="56.0" style="-fx-background-color: #026937" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
                 <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/menu.png');" styleClass="button-image" />
-                <HBox prefWidth="146" />
                 <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                     <children>
                         <Label fx:id="title" style="-fx-font-family: Ariel; -fx-text-fill: white; -fx-font-size: 2.5em" text="Study Dashboard" />
@@ -63,6 +61,8 @@
                         <ColumnConstraints hgrow="ALWAYS" />
                     </columnConstraints>
                     <rowConstraints>
+                  <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="30.0" />
+                  <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="30.0" />
                         <RowConstraints maxHeight="45.0" minHeight="10.0" />
                         <RowConstraints maxHeight="45.0" minHeight="10.0" />
                         <RowConstraints maxHeight="45.0" minHeight="10.0" />
@@ -75,7 +75,7 @@
                   <RowConstraints />
                     </rowConstraints>
                     <children>
-                        <HBox>
+                        <HBox GridPane.rowIndex="2">
                            <children>
                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                    <HBox.margin>
@@ -89,8 +89,7 @@
                             </Button>
                            </children>
                         </HBox>
-
-                        <HBox GridPane.rowIndex="1">
+                        <HBox GridPane.rowIndex="3">
    <children>
                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                    <HBox.margin>
@@ -105,7 +104,7 @@
                         </HBox>
 
 
-                        <HBox GridPane.rowIndex="2">
+                        <HBox GridPane.rowIndex="4">
    <children>
                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                    <HBox.margin>
@@ -119,7 +118,7 @@
    </children>
                         </HBox>
 
-                        <HBox GridPane.rowIndex="3">
+                        <HBox GridPane.rowIndex="5">
    <children>
                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                    <HBox.margin>
@@ -133,7 +132,7 @@
    </children>
                         </HBox>
 
-                        <GridPane vgap="15" GridPane.rowIndex="4">
+                        <GridPane vgap="15" GridPane.rowIndex="6">
    <children>
                              <HBox GridPane.rowIndex="1">
                                 <children>
@@ -187,7 +186,7 @@
                      </rowConstraints>
                       </GridPane>
 
-                        <GridPane vgap="15" GridPane.rowIndex="5">
+                        <GridPane vgap="15" GridPane.rowIndex="7">
    <children>
                              <HBox GridPane.rowIndex="1">
                                 <children>
@@ -241,36 +240,32 @@
                      </rowConstraints>
 
                       </GridPane>
-                  <HBox GridPane.rowIndex="6">
-                     <children>
-                        <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false">
-                           <image>
-                              <Image url="/edu/wright/cs/raiderplanner/content/line.png" />
-                           </image>
-                           <HBox.margin>
-                              <Insets left="0" />
-                           </HBox.margin>
-                        </ImageView>
-                     </children>
-                  </HBox>
-                  <HBox GridPane.rowIndex="7">
+                  <HBox GridPane.rowIndex="1">
                      <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="/edu/wright/cs/raiderplanner/content/settings_icon.png" />
+                              <Image url="/edu/wright/cs/raiderplanner/content/studyprofiles_small.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="5" />
                            </HBox.margin>
                         </ImageView>
-                        <Button fx:id="settings" onAction="#showSettings" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;" text="Settings" />
+                        <Button fx:id="openProfile" onAction="#openProfile" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Open Profile" />
                      </children>
                   </HBox>
-                  <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false" GridPane.rowIndex="9">
-                     <image>
-                        <Image url="/edu/wright/cs/raiderplanner/content/line.png" />
-                     </image>
-                  </ImageView>
+                  <HBox>
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="/edu/wright/cs/raiderplanner/content/studyprofiles_small.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="5" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Button fx:id="newProfile" onAction="#createNewProfile" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="New Profile" />
+                     </children>
+                  </HBox>
                     </children>
                 </GridPane>
             <ImageView fitHeight="2.0" fitWidth="173" layoutY="49.0" pickOnBounds="true" preserveRatio="false">

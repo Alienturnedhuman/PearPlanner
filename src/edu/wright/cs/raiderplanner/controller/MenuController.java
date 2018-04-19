@@ -21,6 +21,7 @@
 
 package edu.wright.cs.raiderplanner.controller;
 
+import edu.wright.cs.raiderplanner.model.Account;
 import edu.wright.cs.raiderplanner.model.Activity;
 import edu.wright.cs.raiderplanner.model.Assignment;
 import edu.wright.cs.raiderplanner.model.Coursework;
@@ -107,6 +108,7 @@ import javafx.util.Duration;
 import jfxtras.scene.control.agenda.Agenda;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -114,6 +116,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -165,6 +168,10 @@ public class MenuController implements Initializable {
 	private Button showNotification;
 	@FXML
 	private Button showDash;
+	@FXML
+	private Button newProfile;
+	@FXML
+	private Button openProfile;
 	@FXML
 	private Button addActivity;
 	@FXML
@@ -482,6 +489,82 @@ public class MenuController implements Initializable {
 		moduleBox.setFitToWidth(true);
 		GridPane.setColumnSpan(moduleBox, GridPane.REMAINING);
 		this.mainContent.addRow(2, moduleBox);
+	}
+
+	/**
+	 * Handles when the user selects the new profile button on the main screen.
+	 */
+	public void createNewProfile() {
+		MainController.save();
+		File plannerFile = null;
+		try {
+			Account newAccount = MainController.ui.createAccount();
+			StudyPlannerController study = new StudyPlannerController(newAccount);
+			// Welcome notification:
+			Notification not = new Notification("Welcome!", new GregorianCalendar(),
+					"Thank you for using RaiderPlanner!");
+			study.getPlanner().addNotification(not);
+			MainController.setSpc(study);
+			plannerFile = MainController.ui.savePlannerFileDialog();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (plannerFile != null) {
+			if (plannerFile.getParentFile().exists()) {
+				if (plannerFile.getParentFile().canRead()) {
+					if (plannerFile.getParentFile().canWrite()) {
+						MainController.setPlannerFile(plannerFile);
+						MainController.save();
+					} else {
+						UiManager.reportError("Directory can not be written to.");
+					}
+				} else {
+					UiManager.reportError("Directory cannot be read from.");
+				}
+
+			} else {
+				UiManager.reportError("Directory does not exist.");
+			}
+		}
+		MainController.loadFile(plannerFile);
+		try {
+			MainController.ui.reloadMainMenu();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Handles when the user selects the open profile button on the main screen.
+	 */
+	public void openProfile() {
+		MainController.save();
+		File plannerFile = MainController.ui.loadPlannerFileDialog();
+		MainController.setPlannerFile(plannerFile);
+		if (plannerFile != null) {
+			if (plannerFile.exists()) {
+				if (plannerFile.canRead()) {
+					if (plannerFile.canWrite()) {
+						MainController.setPlannerFile(plannerFile);
+					} else {
+						UiManager.reportError("Cannot write to file.");
+					}
+				} else {
+					UiManager.reportError("Cannot read file.");
+				}
+
+			} else {
+				UiManager.reportError("File does not exist.");
+			}
+		}
+		MainController.loadFile(plannerFile);
+		try {
+			MainController.ui.reloadMainMenu();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

@@ -152,6 +152,17 @@ public class UiManager {
 	}
 
 	/**
+	 * Relods the main page after a new profile is open.
+	 * @throws Exception When reloading the menu.
+	 */
+	public void reloadMainMenu() throws Exception {
+		FXMLLoader loader = new FXMLLoader(mainMenuFxml);
+		loader.setController(UiManager.mc);
+		Parent root = loader.load();
+		mainStage.getScene().setRoot(root);
+	}
+
+	/**
 	 * Displays the main menu in the current stage.
 	 * Uses the mainStage set forth by the main menu on start up.
 	 *
@@ -633,6 +644,14 @@ public class UiManager {
 	public static void areYouFeelingLucky() {
 		while (UiManager.confirm("Are you feeling lucky?") == (Math.random() < 0.5)) {
 		}
+	}
+
+	/**
+	 * The save folder location.
+	 * @return The save folder location.
+	 */
+	public static File getSavesFolder() {
+		return savesFolder;
 	}
 
 }

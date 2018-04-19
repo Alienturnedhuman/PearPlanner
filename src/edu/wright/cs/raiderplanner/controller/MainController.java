@@ -21,9 +21,11 @@
 
 package edu.wright.cs.raiderplanner.controller;
 
+import edu.wright.cs.raiderplanner.model.Account;
 import edu.wright.cs.raiderplanner.model.Event;
 import edu.wright.cs.raiderplanner.model.HubFile;
 import edu.wright.cs.raiderplanner.model.ICalExport;
+import edu.wright.cs.raiderplanner.model.Notification;
 import edu.wright.cs.raiderplanner.model.Settings;
 import edu.wright.cs.raiderplanner.model.StudyPlanner;
 import edu.wright.cs.raiderplanner.view.UiManager;
@@ -40,6 +42,7 @@ import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -101,30 +104,137 @@ public class MainController {
 	 * importing an existing Study Planner file.
 	 */
 	public static void initialise() {
-		try {
-			if (settings.getAccountStartup() == true) {
-				try {
-					File file = new File(settings.getDefaultFilePath());
-					if (file.exists() && !file.isDirectory()) {
-						plannerFile = file;
-					} else {
-						ui.showStartup();
+		if (settings.getAccountStartup() == true) {
+			File file = new File(settings.getDefaultFilePath());
+			if (file.exists() && !file.isDirectory()) {
+				plannerFile = file;
+			} else {
+				boolean noAccount = false;
+				File[] files = MainController.ui.getSavesFolder().listFiles();
+				if (files != null) {
+					if (files.length == 0) {
+						noAccount = true;
 					}
-				} catch (FileNotFoundException e) {
-					UiManager.reportError("Error, File does not exist.");
-					ui.showStartup();
-				} catch (IOException e) {
-					UiManager.reportError("Error, Invalid file.");
-					ui.showStartup();
+					if (files.length == 1
+							&& files[0].getName().contains("SamplePlanner.dat")) {
+						noAccount = true;
+					}
+				}
+				if (noAccount) {
+					try {
+						Account newAccount = MainController.ui.createAccount();
+						StudyPlannerController study =
+								new StudyPlannerController(newAccount);
+						// Welcome notification:
+						Notification not =
+								new Notification("Welcome!", new GregorianCalendar(),
+								"Thank you for using RaiderPlanner!");
+						study.getPlanner().addNotification(not);
+						MainController.setSpc(study);
+						plannerFile = MainController.ui.savePlannerFileDialog();
+						loadFile(plannerFile);
+						/*This is cating a general exception because the
+						 * createAccount method throws a general exception*/
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if (plannerFile != null) {
+						if (plannerFile.getParentFile().exists()) {
+							if (plannerFile.getParentFile().canRead()) {
+								if (plannerFile.getParentFile().canWrite()) {
+									MainController.setPlannerFile(plannerFile);
+									MainController.save();
+								} else {
+									UiManager.reportError("Directory can't be written to.");
+								}
+							} else {
+								UiManager.reportError("Directory cannot be read from.");
+							}
+						} else {
+							UiManager.reportError("Directory does not exist.");
+						}
+					}
+				} else {
+					long modifiedTime = Long.MIN_VALUE;
+					File modifiedFile = new File("");
+					for (int i = 0; i < files.length; ++i) {
+						if (files[i].lastModified() > modifiedTime) {
+							modifiedFile = files[i];
+							modifiedTime = files[i].lastModified();
+						}
+					}
+					plannerFile = modifiedFile;
+					// If a file is present:
+					loadFile(plannerFile);
+				}
+			}
+		} else {
+			boolean noAccount = false;
+			File[] files = MainController.ui.getSavesFolder().listFiles();
+			if (files != null) {
+				if (files.length == 0) {
+					noAccount = true;
+				}
+				if (files.length == 1 && files[0].getName().contains("SamplePlanner.dat")) {
+					noAccount = true;
+				}
+			}
+			if (noAccount) {
+				try {
+					Account newAccount = MainController.ui.createAccount();
+					StudyPlannerController study = new StudyPlannerController(newAccount);
+					// Welcome notification:
+					Notification not = new Notification("Welcome!", new GregorianCalendar(),
+							"Thank you for using RaiderPlanner!");
+					study.getPlanner().addNotification(not);
+					MainController.setSpc(study);
+					plannerFile = MainController.ui.savePlannerFileDialog();
+					loadFile(plannerFile);
+					/*This is cating a general exception because the
+					 * createAccount method throws a general exception*/
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (plannerFile != null) {
+					if (plannerFile.getParentFile().exists()) {
+						if (plannerFile.getParentFile().canRead()) {
+							if (plannerFile.getParentFile().canWrite()) {
+								MainController.setPlannerFile(plannerFile);
+								MainController.save();
+							} else {
+								UiManager.reportError("Directory can not be written to.");
+							}
+						} else {
+							UiManager.reportError("Directory cannot be read from.");
+						}
+
+					} else {
+						UiManager.reportError("Directory does not exist.");
+					}
 				}
 			} else {
-				ui.showStartup();
+				long modifiedTime = Long.MIN_VALUE;
+				File modifiedFile = new File("");
+				for (int i = 0; i < files.length; ++i) {
+					if (files[i].lastModified() > modifiedTime) {
+						modifiedFile = files[i];
+						modifiedTime = files[i].lastModified();
+					}
+				}
+				plannerFile = modifiedFile;
+				// If a file is present:
+				loadFile(plannerFile);
 			}
-		} catch (IOException e) {
-			UiManager.reportError("Invalid file.");
-			System.exit(1);
 		}
-		// If a file is present:
+	}
+
+	/**
+	 * Decrypts a file and loads it.
+	 * @param plannerFile the file to be loaded
+	 */
+	public static void loadFile(File plannerFile) {
 		if (plannerFile.exists()) {
 			try {
 				Cipher cipher = Cipher.getInstance("Blowfish");
@@ -183,7 +293,6 @@ public class MainController {
 
 	/**
 	 * Display the main menu.
-	 * Stage will be created.
 	 */
 	public static void main() {
 		try {
@@ -309,7 +418,7 @@ public class MainController {
 	}
 
 	/**
-	 * Function exports calendar ICS file to user defined location.
+         * Function exports calendar ICS file to user defined location.
 	 */
 	public static void exportCalendar() {
 		ICalExport icalExport = new ICalExport();

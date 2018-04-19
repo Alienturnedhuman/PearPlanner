@@ -80,12 +80,10 @@ public class AccountController implements Initializable {
 	}
 
 	/**
-	 * Determines if the user has entered a valid salutation and sets the style
-	 * accordingly.
-	 *
+	 * Determines if the user has entered a valid salutation and sets the style accordingly.
 	 * @return true if the user entered a valid salutation.
 	 */
-	public boolean isValidSalutation() {
+	public boolean validateSalutation() {
 		if (!Person.validSalutation(this.salutation.getText().trim())) {
 			return false;
 		} else {
@@ -95,12 +93,10 @@ public class AccountController implements Initializable {
 	}
 
 	/**
-	 * Determines if the user has entered a valid name and sets the style
-	 * accordingly.
-	 *
+	 * Determines if the user has entered a valid name and sets the style accordingly.
 	 * @return True if the user entered a valid name.
 	 */
-	public boolean isValidName() {
+	public boolean validateName() {
 		if (!Person.validName(this.fullName.getText().trim())) {
 			return false;
 		} else {
@@ -110,12 +106,10 @@ public class AccountController implements Initializable {
 	}
 
 	/**
-	 * Determines if the user has entered a valid email and sets the style
-	 * accordingly.
-	 *
+	 * Determines if the user has entered a valid email and sets the style accordingly.
 	 * @return True if the user entered a valid email.
 	 */
-	public boolean isValidEmail() {
+	public boolean validateEmail() {
 		if (this.email.getText().trim().isEmpty()
 				|| Person.validEmail(this.email.getText().trim())) {
 			this.email.setStyle("");
@@ -126,12 +120,10 @@ public class AccountController implements Initializable {
 	}
 
 	/**
-	 * Determines if the user has entered a valid account number and sets the
-	 * style accordingly.
-	 *
+	 * Determines if the user has entered a valid account number and sets the style accordingly.
 	 * @return True if the user entered a valid account number.
 	 */
-	public boolean isValidAcctNumber() {
+	public boolean validateNumber() {
 		if (accountNo.getText().trim().length() == 7) {
 			if (accountNo.getText().trim().charAt(0) != 'w') {
 				return false;
@@ -157,27 +149,26 @@ public class AccountController implements Initializable {
 
 	/**
 	 * Handles the actions taken when the user tries to submit a new account.
-	 * The appropriate warnings and errors are displayed if the user enters
-	 * incorrect information. If a user enters an invalid input, they will be
-	 * taken back to the page, to change fields.
+	 * The appropriate warnings and errors are displayed if the user enters incorrect information.
+	 * If a user enters an invalid input, they will be taken back to the page, to change fields.
 	 */
 	public void handleSubmit() {
 		String invalidMessage = "";
 		boolean validSuccess = true;
 		boolean validName = true;
-		if (!isValidAcctNumber()) {
+		if (!validateNumber()) {
 			invalidMessage += "Please enter a valid W Number\n";
 			validSuccess = false;
 		}
-		if (!isValidName()) {
+		if (!validateName()) {
 			invalidMessage += "Please enter a valid name\n";
 			validSuccess = false;
 		}
-		if (!isValidEmail()) {
+		if (!validateEmail()) {
 			invalidMessage += "Please enter a valid email\n";
 			validSuccess = false;
 		}
-		if (!isValidSalutation()) {
+		if (!validateSalutation()) {
 			invalidMessage += "Please enter a valid salutation\n";
 			validSuccess = false;
 		}
@@ -209,9 +200,7 @@ public class AccountController implements Initializable {
 	}
 
 	/**
-	 * Displays dialog and handles appropriate user choices if the full name
-	 * field is empty.
-	 *
+	 * Displays dialog and handles appropriate user choices if the full name field is empty.
 	 * @return True if the user selects Okay
 	 */
 	public boolean handleEmptyName() {
