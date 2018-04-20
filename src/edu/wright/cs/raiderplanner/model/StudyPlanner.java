@@ -47,7 +47,9 @@ public class StudyPlanner implements Serializable {
 	private HashMap<ModelEntity, boolean[]> deadlineNotifications = new HashMap<>();
 	private ArrayList<VersionControlEntity> versionControlLibrary = new ArrayList<>();
 
-	private StudyProfile currentStudyProfile;
+	private StudyProfile currentStudyProfile = new StudyProfile(new HubFile(0,
+		0,0,new ArrayList<Module>(),new ArrayList<VersionControlEntity>(),
+		new ArrayList<Event>(),"No semester",new MultilineString("No details"),"No UId"));
 
 	// public methods
 
