@@ -158,5 +158,5 @@ When crafting a pull request to be submitted as a project assignment, there are 
    * If the merge requirement is waived, points will be awarded as for any other pull request
    * All other criteria for a *complete* pull request will still apply, as will the assignment deadline
  * Disputes over points awarded should be addressed directly to the instructor
-* Waiting for the last minute is a nearly certain way to ensure that you will run into problems and end up losing points
+ * Waiting for the last minute is a nearly certain way to ensure that you will run into problems and end up losing points
 
