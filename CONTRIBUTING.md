@@ -141,6 +141,7 @@ When crafting a pull request to be submitted as a project assignment, there are 
  * The assignment deadline is the deadline by which the pull request link must be submitted to the Pilot dropbox for the project assignment
  * When the link is submitted, the pull request must be *complete*
    * A *complete* pull request is one which meets all of the guidelines established in the previous section
+   * Note that the guidelines for a good commit message apply to a pull request message/comment as well
    * A pull request which is not complete (e.g., improper commit messages, extraneous changes, missing issue references, failing build, etc.) may be rejected
  * If a pull request is rejected, you will need to fix whatever is wrong and submit a new pull request
    * A link to the new pull request will need to be submitted to the Pilot dropbox
