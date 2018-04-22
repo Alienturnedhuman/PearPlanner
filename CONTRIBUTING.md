@@ -145,6 +145,7 @@ When crafting a pull request to be submitted as a project assignment, there are 
  * If a pull request is rejected, you will need to fix whatever is wrong and submit a new pull request
    * A link to the new pull request will need to be submitted to the Pilot dropbox
    * If the new link is submitted after the assignment deadline, points may be deducted for being late
+   * If an old pull request is closed and a new pull request submitted in its place, you **must** reference the old pull request in the comment of the new pull request
  * Pull requests are processed in the order submitted
    * If an earlier pull request is merged and subsequently creates a conflict with your pull request, you will be asked to resolve the conflict
    * If you must resolve conflicts arising from a merge of another pull request, you will not be penalized for being late, assuming that your pull request was otherwise *complete* prior to the deadline
