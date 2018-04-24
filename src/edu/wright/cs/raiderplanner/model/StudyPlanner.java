@@ -47,7 +47,9 @@ public class StudyPlanner implements Serializable {
 	private HashMap<ModelEntity, boolean[]> deadlineNotifications = new HashMap<>();
 	private ArrayList<VersionControlEntity> versionControlLibrary = new ArrayList<>();
 
-	private StudyProfile currentStudyProfile;
+	private StudyProfile currentStudyProfile = new StudyProfile(new HubFile(0,
+		0,0,new ArrayList<Module>(),new ArrayList<VersionControlEntity>(),
+		new ArrayList<Event>(),"No semester",new MultilineString("No details"),"No UId"));
 
 	// public methods
 
@@ -58,6 +60,8 @@ public class StudyPlanner implements Serializable {
 	}
 
 	/**
+	 * Return a String array of studyProfile names.
+	 *
 	 * @return a String array of studyProfile names.
 	 */
 	public String[] getListOfStudyProfileNames() {
@@ -70,6 +74,8 @@ public class StudyPlanner implements Serializable {
 	}
 
 	/**
+	 * Return an array of study profiles.
+	 *
 	 * @return an array of study profiles.
 	 */
 	public StudyProfile[] getStudyProfiles() {
@@ -108,8 +114,8 @@ public class StudyPlanner implements Serializable {
 	/**
 	 * Check whether this StudyPlanner contains a StudyProfile with the given parameters.
 	 *
-	 * @param sYear year
-	 * @param sSem  semester number
+	 * @param syear year
+	 * @param ssem  semester number
 	 * @return whether this StudyProfile exists
 	 */
 	public boolean containsStudyProfile(int syear, int ssem) {
@@ -177,7 +183,7 @@ public class StudyPlanner implements Serializable {
 	/**
 	 * Returns a HashMap that contains information about Deadline notifications.
 	 *
-	 * @return.
+	 * @return a HashMap that contains information about Deadline notifications.
 	 */
 	public HashMap<ModelEntity, boolean[]> getDeadlineNotifications() {
 		return deadlineNotifications;
