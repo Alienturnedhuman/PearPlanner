@@ -114,9 +114,9 @@ public class ModelEntityTest {
 	@Test
 	public void setDetails3() throws Exception {
 		// Testing setDetails with multiline String argument
-		MultilineString multilineString = new MultilineString("New details to be added ");
-		modelEntity.setDetails(multilineString);
-		assertArrayEquals(multilineString.getAsArray(), modelEntity.getDetails().getAsArray());
+		MultilineString multilineStr = new MultilineString("New details to be added ");
+		modelEntity.setDetails(multilineStr);
+		assertArrayEquals(multilineStr.getAsArray(), modelEntity.getDetails().getAsArray());
 	}
 
 	@Test
