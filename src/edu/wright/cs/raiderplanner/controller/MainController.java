@@ -110,7 +110,7 @@ public class MainController {
 				plannerFile = file;
 			} else {
 				boolean noAccount = false;
-				File[] files = MainController.ui.getSavesFolder().listFiles();
+				File[] files = UiManager.getSavesFolder().listFiles();
 				if (files != null) {
 					if (files.length == 0) {
 						noAccount = true;
