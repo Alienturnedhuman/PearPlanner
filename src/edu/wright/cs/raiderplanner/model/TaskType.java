@@ -30,6 +30,22 @@ import java.util.ArrayList;
  * PearPlanner/RaiderPlanner Created by Team BRONZE on 4/27/17.
  */
 public class TaskType extends ModelEntity {
+	/**
+	 * @return the taskDatabase
+	 */
+	public static ArrayList<TaskType> getTaskDatabase() {
+		return taskDatabase;
+	}
+
+	/**
+	 * @param taskDatabase the taskDatabase to set
+	 */
+	public static void setTaskDatabase(ArrayList<TaskType> taskDatabase) {
+		TaskType.taskDatabase = taskDatabase;
+	}
+
+
+
 	private static ArrayList<TaskType> taskDatabase = new ArrayList<>();
 
 	/**
