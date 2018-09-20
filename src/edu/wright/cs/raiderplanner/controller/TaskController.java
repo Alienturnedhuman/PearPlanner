@@ -274,23 +274,22 @@ public class TaskController implements Initializable {
 		this.taskTypeName.clear();
 		this.taskTypeMenu.setDisable(true);
 	}
+
 	/**
 	 * Add a new TaskType.
 	 */
 	public void removeTaskType() {
 		int doom = this.taskType.getSelectionModel().getSelectedIndex();
 		this.taskType.getItems().remove(doom);
-	    ArrayList <TaskType> temp = TaskType.getTaskDatabase();
-	    temp.remove(doom);
-	    TaskType.setTaskDatabase(temp);
+		ArrayList<TaskType> temp = TaskType.getTaskDatabase();
+		temp.remove(doom);
+		TaskType.setTaskDatabase(temp);
 		// Update the current list:
 		this.taskType.getItems().clear();
 		this.taskType.getItems().addAll(TaskType.listOfNames());
 		this.taskType.getSelectionModel().select(task.getName());
 		// =================
 	}
-
-	
 
 	/**
 	 * Submit the form and create a new Task.
