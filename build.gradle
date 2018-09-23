@@ -20,7 +20,7 @@
  */
 
 import org.gradle.plugins.ide.eclipse.model.Container
-
+import org.gradle.plugins.ide.eclipse.model.AccessRule
 /**
  * The application plugin facilitates creating an executable JVM application.
  */
@@ -43,6 +43,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'edu.sc.seis.launch4j'
 apply plugin: 'org.junit.platform.gradle.plugin'
+apply from: 'https://dl.bintray.com/content/shemnon/javafx-gradle/8.1.1/javafx.plugin'
 
 compileJava {
 	sourceCompatibility = JavaVersion.VERSION_1_8
@@ -173,6 +174,17 @@ tasks.withType(FindBugs) {
 		// html.stylesheet resources.text.fromFile( 'config/xsl/findbugs-custom.xsl' )
 	}
 	ignoreFailures = true
+}
+/** JavaFx dependency access rules so spotbugs can pick them up **/
+eclipse {
+	    classpath {
+	        file {
+	            whenMerged {
+	                def jre = entries.find { it.path.contains 'org.eclipse.jdt.launching.JRE_CONTAINER' }
+	                jre.accessRules.add(new AccessRule('0', 'javafx/**'))
+	            }
+	        }
+	    }
 }
 
 /**
