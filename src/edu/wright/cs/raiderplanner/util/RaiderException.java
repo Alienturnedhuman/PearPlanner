@@ -50,7 +50,6 @@ public class RaiderException extends Exception {
 	public String getMessage() {
 		return super.getMessage();
 	}
-	
 	/*
 	 * Displays Error message and exception.
 	 */
