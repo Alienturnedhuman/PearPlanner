@@ -121,6 +121,7 @@ public class UiManager {
 			Account newAccount = accountControl.getAccount();
 			return newAccount;
 		} else {
+			System.exit(0);
 			throw new Exception("User quit.");
 		}
 	}
