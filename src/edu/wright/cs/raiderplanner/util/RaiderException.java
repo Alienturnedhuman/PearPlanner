@@ -33,7 +33,6 @@ public class RaiderException extends Exception {
 		// Magic stuff
 		getMessage();
 	}
-	
 	/*
 	 * Method that displays the actual message.
 	 */
@@ -41,12 +40,10 @@ public class RaiderException extends Exception {
 		super(message);
 		message = "Error, Please try again or seek help";
 	}
-	
 	// Able to assign specific message
 	public String getMessage() {
 		return super.getMessage();
 	}
-	
 	// Displays Error message and exception.
 	public RaiderException(String message, Throwable throwable) {
 		super(message, throwable);
