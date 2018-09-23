@@ -181,14 +181,14 @@ tasks.withType(com.github.spotbugs.SpotBugsTask) {
 }
 /** JavaFx dependency access rules so spotbugs can pick them up **/
 eclipse {
-	    classpath {
-	        file {
-	            whenMerged {
-	                def jre = entries.find { it.path.contains 'org.eclipse.jdt.launching.JRE_CONTAINER' }
-	                jre.accessRules.add(new AccessRule('0', 'javafx/**'))
+	classpath {
+		file {
+	    	whenMerged {
+	        	def jre = entries.find { it.path.contains 'org.eclipse.jdt.launching.JRE_CONTAINER' }
+	            jre.accessRules.add(new AccessRule('0', 'javafx/**'))
 	            }
 	        }
-	    }
+	 }
 }
 
 /**
