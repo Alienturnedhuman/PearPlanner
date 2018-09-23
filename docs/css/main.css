@@ -1,0 +1,74 @@
+/**************************************************************************/
+/***** CSS file created by James Languirand for CEG3120 Fall 2017 WSU *****/
+/**************************************************************************/
+
+@media screen and (max-width:400px){
+	html{ 
+		font-size: 1em; 
+		padding-top: 10px;
+	}
+	iframe{
+		width: 200px;
+		height: 112px;
+	}
+}
+
+@media screen and (min-width:401px) and (max-width:756px){
+	html{
+		font-size: 1em; 
+		padding-top: 10px;
+	}
+	iframe{
+		width: 320px;
+		height: 180px;
+	}
+}
+
+@media screen and (min-width:757px) and (max-width:1079px){
+	html{ 
+		font-size: 1em;
+		padding-top: 10px;
+	}
+	iframe{
+		width: 640px;
+		height: 360px;
+	}
+}
+
+@media screen and (min-width:1080px){
+	html{
+		font-size: 1em;
+		padding-top: 10px;
+	}
+}
+
+#download {
+	background-color: white;
+	border: 3px solid #008000;
+	border-radius: 15px;
+	color: #008000;
+	padding: 20px 42px;
+	margin-bottom: 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 30px;
+}
+
+#download:hover {
+	background-color: #fff5cc;
+	cursor: pointer;
+}
+
+footer {
+	font-size: 20px;
+	margin-top: 35px;
+	padding: 20px;
+	background-color: #CEA052;
+	color: white;
+	text-align: center;
+}
+
+footer a {
+	color: #005ce6;
+}

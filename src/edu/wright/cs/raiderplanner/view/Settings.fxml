@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" stylesheets="@../content/stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ToolBar fx:id="toolBar" minHeight="56.0" style="-fx-background-color: #026937" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <items>
+                <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/menu.png');" styleClass="button-image" />
+                <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label fx:id="title" style="-fx-font-family: Ariel; -fx-text-fill: white; -fx-font-size: 2.5em;" text="Settings" />
+                    </children>
+                </HBox>
+                <HBox prefWidth="25" />
+            </items>
+        </ToolBar>
+        <GridPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+            <children>
+                <HBox fx:id="topBox" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                    </children>
+                </HBox>
+            </children>
+         <columnConstraints>
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+         </rowConstraints>
+        </GridPane>
+        <AnchorPane fx:id="navList" prefWidth="173.0" style="-fx-background-color: #5C7167;" translateX="-222" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox style="-fx-background-color: #5C7167; -fx-padding: 8;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                      <Button fx:id="closeDrawer" prefWidth="21" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/close.png'); -fx-background-color: transparent; -fx-cursor: hand;" styleClass="button-image">
+                      </Button>
+
+                      <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="   Settings" />
+                    </children>
+                </HBox>
+                <GridPane vgap="15" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="45.0" minHeight="10.0" />
+                        <RowConstraints maxHeight="45.0" minHeight="10.0" />
+                        <RowConstraints maxHeight="45.0" minHeight="10.0" />
+                        <RowConstraints maxHeight="45.0" minHeight="10.0" />
+                        <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                    </rowConstraints>
+                    <children>
+                        <HBox GridPane.rowIndex="1">
+                           <children>
+                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                   <HBox.margin>
+                                       <Insets left="5" />
+                                   </HBox.margin>
+                                   <image>
+                                       <Image url="/edu/wright/cs/raiderplanner/content/settings_general.png" />
+                                   </image>
+                               </ImageView>
+                               <Button fx:id="generalBtn" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="General">
+                            </Button>
+                           </children>
+                        </HBox>
+
+                        <HBox GridPane.rowIndex="2">
+   <children>
+                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                   <HBox.margin>
+                                       <Insets left="5" />
+                                   </HBox.margin>
+                                   <image>
+                                       <Image url="/edu/wright/cs/raiderplanner/content/settings_account.png" />
+                                   </image>
+                               </ImageView>
+                               <Button fx:id="accountBtn" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Account" />
+   </children>
+                        </HBox>
+
+
+                        <HBox GridPane.rowIndex="3">
+   <children>
+                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                   <HBox.margin>
+                                       <Insets left="5" />
+                                   </HBox.margin>
+                                   <image>
+                                       <Image url="/edu/wright/cs/raiderplanner/content/settings_theme.png" />
+                                   </image>
+                               </ImageView>
+                               <Button fx:id="themeBtn" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Theme" />
+   </children>
+                        </HBox>
+
+                        <HBox GridPane.rowIndex="4">
+   <children>
+                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                   <HBox.margin>
+                                       <Insets left="5" />
+                                   </HBox.margin>
+                                   <image>
+                                       <Image url="/edu/wright/cs/raiderplanner/content/notification0.png" />
+                                   </image>
+                               </ImageView>
+                               <Button fx:id="notificationsBtn" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Notification" />
+   </children>
+                        </HBox>
+                  <HBox>
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="/edu/wright/cs/raiderplanner/content/settings_about.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="5" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Button fx:id="aboutBtn" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="About" />
+                     </children>
+                  </HBox>
+                  <HBox GridPane.rowIndex="5">
+                     <children>
+                        <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false">
+                           <image>
+                              <Image url="/edu/wright/cs/raiderplanner/content/line.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="0" />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox GridPane.rowIndex="6">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="/edu/wright/cs/raiderplanner/content/settings_goBack.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="5" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Button fx:id="backBtn" onAction="#goBack" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;" text="Back" />
+                     </children>
+                  </HBox>
+                  <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false" GridPane.rowIndex="7">
+                     <image>
+                        <Image url="/edu/wright/cs/raiderplanner/content/line.png" />
+                     </image>
+                  </ImageView>
+                    </children>
+                </GridPane>
+            <ImageView fitHeight="2.0" fitWidth="173" layoutY="49.0" pickOnBounds="true" preserveRatio="false">
+               <image>
+                  <Image url="/edu/wright/cs/raiderplanner/content/line.png" />
+               </image>
+            </ImageView>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

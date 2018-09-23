@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" stylesheets="@../content/stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ToolBar fx:id="toolBar" minHeight="56.0" style="-fx-background-color: #026937" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <items>
+                <Button fx:id="openMenu" prefHeight="35.0" prefWidth="25.0" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/menu.png');" styleClass="button-image" />
+                <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label fx:id="title" style="-fx-font-family: Ariel; -fx-text-fill: white; -fx-font-size: 2.5em" text="Study Dashboard" />
+                    </children>
+                </HBox>
+                <HBox prefWidth="13" />
+
+                <Button fx:id="showNotification" prefHeight="35.0" prefWidth="39.0" styleClass="button-image" />
+                <HBox prefWidth="8" />
+
+                <Button fx:id="calendar" prefHeight="33.0" prefWidth="33.0" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/calendar.png');" styleClass="button-image" />
+                <HBox prefWidth="11" />
+
+                <Button fx:id="addActivity" onAction="#addActivity" prefHeight="33" prefWidth="33" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/addactivity_small.png');" styleClass="button-image" />
+                <HBox prefWidth="9" />
+
+            </items>
+        </ToolBar>
+        <GridPane fx:id="mainContent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+            <children>
+                <HBox fx:id="topBox" style="-fx-padding: 10 0;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                    </children>
+                </HBox>
+            </children>
+         <columnConstraints>
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+         </rowConstraints>
+        </GridPane>
+        <AnchorPane fx:id="navList" prefWidth="173.0" style="-fx-background-color: #5C7167;" translateX="-222" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox style="-fx-background-color: #5C7167; -fx-padding: 8;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                      <Button fx:id="closeDrawer" prefWidth="21" style="-fx-background-image: url('/edu/wright/cs/raiderplanner/content/close.png');                         -fx-background-color: transparent; -fx-cursor: hand;" styleClass="button-image">
+                      </Button>
+
+                      <Label style="-fx-text-fill: white; -fx-font-size: 1.5em" text="  Navigation" />
+                    </children>
+                </HBox>
+                <GridPane vgap="15" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <rowConstraints>
+                  <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="30.0" />
+                  <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints maxHeight="45.0" minHeight="10.0" />
+                        <RowConstraints maxHeight="45.0" minHeight="10.0" />
+                        <RowConstraints maxHeight="45.0" minHeight="10.0" />
+                        <RowConstraints maxHeight="45.0" minHeight="10.0" />
+                        <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                    </rowConstraints>
+                    <children>
+                        <HBox GridPane.rowIndex="2">
+                           <children>
+                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                   <HBox.margin>
+                                       <Insets left="5" />
+                                   </HBox.margin>
+                                   <image>
+                                       <Image url="/edu/wright/cs/raiderplanner/content/studydashboard.png" />
+                                   </image>
+                               </ImageView>
+                               <Button fx:id="showDash" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Study Dashboard">
+                            </Button>
+                           </children>
+                        </HBox>
+                        <HBox GridPane.rowIndex="3">
+   <children>
+                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                   <HBox.margin>
+                                       <Insets left="5" />
+                                   </HBox.margin>
+                                   <image>
+                                       <Image url="/edu/wright/cs/raiderplanner/content/milestones.png" />
+                                   </image>
+                               </ImageView>
+                               <Button fx:id="milestones" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Milestones" />
+   </children>
+                        </HBox>
+
+
+                        <HBox GridPane.rowIndex="4">
+   <children>
+                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                   <HBox.margin>
+                                       <Insets left="5" />
+                                   </HBox.margin>
+                                   <image>
+                                       <Image url="/edu/wright/cs/raiderplanner/content/module.png" />
+                                   </image>
+                               </ImageView>
+                               <Button fx:id="modules" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Modules" />
+   </children>
+                        </HBox>
+
+                        <HBox GridPane.rowIndex="5">
+   <children>
+                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                   <HBox.margin>
+                                       <Insets left="5" />
+                                   </HBox.margin>
+                                   <image>
+                                       <Image url="/edu/wright/cs/raiderplanner/content/studyprofiles_small.png" />
+                                   </image>
+                               </ImageView>
+                               <Button fx:id="studyProfiles" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Study Profiles" />
+   </children>
+                        </HBox>
+
+                        <GridPane vgap="15" GridPane.rowIndex="6">
+   <children>
+                             <HBox GridPane.rowIndex="1">
+                                <children>
+                                  <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false">
+                                      <HBox.margin>
+                                          <Insets left="0" />
+                                      </HBox.margin>
+                                      <image>
+                                          <Image url="/edu/wright/cs/raiderplanner/content/line.png" />
+                                      </image>
+                                  </ImageView>
+                                </children>
+                             </HBox>
+   
+                             <HBox GridPane.rowIndex="2">
+      <children>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                        <HBox.margin>
+                                            <Insets left="5" />
+                                        </HBox.margin>
+                                        <image>
+                                            <Image url="/edu/wright/cs/raiderplanner/content/chat.png" />
+                                        </image>
+                                    </ImageView>
+                                  <Button fx:id="chat" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Chat" GridPane.rowIndex="7" />
+      </children>
+                             </HBox>
+   
+                             <HBox GridPane.rowIndex="3">
+      <children>
+      	                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+      	                             <HBox.margin>
+      	                                 <Insets left="5" />
+      	                             </HBox.margin>
+      	                             <image>
+      	                                 <Image url="/edu/wright/cs/raiderplanner/content/help.png" />
+      	                             </image>
+      	                         </ImageView>
+      	                         <Button fx:id="help" onAction="#openBrowser" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Help" />
+      </children>
+   	                     </HBox>
+   </children>
+                     <columnConstraints>
+                        <ColumnConstraints />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
+                      </GridPane>
+
+                        <GridPane vgap="15" GridPane.rowIndex="7">
+   <children>
+                             <HBox GridPane.rowIndex="1">
+                                <children>
+                                  <ImageView fitHeight="2.0" fitWidth="173" pickOnBounds="true" preserveRatio="false">
+                                      <HBox.margin>
+                                          <Insets left="0" />
+                                      </HBox.margin>
+                                      <image>
+                                          <Image url="/edu/wright/cs/raiderplanner/content/line.png" />
+                                      </image>
+                                  </ImageView>
+                                </children>
+                             </HBox>
+   
+                             <HBox GridPane.rowIndex="2">
+      <children>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                        <HBox.margin>
+                                            <Insets left="5" />
+                                        </HBox.margin>
+                                        <image>
+                                            <Image url="/edu/wright/cs/raiderplanner/content/importhubfile_small.png" />
+                                        </image>
+                                    </ImageView>
+                                  <Button onAction="#importFile" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;" text="Import HUB file" />
+      </children>
+                             </HBox>
+   
+                             <HBox fx:id="exportCalBox" GridPane.rowIndex="3">
+      <children>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                        <HBox.margin>
+                                            <Insets left="5" />
+                                        </HBox.margin>
+                                        <image>
+                                            <Image url="/edu/wright/cs/raiderplanner/content/importhubfile_small.png" />
+                                        </image>
+                                    </ImageView>
+                                  <Button onAction="#exportCalendar" style="-fx-background-color: transparent;-fx-text-fill:white; -fx-cursor: hand;" text="Export Calendar" />
+      </children>
+                             </HBox>
+   </children>
+                     <columnConstraints>
+                        <ColumnConstraints />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
+
+                      </GridPane>
+                  <HBox GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="/edu/wright/cs/raiderplanner/content/studyprofiles_small.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="5" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Button fx:id="openProfile" onAction="#openProfile" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Open Profile" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="/edu/wright/cs/raiderplanner/content/studyprofiles_small.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="5" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Button fx:id="newProfile" onAction="#createNewProfile" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="New Profile" />
+                     </children>
+                  </HBox>
+                    </children>
+                </GridPane>
+            <ImageView fitHeight="2.0" fitWidth="173" layoutY="49.0" pickOnBounds="true" preserveRatio="false">
+               <image>
+                  <Image url="/edu/wright/cs/raiderplanner/content/line.png" />
+               </image>
+            </ImageView>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="notifications" prefHeight="400.0" prefWidth="288.0" style="-fx-background-color: #5C7167" translateX="-20.0" translateY="-500.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+            <children>
+                <ToolBar minHeight="50.0" style="-fx-background-color: #E4DEC7" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                        <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label style="-fx-text-fill: #026937" text="Notifications" />
+                            </children>
+                        </HBox>
+                        <Button onAction="#handleMarkAll" style="-fx-background-color: transparent; -fx-text-fill: black; -fx-cursor: hand" text="Mark all as read" />
+                    </items>
+                </ToolBar>
+                <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
+                    <content>
+                        <GridPane fx:id="notificationList">
+                            <columnConstraints>
+                                <ColumnConstraints maxWidth="286.0" prefWidth="286.0" />
+                            </columnConstraints>
+                        </GridPane>
+                    </content>
+                </ScrollPane>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

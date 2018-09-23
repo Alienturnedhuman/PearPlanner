@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/Test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="jfxtras-labs-samples-8.0-r6-20160701.060717-1 (2)" level="project" />
+    <orderEntry type="library" name="jfxtras-agenda-8.0-r6-20160529.090116-1" level="project" />
+    <orderEntry type="library" name="jfxtras-common-8.0-r5" level="project" />
+    <orderEntry type="library" name="jfxtras-agenda-8.0-r5" level="project" />
+    <orderEntry type="library" name="jfxtras-controls-8.0-r5" level="project" />
+    <orderEntry type="library" name="guava-21.0 (4)" level="project" />
+  </component>
+</module>
