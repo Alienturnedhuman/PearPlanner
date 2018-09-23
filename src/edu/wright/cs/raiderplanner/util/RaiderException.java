@@ -28,7 +28,9 @@ package edu.wright.cs.raiderplanner.util;
  */
 @SuppressWarnings("serial")
 public class RaiderException extends Exception {
-	
+	/*
+	 * Get the RaiderException
+	 */
 	public RaiderException() {
 		// Magic stuff
 		getMessage();
@@ -40,11 +42,18 @@ public class RaiderException extends Exception {
 		super(message);
 		message = "Error, Please try again or seek help";
 	}
-	// Able to assign specific message
+	/*
+	 * (Javadoc)
+	 * @see java.lang.Throwable#getMessage()
+	 * Able to assign specific message
+	 */
 	public String getMessage() {
 		return super.getMessage();
 	}
-	// Displays Error message and exception.
+	
+	/*
+	 * Displays Error message and exception.
+	 */
 	public RaiderException(String message, Throwable throwable) {
 		super(message, throwable);
 	}
