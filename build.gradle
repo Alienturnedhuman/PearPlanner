@@ -35,7 +35,7 @@ buildscript {
 	}
 	dependencies {
 		classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
-		classpath 'edu.sc.seis.gradle:launch4j:2.4.2'
+		classpath 'gradle.plugin.edu.sc.seis.gradle:launch4j:2.4.4'
 		classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.3"
 	}
 }
