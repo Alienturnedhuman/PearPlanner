@@ -32,7 +32,6 @@ public class RaiderException extends Exception {
 	 * Get the RaiderException
 	 */
 	public RaiderException() {
-		// Magic stuff
 		getMessage();
 	}
 	/*
