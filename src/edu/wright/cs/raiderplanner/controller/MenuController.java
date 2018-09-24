@@ -98,6 +98,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
