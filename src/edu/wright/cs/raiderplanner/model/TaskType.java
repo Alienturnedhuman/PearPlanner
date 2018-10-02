@@ -31,25 +31,13 @@ import java.util.ArrayList;
  */
 public class TaskType extends ModelEntity {
 	/**
-	 * @return the taskDatabase
+	 * the taskDatabase.
 	 */
-	public static ArrayList<TaskType> getTaskDatabase() {
-		return taskDatabase;
-	}
-
-	/**
-	 * @param taskDatabase the taskDatabase to set
-	 */
-	public static void setTaskDatabase(ArrayList<TaskType> taskDatabase) {
-		TaskType.taskDatabase = taskDatabase;
-	}
-
-
 
 	private static ArrayList<TaskType> taskDatabase = new ArrayList<>();
 
 	/**
-	 * @return Returns a array of names of the tasks in the taskDatabase ArrayList.
+	 * Returns a array of names of the tasks in the taskDatabase ArrayList.
 	 */
 	public static String[] listOfNames() {
 		String[] str = new String[taskDatabase.size()];
@@ -223,6 +211,17 @@ public class TaskType extends ModelEntity {
 			taskDatabase.add(this);
 		}
 	}
+	
+	public static ArrayList<TaskType> getTaskDatabase() {
+		return taskDatabase;
+	}
+
+	/**
+	 * taskDatabase the taskDatabase to set.
+	 */
+	public static void setTaskDatabase(ArrayList<TaskType> taskDatabase) {
+		TaskType.taskDatabase = taskDatabase;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -233,6 +232,7 @@ public class TaskType extends ModelEntity {
 			return false;
 		}
 	}
+	
 
 	/**
 	 * Equals method that takes a String instead of an object. Only checks against name
