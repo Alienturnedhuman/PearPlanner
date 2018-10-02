@@ -1,5 +1,7 @@
 /*
- * Copyright (C) 2018
+ * Copyright (C) 2018 - Adam Cone
+ *
+ *
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,18 +27,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Created by Adam Cone 09/22/2018
+ * Created by Adam Cone 09/22/2018.
  */
 public class RoomTest {
 	Building bd1;
 	Building bd2;
 	Room rm1;
 	Room rm2;
-	
+
 	/**
-	 * This test case should set up all of the objects necessary for the following tests in
-	 * 			this suite.
-	 * @throws Exception to handle when any of the required objects cannot be instantiated.
+	 * This test case sets up the objects necessary for each tests.
+	 *
+	 * @throws Exception
+	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@BeforeEach
 	public void setUp() throws Exception {
@@ -45,49 +48,58 @@ public class RoomTest {
 		rm1 = new Room("321", bd1);
 		rm2 = new Room("123", bd2);
 	}
-	
+
 	/**
 	 * This test case attempts to retrieve building object information.
-	 * @throws Exception to handle when any of the required objects cannot be instantiated.
+	 *
+	 * @throws Exception
+	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@Test
 	public void getBuilding() throws Exception {
 		assertEquals(bd1, rm1.getBuilding());
 	}
-	
+
 	/**
 	 * This test case attempts to retrieve room object information.
-	 * @throws Exception to handle when any of the required objects cannot be instantiated.
+	 *
+	 * @throws Exception
+	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@Test
 	public void getRoomNumber() throws Exception {
 		assertEquals("321", rm1.getRoomNumber());
 	}
-	
+
 	/**
 	 * This test case attempts to set building object information.
-	 * @throws Exception to handle when any of the required objects cannot be instantiated.
+	 *
+	 * @throws Exception
+	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@Test
 	public void setBuilding() throws Exception {
 		rm1.setBuilding(bd2);
 		assertEquals(bd2, rm1.getBuilding());
 	}
-	
+
 	/**
 	 * This test case attempts to set room object information.
-	 * @throws Exception to handle when any of the required objects cannot be instantiated.
+	 *
+	 * @throws Exception
+	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@Test
 	public void setRoomNumber() throws Exception {
 		rm1.setRoomNumber("foo");
 		assertEquals("foo", rm1.getRoomNumber());
 	}
-	
+
 	/**
-	 * After each run, this case removes all data from the Task objects to avoid
-	 * 			interference with other test runs.
-	 * @throws Exception to handle when the Task objects cannot be accessed.
+	 * After each run, this removes all data to avoid interference with other tests.
+	 *
+	 * @throws Exception
+	 *             to handle when the Task objects cannot be accessed.
 	 */
 	@AfterEach
 	public void tearDown() throws Exception {
