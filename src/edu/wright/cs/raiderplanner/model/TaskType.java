@@ -50,7 +50,7 @@ public class TaskType extends ModelEntity {
 	}
 
 	/**
-	 * @return Returns a array of task types of the tasks in the taskDatabase ArrayList.
+	 * Returns a array of task types of the tasks in the taskDatabase ArrayList.
 	 */
 	public static TaskType[] listOfTaskTypes() {
 		TaskType[] taskTypes = new TaskType[taskDatabase.size()];
@@ -211,7 +211,10 @@ public class TaskType extends ModelEntity {
 			taskDatabase.add(this);
 		}
 	}
-	
+
+	/**
+	 * Constructor for TaskType.
+	 */
 	public static ArrayList<TaskType> getTaskDatabase() {
 		return taskDatabase;
 	}
@@ -232,7 +235,7 @@ public class TaskType extends ModelEntity {
 			return false;
 		}
 	}
-	
+
 
 	/**
 	 * Equals method that takes a String instead of an object. Only checks against name
