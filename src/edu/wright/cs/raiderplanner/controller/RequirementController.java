@@ -108,7 +108,12 @@ public class RequirementController implements Initializable {
 		if (!this.name.getText().trim().isEmpty()
 				&& !this.quantity.getText().trim().isEmpty()
 				&& !this.time.getText().trim().isEmpty()
-				&& this.quantityType.getSelectionModel().getSelectedIndex() != -1) {
+				&& this.quantityType.getSelectionModel().getSelectedIndex() != -1
+				&& MainController.isNumeric(this.time.getText())
+				&& Double.parseDouble(this.time.getText()) > 0
+				&& MainController.isNumeric(this.quantity.getText())
+				&& Double.parseDouble(this.quantity.getText()) > 0
+				&& Double.parseDouble(this.quantity.getText()) % 1 == 0) {
 			this.submit.setDisable(false);
 		// =================
 		}
@@ -129,11 +134,12 @@ public class RequirementController implements Initializable {
 	}
 
 	/**
-	 * Validate data in the Quantity field.
+	 * Validate data in the Quantity field, including that it is an Integer.
 	 */
 	public void validateQuantity() {
 		if (!MainController.isNumeric(this.quantity.getText())
-				|| Integer.parseInt(this.quantity.getText()) < 0) {
+				|| Double.parseDouble(this.quantity.getText()) < 0
+				|| Double.parseDouble(this.quantity.getText()) % 1 > 0) {
 			this.quantity.setStyle("-fx-text-box-border:red;");
 			this.submit.setDisable(true);
 		} else {
