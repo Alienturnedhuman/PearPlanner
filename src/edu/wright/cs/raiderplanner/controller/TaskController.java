@@ -71,6 +71,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -107,6 +108,7 @@ public class TaskController implements Initializable {
 	@FXML private Button removeDep;
 	@FXML private ToggleButton markComplete;
 	@FXML private Button addTaskType;
+	@FXML private Button removeTaskType;
 	@FXML private MenuItem taskTypeMenu;
 
 	// Panes:
@@ -274,6 +276,22 @@ public class TaskController implements Initializable {
 	}
 
 	/**
+	 * Add a new TaskType.
+	 */
+	public void removeTaskType() {
+		int doom = this.taskType.getSelectionModel().getSelectedIndex();
+		this.taskType.getItems().remove(doom);
+		ArrayList<TaskType> temp = TaskType.getTaskDatabase();
+		temp.remove(doom);
+		TaskType.setTaskDatabase(temp);
+		// Update the current list:
+		this.taskType.getItems().clear();
+		this.taskType.getItems().addAll(TaskType.listOfNames());
+		this.taskType.getSelectionModel().select(task.getName());
+		// =================
+	}
+
+	/**
 	 * Submit the form and create a new Task.
 	 */
 	public void handleSubmit() {
@@ -389,6 +407,10 @@ public class TaskController implements Initializable {
 			if (event.isPrimaryButtonDown()) {
 				context.show(addTaskType, event.getScreenX(), event.getScreenY());
 			}
+		});
+
+		this.removeTaskType.setOnMousePressed(event -> {
+			removeTaskType();
 		});
 		// =================
 
