@@ -408,7 +408,7 @@ public class TaskController implements Initializable {
 				context.show(addTaskType, event.getScreenX(), event.getScreenY());
 			}
 		});
-		
+
 		this.removeTaskType.setOnMousePressed(event -> {
 			removeTaskType();
 		});
