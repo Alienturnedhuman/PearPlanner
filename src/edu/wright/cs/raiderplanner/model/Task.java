@@ -50,15 +50,26 @@ public class Task extends ModelEntity {
 
 	// public methods
 
-	// Getters:
+	/**
+	 * Getter for deadline.
+	 * @return Formatted String for the variable deadline
+	 */
 	public String getDeadline() {
 		return new SimpleDateFormat("dd/MM/yyyy").format(this.deadline.getDate());
 	}
 
+	/**
+	 * Getter for the deadline date.
+	 * @return Date for variable deadline
+	 */
 	public Date getDeadlineDate() {
 		return this.deadline.getDate();
 	}
 
+	/**
+	 * Getter for the weighting.
+	 * @return Integer for variable weighting
+	 */
 	public int getWeighting() {
 		return this.weighting;
 	}
@@ -72,18 +83,34 @@ public class Task extends ModelEntity {
 		return canCheckComplete() && checkedComplete;
 	}
 
+	/**
+	 * Getter for the type.
+	 * @return TaskType for variable type
+	 */
 	public TaskType getType() {
 		return this.type;
 	}
 
+	/**
+	 * Getter for the dependencies.
+	 * @return Task[] for variable dependencies
+	 */
 	public Task[] getDependencies() {
 		return this.dependencies.toArray(new Task[this.dependencies.size()]);
 	}
 
+	/**
+	 * Getter for the requirements.
+	 * @return Requirement[] for variable requirements
+	 */
 	public Requirement[] getRequirements() {
 		return this.requirements.toArray(new Requirement[this.requirements.size()]);
 	}
 
+	/**
+	 * Getter for the number of requirements.
+	 * @return Integer of the size of variable requirements
+	 */
 	public int requirementCount() {
 		return requirements.size();
 	}

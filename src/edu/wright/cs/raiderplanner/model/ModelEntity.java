@@ -177,7 +177,6 @@ public abstract class ModelEntity implements Serializable {
 	/**
 	 * Open the appropriate UI window for this class
 	 * To be overridden by children.
-	 * @return
 	 */
 	public abstract void open(MenuController.Window current);
 

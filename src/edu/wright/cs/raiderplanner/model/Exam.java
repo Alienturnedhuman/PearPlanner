@@ -47,7 +47,7 @@ public class Exam extends Assignment {
 
 	/**
 	 * This Getter method gets the Resit value.
-	 * @return
+	 * @return Exam for variable resit.
 	 */
 	public Exam getResit() {
 		return resit;
@@ -55,7 +55,7 @@ public class Exam extends Assignment {
 
 	/**
 	 * This Getter method gets the Exam event time slot.
-	 * @return
+	 * @return ExamEvent for variable timeSlot.
 	 */
 	public ExamEvent getTimeSlot() {
 		return timeSlot;
