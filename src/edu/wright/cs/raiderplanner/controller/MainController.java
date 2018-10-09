@@ -148,7 +148,7 @@ public class MainController {
 								UiManager.reportError("Directory does not exist.");
 							}
 						}
-						/*This is cating a general exception because the
+						/*This is catching a general exception because the
 						 * createAccount method throws a general exception*/
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -206,7 +206,7 @@ public class MainController {
 							UiManager.reportError("Directory does not exist.");
 						}
 					}
-					/*This is cating a general exception because the
+					/*This is catching a general exception because the
 					 * createAccount method throws a general exception*/
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
