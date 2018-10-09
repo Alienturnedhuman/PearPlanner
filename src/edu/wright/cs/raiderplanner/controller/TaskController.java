@@ -71,6 +71,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -107,6 +108,7 @@ public class TaskController implements Initializable {
 	@FXML private Button removeDep;
 	@FXML private ToggleButton markComplete;
 	@FXML private Button addTaskType;
+	@FXML private Button removeTaskType;
 	@FXML private MenuItem taskTypeMenu;
 
 	// Panes:
@@ -134,16 +136,8 @@ public class TaskController implements Initializable {
 	 * Handle changes to the input fields.
 	 */
 	public void handleChange() {
-		// Check the input fields:
-		if (!this.name.getText().trim().isEmpty()
-				&& !this.weighting.getText().trim().isEmpty()
-				&& !this.deadline.getEditor().getText().trim().isEmpty()
-				&& !this.deadline.getValue().isBefore(LocalDate.now())
-				&& this.taskType.getSelectionModel().getSelectedIndex() != -1) {
-			this.submit.setDisable(false);
-		// =================
-		}
-
+		// Try to unlock:
+		unlockSubmit();
 		// Process requirements and dependencies:
 		if (this.task != null) {
 			this.task.replaceDependencies(this.dependencies.getItems());
@@ -166,12 +160,41 @@ public class TaskController implements Initializable {
 	}
 
 	/**
+	 * Used to test all user entries needed before allowing the ok/submit button to be
+	 * 	pressed. Checks all input fields for incorrect data, including whether weighting
+	 * is an Integer.
+	 * @return true if unlock is successful, or false if not.
+	 */
+	public boolean unlockSubmit() {
+		if (!this.name.getText().trim().isEmpty()
+				&& this.name.getText() != null
+				&& !this.weighting.getText().trim().isEmpty()
+				&& this.weighting.getText() != null
+				&& MainController.isNumeric(this.weighting.getText())
+				&& Double.parseDouble(this.weighting.getText()) < 100
+				&& Double.parseDouble(this.weighting.getText()) > 0
+				&& Double.parseDouble(this.weighting.getText()) % 1 == 0
+				&& !this.deadline.getEditor().getText().trim().isEmpty()
+				&& !this.deadline.getValue().isBefore(LocalDate.now())
+				&& this.taskType.getSelectionModel().getSelectedIndex() != -1
+				&& !this.deadline.getValue().isBefore(LocalDate.now())) {
+			this.submit.setDisable(false);
+			return true;
+		} else {
+			this.submit.setDisable(true);
+			return false;
+		}
+	}
+
+	/**
 	 * Validate data in the Weighting field.
+	 * Confirms that input is an Integer.
 	 */
 	public void validateWeighting() {
 		if (!MainController.isNumeric(this.weighting.getText())
-				|| Integer.parseInt(this.weighting.getText()) > 100
-				|| Integer.parseInt(this.weighting.getText()) < 0) {
+				|| Double.parseDouble(this.weighting.getText()) > 100
+				|| Double.parseDouble(this.weighting.getText()) < 0
+				|| Double.parseDouble(this.weighting.getText()) % 1 > 0) {
 			this.weighting.setStyle("-fx-text-box-border:red;");
 			this.submit.setDisable(true);
 		} else {
@@ -230,6 +253,7 @@ public class TaskController implements Initializable {
 
 	/**
 	 * Handles the 'Mark as complete' button action.
+	 * After toggle is complete, tries to unlock submit button.
 	 */
 	public void toggleComplete() {
 		if (this.task.isCheckedComplete()) {
@@ -241,6 +265,7 @@ public class TaskController implements Initializable {
 			this.completed.setVisible(true);
 			this.canComplete.setVisible(false);
 		}
+		this.unlockSubmit();
 	}
 
 	/**
@@ -274,6 +299,22 @@ public class TaskController implements Initializable {
 	}
 
 	/**
+	 * Add a new TaskType.
+	 */
+	public void removeTaskType() {
+		int doom = this.taskType.getSelectionModel().getSelectedIndex();
+		this.taskType.getItems().remove(doom);
+		ArrayList<TaskType> temp = TaskType.getTaskDatabase();
+		temp.remove(doom);
+		TaskType.setTaskDatabase(temp);
+		// Update the current list:
+		this.taskType.getItems().clear();
+		this.taskType.getItems().addAll(TaskType.listOfNames());
+		this.taskType.getSelectionModel().select(task.getName());
+		// =================
+	}
+
+	/**
 	 * Submit the form and create a new Task.
 	 */
 	public void handleSubmit() {
@@ -282,7 +323,6 @@ public class TaskController implements Initializable {
 			this.task = new Task(this.name.getText(), this.details.getText(),
 					this.deadline.getValue(),
 					Integer.parseInt(this.weighting.getText()), this.taskType.getValue());
-
 			for (Requirement req : this.requirements.getItems()) {
 				this.task.addRequirement(req);
 			}
@@ -389,6 +429,10 @@ public class TaskController implements Initializable {
 			if (event.isPrimaryButtonDown()) {
 				context.show(addTaskType, event.getScreenX(), event.getScreenY());
 			}
+		});
+
+		this.removeTaskType.setOnMousePressed(event -> {
+			removeTaskType();
 		});
 		// =================
 

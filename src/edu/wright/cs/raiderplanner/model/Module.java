@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class Module extends VersionControlEntity {
 	// private data
 	private ArrayList<Assignment> assignments = new ArrayList<>();
-	private Person organiser;
+	private Person organizer;
 	private String moduleCode;
 	private ArrayList<TimetableEvent> timetable = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class Module extends VersionControlEntity {
 		if (receivedVce instanceof Module) {
 			Module castedVce = (Module) receivedVce;
 			if (castedVce.getOrganiser() != null) {
-				this.organiser = castedVce.getOrganiser();
+				this.organizer = castedVce.getOrganiser();
 			}
 			if (castedVce.getModuleCode() != null) {
 				this.moduleCode = castedVce.getModuleCode();
@@ -59,13 +59,18 @@ public class Module extends VersionControlEntity {
 	}
 
 
-	// public methods
+	/**
+	 * ToString() method with boolean parameter.
+	 * @param verbose True returns formatted string with Organizer, total assignments,
+	 * 				and assignment details. False returns standard toString().
+	 * @return Formatted String.
+	 */
 	public String toString(boolean verbose) {
 		if (verbose) {
 			StringBuilder verboseString = new StringBuilder();
 			verboseString.append(toString());
 			verboseString.append("\n");
-			verboseString.append("Organiser: " + organiser.toString());
+			verboseString.append("Organizer: " + organizer.toString());
 			verboseString.append("\n");
 			verboseString.append("Total Assignments: " + Integer.toString(assignments.size()));
 			verboseString.append("\n");
@@ -90,23 +95,42 @@ public class Module extends VersionControlEntity {
 		return "Module: " + this.name + " ( " + this.moduleCode + " )";
 	}
 
-	// getters
+	/**
+	 * Getter for the assignments variable.
+	 * @return ArrayList for variable assignments.
+	 */
 	public ArrayList<Assignment> getAssignments() {
 		return assignments;
 	}
 
+	/**
+	 * Getter for the organizer variable.
+	 * @return Person for variable organizer.
+	 */
 	public Person getOrganiser() {
-		return organiser;
+		return organizer;
 	}
 
+	/**
+	 * Getter for the moduleCode variable.
+	 * @return String for variable moduleCode.
+	 */
 	public String getModuleCode() {
 		return moduleCode;
 	}
 
+	/**
+	 * Getter for retrieving the Timetable.
+	 * @return ArrayList for variable timetable.
+	 */
 	public ArrayList<TimetableEvent> getTimetable() {
 		return timetable;
 	}
 
+	/**
+	 * Getter for the number of assignments.
+	 * @return Integer of the number of assignments.
+	 */
 	public int getNoOfAssignments() {
 		return this.assignments.size();
 	}
@@ -128,7 +152,10 @@ public class Module extends VersionControlEntity {
 		return sum / this.assignments.size();
 	}
 
-	// setters
+	/**
+	 * Method to add an assignment.
+	 * @param newAssignment Assignment variable to be added.
+	 */
 	public void addAssignment(Assignment newAssignment) {
 		// initial set up code below - check if this needs updating
 		if (!assignments.contains(newAssignment)) {
@@ -136,6 +163,10 @@ public class Module extends VersionControlEntity {
 		}
 	}
 
+	/**
+	 * Method to remove an assignment.
+	 * @param newAssignment Assignment variable to be removed.
+	 */
 	public void removeAssignment(Assignment newAssignment) {
 		// initial set up code below - check if this needs updating
 		if (assignments.contains(newAssignment)) {
@@ -143,20 +174,36 @@ public class Module extends VersionControlEntity {
 		}
 	}
 
-	public void setOrganiser(Person newOrganiser) {
-		organiser = newOrganiser;
+	/**
+	 * Method to set the organizer variable.
+	 * @param newOrganizer Person variable.
+	 */
+	public void setOrganiser(Person newOrganizer) {
+		organizer = newOrganizer;
 	}
 
+	/**
+	 * Method to set the moduleCode variable.
+	 * @param newModuleCode String variable.
+	 */
 	public void setModuleCode(String newModuleCode) {
 		moduleCode = newModuleCode;
 	}
 
+	/**
+	 * Method to add a Timetable Event.
+	 * @param newTimetableEvent TimetableEvent variable that will be added.
+	 */
 	public void addTimetableEvent(TimetableEvent newTimetableEvent) {
 		if (!timetable.contains(newTimetableEvent)) {
 			timetable.add(newTimetableEvent);
 		}
 	}
 
+	/**
+	 * Method to remove a Time table event.
+	 * @param newTimetableEvent TimetableEvent variable that will be removed.
+	 */
 	public void removeTimetableEvent(TimetableEvent newTimetableEvent) {
 		if (timetable.contains(newTimetableEvent)) {
 			timetable.remove(newTimetableEvent);
@@ -168,9 +215,13 @@ public class Module extends VersionControlEntity {
 		MainController.ui.moduleDetails(this, current);
 	}
 
-	// constructors
-	public Module(Person corganiser, String cmoduleCode) {
-		setOrganiser(corganiser);
+	/**
+	 * Constructor.
+	 * @param corganizer Person variable used to set the organizer variable.
+	 * @param cmoduleCode String variable used to set the moduleCode variable.
+	 */
+	public Module(Person corganizer, String cmoduleCode) {
+		setOrganiser(corganizer);
 		setModuleCode(cmoduleCode);
 	}
 }

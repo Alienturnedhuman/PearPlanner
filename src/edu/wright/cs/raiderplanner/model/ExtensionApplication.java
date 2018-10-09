@@ -38,7 +38,7 @@ public class ExtensionApplication implements Serializable {
 
 	/**
 	 * Getter for the Extension.
-	 * @return
+	 * @return Extension for variable extension
 	 */
 	public Extension getExtension() {
 		// initial set up code below - check if this needs updating
@@ -47,7 +47,7 @@ public class ExtensionApplication implements Serializable {
 
 	/**
 	 * Getter for the Module Code.
-	 * @return
+	 * @return String for variable moduleCode
 	 */
 	public String getModuleCode() {
 		// initial set up code below - check if this needs updating
@@ -56,7 +56,7 @@ public class ExtensionApplication implements Serializable {
 
 	/**
 	 * Getter for the AssignmentUIds.
-	 * @return
+	 * @return String for variable assignmentUId
 	 */
 	public String getAssignmentUIds() {
 		// initial set up code below - check if this needs updating

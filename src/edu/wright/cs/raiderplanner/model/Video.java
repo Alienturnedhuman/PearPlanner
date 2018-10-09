@@ -31,12 +31,18 @@ public class Video /*extends Requirement*/ {
 
 	// public methods
 
-	// getters
+	/**
+	 * Getter for the url.
+	 * @return String for variable url.
+	 */
 	public String getUrl() {
 		return url;
 	}
 
-	// setters
+	/**
+	 * Setter for the url.
+	 * @param newUrl String for the variable url.
+	 */
 	public void setUrl(String newUrl) {
 		url = newUrl;
 	}
