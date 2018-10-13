@@ -100,7 +100,6 @@ public class UiManager {
 	 * Displays a 'Create Account' window and handles the creation of a new Account object.
 	 *
 	 * @return newly created Account
-	 * @throws Exception if user quits
 	 */
 	public Account createAccount() throws Exception {
 		AccountController accountControl = new AccountController();
@@ -117,12 +116,11 @@ public class UiManager {
 		stage.getIcons().add(icon);
 		stage.showAndWait();
 		// Handle creation of the Account object:
-		if (accountControl.isSuccess()) {
-			Account newAccount = accountControl.getAccount();
-			return newAccount;
-		} else {
-			throw new Exception("User quit.");
+		if (!accountControl.isSuccess()) {
+			System.exit(0);
 		}
+		Account newAccount = accountControl.getAccount();
+		return newAccount;
 	}
 
 	/**

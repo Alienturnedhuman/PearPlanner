@@ -26,13 +26,17 @@ import org.gradle.plugins.ide.eclipse.model.Container
  */
 buildscript {
 	repositories {
+	maven {
+		url 'https://plugins.gradle.org/m2/'
+		}
 		mavenLocal()
 		mavenCentral()
 		jcenter()
 	}
 	dependencies {
 		classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
-		classpath 'edu.sc.seis.gradle:launch4j:2.4.2'
+		classpath 'gradle.plugin.edu.sc.seis.gradle:launch4j:2.4.4'
+		classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.3"
 	}
 }
 
@@ -40,9 +44,10 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
 apply plugin: 'checkstyle'
-apply plugin: 'findbugs'
+apply plugin: 'com.github.spotbugs'
 apply plugin: 'edu.sc.seis.launch4j'
 apply plugin: 'org.junit.platform.gradle.plugin'
+
 
 compileJava {
 	sourceCompatibility = JavaVersion.VERSION_1_8
@@ -166,7 +171,7 @@ checkstyle {
 	maxWarnings = 50
 }
 
-tasks.withType(FindBugs) {
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
 	reports {
 		xml.enabled false
 		html.enabled true
@@ -174,7 +179,6 @@ tasks.withType(FindBugs) {
 	}
 	ignoreFailures = true
 }
-
 /**
  * Keep Gradle from rewriting the generic default JRE container configuration
  */
