@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 - Michael Pantoja
+ * Copyright (C) 2018 - Michael Pantoja, Cole Morgan
  *
  *
  *
@@ -64,6 +64,7 @@ public class ChatController {
 		userMessagePane.add(spacingBox, 1, 0);
 		userMessagePane.add(sendButton, 2, 0);
 		sendButton.setMinWidth(100);
+        sendButton.setDefaultButton(true);
 	}
 
 	/**
