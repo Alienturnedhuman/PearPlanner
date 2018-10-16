@@ -25,10 +25,7 @@ import edu.wright.cs.raiderplanner.model.Account;
 import edu.wright.cs.raiderplanner.model.Activity;
 import edu.wright.cs.raiderplanner.model.Assignment;
 import edu.wright.cs.raiderplanner.model.Coursework;
-import edu.wright.cs.raiderplanner.model.Deadline;
-import edu.wright.cs.raiderplanner.model.Event;
 import edu.wright.cs.raiderplanner.model.Exam;
-import edu.wright.cs.raiderplanner.model.ExamEvent;
 import edu.wright.cs.raiderplanner.model.Milestone;
 import edu.wright.cs.raiderplanner.model.ModelEntity;
 import edu.wright.cs.raiderplanner.model.Module;
@@ -38,7 +35,6 @@ import edu.wright.cs.raiderplanner.model.Requirement;
 import edu.wright.cs.raiderplanner.model.Settings;
 import edu.wright.cs.raiderplanner.model.StudyProfile;
 import edu.wright.cs.raiderplanner.model.Task;
-import edu.wright.cs.raiderplanner.model.TimetableEvent;
 import edu.wright.cs.raiderplanner.view.GanttishDiagram;
 import edu.wright.cs.raiderplanner.view.UiManager;
 import javafx.animation.TranslateTransition;
@@ -59,7 +55,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.print.PrinterJob;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -70,7 +65,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
@@ -86,7 +80,6 @@ import javafx.scene.input.TouchEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
@@ -105,14 +98,11 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import jfxtras.scene.control.agenda.Agenda;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -1557,7 +1547,8 @@ public class MenuController implements Initializable {
 			String dateFormatted = pendingNotifs[i].getDateTime().get(Calendar.DAY_OF_MONTH) + " "
 					+ pendingNotifs[i].getDateTime().getDisplayName(Calendar.MONTH, Calendar.LONG,
 							Locale.getDefault())
-					+ " at " + pendingNotifs[i].getDateTime().get(Calendar.HOUR) + " "
+					+ " at " + pendingNotifs[i].getDateTime().get(Calendar.HOUR) + " " 
+					+ pendingNotifs[i].getDateTime().get(Calendar.MINUTE) + " " 
 					+ pendingNotifs[i].getDateTime().getDisplayName(Calendar.AM_PM, Calendar.LONG,
 							Locale.getDefault());
 			Label date = new Label(dateFormatted);

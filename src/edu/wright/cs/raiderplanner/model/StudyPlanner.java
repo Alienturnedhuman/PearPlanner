@@ -53,8 +53,10 @@ public class StudyPlanner implements Serializable {
 
 	// public methods
 
-	// getters
-
+	/**
+	 * Getter for the variable calendar.
+	 * @return ArrayList for the variable calendar.
+	 */
 	public ArrayList<Event> getCalendar() {
 		return calendar;
 	}
@@ -363,12 +365,18 @@ public class StudyPlanner implements Serializable {
 		}
 	}
 
+	/**
+	 * Getter for the variable version.
+	 * @return Integer for variable version
+	 */
 	public int getVersion() {
 		return version;
 	}
 
-	// constructors
-
+	/**
+	 * Constructor.
+	 * @param newAccount Account type for variable account
+	 */
 	public StudyPlanner(Account newAccount) {
 		this.account = newAccount;
 		try {
