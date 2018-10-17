@@ -214,44 +214,42 @@ public class AccountController implements Initializable {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Used for toggleButton Functionality.
-	 * @return opposite toggle
 	 */
-	
+
 	public void toggleButton() {
-		if(famLast.isSelected() == true) {
+		if (famLast.isSelected() == true) {
 			famLast.setSelected(false);
-		}
-		else if(famLast.isSelected() == false) {
+		} else if (famLast.isSelected() == false) {
 			famLast.setSelected(true);
 		}
 	}
-	 EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
-         public void handle(ActionEvent e) 
-         { 
-             if (famLast.isSelected() && famLast.isFocused()) {
+
+	EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+		public void handle(ActionEvent eq) {
+			if (famLast.isSelected() && famLast.isFocused()) {
 				famLast.setSelected(false);
-			} else if(famLast.isSelected() == false && famLast.isFocused()) {
+			} else if (famLast.isSelected() == false && famLast.isFocused()) {
 				famLast.setSelected(true);
 			}
-         }
-	 }; 
-     
+		}
+	};
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Platform.runLater(() -> this.pane.requestFocus());
 		submit.defaultButtonProperty().bind(submit.focusedProperty());
 		cancelButton.defaultButtonProperty().bind(cancelButton.focusedProperty());
 		submit.setOnAction(e -> {
-			if(submit.isFocused()) {
-			handleSubmit();
+			if (submit.isFocused()) {
+				handleSubmit();
 			}
-			});
-		cancelButton.setOnAction(b -> {   
-			if(cancelButton.isFocused()) {
-		      System.exit(0);
+		});
+		cancelButton.setOnAction(b -> {
+			if (cancelButton.isFocused()) {
+				System.exit(0);
 			}
 		});
 	}
