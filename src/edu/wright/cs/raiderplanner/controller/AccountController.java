@@ -24,6 +24,8 @@ package edu.wright.cs.raiderplanner.controller;
 import edu.wright.cs.raiderplanner.model.Account;
 import edu.wright.cs.raiderplanner.model.Person;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -54,13 +56,13 @@ public class AccountController implements Initializable {
 	@FXML private TextField email;
 	@FXML private CheckBox famLast;
 	@FXML private Button submit;
+	@FXML private Button cancelButton;
 	@FXML private GridPane pane;
 	@FXML private Alert invalidInputAlert = new Alert(AlertType.ERROR);
 	@FXML private Alert emptyNameAlert = new Alert(AlertType.CONFIRMATION);
 
 	private Account account;
 	private boolean success = false;
-
 	/**
 	 * Returns the Account object being managed by this controller.
 	 *
@@ -212,9 +214,45 @@ public class AccountController implements Initializable {
 			return false;
 		}
 	}
-
+	
+	/**
+	 * Used for toggleButton Functionality.
+	 * @return opposite toggle
+	 */
+	
+	public void toggleButton() {
+		if(famLast.isSelected() == true) {
+			famLast.setSelected(false);
+		}
+		else if(famLast.isSelected() == false) {
+			famLast.setSelected(true);
+		}
+	}
+	 EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
+         public void handle(ActionEvent e) 
+         { 
+             if (famLast.isSelected() && famLast.isFocused()) {
+				famLast.setSelected(false);
+			} else if(famLast.isSelected() == false && famLast.isFocused()) {
+				famLast.setSelected(true);
+			}
+         }
+	 }; 
+     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Platform.runLater(() -> this.pane.requestFocus());
+		submit.defaultButtonProperty().bind(submit.focusedProperty());
+		cancelButton.defaultButtonProperty().bind(cancelButton.focusedProperty());
+		submit.setOnAction(e -> {
+			if(submit.isFocused()) {
+			handleSubmit();
+			}
+			});
+		cancelButton.setOnAction(b -> {   
+			if(cancelButton.isFocused()) {
+		      System.exit(0);
+			}
+		});
 	}
 }
