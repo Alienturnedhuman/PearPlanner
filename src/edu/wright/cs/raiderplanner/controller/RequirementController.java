@@ -1,8 +1,8 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar, Ian Mahaffy, Gage Berghoff
+ * Bijan Ghasemi Afshar
  *
- *
+ * Copyright (C) 2018 - Ian Mahaffy, Gage Berghoff
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,6 +108,7 @@ public class RequirementController implements Initializable {
 		// Check the input fields:
 		if (!this.name.getText().trim().isEmpty()
 				&& !this.quantity.getText().trim().isEmpty()
+				&& MainController.isInteger(this.quantity.getText().trim())
 				&& !this.time.getText().trim().isEmpty()
 				&& this.quantityType.getSelectionModel().getSelectedIndex() != -1
 				&& MainController.isNumeric(this.time.getText())
@@ -143,28 +144,25 @@ public class RequirementController implements Initializable {
 	 * @return Integer for the quantity, or -1 for error
 	 */
 	public int getQuantity() {
-		if (!MainController.isNumeric(this.quantity.getText())) {
+		if (!MainController.isNumeric(this.quantity.getText().trim())) {
 			this.quantity.setTooltip(new Tooltip("Value must be numeric"));
 			this.quantity.setStyle("-fx-text-box-border:red;");
 			this.submit.setDisable(true);
 			return -1;
-		} else if (Double.parseDouble(this.quantity.getText()) < 0) {
+		} else if (Double.parseDouble(this.quantity.getText().trim()) < 0) {
 			this.quantity.setTooltip(new Tooltip("Value can not be negative"));
 			this.quantity.setStyle("-fx-text-box-border:red;");
 			this.submit.setDisable(true);
 			return -1;
+		} else if (!MainController.isInteger(this.quantity.getText().trim())) {
+			this.quantity.setTooltip(new Tooltip("Value must be a whole number"));
+			this.quantity.setStyle("-fx-text-box-border:red;");
+			this.submit.setDisable(true);
+			return -1;
 		} else {
-			try {
-				int quantity = Integer.parseInt(this.quantity.getText());
-				this.quantity.setStyle("");
-				this.quantity.setTooltip(null);
-				return quantity;
-			} catch (Exception e) {
-				this.quantity.setTooltip(new Tooltip("Value must be a whole number"));
-				this.quantity.setStyle("-fx-text-box-border:red;");
-				this.submit.setDisable(true);
-				return -1;
-			}
+			this.quantity.setStyle("");
+			this.quantity.setTooltip(null);
+			return Integer.parseInt(this.quantity.getText().trim());
 		}
 	}
 

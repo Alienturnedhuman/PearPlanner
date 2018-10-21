@@ -1,8 +1,8 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar, Ian Mahaffy
+ * Bijan Ghasemi Afshar
  *
- *
+ * Copyright (C) 2018 - Ian Mahaffy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

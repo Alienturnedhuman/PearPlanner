@@ -1,8 +1,8 @@
 /*
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
- * Bijan Ghasemi Afshar, Ian Mahaffy, Gage Berghoff
+ * Bijan Ghasemi Afshar
  *
- *
+ * Copyright (C) 2018 - Ian Mahaffy, Gage Berghoff
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -172,8 +172,7 @@ public class TaskController implements Initializable {
 				&& getWeight() != -1
 				&& !this.deadline.getEditor().getText().trim().isEmpty()
 				&& !this.deadline.getValue().isBefore(LocalDate.now())
-				&& this.taskType.getSelectionModel().getSelectedIndex() != -1
-				&& !this.deadline.getValue().isBefore(LocalDate.now())) {
+				&& this.taskType.getSelectionModel().getSelectedIndex() != -1) {
 			this.submit.setDisable(false);
 			return true;
 		} else {
@@ -192,29 +191,26 @@ public class TaskController implements Initializable {
 			this.weighting.setStyle("");
 			this.weighting.setTooltip(null);
 			return 0;
-		} else if (!MainController.isNumeric(this.weighting.getText())) {
+		} else if (!MainController.isNumeric(this.weighting.getText().trim())) {
 			this.weighting.setTooltip(new Tooltip("Input must be numeric."));
 			this.weighting.setStyle("-fx-text-box-border:red;");
 			this.submit.setDisable(true);
 			return -1;
-		} else if (Double.parseDouble(this.weighting.getText()) > 100
-				|| Double.parseDouble(this.weighting.getText()) < 0) {
+		} else if (Double.parseDouble(this.weighting.getText().trim()) > 100
+				|| Double.parseDouble(this.weighting.getText().trim()) < 0) {
 			this.weighting.setTooltip(new Tooltip("Value must be between 0 and 100."));
 			this.weighting.setStyle("-fx-text-box-border:red;");
 			this.submit.setDisable(true);
 			return -1;
+		} else if (!MainController.isInteger(this.weighting.getText().trim())) {
+			this.weighting.setTooltip(new Tooltip("Value must be a whole number."));
+			this.weighting.setStyle("-fx-text-box-border:red;");
+			this.submit.setDisable(true);
+			return -1;
 		} else {
-			try {
-				int weight = Integer.parseInt(this.weighting.getText());
-				this.weighting.setStyle("");
-				this.weighting.setTooltip(null);
-				return weight;
-			} catch (Exception e) {
-				this.weighting.setTooltip(new Tooltip("Value must be a whole number."));
-				this.weighting.setStyle("-fx-text-box-border:red;");
-				this.submit.setDisable(true);
-				return -1;
-			}
+			this.weighting.setStyle("");
+			this.weighting.setTooltip(null);
+			return Integer.parseInt(this.weighting.getText().trim());
 		}
 	}
 
