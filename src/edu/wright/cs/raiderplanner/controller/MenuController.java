@@ -1547,8 +1547,8 @@ public class MenuController implements Initializable {
 			String dateFormatted = pendingNotifs[i].getDateTime().get(Calendar.DAY_OF_MONTH) + " "
 					+ pendingNotifs[i].getDateTime().getDisplayName(Calendar.MONTH, Calendar.LONG,
 							Locale.getDefault())
-					+ " at " + pendingNotifs[i].getDateTime().get(Calendar.HOUR) + " " 
-					+ pendingNotifs[i].getDateTime().get(Calendar.MINUTE) + " " 
+					+ " at " + pendingNotifs[i].getDateTime().get(Calendar.HOUR) + " "
+					+ pendingNotifs[i].getDateTime().get(Calendar.MINUTE) + " "
 					+ pendingNotifs[i].getDateTime().getDisplayName(Calendar.AM_PM, Calendar.LONG,
 							Locale.getDefault());
 			Label date = new Label(dateFormatted);
