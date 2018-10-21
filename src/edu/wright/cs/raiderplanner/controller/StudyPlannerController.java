@@ -152,7 +152,7 @@ public class StudyPlannerController {
 		if (this.getPlanner().getCurrentStudyProfile() != null) {
 			return this.getPlanner().getCurrentStudyProfile().getTasks();
 		} else {
-			return new ArrayList<Task>();
+			return new ArrayList<>();
 		}
 	}
 
