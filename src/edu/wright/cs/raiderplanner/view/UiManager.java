@@ -100,8 +100,9 @@ public class UiManager {
 	 * Displays a 'Create Account' window and handles the creation of a new Account object.
 	 *
 	 * @return newly created Account
+	 * @throws IOException for loader.load()
 	 */
-	public Account createAccount() throws Exception {
+	public Account createAccount() throws IOException {
 		AccountController accountControl = new AccountController();
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
 		// Load in the .fxml file:
@@ -116,6 +117,7 @@ public class UiManager {
 		stage.getIcons().add(icon);
 		stage.showAndWait();
 		// Handle creation of the Account object:
+		// If user exits before submitting information, program exits.
 		if (!accountControl.isSuccess()) {
 			System.exit(0);
 		}

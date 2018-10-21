@@ -1583,8 +1583,8 @@ public class MenuController implements Initializable {
 			this.calendar.setDisable(true);
 		} else {
 			if (MainController.getSpc().getCurrentTasks().size() <= 0) {
-				this.addActivity.setDisable(true);
-				this.milestones.setDisable(true);
+				this.addActivity.setDisable(false);
+				this.milestones.setDisable(false);
 			}
 
 			if (MainController.getSpc().getPlanner().getCurrentStudyProfile()
