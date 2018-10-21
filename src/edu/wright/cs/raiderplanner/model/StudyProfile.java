@@ -205,7 +205,6 @@ public class StudyProfile extends VersionControlEntity {
 		this.version = initialHubFile.getVersion();
 		this.name = initialHubFile.getSemesterName();
 		this.details = initialHubFile.getSemesterDetails();
-
 		this.current = true;
 	}
 }
