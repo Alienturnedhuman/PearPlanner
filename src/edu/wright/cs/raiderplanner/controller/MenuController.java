@@ -2,7 +2,7 @@
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar, Amila Dias
  *
- * Copyright (C) 2018 - Clayton D. Terrill
+ * Copyright (C) 2018 - Clayton D. Terrill, Cole Morgan
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -198,12 +198,13 @@ public class MenuController implements Initializable {
 	private final GridPane firstPane = new GridPane();
 	private TextField tfName = new TextField("");
 	private TextField tfHost = new TextField("");
-	private final Label name = new Label("Your Name:");
-	private final Label host = new Label("Host User's Name:");
+	private final Label name = new Label("Your W Number: ");
+	private final Label host = new Label("Host W Number: ");
 	private final Button submitButton = new Button("Submit");
 	private boolean calendarOpen = false; // Used to monitor status of calendar (open or closed)
 	private boolean chatConnection = true;
 	private Alert chatConnectionStatus = new Alert(AlertType.ERROR);
+	private Alert invalidInputAlert = new Alert(AlertType.ERROR);
 	private String userName;
 	private String hostName;
 	private int portNumber = 1111;
@@ -988,7 +989,7 @@ public class MenuController implements Initializable {
 
 	/**
 	 * This will load all the textfields,labels and buttons for the window that prompts the user for
-	 * his or her username and host name.
+	 * his or her username and host name and sets hint for W number format.
 	 */
 	public void createFirstWindow() {
 		firstPane.add(name, 0, 0);
@@ -996,28 +997,96 @@ public class MenuController implements Initializable {
 		firstPane.add(host, 0, 1);
 		firstPane.add(tfHost, 1, 1);
 		firstPane.add(submitButton, 1, 2);
+		tfName.setPromptText("W Number (ex: w000xxx)");
+		tfHost.setPromptText("W Number (ex: w000xxx)");
+	}
+
+	/**
+	 * Determines if the user has entered a valid username and sets the style accordingly.
+	 * @return True if the user entered a valid username.
+	 */
+	public boolean validateTfName() {
+		if (tfName.getText().trim().length() == 7) {
+			if (tfName.getText().trim().charAt(0) != 'w') {
+				return false;
+			} else {
+				for (int i = 1; i < 4; ++i) {
+					if (!Character.isDigit(tfName.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+				for (int i = 4; i < 7; ++i) {
+					if (!Character.isLetter(tfName.getText().trim().charAt(i))) {
+						return false;
+					} else if (!Character.isLowerCase(tfName.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+			}
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Determines if the user has entered a valid host name sets the style accordingly.
+	 * @return True if the user entered a valid host name.
+	 */
+	public boolean validateTfHost() {
+		if (tfHost.getText().trim().length() == 7) {
+			if (tfHost.getText().trim().charAt(0) != 'w') {
+				return false;
+			} else {
+				for (int i = 1; i < 4; ++i) {
+					if (!Character.isDigit(tfHost.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+				for (int i = 4; i < 7; ++i) {
+					if (!Character.isLetter(tfHost.getText().trim().charAt(i))) {
+						return false;
+					} else if (!Character.isLowerCase(tfHost.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+			}
+		} else {
+			return false;
+		}
+		return true;
 	}
 
 	/**
 	 * This will take in the action of when the submit button is pressed. The submit button is for
 	 * the chat window where the user inputs his or her information. If the user does not enter a
-	 * username/hostname, an error will pop up notifying them to enter those values. Then at the
-	 * very end the chat window will be loaded.
+	 * valid user W number/host W number, an error will pop up notifying them to enter/correct
+	 * those values. Then the chat window will be loaded.
 	 */
 	public void submitButtonAction() {
 		submitButton.setOnAction((ActionEvent exception1) -> {
+			String invalidMessage = "";
+			boolean validTfName = true;
+			boolean validTfHost = true;
 			if (chatConnection) {
-				if ((tfName.getText() != null && !(tfName.getText().equals("")))
-					&& (tfHost.getText() != null && !(tfHost.getText().equals("")))) {
+				if (!validateTfName()) {
+					invalidMessage += "Please enter a vaid user W Number\n";
+					validTfName = false;
+				}
+				if (!validateTfHost()) {
+					invalidMessage += "Please enter a valid host W Number\n";
+					validTfHost = false;
+				} else {
 					userName = tfName.getText();
 					hostName = tfHost.getText();
-					loadChatWindow();
-				} else {
-					UiManager.displayError("Username and host are required.");
 				}
+			}
+			if (!validTfName || !validTfHost) {
+				invalidInputAlert.setHeaderText("Invalid Entries: Chat Connection Unsuccessful");
+				invalidInputAlert.setContentText(invalidMessage);
+				invalidInputAlert.showAndWait();
 			} else {
-				chatConnectionStatus.setContentText("Chat" + " connection unsuccessful.");
-				chatConnectionStatus.showAndWait();
+				loadChatWindow();
 			}
 		});
 	}
