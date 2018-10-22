@@ -72,6 +72,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
@@ -224,6 +225,7 @@ public class MenuController implements Initializable {
 	 * Main method containing switch statements.
 	 */
 	public void main() {
+		mainContent.setStyle("");
 		if (isNavOpen) {
 			openMenu.fire();
 		}
@@ -345,6 +347,22 @@ public class MenuController implements Initializable {
 		this.topBox.getChildren().add(this.welcome);
 		this.title.setText("Study Dashboard");
 
+		FlowPane modulesPane = new FlowPane();
+		mainContent.setStyle("");
+
+
+		if (MainController.getSpc().getPlanner().getCurrentStudyProfile().getModules().length
+				== 0) {
+			VBox dashPic = new VBox();
+			//dashPic.autosize();
+			dashPic.getChildren().add(new ImageView(new
+					Image("/edu/wright/cs/raiderplanner/content/DashBoardHelp.png")));
+			dashPic.setAlignment(Pos.CENTER);
+			this.mainContent.setStyle("-fx-background-color:#ffffff;");
+			modulesPane.setStyle("-fx-background-color:#ffffff;");
+			this.mainContent.add(dashPic, 1, 3);
+		}
+
 		StudyProfile profile = MainController.getSpc().getPlanner().getCurrentStudyProfile();
 
 		// Display studyProfile:
@@ -354,7 +372,6 @@ public class MenuController implements Initializable {
 		this.mainContent.getColumnConstraints()
 				.add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE,
 						Region.USE_COMPUTED_SIZE, Priority.ALWAYS, HPos.CENTER, true));
-		FlowPane modulesPane = new FlowPane();
 
 		Thread renderModules = new Thread(() -> {
 			Label oldLabel = new Label(this.welcome.getText());
