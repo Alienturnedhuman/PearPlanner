@@ -6,4 +6,5 @@ CREATE TABLE ExceptionDB (
 	Date DATE NOT NULL,
 	Time TIME NOT NULL,
 	PRIMARY KEY (ExID)
+	
 );
