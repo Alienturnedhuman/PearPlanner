@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 - Eric Levine
+ * Copyright (C) 2017 - Eric Levine, Mark Riedel
  *
  *
  *
@@ -49,9 +49,6 @@ public class StartupController {
 
 	@FXML
 	private Button exitButton;
-
-	@FXML
-	private ImageView banner;
 
 	/**
 	 * Handles Close button event. Shouldn't need to save as you only see this
