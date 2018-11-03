@@ -1581,17 +1581,18 @@ public class MenuController implements Initializable {
 			this.studyProfiles.setDisable(true);
 			this.modules.setDisable(true);
 			this.calendar.setDisable(true);
-		} else {
-			if (MainController.getSpc().getCurrentTasks().size() <= 0) {
-				this.addActivity.setDisable(true);
-				this.milestones.setDisable(true);
-			}
-
-			if (MainController.getSpc().getPlanner().getCurrentStudyProfile()
-					.getModules().length <= 0) {
-				this.modules.setDisable(true);
-			}
 		}
+//		else {
+//			if (MainController.getSpc().getCurrentTasks().size() <= 0) {
+//				this.addActivity.setDisable(true);
+//				this.milestones.setDisable(true);
+//			}
+
+		if (MainController.getSpc().getPlanner().getCurrentStudyProfile()
+				.getModules().length <= 0) {
+			this.modules.setDisable(true);
+		}
+		//}
 	}
 
 	/**
