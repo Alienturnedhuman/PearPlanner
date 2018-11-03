@@ -32,6 +32,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -49,7 +50,7 @@ import java.util.ResourceBundle;
  */
 public class AccountController implements Initializable {
 	@FXML private TextField accountNo;
-	@FXML private TextField salutation;
+	@FXML private ComboBox<String> salutation;
 	@FXML private TextField fullName;
 	@FXML private TextField email;
 	@FXML private CheckBox famLast;
@@ -84,7 +85,7 @@ public class AccountController implements Initializable {
 	 * @return true if the user entered a valid salutation.
 	 */
 	public boolean validateSalutation() {
-		if (!Person.validSalutation(this.salutation.getText().trim())) {
+		if (!Person.validSalutation(this.salutation.getSelectionModel().getSelectedItem().trim())) {
 			return false;
 		} else {
 			this.salutation.setStyle("");
@@ -178,7 +179,7 @@ public class AccountController implements Initializable {
 			}
 		}
 		if (validSuccess && validName) {
-			Person pers = new Person(this.salutation.getText().trim(),
+			Person pers = new Person(this.salutation.getSelectionModel().getSelectedItem().trim(),
 					this.fullName.getText().trim(), this.famLast.isSelected());
 			this.account = new Account(pers, this.accountNo.getText().trim());
 			this.success = true;
