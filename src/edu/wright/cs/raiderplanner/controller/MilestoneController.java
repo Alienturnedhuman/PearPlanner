@@ -2,7 +2,7 @@
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar
  *
- *
+ * Copyright (C) 2018 - Ian Mahaffy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -95,10 +96,9 @@ public class MilestoneController implements Initializable {
 	public void handleChange() {
 		// Check the input fields:
 		if (!this.name.getText().trim().isEmpty()
-				&&
-				!this.deadline.getEditor().getText().trim().isEmpty()
-				&&
-				this.tasks.getItems().size() > 0) {
+				&& !this.deadline.getEditor().getText().trim().isEmpty()
+				&& !this.deadline.getValue().isBefore(LocalDate.now())
+				&& this.tasks.getItems().size() > 0) {
 			this.submit.setDisable(false);
 		}
 		// =================
@@ -122,9 +122,11 @@ public class MilestoneController implements Initializable {
 	public void validateDeadline() {
 		if (this.deadline.getValue().isBefore(LocalDate.now())) {
 			this.deadline.setStyle("-fx-border-color:red;");
+			this.deadline.setTooltip(new Tooltip("Date can not be in the past"));
 			this.submit.setDisable(true);
 		} else {
 			this.deadline.setStyle("");
+			this.deadline.setTooltip(null);
 			this.handleChange();
 		}
 	}
@@ -153,9 +155,8 @@ public class MilestoneController implements Initializable {
 	public void handleSubmit() {
 		if (this.milestone == null) {
 			// Create a new Milestone:
-			this.milestone =
-					new Milestone(
-							this.name.getText(), this.details.getText(), this.deadline.getValue());
+			this.milestone = new Milestone(this.name.getText(),
+					this.details.getText(), this.deadline.getValue());
 			this.milestone.addTasks(this.tasks.getItems());
 			// =================
 		} else {

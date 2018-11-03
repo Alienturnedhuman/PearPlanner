@@ -2,7 +2,7 @@
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar, Amila Dias
  *
- * Copyright (C) 2018 - Clayton D. Terrill
+ * Copyright (C) 2018 - Clayton D. Terrill, Ian Mahaffy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -376,6 +376,21 @@ public class MainController {
 	 */
 	public static void setPlannerFile(File file) {
 		plannerFile = file;
+	}
+
+	/**
+	 * Checks if a string can be converted to an Integer.
+	 *
+	 * @param value String to be tested
+	 * @return True if string can be converted, false otherwise
+	 */
+	public static boolean isInteger(String value) {
+		try {
+			Integer.parseInt(value);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**

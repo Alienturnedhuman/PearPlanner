@@ -2,7 +2,7 @@
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar
  *
- *
+ * Copyright (C) 2018 - Ian Mahaffy, Gage Berghoff
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
@@ -107,13 +108,12 @@ public class RequirementController implements Initializable {
 		// Check the input fields:
 		if (!this.name.getText().trim().isEmpty()
 				&& !this.quantity.getText().trim().isEmpty()
+				&& MainController.isInteger(this.quantity.getText().trim())
 				&& !this.time.getText().trim().isEmpty()
 				&& this.quantityType.getSelectionModel().getSelectedIndex() != -1
 				&& MainController.isNumeric(this.time.getText())
 				&& Double.parseDouble(this.time.getText()) > 0
-				&& MainController.isNumeric(this.quantity.getText())
-				&& Double.parseDouble(this.quantity.getText()) > 0
-				&& Double.parseDouble(this.quantity.getText()) % 1 == 0) {
+				&& getQuantity() != -1) {
 			this.submit.setDisable(false);
 		// =================
 		}
@@ -123,13 +123,46 @@ public class RequirementController implements Initializable {
 	 * Validate data in the Time field.
 	 */
 	public void validateTime() {
-		if (!MainController.isNumeric(this.time.getText())
-				|| Double.parseDouble(this.time.getText()) < 0) {
+		if (!MainController.isNumeric(this.time.getText())) {
 			this.time.setStyle("-fx-text-box-border:red;");
+			this.time.setTooltip(new Tooltip("Time must be numeric"));
+			this.submit.setDisable(true);
+		} else if (Double.parseDouble(this.time.getText()) < 0) {
+			this.time.setStyle("-fx-text-box-border:red;");
+			this.time.setTooltip(new Tooltip("Time can not be negative"));
 			this.submit.setDisable(true);
 		} else {
 			this.time.setStyle("");
+			this.time.setTooltip(null);
 			this.handleChange();
+		}
+	}
+
+	/**
+	 * This will properly get the user entry from the quantity field.
+	 * 	If field entry is wrong, displays red border and changes the ToolTip to explain error.
+	 * @return Integer for the quantity, or -1 for error
+	 */
+	public int getQuantity() {
+		if (!MainController.isNumeric(this.quantity.getText().trim())) {
+			this.quantity.setTooltip(new Tooltip("Value must be numeric"));
+			this.quantity.setStyle("-fx-text-box-border:red;");
+			this.submit.setDisable(true);
+			return -1;
+		} else if (Double.parseDouble(this.quantity.getText().trim()) < 0) {
+			this.quantity.setTooltip(new Tooltip("Value can not be negative"));
+			this.quantity.setStyle("-fx-text-box-border:red;");
+			this.submit.setDisable(true);
+			return -1;
+		} else if (!MainController.isInteger(this.quantity.getText().trim())) {
+			this.quantity.setTooltip(new Tooltip("Value must be a whole number"));
+			this.quantity.setStyle("-fx-text-box-border:red;");
+			this.submit.setDisable(true);
+			return -1;
+		} else {
+			this.quantity.setStyle("");
+			this.quantity.setTooltip(null);
+			return Integer.parseInt(this.quantity.getText().trim());
 		}
 	}
 
@@ -137,15 +170,8 @@ public class RequirementController implements Initializable {
 	 * Validate data in the Quantity field, including that it is an Integer.
 	 */
 	public void validateQuantity() {
-		if (!MainController.isNumeric(this.quantity.getText())
-				|| Double.parseDouble(this.quantity.getText()) < 0
-				|| Double.parseDouble(this.quantity.getText()) % 1 > 0) {
-			this.quantity.setStyle("-fx-text-box-border:red;");
-			this.submit.setDisable(true);
-		} else {
-			this.quantity.setStyle("");
-			this.handleChange();
-		}
+		getQuantity();
+		this.handleChange();
 		if (this.requirement != null) {
 			this.completed.setVisible(false);
 		}
@@ -189,7 +215,7 @@ public class RequirementController implements Initializable {
 			// Create a new Requirement:
 			this.requirement = new Requirement(this.name.getText(), this.details.getText(),
 					Double.parseDouble(this.time.getText()),
-					Integer.parseInt(this.quantity.getText()),
+					getQuantity(),
 					this.quantityType.getValue());
 			// =================
 		} else {
@@ -197,7 +223,7 @@ public class RequirementController implements Initializable {
 			this.requirement.setName(this.name.getText());
 			this.requirement.setDetails(this.details.getText());
 			this.requirement.setEstimatedTimeInHours(Double.parseDouble(this.time.getText()));
-			this.requirement.setInitialQuantity(Integer.parseInt(this.quantity.getText()));
+			this.requirement.setInitialQuantity(getQuantity());
 			this.requirement.setQuantityType(this.quantityType.getValue());
 			// =================
 
