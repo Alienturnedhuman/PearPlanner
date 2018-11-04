@@ -28,6 +28,11 @@ import edu.wright.cs.raiderplanner.controller.MenuController.Window;
  * Created by Team BRONZE on 4/27/17
  */
 public class TimeTableEventType extends VersionControlEntity {
+
+	/**
+	 * toString() method.
+	 * @return String for variable name.
+	 */
 	public String toString() {
 		return name;
 	}

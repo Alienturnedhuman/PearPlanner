@@ -2,7 +2,7 @@
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar, Amila Dias
  *
- * Copyright (C) 2018 - Clayton D. Terrill
+ * Copyright (C) 2018 - Clayton D. Terrill, Ian Mahaffy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,28 +132,27 @@ public class MainController {
 						study.getPlanner().addNotification(not);
 						MainController.setSpc(study);
 						plannerFile = MainController.ui.savePlannerFileDialog();
-						loadFile(plannerFile);
-						/*This is cating a general exception because the
+						if (plannerFile != null) {
+							if (plannerFile.getParentFile().exists()) {
+								if (plannerFile.getParentFile().canRead()) {
+									if (plannerFile.getParentFile().canWrite()) {
+										MainController.save();
+										loadFile(plannerFile);
+									} else {
+										UiManager.reportError("Directory can't be written to.");
+									}
+								} else {
+									UiManager.reportError("Directory cannot be read from.");
+								}
+							} else {
+								UiManager.reportError("Directory does not exist.");
+							}
+						}
+						/*This is catching a general exception because the
 						 * createAccount method throws a general exception*/
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
-					if (plannerFile != null) {
-						if (plannerFile.getParentFile().exists()) {
-							if (plannerFile.getParentFile().canRead()) {
-								if (plannerFile.getParentFile().canWrite()) {
-									MainController.setPlannerFile(plannerFile);
-									MainController.save();
-								} else {
-									UiManager.reportError("Directory can't be written to.");
-								}
-							} else {
-								UiManager.reportError("Directory cannot be read from.");
-							}
-						} else {
-							UiManager.reportError("Directory does not exist.");
-						}
 					}
 				} else {
 					long modifiedTime = Long.MIN_VALUE;
@@ -190,29 +189,28 @@ public class MainController {
 					study.getPlanner().addNotification(not);
 					MainController.setSpc(study);
 					plannerFile = MainController.ui.savePlannerFileDialog();
-					loadFile(plannerFile);
-					/*This is cating a general exception because the
+					if (plannerFile != null) {
+						if (plannerFile.getParentFile().exists()) {
+							if (plannerFile.getParentFile().canRead()) {
+								if (plannerFile.getParentFile().canWrite()) {
+									MainController.save();
+									loadFile(plannerFile);
+								} else {
+									UiManager.reportError("Directory can not be written to.");
+								}
+							} else {
+								UiManager.reportError("Directory cannot be read from.");
+							}
+
+						} else {
+							UiManager.reportError("Directory does not exist.");
+						}
+					}
+					/*This is catching a general exception because the
 					 * createAccount method throws a general exception*/
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-				if (plannerFile != null) {
-					if (plannerFile.getParentFile().exists()) {
-						if (plannerFile.getParentFile().canRead()) {
-							if (plannerFile.getParentFile().canWrite()) {
-								MainController.setPlannerFile(plannerFile);
-								MainController.save();
-							} else {
-								UiManager.reportError("Directory can not be written to.");
-							}
-						} else {
-							UiManager.reportError("Directory cannot be read from.");
-						}
-
-					} else {
-						UiManager.reportError("Directory does not exist.");
-					}
 				}
 			} else {
 				long modifiedTime = Long.MIN_VALUE;
@@ -378,6 +376,21 @@ public class MainController {
 	 */
 	public static void setPlannerFile(File file) {
 		plannerFile = file;
+	}
+
+	/**
+	 * Checks if a string can be converted to an Integer.
+	 *
+	 * @param value String to be tested
+	 * @return True if string can be converted, false otherwise
+	 */
+	public static boolean isInteger(String value) {
+		try {
+			Integer.parseInt(value);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**

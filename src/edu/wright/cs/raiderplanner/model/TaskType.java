@@ -30,10 +30,14 @@ import java.util.ArrayList;
  * PearPlanner/RaiderPlanner Created by Team BRONZE on 4/27/17.
  */
 public class TaskType extends ModelEntity {
+	/**
+	 * the taskDatabase.
+	 */
+
 	private static ArrayList<TaskType> taskDatabase = new ArrayList<>();
 
 	/**
-	 * @return Returns a array of names of the tasks in the taskDatabase ArrayList.
+	 * Returns a array of names of the tasks in the taskDatabase ArrayList.
 	 */
 	public static String[] listOfNames() {
 		String[] str = new String[taskDatabase.size()];
@@ -46,7 +50,7 @@ public class TaskType extends ModelEntity {
 	}
 
 	/**
-	 * @return Returns a array of task types of the tasks in the taskDatabase ArrayList.
+	 * Returns a array of task types of the tasks in the taskDatabase ArrayList.
 	 */
 	public static TaskType[] listOfTaskTypes() {
 		TaskType[] taskTypes = new TaskType[taskDatabase.size()];
@@ -208,6 +212,20 @@ public class TaskType extends ModelEntity {
 		}
 	}
 
+	/**
+	 * Constructor for TaskType.
+	 */
+	public static ArrayList<TaskType> getTaskDatabase() {
+		return taskDatabase;
+	}
+
+	/**
+	 * taskDatabase the taskDatabase to set.
+	 */
+	public static void setTaskDatabase(ArrayList<TaskType> taskDatabase) {
+		TaskType.taskDatabase = taskDatabase;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		TaskType that = (TaskType) obj;
@@ -217,6 +235,7 @@ public class TaskType extends ModelEntity {
 			return false;
 		}
 	}
+
 
 	/**
 	 * Equals method that takes a String instead of an object. Only checks against name

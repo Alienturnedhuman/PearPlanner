@@ -155,7 +155,14 @@ public class StudyPlannerController {
 			return new ArrayList<>();
 		}
 	}
-
+	/**
+	 * 
+	 * Calls StudyPlanner to remove profile and all connecting data
+	 * @param t : StudyProfile
+	 */
+	public void removeProfile(StudyProfile t) {
+		this.planner.removeProfile(t);
+	}
 	/**
 	 * Checker whether the user needs to be notified about something. (Deadlines etc.)
 	 */
