@@ -31,7 +31,7 @@ import java.sql.Statement;
  * @author LoganKrause
  */
 public class Utility {
-	private static final String DRIVE = "org.apache.derby.jdbc.EmbeddedDriver";
+	private static final String DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 	private static final String JDBC_URL = "jdbc;derby;ConnectingCreatingJavaDB;create=true";
 	Connection conn;
 
