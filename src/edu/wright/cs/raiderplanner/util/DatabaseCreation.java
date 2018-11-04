@@ -33,37 +33,39 @@ import java.sql.Statement;
 public class DatabaseCreation {
 	private static final String DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 	private static final String JDBC_URL = "jdbc;derby;ConnectingCreatingJavaDB;create=true";
-	Connection conn;
 
 	/**
 	 * Establishes the Server and creates the database.
 	 */
-	public DatabaseCreation() {
-		try {
-			this.conn = DriverManager.getConnection(JDBC_URL);
-			if (this.conn != null) {
-				createDatabase();
-				System.out.println("Connection Successful");
-			}
-		} catch (SQLException e) {
-			System.out.println("Connection Failed");
-		}
+	private DatabaseCreation() {
+
 	}
 
 	/**
 	 * Executes the DDL to create the database.
 	 */
-	public void createDatabase() throws SQLException {
-		String ddl = "CREATE TABLE ExceptionDB ( "
-				+ "	ExID INTEGER NOT NULL, "
-				+ "	Message VARCHAR(2000) NOT NULL, "
-				+ "	Type VARCHAR(200) NOT NULL, "
-				+ "	Date DATE NOT NULL, "
-				+ "	Time TIME NOT NULL, "
-				+ "	PRIMARY KEY (ExID) "
-				+ ");";
-		Statement statement = null;
-		statement = conn.createStatement();
-		statement.executeQuery(ddl);
+	public static void createDatabase() throws SQLException {
+		try {
+			Connection conn;
+			conn = DriverManager.getConnection(JDBC_URL);
+			if (conn != null) {
+
+				String ddl = "CREATE TABLE ExceptionDB ( "
+						+ "	ExID INTEGER NOT NULL, "
+						+ "	Message VARCHAR(2000) NOT NULL, "
+						+ "	Type VARCHAR(200) NOT NULL, "
+						+ "	Date DATE NOT NULL, "
+						+ "	Time TIME NOT NULL, "
+						+ "	PRIMARY KEY (ExID) "
+						+ ");";
+				Statement statement = null;
+				statement = conn.createStatement();
+				statement.executeQuery(ddl);
+				conn.close();
+				System.out.println("Connection Successful");
+			}
+		} catch (SQLException e) {
+			System.out.println("Connection Failed");
+		}
 	}
 }
