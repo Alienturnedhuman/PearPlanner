@@ -62,8 +62,8 @@ public class Utility {
 				+ "	Time TIME NOT NULL, "
 				+ "	PRIMARY KEY (ExID) "
 				+ ");";
-		Statement stmt = null;
-		stmt = conn.createStatement();
-		stmt.executeQuery(ddl);
+		Statement statement = null;
+		statement = conn.createStatement();
+		statement.executeQuery(ddl);
 	}
 }
