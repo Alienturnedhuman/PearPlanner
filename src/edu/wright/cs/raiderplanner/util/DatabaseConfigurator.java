@@ -30,14 +30,14 @@ import java.sql.Statement;
  * Establishes connection to server, then executes DDL.
  * @author LoganKrause
  */
-public class DatabaseCreation {
+public class DatabaseConfigurator {
 	private static final String DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 	private static final String JDBC_URL = "jdbc;derby;ConnectingCreatingJavaDB;create=true";
 
 	/**
 	 * Establishes the Server and creates the database.
 	 */
-	private DatabaseCreation() {
+	private DatabaseConfigurator() {
 
 	}
 
@@ -45,9 +45,9 @@ public class DatabaseCreation {
 	 * Executes the DDL to create the database.
 	 */
 	public static void createDatabase() throws SQLException {
+		Connection conn;
+		conn = DriverManager.getConnection(JDBC_URL);
 		try {
-			Connection conn;
-			conn = DriverManager.getConnection(JDBC_URL);
 			if (conn != null) {
 
 				String ddl = "CREATE TABLE ExceptionDB ( "
@@ -61,11 +61,13 @@ public class DatabaseCreation {
 				Statement statement = null;
 				statement = conn.createStatement();
 				statement.executeQuery(ddl);
-				conn.close();
 				System.out.println("Connection Successful");
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println("Connection Failed");
+		} finally {
+			conn.close();
 		}
 	}
 }
