@@ -24,8 +24,6 @@ package edu.wright.cs.raiderplanner.controller;
 import edu.wright.cs.raiderplanner.model.Account;
 import edu.wright.cs.raiderplanner.model.Person;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -33,6 +31,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -51,18 +50,18 @@ import java.util.ResourceBundle;
  */
 public class AccountController implements Initializable {
 	@FXML private TextField accountNo;
-	@FXML private TextField salutation;
+	@FXML private ComboBox<String> salutation;
 	@FXML private TextField fullName;
 	@FXML private TextField email;
 	@FXML private CheckBox famLast;
 	@FXML private Button submit;
-	@FXML private Button cancelButton;
 	@FXML private GridPane pane;
 	@FXML private Alert invalidInputAlert = new Alert(AlertType.ERROR);
 	@FXML private Alert emptyNameAlert = new Alert(AlertType.CONFIRMATION);
 
 	private Account account;
 	private boolean success = false;
+
 	/**
 	 * Returns the Account object being managed by this controller.
 	 *
@@ -86,7 +85,7 @@ public class AccountController implements Initializable {
 	 * @return true if the user entered a valid salutation.
 	 */
 	public boolean validateSalutation() {
-		if (!Person.validSalutation(this.salutation.getText().trim())) {
+		if (!Person.validSalutation(this.salutation.getSelectionModel().getSelectedItem().trim())) {
 			return false;
 		} else {
 			this.salutation.setStyle("");
@@ -180,7 +179,7 @@ public class AccountController implements Initializable {
 			}
 		}
 		if (validSuccess && validName) {
-			Person pers = new Person(this.salutation.getText().trim(),
+			Person pers = new Person(this.salutation.getSelectionModel().getSelectedItem().trim(),
 					this.fullName.getText().trim(), this.famLast.isSelected());
 			this.account = new Account(pers, this.accountNo.getText().trim());
 			this.success = true;
@@ -215,41 +214,13 @@ public class AccountController implements Initializable {
 		}
 	}
 
-	/**
-	 * Used for toggleButton Functionality.
-	 */
-
-	public void toggleButton() {
-		if (famLast.isSelected() == true) {
-			famLast.setSelected(false);
-		} else if (famLast.isSelected() == false) {
-			famLast.setSelected(true);
-		}
-	}
-
-	EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
-		public void handle(ActionEvent eq) {
-			if (famLast.isSelected() && famLast.isFocused()) {
-				famLast.setSelected(false);
-			} else if (famLast.isSelected() == false && famLast.isFocused()) {
-				famLast.setSelected(true);
-			}
-		}
-	};
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Platform.runLater(() -> this.pane.requestFocus());
 		submit.defaultButtonProperty().bind(submit.focusedProperty());
-		cancelButton.defaultButtonProperty().bind(cancelButton.focusedProperty());
 		submit.setOnAction(e -> {
 			if (submit.isFocused()) {
 				handleSubmit();
-			}
-		});
-		cancelButton.setOnAction(b -> {
-			if (cancelButton.isFocused()) {
-				System.exit(0);
 			}
 		});
 	}
