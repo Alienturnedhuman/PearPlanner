@@ -583,19 +583,19 @@ public class MenuController implements Initializable {
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("Milestones");
-		
+
 		//Add instructions for the current page
-				HBox instruction = new HBox();
-				GridPane.setHgrow(instruction, Priority.ALWAYS);
-				instruction.setSpacing(50);
-				instruction.setPadding(new Insets(5, 5, 10, 0));
-				this.welcome = new Label(
-						"Welcome " + MainController.getSpc().getPlanner().getUserName() + 
-						"! Use Milestones "	+ "to track important tasks.");
-				this.welcome.setPadding(new Insets(10, 15, 10, 15));
-				this.topBox.getChildren().add(this.welcome);
-				this.mainContent.setVgap(10);
-				this.mainContent.setPadding(new Insets(15));
+		HBox instruction = new HBox();
+		GridPane.setHgrow(instruction, Priority.ALWAYS);
+		instruction.setSpacing(50);
+		instruction.setPadding(new Insets(5, 5, 10, 0));
+		this.welcome = new Label(
+				"Welcome " + MainController.getSpc().getPlanner().getUserName()
+				+ "! Use Milestones "	+ "to track important tasks.");
+		this.welcome.setPadding(new Insets(10, 15, 10, 15));
+		this.topBox.getChildren().add(this.welcome);
+		this.mainContent.setVgap(10);
+		this.mainContent.setPadding(new Insets(15));
 
 		// Columns:
 		TableColumn<Milestone, String> nameColumn = new TableColumn<>("Milestone");
@@ -728,22 +728,22 @@ public class MenuController implements Initializable {
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("Calendar");
-		
+
 		//Add instructions for the current page
 		HBox instruction = new HBox();
 		GridPane.setHgrow(instruction, Priority.ALWAYS);
 		instruction.setSpacing(50);
 		instruction.setPadding(new Insets(5, 5, 10, 0));
 		this.welcome = new Label(
-				"Welcome " + MainController.getSpc().getPlanner().getUserName() + 
-				"! See your tasks "	+ "here.");
+				"Welcome " + MainController.getSpc().getPlanner().getUserName()
+				+ "! See your tasks "	+ "here.");
 		this.welcome.setPadding(new Insets(10, 15, 10, 15));
 		this.topBox.getChildren().add(this.welcome);
 		this.mainContent.setVgap(10);
 		this.mainContent.setPadding(new Insets(15));
 		CalendarController myCalendar = new CalendarController();
 		this.mainContent.getChildren().add(myCalendar.getLayout());
-		
+
 	}
 
 	/**
@@ -760,9 +760,8 @@ public class MenuController implements Initializable {
 		GridPane.setHgrow(instruction, Priority.ALWAYS);
 		instruction.setSpacing(50);
 		instruction.setPadding(new Insets(5, 5, 10, 0));
-		this.welcome = new Label(
-				"Welcome " + MainController.getSpc().getPlanner().getUserName() +
-				"! Here you can view your study profiles. "
+		this.welcome = new Label("Welcome " + MainController.getSpc().getPlanner().getUserName()
+				+ "! Here you can view your study profiles. "
 				+ "Double-click on a profile to see more informaiton.");
 		this.welcome.setPadding(new Insets(10, 15, 10, 15));
 		this.topBox.getChildren().add(this.welcome);
@@ -849,15 +848,15 @@ public class MenuController implements Initializable {
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("Modules");
-		
+
 		//Add instructions for the current page
 		HBox instruction = new HBox();
 		GridPane.setHgrow(instruction, Priority.ALWAYS);
 		instruction.setSpacing(50);
 		instruction.setPadding(new Insets(5, 5, 10, 0));
 		this.welcome = new Label(
-				"Welcome " + MainController.getSpc().getPlanner().getUserName() + 
-				"! Modules shows your current courses. "
+				"Welcome " + MainController.getSpc().getPlanner().getUserName()
+				+ "! Modules shows your current courses. "
 				+ "Double-click on a course for more information.");
 		this.welcome.setPadding(new Insets(10, 15, 10, 15));
 		this.topBox.getChildren().add(this.welcome);
@@ -935,15 +934,15 @@ public class MenuController implements Initializable {
 		this.topBox.getChildren().clear();
 		this.title.setText(module.getModuleCode() + " " + module.getName());
 		// =================
-		
+
 		//Add instructions for the current page
 		HBox instruction = new HBox();
 		GridPane.setHgrow(instruction, Priority.ALWAYS);
 		instruction.setSpacing(50);
 		instruction.setPadding(new Insets(5, 5, 10, 0));
 		this.welcome = new Label(
-				"Welcome " + MainController.getSpc().getPlanner().getUserName() + 
-				"! Use this page to view modules. "
+				"Welcome " + MainController.getSpc().getPlanner().getUserName()
+				+ "! Use this page to view modules. "
 				+ "Double-click on a module to see more options like "
 					+ "generate Gantish Diagram, or add Tasks/Requirements.");
 		this.welcome.setPadding(new Insets(10, 15, 10, 15));
