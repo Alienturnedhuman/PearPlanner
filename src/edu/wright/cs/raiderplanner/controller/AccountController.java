@@ -31,6 +31,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
@@ -217,5 +218,11 @@ public class AccountController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Platform.runLater(() -> this.pane.requestFocus());
+		submit.defaultButtonProperty().bind(submit.focusedProperty());
+		submit.setOnAction(e -> {
+			if (submit.isFocused()) {
+				handleSubmit();
+			}
+		});
 	}
 }
