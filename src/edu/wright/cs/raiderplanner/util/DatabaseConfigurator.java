@@ -37,17 +37,14 @@ public class DatabaseConfigurator {
 	/**
 	 * Establishes the Server and creates the database.
 	 */
-	private DatabaseConfigurator() {
-
-	}
+	private DatabaseConfigurator() {}
 
 	/**
 	 * Executes the DDL to create the database.
 	 */
-	public static void createDatabase() throws SQLException {
-		Connection conn;
-		conn = DriverManager.getConnection(JDBC_URL);
-		try {
+	public static void createDatabase() {
+
+		try (Connection conn = DriverManager.getConnection(JDBC_URL)) {
 			if (conn != null) {
 
 				String ddl = "CREATE TABLE ExceptionDB ( "
@@ -63,11 +60,10 @@ public class DatabaseConfigurator {
 				statement.executeQuery(ddl);
 				System.out.println("Connection Successful");
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Connection Failed");
-		} finally {
-			conn.close();
+			System.out.println("Connection Failed. Exception: " + e.toString());
 		}
 	}
 }
