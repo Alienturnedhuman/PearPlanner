@@ -140,8 +140,6 @@ public class CalendarController {
 	 * This function will populate the agenda for the calendar.
 	 */
 	private void populateAgenda() {
-		if(calendarEvents.isEmpty()){return;}
-		else {
 		for (Event e : calendarEvents) {
 			// TODO - find a way to eliminate this if/else-if/instanceof anti-pattern
 			if (e instanceof TimetableEvent) {
@@ -180,7 +178,6 @@ public class CalendarController {
 						.withEndLocalDateTime(stime.plusMinutes(60)).withAppointmentGroup(
 								new Agenda.AppointmentGroupImpl().withStyleClass("group3")));
 			}
-		}
 		}
 	}
 
