@@ -52,9 +52,20 @@ public class StudyPlanner implements Serializable {
 		new ArrayList<Event>(),"No semester",new MultilineString("No details"),"No UId"));
 
 	// public methods
-
-	// getters
-
+	/**
+	 * removes profile from arraylist
+	 * @param i : studyProfile Type
+	 */
+	public void removeProfile(StudyProfile i) {
+		studyProfiles.remove(i);
+		activityList.clear();
+		calendar.clear();
+		deadlineNotifications.clear();
+	}
+	/**
+	 * Getter for the variable calendar.
+	 * @return ArrayList for the variable calendar.
+	 */
 	public ArrayList<Event> getCalendar() {
 		return calendar;
 	}
@@ -110,7 +121,21 @@ public class StudyPlanner implements Serializable {
 		}
 		return time;
 	}
-
+/**
+ * Finds and returns a profile that may exist in the current list of StudyProfiles. returns null if not found
+ * 
+ * @param i : given value is StudyProfile Type
+ * @return
+ */
+	public StudyProfile getProfile(StudyProfile i) {
+		for(StudyProfile sp: studyProfiles) {
+			if(sp.equals(i)) {
+				return sp;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * Check whether this StudyPlanner contains a StudyProfile with the given parameters.
 	 *
@@ -363,12 +388,18 @@ public class StudyPlanner implements Serializable {
 		}
 	}
 
+	/**
+	 * Getter for the variable version.
+	 * @return Integer for variable version
+	 */
 	public int getVersion() {
 		return version;
 	}
 
-	// constructors
-
+	/**
+	 * Constructor.
+	 * @param newAccount Account type for variable account
+	 */
 	public StudyPlanner(Account newAccount) {
 		this.account = newAccount;
 		try {

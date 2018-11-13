@@ -42,6 +42,16 @@ public class StudyProfile extends VersionControlEntity {
 	private boolean current;
 
 	// public methods
+	/**
+	 * clears the profile so that PlannerViewer can update
+	 * 
+	 */
+	public void clearProfile(){
+		modules.clear();
+		milestones.clear();
+		extensions.clear();
+		calendar.clear();
+	}
 
 	// getters:
 	/**
@@ -205,7 +215,6 @@ public class StudyProfile extends VersionControlEntity {
 		this.version = initialHubFile.getVersion();
 		this.name = initialHubFile.getSemesterName();
 		this.details = initialHubFile.getSemesterDetails();
-
-		this.current = false;
+		this.current = true;
 	}
 }

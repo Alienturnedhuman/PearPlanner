@@ -2,7 +2,7 @@
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar, Amila Dias
  *
- * Copyright (C) 2018 - Clayton D. Terrill
+ * Copyright (C) 2018 - Clayton D. Terrill, Cole Morgan
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,10 +25,7 @@ import edu.wright.cs.raiderplanner.model.Account;
 import edu.wright.cs.raiderplanner.model.Activity;
 import edu.wright.cs.raiderplanner.model.Assignment;
 import edu.wright.cs.raiderplanner.model.Coursework;
-import edu.wright.cs.raiderplanner.model.Deadline;
-import edu.wright.cs.raiderplanner.model.Event;
 import edu.wright.cs.raiderplanner.model.Exam;
-import edu.wright.cs.raiderplanner.model.ExamEvent;
 import edu.wright.cs.raiderplanner.model.Milestone;
 import edu.wright.cs.raiderplanner.model.ModelEntity;
 import edu.wright.cs.raiderplanner.model.Module;
@@ -38,7 +35,6 @@ import edu.wright.cs.raiderplanner.model.Requirement;
 import edu.wright.cs.raiderplanner.model.Settings;
 import edu.wright.cs.raiderplanner.model.StudyProfile;
 import edu.wright.cs.raiderplanner.model.Task;
-import edu.wright.cs.raiderplanner.model.TimetableEvent;
 import edu.wright.cs.raiderplanner.view.GanttishDiagram;
 import edu.wright.cs.raiderplanner.view.UiManager;
 import javafx.animation.TranslateTransition;
@@ -59,7 +55,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.print.PrinterJob;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -70,7 +65,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
@@ -86,7 +80,6 @@ import javafx.scene.input.TouchEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
@@ -105,14 +98,11 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import jfxtras.scene.control.agenda.Agenda;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -209,12 +199,13 @@ public class MenuController implements Initializable {
 	private final GridPane firstPane = new GridPane();
 	private TextField tfName = new TextField("");
 	private TextField tfHost = new TextField("");
-	private final Label name = new Label("Your Name:");
-	private final Label host = new Label("Host User's Name:");
+	private final Label name = new Label("Your W Number: ");
+	private final Label host = new Label("Host W Number: ");
 	private final Button submitButton = new Button("Submit");
 	private boolean calendarOpen = false; // Used to monitor status of calendar (open or closed)
 	private boolean chatConnection = true;
 	private Alert chatConnectionStatus = new Alert(AlertType.ERROR);
+	private Alert invalidInputAlert = new Alert(AlertType.ERROR);
 	private String userName;
 	private String hostName;
 	private int portNumber = 1111;
@@ -999,7 +990,7 @@ public class MenuController implements Initializable {
 
 	/**
 	 * This will load all the textfields,labels and buttons for the window that prompts the user for
-	 * his or her username and host name.
+	 * his or her username and host name and sets hint for W number format.
 	 */
 	public void createFirstWindow() {
 		firstPane.add(name, 0, 0);
@@ -1007,28 +998,96 @@ public class MenuController implements Initializable {
 		firstPane.add(host, 0, 1);
 		firstPane.add(tfHost, 1, 1);
 		firstPane.add(submitButton, 1, 2);
+		tfName.setPromptText("W Number (ex: w000xxx)");
+		tfHost.setPromptText("W Number (ex: w000xxx)");
+	}
+
+	/**
+	 * Determines if the user has entered a valid username and sets the style accordingly.
+	 * @return True if the user entered a valid username.
+	 */
+	public boolean validateTfName() {
+		if (tfName.getText().trim().length() == 7) {
+			if (tfName.getText().trim().charAt(0) != 'w') {
+				return false;
+			} else {
+				for (int i = 1; i < 4; ++i) {
+					if (!Character.isDigit(tfName.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+				for (int i = 4; i < 7; ++i) {
+					if (!Character.isLetter(tfName.getText().trim().charAt(i))) {
+						return false;
+					} else if (!Character.isLowerCase(tfName.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+			}
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Determines if the user has entered a valid host name sets the style accordingly.
+	 * @return True if the user entered a valid host name.
+	 */
+	public boolean validateTfHost() {
+		if (tfHost.getText().trim().length() == 7) {
+			if (tfHost.getText().trim().charAt(0) != 'w') {
+				return false;
+			} else {
+				for (int i = 1; i < 4; ++i) {
+					if (!Character.isDigit(tfHost.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+				for (int i = 4; i < 7; ++i) {
+					if (!Character.isLetter(tfHost.getText().trim().charAt(i))) {
+						return false;
+					} else if (!Character.isLowerCase(tfHost.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+			}
+		} else {
+			return false;
+		}
+		return true;
 	}
 
 	/**
 	 * This will take in the action of when the submit button is pressed. The submit button is for
 	 * the chat window where the user inputs his or her information. If the user does not enter a
-	 * username/hostname, an error will pop up notifying them to enter those values. Then at the
-	 * very end the chat window will be loaded.
+	 * valid user W number/host W number, an error will pop up notifying them to enter/correct
+	 * those values. Then the chat window will be loaded.
 	 */
 	public void submitButtonAction() {
 		submitButton.setOnAction((ActionEvent exception1) -> {
+			String invalidMessage = "";
+			boolean validTfName = true;
+			boolean validTfHost = true;
 			if (chatConnection) {
-				if ((tfName.getText() != null && !(tfName.getText().equals("")))
-					&& (tfHost.getText() != null && !(tfHost.getText().equals("")))) {
+				if (!validateTfName()) {
+					invalidMessage += "Please enter a vaid user W Number\n";
+					validTfName = false;
+				}
+				if (!validateTfHost()) {
+					invalidMessage += "Please enter a valid host W Number\n";
+					validTfHost = false;
+				} else {
 					userName = tfName.getText();
 					hostName = tfHost.getText();
-					loadChatWindow();
-				} else {
-					UiManager.displayError("Username and host are required.");
 				}
+			}
+			if (!validTfName || !validTfHost) {
+				invalidInputAlert.setHeaderText("Invalid Entries: Chat Connection Unsuccessful");
+				invalidInputAlert.setContentText(invalidMessage);
+				invalidInputAlert.showAndWait();
 			} else {
-				chatConnectionStatus.setContentText("Chat" + " connection unsuccessful.");
-				chatConnectionStatus.showAndWait();
+				loadChatWindow();
 			}
 		});
 	}
@@ -1558,6 +1617,7 @@ public class MenuController implements Initializable {
 					+ pendingNotifs[i].getDateTime().getDisplayName(Calendar.MONTH, Calendar.LONG,
 							Locale.getDefault())
 					+ " at " + pendingNotifs[i].getDateTime().get(Calendar.HOUR) + " "
+					+ pendingNotifs[i].getDateTime().get(Calendar.MINUTE) + " "
 					+ pendingNotifs[i].getDateTime().getDisplayName(Calendar.AM_PM, Calendar.LONG,
 							Locale.getDefault());
 			Label date = new Label(dateFormatted);
@@ -1590,17 +1650,18 @@ public class MenuController implements Initializable {
 			this.studyProfiles.setDisable(true);
 			this.modules.setDisable(true);
 			this.calendar.setDisable(true);
-		} else {
-			if (MainController.getSpc().getCurrentTasks().size() <= 0) {
-				this.addActivity.setDisable(true);
-				this.milestones.setDisable(true);
-			}
-
-			if (MainController.getSpc().getPlanner().getCurrentStudyProfile()
-					.getModules().length <= 0) {
-				this.modules.setDisable(true);
-			}
 		}
+//		else {
+//			if (MainController.getSpc().getCurrentTasks().size() <= 0) {
+//				this.addActivity.setDisable(true);
+//				this.milestones.setDisable(true);
+//			}
+
+		if (MainController.getSpc().getPlanner().getCurrentStudyProfile()
+				.getModules().length <= 0) {
+			this.modules.setDisable(true);
+		}
+		//}
 	}
 
 	/**
