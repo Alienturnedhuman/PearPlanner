@@ -43,11 +43,17 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.github.plushaze.traynotification.animations.Animations;
+import com.github.plushaze.traynotification.notification.Notifications;
+import com.github.plushaze.traynotification.notification.TrayNotification;
 
 /**
  * Created by Zilvinas on 13/05/2017.
@@ -211,8 +217,17 @@ public class RequirementController implements Initializable {
 	 * Submit the form and create a new Task.
 	 */
 	public void handleSubmit() {
+		TrayNotification trayNotif = new TrayNotification();
+		trayNotif.setTitle("Raider Planner");
+		trayNotif.setRectangleFill(Paint.valueOf("#2A9A84"));
+		trayNotif.setAnimation(Animations.POPUP);
+		trayNotif.setNotification(Notifications.SUCCESS);
+		trayNotif.showAndDismiss(Duration.seconds(2));
+
 		if (this.requirement == null) {
 			// Create a new Requirement:
+			trayNotif.setMessage("Requirement Successfully Created");
+
 			this.requirement = new Requirement(this.name.getText(), this.details.getText(),
 					Double.parseDouble(this.time.getText()),
 					getQuantity(),
@@ -225,8 +240,8 @@ public class RequirementController implements Initializable {
 			this.requirement.setEstimatedTimeInHours(Double.parseDouble(this.time.getText()));
 			this.requirement.setInitialQuantity(getQuantity());
 			this.requirement.setQuantityType(this.quantityType.getValue());
+			trayNotif.setMessage("Requirement Successfully Updated");
 			// =================
-
 		}
 		this.success = true;
 		Stage stage = (Stage) this.submit.getScene().getWindow();
