@@ -77,7 +77,7 @@ public class CalendarController {
 	}
 
 	/**
-	 * Temporary function for calendar.
+	 * Gets layout for calendar
 	 * @return The current layout of the calendar.
 	 *
 	 * @author MichaelPantoja
