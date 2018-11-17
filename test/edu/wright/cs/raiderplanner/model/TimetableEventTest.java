@@ -46,7 +46,7 @@ public class TimetableEventTest {
 	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@BeforeEach
-	public void testSetUp() throws Exception {
+	public void setUp() throws Exception {
 		date = "11/14/2018";
 		room = new Room("152");
 		lecturer = new Person("Mr.", "Adam Cone", true, "adam@wright.edu");
@@ -134,7 +134,7 @@ public class TimetableEventTest {
 	 *             to handle when the Task objects cannot be accessed.
 	 */
 	@AfterEach
-	public void testTearDown() throws Exception {
+	public void tearDown() throws Exception {
 		date = null;
 		room = null;
 		lecturer = null;
