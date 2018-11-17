@@ -46,7 +46,7 @@ public class TimetableEventTest {
 	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@BeforeEach
-	public void setUp() throws Exception {
+	public void testSetUp() throws Exception {
 		date = "11/14/2018";
 		room = new Room("152");
 		lecturer = new Person("Mr.", "Adam Cone", true, "adam@wright.edu");
@@ -62,7 +62,7 @@ public class TimetableEventTest {
 	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@Test
-	public void getRoom() throws Exception {
+	public void testGetRoom() throws Exception {
 		assertEquals(this.room, timetableEventTest.getRoom());
 	}
 
@@ -73,7 +73,7 @@ public class TimetableEventTest {
 	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@Test
-	public void getLecturer() throws Exception {
+	public void testGetLecturer() throws Exception {
 		assertEquals(this.lecturer, timetableEventTest.getLecturer());
 	}
 
@@ -84,7 +84,7 @@ public class TimetableEventTest {
 	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@Test
-	public void getTimeTableEventType() throws Exception {
+	public void testGetTimeTableEventType() throws Exception {
 		assertEquals(this.timeTableEventType, timetableEventTest.getTimeTableEventType());
 	}
 
@@ -95,7 +95,7 @@ public class TimetableEventTest {
 	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@Test
-	public void setRoom() throws Exception {
+	public void testSetRoom() throws Exception {
 		Room newRoom = new Room("300");
 		timetableEventTest.setRoom(newRoom);
 		assertEquals(newRoom, timetableEventTest.getRoom());
@@ -108,7 +108,7 @@ public class TimetableEventTest {
 	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@Test
-	public void setLecturer() throws Exception {
+	public void testSetLecturer() throws Exception {
 		Person newLecturer = new Person("Mr.", "Dam Done", true, "dam@wright.edu");
 		timetableEventTest.setLecturer(newLecturer);
 		assertEquals(newLecturer, timetableEventTest.getLecturer());
@@ -121,7 +121,7 @@ public class TimetableEventTest {
 	 *             to handle when any of the required objects cannot be instantiated.
 	 */
 	@Test
-	public void setTimeTableEventType() throws Exception {
+	public void testSetTimeTableEventType() throws Exception {
 		TimeTableEventType newTimeTableEventType = new TimeTableEventType();
 		timetableEventTest.setTimeTableEventType(newTimeTableEventType);
 		assertEquals(newTimeTableEventType, timetableEventTest.getTimeTableEventType());
@@ -134,7 +134,7 @@ public class TimetableEventTest {
 	 *             to handle when the Task objects cannot be accessed.
 	 */
 	@AfterEach
-	public void tearDown() throws Exception {
+	public void testTearDown() throws Exception {
 		date = null;
 		room = null;
 		lecturer = null;
