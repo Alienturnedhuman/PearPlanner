@@ -32,12 +32,12 @@ import org.junit.jupiter.api.Test;
  */
 public class TimetableEventTest {
 
-	String date;
-	Room room;
-	Person lecturer;
-	TimeTableEventType timeTableEventType;
-	int duration;
-	TimetableEvent timetableEventTest;
+	private String date;
+	private Room room;
+	private Person lecturer;
+	private TimeTableEventType timeTableEventType;
+	private int duration;
+	private TimetableEvent timetableEventTest;
 
 	/**
 	 * This test case sets up the objects necessary for each tests.
