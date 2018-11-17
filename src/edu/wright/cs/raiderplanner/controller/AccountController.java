@@ -80,10 +80,10 @@ public class AccountController implements Initializable {
 	}
 
 	/**
-	 * Determines if the user has entered a valid salutation by calling the 
-	 * validateSalutation() from the Person Class in Model, which checks that 
-	 * the entered Salutation only contains a combination of upper/lower case 
-	 * letters and returns a boolean value. Then sets the style so it is cohesive. 
+	 * Determines if the user has entered a valid salutation by calling the
+	 * validateSalutation() from the Person Class in Model, which checks that
+	 * the entered Salutation only contains a combination of upper/lower case
+	 * letters and returns a boolean value. Then sets the style so it is cohesive.
 	 * @return true if the user entered a valid salutation.
 	 */
 	public boolean validateSalutation() {
@@ -97,8 +97,8 @@ public class AccountController implements Initializable {
 
 	/**
 	 * Determines if the user has entered a valid name by calling the validateName() 
-	 * from the Person Class in Model, which checks that the entered Name only 
-	 * contains a combination of spaces and upper/lower case letters and returns 
+	 * from the Person Class in Model, which checks that the entered Name only
+	 * contains a combination of spaces and upper/lower case letters and returns
 	 * a boolean value. Then sets the style so it is cohesive.
 	 * @return True if the user entered a valid name.
 	 */
@@ -112,10 +112,10 @@ public class AccountController implements Initializable {
 	}
 
 	/**
-	 * Determines if the user has entered a valid email checking if the textfield 
-	 * is empty and by calling the validateEmail() from the Person Class in 
+	 * Determines if the user has entered a valid email checking if the textfield
+	 * is empty and by calling the validateEmail() from the Person Class in
 	 * Model, which uses the EmailValidator (Apache Commons Validator 1.6 API)
-	 * to check that the email is valid and returns a boolean value. Then sets 
+	 * to check that the email is valid and returns a boolean value. Then sets
 	 * the style so it is cohesive.
 	 * @return True if the user entered a valid email.
 	 */
@@ -130,9 +130,9 @@ public class AccountController implements Initializable {
 	}
 
 	/**
-	 * Determines if the user has entered a valid account number by checking 
-	 * that the length of the text is 7, that the first character is a 'w', 
-	 * that the next 3 characters are digits, and that the last 3 
+	 * Determines if the user has entered a valid account number by checking
+	 * that the length of the text is 7, that the first character is a 'w',
+	 * that the next 3 characters are digits, and that the last 3
 	 * characters are letters and lower case. Then sets the style so it is cohesive.
 	 * @return True if the user entered a valid account number.
 	 */
