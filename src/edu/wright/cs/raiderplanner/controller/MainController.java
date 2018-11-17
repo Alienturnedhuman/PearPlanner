@@ -29,6 +29,13 @@ import edu.wright.cs.raiderplanner.model.Notification;
 import edu.wright.cs.raiderplanner.model.Settings;
 import edu.wright.cs.raiderplanner.model.StudyPlanner;
 import edu.wright.cs.raiderplanner.view.UiManager;
+import javafx.scene.Scene;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.awt.Desktop;
 import java.io.BufferedInputStream;
@@ -416,18 +423,69 @@ public class MainController {
 	}
 
 	/**
-	 * Launches the default browser to display a URI.
-	 */
-	public static void openBrowser() {
-		if (Desktop.isDesktopSupported()) {
-			try {
-				Desktop.getDesktop().browse(new URI("https://rsanchez-wsu.github.io/RaiderPlanner/"));
-			} catch (IOException e) {
-				UiManager.reportError("Default browser not found or failed to launch");
-			} catch (URISyntaxException e) {
-				UiManager.reportError("Invaild URI syntax");
+	* Launches the default browser to display a URI.
+	*/
+	public static void openHelpPage() {
+		final Button site = new Button("Website");
+		final Button pdf = new Button("user-manual");
+		Label tab1 = new Label("RaiderPlanner is an application based off of the Pear Planner "
+				+ "to help students keep"
+				+ " track of assignments and exams, allowing them to achieve their full academic"
+				+ " potential. "
+				+ "Current features include a calendar, an alarm, and a Gantt diagram generator"
+				+ " to keep track of progress");
+		Label tab2 = new Label("How to use RaiderPlanner in 3 easy steps:"
+				+ "\n" + "1: Enter valid information for all the fields on the startup page. "
+						+ "All other information is optional." + "\n"
+				+ "2: Choose the name of the file you want to save to." + "\n"
+				+ "3: To unlock all the other features RaiderPlanner has to offer, click the"
+				+ " import hub file button from the menu on the left"
+				+  "\nNeed more help? Open up the user manual or RaiderPlanner Website here");
+		Label tab3 = new Label("If you want, you can contribute to RaiderPlanner on github at"
+				+ " the this address: https://github.com/rsanchez-wsu/RaiderPlanner"
+				+ "\n" + "Planned features include a graduation planner, Pilot integration, and a "
+				+ "schedule sharing feature");
+		tab1.setWrapText(true);
+		tab2.setWrapText(true);
+		tab3.setWrapText(true);
+		VBox splitter = new VBox();
+		splitter.getChildren().add(tab2);
+		splitter.getChildren().add(pdf);
+		splitter.getChildren().add(site);
+		TitledPane t1 = new TitledPane("What is RaiderPlanner?",tab1);
+		TitledPane t2 = new TitledPane("Getting Started",splitter);
+		TitledPane t3 = new TitledPane("Whats Next?",tab3);
+		Accordion root = new Accordion();
+		root.getPanes().addAll(t1, t2, t3);
+		Stage newStage = new Stage();
+		newStage.setTitle("Raider Helper");
+		Scene scene = new Scene(root,400,300);
+		newStage.setScene(scene);
+		newStage.show();
+
+		pdf.setOnAction((event) -> {
+			if (Desktop.isDesktopSupported()) {
+				try {
+					File myFile = new
+							File("Final Documents/"
+									+ "User Manual.pdf");
+					Desktop.getDesktop().open(myFile);
+				} catch (IOException ex) {
+					System.out.println("Error: user-manual not found");
+				}
 			}
-		}
+		});
+		site.setOnAction((event) -> {
+			if (Desktop.isDesktopSupported()) {
+				try {
+					File myFile = new
+							File("docs/index.html");
+					Desktop.getDesktop().open(myFile);
+				} catch (IOException ex) {
+					System.out.println("Error: Website not found");
+				}
+			}
+		});
 	}
 
 	/**

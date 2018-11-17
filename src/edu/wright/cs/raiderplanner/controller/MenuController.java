@@ -1559,8 +1559,8 @@ public class MenuController implements Initializable {
 	/**
 	 * Handles the 'Help' event.
 	 */
-	public void openBrowser() {
-		MainController.openBrowser();
+	public void openHelpPage() {
+		MainController.openHelpPage();
 	}
 
 	/**
