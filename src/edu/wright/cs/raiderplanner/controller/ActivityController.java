@@ -142,9 +142,9 @@ public class ActivityController implements Initializable {
 	/**
 	 * Validate data in the Duration field. If the isNumeric() method is called from
 	 * the MainController Class and is false (checks if the text parameter is a double)
-	 * or the Integer value of the text is less than 0. The duration TextField's 
+	 * or the Integer value of the text is less than 0. The duration TextField's
 	 * border is set to red and the submit button is disabled. Otherwise the duration's
-	 * style is set so that it is cohesive and handleChange() is called. 
+	 * style is set so that it is cohesive and handleChange() is called.
 	 */
 	public void validateDuration() {
 		if (!MainController.isNumeric(this.duration.getText())) {
@@ -168,7 +168,7 @@ public class ActivityController implements Initializable {
 
 	/**
 	 * Validate data in the Quantity field. If the isNumeric() method is called from
-	 * the MainController Class and is false (checks if the text parameter is a double) 
+	 * the MainController Class and is false (checks if the text parameter is a double)
 	 * or the Integer value of the text is less than 0. The quantity TextField's
 	 * border is set to red and the submit button is disabled. Otherwise the quantity's
 	 * style is set so that it is cohesive and handleChange() is called.
@@ -194,8 +194,8 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
-	 * Validate data in the Date field. If the date is before the current date, the 
-	 * DatePicker's border is set to red and the submit button is disabled. Otherwise 
+	 * Validate data in the Date field. If the date is before the current date, the
+	 * DatePicker's border is set to red and the submit button is disabled. Otherwise
 	 * the date's style is set so that it is cohesive and the handleChange() is called.
 	 */
 	public void validateDate() {
