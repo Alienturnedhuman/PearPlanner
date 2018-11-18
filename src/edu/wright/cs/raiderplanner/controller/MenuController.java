@@ -50,12 +50,14 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -841,8 +843,15 @@ public class MenuController implements Initializable {
 					if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
 							&& event.getClickCount() == 2) {
 						try {
-							MainController.ui.studyProfileDetails(row.getItem());
 							this.main();
+							StudyProfileController spc = new StudyProfileController(row.getItem(),
+									this);
+							// Load in the .fxml file:
+							FXMLLoader loader = new FXMLLoader(getClass().getResource(
+									"/edu/wright/cs/raiderplanner/view/StudyProfile.fxml"));
+							loader.setController(spc);
+							Parent root = loader.load();
+							this.mainContent.add(root,0,25);
 						} catch (IOException e1) {
 							UiManager.reportError("Unable to open View file");
 						}

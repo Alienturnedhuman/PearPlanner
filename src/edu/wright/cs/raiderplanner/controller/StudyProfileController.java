@@ -42,6 +42,7 @@ import java.util.ResourceBundle;
  */
 public class StudyProfileController implements Initializable {
 	private StudyProfile profile;
+	private MenuController mc;
 
 	// Labels:
 	@FXML private Label title;
@@ -61,6 +62,7 @@ public class StudyProfileController implements Initializable {
 	public void setCurrent() {
 		MainController.getSpc().getPlanner().setCurrentStudyProfile(this.profile);
 		this.setCurrent.setDisable(true);
+		mc.main();
 	}
 
 	/**
@@ -91,6 +93,14 @@ public class StudyProfileController implements Initializable {
 	 */
 	public StudyProfileController(StudyProfile profile) {
 		this.profile = profile;
+	}
+
+	/**
+	 * Constructor for the StudyProfileController.
+	 */
+	public StudyProfileController(StudyProfile profile,MenuController mc) {
+		this.profile = profile;
+		this.mc = mc;
 	}
 
 	@Override
