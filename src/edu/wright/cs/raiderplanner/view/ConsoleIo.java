@@ -58,7 +58,7 @@ public class ConsoleIo {
 
 	/**
 	 * Get yes/no input.
-	 *
+	 * If the user enters "y" true, if the user enters "n" false.
 	 * @param message Message to be shown.
 	 * @return true for yes, false for no.
 	 */
@@ -74,7 +74,7 @@ public class ConsoleIo {
 	}
 
 	/**
-	 * How many lines have been written to the log.
+	 * Calculate how many lines have been written to the log.
 	 *
 	 * @return number of lines.
 	 */
@@ -167,6 +167,7 @@ public class ConsoleIo {
 	// Console view below
 	/**
 	 * Displays main menu.
+	 * Creates the menu options.
 	 *
 	 * @return menu choice
 	 */
@@ -187,7 +188,7 @@ public class ConsoleIo {
 
 	/**
 	 * Displays Study Profile creation.
-	 *
+	 * Creates menu options for study profile.
 	 * @return Returns menu choice
 	 */
 	public static String view_createStudyP() {
