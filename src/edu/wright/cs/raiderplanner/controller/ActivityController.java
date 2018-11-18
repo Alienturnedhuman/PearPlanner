@@ -58,6 +58,7 @@ import java.util.ResourceBundle;
  *
  * @author Zilvinas Ceikauskas
  */
+
 public class ActivityController implements Initializable {
 	private Activity activity;
 	private boolean success = false;
@@ -139,7 +140,11 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
-	 * Validate data in the Duration field.
+	 * Validate data in the Duration field. If the isNumeric() method is called from
+	 * the MainController Class and is false (checks if the text parameter is a double)
+	 * or the Integer value of the text is less than 0. The duration TextField's
+	 * border is set to red and the submit button is disabled. Otherwise the duration's
+	 * style is set so that it is cohesive and handleChange() is called.
 	 */
 	public void validateDuration() {
 		if (!MainController.isNumeric(this.duration.getText())) {
@@ -162,7 +167,11 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
-	 * Validate data in the Quantity field.
+	 * Validate data in the Quantity field. If the isNumeric() method is called from
+	 * the MainController Class and is false (checks if the text parameter is a double)
+	 * or the Integer value of the text is less than 0. The quantity TextField's
+	 * border is set to red and the submit button is disabled. Otherwise the quantity's
+	 * style is set so that it is cohesive and handleChange() is called.
 	 */
 	public void validateQuantity() {
 		if (!MainController.isNumeric(this.quantity.getText())) {
@@ -185,7 +194,9 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
-	 * Validate data in the Date field.
+	 * Validate data in the Date field. If the date is before the current date, the
+	 * DatePicker's border is set to red and the submit button is disabled. Otherwise
+	 * the date's style is set so that it is cohesive and the handleChange() is called.
 	 */
 	public void validateDate() {
 		if (this.date.getValue().isBefore(LocalDate.now())) {
@@ -238,7 +249,7 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
-	 * Handle Quit button.
+	 * Binds properties on the quit button as well as sets the button actions for exiting.
 	 */
 	public void handleQuit() {
 		Stage stage = (Stage) this.submit.getScene().getWindow();
