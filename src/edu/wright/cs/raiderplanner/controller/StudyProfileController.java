@@ -33,6 +33,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -58,34 +59,31 @@ public class StudyProfileController implements Initializable {
 
 	/**
 	 * Set this StudyProfile as the current profile.
+	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
-	public void setCurrent() {
+	public void setCurrent() throws IOException {
 		MainController.getSpc().getPlanner().setCurrentStudyProfile(this.profile);
 		this.setCurrent.setDisable(true);
 		mc.main();
+		mc.loadStudyProfile(this.profile);
 	}
 
 	/**
-	 * Close this window.
-	 */
-	public void handleClose() {
-		Stage stage = (Stage) this.title.getScene().getWindow();
-		stage.close();
-	}
-	/**
-	 * remove this StudyProfile from List
+	 * remove this StudyProfile from List.
 	 */
 	public void deleteProfile() {
-		if(MainController.getSpc().containsStudyProfile(profile.getYear(), profile.getSemesterNo())) {
-			if(profile.isCurrent()) {
+		if (MainController.getSpc().containsStudyProfile(profile.getYear(),
+				profile.getSemesterNo())) {
+			if (profile.isCurrent()) {
 				MainController.getSpc().getPlanner().getCurrentStudyProfile().clearProfile();
-				MainController.getSpc().getPlanner().setCurrentStudyProfile(new StudyProfile(new HubFile(0,
-					0,0,new ArrayList<Module>(),new ArrayList<VersionControlEntity>(),
-					new ArrayList<Event>(),"No semester",new MultilineString("No details"),"No UId")));
+				MainController.getSpc().getPlanner().setCurrentStudyProfile(
+						new StudyProfile(new HubFile(0,0,0,new ArrayList<Module>(),
+						new ArrayList<VersionControlEntity>(),new ArrayList<Event>(),
+						"No semester",new MultilineString("No details"),"No UId")));
 			}
 			MainController.getSpc().getPlanner().removeProfile(profile);
 		}
-		handleClose();
+		mc.main();
 	}
 
 	/**
