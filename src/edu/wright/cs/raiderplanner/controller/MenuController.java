@@ -846,14 +846,7 @@ public class MenuController implements Initializable {
 							&& event.getClickCount() == 2) {
 						try {
 							this.main();
-							StudyProfileController spc = new StudyProfileController(row.getItem(),
-									this);
-							// Load in the .fxml file:
-							FXMLLoader loader = new FXMLLoader(getClass().getResource(
-									"/edu/wright/cs/raiderplanner/view/StudyProfile.fxml"));
-							loader.setController(spc);
-							Parent root = loader.load();
-							this.mainContent.add(root,0,25);
+							loadStudyProfile(row.getItem());
 						} catch (IOException e1) {
 							UiManager.reportError("Unable to open View file");
 						}
@@ -866,6 +859,20 @@ public class MenuController implements Initializable {
 		this.mainContent.addRow(2, table);
 		GridPane.setColumnSpan(table, GridPane.REMAINING);
 		this.mainContent.getStyleClass().add("list-item");
+	}
+
+	/**
+	 * Display the StudyProfile details.
+	 */
+	public void loadStudyProfile(StudyProfile profile) throws IOException {
+		StudyProfileController spc = new StudyProfileController(profile,
+				this);
+		// Load in the .fxml file:
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(
+				"/edu/wright/cs/raiderplanner/view/StudyProfile.fxml"));
+		loader.setController(spc);
+		Parent root = loader.load();
+		this.mainContent.add(root,0,25);
 	}
 
 	/**
@@ -1562,7 +1569,6 @@ public class MenuController implements Initializable {
 
 		if (not.getLink() != null) {
 			not.getLink().open(this.current);
-			this.main();
 		}
 	}
 
