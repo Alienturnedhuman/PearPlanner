@@ -50,7 +50,7 @@ public class Milestone extends ModelEntity {
 	 */
 	public Milestone(String name, String details, LocalDate deadline) {
 		super(name, details);
-		this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+		this.deadline = new Deadline(deadline.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))
 				+ "T00:00:01Z");
 	}
 
@@ -152,7 +152,7 @@ public class Milestone extends ModelEntity {
 	 * @return String representation of a Deadline.
 	 */
 	public String getDeadline() {
-		return new SimpleDateFormat("dd/MM/yyyy").format(this.deadline.getDate());
+		return new SimpleDateFormat("MM/dd/yyyy").format(this.deadline.getDate());
 	}
 
 	/**
@@ -232,7 +232,7 @@ public class Milestone extends ModelEntity {
 	 * @param date date to be set as a new deadline
 	 */
 	public void setDeadline(LocalDate date) {
-		this.deadline.setDate(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+		this.deadline.setDate(date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))
 				+ "T00:00:01Z");
 	}
 
