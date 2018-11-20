@@ -2,7 +2,7 @@
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar, Amila Dias
  *
- * Copyright (C) 2018 - Clayton D. Terrill
+ * Copyright (C) 2018 - Clayton D. Terrill, Cole Morgan
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,12 +50,14 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -72,6 +74,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
@@ -199,12 +202,13 @@ public class MenuController implements Initializable {
 	private final GridPane firstPane = new GridPane();
 	private TextField tfName = new TextField("");
 	private TextField tfHost = new TextField("");
-	private final Label name = new Label("Your Name:");
-	private final Label host = new Label("Host User's Name:");
+	private final Label name = new Label("Your W Number: ");
+	private final Label host = new Label("Host W Number: ");
 	private final Button submitButton = new Button("Submit");
 	private boolean calendarOpen = false; // Used to monitor status of calendar (open or closed)
 	private boolean chatConnection = true;
 	private Alert chatConnectionStatus = new Alert(AlertType.ERROR);
+	private Alert invalidInputAlert = new Alert(AlertType.ERROR);
 	private String userName;
 	private String hostName;
 	private int portNumber = 1111;
@@ -221,9 +225,11 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * Main method containing switch statements.
+	 * Main method containing switch statements. This checks to see if the calendar is open as well as loads to see
+	 * if you need the profile, module, milestones, calendar, and chat.
 	 */
 	public void main() {
+		mainContent.setStyle("");
 		if (isNavOpen) {
 			openMenu.fire();
 		}
@@ -345,6 +351,22 @@ public class MenuController implements Initializable {
 		this.topBox.getChildren().add(this.welcome);
 		this.title.setText("Study Dashboard");
 
+		FlowPane modulesPane = new FlowPane();
+		mainContent.setStyle("");
+
+
+		if (MainController.getSpc().getPlanner().getCurrentStudyProfile().getModules().length
+				== 0) {
+			VBox dashPic = new VBox();
+			//dashPic.autosize();
+			dashPic.getChildren().add(new ImageView(new
+					Image("/edu/wright/cs/raiderplanner/content/DashBoardHelp.png")));
+			dashPic.setAlignment(Pos.CENTER);
+			this.mainContent.setStyle("-fx-background-color:#ffffff;");
+			modulesPane.setStyle("-fx-background-color:#ffffff;");
+			this.mainContent.add(dashPic, 1, 3);
+		}
+
 		StudyProfile profile = MainController.getSpc().getPlanner().getCurrentStudyProfile();
 
 		// Display studyProfile:
@@ -354,7 +376,6 @@ public class MenuController implements Initializable {
 		this.mainContent.getColumnConstraints()
 				.add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE,
 						Region.USE_COMPUTED_SIZE, Priority.ALWAYS, HPos.CENTER, true));
-		FlowPane modulesPane = new FlowPane();
 
 		Thread renderModules = new Thread(() -> {
 			Label oldLabel = new Label(this.welcome.getText());
@@ -482,7 +503,7 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * Handles when the user selects the new profile button on the main screen.
+	 * Handles when the user selects the new profile button on the main screen and creates a profile when this occurs.
 	 */
 	public void createNewProfile() {
 		MainController.save();
@@ -559,6 +580,7 @@ public class MenuController implements Initializable {
 
 	/**
 	 * Display the 'Add Activity' window.
+	 * @throws IOException if you can not open the file. Exception e if other unexpected issues occur
 	 */
 	public void addActivity() {
 		try {
@@ -582,6 +604,19 @@ public class MenuController implements Initializable {
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("Milestones");
+
+		//Add instructions for the current page
+		HBox instruction = new HBox();
+		GridPane.setHgrow(instruction, Priority.ALWAYS);
+		instruction.setSpacing(50);
+		instruction.setPadding(new Insets(5, 5, 10, 0));
+		this.welcome = new Label(
+				"Welcome " + MainController.getSpc().getPlanner().getUserName()
+				+ "! Use Milestones "	+ "to track important tasks.");
+		this.welcome.setPadding(new Insets(10, 15, 10, 15));
+		this.topBox.getChildren().add(this.welcome);
+		this.mainContent.setVgap(10);
+		this.mainContent.setPadding(new Insets(15));
 
 		// Columns:
 		TableColumn<Milestone, String> nameColumn = new TableColumn<>("Milestone");
@@ -714,8 +749,22 @@ public class MenuController implements Initializable {
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("Calendar");
+
+		//Add instructions for the current page
+		HBox instruction = new HBox();
+		GridPane.setHgrow(instruction, Priority.ALWAYS);
+		instruction.setSpacing(50);
+		instruction.setPadding(new Insets(5, 5, 10, 0));
+		this.welcome = new Label(
+				"Welcome " + MainController.getSpc().getPlanner().getUserName()
+				+ "! See your tasks "	+ "here.");
+		this.welcome.setPadding(new Insets(10, 15, 10, 15));
+		this.topBox.getChildren().add(this.welcome);
+		this.mainContent.setVgap(10);
+		this.mainContent.setPadding(new Insets(15));
 		CalendarController myCalendar = new CalendarController();
 		this.mainContent.getChildren().add(myCalendar.getLayout());
+
 	}
 
 	/**
@@ -727,6 +776,18 @@ public class MenuController implements Initializable {
 		this.topBox.getChildren().clear();
 		this.title.setText("Study Profiles");
 
+		//Add instructions for the current page
+		HBox instruction = new HBox();
+		GridPane.setHgrow(instruction, Priority.ALWAYS);
+		instruction.setSpacing(50);
+		instruction.setPadding(new Insets(5, 5, 10, 0));
+		this.welcome = new Label("Welcome " + MainController.getSpc().getPlanner().getUserName()
+				+ "! Here you can view your study profiles. "
+				+ "Double-click on a profile to see more informaiton.");
+		this.welcome.setPadding(new Insets(10, 15, 10, 15));
+		this.topBox.getChildren().add(this.welcome);
+		this.mainContent.setVgap(10);
+		this.mainContent.setPadding(new Insets(15));
 
 		// Columns:
 		TableColumn<StudyProfile, String> nameColumn = new TableColumn<>("Profile name");
@@ -784,8 +845,8 @@ public class MenuController implements Initializable {
 					if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
 							&& event.getClickCount() == 2) {
 						try {
-							MainController.ui.studyProfileDetails(row.getItem());
 							this.main();
+							loadStudyProfile(row.getItem());
 						} catch (IOException e1) {
 							UiManager.reportError("Unable to open View file");
 						}
@@ -801,6 +862,20 @@ public class MenuController implements Initializable {
 	}
 
 	/**
+	 * Display the StudyProfile details.
+	 */
+	public void loadStudyProfile(StudyProfile profile) throws IOException {
+		StudyProfileController spc = new StudyProfileController(profile,
+				this);
+		// Load in the .fxml file:
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(
+				"/edu/wright/cs/raiderplanner/view/StudyProfile.fxml"));
+		loader.setController(spc);
+		Parent root = loader.load();
+		this.mainContent.add(root,0,25);
+	}
+
+	/**
 	 * Display the Modules pane.
 	 */
 	public void loadModules() {
@@ -808,6 +883,20 @@ public class MenuController implements Initializable {
 		this.mainContent.getChildren().remove(1, this.mainContent.getChildren().size());
 		this.topBox.getChildren().clear();
 		this.title.setText("Modules");
+
+		//Add instructions for the current page
+		HBox instruction = new HBox();
+		GridPane.setHgrow(instruction, Priority.ALWAYS);
+		instruction.setSpacing(50);
+		instruction.setPadding(new Insets(5, 5, 10, 0));
+		this.welcome = new Label(
+				"Welcome " + MainController.getSpc().getPlanner().getUserName()
+				+ "! Modules shows your current courses. "
+				+ "Double-click on a course for more information.");
+		this.welcome.setPadding(new Insets(10, 15, 10, 15));
+		this.topBox.getChildren().add(this.welcome);
+		this.mainContent.setVgap(10);
+		this.mainContent.setPadding(new Insets(15));
 		// Columns:
 		TableColumn<Module, String> codeColumn = new TableColumn<>("Module code");
 		codeColumn.setCellValueFactory(new PropertyValueFactory<>("moduleCode"));
@@ -880,6 +969,21 @@ public class MenuController implements Initializable {
 		this.topBox.getChildren().clear();
 		this.title.setText(module.getModuleCode() + " " + module.getName());
 		// =================
+
+		//Add instructions for the current page
+		HBox instruction = new HBox();
+		GridPane.setHgrow(instruction, Priority.ALWAYS);
+		instruction.setSpacing(50);
+		instruction.setPadding(new Insets(5, 5, 10, 0));
+		this.welcome = new Label(
+				"Welcome " + MainController.getSpc().getPlanner().getUserName()
+				+ "! Use this page to view modules. "
+				+ "Double-click on a module to see more options like "
+					+ "generate Gantish Diagram, or add Tasks/Requirements.");
+		this.welcome.setPadding(new Insets(10, 15, 10, 15));
+		this.topBox.getChildren().add(this.welcome);
+		this.mainContent.setVgap(10);
+		this.mainContent.setPadding(new Insets(15));
 
 		// Create a back button:
 		this.backButton(previousWindow, previous);
@@ -989,7 +1093,7 @@ public class MenuController implements Initializable {
 
 	/**
 	 * This will load all the textfields,labels and buttons for the window that prompts the user for
-	 * his or her username and host name.
+	 * his or her username and host name and sets hint for W number format.
 	 */
 	public void createFirstWindow() {
 		firstPane.add(name, 0, 0);
@@ -997,28 +1101,96 @@ public class MenuController implements Initializable {
 		firstPane.add(host, 0, 1);
 		firstPane.add(tfHost, 1, 1);
 		firstPane.add(submitButton, 1, 2);
+		tfName.setPromptText("W Number (ex: w000xxx)");
+		tfHost.setPromptText("W Number (ex: w000xxx)");
+	}
+
+	/**
+	 * Determines if the user has entered a valid username and sets the style accordingly.
+	 * @return True if the user entered a valid username.
+	 */
+	public boolean validateTfName() {
+		if (tfName.getText().trim().length() == 7) {
+			if (tfName.getText().trim().charAt(0) != 'w') {
+				return false;
+			} else {
+				for (int i = 1; i < 4; ++i) {
+					if (!Character.isDigit(tfName.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+				for (int i = 4; i < 7; ++i) {
+					if (!Character.isLetter(tfName.getText().trim().charAt(i))) {
+						return false;
+					} else if (!Character.isLowerCase(tfName.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+			}
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Determines if the user has entered a valid host name sets the style accordingly.
+	 * @return True if the user entered a valid host name.
+	 */
+	public boolean validateTfHost() {
+		if (tfHost.getText().trim().length() == 7) {
+			if (tfHost.getText().trim().charAt(0) != 'w') {
+				return false;
+			} else {
+				for (int i = 1; i < 4; ++i) {
+					if (!Character.isDigit(tfHost.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+				for (int i = 4; i < 7; ++i) {
+					if (!Character.isLetter(tfHost.getText().trim().charAt(i))) {
+						return false;
+					} else if (!Character.isLowerCase(tfHost.getText().trim().charAt(i))) {
+						return false;
+					}
+				}
+			}
+		} else {
+			return false;
+		}
+		return true;
 	}
 
 	/**
 	 * This will take in the action of when the submit button is pressed. The submit button is for
 	 * the chat window where the user inputs his or her information. If the user does not enter a
-	 * username/hostname, an error will pop up notifying them to enter those values. Then at the
-	 * very end the chat window will be loaded.
+	 * valid user W number/host W number, an error will pop up notifying them to enter/correct
+	 * those values. Then the chat window will be loaded.
 	 */
 	public void submitButtonAction() {
 		submitButton.setOnAction((ActionEvent exception1) -> {
+			String invalidMessage = "";
+			boolean validTfName = true;
+			boolean validTfHost = true;
 			if (chatConnection) {
-				if ((tfName.getText() != null && !(tfName.getText().equals("")))
-					&& (tfHost.getText() != null && !(tfHost.getText().equals("")))) {
+				if (!validateTfName()) {
+					invalidMessage += "Please enter a vaid user W Number\n";
+					validTfName = false;
+				}
+				if (!validateTfHost()) {
+					invalidMessage += "Please enter a valid host W Number\n";
+					validTfHost = false;
+				} else {
 					userName = tfName.getText();
 					hostName = tfHost.getText();
-					loadChatWindow();
-				} else {
-					UiManager.displayError("Username and host are required.");
 				}
+			}
+			if (!validTfName || !validTfHost) {
+				invalidInputAlert.setHeaderText("Invalid Entries: Chat Connection Unsuccessful");
+				invalidInputAlert.setContentText(invalidMessage);
+				invalidInputAlert.showAndWait();
 			} else {
-				chatConnectionStatus.setContentText("Chat" + " connection unsuccessful.");
-				chatConnectionStatus.showAndWait();
+				loadChatWindow();
 			}
 		});
 	}
@@ -1397,7 +1569,6 @@ public class MenuController implements Initializable {
 
 		if (not.getLink() != null) {
 			not.getLink().open(this.current);
-			this.main();
 		}
 	}
 
@@ -1547,8 +1718,8 @@ public class MenuController implements Initializable {
 			String dateFormatted = pendingNotifs[i].getDateTime().get(Calendar.DAY_OF_MONTH) + " "
 					+ pendingNotifs[i].getDateTime().getDisplayName(Calendar.MONTH, Calendar.LONG,
 							Locale.getDefault())
-					+ " at " + pendingNotifs[i].getDateTime().get(Calendar.HOUR) + " " 
-					+ pendingNotifs[i].getDateTime().get(Calendar.MINUTE) + " " 
+					+ " at " + pendingNotifs[i].getDateTime().get(Calendar.HOUR) + " "
+					+ pendingNotifs[i].getDateTime().get(Calendar.MINUTE) + " "
 					+ pendingNotifs[i].getDateTime().getDisplayName(Calendar.AM_PM, Calendar.LONG,
 							Locale.getDefault());
 			Label date = new Label(dateFormatted);
@@ -1581,17 +1752,18 @@ public class MenuController implements Initializable {
 			this.studyProfiles.setDisable(true);
 			this.modules.setDisable(true);
 			this.calendar.setDisable(true);
-		} else {
-			if (MainController.getSpc().getCurrentTasks().size() <= 0) {
-				this.addActivity.setDisable(true);
-				this.milestones.setDisable(true);
-			}
-
-			if (MainController.getSpc().getPlanner().getCurrentStudyProfile()
-					.getModules().length <= 0) {
-				this.modules.setDisable(true);
-			}
 		}
+//		else {
+//			if (MainController.getSpc().getCurrentTasks().size() <= 0) {
+//				this.addActivity.setDisable(true);
+//				this.milestones.setDisable(true);
+//			}
+
+		if (MainController.getSpc().getPlanner().getCurrentStudyProfile()
+				.getModules().length <= 0) {
+			this.modules.setDisable(true);
+		}
+		//}
 	}
 
 	/**

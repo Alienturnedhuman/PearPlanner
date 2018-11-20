@@ -2,7 +2,7 @@
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar
  *
- *
+ * Copyright (C) 2018 - Ian Mahaffy, Gage Berghoff
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -57,6 +58,7 @@ import java.util.ResourceBundle;
  *
  * @author Zilvinas Ceikauskas
  */
+
 public class ActivityController implements Initializable {
 	private Activity activity;
 	private boolean success = false;
@@ -118,57 +120,92 @@ public class ActivityController implements Initializable {
 
 	/**
 	 * Handle changes to the input fields.
+	 * Checks inputs, and unlocks the submit button if inputs are valid
 	 */
 	public void handleChange() {
 		if (!this.name.getText().trim().isEmpty()
 				&& !this.quantity.getText().trim().isEmpty()
+				&& MainController.isNumeric(this.quantity.getText())
+				&& MainController.isInteger(this.quantity.getText())
+				&& Integer.parseInt(this.quantity.getText()) >= 0
 				&& !this.date.getValue().isBefore(LocalDate.now())
 				&& !this.duration.getText().trim().isEmpty()
+				&& MainController.isNumeric(this.duration.getText())
+				&& MainController.isInteger(this.duration.getText())
+				&& Integer.parseInt(this.duration.getText()) >= 0
 				&& this.quantityType.getSelectionModel().getSelectedIndex() != -1
 				&& this.tasks.getItems().size() > 0) {
-
 			this.submit.setDisable(false);
-
 		}
 	}
 
 	/**
-	 * Validate data in the Duration field.
+	 * Validate data in the Duration field. If the isNumeric() method is called from
+	 * the MainController Class and is false (checks if the text parameter is a double)
+	 * or the Integer value of the text is less than 0. The duration TextField's
+	 * border is set to red and the submit button is disabled. Otherwise the duration's
+	 * style is set so that it is cohesive and handleChange() is called.
 	 */
 	public void validateDuration() {
-		if (!MainController.isNumeric(this.duration.getText())
-				|| Integer.parseInt(this.duration.getText()) < 0) {
+		if (!MainController.isNumeric(this.duration.getText())) {
 			this.duration.setStyle("-fx-text-box-border:red;");
+			this.duration.setTooltip(new Tooltip("Duration must be numeric"));
+			this.submit.setDisable(true);
+		} else if (!MainController.isInteger(this.duration.getText())) {
+			this.duration.setStyle("-fx-text-box-border:red;");
+			this.duration.setTooltip(new Tooltip("Duration must be a whole number"));
+			this.submit.setDisable(true);
+		} else if (Integer.parseInt(this.duration.getText()) < 0) {
+			this.duration.setStyle("-fx-text-box-border:red;");
+			this.duration.setTooltip(new Tooltip("Duration can not be negative"));
 			this.submit.setDisable(true);
 		} else {
 			this.duration.setStyle("");
+			this.duration.setTooltip(null);
 			this.handleChange();
 		}
 	}
 
 	/**
-	 * Validate data in the Quantity field.
+	 * Validate data in the Quantity field. If the isNumeric() method is called from
+	 * the MainController Class and is false (checks if the text parameter is a double)
+	 * or the Integer value of the text is less than 0. The quantity TextField's
+	 * border is set to red and the submit button is disabled. Otherwise the quantity's
+	 * style is set so that it is cohesive and handleChange() is called.
 	 */
 	public void validateQuantity() {
-		if (!MainController.isNumeric(this.quantity.getText())
-				|| Integer.parseInt(this.quantity.getText()) < 0) {
+		if (!MainController.isNumeric(this.quantity.getText())) {
 			this.quantity.setStyle("-fx-text-box-border:red;");
+			this.quantity.setTooltip(new Tooltip("Quantity must be numeric"));
+			this.submit.setDisable(true);
+		} else if (!MainController.isInteger(this.quantity.getText())) {
+			this.quantity.setStyle("-fx-text-box-border:red;");
+			this.quantity.setTooltip(new Tooltip("Quantity must be a whole number"));
+			this.submit.setDisable(true);
+		}  else if (Integer.parseInt(this.quantity.getText()) < 0) {
+			this.quantity.setStyle("-fx-text-box-border:red;");
+			this.quantity.setTooltip(new Tooltip("Quantity can not be negative"));
 			this.submit.setDisable(true);
 		} else {
 			this.quantity.setStyle("");
+			this.quantity.setTooltip(null);
 			this.handleChange();
 		}
 	}
 
 	/**
-	 * Validate data in the Date field.
+	 * Validate data in the Date field. If the date is before the current date, the
+	 * DatePicker's border is set to red and the submit button is disabled. Otherwise
+	 * the date's style is set so that it is cohesive and the handleChange() is called.
 	 */
 	public void validateDate() {
 		if (this.date.getValue().isBefore(LocalDate.now())) {
 			this.date.setStyle("-fx-border-color:red;");
+			this.date.setTooltip(new Tooltip("Date can not be in the past"));
 			this.submit.setDisable(true);
 		} else {
 			this.date.setStyle("");
+			this.date.setTooltip(null);
 			this.handleChange();
 		}
 	}
@@ -197,7 +234,6 @@ public class ActivityController implements Initializable {
 	 */
 	public void handleSubmit() {
 		if (this.activity == null) {
-
 			this.activity = new Activity(this.name.getText(),
 					this.details.getText(), this.date.getValue(),
 					Integer.parseInt(this.duration.getText()),
@@ -213,7 +249,7 @@ public class ActivityController implements Initializable {
 	}
 
 	/**
-	 * Handle Quit button.
+	 * Binds properties on the quit button as well as sets the button actions for exiting.
 	 */
 	public void handleQuit() {
 		Stage stage = (Stage) this.submit.getScene().getWindow();

@@ -66,4 +66,4 @@
     -fx-background-image: url("/edu/wright/cs/raiderplanner/content/print.png");
     -fx-min-width: 30;
     -fx-background-color: transparent;
-}
+} .delete-button { -fx-base: #FF0000;}

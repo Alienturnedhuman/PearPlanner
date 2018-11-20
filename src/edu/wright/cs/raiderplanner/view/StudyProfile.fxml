@@ -33,14 +33,14 @@
                        text="# extension applications."/>
             </children>
         </VBox>
-        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleClose" prefHeight="31.0" prefWidth="69.0"
-                text="OK" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+        <Button fx:id="setCurrent" layoutX="531.0" layoutY="141.0" mnemonicParsing="false" onAction="#setCurrent"
+                prefHeight="31.0" prefWidth="119.0" styleClass="set-button" text="Set as current" GridPane.rowIndex="2">
             <GridPane.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
             </GridPane.margin>
         </Button>
-        <Button fx:id="setCurrent" layoutX="531.0" layoutY="141.0" mnemonicParsing="false" onAction="#setCurrent"
-                prefHeight="31.0" prefWidth="119.0" styleClass="set-button" text="Set as current" GridPane.rowIndex="2">
+        <Button fx:id="deleteProfile" layoutX="531.0" layoutY="141.0" mnemonicParsing="false" onAction="#deleteProfile"
+                prefHeight="31.0" prefWidth="119.0" styleClass="delete-button" text="delete profile" GridPane.rowIndex="2" GridPane.columnIndex="2">
             <GridPane.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
             </GridPane.margin>

@@ -2,7 +2,7 @@
  * Copyright (C) 2017 - Benjamin Dickson, Andrew Odintsov, Zilvinas Ceikauskas,
  * Bijan Ghasemi Afshar, Amila Dias
  *
- * Copyright (C) 2018 - Clayton D. Terrill
+ * Copyright (C) 2018 - Clayton D. Terrill, Ian Mahaffy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,6 +102,7 @@ public class MainController {
 	/**
 	 * Initializes the Study Planner by either registering a new account or
 	 * importing an existing Study Planner file.
+	 * @throws Exception e if there is an issue registering a new account or importing a file
 	 */
 	public static void initialise() {
 		if (settings.getAccountStartup() == true) {
@@ -291,6 +292,7 @@ public class MainController {
 
 	/**
 	 * Display the main menu.
+	 * @throws IOException e if the file doesnt exist. Any other exceptions gets error message.
 	 */
 	public static void main() {
 		try {
@@ -305,6 +307,7 @@ public class MainController {
 	/**
 	 * Display the main menu.
 	 * Stage is already present.
+	 * @throws IOException e if the file doesnt exist. Any other exceptions gets error message.
 	 */
 	public static void showMain() {
 		try {
@@ -319,6 +322,7 @@ public class MainController {
 	/**
 	 * Display the settings menu.
 	 * Stage is already present.
+	 * @throws IOException e if the file doesnt exist. Any other exceptions gets error message.
 	 */
 	public static void showSettings() {
 		try {
@@ -331,7 +335,7 @@ public class MainController {
 	}
 
 	/**
-	 * Handles importing a new file.
+	 * Handles importing a new file and if the file is imported it lets the user know.
 	 *
 	 * @return whether imported successfully.
 	 */
@@ -355,7 +359,7 @@ public class MainController {
 
 	/**
 	 * Save the current state of the program to file.
-	 *
+	 * @throws Exception e if there was an issue with saving information
 	 * @return true for a successful save, false otherwise
 	 */
 	public static boolean save() {
@@ -376,6 +380,21 @@ public class MainController {
 	 */
 	public static void setPlannerFile(File file) {
 		plannerFile = file;
+	}
+
+	/**
+	 * Checks if a string can be converted to an Integer.
+	 *
+	 * @param value String to be tested
+	 * @return True if string can be converted, false otherwise
+	 */
+	public static boolean isInteger(String value) {
+		try {
+			Integer.parseInt(value);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**
