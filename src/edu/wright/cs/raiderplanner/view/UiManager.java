@@ -104,7 +104,7 @@ public class UiManager {
 	 * @return newly created Account
 	 * @throws IOException for loader.load()
 	 */
-	public Account createAccount() throws IOException {
+	public Account createAccount(boolean first) throws IOException {
 		AccountController accountControl = new AccountController();
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Hello World!");
 		// Load in the .fxml file:
@@ -120,9 +120,13 @@ public class UiManager {
 		stage.showAndWait();
 		// Handle creation of the Account object:
 		// If user exits before submitting information, program exits.
-		if (!accountControl.isSuccess()) {
+		if (!accountControl.isSuccess() && first == true) {
 			System.exit(0);
+		} else if(!accountControl.isSuccess() && first == false) {
+			stage.close();
+			return null;
 		}
+		
 		Account newAccount = accountControl.getAccount();
 		return newAccount;
 	}

@@ -70,7 +70,7 @@ public class StartupController {
 		// Generates the basic planner information
 		File plannerFile = null;
 		try {
-			Account newAccount = MainController.ui.createAccount();
+			Account newAccount = MainController.ui.createAccount(true);
 			StudyPlannerController study = new StudyPlannerController(newAccount);
 			// Welcome notification:
 			Notification not = new Notification("Welcome!", new GregorianCalendar(),
