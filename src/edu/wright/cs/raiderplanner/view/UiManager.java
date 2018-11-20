@@ -306,19 +306,8 @@ public class UiManager {
 	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public void studyProfileDetails(StudyProfile profile) throws IOException {
-		StudyProfileController spc = new StudyProfileController(profile);
-		// Load in the .fxml file:
-		FXMLLoader loader = new FXMLLoader(studyProfileFxml);
-		loader.setController(spc);
-		Parent root = loader.load();
-		// Set the scene:
-		Stage stage = new Stage();
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.setScene(new Scene(root, 550, 232));
-		stage.setTitle(profile.getName());
-		stage.resizableProperty().setValue(false);
-		stage.getIcons().add(icon);
-		stage.showAndWait();
+		UiManager.mc.main(MenuController.Window.PROFILES);
+		UiManager.mc.loadStudyProfile(profile);
 	}
 
 	/**
