@@ -168,7 +168,7 @@ junitPlatform {
 
 checkstyle {
 	configFile = '.checkstyle.xml' as File
-	maxWarnings = 33
+	maxWarnings = 0
 }
 
 tasks.withType(com.github.spotbugs.SpotBugsTask) {

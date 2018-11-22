@@ -33,7 +33,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -64,7 +63,8 @@ public class AccountController implements Initializable {
 	private boolean success = false;
 
 	/**
-	 * Getter for Account
+	 * Getter for Account.
+	 *
 	 * @return the Account object being managed by this controller.
 	 */
 	public Account getAccount() {
@@ -72,7 +72,8 @@ public class AccountController implements Initializable {
 	}
 
 	/**
-	 * Getter for Success
+	 * Getter for Success.
+	 *
 	 * @return true if the last submit operation succeeded, false otherwise.
 	 */
 	public boolean isSuccess() {
@@ -96,7 +97,7 @@ public class AccountController implements Initializable {
 	}
 
 	/**
-	 * Determines if the user has entered a valid name by calling the validateName() 
+	 * Determines if the user has entered a valid name by calling the validateName()
 	 * from the Person Class in Model, which checks that the entered Name only
 	 * contains a combination of spaces and upper/lower case letters and returns
 	 * a boolean value. Then sets the style so it is cohesive.

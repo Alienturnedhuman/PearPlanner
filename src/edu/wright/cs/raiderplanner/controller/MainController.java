@@ -359,8 +359,8 @@ public class MainController {
 
 	/**
 	 * Save the current state of the program to file.
-	 * @throws Exception e if there was an issue with saving information
 	 * @return true for a successful save, false otherwise
+	 * @throws Exception e if there was an issue with saving information
 	 */
 	public static boolean save() {
 		try {
