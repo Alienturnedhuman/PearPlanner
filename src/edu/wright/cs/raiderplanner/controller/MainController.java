@@ -123,7 +123,7 @@ public class MainController {
 				}
 				if (noAccount) {
 					try {
-						Account newAccount = MainController.ui.createAccount();
+						Account newAccount = MainController.ui.createAccount(noAccount);
 						StudyPlannerController study =
 								new StudyPlannerController(newAccount);
 						// Welcome notification:
@@ -182,7 +182,7 @@ public class MainController {
 			}
 			if (noAccount) {
 				try {
-					Account newAccount = MainController.ui.createAccount();
+					Account newAccount = MainController.ui.createAccount(noAccount);
 					StudyPlannerController study = new StudyPlannerController(newAccount);
 					// Welcome notification:
 					Notification not = new Notification("Welcome!", new GregorianCalendar(),
