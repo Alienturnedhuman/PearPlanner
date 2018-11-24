@@ -127,6 +127,14 @@ public class MainController {
 							&& files[0].getName().contains("SamplePlanner.dat")) {
 						noAccount = true;
 					}
+					if (files.length >= 1) {
+						try {
+							noAccount = MainController.ui.accountStart();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 				if (noAccount) {
 					try {
