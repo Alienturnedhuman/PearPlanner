@@ -293,6 +293,7 @@ public class MainController {
 	/**
 	 * Display the main menu.
 	 * @throws Exception - Throws Custom Exception
+	 * @throws IOException - e if the file doesn't exist. Any other exceptions gets error message
 	 */
 	public static void main() throws Exception {
 		try {
