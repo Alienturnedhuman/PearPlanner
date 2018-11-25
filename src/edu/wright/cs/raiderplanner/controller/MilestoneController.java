@@ -32,6 +32,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -39,6 +40,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -89,6 +91,13 @@ public class MilestoneController implements Initializable {
 
 	// Lists:
 	@FXML private ListView<Task> tasks;
+
+	// Tooltips:
+	@FXML private Label nameTooltip;
+	@FXML private Label deadlineTooltip;
+	@FXML private Label detailsTooltip;
+	@FXML private Label tasksTooltip;
+	@FXML private Label headingTooltip;
 
 	/**
 	 * Handle changes to the input fields.
@@ -268,6 +277,16 @@ public class MilestoneController implements Initializable {
 		// ListChangeListener:
 		this.tasks.getItems().addListener((ListChangeListener<Task>) c -> handleChange());
 		// =================
+
+		// Initialize tooltip messages:
+		nameTooltip.setTooltip(new Tooltip("Enter the name of the milestone."));
+		deadlineTooltip.setTooltip(new Tooltip("Enter a deadline for the milestone \n in "
+				+ "the format: MM/DD/YYYY"));
+		detailsTooltip.setTooltip(new Tooltip("Enter any details for the milestone."));
+		tasksTooltip.setTooltip(new Tooltip("Add or remove tasks from you milestone."));
+		headingTooltip.setTooltip(new Tooltip("A Milestone is a goal that you can set for "
+				+ "yourself to achieve\nin the future.  You can "
+				+ "give a deadline and tasks\nthat need to be completed to achieve this goal."));
 
 		Platform.runLater(() -> this.pane.requestFocus());
 	}
