@@ -1593,8 +1593,9 @@ public class MenuController implements Initializable {
 
 	/**
 	 * Handles the 'Settings' event.
+	 * @throws Exception - Throws RaiderException
 	 */
-	public void showSettings() {
+	public void showSettings() throws Exception {
 		initialLoad = true; // Required so the notifications don't appear.
 		MainController.showSettings();
 	}

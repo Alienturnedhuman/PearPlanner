@@ -636,8 +636,9 @@ public class SettingsController implements Initializable {
 	/**
 	 * Handles the 'Back' Event.
 	 * Will close the settings menu and open the main menu.
+	 * @throws Exception - Throws Raider Exception
 	 */
-	public void goBack() {
+	public void goBack() throws Exception {
 		MainController.showMain();
 	}
 

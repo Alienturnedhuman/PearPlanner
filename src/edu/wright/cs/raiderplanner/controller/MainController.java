@@ -28,6 +28,7 @@ import edu.wright.cs.raiderplanner.model.ICalExport;
 import edu.wright.cs.raiderplanner.model.Notification;
 import edu.wright.cs.raiderplanner.model.Settings;
 import edu.wright.cs.raiderplanner.model.StudyPlanner;
+import edu.wright.cs.raiderplanner.util.RaiderException;
 import edu.wright.cs.raiderplanner.view.UiManager;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
@@ -301,13 +302,13 @@ public class MainController {
 	 * Display the main menu.
 	 * @throws IOException e if the file doesnt exist. Any other exceptions gets error message.
 	 */
-	public static void main() {
+	public static void main() throws Exception {
 		try {
 			ui.mainMenu();
 		} catch (IOException e) {
 			UiManager.reportError("File does not exist: " + e.getMessage());
-		} catch (Exception e) {
-			UiManager.reportError(e.getMessage());
+		} catch (RaiderException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -316,12 +317,12 @@ public class MainController {
 	 * Stage is already present.
 	 * @throws IOException e if the file doesnt exist. Any other exceptions gets error message.
 	 */
-	public static void showMain() {
+	public static void showMain() throws Exception {
 		try {
 			ui.showMain();
 		} catch (IOException e) {
 			UiManager.reportError("File does not exist: " + e.getMessage());
-		} catch (Exception e) {
+		} catch (RaiderException e) {
 			UiManager.reportError(e.getMessage());
 		}
 	}
@@ -331,12 +332,12 @@ public class MainController {
 	 * Stage is already present.
 	 * @throws IOException e if the file doesnt exist. Any other exceptions gets error message.
 	 */
-	public static void showSettings() {
+	public static void showSettings() throws Exception {
 		try {
 			ui.showSettings();
 		} catch (IOException e) {
 			UiManager.reportError("File does not exist: " + e.getMessage());
-		} catch (Exception e) {
+		} catch (RaiderException e) {
 			UiManager.reportError(e.getMessage());
 		}
 	}
