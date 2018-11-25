@@ -44,7 +44,7 @@
                <graphic>
                   <ImageView fitHeight="13.0" fitWidth="13.0" preserveRatio="true" smooth="true">
                      <image>
-                        <Image url="@../../../../../../../../Downloads/information.png" />
+                        <Image url="@../content/information.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -63,7 +63,7 @@
       				   <graphic>
       				      <ImageView fitHeight="13.0" fitWidth="13.0" preserveRatio="true" smooth="true">
       				        <image>
-      				          <Image url="@../../../../../../../../Downloads/information.png" />
+      				          <Image url="@../content/information.png" />
       				        </image>
       				      </ImageView>
       				   </graphic>
@@ -80,7 +80,7 @@
                      <graphic>
                         <ImageView fitHeight="13.0" fitWidth="13.0" preserveRatio="true" smooth="true">
                            <image>
-                              <Image url="@../../../../../../../../Downloads/information.png" />
+                              <Image url="@../content/information.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -97,7 +97,7 @@
                      <graphic>
                         <ImageView fitHeight="13.0" fitWidth="13.0" preserveRatio="true" smooth="true">
                            <image>
-                              <Image url="@../../../../../../../../Downloads/information.png" />
+                              <Image url="@../content/information.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -125,7 +125,7 @@
                      <graphic>
                         <ImageView fitHeight="13.0" fitWidth="13.0" preserveRatio="true" smooth="true">
                            <image>
-                              <Image url="@../../../../../../../../Downloads/information.png" />
+                              <Image url="@../content/information.png" />
                            </image>
                         </ImageView>
                      </graphic>
