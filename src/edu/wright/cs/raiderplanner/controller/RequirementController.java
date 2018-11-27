@@ -21,6 +21,9 @@
 
 package edu.wright.cs.raiderplanner.controller;
 
+import com.github.plushaze.traynotification.animations.Animations;
+import com.github.plushaze.traynotification.notification.Notifications;
+import com.github.plushaze.traynotification.notification.TrayNotification;
 import edu.wright.cs.raiderplanner.model.Activity;
 import edu.wright.cs.raiderplanner.model.QuantityType;
 import edu.wright.cs.raiderplanner.model.Requirement;
@@ -50,10 +53,6 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import com.github.plushaze.traynotification.animations.Animations;
-import com.github.plushaze.traynotification.notification.Notifications;
-import com.github.plushaze.traynotification.notification.TrayNotification;
 
 /**
  * Created by Zilvinas on 13/05/2017.

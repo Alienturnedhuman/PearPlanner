@@ -21,17 +21,9 @@
 
 package edu.wright.cs.raiderplanner.controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
 import com.github.plushaze.traynotification.animations.Animations;
 import com.github.plushaze.traynotification.notification.Notifications;
 import com.github.plushaze.traynotification.notification.TrayNotification;
-
 import edu.wright.cs.raiderplanner.model.Assignment;
 import edu.wright.cs.raiderplanner.model.Requirement;
 import edu.wright.cs.raiderplanner.model.Task;
@@ -79,6 +71,13 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 /**
  * Created by Zilvinas on 12/05/2017.
