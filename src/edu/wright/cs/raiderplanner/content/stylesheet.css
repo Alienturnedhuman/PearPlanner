@@ -13,7 +13,7 @@
 }
 
 .set-button {
-    -fx-base: #CEA052;
+    -fx-base: #4aea95;
 }
 
 .back-button {
@@ -59,7 +59,7 @@
 }
 
 .current-item {
-    -fx-background-color: #CEA052;
+    -fx-background-color: #4aea95;
 }
 
 .print-button {
