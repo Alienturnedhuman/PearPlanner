@@ -120,7 +120,9 @@
         </HBox>
         <HBox alignment="TOP_CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER"> 
             <children>
-                <ComboBox fx:id="quantityType" onAction="#handleChange" prefHeight="31.0" prefWidth="242.0" promptText="Quantity type" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                <ComboBox fx:id="quantityType" onAction="#handleChange" prefHeight="31.0" prefWidth="242.0"
+                          promptText="Requirement Type" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                          GridPane.rowIndex="2" GridPane.valignment="TOP">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
                     </GridPane.margin>

@@ -138,7 +138,8 @@
                 </HBox>
             </children>
         </VBox>
-        <ComboBox fx:id="quantityType" onAction="#handleChange" prefHeight="31.0" prefWidth="531.0" promptText="Quantity type" GridPane.columnIndex="1" GridPane.rowIndex="2">
+ 			<ComboBox fx:id="quantityType" onAction="#handleChange" prefHeight="31.0" prefWidth="531.0"
+                  promptText="Activity Type" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <GridPane.margin>
                 <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
             </GridPane.margin>

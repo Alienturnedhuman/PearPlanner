@@ -119,7 +119,9 @@
         </HBox>
         <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
             <children>
-                <ComboBox fx:id="taskType" onAction="#handleChange" prefHeight="31.0" prefWidth="237.0" promptText="Task type" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                <ComboBox fx:id="taskType" onAction="#handleChange" prefHeight="31.0" prefWidth="237.0"
+                          promptText="Task Type" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                          GridPane.rowIndex="2" GridPane.valignment="CENTER">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
