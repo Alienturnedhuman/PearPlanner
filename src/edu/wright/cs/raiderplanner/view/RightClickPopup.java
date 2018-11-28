@@ -20,6 +20,7 @@
  */
 
 package edu.wright.cs.raiderplanner.view;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -32,63 +33,87 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 
-
-
 /**
- * @author Dominick Hatton
- *
+ * @author Dominick Hatton. Class that implements a right click pop up menu function.
  */
-public class RightClickPopup implements ActionListener, ItemListener{
-	 JMenuItem item;
-	 JTextArea output;
-     //Create the popup menu.
-	 public void createPopupMenu() {
-     JPopupMenu popup = new JPopupMenu();
-     item = new JMenuItem("Delete");
-     item.addActionListener(this);
-     popup.add(item);
-     //Add listener to the text area so the popup menu can come up.
-     MouseListener popupListener = new PopupListener(popup);
-     output.addMouseListener(popupListener);
-	 }
+public class RightClickPopup implements ActionListener, ItemListener {
+	JMenuItem item;
+	JTextArea output;
 
-class PopupListener extends MouseAdapter {
-    JPopupMenu popup;
+	/**
+	 * Initializes the popup menu.
+	 */
+	public void createPopupMenu() {
+		JPopupMenu popup = new JPopupMenu();
+		item = new JMenuItem("Delete");
+		item.addActionListener(this);
+		popup.add(item);
+		// Add listener to the text area so the popup menu can come up.
+		MouseListener popupListener = new PopupListener(popup);
+		output.addMouseListener(popupListener);
+	}
 
-    PopupListener(JPopupMenu popupMenu) {
-        popup = popupMenu;
-    }
+	/**
+	 * Listens for a right click to create a popup menu.
+	 */
+	class PopupListener extends MouseAdapter {
+		JPopupMenu menu;
 
-    public void mousePressed(MouseEvent e) {
-        showPopup(e);
-    }
-    public void mouseReleased(MouseEvent e) {
-        showPopup(e);
-    }
-    private void showPopup(MouseEvent e) {
-        if (e.isPopupTrigger()) {
-            popup.show(e.getComponent(),
-                       e.getX(), e.getY());
-        }
-    }
+		/**
+		 * @param popupMenu.
+		 *
+		 */
+		PopupListener(JPopupMenu popupMenu) {
+			menu = popupMenu;
+		}
+
+		/**
+		 * Called when there is a right click pressed.
+		 *
+		 * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
+		 */
+		public void mousePressed(MouseEvent me) {
+			showPopup(me);
+		}
+
+		/**
+		 * Called when there is a right click release.
+		 *
+		 * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
+		 */
+		public void mouseReleased(MouseEvent me) {
+			showPopup(me);
+		}
+
+		/**
+		 * When there is a right click event triggered, this method will begin to display the menu.
+		 */
+		private void showPopup(MouseEvent me) {
+			if (me.isPopupTrigger()) {
+				menu.show(me.getComponent(), me.getX(), me.getY());
+			}
+		}
+	}
+
+	/**
+	 * (non-Javadoc)
+	 *
+	 * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
+	 */
+	@Override
+	public void itemStateChanged(ItemEvent me) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * (non-Javadoc)
+	 *
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
 }
-
-/* (non-Javadoc)
- * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
- */
-@Override
-public void itemStateChanged(ItemEvent e) {
-	// TODO Auto-generated method stub
-	
-}
-
-/* (non-Javadoc)
- * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
- */
-@Override
-public void actionPerformed(ActionEvent arg0) {
-	// TODO Auto-generated method stub
-	
-}
-}
-
