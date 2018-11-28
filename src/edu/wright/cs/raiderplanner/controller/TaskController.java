@@ -509,7 +509,6 @@ public class TaskController implements Initializable {
 				this.canComplete.setVisible(true);
 			}
 			// =================
-
 			// Fill in data:
 			this.name.setText(this.task.getName());
 			this.details.setText(this.task.getDetails().getAsString());
