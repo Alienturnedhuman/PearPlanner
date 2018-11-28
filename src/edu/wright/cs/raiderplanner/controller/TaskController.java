@@ -90,7 +90,6 @@ public class TaskController implements Initializable {
 
 	/**
 	 * Returns the current task associated with this TaskController.
-	 * 
 	 * @return The Task associated with this TaskController.
 	 */
 	public Task getTask() {
@@ -99,7 +98,6 @@ public class TaskController implements Initializable {
 
 	/**
 	 * Returns whether the TasksController has successfully handled a Task submission.
-	 * 
 	 * @return Whether this TaskController has successfully handled a Task submission.
 	 */
 	public boolean isSuccess() {
@@ -190,7 +188,6 @@ public class TaskController implements Initializable {
 	/**
 	 * Used to test all user entries needed before allowing the ok/submit button to be pressed.
 	 * Checks all input fields for incorrect data, including whether weighting is an Integer.
-	 * 
 	 * @return true if unlock is successful, or false if not.
 	 */
 	public boolean unlockSubmit() {
@@ -209,7 +206,6 @@ public class TaskController implements Initializable {
 	/**
 	 * This will properly get the user entry from the weighting field. If field entry is wrong,
 	 * displays red border and changes the ToolTip to explain error.
-	 * 
 	 * @return Integer for the weight, 0 if left blank, or -1 for error
 	 */
 	public int getWeight() {
