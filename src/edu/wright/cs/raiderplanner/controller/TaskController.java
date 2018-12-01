@@ -133,6 +133,15 @@ public class TaskController implements Initializable {
 	@FXML private ListView<Requirement> requirements;
 	@FXML private ListView<Task> dependencies;
 
+	// Tooltips:
+	@FXML private Label nameTooltip;
+	@FXML private Label weightingTooltip;
+	@FXML private Label deadlineTooltip;
+	@FXML private Label detailsTooltip;
+	@FXML private Label requirementsTooltip;
+	@FXML private Label dependenciesTooltip;
+	@FXML private Label headingTooltip;
+
 	/**
 	 * Handle changes to the input fields.
 	 */
@@ -499,6 +508,22 @@ public class TaskController implements Initializable {
 		this.requirements.getItems().addListener((ListChangeListener<Requirement>)
 				c -> handleChange());
 		// =================
+
+		// Initialize Tooltips:
+		nameTooltip.setTooltip(new Tooltip("Enter the name of the task."));
+		detailsTooltip.setTooltip(new Tooltip("Enter any additional information about the task."));
+		deadlineTooltip.setTooltip(new Tooltip("Enter a deadline that this task must be completed "
+				+ "by\nin the format (MM/DD/YYYY)"));
+		weightingTooltip.setTooltip(new Tooltip("Distribute the importance of each task in your "
+				+ "to do list\nby adding a weight."));
+		requirementsTooltip.setTooltip(new Tooltip("Add the required actions needed for completing "
+				+ "this task."));
+		dependenciesTooltip.setTooltip(new Tooltip("add the dependencies for the task to be "
+				+ "complete."));
+		headingTooltip.setTooltip(new Tooltip("A Task is something that needs to be completed\n"
+				+ "before marking a requirement, milestone, or activity\nfinidhed. "
+				+ "It comes with a weighting feature that allows\nyou to organize tasks in order "
+				+ "of importance."));
 
 		Platform.runLater(() -> this.pane.requestFocus());
 	}
