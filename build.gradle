@@ -97,6 +97,7 @@ repositories {
 	maven {
 		url "https://github.com/screamingfrog/Maven/blob/master/uk/co/screamingfrog/AppleJavaExtensions/1.6/"
 		url "https://oss.sonatype.org/content/repositories/snapshots/org/testfx/testfx-core/4.0.0-SNAPSHOT/"
+		url "https://jitpack.io"
 	}
 }
 
@@ -127,6 +128,7 @@ dependencies {
 	compile 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
 	compile 'org.junit.platform:junit-platform-runner:1.0.1'
 	compile 'org.junit.vintage:junit-vintage-engine:4.12.1'
+	implementation 'com.github.PlusHaze:TrayNotification:5393c3a54f'
 	compile fileTree(dir: 'src', include: ['*.jar'])
 	compile group: 'org.apache.derby', name: 'derby', version: '10.14.1.0'
 	runtime group: 'org.apache.derby', name: 'derby', version: '10.14.1.0'
