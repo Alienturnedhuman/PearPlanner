@@ -78,7 +78,7 @@ public class AccountLoader implements Initializable {
 	/**
 	 * Handle submit button.
 	 *
-	 * @return
+	 * @return true or false based on if an account is present.
 	 */
 	public boolean handleSubmit() {
 		Stage stage = (Stage) this.submit.getScene().getWindow();
