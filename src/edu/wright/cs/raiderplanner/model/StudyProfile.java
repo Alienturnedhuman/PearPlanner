@@ -43,10 +43,9 @@ public class StudyProfile extends VersionControlEntity {
 
 	// public methods
 	/**
-	 * clears the profile so that PlannerViewer can update
-	 * 
+	 * Clears the profile so that PlannerViewer can update.
 	 */
-	public void clearProfile(){
+	public void clearProfile() {
 		modules.clear();
 		milestones.clear();
 		extensions.clear();
@@ -137,6 +136,7 @@ public class StudyProfile extends VersionControlEntity {
 	 * Returns the name of this StudyProfile as a String.
 	 * @return the name of this StudyProfile
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}

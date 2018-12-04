@@ -21,6 +21,9 @@
 
 package edu.wright.cs.raiderplanner.controller;
 
+import com.github.plushaze.traynotification.animations.Animations;
+import com.github.plushaze.traynotification.notification.Notifications;
+import com.github.plushaze.traynotification.notification.TrayNotification;
 import edu.wright.cs.raiderplanner.model.Activity;
 import edu.wright.cs.raiderplanner.model.QuantityType;
 import edu.wright.cs.raiderplanner.model.Requirement;
@@ -43,7 +46,9 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -100,6 +105,13 @@ public class RequirementController implements Initializable {
 	// Labels:
 	@FXML private Label title;
 	@FXML private Label completed;
+
+	// Tooltips:
+	@FXML private Label nameTooltip;
+	@FXML private Label timeTooltip;
+	@FXML private Label quantityTooltip;
+	@FXML private Label detailsTooltip;
+	@FXML private Label headingTooltip;
 
 	/**
 	 * Handle changes to the input fields.
@@ -211,8 +223,17 @@ public class RequirementController implements Initializable {
 	 * Submit the form and create a new Task.
 	 */
 	public void handleSubmit() {
+		TrayNotification trayNotif = new TrayNotification();
+		trayNotif.setTitle("Raider Planner");
+		trayNotif.setRectangleFill(Paint.valueOf("#2A9A84"));
+		trayNotif.setAnimation(Animations.POPUP);
+		trayNotif.setNotification(Notifications.SUCCESS);
+		trayNotif.showAndDismiss(Duration.seconds(2));
+
 		if (this.requirement == null) {
 			// Create a new Requirement:
+			trayNotif.setMessage("Requirement Successfully Created");
+
 			this.requirement = new Requirement(this.name.getText(), this.details.getText(),
 					Double.parseDouble(this.time.getText()),
 					getQuantity(),
@@ -225,8 +246,8 @@ public class RequirementController implements Initializable {
 			this.requirement.setEstimatedTimeInHours(Double.parseDouble(this.time.getText()));
 			this.requirement.setInitialQuantity(getQuantity());
 			this.requirement.setQuantityType(this.quantityType.getValue());
+			trayNotif.setMessage("Requirement Successfully Updated");
 			// =================
-
 		}
 		this.success = true;
 		Stage stage = (Stage) this.submit.getScene().getWindow();
@@ -322,6 +343,17 @@ public class RequirementController implements Initializable {
 			// =================
 		}
 		// =================
+
+		// Initialize Tooltips:
+		nameTooltip.setTooltip(new Tooltip("Enter the name of your new requirement."));
+		timeTooltip.setTooltip(new Tooltip("Enter an approximate time that it would take "
+				+ "\nto complete this requirement"));
+		quantityTooltip.setTooltip(new Tooltip("Enter how many of this requirement is "
+				+ "required."));
+		detailsTooltip.setTooltip(new Tooltip("Enter any additional information pertaining "
+				+ "to \nthis requirement"));
+		headingTooltip.setTooltip(new Tooltip("A Requiremnet is something that needs to be "
+				+ "finished\nbefore finishing a larger task."));
 
 		Platform.runLater(() -> this.pane.requestFocus());
 	}

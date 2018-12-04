@@ -53,15 +53,17 @@ public class StudyPlanner implements Serializable {
 
 	// public methods
 	/**
-	 * removes profile from arraylist
-	 * @param i : studyProfile Type
+	 * Removes the specified profile.
+	 *
+	 * @param profile The profile to remove
 	 */
-	public void removeProfile(StudyProfile i) {
-		studyProfiles.remove(i);
+	public void removeProfile(StudyProfile profile) {
+		studyProfiles.remove(profile);
 		activityList.clear();
 		calendar.clear();
 		deadlineNotifications.clear();
 	}
+
 	/**
 	 * Getter for the variable calendar.
 	 * @return ArrayList for the variable calendar.
@@ -121,21 +123,7 @@ public class StudyPlanner implements Serializable {
 		}
 		return time;
 	}
-/**
- * Finds and returns a profile that may exist in the current list of StudyProfiles. returns null if not found
- * 
- * @param i : given value is StudyProfile Type
- * @return
- */
-	public StudyProfile getProfile(StudyProfile i) {
-		for(StudyProfile sp: studyProfiles) {
-			if(sp.equals(i)) {
-				return sp;
-			}
-		}
-		return null;
-	}
-	
+
 	/**
 	 * Check whether this StudyPlanner contains a StudyProfile with the given parameters.
 	 *

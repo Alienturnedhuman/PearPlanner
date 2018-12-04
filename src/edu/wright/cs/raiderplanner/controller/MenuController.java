@@ -225,8 +225,9 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * Main method containing switch statements. This checks to see if the calendar is open as well as loads to see
-	 * if you need the profile, module, milestones, calendar, and chat.
+	 * Main method containing switch statements. This checks to see if the
+	 * calendar is open as well as loads to see if you need the profile, module,
+	 * milestones, calendar, and chat.
 	 */
 	public void main() {
 		mainContent.setStyle("");
@@ -503,20 +504,23 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * Handles when the user selects the new profile button on the main screen and creates a profile when this occurs.
+	 * Handles when the user selects the new profile button on the main screen
+	 * and creates a profile when this occurs.
 	 */
 	public void createNewProfile() {
 		MainController.save();
 		File plannerFile = null;
 		try {
-			Account newAccount = MainController.ui.createAccount();
-			StudyPlannerController study = new StudyPlannerController(newAccount);
-			// Welcome notification:
-			Notification not = new Notification("Welcome!", new GregorianCalendar(),
-					"Thank you for using RaiderPlanner!");
-			study.getPlanner().addNotification(not);
-			MainController.setSpc(study);
-			plannerFile = MainController.ui.savePlannerFileDialog();
+			Account newAccount = MainController.ui.createAccount(false);
+			if (newAccount != null) {
+				StudyPlannerController study = new StudyPlannerController(newAccount);
+				// Welcome notification:
+				Notification not = new Notification("Welcome!", new GregorianCalendar(),
+						"Thank you for using RaiderPlanner!");
+				study.getPlanner().addNotification(not);
+				MainController.setSpc(study);
+				plannerFile = MainController.ui.savePlannerFileDialog();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -537,9 +541,13 @@ public class MenuController implements Initializable {
 				UiManager.reportError("Directory does not exist.");
 			}
 		}
-		MainController.loadFile(plannerFile);
+
+		if (plannerFile != null) {
+			MainController.loadFile(plannerFile);
+		}
+
 		try {
-			MainController.ui.reloadMainMenu();
+			this.main();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -580,7 +588,8 @@ public class MenuController implements Initializable {
 
 	/**
 	 * Display the 'Add Activity' window.
-	 * @throws IOException if you can not open the file. Exception e if other unexpected issues occur
+	 * @throws IOException if you can not open the file
+	 * @throws Exception if other unexpected issues occur
 	 */
 	public void addActivity() {
 		try {
@@ -846,14 +855,7 @@ public class MenuController implements Initializable {
 							&& event.getClickCount() == 2) {
 						try {
 							this.main();
-							StudyProfileController spc = new StudyProfileController(row.getItem(),
-									this);
-							// Load in the .fxml file:
-							FXMLLoader loader = new FXMLLoader(getClass().getResource(
-									"/edu/wright/cs/raiderplanner/view/StudyProfile.fxml"));
-							loader.setController(spc);
-							Parent root = loader.load();
-							this.mainContent.add(root,0,25);
+							loadStudyProfile(row.getItem());
 						} catch (IOException e1) {
 							UiManager.reportError("Unable to open View file");
 						}
@@ -866,6 +868,20 @@ public class MenuController implements Initializable {
 		this.mainContent.addRow(2, table);
 		GridPane.setColumnSpan(table, GridPane.REMAINING);
 		this.mainContent.getStyleClass().add("list-item");
+	}
+
+	/**
+	 * Display the StudyProfile details.
+	 */
+	public void loadStudyProfile(StudyProfile profile) throws IOException {
+		StudyProfileController spc = new StudyProfileController(profile,
+				this);
+		// Load in the .fxml file:
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(
+				"/edu/wright/cs/raiderplanner/view/StudyProfile.fxml"));
+		loader.setController(spc);
+		Parent root = loader.load();
+		this.mainContent.add(root,0,25);
 	}
 
 	/**
@@ -1562,7 +1578,6 @@ public class MenuController implements Initializable {
 
 		if (not.getLink() != null) {
 			not.getLink().open(this.current);
-			this.main();
 		}
 	}
 
@@ -1578,8 +1593,9 @@ public class MenuController implements Initializable {
 
 	/**
 	 * Handles the 'Settings' event.
+	 * @throws Exception - Throws RaiderException
 	 */
-	public void showSettings() {
+	public void showSettings() throws Exception {
 		initialLoad = true; // Required so the notifications don't appear.
 		MainController.showSettings();
 	}
@@ -1587,8 +1603,8 @@ public class MenuController implements Initializable {
 	/**
 	 * Handles the 'Help' event.
 	 */
-	public void openBrowser() {
-		MainController.openBrowser();
+	public void openHelpPage() {
+		MainController.openHelpPage();
 	}
 
 	/**

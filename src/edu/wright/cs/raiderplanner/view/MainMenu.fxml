@@ -171,7 +171,7 @@
       	                                 <Image url="/edu/wright/cs/raiderplanner/content/help.png" />
       	                             </image>
       	                         </ImageView>
-      	                         <Button fx:id="help" onAction="#openBrowser" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Help" />
+      	                         <Button fx:id="help" onAction="#openHelpPage" style="-fx-background-color: transparent; -fx-text-fill:white; -fx-cursor: hand;" text="Help" />
       </children>
    	                     </HBox>
    </children>

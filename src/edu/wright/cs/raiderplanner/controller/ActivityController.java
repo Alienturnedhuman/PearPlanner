@@ -118,6 +118,15 @@ public class ActivityController implements Initializable {
 	// Lists:
 	@FXML private ListView<Task> tasks;
 
+	// Tooltips:
+	@FXML private Label nameTooltip;
+	@FXML private Label durationTooltip;
+	@FXML private Label quantityTooltip;
+	@FXML private Label dateTooltip;
+	@FXML private Label taskTooltip;
+	@FXML private Label detailsTooltip;
+	@FXML private Label headingTooltip;
+
 	/**
 	 * Handle changes to the input fields.
 	 * Checks inputs, and unlocks the submit button if inputs are valid
@@ -340,6 +349,20 @@ public class ActivityController implements Initializable {
 			this.handleChange();
 		}
 		// =================
+
+		// Initialize Tooltips:
+		nameTooltip.setTooltip(new Tooltip("Enter the name for your new activity."));
+		durationTooltip.setTooltip(new Tooltip("Enter how long this Activity will take you "
+				+ "to complete"));
+		quantityTooltip.setTooltip(new Tooltip("Enter how many times this activity needs to "
+				+ "be completed"));
+		dateTooltip.setTooltip(new Tooltip("Enter the date tgat "));
+		detailsTooltip.setTooltip(new Tooltip("Enter any additional information for this "
+				+ "activity."));
+		taskTooltip.setTooltip(new Tooltip("Add tasks to you activity to help stay organized "
+				+ "and efficient."));
+		headingTooltip.setTooltip(new Tooltip("An Activity is something that you need to do "
+				+ "and\nfeatures a duration, activity type, date, and tasks."));
 
 		Platform.runLater(() -> this.pane.requestFocus());
 	}

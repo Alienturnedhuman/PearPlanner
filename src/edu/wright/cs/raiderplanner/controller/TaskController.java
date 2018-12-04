@@ -21,6 +21,9 @@
 
 package edu.wright.cs.raiderplanner.controller;
 
+import com.github.plushaze.traynotification.animations.Animations;
+import com.github.plushaze.traynotification.notification.Notifications;
+import com.github.plushaze.traynotification.notification.TrayNotification;
 import edu.wright.cs.raiderplanner.model.Assignment;
 import edu.wright.cs.raiderplanner.model.Requirement;
 import edu.wright.cs.raiderplanner.model.Task;
@@ -67,6 +70,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -94,44 +98,74 @@ public class TaskController implements Initializable {
 
 	/**
 	 * Returns whether the TasksController has successfully handled a Task submission.
-	 * @return Whether this TaskController has successfully handled a Task
-	 * 				submission.
+	 * @return Whether this TaskController has successfully handled a Task submission.
 	 */
 	public boolean isSuccess() {
 		return success;
 	}
 
 	// Buttons:
-	@FXML private Button submit;
-	@FXML private Button addReq;
-	@FXML private Button addDep;
-	@FXML private Button removeReq;
-	@FXML private Button removeDep;
-	@FXML private ToggleButton markComplete;
-	@FXML private Button addTaskType;
-	@FXML private Button removeTaskType;
-	@FXML private MenuItem taskTypeMenu;
+	@FXML
+	private Button submit;
+	@FXML
+	private Button addReq;
+	@FXML
+	private Button addDep;
+	@FXML
+	private Button removeReq;
+	@FXML
+	private Button removeDep;
+	@FXML
+	private ToggleButton markComplete;
+	@FXML
+	private Button addTaskType;
+	@FXML
+	private Button removeTaskType;
+	@FXML
+	private MenuItem taskTypeMenu;
 
 	// Panes:
-	@FXML private GridPane pane;
-	@FXML private ContextMenu context;
+	@FXML
+	private GridPane pane;
+	@FXML
+	private ContextMenu context;
 
 	// Text:
-	@FXML private TextArea details;
-	@FXML private ComboBox<String> taskType;
-	@FXML private DatePicker deadline;
-	@FXML private TextField name;
-	@FXML private TextField weighting;
-	@FXML private TextField taskTypeName;
+	@FXML
+	private TextArea details;
+	@FXML
+	private ComboBox<String> taskType;
+	@FXML
+	private DatePicker deadline;
+	@FXML
+	private TextField name;
+	@FXML
+	private TextField weighting;
+	@FXML
+	private TextField taskTypeName;
 
 	// Labels:
-	@FXML private Label title;
-	@FXML private Label completed;
-	@FXML private Label canComplete;
+	@FXML
+	private Label title;
+	@FXML
+	private Label completed;
+	@FXML
+	private Label canComplete;
 
 	// Lists:
-	@FXML private ListView<Requirement> requirements;
-	@FXML private ListView<Task> dependencies;
+	@FXML
+	private ListView<Requirement> requirements;
+	@FXML
+	private ListView<Task> dependencies;
+
+	// Tooltips:
+	@FXML private Label nameTooltip;
+	@FXML private Label weightingTooltip;
+	@FXML private Label deadlineTooltip;
+	@FXML private Label detailsTooltip;
+	@FXML private Label requirementsTooltip;
+	@FXML private Label dependenciesTooltip;
+	@FXML private Label headingTooltip;
 
 	/**
 	 * Handle changes to the input fields.
@@ -161,16 +195,13 @@ public class TaskController implements Initializable {
 	}
 
 	/**
-	 * Used to test all user entries needed before allowing the ok/submit button to be
-	 * 	pressed. Checks all input fields for incorrect data, including whether weighting
-	 * is an Integer.
+	 * Used to test all user entries needed before allowing the ok/submit button to be pressed.
+	 * Checks all input fields for incorrect data, including whether weighting is an Integer.
 	 * @return true if unlock is successful, or false if not.
 	 */
 	public boolean unlockSubmit() {
-		if (!this.name.getText().trim().isEmpty()
-				&& this.name.getText() != null
-				&& getWeight() != -1
-				&& !this.deadline.getEditor().getText().trim().isEmpty()
+		if (!this.name.getText().trim().isEmpty() && this.name.getText() != null
+				&& getWeight() != -1 && !this.deadline.getEditor().getText().trim().isEmpty()
 				&& !this.deadline.getValue().isBefore(LocalDate.now())
 				&& this.taskType.getSelectionModel().getSelectedIndex() != -1) {
 			this.submit.setDisable(false);
@@ -182,8 +213,8 @@ public class TaskController implements Initializable {
 	}
 
 	/**
-	 * This will properly get the user entry from the weighting field.
-	 * 	If field entry is wrong, displays red border and changes the ToolTip to explain error.
+	 * This will properly get the user entry from the weighting field. If field entry is wrong,
+	 * displays red border and changes the ToolTip to explain error.
 	 * @return Integer for the weight, 0 if left blank, or -1 for error
 	 */
 	public int getWeight() {
@@ -215,8 +246,7 @@ public class TaskController implements Initializable {
 	}
 
 	/**
-	 * Validate data in the Weighting field.
-	 * Confirms that input is an Integer.
+	 * Validate data in the Weighting field. Confirms that input is an Integer.
 	 */
 	public void validateWeighting() {
 		getWeight();
@@ -259,8 +289,8 @@ public class TaskController implements Initializable {
 	 */
 	public void addDependency() {
 		// Table items:
-		ObservableList<Task> list = FXCollections.observableArrayList(MainController
-				.getSpc().getCurrentTasks());
+		ObservableList<Task> list = FXCollections
+				.observableArrayList(MainController.getSpc().getCurrentTasks());
 		list.removeAll(this.dependencies.getItems());
 		if (this.task != null) {
 			list.remove(this.task);
@@ -274,8 +304,8 @@ public class TaskController implements Initializable {
 	}
 
 	/**
-	 * Handles the 'Mark as complete' button action.
-	 * After toggle is complete, tries to unlock submit button.
+	 * Handles the 'Mark as complete' button action. After toggle is complete, tries to unlock
+	 * submit button.
 	 */
 	public void toggleComplete() {
 		if (this.task.isCheckedComplete()) {
@@ -340,11 +370,17 @@ public class TaskController implements Initializable {
 	 * Submit the form and create a new Task.
 	 */
 	public void handleSubmit() {
+		TrayNotification trayNotif = new TrayNotification();
+		trayNotif.setTitle("Raider Planner");
+		trayNotif.setRectangleFill(Paint.valueOf("#2A9A84"));
+		trayNotif.setAnimation(Animations.POPUP);
+		trayNotif.setNotification(Notifications.SUCCESS);
+		trayNotif.showAndDismiss(Duration.seconds(2));
+
 		if (this.task == null) {
 			// Create a new Task:
 			this.task = new Task(this.name.getText(), this.details.getText(),
-					this.deadline.getValue(),
-					getWeight(), this.taskType.getValue());
+					this.deadline.getValue(), getWeight(), this.taskType.getValue());
 			for (Requirement req : this.requirements.getItems()) {
 				this.task.addRequirement(req);
 			}
@@ -353,6 +389,7 @@ public class TaskController implements Initializable {
 				this.task.addDependency(t);
 			}
 			// =================
+			trayNotif.setMessage("Task Successfully Created");
 		} else {
 			if (unlockSubmit()) {
 				// Update the current task:
@@ -361,6 +398,7 @@ public class TaskController implements Initializable {
 				this.task.setDeadline(this.deadline.getValue());
 				this.task.setWeighting(getWeight());
 				this.task.setType(this.taskType.getValue());
+				trayNotif.setMessage("Task Successfully Updated");
 				// =================
 			}
 		}
@@ -388,7 +426,7 @@ public class TaskController implements Initializable {
 	 * Constructor for a TaskController with an existing Task.
 	 *
 	 * @param task
-	 * 			The current task associated with TaskController.
+	 *            The current task associated with TaskController.
 	 */
 	public TaskController(Task task) {
 		this.task = task;
@@ -480,7 +518,6 @@ public class TaskController implements Initializable {
 				this.canComplete.setVisible(true);
 			}
 			// =================
-
 			// Fill in data:
 			this.name.setText(this.task.getName());
 			this.details.setText(this.task.getDetails().getAsString());
@@ -496,9 +533,25 @@ public class TaskController implements Initializable {
 
 		// ListChangeListener:
 		this.dependencies.getItems().addListener((ListChangeListener<Task>) c -> handleChange());
-		this.requirements.getItems().addListener((ListChangeListener<Requirement>)
-				c -> handleChange());
+		this.requirements.getItems()
+				.addListener((ListChangeListener<Requirement>) c -> handleChange());
 		// =================
+
+		// Initialize Tooltips:
+		nameTooltip.setTooltip(new Tooltip("Enter the name of the task."));
+		detailsTooltip.setTooltip(new Tooltip("Enter any additional information about the task."));
+		deadlineTooltip.setTooltip(new Tooltip("Enter a deadline that this task must be completed "
+				+ "by\nin the format (MM/DD/YYYY)"));
+		weightingTooltip.setTooltip(new Tooltip("Distribute the importance of each task in your "
+				+ "to do list\nby adding a weight."));
+		requirementsTooltip.setTooltip(new Tooltip("Add the required actions needed for completing "
+				+ "this task."));
+		dependenciesTooltip.setTooltip(new Tooltip("add the dependencies for the task to be "
+				+ "complete."));
+		headingTooltip.setTooltip(new Tooltip("A Task is something that needs to be completed\n"
+				+ "before marking a requirement, milestone, or activity\nfinidhed. "
+				+ "It comes with a weighting feature that allows\nyou to organize tasks in order "
+				+ "of importance."));
 
 		Platform.runLater(() -> this.pane.requestFocus());
 	}
@@ -506,7 +559,8 @@ public class TaskController implements Initializable {
 	/**
 	 * RowFactory for a TableRow of Task.
 	 *
-	 * @param etableView TableView that contains the TableRow.
+	 * @param etableView
+	 *            TableView that contains the TableRow.
 	 * @return new TableRow
 	 */
 	protected static TableRow<Task> taskRowFactory(TableView<Task> etableView) {
@@ -522,8 +576,8 @@ public class TaskController implements Initializable {
 			}
 		};
 		row.setOnMouseClicked(event -> {
-			if (!row.isEmpty() && event.getButton()
-					== MouseButton.PRIMARY && event.getClickCount() == 2) {
+			if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
+					&& event.getClickCount() == 2) {
 				Stage current = (Stage) row.getScene().getWindow();
 				current.close();
 			}
@@ -534,7 +588,8 @@ public class TaskController implements Initializable {
 	/**
 	 * Creates a Task selection window.
 	 *
-	 * @param list List of Tasks to be put into the window.
+	 * @param list
+	 *            List of Tasks to be put into the window.
 	 * @return A list of selected Tasks
 	 */
 	protected static ObservableList<Task> taskSelectionWindow(ObservableList<Task> list) {
@@ -550,7 +605,8 @@ public class TaskController implements Initializable {
 
 		TableColumn<Task, String> assignmentColumn = new TableColumn<>("Assignments");
 		assignmentColumn.setCellValueFactory(new PropertyValueFactory("assignments") {
-			@Override public ObservableValue call(TableColumn.CellDataFeatures param) {
+			@Override
+			public ObservableValue call(TableColumn.CellDataFeatures param) {
 				SimpleStringProperty value = new SimpleStringProperty("");
 				for (Assignment a : ((Task) param.getValue()).getAssignmentReferences()) {
 					value.set(value.getValue() + a.getName() + "\n");
@@ -608,7 +664,8 @@ public class TaskController implements Initializable {
 	/**
 	 * CellFactory for a ListView of Requirement.
 	 *
-	 * @param elistView ListView that contains the ListCell.
+	 * @param elistView
+	 *            ListView that contains the ListCell.
 	 * @return new ListCell
 	 */
 	protected ListCell<Requirement> requirementCellFactory(ListView<Requirement> elistView) {
@@ -702,4 +759,3 @@ public class TaskController implements Initializable {
 		return cell;
 	}
 }
-
