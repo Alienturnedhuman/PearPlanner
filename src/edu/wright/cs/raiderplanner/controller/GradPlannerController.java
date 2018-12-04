@@ -44,7 +44,8 @@ import java.io.IOException;
  *
  * @author Mark Riedel on 10/9/2018.
 */
-public class GradPlannerController {	
+
+public class GradPlannerController {
 	ObservableList<String> semesterList = FXCollections
 			.observableArrayList("Semster 1, Semester2,...",
 			"Fall 2018,Spring 2018,...","Year 1 Fall,Year 1 Spring",
@@ -68,15 +69,15 @@ public class GradPlannerController {
 	@FXML
 	private TextField semesterEight;
 	@FXML
-	private ComboBox chooseSemester;	
+	private ComboBox chooseSemester;
 	String startYear = startYearFx.getText();
-	String year1 = startYear.toString();	
+	String year1 = startYear.toString();
 	String secondYear = startYearFx.getText() + 1;
-	String year2 = secondYear.toString();	
+	String year2 = secondYear.toString();
 	String thirdYear = startYearFx.getText() + 2;
-	String year3 = thirdYear.toString();	
+	String year3 = thirdYear.toString();
 	String fourthYear = startYearFx.getText();
-	String year4 = fourthYear.toString();	
+	String year4 = fourthYear.toString();
 	/**
 	 * Adds SemesterList to the Combo Box
 	 */
@@ -104,9 +105,9 @@ public class GradPlannerController {
 		semesterSeven.setText("Semester 7");
 		semesterSeven.setEditable(false);
 		semesterEight.setText("Semester 8");
-		semesterEight.setEditable(false);		
+		semesterEight.setEditable(false);	
 	}
-	
+
 	public void nameYear() {
 		semesterOne.setText("Fall " + year1);
 		semesterOne.setEditable(false);
@@ -123,7 +124,7 @@ public class GradPlannerController {
 		semesterSeven.setText("Fall" + year4);
 		semesterSeven.setEditable(false);
 		semesterEight.setText("Spring" + year4);
-		semesterEight.setEditable(false);		
+		semesterEight.setEditable(false);	
 	}
 	/*
 	 * Allows for custom naming semesters
@@ -137,5 +138,5 @@ public class GradPlannerController {
 		semesterSix.setEditable(true);
 		semesterSeven.setEditable(true);
 		semesterEight.setEditable(true);
-	}	
+	}
 }
