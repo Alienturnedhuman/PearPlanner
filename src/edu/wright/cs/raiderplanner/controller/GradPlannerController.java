@@ -19,6 +19,7 @@
  *
  */
 package edu.wright.cs.raiderplanner.controller;
+
 import edu.wright.cs.raiderplanner.model.Account;
 import edu.wright.cs.raiderplanner.model.Notification;
 import edu.wright.cs.raiderplanner.model.Requirement;
@@ -32,9 +33,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.io.IOException;
 /**
@@ -43,13 +44,11 @@ import java.io.IOException;
  *
  * @author Mark Riedel on 10/9/2018.
 */
-public class GradPlannerController {
-	
+public class GradPlannerController {	
 	ObservableList<String> semesterList = FXCollections
 			.observableArrayList("Semster 1, Semester2,...",
 			"Fall 2018,Spring 2018,...","Year 1 Fall,Year 1 Spring",
-			"Custom");
-	
+			"Custom");	
 	@FXML
 	private TextField startYearFx;
 	@FXML
@@ -69,20 +68,15 @@ public class GradPlannerController {
 	@FXML
 	private TextField semesterEight;
 	@FXML
-	private ComboBox chooseSemester;
-	
+	private ComboBox chooseSemester;	
 	String startYear = startYearFx.getText();
-	String year1 = startYear.toString();
-	
+	String year1 = startYear.toString();	
 	String secondYear = startYearFx.getText() + 1;
-	String year2 = secondYear.toString();
-	
+	String year2 = secondYear.toString();	
 	String thirdYear = startYearFx.getText() + 2;
-	String year3 = thirdYear.toString();
-	
+	String year3 = thirdYear.toString();	
 	String fourthYear = startYearFx.getText();
-	String year4 = fourthYear.toString();
-	
+	String year4 = fourthYear.toString();	
 	/**
 	 * Adds SemesterList to the Combo Box
 	 */
@@ -110,8 +104,7 @@ public class GradPlannerController {
 		semesterSeven.setText("Semester 7");
 		semesterSeven.setEditable(false);
 		semesterEight.setText("Semester 8");
-		semesterEight.setEditable(false);
-		
+		semesterEight.setEditable(false);		
 	}
 	
 	public void nameYear() {
@@ -130,8 +123,7 @@ public class GradPlannerController {
 		semesterSeven.setText("Fall" + year4);
 		semesterSeven.setEditable(false);
 		semesterEight.setText("Spring" + year4);
-		semesterEight.setEditable(false);
-		
+		semesterEight.setEditable(false);		
 	}
 	/*
 	 * Allows for custom naming semesters
@@ -145,8 +137,5 @@ public class GradPlannerController {
 		semesterSix.setEditable(true);
 		semesterSeven.setEditable(true);
 		semesterEight.setEditable(true);
-	}
-	
-	
-	
+	}	
 }
