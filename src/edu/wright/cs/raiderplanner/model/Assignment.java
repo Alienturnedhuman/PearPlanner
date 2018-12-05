@@ -78,7 +78,7 @@ public abstract class Assignment extends VersionControlEntity {
 	}
 
 	/**
-	 * toString() method.
+	 * toString() method which formats the needed string.
 	 * @param verbose : given value is a boolean type
 	 * @return verboseString : returns StringBuilder object
 	 */
@@ -171,7 +171,7 @@ public abstract class Assignment extends VersionControlEntity {
 	// Setters:
 
 	/**
-	 * Add a Task to this Assignment.
+	 * Add a Task to this Assignment and task to task array list.
 	 *
 	 * @param task Task to be added
 	 */
@@ -214,6 +214,7 @@ public abstract class Assignment extends VersionControlEntity {
 	 * Calculates how much of this Assignment has been completed in percentage.
 	 *
 	 * @return int (0-100)
+	 * @throws ArithmeticException e if there is a number issue
 	 */
 	public int calculateProgress() {
 		if (this.requirements.size() == 0 && this.tasks.size() == 0) {

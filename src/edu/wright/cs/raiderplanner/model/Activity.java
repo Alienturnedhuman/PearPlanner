@@ -48,7 +48,7 @@ public class Activity extends Event {
 	private QuantityType type;
 
 	/**
-	 * Create a new activity from the given parameters.
+	 * Create a new activity from the given parameters also sets the time and date format.
 	 *
 	 * @param name name of activity
 	 * @param details details of the activity
@@ -84,6 +84,7 @@ public class Activity extends Event {
 	}
 
 	/**
+	 * Sets tasks to a new array and size to the task list already made.
 	 * @return an array of Tasks related to this Activity.
 	 */
 	public Task[] getTasks() {
@@ -92,6 +93,7 @@ public class Activity extends Event {
 	}
 
 	/**
+	 * Getter for activity quantity
 	 * @return the Quantity of this Activity.
 	 */
 	public int getActivityQuantity() {
@@ -106,6 +108,7 @@ public class Activity extends Event {
 	}
 
 	/**
+	 * Formats the strings activity date and then returns it.
 	 * @return a formatted String representation of this Activity's date.
 	 */
 	public String getDateString() {

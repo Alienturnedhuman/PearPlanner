@@ -121,7 +121,7 @@ public class UiManager {
 
 	/**
 	 * Displays a 'Create Account' window and handles the creation of a new Account object.
-	 *
+	 * Checks if the account was created successfully if not exit.
 	 * @return newly created Account
 	 * @throws IOException for loader.load()
 	 */
@@ -179,7 +179,7 @@ public class UiManager {
 	}
 
 	/**
-	 * Relods the main page after a new profile is open.
+	 * Reloads the main page after a new profile is open.
 	 * @throws Exception When reloading the menu.
 	 */
 	public void reloadMainMenu() throws Exception {
@@ -230,8 +230,8 @@ public class UiManager {
 
 	/**
 	 * Display the 'Add Activity' window.
-	 *
-	 * @return newly created Activity
+	 * Checks to see if the creation is successful.
+	 * @return newly created Activity. If not successful return null.
 	 * @throws IOException exception if IO error is triggered
 	 */
 	public Activity addActivity() throws IOException {
@@ -279,8 +279,8 @@ public class UiManager {
 
 	/**
 	 * Displays the 'Add Milestone' window.
-	 *
-	 * @return newly created Milestone object.
+	 * Checks to see if the milestone was added.
+	 * @return newly created Milestone object. if not return null.
 	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public Milestone addMilestone() throws IOException {
@@ -379,8 +379,8 @@ public class UiManager {
 
 	/**
 	 * Creates a window for adding a new Task.
-	 *
-	 * @return newly created Task
+	 * Checks if window was made successfully.
+	 * @return newly created Task. Returns null if failed
 	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public Task addTask() throws IOException {
@@ -428,8 +428,8 @@ public class UiManager {
 
 	/**
 	 * Creates a window for adding a new Requirement.
-	 *
-	 * @return newly created Requirement
+	 * Checks if window was created successfully.
+	 * @return newly created Requirement. Return null if failed
 	 * @throws IOException if there is an error while loading the FXML GUI
 	 */
 	public Requirement addRequirement() throws IOException {

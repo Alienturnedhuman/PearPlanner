@@ -469,8 +469,7 @@ public class GanttishDiagram {
 	}
 
 	/**
-	 * Generates a rectangle with the given message in the middle.
-	 *
+	 * Generates a rectangle with the given dimensions and the given message in the middle.
 	 * @param g2d 2d graphics
 	 * @param fontSize font size
 	 * @param msg message
