@@ -38,6 +38,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.io.IOException;
+
 /**
  * Controller for the first window that is presented when the application
  * launches (i.e., New/Open/Exit buttons).
@@ -49,7 +50,7 @@ public class GradPlannerController {
 	ObservableList<String> semesterList = FXCollections
 			.observableArrayList("Semster 1, Semester2,...",
 			"Fall 2018,Spring 2018,...","Year 1 Fall,Year 1 Spring",
-			"Custom");	
+			"Custom");
 	@FXML
 	private TextField startYearFx;
 	@FXML
@@ -78,6 +79,7 @@ public class GradPlannerController {
 	String year3 = thirdYear.toString();
 	String fourthYear = startYearFx.getText();
 	String year4 = fourthYear.toString();
+	
 	/**
 	 * Adds SemesterList to the Combo Box
 	 */
@@ -86,8 +88,9 @@ public class GradPlannerController {
 		chooseSemester.setValue("semester");
 		chooseSemester.setItems(semesterList);
 	}
+
 	/**
-	 * Allows for the TextFields Standard Configurations. 
+	 * Allows for the TextFields Standard Configurations.
 	 */
 	public void semesterNumber() {
 		semesterOne.setText("Semester 1");
@@ -105,9 +108,12 @@ public class GradPlannerController {
 		semesterSeven.setText("Semester 7");
 		semesterSeven.setEditable(false);
 		semesterEight.setText("Semester 8");
-		semesterEight.setEditable(false);	
+		semesterEight.setEditable(false);
 	}
-
+	
+	/**
+	 *Allows for switchable naming conventions
+	 */
 	public void nameYear() {
 		semesterOne.setText("Fall " + year1);
 		semesterOne.setEditable(false);
@@ -126,7 +132,8 @@ public class GradPlannerController {
 		semesterEight.setText("Spring" + year4);
 		semesterEight.setEditable(false);	
 	}
-	/*
+	
+	/**
 	 * Allows for custom naming semesters
 	 */
 	public void customName() {
