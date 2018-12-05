@@ -261,31 +261,49 @@ public class MainController {
 					}
 				}
 			} catch (FileNotFoundException e) {
-				UiManager.reportError("Error, File does not exist.");
+				UiManager.reportError("Cannot find this file.","file not found exception when "
+						+ "trying loadfile, most likely due to invalid parameters");
 				System.exit(1);
 			} catch (ClassNotFoundException e) {
-				UiManager.reportError("Error, Class NotFoundException.");
+				UiManager.reportError("Error, Cannot find the study planner.", "class not found"
+						+ " exception thrown when trying loadfile, most likely due to problems"
+						+ " reading the object input stream as a sealed object");
 				System.exit(1);
 			} catch (BadPaddingException e) {
-				UiManager.reportError("Error, Invalid file, Bad Padding Exception.");
+				UiManager.reportError("Error, Cannot decode the given file.", "bad padding"
+						+ " exception thrown when trying loadfile, most likely due to "
+						+ "problems with the cipher");
 				System.exit(1);
 			} catch (IOException e) {
-				UiManager.reportError("Error, Invalid file.");
+				UiManager.reportError("Error, Invalid file.", "IO exception thrown when trying"
+						+ " loadfile, most likely due to an invalide file or problems with "
+						+ "one of the input streams");
 				System.exit(1);
 			} catch (IllegalBlockSizeException e) {
-				UiManager.reportError("Error, Invalid file, Illegal Block Size Exception.");
+				UiManager.reportError("Error, Object too large, cannot decode the file.",
+						"Illegal block size exception thrown when trying loadfile, most "
+						+ "likely due to a problem with constructing a sealed object");
 				System.exit(1);
 			}  catch (InvalidKeyException e) {
-				UiManager.reportError("Error, Invalid Key, Cannot decode the given file.");
+				UiManager.reportError("Error, Invalid Key, Cannot decode the given file.",
+						"invalid key exception thrown when trying loadfile, most likely due "
+						+ "to using an invalid key while initialising the the cypher");
 				System.exit(1);
 			} catch (NoSuchAlgorithmException e) {
-				UiManager.reportError("Error, Cannot decode the given file.");
+				UiManager.reportError("Error, Cannot decode the given file.", "no such "
+						+ "algorithm exception thrown when trying loadfile, most likely "
+						+ "due to the program not being able to find the indicated "
+						+ "cypher while initialising the the cypher");
 				System.exit(1);
 			} catch (NoSuchPaddingException e) {
-				UiManager.reportError("Error, Invalid file, No Such Padding.");
+				UiManager.reportError("Error, Cannot decode the given file",  "no such"
+						+ " padding exception thrown when trying loadfile, most likely"
+						+ " due to problems with the parameters used in the get "
+						+ "instance call made while initialising the the cypher");
 				System.exit(1);
 			}  catch (Exception e) {
-				UiManager.reportError(e.getMessage() + "Unknown error.");
+				UiManager.reportError(e.getMessage() + "Unknown error.", e.getMessage()
+						+ "unknown error occured while trying loadfile");
 				System.exit(1);
 			}
 		} else {
