@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 package edu.wright.cs.raiderplanner.controller;
 
 import edu.wright.cs.raiderplanner.model.Account;
@@ -37,6 +38,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 /**
@@ -79,9 +81,9 @@ public class GradPlannerController {
 	String year3 = thirdYear.toString();
 	String fourthYear = startYearFx.getText();
 	String year4 = fourthYear.toString();
-	
+
 	/**
-	 * Adds SemesterList to the Combo Box
+	 * Adds SemesterList to the Combo Box.
 	 */
 	@FXML
 	private void initialize() {
@@ -110,9 +112,9 @@ public class GradPlannerController {
 		semesterEight.setText("Semester 8");
 		semesterEight.setEditable(false);
 	}
-	
+
 	/**
-	 *Allows for switchable naming conventions
+	 * Allows for switchable naming conventions.
 	 */
 	public void nameYear() {
 		semesterOne.setText("Fall " + year1);
@@ -130,11 +132,11 @@ public class GradPlannerController {
 		semesterSeven.setText("Fall" + year4);
 		semesterSeven.setEditable(false);
 		semesterEight.setText("Spring" + year4);
-		semesterEight.setEditable(false);	
+		semesterEight.setEditable(false);
 	}
-	
+
 	/**
-	 * Allows for custom naming semesters
+	 * Allows for custom naming semesters.
 	 */
 	public void customName() {
 		semesterOne.setEditable(true);
