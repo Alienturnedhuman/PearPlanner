@@ -1,0 +1,190 @@
+/*
+ * Copyright (C) 2017 - Matthew Barrett, Randy Forte, Brandon Hulbert,
+ * Donald Miller, Nathaniel C Crossman
+ *
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+import org.gradle.plugins.ide.eclipse.model.Container
+
+/**
+ * The application plugin facilitates creating an executable JVM application.
+ */
+buildscript {
+	repositories {
+	maven {
+		url 'https://plugins.gradle.org/m2/'
+		}
+		mavenLocal()
+		mavenCentral()
+		jcenter()
+	}
+	dependencies {
+		classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
+		classpath 'gradle.plugin.edu.sc.seis.gradle:launch4j:2.4.4'
+		classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.3"
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+apply plugin: 'checkstyle'
+apply plugin: 'com.github.spotbugs'
+apply plugin: 'edu.sc.seis.launch4j'
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+
+compileJava {
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
+	throw new GradleException("This project requires Java 8, but it's running on " + JavaVersion.current())
+}
+
+/**
+ * This line specifies where the main.java file is found.
+ */
+mainClassName = 'edu.wright.cs.raiderplanner.view.Main'
+
+/**
+ * This statement declares where Gradle is to find directories
+ * for source code, external resources, and test classes
+ */
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src']
+		}
+		resources {
+			srcDirs = ['src']
+		}
+	}
+
+	test {
+		java {
+			srcDirs = ["test"]
+		}
+	}
+}
+
+/**
+ * The mavenCentral() function allows Gradle to access Maven's
+ * central repositories. I also identify two external repositories
+ * for dependencies not found in Maven Central.
+ * NOTE: The dependency "testfx-core-4.0.0-20150226.214553-8-sources.jar"
+ * is pulled from the sonatype URL.
+ */
+repositories {
+	mavenCentral()
+	jcenter()
+	maven {
+		url "https://github.com/screamingfrog/Maven/blob/master/uk/co/screamingfrog/AppleJavaExtensions/1.6/"
+		url "https://oss.sonatype.org/content/repositories/snapshots/org/testfx/testfx-core/4.0.0-SNAPSHOT/"
+		url "https://jitpack.io"
+	}
+}
+
+/**
+ * Gradle grabs dependencies from the above repositories.
+ */
+dependencies {
+	compile 'net.sf.biweekly:biweekly:0.6.1'
+	compile 'commons-validator:commons-validator:1.6'
+	compile 'com.google.guava:guava:21.0'
+	compile 'org.apache.commons:commons-lang3:3.7'
+	compile 'org.hamcrest:hamcrest-all:1.3'
+	compile 'org.hamcrest:hamcrest-core:1.3'
+	compile 'org.hamcrest:hamcrest-generator:1.3'
+	compile 'org.hamcrest:hamcrest-integration:1.3'
+	compile 'org.hamcrest:hamcrest-junit:2.0.0.0'
+	compile 'org.hamcrest:hamcrest-library:1.3'
+	compile 'com.jfoenix:jfoenix:1.0.0'
+	compile 'org.jfxtras:jfxtras-agenda:8.0-r5'
+	compile 'org.jfxtras:jfxtras-common:8.0-r5'
+	compile 'org.jfxtras:jfxtras-controls:8.0-r5'
+	compile 'org.testfx:testfx-core:4.0.6-alpha'
+	compile 'org.testfx:testfx-junit:4.0.6-alpha'
+	compile 'org.testfx:testfx-junit5:4.0.6-alpha'
+	compile 'org.testfx:testfx-legacy:4.0.6-alpha'
+	compile 'com.github.mangstadt:vinnie:2.0.1'
+	compile 'org.junit.jupiter:junit-jupiter-api:5.0.1'
+	compile 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
+	compile 'org.junit.platform:junit-platform-runner:1.0.1'
+	compile 'org.junit.vintage:junit-vintage-engine:4.12.1'
+	implementation 'com.github.PlusHaze:TrayNotification:5393c3a54f'
+	compile fileTree(dir: 'src', include: ['*.jar'])
+	compile group: 'org.apache.derby', name: 'derby', version: '10.14.1.0'
+	runtime group: 'org.apache.derby', name: 'derby', version: '10.14.1.0'
+}
+
+/**
+ * Ensure the build fails if any unit test fails.
+ */
+test {
+	ignoreFailures = false
+}
+
+/**
+ * Tells Gradle to assemble a JAR archive.
+ */
+jar {
+	manifest.attributes "Main-Class": mainClassName
+	baseName = project.name
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+/**
+ * Create executable from jar
+ */
+launch4j {
+	outputDir = 'libs'
+	outfile = 'raiderplanner.exe'
+	icon = '/../../icon.ico'
+	mainClassName = mainClassName
+	jar = "raiderplanner.jar"
+	productName = 'Raider Planner'
+	fileDescription = 'The best study planner since the Gantt Diagram'
+}
+
+junitPlatform {
+	platformVersion '1.0.0'
+	reportsDir file('build/test-results/junit-platform') // this is the default
+}
+
+checkstyle {
+	configFile = '.checkstyle.xml' as File
+	maxWarnings = 0
+}
+
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+	reports {
+		xml.enabled false
+		html.enabled true
+		// html.stylesheet resources.text.fromFile( 'config/xsl/findbugs-custom.xsl' )
+	}
+	ignoreFailures = true
+}
+/**
+ * Keep Gradle from rewriting the generic default JRE container configuration
+ */
+eclipse.classpath.file.whenMerged { classpath ->
+	classpath.entries.removeAll { entry -> entry.kind == 'con' }
+	classpath.entries.add(new Container('org.eclipse.jdt.launching.JRE_CONTAINER'))
+}
